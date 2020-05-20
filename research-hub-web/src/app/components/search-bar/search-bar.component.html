@@ -1,0 +1,27 @@
+<div class="search-bar-outer" ngClass.lt-md="search-bar-outer-xs" *ngIf="isVisible">
+  <div class="search-bar-inner" fxFlex="100" fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="space-between center">
+    <mat-form-field fxFlex floatLabel="never">
+      <button matPrefix mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+      <input #searchTextInput matInput placeholder="Search" [(ngModel)]="searchText" autofocus>
+      <button matSuffix (click)="clearSearchText()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="200px" fxHide.lt-md floatLabel="never" placeholder="Categories">
+      <mat-select [(ngModel)]="category">
+        <mat-option *ngFor="let category of categoriesValue" [value]="category.id">
+          {{category.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div fxFlex="40px" fxHide.gt-sm *ngIf="isFilterBtnVisible" fxLayoutAlign="center center">
+      <button mat-icon-button (click)="openSearchFilter(); this.analyticsService.trackUserExperience('Filter panel', 'open')">
+        <mat-icon class="mat-24" style="color: #757575;">filter_list</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

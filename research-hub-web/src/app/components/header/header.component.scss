@@ -1,0 +1,60 @@
+@import "../../../styles";
+
+/*
+ * Image based header styles
+ */
+
+.header {
+  @extend .div-background-image;
+}
+
+.header-xs {
+  @extend .header;
+  padding: 0;
+}
+
+.header-padding {
+  @extend .site-content;
+  padding-left: $padding-site;
+  padding-right: $padding-site;
+}
+
+.header-padding-xs {
+  padding: 0;
+
+}
+
+.info-no-bg {
+  padding: $offset-gt-xs;
+  background-color: white;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+}
+
+.info-no-bg-xs {
+  @extend .info-no-bg;
+  margin-bottom: 0;
+}
+
+.info {
+  padding: $offset-gt-xs;
+  background-color: white;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12)
+}
+
+.info-xs {
+  @extend .info;
+  padding: $offset-xs;
+  padding-top: $offset-xs * 1.5;
+  padding-bottom: $offset-xs * 2.0;
+  margin-bottom: 0;
+}
+
+.cover-image {
+  @extend .div-background-image;
+  height: 300px;
+}
+
+.cover-image-xs {
+  @extend .div-background-image;
+  height: 200px;
+}

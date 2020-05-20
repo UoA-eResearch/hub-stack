@@ -1,0 +1,319 @@
+<mat-card>
+  <mat-card-header class="request-card-header">
+    <img mat-card-avatar [src]="apiService.getAssetUrl(image)">
+    <h1>{{title}}</h1>
+  </mat-card-header>
+
+  <p style="padding-left: 24px;">In order to provide you with research storage please complete the general information in the following sections. If you have any questions feel free to add this into the comments field at the end of the form.</p>
+
+  <div #resultsDummyHeader style="margin-top: 3em;"></div>
+  <mat-horizontal-stepper #stepper linear="true">
+    <mat-step [editable]="isEditable" [stepControl]="requestTypeForm">
+      <form [formGroup]="requestTypeForm" novalidate>
+
+        <ng-template matStepLabel>Request Type</ng-template>
+
+        <div class="step-form-container">
+          <div class="form-group">
+            <h3>Do you want to request new storage or update existing storage?</h3>
+            <mat-radio-group fxLayout="column" fxLayoutGap="1em" formControlName="requestType">
+              <mat-radio-button value="New">New</mat-radio-button>
+              <mat-radio-button value="Existing">Existing</mat-radio-button>
+              <mat-error *ngIf="requestTypeForm.controls.requestType.invalid && requestTypeClicked">* Please choose an option</mat-error>
+            </mat-radio-group>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="end">
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-raised-button color="accent" matStepperNext (click)="requestTypeClicked = true;">Next</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [editable]="isEditable" [stepControl]="requestDetailsForm" *ngIf="requestTypeForm.controls.requestType.value === 'Existing'">
+      <form [formGroup]="requestDetailsForm">
+        <ng-template matStepLabel>Request Details</ng-template>
+
+        <div class="step-form-container">
+          <div class="form-group">
+            <h3>Please provide the name of your existing research folder</h3>
+
+            <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+              <input matInput placeholder="Folder name" formControlName="existingFolderName" type="text">
+              <mat-error *ngIf="requestDetailsForm.controls.existingFolderName.invalid">* Please enter folder name</mat-error>
+            </mat-form-field>
+
+
+          <div class="form-group">
+            <h3>Would you like to: </h3>
+            <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+              <mat-select placeholder="Type of update" formControlName="updateType" multiple>
+                <mat-option *ngFor="let item of updateOptionsList" [value]="item">{{item}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="requestDetailsForm.controls.updateType.invalid">* Please choose at least one item from the list</mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="form-group">
+            <h3>Please provide details of your request</h3>
+            <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+              <textarea matInput placeholder="Request Details" formControlName="requestDetails" type="text"></textarea>
+              <mat-error *ngIf="requestDetailsForm.controls.requestDetails.invalid">* Please provide details of your request</mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="form-group">
+            <h3>Is there anything else you would like to tell us?</h3>
+            <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+              <textarea matInput placeholder="Comments [optional]" formControlName="comments" type="text"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="step-overlay" fxLayout="row" fxLayoutAlign="center center" *ngIf="submitting">
+            <mat-spinner></mat-spinner>
+          </div>
+
+          <div fxLayout="column" fxLayoutAlign="end">
+            <div fxLayout="row" fxLayoutAlign="end">
+              <button mat-raised-button color="accent" (click)="submit(requestTypeForm.controls.requestType.value, requestDetailsForm)" [disabled]="submitting">Request Storage</button>
+            </div>
+          </div>
+
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [editable]="isEditable" [stepControl]="projectForm" *ngIf="requestTypeForm.controls.requestType.value === 'New'">  
+      <form [formGroup]="projectForm" novalidate>
+        <ng-template matStepLabel>General Information</ng-template>
+
+        <div class="step-form-container">
+          <div class="form-group">
+            <h3>Project title</h3>
+            <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+              <input matInput placeholder="Project title" formControlName="title" type="text">
+              <mat-error *ngIf="projectForm.controls.title.invalid">* Please enter a title</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <h3>Brief abstract or summary of the research for this storage</h3>
+            <mat-form-field class="no-floating-label input-full-width" floatLabel="never">
+              <textarea matInput placeholder="Project abstract" formControlName="abstract" type="text"></textarea>
+              <mat-error *ngIf="projectForm.controls.abstract.hasError('required')">* Please enter an abstract</mat-error>
+              <mat-error *ngIf="projectForm.controls.abstract.hasError('minlength')" align="start">* Please enter at least 500 characters</mat-error>
+              <mat-error *ngIf="projectForm.controls.abstract.hasError('minlength')" align="end">{{ projectForm.controls.abstract.value ? projectForm.controls.abstract.value.length : 0  }}/500</mat-error>
+              <mat-hint align="start">Min 500 Characters</mat-hint>
+              <mat-hint align="end">{{ projectForm.controls.abstract.value ? projectForm.controls.abstract.value.length : 0  }}/500</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <h3>Which of the following storage options would you like?</h3>
+            <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+              <mat-select placeholder="Storage options" formControlName="storageOptions" multiple>
+                <mat-option *ngFor="let item of storageOptionsList" [value]="item">{{item}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="projectForm.controls.storageOptions.invalid">* Please choose at least one item from the list</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group">
+            <h3>Estimated project end date</h3>
+            <mat-form-field floatLabel="never" class="no-floating-label" (click)="picker.open()">
+              <input matInput [matDatepicker]="picker" [min]="dateToday" formControlName="endDate" placeholder="Choose a date" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="projectForm.controls.endDate.invalid">* Please choose a date</mat-error>
+            </mat-form-field>
+          </div>
+
+
+          <div class="form-group">
+            <h3>Please choose at least one FOR code from the Australian and New Zealand Standard Research Classification (ANZSRC)</h3>
+            <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+              <mat-select placeholder="Field of research" formControlName="fieldOfResearch" multiple>
+                <mat-option *ngFor="let item of fieldOfResearchCodes" [value]="item">{{item}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="projectForm.controls.fieldOfResearch.invalid">* Please choose at least one item from the list</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="end">
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-raised-button color="accent" matStepperNext>Next</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [editable]="isEditable" [stepControl]="dataInfoForm" *ngIf="requestTypeForm.controls.requestType.value === 'New'">
+      <form [formGroup]="dataInfoForm" novalidate>
+        <ng-template matStepLabel>Data Information</ng-template>
+
+        <div class="step-form-container">
+            <div class="form-group">
+              <h3>To help us store your data appropriately please tick any of the following that apply to the data being stored</h3>
+              <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+                <mat-select placeholder="Data information [optional]" formControlName="dataRequirements" multiple>
+                  <mat-option *ngFor="let item of dataRequirements" [value]="item">{{item}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="dataInfoForm.controls.dataRequirements.invalid">* Please choose at least one item from the list</mat-error>
+              </mat-form-field>
+              <mat-form-field style="margin-top: 1em;" *ngIf="showOtherField" floatLabel="never" class="no-floating-label input-full-width">
+                <input matInput placeholder="Other" formControlName="dataRequirementsOther">
+                <mat-error *ngIf="dataInfoForm.controls.dataRequirementsOther.invalid">* Please enter a name for other</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group">
+              <h3>Please provide a descriptive name for your storage folder (e.g. GDC-data)?</h3>
+              <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+                <input matInput placeholder="Short name" formControlName="shortName" type="text">
+                <mat-hint align="start">Avoid generic names like <i>my-project</i> or <i>my-data</i></mat-hint>
+                <mat-error *ngIf="dataInfoForm.controls.shortName.invalid">* Please enter a short name</mat-error>
+              </mat-form-field>
+            </div>
+
+          <div class="form-group">
+            <h3>Please provide a list of people who require access</h3>
+            <div class="flex-hack" fxLayout="column" formArrayName="projectMembers">
+              <div fxLayout="row" fxLayoutAlign="start center" class="flex-hack data-person-row" fxLayoutGap="1.5em" *ngFor="let member of projectMembers.controls; let i = index">
+                <div class="flex-hack" style="width: 100%; max-width: calc(100% - 50px);" fxFlex="100" fxLayout="column" fxLayoutGap="1em" [formGroupName]="i">
+                  <div fxFlex="100" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em" class="flex-hack data-person-row-inner">
+                    <mat-form-field fxFlex="grow" floatLabel="never" class="no-floating-label">
+                      <input matInput placeholder="First name" formControlName="firstName" autocapitalize=words>
+                      <mat-error *ngIf="member.controls.firstName.invalid">* Please enter a first name</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="grow" floatLabel="never" class="no-floating-label">
+                      <input matInput placeholder="Last name" formControlName="lastName" autocapitalize=words>
+                      <mat-error *ngIf="member.controls.lastName.invalid">* Please enter a last name</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="grow" floatLabel="never" class="no-floating-label">
+                      <input matInput placeholder="Email" formControlName="email" type="email">
+                      <mat-error *ngIf="member.controls.email.invalid">* Please enter an email</mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div fxFlex="100" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em" class="flex-hack data-person-row-inner">
+                    <mat-form-field fxFlex="grow" floatLabel="never" class="no-floating-label">
+                      <input matInput placeholder="Username" formControlName="username" autocapitalize=off>
+                      <mat-error *ngIf="member.controls.username.invalid">* Please enter a username</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="grow" floatLabel="never" class="no-floating-label">
+                      <mat-select placeholder="Access" formControlName="access">
+                        <mat-option *ngFor="let item of access;" [value]="item">{{item}}</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="member.controls.access.invalid">* Please choose an option</mat-error>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="grow" floatLabel="never" class="no-floating-label">
+                      <mat-select placeholder="Role" formControlName="roles" multiple>
+                        <mat-option *ngFor="let item of roleTypes;" [value]="item">{{item}}</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="member.controls.roles.invalid">* Please choose a role</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div fxFlex="40px">
+                  <button mat-icon-button (click)="deletePerson(i)" style="color: #757575;"><mat-icon>delete</mat-icon></button>
+                </div>
+              </div>
+              <mat-error *ngIf="dataInfoForm.controls.projectMembers.hasError('required')">* Please add at least 1 person</mat-error>
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <button mat-button color="primary" (click)="addNewPerson()">Add Person</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 3em;" fxLayout="column" fxLayoutAlign="end">
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-raised-button color="accent" matStepperNext>Next</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [editable]="isEditable" [stepControl]="dataSizeForm" *ngIf="requestTypeForm.controls.requestType.value === 'New'">
+      <form [formGroup]="dataSizeForm" novalidate>
+        <ng-template matStepLabel>Data Size</ng-template>
+
+        <div class="step-form-container">
+          <div class="form-group">
+            <h3>Estimate how much total storage you need in the next 12 months</h3>
+            <div fxLayout="row" fxLayoutGap="1em" fxLayout.xs="column">
+              <mat-form-field fxFlex="50">
+                <input matInput placeholder="Amount" formControlName="sizeThisYear" type="number" min="1">
+                <mat-error *ngIf="dataSizeForm.controls.sizeThisYear.invalid">* Please enter a value above 0</mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="50">
+                <mat-select formControlName="unitThisYear">
+                  <mat-option *ngFor="let unit of units" [value]="unit">
+                    {{unit}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="dataSizeForm.controls.unitThisYear.invalid">* Please choose an option</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group" *ngIf="showSizeNextYear">
+            <h3>Estimate how much total storage you need for the entire project duration</h3>
+            <div fxLayout="row" fxLayoutGap="1em" fxLayout.xs="column">
+              <mat-form-field fxFlex="50">
+                <input matInput placeholder="Amount" formControlName="sizeNextYear" type="number" min="1">
+                <mat-error *ngIf="dataSizeForm.controls.sizeNextYear.invalid">* Please enter a value above 0</mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="50">
+                <mat-select placeholder="Unit" formControlName="unitNextYear">
+                  <mat-option *ngFor="let unit of units" [value]="unit">
+                    {{unit}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="dataSizeForm.controls.unitNextYear.invalid">* Please choose an option</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h3>Is there anything else you would like to tell us?</h3>
+            <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
+              <textarea matInput placeholder="Comments [optional]" formControlName="comments" type="text"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="step-overlay" fxLayout="row" fxLayoutAlign="center center" *ngIf="submitting">
+            <mat-spinner></mat-spinner>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="end">
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-raised-button color="accent" (click)="submit(requestTypeForm.controls.requestType.value, dataSizeForm)" [disabled]="submitting">Request Storage</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [editable]="isEditable">
+      <ng-template matStepLabel>Done</ng-template>
+      <div class="step-form-container">
+        <h3>Request submitted</h3>
+        <p>Your storage request has been submitted and an acknowledgement e-mail sent to <a *ngIf="authService.user" [href]="'mailto:' + authService.user.mail" target="_blank">{{authService.user.mail}}</a>.</p>
+        <p>You may view your request here: <a *ngIf="response" [href]="response.ticketUrl"  target="_blank">{{response.ticketNumber}}</a></p>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="end">
+        <div fxLayout="row" fxLayoutAlign="end">
+          <button mat-raised-button color="accent" [routerLink]="['/content', 49]">Back to Research Storage</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>

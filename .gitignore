@@ -1,0 +1,37 @@
+# ======================== General ==================== #
+node_modules/
+tmp/
+.npm
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# ==================== research-hub-web ================ #
+research-hub-web/dist/
+research-hub-web/documentation/
+
+# Custom environment file - use it in special local development situations
+research-hub-web/src/environments/environment.custom.ts
+
+# Misc
+research-hub-web/.sass-cache
+research-hub-web/connect.lock
+research-hub-web/coverage
+research-hub-web/libpeerconnection.log
+research-hub-web/npm-debug.log
+research-hub-web/testem.log
+research-hub-web/typings
+
+# ====================== cer-graphql =================== #
+
+
+
+# ====================== serverless-now ================ #
+serverless-now/.serverless/
+

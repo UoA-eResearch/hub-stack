@@ -1,0 +1,74 @@
+@import '../../../styles';
+
+.content-header {
+  padding: $offset-gt-xs;
+  background-color: $color-content-header;
+}
+
+.content-header-xs {
+  @extend .content-header;
+  padding: $offset-xs $offset-xs 1.2em $offset-xs;
+}
+
+.content-header > div:nth-child(1) > h2 {
+  color:white;
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.content-header div:nth-child(1) > h3 {
+  color:white;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.content-cover-image {
+  height: 200px;
+  width: 100%;
+  background-size: cover;
+  background: no-repeat center;
+  padding: 1em;
+}
+
+.content {
+  max-width: 600px;
+  margin: 2em;
+}
+
+.content-xs {
+  @extend .content;
+  margin: 0.5em 1.5em 1em 1.5em;
+}
+
+
+.divider {
+  height: 1px;
+  overflow: hidden;
+  background-color: #e0e0e0;
+  margin-top: 1.4em;
+  margin-bottom: 1.6em;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 2em;
+}
+
+.content-xs {
+  @extend .content;
+  margin: 0.5em 1.5em 1em 1.5em;
+}
+
+.content-overview {
+  padding-right: 2em;
+}
+
+.content-overview-xs {
+  @extend .content-overview;
+  padding-right: 0;
+  margin-bottom: 1em;
+}
+
+.content-overview-xs {
+  @extend .content-overview;
+}

@@ -1,0 +1,27 @@
+.category-list .mat-chip {
+  cursor: pointer;
+  color: #004059;
+  margin: 0.15em 0px !important; // !important required to override a rule with selectors that have pseudoclasses
+  margin-right: 8px !important;
+  outline: 0;
+  padding: 8.5px 12px;
+  outline: none;
+}
+
+.category-list .mat-chip-selected {
+  color: white;
+}
+
+// Category list that is displayed when the filter-panel is hidden
+.category-list.compact {
+  mat-chip {
+    font-size: 14px;
+    line-height: 26px;
+    height: 25px;
+  
+    &.mat-standard-chip { // Fixes predefined material CSS causing oversized chips
+      min-height: 100%;
+    }
+  }
+}
+

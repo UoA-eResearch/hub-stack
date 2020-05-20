@@ -1,0 +1,218 @@
+@import '../../../styles';
+
+.flex-hack {
+  flex: 1 1 auto !important;
+  width: 100%; // For IE 11
+}
+
+.component {
+  @extend .flex-hack;
+}
+
+.component-xs {
+  @extend .component;
+}
+
+.mat-button.mat-small {
+  min-width: 1%;
+}
+
+.content-header {
+  padding: $offset-gt-xs;
+  background-color: $color-content-header;
+}
+
+.content-header-xs {
+  @extend .content-header;
+  padding: $offset-xs $offset-xs 1.2em $offset-xs;
+}
+
+.content-header > div:nth-child(1) > h2 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+
+.content-header div:nth-child(1) > h3 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.content-cover-image {
+  height: 200px;
+  width: 100%;
+  background-size: cover;
+  background: no-repeat center;
+  padding: 1em;
+}
+
+.content-overview {
+  padding-right: 2em;
+}
+
+.content-overview-xs {
+  @extend .content-overview;
+  padding-right: 0;
+  margin-bottom: 1em;
+}
+
+.content-overview-xs {
+  @extend .content-overview;
+}
+
+.mat-standard-chip {
+  height: auto !important; // Fixes predefined material CSS causing issue with multiline chips
+  border-radius: 24px;
+  line-height: 18px !important;
+}
+
+.contact-chip {
+  margin: 0.25em !important;
+  cursor: pointer !important;
+}
+
+.org-unit-chip {
+  margin: 0.25em !important;
+  cursor: pointer !important;
+}
+
+.policy-url {
+  display: block;
+  margin: 0.5em;
+  width: 100%;
+}
+
+.divider {
+  height: 1px;
+  overflow: hidden;
+  background-color: #e0e0e0;
+  margin-top: 1.4em;
+  margin-bottom: 1.6em;
+}
+
+.divider-app-markdown {
+  @extend .divider;
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+}
+
+.browse-tile {
+  @extend .browse-tile;
+  background-color: $color-guide-tile-bg !important;
+}
+
+// CSS for custom content pages
+/deep/ .impact {
+  mat-card:first-child {
+
+    // Common to all screen sizes
+    app-markdown div {
+      display: flex;
+      justify-content: space-between;
+      
+      p:first-of-type {
+        text-align: justify;
+      }
+
+      .youtube-embedded {
+        box-shadow: 0 0 13px 0 #ccc;
+      }
+   }
+
+    // Small screens
+    @media all and (max-width: 976px) {
+      app-markdown div {
+        flex-flow: column nowrap;
+        height: 100%;
+      }
+
+      p:first-of-type {
+        flex: 1 1 auto;
+      }
+
+      p:nth-of-type(2) {
+        flex: 1 1 auto;
+        width: 100%;
+        height: 100%;
+
+        .youtube-embedded {
+          max-width: 100%;
+          width: 100%;
+          height: 270px;
+          max-height: 270px;
+          max-width: 480px;
+        }
+      }
+    }
+
+    // Large screens
+    @media all and (min-width: 976px) {
+      app-markdown div {
+        flex-flow: row nowrap;
+      }
+      
+      p:first-of-type {
+        flex: 1 1 auto;
+        padding-right: 40px;
+      }
+
+      p:nth-of-type(2) {
+        width: 480px;
+        height: 270px;
+        flex: 1 0 auto;
+
+        .youtube-embedded {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  mat-card:last-child {
+    app-markdown div {
+      display: grid;
+
+      h3:not(:first-child) {
+        margin-top: 0px !important;
+      }
+
+      // Small screens
+      @media all and (max-width: 976px) {
+        grid-template-cols: 1fr;
+
+        .youtube-embedded {
+          width: 100%;
+          height: 270px;
+          max-height: 270px;
+          max-width: 480px;
+        }
+      }
+
+      // Large Screens
+      @media all and (min-width: 976px) {
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 0 15px;
+        
+        // Rearrange markdown content for the grid layout
+        :nth-child(1) { order: 0; grid-column: 1 / span 2;}
+        :nth-child(2) { order: 1; }
+        :nth-child(3) { order: 3; }
+        :nth-child(4) { order: 5; }
+        :nth-child(5) { order: 2; }
+        :nth-child(6) { order: 4; }
+        :nth-child(7) { order: 6; }
+
+        .youtube-embedded {
+          width: 100%;
+          height: 252px;
+          max-height: 252px;
+          max-width: 450px;
+          box-shadow: 0 0 13px 0 #ccc;
+        }
+      }
+
+    }
+  }
+}

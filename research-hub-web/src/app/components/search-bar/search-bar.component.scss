@@ -1,0 +1,25 @@
+@import "../../../styles";
+
+$mat-select-width: 200px;
+$mat-select-flex: 1;
+$search-flex: 4;
+
+.search-bar-outer {
+  background-color: $color-browse-tile-bg;
+  padding: 2em;
+}
+
+.search-bar-outer-xs {
+  @extend .search-bar-outer;
+  padding: 1em;
+}
+
+.search-bar-inner {
+  background-color: white;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+.search-bar-inner mat-form-field {
+  min-width: 0 !important;
+}

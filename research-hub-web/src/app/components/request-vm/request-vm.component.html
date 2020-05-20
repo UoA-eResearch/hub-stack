@@ -1,0 +1,79 @@
+<mat-card>
+  <mat-card-header class="request-card-header">
+    <img mat-card-avatar [src]="apiService.getAssetUrl(image)">
+    <h1>{{title}}</h1>
+  </mat-card-header>
+
+  <p style="padding-left: 24px;">In order to request a virtual machine, please book a consultation with us to discuss details like the desired operating system, software, memory, storage and processing power. A consultation typically takes 30 minutes. No preparation on your side is necessary. If you have any questions please put them into the comments field.</p>
+
+  <div #resultsDummyHeader style="margin-top: 3em;"></div>
+  <mat-horizontal-stepper #stepper linear>
+    <mat-step editable="false" [stepControl]="requestVmForm">
+
+      <form [formGroup]="requestVmForm" novalidate>
+        <ng-template matStepLabel>Details</ng-template>
+
+        <div class="step-form-container">
+
+          <div class="form-group">
+            <h3>When would you like the consultation to take place?</h3>
+
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutGap.gt-xs="1em">
+              <mat-form-field (click)="picker.open()">
+                <input matInput [matDatepickerFilter]="excludeWeekendsFilter" [matDatepicker]="picker" [min]="dateToday" formControlName="date" placeholder="Choose a date" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="dateCtrl.invalid">* Please choose a date</mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select placeholder="Time" formControlName="time">
+                  <mat-option *ngFor="let time of times" [value]="time">
+                    {{time}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="timeCtrl.invalid">* Please choose a time</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <h3>Location</h3>
+            <p>Our office is at 23 Symonds Street, Building 302, Floor 5, Room 585. We will contact you to confirm the time and arrange the location.</p>
+          </div>
+
+          <div class="form-group">
+            <h3>Comments?</h3>
+            <mat-form-field class="input-full-width">
+              <textarea matInput placeholder="Comments [optional]" formControlName="comments"></textarea>
+            </mat-form-field>
+          </div>
+
+          <div class="step-overlay" fxLayout="row" fxLayoutAlign="center center" *ngIf="submitting">
+              <mat-spinner></mat-spinner>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="end">
+          <div fxLayout="row" fxLayoutAlign="end">
+            <button mat-raised-button color="accent" (click)="submit()" [disabled]="submitting">Book Consultation</button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step editable="false">
+      <ng-template matStepLabel>Done</ng-template>
+      <div class="step-form-container">
+        <h3>Request submitted</h3>
+        <p>Your virtual machine consultation request has been submitted and an acknowledgement e-mail sent to <a *ngIf="authService.user" [href]="'mailto:' + authService.user.mail" target="_blank">{{authService.user.mail}}</a>.</p>
+        <p>We will contact you to confirm the time and arrange the location.</p>
+        <p>You may view your request here: <a *ngIf="response" [href]="response.ticketUrl"  target="_blank">{{response.ticketNumber}}</a></p>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="end">
+        <div fxLayout="row" fxLayoutAlign="end">
+          <button mat-raised-button color="accent" [routerLink]="['/content', 1]">Back to Research Virtual Machines</button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-card>

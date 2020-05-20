@@ -1,0 +1,7 @@
+.filters-form {
+    .mat-standard-chip {
+        height: auto !important; // Fixes predefined material CSS causing issue with multiline chips
+        border-radius: 24px;
+        line-height: 18px !important;
+    }
+}

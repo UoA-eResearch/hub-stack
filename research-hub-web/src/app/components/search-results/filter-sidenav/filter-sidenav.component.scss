@@ -1,0 +1,25 @@
+@import '../../../../styles';
+
+.filter-sidenav-content,.filter-header {
+  padding-left:32px;
+  padding-right:32px;
+}
+
+.close-button {
+  padding-right:19px;
+  padding-top:17px;
+  color: #b3b3b3;
+  :hover {
+    color: $color-icon;
+  }
+}
+
+
+.filter-header {
+  background-color: inherit;
+  padding-top:6px; // Make it align with the search bar
+}
+
+.filter-footer {
+  padding-bottom: 32px;
+}

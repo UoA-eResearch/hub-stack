@@ -1,0 +1,11 @@
+.ra-slide-container {
+  $ra-slide-container-margin: 3px;
+  $ra-slide-container-margin-touch: 1em;
+
+  margin: $ra-slide-container-margin;
+
+  &.mobile-view {
+    margin: $ra-slide-container-margin-touch;
+  }
+
+}

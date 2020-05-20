@@ -1,0 +1,35 @@
+<form *ngIf="filtersForm" [formGroup]="filtersForm" fxLayout="column" fxLayoutGap="2.5em" fxLayoutGap.xs="1em" class="filters-form">
+  <div fxFlex="noshrink">
+    <app-research-activity-input style="display: block;"
+                                 formControlName="researchActivityIds"
+                                 [touchFriendly]="compact"></app-research-activity-input>
+
+  </div>
+
+  <div *ngIf="!compact">
+  <span style="color: rgba(0,0,0,0.54);padding-bottom:0.5em;display: block;">Check out a different category</span>
+  <category-list [selectedCategory]="filtersForm.controls.categoryId.value"
+                 (selectedCategoryChange)="setCategory($event)">
+  </category-list>
+  </div>
+
+  <div fxFlex="noshrink">
+    <div *ngIf="compact" style="margin-bottom: 1em;">
+      <mat-form-field fxFlex="100" style="margin-top: 1em !important;">
+        <mat-select formControlName="categoryId" placeholder="Category">
+          <mat-option *ngFor="let category of optionsService.categoryOptions" [value]="category.id" (click)="analyticsService.trackUserExperience('Filter panel', 'filter by category')">
+            {{category.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxLayoutGap="1em">
+      <app-mat-tags [placeholder]="'Refine by person&#8230;'"
+                    [addNew]="false" [source]="personTagSource" formControlName="personTags"></app-mat-tags>
+      <app-mat-tags [placeholder]="'Refine by organisation unit&#8230;'"
+                    [addNew]="false" [source]="orgUnitTagSource" formControlName="orgUnitTags"></app-mat-tags>
+    </div>
+  </div>
+
+</form>

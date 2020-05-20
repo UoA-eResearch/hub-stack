@@ -1,0 +1,27 @@
+{
+  "name": "serverless-now",
+  "version": "1.0.0",
+  "description": "Serverless Framework Lambda functions to interact with the UoA ServiceNow.",
+  "main": "handler.js",
+  "scripts": {
+    "start": "sls offline",
+    "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/sls offline",
+    "test": "sls invoke test",
+    "testw": "nodemon --watch . --exec 'sls invoke test || true'",
+    "deploy": "npm run test && sls deploy"
+  },
+  "keywords": [
+    "Lambda",
+    "ServiceNow",
+    "Serverless",
+    "Framework"
+  ],
+  "author": "Sam Kavanagh (tofu.dev)",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.3",
+    "serverless": "^1.68.0",
+    "serverless-offline": "^6.1.4",
+    "serverless-mocha-plugin": "^1.12.0"
+  }
+}

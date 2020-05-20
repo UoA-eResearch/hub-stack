@@ -1,0 +1,12 @@
+<div *ngIf="isVisible" class="header" [ngStyle]="getBackgroundStyle(imageUrl)">
+  <div class="header-padding" ngClass.xs="header-padding-xs">
+    <div>
+      <div class="info" ngClass.xs="info-xs" fxFlex="475px" fxFlex.xs="100" [ngStyle.gt-xs]="getInfoStyle(imageUrl)">
+        <h1 *ngIf="title">{{title}}</h1>
+        <div *ngIf="description" class="header-description">
+          <p>{{description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
