@@ -81,7 +81,8 @@ pipeline {
                         changeset "**/cer-graphql/*.*"
                     }
                     steps {
-                        echo 'Deploying cer-graphql to Fargate on ' + BRANCH_NAME
+                        echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
+                        echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
                     }
                 }
                 stage('Deploy serverless-now') {
