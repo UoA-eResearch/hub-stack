@@ -73,7 +73,7 @@ pipeline {
                         changeset "**/research-hub-web/*.*"
                     }
                     steps {
-                        echo 'Deploying research-hub-web to S3'
+                        echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
                     }
                 }
                 stage('Deploy cer-graphql') {
@@ -81,7 +81,7 @@ pipeline {
                         changeset "**/cer-graphql/*.*"
                     }
                     steps {
-                        echo 'Deploying cer-graphql to Fargate'
+                        echo 'Deploying cer-graphql to Fargate on ' + BRANCH_NAME
                     }
                 }
                 stage('Deploy serverless-now') {
@@ -89,7 +89,7 @@ pipeline {
                         changeset "**/serverless-now/*.*"
                     }
                     steps {
-                        echo 'Deploying serverless-now Lambda function'
+                        echo 'Deploying serverless-now Lambda function to ' + BRANCH_NAME
                     }
                 }
             }
@@ -98,7 +98,7 @@ pipeline {
     
     post {
         success {
-            echo 'Jenkins job ran successfully'
+            echo 'Jenkins job ran successfully. Deployed to ' + BRANCH_NAME
         }
         failure {
             echo 'Jenkins job failed :('
