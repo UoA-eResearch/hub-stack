@@ -21,6 +21,7 @@ provider:
     LEVEL: INFO
     EXAMPLE_KEY: ${ssm:/${self:provider.stage}/research-hub/example-key~true}
     SN_API_KEY_R: ${ssm:/${self:provider.stage}/research-hub/SN_API_KEY_R~true}
+    COGNITO_DOMAIN: "uoapool-sandbox.auth.ap-southeast-2.amazoncognito.com"
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -55,3 +56,6 @@ functions:
 plugins:
   - serverless-offline
   - serverless-mocha-plugin
+
+include:
+  - node_modules/**
