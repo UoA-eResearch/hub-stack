@@ -1,4 +1,4 @@
-service: serverless-now
+service: serverless-now-warrick
 
 provider:
   name: aws
