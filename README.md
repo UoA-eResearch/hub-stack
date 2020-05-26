@@ -15,3 +15,6 @@ A [Serverless Framework](https://www.serverless.com/) ([AWS Lambda](https://aws.
 
 ## Deployment (TODO)
 CI/CD is achieved via the monorepo's [Jenkinsfile](Jenkinsfile) which is triggered when code is pushed to one of 3 Git branches corresponding the 3 [UoA AWS environments](http://aws.auckland.ac.nz/) (`sandbox`, `nonprod`, `prod`). 
+
+## Architecture Overview
+![Architecture Overview](Architecture.png)
