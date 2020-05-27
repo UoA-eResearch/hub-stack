@@ -23,7 +23,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @Output() categoryChange = new EventEmitter();
   @Output() categoriesChange = new EventEmitter();
   @Output() focusOnInitChange = new EventEmitter();
-  @ViewChild('searchTextInput', { read: MatInput, static: false }) searchTextInput: MatInput;
+  @ViewChild('searchTextInput', { read: MatInput }) searchTextInput: MatInput;
 
   private searchBarVisibilityChangeSub: Subscription;
   private searchCategoryChangeSub: Subscription;
