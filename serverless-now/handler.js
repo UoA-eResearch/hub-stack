@@ -13,14 +13,14 @@ module.exports.main = async event => {
       console.log('User not found.')
     } else {
       // personId = data['custom:EmpID'];
-      console.log('User data: ');
+      console.log('User data:');
       console.log(data);
       return {
         statusCode: 200,
         headers: {
           "Access-Control-Allow-Origin": "*"
         },
-        body: data
+        body: JSON.stringify(data)
       }
     }
   } catch (e) {
