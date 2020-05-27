@@ -39,8 +39,8 @@ interface Person {
 export class RequestStorageComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   private requestFormKey = 'requestStorageForm';
 
-  @ViewChild('resultsDummyHeader') private resultsDummyHeader: ElementRef;
-  @ViewChild('stepper') stepper: MatHorizontalStepper;
+  @ViewChild('resultsDummyHeader', { static: true }) private resultsDummyHeader: ElementRef;
+  @ViewChild('stepper', { static: true }) stepper: MatHorizontalStepper;
   public dateToday = new Date();
   public submitting = false;
   private routeParamsSub: Subscription;

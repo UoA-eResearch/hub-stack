@@ -73,13 +73,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
   public isContentSidenavFixed = false;
   public contentSidenavHeight = 0;
 
-  @ViewChild('topbar')
+  @ViewChild('topbar', { static: true })
   private topbarElement : ElementRef;
 
-  @ViewChild('topContent')
+  @ViewChild('topContent', { static: true })
   private topContentElement : ElementRef;
 
-  @ViewChild('content')
+  @ViewChild('content', { static: true })
   private contentElement : ElementRef;
   private contentElementHeight : number;
 
