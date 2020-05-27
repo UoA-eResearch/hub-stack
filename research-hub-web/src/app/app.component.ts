@@ -17,7 +17,7 @@ import * as format from 'date-fns/format';
 import {HeaderService} from './components/header/header.service';
 import {Location} from '@angular/common';
 import {AppComponentService} from './app.component.service';
-import {Title} from "@angular/platform-browser";
+import {Title} from '@angular/platform-browser';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import {
   trigger,
@@ -33,12 +33,12 @@ import {
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: [
-    trigger('contentPushLeft',[
-      state('true',style({
-        marginLeft:'400px'
+    trigger('contentPushLeft', [
+      state('true', style({
+        marginLeft: '400px'
       })),
-      state('false',style({
-        marginLeft:'0'
+      state('false', style({
+        marginLeft: '0'
       })),
       transition('false => true', animate('500ms  cubic-bezier(.63,.66,.47,.9)')),
       transition('true => false', animate('300ms ease-out'))
@@ -229,7 +229,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     }
       // We calculate the height of the affixed content sidenav so that the sidenav does not
       // overlap with the footer.
-    newSidenavHeight = Math.min(contentHeight - winY,winHeight);
+    newSidenavHeight = Math.min(contentHeight - winY, winHeight);
 
     if ((newFixedValue === false) || (newFixedValue === undefined && !this.isContentSidenavFixed)){
       // If the sidenav is not yet fixed - i.e. some of the topbar is still visible,
@@ -237,14 +237,14 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
       newSidenavHeight -= topbarBottom;
     }
     this.ngZone.runGuarded(() => {
-      setTimeout(()=>{
+      setTimeout(() => {
         if (newFixedValue !== undefined){
           this.isContentSidenavFixed = newFixedValue;
         }
         if (newSidenavHeight !== undefined){
           this.contentSidenavHeight = newSidenavHeight;
         }
-      },0);
+      }, 0);
     });
   }
 
@@ -262,7 +262,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     });
     const restyleFn = () => (this.restyleContentSidenav());
     this.scrollSub = this.scrollDispatcher.scrolled(150).subscribe(restyleFn);
-    this.winResizeSub = fromEvent(window,'resize').pipe(debounceTime(150)).subscribe(restyleFn);
+    this.winResizeSub = fromEvent(window, 'resize').pipe(debounceTime(150)).subscribe(restyleFn);
     this.contentElementHeight = this.contentElement.nativeElement.clientHeight;
   }
 
@@ -276,9 +276,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
     if (contentHeight !== this.contentElementHeight){
       // Recompute content sidenav size when the content has changed.
       this.restyleContentSidenav();
-      setTimeout(()=> {
+      setTimeout(() => {
         this.contentElementHeight = contentHeight;
-      },0);
+      }, 0);
     }
   }
 
