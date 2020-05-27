@@ -24,7 +24,7 @@
   margin-bottom: 1.5em;
 }
 
-mat-horizontal-stepper /deep/ div.mat-horizontal-stepper-header-container>:last-child {
+mat-horizontal-stepper ::ng-deep div.mat-horizontal-stepper-header-container>:last-child {
   pointer-events: none !important;
 }
 

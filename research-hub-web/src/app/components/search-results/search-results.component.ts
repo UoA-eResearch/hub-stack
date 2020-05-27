@@ -41,8 +41,8 @@ const FILTER_VIEW_BREAKPOINT = "md";
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
 
-  @ViewChild('paginator') paginator: MatPaginator;
-  @ViewChild('resultsDummyHeader') private resultsDummyHeader: ElementRef;
+  @ViewChild('paginator', { static: true }) paginator: MatPaginator;
+  @ViewChild('resultsDummyHeader', { static: true }) private resultsDummyHeader: ElementRef;
 
   public filtersForm: FormGroup;
   public resultsPage: Page<ListItem>;

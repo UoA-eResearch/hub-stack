@@ -30,8 +30,8 @@ export class RequestVmComponent implements OnInit, OnDestroy, CanComponentDeacti
 
   private static requestVmFormKey = 'requestVmForm';
 
-  @ViewChild('resultsDummyHeader') private resultsDummyHeader: ElementRef;
-  @ViewChild('stepper') stepper: MatHorizontalStepper;
+  @ViewChild('resultsDummyHeader', { static: true }) private resultsDummyHeader: ElementRef;
+  @ViewChild('stepper', { static: true }) stepper: MatHorizontalStepper;
   public requestVmForm: FormGroup;
   public times = [];
   public dateToday = new Date();
