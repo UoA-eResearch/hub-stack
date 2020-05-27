@@ -4,7 +4,7 @@ import { AuthGuard, LoginSuccessGuard } from 'uoa-auth-angular';
 
 
 export const appRoutes: Routes = [
-  { path: 'home', loadChildren: () => import('app/components/home/home.module').then(m => m.HomeModule) },
+  { path: 'home', loadChildren: () => import('app/components/home/home.module').then(m => m.HomeModule), canActivate: [LoginSuccessGuard] },
   { path: 'search', loadChildren: () => import('app/components/search-results/search-results.module').then(m => m.SearchResultsModule) },
 
   { path: 'feedback', loadChildren: () => import('app/components/feedback/feedback.module').then(m => m.FeedbackModule) },
@@ -30,8 +30,8 @@ export const appRoutes: Routes = [
   { path: 'guideCategory/:guideCategoryId', loadChildren: () => import('app/components/guide-category/guide-category.module').then(m => m.GuideCategoryModule) },
 
   { path: 'requestVm', loadChildren: () => import('app/components/request-vm/request-vm.module').then(m => m.RequestVmModule), canActivate: [CanActivateViaAuthGuard] },
-  // {path: 'requestStorage', loadChildren: 'app/components/request-storage/request-storage.module#RequestStorageModule', canActivate: [CanActivateViaAuthGuard]},
-  { path: 'requestStorage', loadChildren: () => import('app/components/request-storage/request-storage.module').then(m => m.RequestStorageModule), canActivate: [AuthGuard] },
+  // { path: 'requestStorage', loadChildren: 'app/components/request-storage/request-storage.module#RequestStorageModule', canActivate: [CanActivateViaAuthGuard] },
+  { path: 'requestStorage', loadChildren: () => import('app/components/request-storage/request-storage.module').then(m => m.RequestStorageModule), canActivate: [CanActivateViaAuthGuard] },
 
   /**
    * Custom Route Handlers:
@@ -44,7 +44,6 @@ export const appRoutes: Routes = [
     loadChildren: () => import('app/components/content-details/content-details.module').then(m => m.ContentDetailsModule),
     data: { contentId: 73 }
   },
-
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '/home', pathMatch: 'full' }
 ];
