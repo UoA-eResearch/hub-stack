@@ -41,6 +41,7 @@ package:
     - .vscode/*
     - events/*
     - node_modules/**
+    - '!node_modules/@uoa/**'
 
 functions:
   serverless-now:
@@ -49,13 +50,19 @@ functions:
       - http:
           path: serverless-now
           method: get
+          cors: true
+          authorizer:
+            name: warrick-serverless-auth
+            type: cognito_user_pools
+            arn: arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O
+            identitySource: method.request.header.Authorization
+            scopes: 
+              - openid
+              - profile
+              - https://test-domain.auckland.ac.nz/lambda-hello-world
       - http:
           path: serverless-now
           method: post
-
 plugins:
   - serverless-offline
   - serverless-mocha-plugin
-
-include:
-  - node_modules/**

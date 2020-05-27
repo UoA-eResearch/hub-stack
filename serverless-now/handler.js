@@ -15,6 +15,13 @@ module.exports.main = async event => {
       // personId = data['custom:EmpID'];
       console.log('User data: ');
       console.log(data);
+      return {
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*"
+        },
+        body: data
+      }
     }
   } catch (e) {
     // return buildResponse(500, { 'message': 'Error getting user' });
@@ -50,6 +57,9 @@ module.exports.main = async event => {
   // Default '/' page
   return {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*"
+    },
     body: JSON.stringify({
       message: 'Welcome to serverless-now',
       aws_message: process.env.EXAMPLE_KEY
