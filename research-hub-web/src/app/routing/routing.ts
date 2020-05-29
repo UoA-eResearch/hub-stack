@@ -31,7 +31,7 @@ export const appRoutes: Routes = [
 
   { path: 'requestVm', loadChildren: () => import('app/components/request-vm/request-vm.module').then(m => m.RequestVmModule), canActivate: [CanActivateViaAuthGuard] },
   // { path: 'requestStorage', loadChildren: 'app/components/request-storage/request-storage.module#RequestStorageModule', canActivate: [CanActivateViaAuthGuard] },
-  { path: 'requestStorage', loadChildren: () => import('app/components/request-storage/request-storage.module').then(m => m.RequestStorageModule), canActivate: [CanActivateViaAuthGuard] },
+  { path: 'requestStorage', loadChildren: () => import('app/components/request-storage/request-storage.module').then(m => m.RequestStorageModule), canActivate: [AuthGuard] },
 
   /**
    * Custom Route Handlers:
