@@ -1,24 +1,23 @@
 
-import {map, first} from 'rxjs/operators';
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {DateAdapter, NativeDateAdapter} from '@angular/material/core';
-import {CerApiService} from 'app/services/cer-api.service';
-import {AuthService} from '../../services/auth.service';
-import {MatHorizontalStepper} from '@angular/material/stepper';
-import {AppComponentService} from '../../app.component.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Location} from '@angular/common';
-import {MatDialog} from '@angular/material/dialog';
-import {ErrorDialogComponent} from '../shared/error-dialog/error-dialog.component';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {AnalyticsService} from '../../services/analytics.service';
-import * as format from 'date-fns/format';
-import * as subYears from 'date-fns/sub_years';
-import {ConfirmDialogComponent} from '../shared/confirm-dialog/confirm-dialog.component';
-import {CanComponentDeactivate} from '../../routing/routing.confirm-deactivate';
-import {ResearchHubApiService} from '../../services/research-hub-api.service';
+import { map, first } from 'rxjs/operators';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
+import { CerApiService } from 'app/services/cer-api.service';
+import { AuthService } from '../../services/auth.service';
+import { MatHorizontalStepper } from '@angular/material/stepper';
+import { AppComponentService } from '../../app.component.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../shared/error-dialog/error-dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AnalyticsService } from '../../services/analytics.service';
+import { format, subYears } from 'date-fns';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
+import { CanComponentDeactivate } from '../../routing/routing.confirm-deactivate';
+import { ResearchHubApiService } from '../../services/research-hub-api.service';
 
 
 interface Person {
@@ -129,10 +128,10 @@ export class RequestStorageComponent implements OnInit, OnDestroy, CanComponentD
   ];
 
   constructor(private formBuilder: FormBuilder, dateAdapter: DateAdapter<NativeDateAdapter>,
-              private cerApiService: CerApiService, public apiService: ResearchHubApiService,
-              public authService: AuthService, private appComponentService: AppComponentService,
-              public dialog: MatDialog, private location: Location, private route: ActivatedRoute,
-              private analyticsService: AnalyticsService, private el: ElementRef) {
+    private cerApiService: CerApiService, public apiService: ResearchHubApiService,
+    public authService: AuthService, private appComponentService: AppComponentService,
+    public dialog: MatDialog, private location: Location, private route: ActivatedRoute,
+    private analyticsService: AnalyticsService, private el: ElementRef) {
     dateAdapter.setLocale('en-GB');
   }
 
@@ -350,18 +349,18 @@ export class RequestStorageComponent implements OnInit, OnDestroy, CanComponentD
       let body;
 
       if (requestType === 'New') {
-        body =  Object.assign({},
-                this.requestTypeForm.getRawValue(),
-                this.projectForm.getRawValue(),
-                this.dataInfoForm.getRawValue(),
-                this.dataSizeForm.getRawValue());
+        body = Object.assign({},
+          this.requestTypeForm.getRawValue(),
+          this.projectForm.getRawValue(),
+          this.dataInfoForm.getRawValue(),
+          this.dataSizeForm.getRawValue());
 
         // Convert endDate into string
-        body.endDate = format(body.endDate, 'YYYY-MM-DD');
+        body.endDate = format(body.endDate, 'yyyy-mm-dd');
       } else if (requestType === 'Existing') {
-        body =  Object.assign({},
-                this.requestTypeForm.getRawValue(),
-                this.requestDetailsForm.getRawValue());
+        body = Object.assign({},
+          this.requestTypeForm.getRawValue(),
+          this.requestDetailsForm.getRawValue());
       }
 
       console.log('Submitting request body: ', body);

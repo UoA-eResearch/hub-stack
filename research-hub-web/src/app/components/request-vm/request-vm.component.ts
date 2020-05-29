@@ -1,24 +1,24 @@
 
-import {map, first} from 'rxjs/operators';
-import {Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {DateAdapter, NativeDateAdapter} from '@angular/material/core';
-import {CerApiService} from 'app/services/cer-api.service';
-import {AuthService} from '../../services/auth.service';
-import {MatHorizontalStepper} from '@angular/material/stepper';
-import {AppComponentService} from '../../app.component.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Location} from '@angular/common';
-import {MatDialog} from '@angular/material/dialog';
-import {ErrorDialogComponent} from '../shared/error-dialog/error-dialog.component';
-import {ActivatedRoute} from '@angular/router';
-import {Subscription} from 'rxjs';
-import {AnalyticsService} from '../../services/analytics.service';
-import * as format from 'date-fns/format';
-import {CanComponentDeactivate} from '../../routing/routing.confirm-deactivate';
+import { map, first } from 'rxjs/operators';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DateAdapter, NativeDateAdapter } from '@angular/material/core';
+import { CerApiService } from 'app/services/cer-api.service';
+import { AuthService } from '../../services/auth.service';
+import { MatHorizontalStepper } from '@angular/material/stepper';
+import { AppComponentService } from '../../app.component.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Location } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../shared/error-dialog/error-dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AnalyticsService } from '../../services/analytics.service';
+import { format } from 'date-fns';
+import { CanComponentDeactivate } from '../../routing/routing.confirm-deactivate';
 
-import {ConfirmDialogComponent} from '../shared/confirm-dialog/confirm-dialog.component';
-import {ResearchHubApiService} from '../../services/research-hub-api.service';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
+import { ResearchHubApiService } from '../../services/research-hub-api.service';
 
 
 @Component({
@@ -64,10 +64,10 @@ export class RequestVmComponent implements OnInit, OnDestroy, CanComponentDeacti
   }
 
   constructor(private formBuilder: FormBuilder, dateAdapter: DateAdapter<NativeDateAdapter>,
-              private cerApiService: CerApiService, public apiService: ResearchHubApiService,
-              public authService: AuthService, private appComponentService: AppComponentService,
-              public dialog: MatDialog, private location: Location, private route: ActivatedRoute,
-              private analyticsService: AnalyticsService) {
+    private cerApiService: CerApiService, public apiService: ResearchHubApiService,
+    public authService: AuthService, private appComponentService: AppComponentService,
+    public dialog: MatDialog, private location: Location, private route: ActivatedRoute,
+    private analyticsService: AnalyticsService) {
     dateAdapter.setLocale('en-GB');
   }
 
@@ -166,7 +166,7 @@ export class RequestVmComponent implements OnInit, OnDestroy, CanComponentDeacti
       const values = this.requestVmForm.getRawValue();
 
       const body = {
-        date: format(values.date, 'YYYY-MM-DD'),
+        date: format(values.date, 'yyyy-mm-dd'),
         time: values.time,
         comments: values.comments
       };
