@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ResearchHubApiService, PeopleParams} from 'app/services/research-hub-api.service';
-import {Content} from 'app/model/Content';
-import {Location} from '@angular/common';
-import {AnalyticsService} from 'app/services/analytics.service';
-import {ListItem} from '../../model/ListItem';
-import {ActionTypeId, ContentTypeId, RoleTypeId} from '../../services/options.service';
-import {Subscription} from 'rxjs';
-import {MediaChange, MediaObserver } from '@angular/flex-layout';
-import {LayoutService} from '../../services/layout.service';
-import {AppComponentService} from '../../app.component.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ResearchHubApiService, PeopleParams } from 'app/services/research-hub-api.service';
+import { Content } from 'app/model/Content';
+import { Location } from '@angular/common';
+import { AnalyticsService } from 'app/services/analytics.service';
+import { ListItem } from '../../model/ListItem';
+import { ActionTypeId, ContentTypeId, RoleTypeId } from '../../services/options.service';
+import { Subscription } from 'rxjs';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { LayoutService } from '../../services/layout.service';
+import { AppComponentService } from '../../app.component.service';
 
 @Component({
   selector: 'app-content-details',
@@ -27,9 +27,9 @@ export class ContentDetailsComponent implements OnInit, OnDestroy {
 
   readonly CONTENT_TYPE_ID_GUIDE: ContentTypeId = ContentTypeId.Guide; // Used to provide a link to all guides in guide breadcrumbs
 
-  constructor(private route: ActivatedRoute, private apiService: ResearchHubApiService, private media: MediaObserver,
-              private location: Location, private analyticsService: AnalyticsService, private layoutService: LayoutService,
-              private appComponentService: AppComponentService) {
+  constructor(private route: ActivatedRoute, public apiService: ResearchHubApiService, public media: MediaObserver,
+    public location: Location, public analyticsService: AnalyticsService, public layoutService: LayoutService,
+    public appComponentService: AppComponentService) {
   }
 
   isGuide() {

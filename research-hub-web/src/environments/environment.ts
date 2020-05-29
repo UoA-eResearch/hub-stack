@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 export const environment = {
   production: false,
-  shibbolethSessionUrl: 'https://dev.research-hub.cer.auckland.ac.nz/Shibboleth.sso/Session.json',
+  shibbolethSessionUrl: './Session.json',
   researchHubApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/api/',
   cerApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/cer-api/',
   analyticsCode: 'UA-77710107-3',

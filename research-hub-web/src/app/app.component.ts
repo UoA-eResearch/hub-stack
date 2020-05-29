@@ -11,7 +11,7 @@ import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
-import * as format from 'date-fns/format';
+import { format } from 'date-fns';
 
 
 import { HeaderService } from './components/header/header.service';
@@ -302,6 +302,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getYear() {
-    return format(new Date(), 'YYYY');
+    return format(new Date(), 'yyyy');
   }
 }
