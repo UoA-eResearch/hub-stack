@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { CanActivateViaAuthGuard } from './routing.can-activate-via-auth-guard';
 import { AuthGuard, LoginSuccessGuard } from 'uoa-auth-angular';
 import { HomeComponent } from '../components/home/home.component';
 
@@ -18,6 +17,7 @@ export const appRoutes: Routes = [
     path: 'home',
     canActivate: [LoginSuccessGuard],
     component: HomeComponent,
+    // loadChildren: () => import('../components/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'search',
@@ -70,7 +70,7 @@ export const appRoutes: Routes = [
   },
   {
     path: 'requestVm',
-    loadChildren: () => import('app/components/request-vm/request-vm.module').then(m => m.RequestVmModule), canActivate: [CanActivateViaAuthGuard]
+    loadChildren: () => import('../components/request-vm/request-vm.module').then(m => m.RequestVmModule), canActivate: [AuthGuard]
   },
   {
     path: 'requestStorage',
