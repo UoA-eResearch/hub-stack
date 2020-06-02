@@ -23,6 +23,8 @@ import { RouteReuseStrategy } from '@angular/router';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { HomeModule } from './components/home/home.module';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +44,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     // MaterialModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HomeModule
   ],
   entryComponents: [],
   providers: [
