@@ -1,19 +1,53 @@
 import { Routes } from '@angular/router';
 import { CanActivateViaAuthGuard } from './routing.can-activate-via-auth-guard';
 import { AuthGuard, LoginSuccessGuard } from 'uoa-auth-angular';
+import { HomeComponent } from '../components/home/home.component';
 
 
 export const appRoutes: Routes = [
-  { path: 'home', loadChildren: () => import('app/components/home/home.module').then(m => m.HomeModule), canActivate: [LoginSuccessGuard] },
-  { path: 'search', loadChildren: () => import('app/components/search-results/search-results.module').then(m => m.SearchResultsModule) },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'error/:errorCode',
+    loadChildren: () => import('../components/error-routing/error-routing.module').then((m) => m.ErrorRoutingModule),
+  },
+  {
+    path: 'home',
+    canActivate: [LoginSuccessGuard],
+    component: HomeComponent,
+  },
+  {
+    path: 'search',
+    loadChildren: () => import('../components/search-results/search-results.module').then(m => m.SearchResultsModule)
+  },
+  {
+    path: 'feedback',
+    loadChildren: () => import('../components/feedback/feedback.module').then(m => m.FeedbackModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'userStudy',
+    loadChildren: () => import('../components/user-study/user-study.module').then(m => m.UserStudyModule)
+  },
+  {
+    path: 'about',
+    loadChildren: () => import('../components/about/about.module').then(m => m.AboutModule)
+  },
+  {
+    path: 'contact',
+    loadChildren: () => import('../components/contact/contact.module').then(m => m.ContactModule)
+  },
 
-  { path: 'feedback', loadChildren: () => import('app/components/feedback/feedback.module').then(m => m.FeedbackModule) },
-  { path: 'userStudy', loadChildren: () => import('app/components/user-study/user-study.module').then(m => m.UserStudyModule) },
-  { path: 'about', loadChildren: () => import('app/components/about/about.module').then(m => m.AboutModule) },
-  { path: 'contact', loadChildren: () => import('app/components/contact/contact.module').then(m => m.ContactModule) },
-
-  { path: 'orgUnit/:orgUnitId', loadChildren: () => import('app/components/org-unit-details/org-unit-details.module').then(m => m.OrgUnitDetailsModule) },
-  { path: 'person/:personId', loadChildren: () => import('app/components/person-details/person-details.module').then(m => m.PersonDetailsModule) },
+  {
+    path: 'orgUnit/:orgUnitId',
+    loadChildren: () => import('../components/org-unit-details/org-unit-details.module').then(m => m.OrgUnitDetailsModule)
+  },
+  {
+    path: 'person/:personId',
+    loadChildren: () => import('../components/person-details/person-details.module').then(m => m.PersonDetailsModule)
+  },
 
   /**
    * Custom Route Redirects:
@@ -26,12 +60,24 @@ export const appRoutes: Routes = [
     pathMatch: 'full'
   },
 
-  { path: 'content/:contentId', loadChildren: () => import('app/components/content-details/content-details.module').then(m => m.ContentDetailsModule) },
-  { path: 'guideCategory/:guideCategoryId', loadChildren: () => import('app/components/guide-category/guide-category.module').then(m => m.GuideCategoryModule) },
+  {
+    path: 'content/:contentId',
+    loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule)
+  },
+  {
+    path: 'guideCategory/:guideCategoryId',
+    loadChildren: () => import('../components/guide-category/guide-category.module').then(m => m.GuideCategoryModule)
+  },
+  {
+    path: 'requestVm',
+    loadChildren: () => import('app/components/request-vm/request-vm.module').then(m => m.RequestVmModule), canActivate: [CanActivateViaAuthGuard]
+  },
+  {
+    path: 'requestStorage',
+    loadChildren: () => import('../components/request-storage/request-storage.module').then(m => m.RequestStorageModule),
+    canActivate: [AuthGuard]
+  },
 
-  { path: 'requestVm', loadChildren: () => import('app/components/request-vm/request-vm.module').then(m => m.RequestVmModule), canActivate: [CanActivateViaAuthGuard] },
-  // { path: 'requestStorage', loadChildren: 'app/components/request-storage/request-storage.module#RequestStorageModule', canActivate: [CanActivateViaAuthGuard] },
-  { path: 'requestStorage', loadChildren: () => import('app/components/request-storage/request-storage.module').then(m => m.RequestStorageModule), canActivate: [AuthGuard] },
 
   /**
    * Custom Route Handlers:
@@ -41,9 +87,11 @@ export const appRoutes: Routes = [
    */
   {
     path: 'researchimpact',
-    loadChildren: () => import('app/components/content-details/content-details.module').then(m => m.ContentDetailsModule),
+    loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule),
     data: { contentId: 73 }
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/home', pathMatch: 'full' }
+  {
+    path: '**',
+    redirectTo: 'home'
+  }
 ];
