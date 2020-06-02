@@ -18,7 +18,7 @@ import { format, subYears } from 'date-fns';
 import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 import { CanComponentDeactivate } from '../../routing/routing.confirm-deactivate';
 import { ResearchHubApiService } from '../../services/research-hub-api.service';
-
+import { LoginService } from 'uoa-auth-angular';
 
 interface Person {
   firstName: string;
@@ -36,6 +36,9 @@ interface Person {
   styleUrls: ['./request-storage.component.scss']
 })
 export class RequestStorageComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+  public userInfo;
+  public authenticated;
+
   private requestFormKey = 'requestStorageForm';
 
   @ViewChild('resultsDummyHeader', { static: true }) private resultsDummyHeader: ElementRef;
@@ -131,11 +134,17 @@ export class RequestStorageComponent implements OnInit, OnDestroy, CanComponentD
     private cerApiService: CerApiService, public apiService: ResearchHubApiService,
     public authService: AuthService, private appComponentService: AppComponentService,
     public dialog: MatDialog, private location: Location, private route: ActivatedRoute,
-    private analyticsService: AnalyticsService, private el: ElementRef) {
+    private analyticsService: AnalyticsService, private el: ElementRef, private loginService: LoginService) {
     dateAdapter.setLocale('en-GB');
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.authenticated = await this.loginService.isAuthenticated();
+    console.log('User is authenticated: ' + this.authenticated);
+    this.userInfo = await this.loginService.getUserInfo();
+    console.log('User info: ', this.userInfo)
+
+
     this.analyticsService.trackIntegratedService(this.title, this.location.path());
 
     this.requestTypeForm = this.formBuilder.group({

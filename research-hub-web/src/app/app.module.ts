@@ -18,6 +18,10 @@ import { SearchFiltersService } from './components/search-results/search-filters
 import { AuthModule, CognitoConfigService } from 'uoa-auth-angular';
 import { AppAuthConfigService } from './services/app-auth-config.service';
 import { ErrorPagesModule } from 'uoa-error-pages-angular';
+import { HttpClientModule } from '@angular/common/http';
+import { RouteReuseStrategy } from '@angular/router';
+import { StorageServiceModule } from 'ngx-webstorage-service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -26,12 +30,19 @@ import { ErrorPagesModule } from 'uoa-error-pages-angular';
     SearchBarComponent
   ],
   imports: [
+    AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
     ServicesModule,
     SharedModule,
+    StorageServiceModule,
     RoutingModule,
-    ErrorPagesModule
+    ErrorPagesModule,
+    HttpClientModule,
+    // MaterialModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    FlexLayoutModule
   ],
   entryComponents: [],
   providers: [
