@@ -12,7 +12,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { AuthService } from './services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
-
+import { LoginService } from 'uoa-auth-angular';
+import { Subject } from 'rxjs';
 
 import { HeaderService } from './components/header/header.service';
 import { Location } from '@angular/common';
@@ -83,13 +84,17 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private contentElement: ElementRef;
   private contentElementHeight: number;
 
+  public userInfo;
+  public authenticated;
+
   constructor(private location: Location, public optionsService: OptionsService, private headerService: HeaderService,
     private searchBarService: SearchBarService, private router: Router,
     public apiService: ResearchHubApiService, public analyticsService: AnalyticsService,
     public authService: AuthService, private ref: ChangeDetectorRef, public appComponentService: AppComponentService,
     private titleService: Title,
     private scrollDispatcher: ScrollDispatcher,
-    private ngZone: NgZone) {
+    private ngZone: NgZone,
+    private loginService: LoginService) {
 
     authService.loginChange.subscribe((loggedIn) => {
       this.showLoginBtn = !loggedIn;
@@ -138,11 +143,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.appComponentService.setCustomCSSClassName(pageInfo.customCSSClassName);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
       this.setTitleSearchBarHeaderCustomCSS(this.optionsService.getPageInfo(this.currentRoute, this.pageTitle));
     });
+
+    this.authenticated = await this.loginService.isAuthenticated();
+    console.log('User is authenticated: ' + this.authenticated);
+    this.userInfo = await this.loginService.getUserInfo();
+    console.log('User info: ' + JSON.stringify(this.userInfo));
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
       this.showProgressBar = isVisible;

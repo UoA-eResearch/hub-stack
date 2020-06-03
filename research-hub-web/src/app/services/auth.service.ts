@@ -1,11 +1,11 @@
 
-import {map} from 'rxjs/operators';
-import {Injectable} from '@angular/core';
-import {environment} from 'environments/environment';
-import {Subject} from 'rxjs';
-import {User} from '../model/User';
-import {HttpClient} from '@angular/common/http';
-import {Location} from '@angular/common';
+import { map } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
+import { Subject } from 'rxjs';
+import { User } from '../model/User';
+import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 
 @Injectable()
@@ -34,6 +34,7 @@ export class AuthService {
   }
 
   private updateSession(session: any) {
+    console.log('Updating session: ', JSON.stringify(session));
     this.isLoggedInVal = Object.getOwnPropertyNames(session).length !== 0; // Checks if session object empty or not
     // If empty then not logged in
     if (this.isLoggedInVal) {
@@ -47,12 +48,12 @@ export class AuthService {
   }
 
   public getSession() {
-    const headers = {'Accept': 'application/json'};
+    const headers = { 'Accept': 'application/json' };
     return this.http
-      .get(environment.shibbolethSessionUrl, {headers}).pipe(
-      map((session) =>  {
-        this.updateSession(session);
-        return this.isLoggedInVal;
-    }));
+      .get(environment.shibbolethSessionUrl, { headers }).pipe(
+        map((session) => {
+          this.updateSession(session);
+          return this.isLoggedInVal;
+        }));
   }
 }
