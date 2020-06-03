@@ -25,5 +25,6 @@ export class FeedbackComponent implements OnInit {
     this.authenticated = await this.loginService.isAuthenticated();
     console.log('User is authenticated: ' + this.authenticated);
     this.userInfo = await this.loginService.getUserInfo();
+    console.log('User info: ' + JSON.stringify(this.userInfo));
   }
 }
