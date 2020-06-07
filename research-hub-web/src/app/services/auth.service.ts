@@ -34,7 +34,6 @@ export class AuthService {
   }
 
   private updateSession(session: any) {
-    console.log('Updating session: ', JSON.stringify(session));
     this.isLoggedInVal = Object.getOwnPropertyNames(session).length !== 0; // Checks if session object empty or not
     // If empty then not logged in
     if (this.isLoggedInVal) {
