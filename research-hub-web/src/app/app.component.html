@@ -88,7 +88,7 @@
                   Feedback
                 </button>
 
-                <button *ngIf="!authenticated" mat-button (click)="authService.login()">Sign In</button>
+                <button *ngIf="!userInfo" mat-button (click)="authService.login()">Sign In</button>
 
                 <!-- <button class="button-menu" *ngIf="!showLoginBtn" mat-button [matMenuTriggerFor]="userMenu"> -->
                 <button class="button-menu" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">

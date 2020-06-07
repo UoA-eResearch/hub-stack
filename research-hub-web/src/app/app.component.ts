@@ -149,11 +149,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.setTitleSearchBarHeaderCustomCSS(this.optionsService.getPageInfo(this.currentRoute, this.pageTitle));
     });
 
-    this.authenticated = await this.loginService.isAuthenticated();
-    console.log('User is authenticated: ' + this.authenticated);
-    this.userInfo = await this.loginService.getUserInfo();
-    console.log('User info: ' + JSON.stringify(this.userInfo));
-
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
       this.showProgressBar = isVisible;
     });
@@ -174,10 +169,14 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
-        .subscribe(event => {
+        .subscribe(async event => {
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
+
+          // Check if the user is logged in now (Cognito redirect)
+          this.authenticated = await this.loginService.isAuthenticated();
+          this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
             // Update previous and current routes
