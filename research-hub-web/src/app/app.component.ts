@@ -9,11 +9,9 @@ import { debounceTime } from 'rxjs/operators';
 import { ResearchHubApiService } from './services/research-hub-api.service';
 import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthService } from './services/auth.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
 import { LoginService } from 'uoa-auth-angular';
-import { Subject } from 'rxjs';
 
 import { HeaderService } from './components/header/header.service';
 import { Location } from '@angular/common';
@@ -90,16 +88,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private location: Location, public optionsService: OptionsService, private headerService: HeaderService,
     private searchBarService: SearchBarService, private router: Router,
     public apiService: ResearchHubApiService, public analyticsService: AnalyticsService,
-    public authService: AuthService, private ref: ChangeDetectorRef, public appComponentService: AppComponentService,
+    private ref: ChangeDetectorRef, public appComponentService: AppComponentService,
     private titleService: Title,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
-    private loginService: LoginService) {
-
-    authService.loginChange.subscribe((loggedIn) => {
-      this.showLoginBtn = !loggedIn;
-      this.ref.detectChanges();
-    });
+    public loginService: LoginService) {
   }
 
   getSearchQueryParams(item: any) {
@@ -170,6 +163,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
         .subscribe(async event => {
+
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
@@ -177,6 +171,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           // Check if the user is logged in now (Cognito redirect)
           this.authenticated = await this.loginService.isAuthenticated();
           this.userInfo = await this.loginService.getUserInfo();
+
+
+          console.log(this.userInfo)
+          console.log(this.authenticated)
 
           if (routeName) {
             // Update previous and current routes
@@ -292,7 +290,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.setupContentSidenav()
+    this.setupContentSidenav();
   }
 
   ngAfterViewChecked() {
