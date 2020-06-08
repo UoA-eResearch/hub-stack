@@ -56,7 +56,9 @@
 <mat-nav-list class="results-list" [class.loading]="(resultsLoading$ | async) === true" *ngIf="!showCardView">
   <ng-container *ngFor="let item of resultsPage.content; trackBy: resultIdentity">
     <ng-container>
-      <a appSearchResultLink [item]="item">
+      <!-- TODO: Replace directive logic with SLUGs and tidy. -->
+      <a appSearchResultLink href="#"
+        [routerLink]="item.type === 'policy' ? '' : '/' + item.type + '/' + item.id.toString()" [item]="item">
         <mat-list-item class="list-item">
           <img mat-list-avatar [src]="apiService.getAssetUrl(item.image)">
           <p mat-line class="item-title">{{item.title}}</p>
@@ -76,7 +78,9 @@
   [cols]="cardViewResultsNumberOfColumns" gutterSize="1em" rowHeight="1:2" style="padding-top: 1em">
   <mat-grid-tile *ngFor="let item of resultsPage.content; trackBy: resultIdentity" [colspan]="1" [rowspan]="1"
     style="cursor: pointer">
-    <a appSearchResultLink [item]="item">
+    <!-- <a appSearchResultLink [item]="item"> -->
+    <a appSearchResultLink href="#"
+      [routerLink]="item.type === 'policy' ? '' : '/' + item.type + '/' + item.id.toString()" [item]="item">
       <div class="card-result-image">
         <img src="{{apiService.getAssetUrl(item.image)}}" style="width: 100%; height: 100%;" />
       </div>
