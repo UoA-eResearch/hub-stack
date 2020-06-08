@@ -88,7 +88,7 @@
                   Feedback
                 </button>
 
-                <button *ngIf="!authenticated" mat-button (click)="authService.login()">Sign In</button>
+                <button *ngIf="!authenticated" mat-button (click)="loginService.doLogin()">Sign In</button>
 
                 <button class="button-menu" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
                   <mat-icon matPrefix style="margin-right: 5px;" fxHide.xs>person</mat-icon>
@@ -104,11 +104,11 @@
                     <mat-list class="user-menu-list">
                       <mat-list-item>
                         <mat-icon mat-list-icon>person</mat-icon>
-                        <p mat-line>{{authService.user.displayName}}</p>
+                        <p mat-line>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</p>
                       </mat-list-item>
                       <mat-list-item>
                         <mat-icon mat-list-icon>note</mat-icon>
-                        <p mat-line>{{authService.user.mail}}</p>
+                        <p mat-line>{{ userInfo?.email }}</p>
                       </mat-list-item>
                     </mat-list>
 

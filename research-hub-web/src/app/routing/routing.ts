@@ -68,16 +68,6 @@ export const appRoutes: Routes = [
     path: 'guideCategory/:guideCategoryId',
     loadChildren: () => import('../components/guide-category/guide-category.module').then(m => m.GuideCategoryModule)
   },
-  {
-    path: 'requestVm',
-    loadChildren: () => import('../components/request-vm/request-vm.module').then(m => m.RequestVmModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'requestStorage',
-    loadChildren: () => import('../components/request-storage/request-storage.module').then(m => m.RequestStorageModule),
-    canActivate: [AuthGuard]
-  },
-
 
   /**
    * Custom Route Handlers:
