@@ -1,16 +1,16 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {routing} from './feedback.routing';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FeedbackRoutingModule } from './feedback-routing.module';
 
-import {SharedModule} from 'app/components/shared/app.shared.module';
-import {FeedbackComponent} from './feedback.component';
+import { SharedModule } from 'app/components/shared/app.shared.module';
+import { FeedbackComponent } from './feedback.component';
 
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    routing
+    FeedbackRoutingModule
   ],
   declarations: [
     FeedbackComponent

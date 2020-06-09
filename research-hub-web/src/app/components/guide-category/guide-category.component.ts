@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {GuideCategory} from 'app/model/GuideCategory';
-import {ActivatedRoute} from '@angular/router';
-import {ResearchHubApiService} from 'app/services/research-hub-api.service';
+import { GuideCategory } from 'app/model/GuideCategory';
+import { ActivatedRoute } from '@angular/router';
+import { ResearchHubApiService } from 'app/services/research-hub-api.service';
 import { Location } from '@angular/common';
-import {AnalyticsService} from 'app/services/analytics.service';
-import {AppComponentService} from '../../app.component.service';
-import {Content} from '../../model/Content';
-import {ContentTypeId} from '../../services/options.service';
+import { AnalyticsService } from 'app/services/analytics.service';
+import { AppComponentService } from '../../app.component.service';
+import { Content } from '../../model/Content';
+import { ContentTypeId } from '../../services/options.service';
 
 @Component({
   selector: 'app-guide-category',
@@ -19,8 +19,8 @@ export class GuideCategoryComponent implements OnInit {
   guideCategory: GuideCategory;
   readonly CONTENT_TYPE_ID_GUIDE: ContentTypeId = ContentTypeId.Guide;
 
-  constructor(private route: ActivatedRoute, private apiService: ResearchHubApiService, private location: Location,
-              private analyticsService: AnalyticsService, private appComponentService: AppComponentService) {
+  constructor(private route: ActivatedRoute, public apiService: ResearchHubApiService, private location: Location,
+    private analyticsService: AnalyticsService, private appComponentService: AppComponentService) {
   }
 
   ngOnInit() {

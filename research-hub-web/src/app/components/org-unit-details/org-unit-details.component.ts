@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ResearchHubApiService, PeopleParams} from 'app/services/research-hub-api.service';
-import {OrgUnit} from 'app/model/OrgUnit';
+import { ActivatedRoute } from '@angular/router';
+import { ResearchHubApiService, PeopleParams } from 'app/services/research-hub-api.service';
+import { OrgUnit } from 'app/model/OrgUnit';
 import { Location } from '@angular/common';
-import {AnalyticsService} from 'app/services/analytics.service';
-import {ListItem} from '../../model/ListItem';
-import {AppComponentService} from '../../app.component.service';
-import {RoleTypeId} from '../../services/options.service';
+import { AnalyticsService } from 'app/services/analytics.service';
+import { ListItem } from '../../model/ListItem';
+import { AppComponentService } from '../../app.component.service';
+import { RoleTypeId } from '../../services/options.service';
 
 
 @Component({
@@ -19,9 +19,9 @@ export class OrgUnitDetailsComponent implements OnInit {
   public orgUnit: OrgUnit;
   userSupport: ListItem[];
 
-  constructor(private route: ActivatedRoute, private apiService: ResearchHubApiService,
-              private location: Location, private analyticsService: AnalyticsService,
-              private appComponentService: AppComponentService) {
+  constructor(private route: ActivatedRoute, public apiService: ResearchHubApiService,
+    private location: Location, public analyticsService: AnalyticsService,
+    private appComponentService: AppComponentService) {
 
   }
 
