@@ -26,6 +26,9 @@ import {
   transition
 } from '@angular/animations';
 
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -92,7 +95,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: Title,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
-    public loginService: LoginService) {
+    public loginService: LoginService,
+    public apollo: Apollo) {
   }
 
   getSearchQueryParams(item: any) {
@@ -145,6 +149,26 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
       this.showProgressBar = isVisible;
     });
+
+    this.apollo
+      .watchQuery({
+        query: gql`
+          {
+            rates(currency: "NZD") {
+              currency
+              rate
+            }
+          }
+        `,
+      })
+      .valueChanges.subscribe(result => {
+        console.log('result from graphql:');
+        console.log(result);
+        return result;
+        // this.rates = result.data && result.data.rates;
+        // this.loading = result.loading;
+        // this.error = result.error;
+      });
 
     // Navigate to the search page if the user types text in
     this.searchTextChangeSub = this.searchBarService.searchTextChange.pipe(distinctUntilChanged()).subscribe(searchText => {

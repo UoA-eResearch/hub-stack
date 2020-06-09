@@ -25,6 +25,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { HomeModule } from './components/home/home.module';
 
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +49,9 @@ import { HomeModule } from './components/home/home.module';
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    HomeModule
+    HomeModule,
+    ApolloModule,
+    HttpLinkModule
   ],
   entryComponents: [],
   providers: [
@@ -53,7 +59,19 @@ import { HomeModule } from './components/home/home.module';
     SearchBarService,
     AppComponentService,
     SearchFiltersService,
-    { provide: CognitoConfigService, useClass: AppAuthConfigService }],
+    { provide: CognitoConfigService, useClass: AppAuthConfigService },
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'https://o5x5jzoo7z.sse.codesandbox.io/graphql'
+          })
+        }
+      },
+      deps: [HttpLink]
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
