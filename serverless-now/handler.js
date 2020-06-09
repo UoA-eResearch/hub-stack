@@ -1,8 +1,8 @@
-'use strict';
-const https = require('https')
-const utils = require('@uoa/utilities')
+"use strict";
+const https = require("https");
+const utils = require("@uoa/utilities");
 
-module.exports.main = async event => {
+module.exports.main = async (event) => {
   const BASE_URL = `api.${process.env.ENV}.auckland.ac.nz`;
 
   try {
@@ -10,33 +10,74 @@ module.exports.main = async event => {
     let data = await utils.getUserInfo(event, cognitoDomain);
     if (data.error) {
       // return buildResponse(500, { 'message': 'User not found' });
-      console.log('User not found.')
+      console.log("User not found.");
     } else {
       // personId = data['custom:EmpID'];
-      console.log('User data:');
+      console.log("User data:");
       console.log(data);
       return {
         statusCode: 200,
         headers: {
-          "Access-Control-Allow-Origin": "*"
+          "Access-Control-Allow-Origin": "*",
         },
-        body: JSON.stringify(data)
-      }
+        body: JSON.stringify(data),
+      };
     }
   } catch (e) {
     // return buildResponse(500, { 'message': 'Error getting user' });
-    console.log('Error getting user.');
+    console.log("Error getting user.");
   }
 
   // POST (Create) a new ServiceNow ticket
   if (event.httpMethod === "POST" && event.body) {
     // TODO: Enable POST to ServiceNow
+
+    let requesterData;
+    // preferred username is the closest thing
+    try {
+      let cognitoDomain = process.env.COGNITO_DOMAIN;
+      let data = await utils.getUserInfo(event, cognitoDomain);
+      if (data.error) {
+        return {
+          statusCode: 500,
+          body: JSON.stringify(
+            "Failed getting requester cognito information.",
+            error
+          ),
+        };
+      } else {
+        // personId = data['custom:EmpID'];
+        console.log("Successfully retrieved user data.");
+        console.log(data);
+        requesterData = data;
+        // return {
+        //   statusCode: 200,
+        //   headers: {
+        //     "Access-Control-Allow-Origin": "*",
+        //   },
+        //   body: JSON.stringify(data),
+        // };
+      }
+    } catch (e) {
+      console.log("Error getting user.");
+      return {
+        statusCode: 500,
+        body: JSON.stringify(
+          "Failed getting requester cognito information.",
+          error
+        ),
+      };
+    }
+
     return {
       statusCode: 200,
       body: JSON.stringify({
-        message: 'Creating ticket',
-        object: event.body
-      })
+        // todo: add SN_RW key here - refer to postman for the header name
+        // e.g. token: process.env.SN_RW,
+        message: "Creating ticket",
+        object: event.body,
+        user: JSON.stringify(requesterData),
+      }),
     };
   }
 
@@ -44,13 +85,23 @@ module.exports.main = async event => {
   if (event.queryStringParameters && event.queryStringParameters.ticketId) {
     try {
       // TODO: Replace hardcoded ticket with ${event.queryStringParameters.ticketId}
-      return await getRes(`/service/servicenow-readonly/table/u_request?sysparm_query=number=REQ1216647&sysparm_display_value=all`, process.env.SN_API_KEY_R)
-        .then(res => ([res] = res.result) ? // Destructure to first object in result array (first ticket)
-          { statusCode: 200, body: JSON.stringify(res) } :
-          { statusCode: 500, body: JSON.stringify('Error retrieving ticket from ServiceNow') })
+      return await getRes(
+        `/service/servicenow-readonly/table/u_request?sysparm_query=number=REQ1216647&sysparm_display_value=all`,
+        process.env.SN_API_KEY_R
+      ).then((res) =>
+        ([res] = res.result) // Destructure to first object in result array (first ticket)
+          ? { statusCode: 200, body: JSON.stringify(res) }
+          : {
+              statusCode: 500,
+              body: JSON.stringify("Error retrieving ticket from ServiceNow"),
+            }
+      );
     } catch (error) {
       console.error(error);
-      return { statusCode: 500, body: JSON.stringify('Task failed successfully: ', error) };
+      return {
+        statusCode: 500,
+        body: JSON.stringify("Task failed successfully: ", error),
+      };
     }
   }
 
@@ -58,40 +109,38 @@ module.exports.main = async event => {
   return {
     statusCode: 200,
     headers: {
-      "Access-Control-Allow-Origin": "*"
+      "Access-Control-Allow-Origin": "*",
     },
     body: JSON.stringify({
-      message: 'Welcome to serverless-now',
-      aws_message: process.env.EXAMPLE_KEY
-    })
+      message: "Welcome to serverless-now",
+      aws_message: process.env.EXAMPLE_KEY,
+    }),
   };
 
   // Function for getting data and returning the JSON result
   // Will make a POST request if the optional data argument is passed
   async function getRes(path, apiKey, data = null) {
-
     // Request options
     const options = {
-      method: data ? 'POST' : 'GET',
+      method: data ? "POST" : "GET",
       hostname: BASE_URL,
       path: path,
       headers: {
-        apiKey: apiKey
-      }
+        apiKey: apiKey,
+      },
     };
 
     return new Promise((resolve, reject) => {
-      let request = https.request(options, res => {
-        res.setEncoding('utf8');
-        let body = '';
+      let request = https.request(options, (res) => {
+        res.setEncoding("utf8");
+        let body = "";
 
-        res.on('data', chunk => body += chunk);
-        res.on('end', () => resolve(JSON.parse(body)));
-        res.on('error', e => reject((e)));
+        res.on("data", (chunk) => (body += chunk));
+        res.on("end", () => resolve(JSON.parse(body)));
+        res.on("error", (e) => reject(e));
       });
 
-      data && request.write(JSON.stringify(data)) || request.end(); // Optionally write POST data then execute
+      (data && request.write(JSON.stringify(data))) || request.end(); // Optionally write POST data then execute
     });
   }
-
 };
