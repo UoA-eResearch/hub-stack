@@ -21,6 +21,7 @@ provider:
     LEVEL: INFO
     EXAMPLE_KEY: ${ssm:/${self:provider.stage}/research-hub/example-key~true}
     SN_API_KEY_R: ${ssm:/${self:provider.stage}/research-hub/SN_API_KEY_R~true}
+    SN_DEV_API_KEY_RW: ${ssm:/${self:provider.stage}/research-hub/SN_DEV_API_KEY_RW~true}
     COGNITO_DOMAIN: "uoapool-sandbox.auth.ap-southeast-2.amazoncognito.com"
   iamRoleStatements:
     - Effect: Allow
@@ -60,7 +61,7 @@ functions:
           method: get
           cors: true
           authorizer:
-            name: warrick-serverless-auth
+            name: serverless-now-auth
             type: cognito_user_pools
             arn: arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O
             identitySource: method.request.header.Authorization
