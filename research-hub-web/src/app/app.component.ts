@@ -172,10 +172,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this.authenticated = await this.loginService.isAuthenticated();
           this.userInfo = await this.loginService.getUserInfo();
 
-
-          console.log(this.userInfo)
-          console.log(this.authenticated)
-
           if (routeName) {
             // Update previous and current routes
             if (this.currentRoute) {

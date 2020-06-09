@@ -11,7 +11,7 @@ export const environment = {
     cognitoAwsRegion: 'ap-southeast-2',
     cognitoUserPoolId: 'ap-southeast-2_pgErjyL4O',
     cognitoDomain: 'uoapool-sandbox',
-    cognitoClientId: 'lrju6v80vse4bbaesjvnr2ff0',
+    cognitoClientId: '53nj363gumskeibdir61nu1cs5',
     redirectUri: 'http://localhost:4200',
     scopes: 'openid profile https://test-domain.auckland.ac.nz/lambda-hello-world',
     codeChallengeMethod: 'S256',
