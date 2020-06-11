@@ -1,32 +1,10 @@
 "use strict";
 const https = require("https");
 const utils = require("@uoa/utilities");
+const { v4: uuidv4 } = require("uuid");
 
 module.exports.main = async (event) => {
   const BASE_URL = `api.${process.env.ENV}.auckland.ac.nz`;
-
-  try {
-    let cognitoDomain = process.env.COGNITO_DOMAIN;
-    let data = await utils.getUserInfo(event, cognitoDomain);
-    if (data.error) {
-      // return buildResponse(500, { 'message': 'User not found' });
-      console.log("User not found.");
-    } else {
-      // personId = data['custom:EmpID'];
-      console.log("User data:");
-      console.log(data);
-      return {
-        statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(data),
-      };
-    }
-  } catch (e) {
-    // return buildResponse(500, { 'message': 'Error getting user' });
-    console.log("Error getting user.");
-  }
 
   // POST (Create) a new ServiceNow ticket
   if (event.httpMethod === "POST" && event.body) {
@@ -46,17 +24,9 @@ module.exports.main = async (event) => {
           ),
         };
       } else {
-        // personId = data['custom:EmpID'];
         console.log("Successfully retrieved user data.");
         console.log(data);
         requesterData = data;
-        // return {
-        //   statusCode: 200,
-        //   headers: {
-        //     "Access-Control-Allow-Origin": "*",
-        //   },
-        //   body: JSON.stringify(data),
-        // };
       }
     } catch (e) {
       console.log("Error getting user.");
@@ -72,13 +42,43 @@ module.exports.main = async (event) => {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        // todo: add SN_RW key here - refer to postman for the header name
-        // e.g. token: process.env.SN_RW,
-        message: "Creating ticket",
-        object: event.body,
-        user: JSON.stringify(requesterData),
+        u_short_description: "Storage request",
+        u_requestor: requesterData.preferred_username,
+        u_comments: "(Content for the storage request goes here.)",
+        u_category: "Research IT",
+        u_subcategory: "Storage & Data Management",
+        u_cmdb_ci: "",
+        u_assignment_group: "0b024896406d05c0b8c650771b44066b",
+        u_business_service: "f98caa69f9ee0600b8c6ead41549b040",
+        u_watch_list: "researchdata@auckland.ac.nz",
+        u_correlation_id: `${uuidv4()}`,
+        u_correlation_display: "cerhub",
+        u_work_notes: event.body,
       }),
     };
+  }
+
+  // GET request as fallback
+  try {
+    let cognitoDomain = process.env.COGNITO_DOMAIN;
+    let data = await utils.getUserInfo(event, cognitoDomain);
+    if (data.error) {
+      // return buildResponse(500, { 'message': 'User not found' });
+      console.log("User not found.");
+    } else {
+      // personId = data['custom:EmpID'];
+      console.log("User data:");
+      console.log(data);
+      return {
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(data),
+      };
+    }
+  } catch (e) {
+    console.log("Error getting user.");
   }
 
   // GET a ServiceNow ticket by ticket ID URL parameter
