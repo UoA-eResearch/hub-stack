@@ -51,6 +51,7 @@ package:
     - events/*
     - node_modules/**
     - '!node_modules/@uoa/**'
+    - '!node_modules/uuid/**'
 
 functions:
   serverless-now:
