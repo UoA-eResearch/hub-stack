@@ -2,7 +2,6 @@
 const https = require("https");
 const utils = require("@uoa/utilities");
 const { v4: uuidv4 } = require("uuid");
-const request = require('request');
 
 module.exports.main = async (event) => {
   const BASE_URL = `api.${process.env.ENV}.auckland.ac.nz`;
@@ -34,30 +33,28 @@ module.exports.main = async (event) => {
         statusCode: 500,
         body: JSON.stringify(
           "Failed getting requester cognito information within lambda function.",
-          error
+          e
         ),
       };
     }
 
     let serviceNowTicketBody = {
-      statusCode: 200,
-      body: JSON.stringify({
-        u_short_description: "Storage request",
-        u_requestor: requesterData.preferred_username,
-        u_comments: "(Content for the storage request goes here.)",
-        u_category: "Research IT",
-        u_subcategory: "Storage & Data Management",
-        u_cmdb_ci: "",
-        u_assignment_group: "0b024896406d05c0b8c650771b44066b",
-        u_business_service: "f98caa69f9ee0600b8c6ead41549b040",
-        u_watch_list: "researchdata@auckland.ac.nz",
-        u_correlation_id: `${uuidv4()}`,
-        u_correlation_display: "cerhub",
-        u_work_notes: event.body,
-      }),
+      u_short_description: "Storage request",
+      u_requestor: requesterData.preferred_username,
+      u_comments: "(Content for the storage request goes here.)",
+      u_category: "Research IT",
+      u_subcategory: "Storage & Data Management",
+      u_cmdb_ci: "",
+      u_assignment_group: "0b024896406d05c0b8c650771b44066b",
+      u_business_service: "f98caa69f9ee0600b8c6ead41549b040",
+      u_watch_list: "researchdata@auckland.ac.nz",
+      u_correlation_id: `${uuidv4()}`,
+      u_correlation_display: "cerhub",
+      u_work_notes: event.body,
     };
 
     // return serviceNowTicketBody; // Working up till here
+    console.log(serviceNowTicketBody);
 
     // creating a ticket but has no worknotes body or anything
 
@@ -68,7 +65,10 @@ module.exports.main = async (event) => {
         serviceNowTicketBody
       ).then((res) =>
         ([res] = res.result) // Destructure to first object in result array (first ticket)
-          ? { statusCode: 200, body: JSON.stringify(res) }
+          ? {
+              statusCode: 200,
+              body: JSON.stringify(res),
+            }
           : {
               statusCode: 500,
               body: JSON.stringify("Error retrieving ticket from ServiceNow"),
@@ -80,26 +80,7 @@ module.exports.main = async (event) => {
         statusCode: 500,
         body: JSON.stringify("Task failed successfully: ", error),
       };
-  }
-
-    // request.post('api.dev.auckland.ac.nz/service/servicenow-readwrite/import/u_rest_u_request', {
-    //   method: 'POST',
-    //   headers: {
-    //     "apiKey": process.env.SN_DEV_API_KEY_RW,
-    //     "Content-Type": "application/json"
-    //   }
-    // }, (error, res, body) => {
-    //   if (error) {
-    //     return JSON.stringify(error)
-    //   }
-    //   return {
-    //     statusCode: 200,
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "*",
-    //     },
-    //     body: JSON.stringify(body),
-    //   };
-    // })
+    }
   }
 
   // GET request as fallback
@@ -113,13 +94,6 @@ module.exports.main = async (event) => {
       // personId = data['custom:EmpID'];
       console.log("User data:");
       console.log(data);
-      return {
-        statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(data),
-      };
     }
   } catch (e) {
     console.log("Error getting user.");
@@ -132,13 +106,23 @@ module.exports.main = async (event) => {
       return await getRes(
         `/service/servicenow-readonly/table/u_request?sysparm_query=number=REQ1216647&sysparm_display_value=all`,
         process.env.SN_API_KEY_R
-      ).then((res) =>
-        ([res] = res.result) // Destructure to first object in result array (first ticket)
-          ? { statusCode: 200, body: JSON.stringify(res) }
-          : {
-              statusCode: 500,
-              body: JSON.stringify("Error retrieving ticket from ServiceNow"),
-            }
+      ).then(
+        (res) => {
+          // test start// Destructure to first object in result array (first ticket)
+          return ([res] = res.result)
+            ? { statusCode: 200, body: JSON.stringify(res) }
+            : {
+                statusCode: 500,
+                body: JSON.stringify("Error retrieving ticket from ServiceNow"),
+              };
+        }
+        // test:end:
+        // ([res] = res.result) // Destructure to first object in result array (first ticket)
+        //   ? { statusCode: 200, body: JSON.stringify(res) }
+        //   : {
+        //       statusCode: 500,
+        //       body: JSON.stringify("Error retrieving ticket from ServiceNow"),
+        //     }
       );
     } catch (error) {
       console.error(error);
@@ -146,6 +130,7 @@ module.exports.main = async (event) => {
         statusCode: 500,
         body: JSON.stringify("Task failed successfully: ", error),
       };
+    }
   }
 
   // Default '/' page
@@ -163,28 +148,32 @@ module.exports.main = async (event) => {
   // Function for getting data and returning the JSON result
   // Will make a POST request if the optional data argument is passed
   async function getRes(path, apiKey, data = null) {
-      const options = {
-        method: data ? "POST" : "GET",
-        hostname: BASE_URL,
-        path: path,
-        headers: {
-          apiKey: apiKey,
-          "Content-Type": "application/json;charset=UTF-8",
-        },
-      };
+    const options = {
+      method: data ? "POST" : "GET",
+      hostname: BASE_URL,
+      path: path,
+      headers: {
+        apiKey: apiKey,
+        "Content-Type": "application/json",
+      },
+    };
 
-      return new Promise((resolve, reject) => {
-        let request = https.request(options, (res) => {
-          res.setEncoding("utf8");
-          let body = "";
+    console.log(options);
 
-          res.on("data", (chunk) => (body += chunk));
-          res.on("end", () => resolve(JSON.parse(body)));
-          res.on("error", (e) => reject(e));
-        });
+    return new Promise((resolve, reject) => {
+      let request = https.request(options, (res) => {
+        res.setEncoding("utf8");
+        let body = "";
 
-        (data && request.write(JSON.stringify(data))) || request.end(); // Optionally write POST data then execute
+        console.log("within the promise");
+
+        res.on("data", (chunk) => (body += chunk));
+        res.on("end", () => resolve(JSON.parse(body)));
+        res.on("error", (e) => reject(e));
       });
-      return JSON.stringify("getRes not working");
+
+      (data && request.write(JSON.stringify(data))) || request.end(); // Optionally write POST data then execute
+    });
+    // POST
   }
 };
