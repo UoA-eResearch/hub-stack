@@ -172,8 +172,8 @@ module.exports.main = async (event) => {
         res.on("error", (e) => reject(e));
       });
 
-      (data && request.write(JSON.stringify(data))) || request.end(); // Optionally write POST data then execute
+      request.write(JSON.stringify(data));
+      request.end();
     });
-    // POST
   }
 };
