@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ResearchHubApiService, ContentItemsParams} from 'app/services/research-hub-api.service';
-import {Content} from 'app/model/Content';
+import { Component, OnInit } from '@angular/core';
+import { ResearchHubApiService, ContentItemsParams } from 'app/services/research-hub-api.service';
+import { Content } from 'app/model/Content';
 import { AnalyticsService } from 'app/services/analytics.service';
 
 @Component({
@@ -11,9 +11,9 @@ import { AnalyticsService } from 'app/services/analytics.service';
 export class FeaturedComponent implements OnInit {
 
   content: Content;
-  private featuredContentIndex: number; // Set in ngOnInit() to undefined || content item index number
+  public featuredContentIndex: number; // Set in ngOnInit() to undefined || content item index number
 
-  constructor(private apiService: ResearchHubApiService, public analyticsService: AnalyticsService)  {
+  constructor(public apiService: ResearchHubApiService, public analyticsService: AnalyticsService) {
 
   }
 

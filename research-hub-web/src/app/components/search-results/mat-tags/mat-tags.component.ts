@@ -50,8 +50,8 @@ export class MatTagsComponent implements ControlValueAccessor, OnChanges {
 
   filteredSources: Tag[] = [];
 
-  @ViewChild('chipInput') chipInput: MatInput;
-  @ViewChild(MatAutocompleteTrigger) autoTrigger: MatAutocompleteTrigger;
+  @ViewChild('chipInput', { static: true }) chipInput: MatInput;
+  @ViewChild(MatAutocompleteTrigger, { static: true }) autoTrigger: MatAutocompleteTrigger;
 
   @Input() source: Tag[] = [];
   @Input() addNew = true;

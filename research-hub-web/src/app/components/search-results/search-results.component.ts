@@ -1,38 +1,38 @@
 
-import {of, combineLatest, Subscription, Observable, Subject, forkJoin} from 'rxjs';
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {SearchBarService} from 'app/components/search-bar/search-bar.service';
-import {CategoryId, OptionsService, RoleTypeId} from 'app/services/options.service';
+import { of, combineLatest, Subscription, Observable, Subject, forkJoin } from 'rxjs';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { SearchBarService } from 'app/components/search-bar/search-bar.service';
+import { CategoryId, OptionsService, RoleTypeId } from 'app/services/options.service';
 import {
   ResearchHubApiService, OrderBy,
   SearchResultsParams
 } from 'app/services/research-hub-api.service';
-import {Page} from 'app/model/Page';
-import {AnalyticsService} from 'app/services/analytics.service';
+import { Page } from 'app/model/Page';
+import { AnalyticsService } from 'app/services/analytics.service';
 
-import {FormControl, FormGroup} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {FilterDialogComponent} from './filter-dialog/filter-dialog.component';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 
 
-import { map ,  debounceTime,distinctUntilChanged } from 'rxjs/operators';
-import {Tag} from './mat-tags/mat-tags.component';
-import {ListItem} from '../../model/ListItem';
-import {AppComponentService} from '../../app.component.service';
-import {PageEvent} from '@angular/material/paginator';
-import {MatPaginator} from '@angular/material/paginator';
-import {LayoutService} from '../../services/layout.service';
+import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Tag } from './mat-tags/mat-tags.component';
+import { ListItem } from '../../model/ListItem';
+import { AppComponentService } from '../../app.component.service';
+import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
+import { LayoutService } from '../../services/layout.service';
 
-import {MediaChange, MediaObserver} from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
-import {SearchFiltersService} from './search-filters/search-filters.service';
+import { SearchFiltersService } from './search-filters/search-filters.service';
 import { SearchResultsComponentService } from './search-results-component.service';
 
 // The screen size at which we should switch to opening filters in dialog or sidenav.
-const FILTER_VIEW_BREAKPOINT = "md";
+const FILTER_VIEW_BREAKPOINT = 'md';
 
 @Component({
   selector: 'app-search-results',
@@ -41,8 +41,8 @@ const FILTER_VIEW_BREAKPOINT = "md";
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
 
-  @ViewChild('paginator') paginator: MatPaginator;
-  @ViewChild('resultsDummyHeader') private resultsDummyHeader: ElementRef;
+  @ViewChild('paginator', { static: true }) paginator: MatPaginator;
+  @ViewChild('resultsDummyHeader', { static: true }) private resultsDummyHeader: ElementRef;
 
   public filtersForm: FormGroup;
   public resultsPage: Page<ListItem>;
@@ -57,11 +57,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   // we will need to hide the filter, but it should still be open
   // if the window becomes bigger again.
   private filterSidenavVisibilitySub: Subscription;
-  private filterOpenSub : Subscription;
+  private filterOpenSub: Subscription;
 
-  private resultsSub : Subscription;
-  private resultsLoading$ : Observable<boolean>;
-  private categoriesSub : Subscription;
+  private resultsSub: Subscription;
+  public resultsLoading$: Observable<boolean>;
+  private categoriesSub: Subscription;
 
   public searchTextIsBlank = true;
   public noResultsSummary = '';
@@ -80,7 +80,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   private previousFiltersFormValues: any;
   private previousSearchText: any;
 
-  private filterVisible: boolean = false;
+  public filterVisible = false;
 
   // Used for determining number of columns for card-view results
   public cardViewResultsNumberOfColumns = 3;
@@ -95,7 +95,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   // A reference to the search filters dialog, if one is currently displayed.
   // Otherwise null.
-  private filterDialogRef : MatDialogRef<any>;
+  private filterDialogRef: MatDialogRef<any>;
 
   public static getFilterVisibility(categoryId: number) {
     return {
@@ -136,23 +136,23 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
 
   fromTags(tags: Tag[]) {
-    if (tags == null) return [];
+    if (tags == null) { return []; }
     return tags.map(tag => tag.id);
   }
 
   toTags(ids: number[]) {
     return ids.map(id => {
-      return {id: id};
+      return { id: id };
     });
   }
 
   constructor(private searchBarService: SearchBarService,
-              public optionsService: OptionsService, public apiService: ResearchHubApiService,
-              private analyticsService: AnalyticsService, private route: ActivatedRoute,
-              private location: Location, public dialog: MatDialog, private appComponentService: AppComponentService,
-              private componentService : SearchResultsComponentService,
-              private layoutService: LayoutService, private media: MediaObserver,
-              private searchFiltersService: SearchFiltersService) {
+    public optionsService: OptionsService, public apiService: ResearchHubApiService,
+    public analyticsService: AnalyticsService, private route: ActivatedRoute,
+    private location: Location, public dialog: MatDialog, private appComponentService: AppComponentService,
+    private componentService: SearchResultsComponentService,
+    private layoutService: LayoutService, private media: MediaObserver,
+    public searchFiltersService: SearchFiltersService) {
     this.filtersForm = searchFiltersService.filtersForm;
   }
 
@@ -162,7 +162,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.cardViewResultsNumberOfColumns = Math.min(3, cols);
   }
 
-  initFilter(){
+  initFilter() {
     this.filterSidenavVisibilitySub = this.appComponentService.contentSidenavVisibility$.subscribe(
       (isSidenavVisible: boolean) => {
         this.filterVisible = isSidenavVisible;
@@ -170,20 +170,20 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     );
     this.filterOpenSub = this.searchFiltersService.filtersOpen$.subscribe(
       (isOpen: boolean) => {
-        if (isOpen){
+        if (isOpen) {
           this.showFilters();
         } else {
           this.hideFilters();
         }
       });
 
-    if (!this.layoutService.isWidthLessThan(FILTER_VIEW_BREAKPOINT)){
+    if (!this.layoutService.isWidthLessThan(FILTER_VIEW_BREAKPOINT)) {
       // If we are in desktop view, pop open the filters by default.
-        this.searchFiltersService.openFilters();
+      this.searchFiltersService.openFilters();
     }
   }
 
-  initResultSubs(){
+  initResultSubs() {
     this.resultsSub = this.componentService.results$.subscribe(
       page => {
         this.resultsPage = page;
@@ -195,7 +195,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         const searchText = this.searchBarService.searchText;
         const researchActivityIds = filtersFormValue.researchActivityIds;
         this.setFiltersTextIfUndefined(personTags, orgUnitTags).subscribe(res => {
-          const[personTagsRes, orgUnitTagsRes] = res;
+          const [personTagsRes, orgUnitTagsRes] = res;
           this.updateResultsSummary(page, categoryId, searchText, personTagsRes, orgUnitTagsRes, researchActivityIds);
         });
         this.appComponentService.setProgressBarVisibility(false);
@@ -208,7 +208,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     this.resultsLoading$ = this.componentService.resultsLoading$;
   }
 
-  resultIdentity(index : number,result){
+  resultIdentity(index: number, result) {
     // The identity function for each result item.
     // This reduces DOM operations of the ngFor
     // statements and also ensures the refine search panel
@@ -229,7 +229,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     });
 
     // Results page
-    this.resultsPage = {totalElements: 0} as Page<ListItem>;
+    this.resultsPage = { totalElements: 0 } as Page<ListItem>;
 
     // Category changes
     this.categoryIdSub = this.searchBarService.searchCategoryChange.subscribe(category => {
@@ -240,16 +240,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     // Subscribe to search parameter changes
     this.searchChangeSub = combineLatest(
-        this.searchBarService.searchTextChange.pipe(debounceTime(250),distinctUntilChanged()),
-        this.filtersForm.valueChanges.pipe(distinctUntilChanged()),
-        this.pageEventChange.pipe(distinctUntilChanged()),
-        this.orderByChange
-      ).pipe(
+      this.searchBarService.searchTextChange.pipe(debounceTime(250), distinctUntilChanged()),
+      this.filtersForm.valueChanges.pipe(distinctUntilChanged()),
+      this.pageEventChange.pipe(distinctUntilChanged()),
+      this.orderByChange
+    ).pipe(
       debounceTime(100))
       .subscribe(latestValues => {
         const [searchText, filtersFormValues, pageEvent, orderBy] = latestValues;
 
-        this.searchTextIsBlank = searchText == "";
+        this.searchTextIsBlank = searchText == '';
 
         if (filtersFormValues.categoryId !== this.searchBarService.category) {
           this.searchBarService.setCategory(filtersFormValues.categoryId);
@@ -271,35 +271,35 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     // Update filtersForm and searchBar based on route parameters
     this.routeParamsSub =
       this.route.queryParams
-      .subscribe(params => {
-        // These need to be set initially so that the combineLatest observable will fire
-        // Always set category id and search text  from url if you want to change them
-        const categoryId = +(params['categoryId'] || CategoryId.All);
-        const searchText = typeof params['searchText'] === 'string' ? params['searchText'] : '';
-        const personIds = SearchResultsComponent.parseParamArray(params['personIds']);
-        const orgUnitIds = SearchResultsComponent.parseParamArray(params['orgUnitIds']);
-        const researchActivityIds = SearchResultsComponent.parseParamArray(params['researchActivityIds']);
-        this.pageIndex = +(params['pageIndex'] || 0);
-        this.pageSize = +(params['pageSize'] || 21);
-        this.orderBy = params['orderBy'] || OrderBy.Relevance;
+        .subscribe(params => {
+          // These need to be set initially so that the combineLatest observable will fire
+          // Always set category id and search text  from url if you want to change them
+          const categoryId = +(params['categoryId'] || CategoryId.All);
+          const searchText = typeof params['searchText'] === 'string' ? params['searchText'] : '';
+          const personIds = SearchResultsComponent.parseParamArray(params['personIds']);
+          const orgUnitIds = SearchResultsComponent.parseParamArray(params['orgUnitIds']);
+          const researchActivityIds = SearchResultsComponent.parseParamArray(params['researchActivityIds']);
+          this.pageIndex = +(params['pageIndex'] || 0);
+          this.pageSize = +(params['pageSize'] || 21);
+          this.orderBy = params['orderBy'] || OrderBy.Relevance;
 
 
-        // Update values in search bar and search filters form
-        this.searchBarService.setSearchText(searchText);
-        setTimeout(() => {
-          // Have to run this in a task to avoid 'changed after checked' errors during init.
-          // This is because these affect the filter panel, which is rendered
-          // by the parent.
-          this.searchBarService.setCategory(categoryId);
-          this.filtersForm.controls.categoryId.setValue(categoryId);
-          this.filtersForm.controls.personTags.setValue(this.toTags(personIds));
-          this.filtersForm.controls.orgUnitTags.setValue(this.toTags(orgUnitIds));
-          this.filtersForm.controls.researchActivityIds.setValue(researchActivityIds);
+          // Update values in search bar and search filters form
+          this.searchBarService.setSearchText(searchText);
+          setTimeout(() => {
+            // Have to run this in a task to avoid 'changed after checked' errors during init.
+            // This is because these affect the filter panel, which is rendered
+            // by the parent.
+            this.searchBarService.setCategory(categoryId);
+            this.filtersForm.controls.categoryId.setValue(categoryId);
+            this.filtersForm.controls.personTags.setValue(this.toTags(personIds));
+            this.filtersForm.controls.orgUnitTags.setValue(this.toTags(orgUnitIds));
+            this.filtersForm.controls.researchActivityIds.setValue(researchActivityIds);
+          });
+          // Send page event order by event to trigger search
+          this.pageEventChange.next({ pageIndex: this.pageIndex, pageSize: this.pageSize } as PageEvent);
+          this.orderByChange.next(this.orderBy);
         });
-        // Send page event order by event to trigger search
-        this.pageEventChange.next({pageIndex: this.pageIndex, pageSize: this.pageSize} as PageEvent);
-        this.orderByChange.next(this.orderBy);
-      });
 
     this.buttonClickSub = this.searchBarService.filterButtonClickChange.subscribe((buttonName) => {
       this.searchFiltersService.openFilters();
@@ -307,7 +307,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   onPageChange(event: PageEvent) {
-    this.pageEventChange.next({pageSize: event.pageSize, pageIndex: event.pageIndex});
+    this.pageEventChange.next({ pageSize: event.pageSize, pageIndex: event.pageIndex });
     this.resultsDummyHeader.nativeElement.scrollIntoView();
   }
 
@@ -320,8 +320,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     const observablePersonBatch = [];
     const observableOrgUnitBatch = [];
 
-    if (!personTags) { personTags = [];}
-    if (!orgUnitTags) { orgUnitTags = [];}
+    if (!personTags) { personTags = []; }
+    if (!orgUnitTags) { orgUnitTags = []; }
 
     // Queue up API requests for persons and orgUnits
     orgUnitTags.forEach(key => observableOrgUnitBatch.push(this.apiService.getOrgUnit(key.id)));
@@ -329,16 +329,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
     // Return an observable containing the batches of observables for both personTags and orgUnitTags
     return forkJoin(
-      forkJoin(observablePersonBatch).pipe(map(x => x.map(y => {y['text'] = y['firstName'] + ' ' + y['lastName']; return (y)})))
+      forkJoin(observablePersonBatch).pipe(map(x => x.map(y => { y['text'] = y['firstName'] + ' ' + y['lastName']; return (y) })))
         .pipe(z => observablePersonBatch.length ? z : of([])),
-      forkJoin(observableOrgUnitBatch).pipe(map(x => x.map(y => {y['text'] = y['name'];  return (y)})))
+      forkJoin(observableOrgUnitBatch).pipe(map(x => x.map(y => { y['text'] = y['name']; return (y) })))
         .pipe(z => observableOrgUnitBatch.length ? z : of([]))
     );
   }
 
-  private showFilters(){
+  private showFilters() {
     const winWidth = this.layoutService.getMQAlias();
-    if (this.layoutService.isWidthLessThan(FILTER_VIEW_BREAKPOINT)){
+    if (this.layoutService.isWidthLessThan(FILTER_VIEW_BREAKPOINT)) {
       this.filterDialogRef = this.dialog.open(FilterDialogComponent, {
         maxWidth: '100%',
         width: '100%',
@@ -351,15 +351,15 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       // Make the panel invisible as it is not applicable in the mobile view.
       this.appComponentService.setContentSidenavVisibility(false);
     } else {
-      if (this.filterDialogRef){
+      if (this.filterDialogRef) {
         this.filterDialogRef.close();
       }
       this.appComponentService.setContentSidenavVisibility(true);
     }
   }
 
-  private hideFilters(){
-    if (this.filterDialogRef){
+  private hideFilters() {
+    if (this.filterDialogRef) {
       this.filterDialogRef.close();
     }
     this.appComponentService.setContentSidenavVisibility(false);
@@ -370,13 +370,13 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   * if window width has changed.
   * See ngOnInit.
   */
-  private updateFiltersView(winWidth: string){
-    if (this.layoutService.isWidthLessThan(FILTER_VIEW_BREAKPOINT)){
+  private updateFiltersView(winWidth: string) {
+    if (this.layoutService.isWidthLessThan(FILTER_VIEW_BREAKPOINT)) {
       // Always hide filters by default when in mobile view, even if
       // we are in open state.
       this.hideFilters();
     } else {
-      if (this.filterDialogRef){
+      if (this.filterDialogRef) {
         // If we are transitioning from mobile to desktop, and the
         // user has the filters open, we should save the state of
         // the filters, then make the refine search panel visible.
@@ -387,7 +387,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       // If the filters are open but invisible (e.g. when the user made the
       // window smaller), we make it visible when the window is large
       // enough again.
-      if (this.searchFiltersService.areFiltersOpen){
+      if (this.searchFiltersService.areFiltersOpen) {
         this.showFilters();
       }
     }
@@ -452,11 +452,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       params.push('searchText=' + searchText);
     }
 
-    if (personIds  && personIds.length && visibilities['person']) {
+    if (personIds && personIds.length && visibilities['person']) {
       params.push('personIds=' + personIds.join(','));
     }
 
-    if (orgUnitIds  && orgUnitIds.length && visibilities['orgUnit']) {
+    if (orgUnitIds && orgUnitIds.length && visibilities['orgUnit']) {
       params.push('orgUnitIds=' + orgUnitIds.join(','));
     }
 
