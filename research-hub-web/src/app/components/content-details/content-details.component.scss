@@ -103,7 +103,7 @@
 }
 
 // CSS for custom content pages
-/deep/ .impact {
+::ng-deep .impact {
   mat-card:first-child {
 
     // Common to all screen sizes
