@@ -3,8 +3,32 @@ const https = require("https");
 const utils = require("@uoa/utilities");
 const { v4: uuidv4 } = require("uuid");
 
+
 module.exports.main = async (event) => {
   const BASE_URL = `api.${process.env.ENV}.auckland.ac.nz`;
+
+  try {
+    let cognitoDomain = process.env.COGNITO_DOMAIN;
+    let data = await utils.getUserInfo(event, cognitoDomain);
+    if (data.error) {
+      // return buildResponse(500, { 'message': 'User not found' });
+      console.log('User not found.')
+    } else {
+      // personId = data['custom:EmpID'];
+      console.log('User data:');
+      console.log(data);
+      return {
+        statusCode: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify(data)
+      }
+    }
+  } catch (e) {
+    // return buildResponse(500, { 'message': 'Error getting user' });
+    console.log('Error getting user.');
+  }
 
   // POST (Create) a new ServiceNow ticket
   if (event.httpMethod === "POST" && event.body) {
