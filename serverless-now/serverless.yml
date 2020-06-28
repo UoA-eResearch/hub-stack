@@ -1,4 +1,4 @@
-service: serverless-now
+service: serverless-now-warrick
 
 provider:
   name: aws
@@ -21,6 +21,7 @@ provider:
     LEVEL: INFO
     EXAMPLE_KEY: ${ssm:/${self:provider.stage}/research-hub/example-key~true}
     SN_API_KEY_R: ${ssm:/${self:provider.stage}/research-hub/SN_API_KEY_R~true}
+    COGNITO_DOMAIN: "uoapool-sandbox.auth.ap-southeast-2.amazoncognito.com"
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -33,6 +34,14 @@ provider:
         - kms:Decrypt
       Resource:
         - "arn:aws:kms:ap-southeast-2:416527880812:key/3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d"
+  alb:
+    authorizers:
+      cognito-authorizer-uoapool:
+        type: 'cognito'
+        userPoolArn: 'arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O'
+        userPoolClientId: 'lrju6v80vse4bbaesjvnr2ff0' # required
+        userPoolDomain: 'uoapool-sandbox' # required
+        scope: 'openid profile https://my-domain.auckland.ac.nz/angular-test' 
 
 package:
   exclude:
@@ -40,6 +49,7 @@ package:
     - .vscode/*
     - events/*
     - node_modules/**
+    - '!node_modules/@uoa/**'
 
 functions:
   serverless-now:
@@ -48,10 +58,19 @@ functions:
       - http:
           path: serverless-now
           method: get
+          cors: true
+          authorizer:
+            name: warrick-serverless-auth
+            type: cognito_user_pools
+            arn: arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O
+            identitySource: method.request.header.Authorization
+            scopes: 
+              - openid
+              - profile
+              - https://test-domain.auckland.ac.nz/lambda-hello-world
       - http:
           path: serverless-now
           method: post
-
 plugins:
   - serverless-offline
   - serverless-mocha-plugin
