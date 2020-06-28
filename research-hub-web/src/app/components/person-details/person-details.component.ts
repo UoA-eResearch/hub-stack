@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ResearchHubApiService, ContentItemsParams } from 'app/services/research-hub-api.service';
-import { ActivatedRoute } from '@angular/router';
-import { Person } from 'app/model/Person';
-import { Location } from '@angular/common';
-import { AnalyticsService } from 'app/services/analytics.service';
-import { ListItem } from '../../model/ListItem';
-import { AppComponentService } from '../../app.component.service';
-import { CategoryId, RoleTypeId } from '../../services/options.service';
+import {Component, OnInit} from '@angular/core';
+import {ResearchHubApiService, ContentItemsParams} from 'app/services/research-hub-api.service';
+import {ActivatedRoute} from '@angular/router';
+import {Person} from 'app/model/Person';
+import {Location} from '@angular/common';
+import {AnalyticsService} from 'app/services/analytics.service';
+import {ListItem} from '../../model/ListItem';
+import {AppComponentService} from '../../app.component.service';
+import {CategoryId, RoleTypeId} from '../../services/options.service';
 
 
 @Component({
@@ -20,9 +20,9 @@ export class PersonDetailsComponent implements OnInit {
   categoryIdPerson = CategoryId.Person;
   supportedContent: ListItem[];
 
-  constructor(private route: ActivatedRoute, public apiService: ResearchHubApiService,
-    private location: Location, public analyticsService: AnalyticsService,
-    private appComponentService: AppComponentService) {
+  constructor(private route: ActivatedRoute, private apiService: ResearchHubApiService,
+              private location: Location, private analyticsService: AnalyticsService,
+              private appComponentService: AppComponentService) {
 
   }
 

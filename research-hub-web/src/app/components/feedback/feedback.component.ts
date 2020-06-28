@@ -1,11 +1,6 @@
-// import {Component} from '@angular/core';
-import { AnalyticsService } from '../../services/analytics.service';
-import { Location } from '@angular/common';
-
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { LoginService } from 'uoa-auth-angular';
+import {Component} from '@angular/core';
+import {AnalyticsService} from 'app/services/analytics.service';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -13,18 +8,8 @@ import { LoginService } from 'uoa-auth-angular';
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.scss']
 })
-export class FeedbackComponent implements OnInit {
-  public userInfo;
-  public authenticated;
-  public helloWorld;
-  public loading$ = new Subject<boolean>();
+export class FeedbackComponent {
 
-  constructor(public analyticsService: AnalyticsService, public location: Location, private loginService: LoginService) { }
-
-  async ngOnInit() {
-    this.authenticated = await this.loginService.isAuthenticated();
-    console.log('User is authenticated: ' + this.authenticated);
-    this.userInfo = await this.loginService.getUserInfo();
-    console.log('User info: ' + JSON.stringify(this.userInfo));
+  constructor(public analyticsService: AnalyticsService, public location: Location) {
   }
 }

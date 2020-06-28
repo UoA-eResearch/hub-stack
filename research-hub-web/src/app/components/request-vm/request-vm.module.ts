@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {routing} from './feedback.routing';
+import {routing} from './request-vm.routing';
 
 import {SharedModule} from 'app/components/shared/app.shared.module';
-import {FeedbackComponent} from './feedback.component';
+import {RequestVmComponent} from './request-vm.component';
 
 
 @NgModule({
@@ -13,8 +13,8 @@ import {FeedbackComponent} from './feedback.component';
     routing
   ],
   declarations: [
-    FeedbackComponent
+    RequestVmComponent
   ]
 })
-export class FeedbackModule {
+export class RequestVmModule {
 }

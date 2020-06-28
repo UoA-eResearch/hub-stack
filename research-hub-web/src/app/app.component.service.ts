@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Subject, Observable, BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class AppComponentService {
@@ -9,10 +9,10 @@ export class AppComponentService {
   public progressBarVisibilityChange: Subject<boolean> = new Subject<boolean>();
 
   private contentSidenavVisibilityChange: Subject<boolean>;
-  public contentSidenavVisibility$: Observable<boolean>;
-  public isContentSidenavVisible: boolean;
+  public contentSidenavVisibility$ : Observable<boolean>;
+  public isContentSidenavVisible : boolean;
 
-  public contentSidenavHasContent: boolean;
+  public contentSidenavHasContent : boolean;
 
   constructor() {
     this.contentSidenavVisibilityChange = new Subject<boolean>();
@@ -29,15 +29,15 @@ export class AppComponentService {
     this.customCSSClassName.next(customCSSClassName);
   }
 
-  getCustomCSSClassName() {
-    return this.customCSSClassName;
+  getCustomCSSClassName(customCSSClassName: string) {
+   return this.customCSSClassName;
   }
 
   setProgressBarVisibility(isVisible: boolean) {
     this.progressBarVisibilityChange.next(isVisible);
   }
 
-  setContentSidenavVisibility(isVisible: boolean) {
+  setContentSidenavVisibility(isVisible: boolean){
     // Need to use setTimeout, as this may be called by a child component.
     // setTimeout means the changes won't be made in the same VM turn.
     // See https://blog.angularindepth.com/everything-you-need-to-know-about-the-expressionchangedafterithasbeencheckederror-error-e3fd9ce7dbb4
@@ -51,9 +51,9 @@ export class AppComponentService {
     });
   }
 
-  setContentSidenavHasContent(hasContent: boolean) {
+  setContentSidenavHasContent(hasContent: boolean){
     this.contentSidenavHasContent = hasContent;
-    if (!hasContent && this.isContentSidenavVisible) {
+    if (!hasContent && this.isContentSidenavVisible){
       this.setContentSidenavVisibility(false);
     }
   }

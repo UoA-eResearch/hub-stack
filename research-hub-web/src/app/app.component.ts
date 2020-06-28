@@ -1,22 +1,23 @@
 
-import { filter, distinctUntilChanged } from 'rxjs/operators';
-import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild, AfterViewInit, ElementRef, NgZone } from '@angular/core';
-import { CategoryId, OptionsService, OptionType } from './services/options.service';
-import { SearchBarService } from './components/search-bar/search-bar.service';
-import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, Observable, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { ResearchHubApiService } from './services/research-hub-api.service';
-import { AnalyticsService } from './services/analytics.service';
-import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
-import { format } from 'date-fns';
-import { LoginService } from 'uoa-auth-angular';
+import {filter, distinctUntilChanged} from 'rxjs/operators';
+import {Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild, AfterViewInit, ElementRef, NgZone} from '@angular/core';
+import {CategoryId, OptionsService, OptionType} from './services/options.service';
+import {SearchBarService} from './components/search-bar/search-bar.service';
+import {NavigationEnd, Router} from '@angular/router';
+import {Subscription,  Observable, fromEvent } from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {ResearchHubApiService} from './services/research-hub-api.service';
+import {AnalyticsService} from './services/analytics.service';
+import {isPlatformBrowser} from '@angular/common';
+import {AuthService} from './services/auth.service';
+import {ChangeDetectorRef} from '@angular/core';
+import * as format from 'date-fns/format';
 
-import { HeaderService } from './components/header/header.service';
-import { Location } from '@angular/common';
-import { AppComponentService } from './app.component.service';
-import { Title } from '@angular/platform-browser';
+
+import {HeaderService} from './components/header/header.service';
+import {Location} from '@angular/common';
+import {AppComponentService} from './app.component.service';
+import {Title} from "@angular/platform-browser";
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
 import {
   trigger,
@@ -32,19 +33,19 @@ import {
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: [
-    trigger('contentPushLeft', [
-      state('true', style({
-        marginLeft: '400px'
+    trigger('contentPushLeft',[
+      state('true',style({
+        marginLeft:'400px'
       })),
-      state('false', style({
-        marginLeft: '0'
+      state('false',style({
+        marginLeft:'0'
       })),
       transition('false => true', animate('500ms  cubic-bezier(.63,.66,.47,.9)')),
       transition('true => false', animate('300ms ease-out'))
     ])
   ]
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit  {
 
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
@@ -56,8 +57,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private progressBarVisibilitySub: Subscription;
   private titleSub: Subscription;
   private contentSidenavVisibilitySub: Subscription;
-  private scrollSub: Subscription;
-  private winResizeSub: Subscription;
+  private scrollSub : Subscription;
+  private winResizeSub : Subscription;
 
   public selectedCategory = CategoryId.All;
   public searchText = '';
@@ -72,36 +73,37 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public isContentSidenavFixed = false;
   public contentSidenavHeight = 0;
 
-  @ViewChild('topbar', { static: true })
-  private topbarElement: ElementRef;
+  @ViewChild('topbar')
+  private topbarElement : ElementRef;
 
-  @ViewChild('topContent', { static: true })
-  private topContentElement: ElementRef;
+  @ViewChild('topContent')
+  private topContentElement : ElementRef;
 
-  @ViewChild('content', { static: true })
-  private contentElement: ElementRef;
-  private contentElementHeight: number;
-
-  public userInfo;
-  public authenticated;
+  @ViewChild('content')
+  private contentElement : ElementRef;
+  private contentElementHeight : number;
 
   constructor(private location: Location, public optionsService: OptionsService, private headerService: HeaderService,
-    private searchBarService: SearchBarService, private router: Router,
-    public apiService: ResearchHubApiService, public analyticsService: AnalyticsService,
-    private ref: ChangeDetectorRef, public appComponentService: AppComponentService,
-    private titleService: Title,
-    private scrollDispatcher: ScrollDispatcher,
-    private ngZone: NgZone,
-    public loginService: LoginService) {
+              private searchBarService: SearchBarService, private router: Router,
+              public apiService: ResearchHubApiService, public analyticsService: AnalyticsService,
+              public authService: AuthService, private ref: ChangeDetectorRef, public appComponentService: AppComponentService,
+              private titleService: Title,
+              private scrollDispatcher: ScrollDispatcher,
+              private ngZone : NgZone) {
+
+    authService.loginChange.subscribe((loggedIn) => {
+      this.showLoginBtn = !loggedIn;
+      this.ref.detectChanges();
+    });
   }
 
   getSearchQueryParams(item: any) {
     const type = item['type'];
 
     if (type === OptionType.Category) {
-      return { categoryId: item.id };
+      return {categoryId: item.id};
     } else {
-      return { researchActivityIds: [item.id] };
+      return {researchActivityIds: [item.id]};
     }
   }
 
@@ -118,7 +120,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  setContentSidenavHasContent(hasContent: boolean) {
+  setContentSidenavHasContent(hasContent: boolean){
     this.appComponentService.setContentSidenavHasContent(hasContent);
   }
 
@@ -136,7 +138,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.appComponentService.setCustomCSSClassName(pageInfo.customCSSClassName);
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
       this.setTitleSearchBarHeaderCustomCSS(this.optionsService.getPageInfo(this.currentRoute, this.pageTitle));
@@ -162,15 +164,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
-        .subscribe(async event => {
-
+        .subscribe(event => {
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
-
-          // Check if the user is logged in now (Cognito redirect)
-          this.authenticated = await this.loginService.isAuthenticated();
-          this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
             // Update previous and current routes
@@ -204,89 +201,89 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  restyleContentSidenav() {
-    if (!this.appComponentService.isContentSidenavVisible) {
+  restyleContentSidenav(){
+    if (!this.appComponentService.isContentSidenavVisible){
       // If content sidenav is not visible, don't need to calculate style.
       return;
     }
     const topbar = this.topbarElement.nativeElement,
-      topContent = this.topContentElement.nativeElement,
-      topbarRect = topbar.getBoundingClientRect(),
-      contentHeight = topContent.clientHeight,
-      topbarBottom = topbarRect.bottom,
-      winY = window.pageYOffset,
-      winHeight = window.innerHeight;
+    topContent = this.topContentElement.nativeElement,
+    topbarRect = topbar.getBoundingClientRect(),
+    contentHeight = topContent.clientHeight,
+    topbarBottom = topbarRect.bottom,
+    winY = window.pageYOffset,
+    winHeight = window.innerHeight;
     let newFixedValue, newSidenavHeight;
-    if (topbarBottom < 0) {
+    if (topbarBottom < 0){
       // The topbar is now scrolled out of view, so we need to affix the
       // content sidenav if it is not affixed.
-      if (!this.isContentSidenavFixed) {
-        newFixedValue = true;
+      if (!this.isContentSidenavFixed){
+          newFixedValue = true;
       }
     } else {
       // The topbar is now in view, so we need to un-affix the content
       // sidenav if it is affixed.
-      if (this.isContentSidenavFixed) {
+      if (this.isContentSidenavFixed){
         newFixedValue = false;
       }
     }
-    // We calculate the height of the affixed content sidenav so that the sidenav does not
-    // overlap with the footer.
-    newSidenavHeight = Math.min(contentHeight - winY, winHeight);
+      // We calculate the height of the affixed content sidenav so that the sidenav does not
+      // overlap with the footer.
+    newSidenavHeight = Math.min(contentHeight - winY,winHeight);
 
-    if ((newFixedValue === false) || (newFixedValue === undefined && !this.isContentSidenavFixed)) {
+    if ((newFixedValue === false) || (newFixedValue === undefined && !this.isContentSidenavFixed)){
       // If the sidenav is not yet fixed - i.e. some of the topbar is still visible,
       // remove the visible topbar height from the sidenav height.
       newSidenavHeight -= topbarBottom;
     }
     this.ngZone.runGuarded(() => {
-      setTimeout(() => {
-        if (newFixedValue !== undefined) {
+      setTimeout(()=>{
+        if (newFixedValue !== undefined){
           this.isContentSidenavFixed = newFixedValue;
         }
-        if (newSidenavHeight !== undefined) {
+        if (newSidenavHeight !== undefined){
           this.contentSidenavHeight = newSidenavHeight;
         }
-      }, 0);
+      },0);
     });
   }
 
-  setupContentSidenav() {
+  setupContentSidenav(){
     // If not running in a browser, do not do any listener setup.
-    if (!isPlatformBrowser) {
+    if (!isPlatformBrowser){
       return;
     }
     this.contentSidenavVisibilitySub = this.appComponentService.contentSidenavVisibility$.subscribe((isVisible) => {
       // Sets if we pop out the content sidenav.
-      if (isVisible) {
-        // Do a restyle when the filter sidenav opens to initialise the height.
-        this.restyleContentSidenav();
-      }
+          if (isVisible){
+            // Do a restyle when the filter sidenav opens to initialise the height.
+            this.restyleContentSidenav();
+          }
     });
     const restyleFn = () => (this.restyleContentSidenav());
     this.scrollSub = this.scrollDispatcher.scrolled(150).subscribe(restyleFn);
-    this.winResizeSub = fromEvent(window, 'resize').pipe(debounceTime(150)).subscribe(restyleFn);
+    this.winResizeSub = fromEvent(window,'resize').pipe(debounceTime(150)).subscribe(restyleFn);
     this.contentElementHeight = this.contentElement.nativeElement.clientHeight;
   }
 
-  checkContentHeightChanged() {
-    if (!this.appComponentService.isContentSidenavVisible) {
+  checkContentHeightChanged(){
+    if (!this.appComponentService.isContentSidenavVisible){
       // If content sidenav is not visible, don't need to calculate style.
       return;
     }
 
     const contentHeight = this.contentElement.nativeElement.clientHeight;
-    if (contentHeight !== this.contentElementHeight) {
+    if (contentHeight !== this.contentElementHeight){
       // Recompute content sidenav size when the content has changed.
       this.restyleContentSidenav();
-      setTimeout(() => {
+      setTimeout(()=> {
         this.contentElementHeight = contentHeight;
-      }, 0);
+      },0);
     }
   }
 
   ngAfterViewInit() {
-    this.setupContentSidenav();
+      this.setupContentSidenav()
   }
 
   ngAfterViewChecked() {
@@ -305,6 +302,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getYear() {
-    return format(new Date(), 'yyyy');
+    return format(new Date(), 'YYYY');
   }
 }

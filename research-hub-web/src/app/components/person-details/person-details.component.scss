@@ -90,7 +90,7 @@
   background-position: center top;
 }
 
-mat-list-item ::ng-deep div.mat-list-item-content {
+mat-list-item /deep/ div.mat-list-item-content {
   padding-left: 0 !important;
 }
 

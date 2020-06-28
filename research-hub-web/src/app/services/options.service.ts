@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 
 export enum OptionType {
@@ -38,10 +38,10 @@ export enum CategoryId {
 }
 
 export const CategoryDisplayNames = {
-  'Policies': 'Policy',
-  'Support': 'Service',
-  'Facilities': 'Facility',
-  'Person': 'People'
+  "Policies":"Policy",
+  "Support":"Service",
+  "Facilities":"Facility",
+  "Person":"People"
 };
 
 export enum ActionTypeId {
@@ -82,15 +82,15 @@ export class OptionsService {
     this.contentTypeMap[CategoryId.Guide] = [ContentTypeId.Guide, ContentTypeId.KnowledgeArticle];
 
     this.categoryOptions = [
-      { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
-      { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
-      { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
-      { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
-      { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
-      { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
-      { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
-      { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
-      { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category }
+      {id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category},
+      {id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category},
+      {id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category},
+      {id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category},
+      {id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category},
+      {id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category},
+      {id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category},
+      {id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category},
+      {id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category}
     ];
 
     this.researchActivityOptions = [
@@ -127,8 +127,8 @@ export class OptionsService {
     ];
 
     this.menuOptions = [
-      { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
-      { name: 'Browse', icon: 'view_list', routerLink: '', sublist: this.categoryOptions, type: OptionType.Menu },
+      {name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu},
+      {name: 'Browse', icon: 'view_list', routerLink: '', sublist: this.categoryOptions, type: OptionType.Menu},
       {
         name: 'Research Activities',
         icon: 'school',
@@ -136,10 +136,10 @@ export class OptionsService {
         sublist: this.researchActivityOptions,
         type: OptionType.Menu
       },
-      { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
-      { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },
-      { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
-      { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
+      {name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu},
+      {name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu},
+      {name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu},
+      {name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu}
     ];
 
     this._pageInfo = {
@@ -150,7 +150,7 @@ export class OptionsService {
         isHeaderVisible: true,
         isSearchBarVisible: true
       },
-      search: { title: 'Search', isHeaderVisible: false, isSearchBarVisible: true },
+      search: {title: 'Search', isHeaderVisible: false, isSearchBarVisible: true},
       feedback: {
         title: 'Feedback',
         description: 'We appreciate your visit to the beta-version of the ResearchHub, our platform for research support.',
@@ -179,11 +179,13 @@ export class OptionsService {
         isHeaderVisible: true,
         isSearchBarVisible: false
       },
-      orgUnit: { isHeaderVisible: false, isSearchBarVisible: false },
-      person: { isHeaderVisible: false, isSearchBarVisible: false },
-      content: { isHeaderVisible: false, isSearchBarVisible: false },
-      guide: { isHeaderVisible: false, isSearchBarVisible: false },
-      guideCategory: { isHeaderVisible: false, isSearchBarVisible: false },
+      orgUnit: {isHeaderVisible: false, isSearchBarVisible: false},
+      person: {isHeaderVisible: false, isSearchBarVisible: false},
+      content: {isHeaderVisible: false, isSearchBarVisible: false},
+      guide: {isHeaderVisible: false, isSearchBarVisible: false},
+      guideCategory: {isHeaderVisible: false, isSearchBarVisible: false},
+      requestVm: {isHeaderVisible: false, isSearchBarVisible: false},
+      requestStorage: {isHeaderVisible: false, isSearchBarVisible: false},
       impact: {
         title: 'Research Impact Guide',
         description: 'These pages contain tools and resources to support you in generating impact from your research.',
@@ -210,4 +212,4 @@ export class OptionsService {
     return title && this._customPagesMap[title] ? this._customPagesMap[title] : this._pageInfo[routeName];
   }
 
-}
+ }

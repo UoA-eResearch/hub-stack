@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {routing} from './feedback.routing';
+import {routing} from './request-storage.routing';
 
 import {SharedModule} from 'app/components/shared/app.shared.module';
-import {FeedbackComponent} from './feedback.component';
+import {RequestStorageComponent} from './request-storage.component';
 
 
 @NgModule({
@@ -13,8 +13,8 @@ import {FeedbackComponent} from './feedback.component';
     routing
   ],
   declarations: [
-    FeedbackComponent
+    RequestStorageComponent
   ]
 })
-export class FeedbackModule {
+export class RequestStorageModule {
 }

@@ -1,53 +1,18 @@
-import { Routes } from '@angular/router';
-import { AuthGuard, LoginSuccessGuard } from 'uoa-auth-angular';
-import { HomeComponent } from '../components/home/home.component';
+import {Routes} from '@angular/router';
+import {CanActivateViaAuthGuard} from './routing.can-activate-via-auth-guard';
 
 
 export const appRoutes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'error/:errorCode',
-    loadChildren: () => import('../components/error-routing/error-routing.module').then((m) => m.ErrorRoutingModule),
-  },
-  {
-    path: 'home',
-    canActivate: [LoginSuccessGuard],
-    component: HomeComponent,
-    // loadChildren: () => import('../components/home/home.module').then((m) => m.HomeModule),
-  },
-  {
-    path: 'search',
-    loadChildren: () => import('../components/search-results/search-results.module').then(m => m.SearchResultsModule)
-  },
-  {
-    path: 'feedback',
-    loadChildren: () => import('../components/feedback/feedback.module').then(m => m.FeedbackModule), canActivate: [AuthGuard]
-  },
-  {
-    path: 'userStudy',
-    loadChildren: () => import('../components/user-study/user-study.module').then(m => m.UserStudyModule)
-  },
-  {
-    path: 'about',
-    loadChildren: () => import('../components/about/about.module').then(m => m.AboutModule)
-  },
-  {
-    path: 'contact',
-    loadChildren: () => import('../components/contact/contact.module').then(m => m.ContactModule)
-  },
+  {path: 'home',  loadChildren: 'app/components/home/home.module#HomeModule'},
+  {path: 'search', loadChildren: 'app/components/search-results/search-results.module#SearchResultsModule'},
 
-  {
-    path: 'orgUnit/:orgUnitId',
-    loadChildren: () => import('../components/org-unit-details/org-unit-details.module').then(m => m.OrgUnitDetailsModule)
-  },
-  {
-    path: 'person/:personId',
-    loadChildren: () => import('../components/person-details/person-details.module').then(m => m.PersonDetailsModule)
-  },
+  {path: 'feedback', loadChildren: 'app/components/feedback/feedback.module#FeedbackModule'},
+  {path: 'userStudy', loadChildren: 'app/components/user-study/user-study.module#UserStudyModule'},
+  {path: 'about', loadChildren: 'app/components/about/about.module#AboutModule'},
+  {path: 'contact', loadChildren: 'app/components/contact/contact.module#ContactModule'},
+
+  {path: 'orgUnit/:orgUnitId', loadChildren: 'app/components/org-unit-details/org-unit-details.module#OrgUnitDetailsModule'},
+  {path: 'person/:personId', loadChildren: 'app/components/person-details/person-details.module#PersonDetailsModule'},
 
   /**
    * Custom Route Redirects:
@@ -60,14 +25,11 @@ export const appRoutes: Routes = [
     pathMatch: 'full'
   },
 
-  {
-    path: 'content/:contentId',
-    loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule)
-  },
-  {
-    path: 'guideCategory/:guideCategoryId',
-    loadChildren: () => import('../components/guide-category/guide-category.module').then(m => m.GuideCategoryModule)
-  },
+  {path: 'content/:contentId',  loadChildren: 'app/components/content-details/content-details.module#ContentDetailsModule'},
+  {path: 'guideCategory/:guideCategoryId', loadChildren: 'app/components/guide-category/guide-category.module#GuideCategoryModule'},
+
+  {path: 'requestVm', loadChildren: 'app/components/request-vm/request-vm.module#RequestVmModule', canActivate: [CanActivateViaAuthGuard]},
+  {path: 'requestStorage', loadChildren: 'app/components/request-storage/request-storage.module#RequestStorageModule', canActivate: [CanActivateViaAuthGuard]},
 
   /**
    * Custom Route Handlers:
@@ -77,11 +39,10 @@ export const appRoutes: Routes = [
    */
   {
     path: 'researchimpact',
-    loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule),
+    loadChildren: 'app/components/content-details/content-details.module#ContentDetailsModule',
     data: { contentId: 73 }
   },
-  {
-    path: '**',
-    redirectTo: 'home'
-  }
+
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '**', redirectTo: '/home', pathMatch: 'full'}
 ];

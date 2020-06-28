@@ -1,4 +1,4 @@
-import { Component, OnInit, SimpleChanges, OnChanges, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnChanges, Input, EventEmitter,Output } from '@angular/core';
 import { SearchResultsComponentService } from '../search-results-component.service';
 import { Observable } from 'rxjs';
 import { Page } from 'app/model/Page';
@@ -16,29 +16,29 @@ export class CategoryListComponent implements OnInit, OnChanges {
   * ID of the selcted category, as defined in the CategoryId enum.
   */
   @Input()
-  private selectedCategory: number;
+  private selectedCategory : number;
   @Output()
   public selectedCategoryChange: EventEmitter<number> = new EventEmitter<number>();
 
-  isSelectedCategoryAll: boolean;
+  isSelectedCategoryAll : boolean;
   /**
    * Should the list be presented in a horizontal or vertical way?
    * Defaults to horizontal.
    */
   @Input()
-  public compact = false;
+  public compact : boolean = false;
 
-  public results$: Observable<Page<ListItem>>;
-  public resultsCategories$: Observable<Array<Object>>;
+  private results$ : Observable<Page<ListItem>>;
+  private resultsCategories$ : Observable<Array<Object>>;
 
   /**
    * Gets the proper category name from the category name displayed to the user.
    * Necessary because of discrepancies between item category description and backend name (enums could be updated in future)
    */
-  public getCategoryName(displayName: string) {
+  private getCategoryName(displayName : string){
     // Try look up if there's a corresponding category name for the display name.
-    for (const name in CategoryDisplayNames) {
-      if (CategoryDisplayNames[name] === displayName) {
+    for (var name in CategoryDisplayNames){
+      if (CategoryDisplayNames[name] === displayName){
         return name;
       }
     }
@@ -47,19 +47,19 @@ export class CategoryListComponent implements OnInit, OnChanges {
     return displayName;
   }
 
-  public getCategoryDisplayName(categoryId: number): string {
-    if (categoryId === null || categoryId === undefined) {
+  private getCategoryDisplayName(categoryId : number) : string{
+    if (categoryId === null || categoryId === undefined){
       return '';
     }
-    const categoryName: string = CategoryId[categoryId];
-    const displayName: string = CategoryDisplayNames[categoryName];
-    if (!displayName) {
+    const categoryName : string = CategoryId[categoryId];
+    const displayName : string = CategoryDisplayNames[categoryName];
+    if (!displayName){
       return categoryName;
     }
     return displayName;
   }
 
-  public getCurrentCategoryDisplayName() {
+  private getCurrentCategoryDisplayName(){
     return this.getCategoryDisplayName(this.selectedCategory);
   }
 
@@ -74,7 +74,7 @@ export class CategoryListComponent implements OnInit, OnChanges {
    * Used to highlight the mat-chip corresponding to the currently searched category.
    * @param {string} category
    */
-  public isCurrentCategory(categoryDisplayName: string) {
+  private isCurrentCategory(categoryDisplayName: string) {
     return this.getCategoryName(categoryDisplayName) == CategoryId[this.selectedCategory];
   }
 
@@ -86,9 +86,9 @@ export class CategoryListComponent implements OnInit, OnChanges {
     this.resultsCategories$ = this.componentService.resultsCategories$;
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges){
     // Set whether we are in All Categories.
-    if (!!changes['selectedCategory']) {
+    if (!!changes["selectedCategory"]){
       this.isSelectedCategoryAll = changes['selectedCategory'].currentValue === CategoryId.All;
     }
 
