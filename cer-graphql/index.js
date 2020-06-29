@@ -1,19 +1,25 @@
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer, AuthenticationError } = require('apollo-server');
 const { introspectSchema, makeRemoteExecutableSchema, mergeSchemas } = require('graphql-tools');
 const { HttpLink } = require('apollo-link-http');
 const fetch = require('node-fetch');
+const jwt = require('jsonwebtoken');
+const jwkToPem = require('jwk-to-pem');
 
 // Measure server startup time
 var startTime = new Date().getTime();
 
 // Contentful settings
-const CONTENTFUL_ACCESS_TOKEN='9d5de88248563ebc0d2ad688d0473f56fcd31c600e419d6c8962f6aed0150599';
-const CONTENTFUL_SPACE_ID='f8bqpb154z8p';
+const CONTENTFUL_ACCESS_TOKEN = process.env.CONTENTFUL_ACCESS_TOKEN;
+const CONTENTFUL_SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
+const COGNITO_USER_POOL = process.env.COGNITO_USER_POOL;
+const COGNITO_REGION = process.env.COGNITO_REGION;
 
+// Cognito public key URL
+const COGNITO_PUBLIC_KEYS_URL = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}/.well-known/jwks.json`;
 
 // Set up remote schemas
 // Load a remote schema and set up the http-link
-getRemoteSchema = async(remoteUri) => {
+getRemoteSchema = async (remoteUri) => {
     try {
         console.log('Loading remote schema:', remoteUri)
         const link = new HttpLink({ uri: remoteUri, fetch });
@@ -24,59 +30,158 @@ getRemoteSchema = async(remoteUri) => {
             schema,
             link,
         });
-    } catch(e) {
+    } catch (e) {
         console.error(e);
     }
 }
 
+const fetchCognitoPublicKeys = async (jwkUrl) => {
+    try {
+        return fetch(jwkUrl).then((response) => {
+            if (!response.ok) {
+                throw new Error("Could not reach Cognito public keys URL.");
+            }
+            const jwk = response.json();
+            console.log("Cognito public keys loaded successfully.");
+            return jwk;
+        });
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+const verifyJwt = (token, jwk) => {
+    const decodedJwt = jwt.decode(token, { complete: true });
+    const key = jwk.keys.find(key => {
+        return key.kid === decodedJwt.header.kid
+    });
+    if (!key) {
+        throw new Error("Signing key for token not found in Cognito public keys.");
+    }
+    const pem = jwkToPem(key);
+    return jwt.verify(token, pem);
+};
+
 // Set up the schemas and initialize the server
 (async () => {
+    // Check if access token and space ID are supplied.
+    if (!CONTENTFUL_ACCESS_TOKEN || !CONTENTFUL_SPACE_ID ||
+        !COGNITO_REGION || !COGNITO_USER_POOL) {
+        console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
+        process.exit(1);
+    }
 
     // Load remote schemas here
     contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
 
+    // Get a list of the types that have the ssoProtected field
+    let protectedTypes = Object.keys(contentfulSchema._typeMap)
+        .filter(x => x.includes('Filter')) // Get all the filters
+        .filter(y => contentfulSchema._typeMap[y]._fields.ssoProtected) // Filter by those with an ssoProtected field
+        .flatMap(z => [z.replace('Filter', ''), z.replace('Filter', 'Collection')]) // Replace 'xfilter' with 'x' and 'xCollection'
+        .map(a => a[0].toLowerCase() + a.substring(1)); // Make first char lower case
+
+    let customQueryResolvers = {};
+
+    // Loop over the protected types and create custom resolvers for them
+    protectedTypes.forEach(type => {
+        customQueryResolvers[type] = (root, args, context, info) => {
+            if (context.user) { // If the user is signed in, simply forward request
+                return forwardReqToContentful(args, context, info);
+            } else { // If the user is not signed, do further request checking
+
+                /**
+                 * Get list of requested fields. The location of these differs depending on whether
+                 * this is the resolver for a collection or a single resource.
+                 */
+                let requestedFields = (info.fieldName.endsWith('Collection') ?
+                    info.fieldNodes[0].selectionSet.selections[0].selectionSet.selections :
+                    info.fieldNodes[0].selectionSet.selections)
+                    .map(x => x.name.value);
+
+                // Check whether the user has requested only public fields
+                const ALWAYS_PUBLIC_FIELDS = [
+                    'title',
+                    'summary',
+                    'name',
+                    'ssoProtected'
+                ];
+
+                let userOnlyQueryingPublicFields = requestedFields
+                    .every(y => ALWAYS_PUBLIC_FIELDS.includes(y));
+
+                if (userOnlyQueryingPublicFields) return forwardReqToContentful(args, context, info);
+
+                /**
+                 * If the user hasn't requested fields that can only ever be public, then check whether they have
+                 * included the ssoProtected field. If they haven't throw an auth error. If they have, the 
+                 * response is then intercepted and only returned if none of the results have an 'ssoProtected: true'
+                 * field. This is done in the server formatResponse() function.
+                 */
+                if (!(requestedFields.includes('ssoProtected')))
+                    return new AuthenticationError('The ssoProtected field is required to query this content.');
+
+                context.responseVerificationRequired = true;
+                return forwardReqToContentful(args, context, info);
+            }
+        }
+    })
+
+    // Function used in resolvers to forward requests on to Contentful
+    let forwardReqToContentful = (args, context, info) =>
+        info.mergeInfo.delegateToSchema({
+            schema: contentfulSchema,
+            operation: 'query',
+            fieldName: info.fieldName,
+            args,
+            context,
+            info
+        });
+
     // Merge all schemas (remote and local) here
     const schema = mergeSchemas({
         schemas: [
-            contentfulSchema
+            contentfulSchema,
         ],
-        resolvers: [{
-            Query: {
-                lessonCollection: (root, args, context, info) => {
-                    if(context.user) { // If the user is signed in, simply forward request
-                        return info.mergeInfo.delegateToSchema({
-                            schema: contentfulSchema,
-                            operation: 'query',
-                            fieldName: 'lessonCollection',
-                            args,
-                            context,
-                            info
-                        });
-                    } else { // If the user is not signed, forward request with additional filtering arguments
-                        return info.mergeInfo.delegateToSchema({
-                            schema: contentfulSchema,
-                            operation: 'query',
-                            fieldName: 'lessonCollection',
-                            args: {
-                                where: {
-                                    enabled: true
-                                }
-                            },
-                            context,
-                            info
-                        });
-                    } 
-                }
-            }
-        }]
+        resolvers: [{ Query: customQueryResolvers }],
     });
 
-    const server = new ApolloServer({ 
+    const server = new ApolloServer({
         schema,
         context: ({ req }) => {
-            // user = { upi: 'skav012' }; // Get session here
-            user = null;
-            return  { user };
+            let user;
+
+            const authHeader = req.headers.authorization || '';
+            if (!authHeader || authHeader.indexOf('Bearer ') !== 0) {
+                return null;
+            }
+            // Trim off the leading "Bearer"
+            const token = authHeader.substring('Bearer '.length);
+            try {
+                user = verifyJwt(token, cognitoPublicKeys);
+            } catch (e) {
+                // TODO: Handle TokenExpiredError: jwt expired
+                console.log("Token failed verification.", e);
+                return null;
+            }
+            if (user) {
+                console.log("Authenticated as user ", user.name)
+            }
+            return { user };
+        }, formatResponse: (res, context) => {
+
+            /**
+             * If the user is not signed in and the responseVerificationRequired flag is
+             * true (i.e. they requested potentially non-public information), check the response
+             * for the existence of any 'ssoProtected: true' fields.
+             */
+            if (context.operationName != 'IntrospectionQuery'
+                && !(!!context.context.user)
+                && context.context.responseVerificationRequired) {
+
+                if (JSON.stringify(res).includes('\"ssoProtected\":true'))
+                    throw new AuthenticationError('SSO authentication required to view this content.')
+            }
         },
     });
 
