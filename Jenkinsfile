@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent uoa-buildtools-ionic
 
     stages {
         stage("Checkout") {
