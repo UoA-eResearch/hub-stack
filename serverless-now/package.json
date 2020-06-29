@@ -25,6 +25,7 @@
     "serverless-mocha-plugin": "^1.12.0"
   },
   "dependencies": {
-    "@uoa/utilities": "0.0.6"
+    "@uoa/utilities": "0.0.6",
+    "uuid": "^8.1.0"
   }
 }
