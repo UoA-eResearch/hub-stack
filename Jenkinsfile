@@ -57,13 +57,20 @@ pipeline {
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
+                    // TODO: Enable after devops setup completed
                     // when {
                     //     changeset "**/research-hub-web/*.*"
                     // }
                     steps {
-                        echo 'Building research-hub project'
-                        sh "cd research-hub-web"
-                        sh "npm install"
+                        echo 'Building research-hub-web project'
+                        dir("research-hub-web") {
+                            echo 'Installing research-hub-web dependencies'
+                            sh "npm install"
+
+                            echo 'Running unit tests'
+                            sh 'npm run test'
+                        }
+
                     }
                 }
                 stage('Build cer-graphql') {
@@ -88,11 +95,17 @@ pipeline {
         stage('Run tests') {
             parallel {
                 stage('Run research-hub-web tests') {
-                    when {
-                        changeset "**/research-hub-web/*.*"
-                    }
+                    // TODO: Enable after devops setup completed
+                    // when {
+                        // changeset "**/research-hub-web/*.*"
+                    // }
                     steps {
                         echo 'Testing research-hub-web project'
+
+                        dir("research-hub-web") {
+                            echo 'Running research-hub-web unit tests'
+                            sh 'npm run test'
+                        }
                     }
                 }
                 stage('Run cer-graphql tests') {
