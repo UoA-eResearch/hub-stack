@@ -25,8 +25,8 @@ pipeline {
                         awsTokenId = 'aws-token-sandbox'
                         awsProfile = 'uoa-sandbox'
 
-                    } else if (BRANCH_NAME == 'test') {
-                        echo 'Setting variables for test deployment'
+                    } else if (BRANCH_NAME == 'nonprod') {
+                        echo 'Setting variables for nonprod deployment'
                         awsCredentialsId = 'uoa-its-nonprod-access'
                         awsTokenId = 'uoa-its-nonprod-token'
                         awsProfile = 'uoa-its-nonprod'
@@ -54,6 +54,37 @@ pipeline {
             }
         }
         
+        stage('Build projects') {
+            parallel {
+                stage('Build research-hub-web') {
+                    // when {
+                    //     changeset "**/research-hub-web/*.*"
+                    // }
+                    steps {
+                        echo 'Building research-hub project'
+                        sh "cd research-hub-web"
+                        sh "npm install"
+                    }
+                }
+                stage('Build cer-graphql') {
+                    when {
+                        changeset "**/cer-graphql/*.*"
+                    }
+                    steps {
+                        echo 'Building cer-graphql project'
+                    }
+                }
+                stage('Build serverless-now') {
+                    when {
+                        changeset "**/serverless-now/*.*"
+                    }
+                    steps {
+                        echo 'Building serverless-now project'
+                    }
+                }
+            }
+        }
+
         stage('Run tests') {
             parallel {
                 stage('Run research-hub-web tests') {
@@ -82,36 +113,7 @@ pipeline {
                 }
             }
         }  
-        
-        stage('Build projects') {
-            parallel {
-                stage('Build research-hub-web') {
-                    when {
-                        changeset "**/research-hub-web/*.*"
-                    }
-                    steps {
-                        echo 'Building research-hub project'
-                    }
-                }
-                stage('Build cer-graphql') {
-                    when {
-                        changeset "**/cer-graphql/*.*"
-                    }
-                    steps {
-                        echo 'Building cer-graphql project'
-                    }
-                }
-                stage('Build serverless-now') {
-                    when {
-                        changeset "**/serverless-now/*.*"
-                    }
-                    steps {
-                        echo 'Building serverless-now project'
-                    }
-                }
-            }
-        }
-  
+
         stage('Deploy projects') {
             parallel {
                 stage('Deploy research-hub-web') {
