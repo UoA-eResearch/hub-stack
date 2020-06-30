@@ -9,6 +9,50 @@ pipeline {
                 checkout scm
             }
         }
+
+        stage('AWS Credential Grab') {
+            steps{
+                script {
+                    echo "☯ Authenticating with AWS"
+
+                    def awsCredentialsId = ''
+                    def awsTokenId = ''
+                    def awsProfile = ''
+
+                    if (BRANCH_NAME == 'sandbox') {
+                        echo 'Setting variables for sandbox deployment'
+                        awsCredentialsId = 'aws-user-sandbox'
+                        awsTokenId = 'aws-token-sandbox'
+                        awsProfile = 'uoa-sandbox'
+
+                    } else if (BRANCH_NAME == 'test') {
+                        echo 'Setting variables for test deployment'
+                        awsCredentialsId = 'uoa-its-nonprod-access'
+                        awsTokenId = 'uoa-its-nonprod-token'
+                        awsProfile = 'uoa-its-nonprod'
+
+                    } else if (BRANCH_NAME == 'prod') {
+                        echo 'Setting variables for prod deployment'
+                        awsCredentialsId = 'uoa-its-prod-access'
+                        awsTokenId = 'uoa-its-prod-token'
+                        awsProfile = 'uoa-its-prod'
+
+                    } else {
+                        echo 'You are not on an environment branch, defaulting to sandbox'
+                        awsCredentialsId = 'aws-user-sandbox'
+                        awsTokenId = 'aws-token-sandbox'
+                        awsProfile = 'uoa-sandbox'
+                    }
+
+                    withCredentials([
+                        usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
+                        string(credentialsId: "${awsTokenId}", variable: 'awsToken')
+                    ]) {
+                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile}"
+                    }
+                }
+            }
+        }
         
         stage('Run tests') {
             parallel {
