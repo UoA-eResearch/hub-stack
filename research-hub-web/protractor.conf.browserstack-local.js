@@ -2,20 +2,21 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 // Note that this is the config file for e2e tests using BrowserStack's automation API (against local hosts). See protractor.conf.browserstack-remote.js for remote-test settings.
 
+const { SpecReporter } = require('jasmine-spec-reporter');
 var BROWSERSTACK_CREDENTIALS = require('./e2e/browserstack-credentials');
 var browserstack = require('browserstack-local');
 
 exports.config = {
   allScriptsTimeout: 11000,
   framework: 'jasmine',
-  baseUrl: 'http://localhost:4200/',
   jasmineNodeOpts: {
     showColors: true,
   },
   onPrepare: function () {
     require('ts-node').register({
-      project: './e2e/tsconfig.json'
+      project: require('path').join(__dirname, './e2e/tsconfig.json')
     });
+    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
     browser.driver.manage().window().maximize();
   },
 
@@ -46,11 +47,6 @@ exports.config = {
     'os': 'Windows',
     'os_version': '10',
     'resolution': '1920x1080'
-  }, {
-    'browserName': 'Safari',
-    'os': 'OS X',
-    'os_version': 'Mojave',
-    'resolution': '1600x1200'
   }],
 
   // Code to start browserstack local before start of test
