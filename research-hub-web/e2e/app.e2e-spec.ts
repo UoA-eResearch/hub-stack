@@ -4,22 +4,21 @@ import { protractor } from 'protractor/built/ptor';
 
 let page: ResearchHubPage;
 
-
 /**
  * Tests the basic functionality of the ResearchHub, e.g. whether the home page
  * loads successfully.
  */
-describe('ResearchHub\'s Basic Functionality', async () => {
+describe('ResearchHub\'s Basic Functionality', () => {
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new ResearchHubPage();
+    await page.navigateTo(browser.baseUrl);
   });
 
   /**
    * Visits the home page and checks it contains the heading 'Welcome to the ResearchHub'.
    */
   it('can display welcome message', async () => {
-    await page.navigateTo(browser.baseUrl);
     const welcomeMsg = await browser.driver.findElement(by.css('app-root h1')).getText();
     expect(welcomeMsg).toEqual('Welcome to the ResearchHub');
   });
@@ -29,7 +28,6 @@ describe('ResearchHub\'s Basic Functionality', async () => {
    * been successfully navigated to by checking the presence of the search results page title 'Results'.
    */
   it('can browse by category', async () => {
-    await page.navigateTo(browser.baseUrl);
     await browser.driver.findElement(by.className('tile-text')).click();
     await browser.waitForAngular();
     const searchPageTitle = await browser.driver.findElement(by.className('search-results-title')).getText();
@@ -87,8 +85,10 @@ describe('ResearchHub\'s Search Functionality', () => {
  */
 describe('ResearchHub\'s Filter Functionality', () => {
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new ResearchHubPage();
+    await page.navigateTo(browser.baseUrl + '/search');
+    await browser.waitForAngular();
   });
 
   /**
@@ -102,10 +102,9 @@ describe('ResearchHub\'s Filter Functionality', () => {
      */
     let initialResultCount: number, filteredResultCount: number;
 
-    await page.navigateTo(browser.baseUrl + '/search');
-    await browser.waitForAngular();
     await browser.driver.findElement(by.className('search-results-text')).getText().then(result => initialResultCount = parseInt(result));
     await browser.waitForAngular();
+
     await browser.driver.findElement(by.css('.mat-slide-toggle-thumb')).click();
     await browser.waitForAngular();
 
@@ -127,19 +126,18 @@ describe('ResearchHub\'s Integrated Services', () => {
     page = new ResearchHubPage();
   });
 
-
   /**
    * Searches for the item 'research vm' using the home page search box -> Clicks the first result ->
    * Clicks the 'Request' button -> checks for SSO page heading 'The University of Auckland'.
+   * TODO: Disabled until dashboard website created.
    */
-  xit('clicking the \'Request\' button on the \'Research Virtual Machines\' page redirects to Single sign-on', async () => {
+  it('clicking the \'Request\' button on the \'Research Virtual Machines\' page redirects to Single sign-on', async () => {
     await page.navigateTo(browser.baseUrl);
     await browser.driver.findElement(by.css('input')).sendKeys('research vm');
     await browser.waitForAngular();
 
     await browser.driver.findElement(by.css('.results-list .mat-list-item')).click();
     await browser.waitForAngular();
-
 
     await browser.driver.findElement(by.css('.mat-raised-button')).click();
     browser.ignoreSynchronization = true; // Don't wait for Angular components to load as this is an external site
@@ -155,16 +153,16 @@ describe('ResearchHub\'s Integrated Services', () => {
  */
 describe('ResearchHub\'s Research Impact Content', () => {
 
-  beforeEach(() => {
+  beforeEach(async () => {
     page = new ResearchHubPage();
+    await page.navigateTo(browser.baseUrl + 'researchimpact');
+    await browser.waitForAngular();
   });
 
   /**
    * Directly navigates to the Research Impact guide page and checks the presence of the title 'Research Impact Guide'.
    */
   it('can directly navigate to main guide page', async () => {
-    await page.navigateTo(browser.baseUrl + '/researchimpact');
-    await browser.waitForAngular();
     expect(await browser.driver.findElement(by.css('.description h2')).getText()).toEqual('Research Impact Guide');
   });
 
@@ -173,8 +171,6 @@ describe('ResearchHub\'s Research Impact Content', () => {
    * src attribute.
    */
   it('can load an iframe with youtube as src attribute', async () => {
-    await page.navigateTo(browser.baseUrl + '/researchimpact');
-    await browser.waitForAngular();
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description iframe'))), 9000);
     expect(await browser.driver.findElement(by.css('.description iframe')).getAttribute('src')).toContain('youtube');
   });
@@ -184,8 +180,6 @@ describe('ResearchHub\'s Research Impact Content', () => {
    * its title is 'Planning for Impact'.
    */
   it('can correctly load a sub-page (guideCategory) item', async () => {
-    await page.navigateTo(browser.baseUrl + '/researchimpact');
-    await browser.waitForAngular();
     await browser.driver.findElement(by.css('mat-grid-list .browse-tile')).click();
     await browser.waitForAngular();
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description h1'))), 9000);
@@ -197,8 +191,6 @@ describe('ResearchHub\'s Research Impact Content', () => {
    * the final part of the breadcrumbs is 'Planning for Impact'.
    */
   it('can display the breadcrumbs correctly', async () => {
-    await page.navigateTo(browser.baseUrl + '/researchimpact');
-    await browser.waitForAngular();
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('mat-grid-list .browse-tile:first-of-type'))));
     await browser.driver.findElement(by.css('mat-grid-list .browse-tile:first-of-type')).click();
     await browser.waitForAngular();

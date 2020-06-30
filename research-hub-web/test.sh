@@ -49,7 +49,8 @@ run_protractor() {
         fi
     else
         echo "Running Local Selenium tests against host: $1"
-        ./node_modules/.bin/protractor protractor.conf.js --baseUrl  $1
+        # ./node_modules/.bin/protractor protractor.conf.js --baseUrl  $1
+        ng e2e
     fi
 }
 
