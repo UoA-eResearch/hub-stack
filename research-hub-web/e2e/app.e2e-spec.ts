@@ -119,6 +119,7 @@ describe('ResearchHub\'s Filter Functionality', () => {
 
 /**
  * Describes a series of tests of the ResearchHub' integrated services.
+ * TODO: Disabled until dashboard website created.
  */
 describe('ResearchHub\'s Integrated Services', () => {
 
@@ -129,9 +130,9 @@ describe('ResearchHub\'s Integrated Services', () => {
   /**
    * Searches for the item 'research vm' using the home page search box -> Clicks the first result ->
    * Clicks the 'Request' button -> checks for SSO page heading 'The University of Auckland'.
-   * TODO: Disabled until dashboard website created.
+   * 
    */
-  it('clicking the \'Request\' button on the \'Research Virtual Machines\' page redirects to Single sign-on', async () => {
+  xit('clicking the \'Request\' button on the \'Research Virtual Machines\' page redirects to Single sign-on', async () => {
     await page.navigateTo(browser.baseUrl);
     await browser.driver.findElement(by.css('input')).sendKeys('research vm');
     await browser.waitForAngular();

@@ -2,6 +2,7 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 // Note that this is the config file for e2e tests using BrowserStack's automation API (against remote hosts). See protractor.conf.browserstack-local.js for local-test settings.
 
+const { SpecReporter } = require('jasmine-spec-reporter');
 var BROWSERSTACK_CREDENTIALS = require('./e2e/browserstack-credentials');
 
 exports.config = {

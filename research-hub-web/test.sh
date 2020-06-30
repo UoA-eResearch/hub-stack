@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Specify host_urls here
-host_urls[1]='https://research-hub.auckland.ac.nz'
-host_urls[2]='https://test.research-hub.cer.auckland.ac.nz'
-host_urls[3]='https://dev.research-hub.cer.auckland.ac.nz'
-host_urls[4]='localhost'
+host_urls[1]='https://research-hub.auckland.ac.nz/'
+host_urls[2]='https://test.research-hub.cer.auckland.ac.nz/'
+host_urls[3]='https://dev.research-hub.cer.auckland.ac.nz/'
+host_urls[4]='http://localhost:4200/'
 
 echo "======================================================"
 echo "=        Welcome to the ResearchHub Test Runner      ="
@@ -42,14 +42,15 @@ run_protractor() {
     if [ "$seleniumServer" = 1 ]; then
         if [ "$host" = 1 ]; then
             echo "Running BrowserStack tests against remote host: $1"
-            ./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl  $1
+            ./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl "$1"
         else
             echo "Running BrowserStack tests against local host: $1"
-            ./node_modules/.bin/protractor protractor.conf.browserstack-local --baseUrl  $1
+            echo "Safari testing only supported on remote hosts, see https://www.browserstack.com/question/664"
+            ./node_modules/.bin/protractor protractor.conf.browserstack-local --baseUrl "$1"
+
         fi
     else
         echo "Running Local Selenium tests against host: $1"
-        # ./node_modules/.bin/protractor protractor.conf.js --baseUrl  $1
         ng e2e
     fi
 }
