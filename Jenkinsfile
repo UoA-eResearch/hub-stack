@@ -22,13 +22,13 @@ pipeline {
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
                         awsCredentialsId = 'aws-sandbox-user'
-                        awsTokenId = 'aws-token-sandbox'
+                        awsTokenId = 'aws-sandbox-token'
                         awsProfile = 'uoa-sandbox'
 
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
-                        awsCredentialsId = 'uoa-its-nonprod-access'
-                        awsTokenId = 'uoa-its-nonprod-token'
+                        awsCredentialsId = 'aws-its-nonprod-access'
+                        awsTokenId = 'aws-its-nonprod-token'
                         awsProfile = 'uoa-its-nonprod'
 
                     } else if (BRANCH_NAME == 'prod') {
@@ -40,7 +40,7 @@ pipeline {
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         awsCredentialsId = 'aws-sandbox-user'
-                        awsTokenId = 'aws-token-sandbox'
+                        awsTokenId = 'aws-sandbox-token'
                         awsProfile = 'uoa-sandbox'
                     }
 
