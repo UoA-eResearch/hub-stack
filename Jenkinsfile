@@ -21,7 +21,7 @@ pipeline {
 
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
-                        awsCredentialsId = 'aws-user-sandbox'
+                        awsCredentialsId = 'aws-sandbox-user'
                         awsTokenId = 'aws-token-sandbox'
                         awsProfile = 'uoa-sandbox'
 
@@ -39,7 +39,7 @@ pipeline {
 
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
-                        awsCredentialsId = 'aws-user-sandbox'
+                        awsCredentialsId = 'aws-sandbox-user'
                         awsTokenId = 'aws-token-sandbox'
                         awsProfile = 'uoa-sandbox'
                     }
