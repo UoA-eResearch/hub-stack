@@ -82,12 +82,14 @@ pipeline {
                     }
                 }
                 stage('Build serverless-now') {
-                    when {
-                        changeset "**/serverless-now/*.*"
-                    }
+                    // when {
+                    //     changeset "**/serverless-now/*.*"
+                    // }
                     steps {
-                        echo 'Building serverless-now project'
-                        sh "npm install --only=dev"
+                        dir("serverless-now") {
+                            echo 'Building serverless-now project'
+                            sh "npm install --only=dev"
+                        }
                     }
                 }
             }
@@ -158,6 +160,9 @@ pipeline {
                             sh 'pwd'
                             sh 'ls'
                             sh '(cd ./serverless-now/;sls deploy)'
+                        }
+                        dir("serverless-now") {
+                            sh 'sls deploy'
                         }
                     }
                 }
