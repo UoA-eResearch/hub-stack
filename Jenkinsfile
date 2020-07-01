@@ -155,12 +155,6 @@ pipeline {
                     // }
                     steps {
                         echo 'Deploying serverless-now Lambda function to ' + BRANCH_NAME
-                        // script {
-                        //     echo "Deploying..."
-                        //     sh 'pwd'
-                        //     sh 'ls'
-                        //     sh '(cd ./serverless-now/;sls deploy)'
-                        // }
                         dir("serverless-now") {
                             sh 'sls deploy --aws-profile uoa-sandbox'
                         }
