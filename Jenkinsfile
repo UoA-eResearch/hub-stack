@@ -156,7 +156,7 @@ pipeline {
                             echo "Deploying..."
                             sh 'pwd'
                             sh 'ls'
-                            sh 'serverless deploy'
+                            sh '(cd ./serverless-now/;serverless deploy)'
                         }
                     }
                 }
