@@ -192,7 +192,7 @@ describe('ResearchHub\'s Research Impact Content', () => {
    * the final part of the breadcrumbs is 'Planning for Impact'.
    */
   it('can display the breadcrumbs correctly', async () => {
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('mat-grid-list .browse-tile:first-of-type'))));
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('mat-grid-list .browse-tile:first-of-type'))), 9000);
     await browser.driver.findElement(by.css('mat-grid-list .browse-tile:first-of-type')).click();
     await browser.waitForAngular();
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description a:nth-of-type(3)'))), 9000);
