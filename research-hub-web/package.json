@@ -9,6 +9,7 @@
     "postinstall": "ngcc",
     "build-prod": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod --stats-json",
     "test-prod": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve --port 4000 --prod",
+    "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "test": "ng test",
     "ci-test": "ng test --environment prod --single-run",
     "lint": "ng lint",
