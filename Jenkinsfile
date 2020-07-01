@@ -104,10 +104,10 @@ pipeline {
 
                         dir("research-hub-web") {
                             echo 'Running research-hub-web unit tests'
-                            // sh 'npm run test-headless'
+                            sh 'npm run test-headless'
 
                             echo 'Running research-hub-web e2e tests'
-                            // sh 'npm run e2e'
+                            sh 'npm run e2e'
                         }
                     }
                 }
