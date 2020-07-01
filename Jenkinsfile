@@ -120,11 +120,15 @@ pipeline {
                     }
                 }
                 stage('Run serverless-now tests') {
-                    when {
-                        changeset "**/serverless-now/*.*"
-                    }
+                    // TODO: re-enable changeset when complete.
+                    // when {
+                    //     changeset "**/serverless-now/*.*"
+                    // }
                     steps {
                         echo 'Testing serverless-now project'
+                        dir('serverless-now') {
+                           sh 'sls invoke test'
+                        }
                     }
                 }
             }
