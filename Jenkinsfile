@@ -152,7 +152,11 @@ pipeline {
                     // }
                     steps {
                         echo 'Deploying serverless-now Lambda function to ' + BRANCH_NAME
-                        echo 'test'
+                        script {
+                            echo "Deploying..."
+                            sh 'pwd'
+                            sh 'serverless deploy'
+                        }
                     }
                 }
             }
