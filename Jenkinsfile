@@ -67,8 +67,8 @@ pipeline {
                             echo 'Installing research-hub-web dependencies'
                             sh "npm install"
 
-                            echo 'Running unit tests'
-                            sh 'npm run test-headless'
+                            echo 'Building for production'
+                            sh "npm run build --prod"
                         }
 
                     }
@@ -104,7 +104,10 @@ pipeline {
 
                         dir("research-hub-web") {
                             echo 'Running research-hub-web unit tests'
-                            sh 'npm run test'
+                            sh 'npm run test-headless'
+
+                            echo 'Running research-hub-web e2e tests'
+                            sh 'npm run e2e'
                         }
                     }
                 }
