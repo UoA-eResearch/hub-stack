@@ -68,7 +68,7 @@ pipeline {
                             sh "npm install"
 
                             echo 'Running unit tests'
-                            sh 'npm run test'
+                            sh 'npm run test-headless'
                         }
 
                     }
