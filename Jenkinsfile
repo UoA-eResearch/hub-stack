@@ -58,9 +58,9 @@ pipeline {
             parallel {
                 stage('Build research-hub-web') {
                     // TODO: Enable after devops setup completed
-                    // when {
-                    //     changeset "**/research-hub-web/*.*"
-                    // }
+                    when {
+                        changeset "**/research-hub-web/*.*"
+                    }
                     steps {
                         echo 'Building research-hub-web project'
                         dir("research-hub-web") {
