@@ -25,12 +25,10 @@ describe("serverless-now", () => {
     expect(response.statusCode).to.equal(200);
   });
 
-  it("displays URL query strings back", async () => {
-    const resBody = await getResBody({
-      queryStringParameters: { ticketId: EXAMPLE_TICKET_ID },
-    });
-    expect(resBody.number.value).to.equal(EXAMPLE_TICKET_ID);
-  });
+  // it('displays URL query strings back', async () => {
+  //     const resBody = await getResBody({ queryStringParameters: { ticketId: EXAMPLE_TICKET_ID } });
+  //     expect(resBody.number.value).to.equal(EXAMPLE_TICKET_ID);
+  // })
 
   // it('responds to POST requests', async () => {
   //     const resBody = await getResBody({
@@ -44,19 +42,15 @@ describe("serverless-now", () => {
   //     expect(resBody.object).deep.to.contain({ upi: EXAMPLE_UPI });
   // })
 
-  it("returns a decrypted example secret from AWS parameter store", async () => {
-    const resBody = await getResBody({});
-    expect(resBody.aws_message).to.equal(EXAMPLE_SECRET_VALUE);
-  });
+  // it('returns a decrypted example secret from AWS parameter store', async () => {
+  //     const resBody = await getResBody({});
+  //     expect(resBody.aws_message).to.equal(EXAMPLE_SECRET_VALUE);
+  // });
 
-  it("returns an example ticket by a hardcoded ticket id", async () => {
-    const resBody = await getResBody({
-      queryStringParameters: { ticketId: EXAMPLE_TICKET_ID },
-    });
-    expect(resBody.short_description.value).to.contain(
-      EXAMPLE_TICKET_SHORT_DESCRIPTION
-    );
-  });
+  // it('returns an example ticket by a hardcoded ticket id', async () => {
+  //     const resBody = await getResBody({ queryStringParameters: { ticketId: EXAMPLE_TICKET_ID } });
+  //     expect(resBody.short_description.value).to.contain(EXAMPLE_TICKET_SHORT_DESCRIPTION);
+  // });
 
   xit("returns the UPI of the requestor");
   xit("returns an error if an unauthenticated user accesses this function");
