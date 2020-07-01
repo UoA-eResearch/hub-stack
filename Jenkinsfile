@@ -133,9 +133,9 @@ pipeline {
         stage('Deploy projects') {
             parallel {
                 stage('Deploy research-hub-web') {
-                    when {
-                        changeset "**/research-hub-web/*.*"
-                    }
+                    // when {
+                    //     changeset "**/research-hub-web/*.*"
+                    // }
                     steps {
                         script {
                             echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
