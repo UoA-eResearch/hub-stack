@@ -88,7 +88,7 @@ pipeline {
                     steps {
                         dir("serverless-now") {
                             echo 'Building serverless-now project'
-                            sh "npm install --only=dev"
+                            sh "npm install"
                         }
                     }
                 }
