@@ -155,6 +155,7 @@ pipeline {
                         script {
                             echo "Deploying..."
                             sh 'pwd'
+                            sh 'ls'
                             sh 'serverless deploy'
                         }
                     }
