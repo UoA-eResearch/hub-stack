@@ -25,10 +25,23 @@ describe("serverless-now", () => {
     expect(response.statusCode).to.equal(200);
   });
 
-  // it('displays URL query strings back', async () => {
-  //     const resBody = await getResBody({ queryStringParameters: { ticketId: EXAMPLE_TICKET_ID } });
-  //     expect(resBody.number.value).to.equal(EXAMPLE_TICKET_ID);
-  // })
+  it("displays URL query strings back without wrapper function", async () => {
+    const response = await wrapped.run({
+      queryStringParameters: {
+        ticketId: EXAMPLE_TICKET_ID,
+      },
+    });
+    console.log(response);
+    expect(response.statusCode).to.equal(200);
+  });
+
+  it("displays URL query strings back", async () => {
+    const resBody = await getResBody({
+      queryStringParameters: { ticketId: EXAMPLE_TICKET_ID },
+    });
+    console.log(resBody);
+    expect(resBody.number.value).to.equal(EXAMPLE_TICKET_ID);
+  });
 
   // it('responds to POST requests', async () => {
   //     const resBody = await getResBody({
