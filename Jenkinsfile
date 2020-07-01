@@ -137,30 +137,32 @@ pipeline {
                         changeset "**/research-hub-web/*.*"
                     }
                     steps {
-                        echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
+                        script {
+                            echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
 
-                        def awsProfile = ''
-                        def s3BucketName = 'research-hub-web'
+                            def awsProfile = ''
+                            def s3BucketName = 'research-hub-web'
 
-                        // TODO: Refactor duplicate logic
-                        if (BRANCH_NAME == 'sandbox') {
-                            echo 'Setting variables for sandbox deployment'
-                            awsProfile = "uoa-sandbox"
+                            // TODO: Refactor duplicate logic
+                            if (BRANCH_NAME == 'sandbox') {
+                                echo 'Setting variables for sandbox deployment'
+                                awsProfile = "uoa-sandbox"
 
-                        } else if (BRANCH_NAME == 'nonprod') {
-                            echo 'Setting variables for TEST deployment'
-                            awsProfile = "uoa-its-nonprod"
+                            } else if (BRANCH_NAME == 'nonprod') {
+                                echo 'Setting variables for TEST deployment'
+                                awsProfile = "uoa-its-nonprod"
 
-                        } else if (BRANCH_NAME == 'prod') {
-                            echo 'Setting variables for PROD deployment'
-                            awsProfile = "uoa-its-prod"
+                            } else if (BRANCH_NAME == 'prod') {
+                                echo 'Setting variables for PROD deployment'
+                                awsProfile = "uoa-its-prod"
 
-                        } else {
-                            echo 'You are not on an environment branch, defaulting to sandbox'
-                            awsProfile = "uoa-sandbox"
+                            } else {
+                                echo 'You are not on an environment branch, defaulting to sandbox'
+                                awsProfile = "uoa-sandbox"
+                            }
+                            sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
+                            echo "Sync complete"
                         }
-                        sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
-                        echo "Sync complete"
                     }
                 }
                 stage('Deploy cer-graphql') {
