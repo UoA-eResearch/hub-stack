@@ -160,8 +160,11 @@ pipeline {
                                 echo 'You are not on an environment branch, defaulting to sandbox'
                                 awsProfile = "uoa-sandbox"
                             }
-                            sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
-                            echo "Sync complete"
+
+                            dir("research-hub-web") {
+                                sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
+                                echo "Sync complete"
+                            }
                         }
                     }
                 }
