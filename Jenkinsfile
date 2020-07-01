@@ -162,7 +162,7 @@ pipeline {
                         //     sh '(cd ./serverless-now/;sls deploy)'
                         // }
                         dir("serverless-now") {
-                            sh 'sls deploy'
+                            sh 'sls deploy --aws-profile uoa-sandbox'
                         }
                     }
                 }
