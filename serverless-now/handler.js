@@ -11,7 +11,13 @@ module.exports.main = async (event) => {
     // TODO: Enable POST to ServiceNow
     let requesterData;
 
-    console.log(`the process env is ${process.env.ENV}`);
+    // console.log(`the process env is ${process.env.ENV}`);
+    return {
+      statusCode: 200,
+      body:JSON.stringify(
+        `the process env is ${process.env.ENV}`
+      )
+    };
 
     // preferred username is the closest thing
     try {
