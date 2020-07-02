@@ -10,6 +10,9 @@ module.exports.main = async (event) => {
   if (event.httpMethod === "POST" && event.body) {
     // TODO: Enable POST to ServiceNow
     let requesterData;
+
+    console.log(`the process env is ${process.env.ENV}`);
+
     // preferred username is the closest thing
     try {
       let cognitoDomain = process.env.COGNITO_DOMAIN;
