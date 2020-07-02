@@ -127,7 +127,7 @@ pipeline {
                     steps {
                         echo 'Testing serverless-now project'
                         dir('serverless-now') {
-                           sh 'sls invoke test'
+                           sh 'sls invoke test --aws-profile uoa-sandbox'
                         }
                     }
                 }
