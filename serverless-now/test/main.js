@@ -33,17 +33,17 @@ describe("serverless-now", () => {
   });
 
   // TODO: commenting out until POST requests are working.
-  //   it("responds to POST requests", async () => {
-  //     const resBody = await getResBody({
-  //       httpMethod: "POST",
-  //       body: {
-  //         upi: EXAMPLE_UPI,
-  //         comment: "Example ticket comment.",
-  //       },
-  //     });
-  //     console.log(resBody);
-  //     expect(resBody.object).deep.to.contain({ upi: EXAMPLE_UPI });
-  //   });
+    it("responds to POST requests", async () => {
+      const resBody = await getResBody({
+        httpMethod: "POST",
+        body: {
+          upi: EXAMPLE_UPI,
+          comment: "Example ticket comment.",
+        },
+      });
+      console.log(resBody);
+      expect(resBody.object).deep.to.contain({ upi: EXAMPLE_UPI });
+    });
 
   it("returns a decrypted example secret from AWS parameter store", async () => {
     const resBody = await getResBody({});
