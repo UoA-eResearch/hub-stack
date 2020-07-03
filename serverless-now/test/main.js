@@ -41,6 +41,7 @@ describe("serverless-now", () => {
       }
     });
     console.log(response);
+    console.log('@@@@');
     if (response == {}) {
       console.log("the response is an empty object.");
     }
