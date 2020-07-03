@@ -32,23 +32,6 @@ describe("serverless-now", () => {
     expect(resBody.number.value).to.equal(EXAMPLE_TICKET_ID);
   });
 
-
-  it ("Responds to a POST request", async () => {
-    const response = wrapped.run({
-      httpMethod: "POST",
-      body: {
-        upi: "test"
-      }
-    });
-    console.log(response);
-    console.log('@@@@');
-    if (response == {}) {
-      console.log("the response is an empty object.");
-    }
-    expect(response).to.be.equal(true);
-  })
-
-
   // TODO: commenting out until POST requests are working.
     // it("responds to POST requests with a valid body", async () => {
     //   const resBody = await getResBody({
