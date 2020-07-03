@@ -9,6 +9,7 @@ module.exports.main = async (event) => {
   // POST (Create) a new ServiceNow ticket
   if (event.httpMethod === "POST" && event.body) {
     // TODO: Enable POST to ServiceNow
+    
     let requesterData;
 
     // preferred username is the closest thing
