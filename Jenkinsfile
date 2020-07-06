@@ -36,6 +36,8 @@ pipeline {
 
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
+                        BRANCH_NAME = 'sandbox'
+
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
@@ -73,7 +75,7 @@ pipeline {
                             sh "npm install"
 
                             echo 'Building for production'
-                            sh "npm run build --prod"
+                            sh "npm run build -c ${BRANCH_NAME}"
                         }
                     }
                 }
