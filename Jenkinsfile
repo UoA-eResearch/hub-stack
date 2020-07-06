@@ -4,7 +4,10 @@ pipeline {
     }
 
     environment {
-        awsCredentialsId, awsTokenId, awsProfile = '';
+        awsCredentialsId = '';
+        awsTokenId  = '';
+        awsProfile = '';
+
     }
 
     stages {
@@ -19,27 +22,27 @@ pipeline {
         stage('Set environment variables') {
             if(BRANCH_NAME == 'sandbox') {
                 echo 'Setting variables for sandbox deployment'
-                awsCredentialsId = 'aws-sandbox-user'
-                awsTokenId = 'aws-sandbox-token'
-                awsProfile = 'uoa-sandbox'
+                env.awsCredentialsId = 'aws-sandbox-user'
+                env.awsTokenId = 'aws-sandbox-token'
+                env.awsProfile = 'uoa-sandbox'
 
             } else if (BRANCH_NAME == 'nonprod') {
                 echo 'Setting variables for nonprod deployment'
-                awsCredentialsId = 'aws-its-nonprod-access'
-                awsTokenId = 'aws-its-nonprod-token'
-                awsProfile = 'uoa-its-nonprod'
+                env.awsCredentialsId = 'aws-its-nonprod-access'
+                env.awsTokenId = 'aws-its-nonprod-token'
+                env.awsProfile = 'uoa-its-nonprod'
 
             } else if (BRANCH_NAME == 'prod') {
                 echo 'Setting variables for prod deployment'
-                awsCredentialsId = 'uoa-its-prod-access'
-                awsTokenId = 'uoa-its-prod-token'
-                awsProfile = 'uoa-its-prod'
+                env.awsCredentialsId = 'uoa-its-prod-access'
+                env.awsTokenId = 'uoa-its-prod-token'
+                env.awsProfile = 'uoa-its-prod'
 
             } else {
                 echo 'You are not on an environment branch, defaulting to sandbox'
-                awsCredentialsId = 'aws-sandbox-user'
-                awsTokenId = 'aws-sandbox-token'
-                awsProfile = 'uoa-sandbox'
+                env.awsCredentialsId = 'aws-sandbox-user'
+                env.awsTokenId = 'aws-sandbox-token'
+                env.awsProfile = 'uoa-sandbox'
             }
         }
 
