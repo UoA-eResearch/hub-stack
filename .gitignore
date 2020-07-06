@@ -13,6 +13,7 @@ logs
 npm-debug.log*
 
 # ==================== research-hub-web ================ #
+research-hub-web/www/
 research-hub-web/dist/
 research-hub-web/documentation/
 

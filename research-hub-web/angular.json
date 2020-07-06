@@ -75,7 +75,7 @@
                 }
               ]
             },
-            "production": {
+            "prod": {
               "budgets": [
                 {
                   "type": "anyComponentStyle",
@@ -97,6 +97,52 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ]
+            },
+            "nonprod": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.nonprod.ts"
+                }
+              ]
+            },
+            "sandbox": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.sandbox.ts"
+                }
+              ]
             }
           }
         },
@@ -109,14 +155,14 @@
             "local": {
               "browserTarget": "research-hub-web:build:local"
             },
-            "dev": {
-              "browserTarget": "research-hub-web:build:dev"
+            "sandbox": {
+              "browserTarget": "research-hub-web:build:sandbox"
             },
-            "test": {
-              "browserTarget": "research-hub-web:build:test"
+            "nonprod": {
+              "browserTarget": "research-hub-web:build:nonprod"
             },
-            "production": {
-              "browserTarget": "research-hub-web:build:production"
+            "prod": {
+              "browserTarget": "research-hub-web:build:prod"
             }
           }
         },

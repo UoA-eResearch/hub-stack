@@ -1,4 +1,4 @@
-// TODO: Insert prod values
+// TODO: Insert nonprod values
 export const environment = {
   production: true,
   researchHubApiUrl: '',
