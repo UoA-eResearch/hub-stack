@@ -75,7 +75,7 @@ pipeline {
                             sh "npm install"
 
                             echo 'Building for production'
-                            sh "npm run build -c ${BRANCH_NAME}"
+                            sh "ng build -c ${BRANCH_NAME}"
                         }
                     }
                 }
