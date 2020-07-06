@@ -64,10 +64,9 @@ pipeline {
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
-                    // TODO: Enable after devops setup completed
-                    // when {
-                    //     changeset "**/research-hub-web/*.*"
-                    // }
+                    when {
+                        changeset "**/research-hub-web/*.*"
+                    }
                     steps {
                         echo 'Building research-hub-web project'
                         dir("research-hub-web") {
@@ -101,10 +100,9 @@ pipeline {
         stage('Run tests') {
             parallel {
                 stage('Run research-hub-web tests') {
-                    // TODO: Enable after devops setup completed
-                    // when {
-                        // changeset "**/research-hub-web/*.*"
-                    // }
+                    when {
+                        changeset "**/research-hub-web/*.*"
+                    }
                     steps {
                         echo 'Testing research-hub-web project'
 
@@ -139,9 +137,9 @@ pipeline {
         stage('Deploy projects') {
             parallel {
                 stage('Deploy research-hub-web') {
-                    // when {
-                    //     changeset "**/research-hub-web/*.*"
-                    // }
+                    when {
+                        changeset "**/research-hub-web/*.*"
+                    }
                     stages {
                         stage('Deploy to S3 bucket') {
                             steps {
