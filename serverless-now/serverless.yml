@@ -53,9 +53,9 @@ provider:
         - kms:Decrypt
       Resource:
         - "arn:aws:kms:ap-southeast-2:416527880812:key/3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d"
-  apiGateway:
+  alb: # Don't know what this stands for
     authorizers:
-      cognito-authorizer-uoapool:
+      uoapoolAuth:
         type: 'cognito'
         userPoolArn: 'arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O'
         userPoolClientId: 'lrju6v80vse4bbaesjvnr2ff0' # required
