@@ -8,6 +8,8 @@ custom:
   WikiLink: N/A
   Application: ${self:service}
   CostCentre: N/A
+  # customDomain:
+  #   domainName: 
 
 
 provider:
