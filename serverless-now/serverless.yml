@@ -53,14 +53,14 @@ provider:
         - kms:Decrypt
       Resource:
         - "arn:aws:kms:ap-southeast-2:416527880812:key/3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d"
-  alb:
+  apiGateway:
     authorizers:
       cognito-authorizer-uoapool:
         type: 'cognito'
         userPoolArn: 'arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O'
         userPoolClientId: 'lrju6v80vse4bbaesjvnr2ff0' # required
         userPoolDomain: 'uoapool-sandbox' # required
-        scope: 'openid profile https://my-domain.auckland.ac.nz/angular-test' 
+        scope: ${file(env/${self:provider.stage}.json):OAUTH_SCOPES} 
 
 package:
   exclude:
@@ -97,10 +97,7 @@ functions:
             type: cognito_user_pools
             arn: arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O
             identitySource: method.request.header.Authorization
-            scopes: 
-              - openid
-              - profile
-              - https://test-domain.auckland.ac.nz/lambda-hello-world
+            scopes: ${file(env/${self:provider.stage}.json):OAUTH_SCOPES}
               
 plugins:
   - serverless-offline
