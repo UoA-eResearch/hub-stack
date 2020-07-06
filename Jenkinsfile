@@ -3,13 +3,6 @@ pipeline {
         label("uoa-buildtools-ionic")
     }
 
-    environment {
-        awsCredentialsId = '';
-        awsTokenId  = '';
-        awsProfile = '';
-
-    }
-
     stages {
 
         stage("Checkout") {
@@ -18,7 +11,6 @@ pipeline {
             }
         }
 
-        // Define Global Variables
         stage('Set environment variables') {
             if(BRANCH_NAME == 'sandbox') {
                 echo 'Setting variables for sandbox deployment'
