@@ -128,7 +128,7 @@ pipeline {
                     }
                 }
             }
-        }  
+        }
 
         stage('Deploy projects') {
             parallel {
@@ -136,34 +136,57 @@ pipeline {
                     // when {
                     //     changeset "**/research-hub-web/*.*"
                     // }
-                    steps {
-                        script {
-                            echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
+                    stages {
+                        stage('Deploy to S3 bucket') {
+                            steps {
+                                script {
+                                    echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
 
-                            def awsProfile = ''
-                            def s3BucketName = 'research-hub-web'
+                                    def awsProfile = ''
+                                    def s3BucketName = 'research-hub-web'
 
-                            // TODO: Refactor duplicate logic
-                            if (BRANCH_NAME == 'sandbox') {
-                                echo 'Setting variables for sandbox deployment'
-                                awsProfile = "uoa-sandbox"
+                                    // TODO: Refactor duplicate logic
+                                    if (BRANCH_NAME == 'sandbox') {
+                                        echo 'Setting variables for sandbox deployment'
+                                        awsProfile = "uoa-sandbox"
 
-                            } else if (BRANCH_NAME == 'nonprod') {
-                                echo 'Setting variables for TEST deployment'
-                                awsProfile = "uoa-its-nonprod"
+                                    } else if (BRANCH_NAME == 'nonprod') {
+                                        echo 'Setting variables for TEST deployment'
+                                        awsProfile = "uoa-its-nonprod"
 
-                            } else if (BRANCH_NAME == 'prod') {
-                                echo 'Setting variables for PROD deployment'
-                                awsProfile = "uoa-its-prod"
+                                    } else if (BRANCH_NAME == 'prod') {
+                                        echo 'Setting variables for PROD deployment'
+                                        awsProfile = "uoa-its-prod"
 
-                            } else {
-                                echo 'You are not on an environment branch, defaulting to sandbox'
-                                awsProfile = "uoa-sandbox"
+                                    } else {
+                                        echo 'You are not on an environment branch, defaulting to sandbox'
+                                        awsProfile = "uoa-sandbox"
+                                    }
+
+                                    dir("research-hub-web") {
+                                        sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
+                                        echo "Sync complete"
+                                    }
+                                }
                             }
+                        }
+                        stage('Invalidate CloudFront') {
+                            steps {
+                                script {
+                                    echo "Invalidating..."
 
-                            dir("research-hub-web") {
-                                sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
-                                echo "Sync complete"
+                                    // TODO: Enter nonprod/prod CloudFrontDistroIds
+                                    def awsCloudFrontDistroId = (
+                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'nonprod' ? '' :
+                                        'E20R95KPAKSWTG'
+                                    )
+
+                                    echo "Cloudfront distro id: ${awsCloudFrontDistroId}"
+
+                                    sh "aws cloudfront create-invalidation --distribution-id ${awsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
+                                    echo "Invalidation started"
+                                }
                             }
                         }
                     }
