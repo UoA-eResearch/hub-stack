@@ -38,8 +38,8 @@ provider:
     ENV: ${self:provider.stage}
     LEVEL: INFO
     EXAMPLE_KEY: ${ssm:/${self:provider.stage}/research-hub/example-key~true}
-    SN_API_KEY_R: ${ssm:/${self:provider.stage}/research-hub/SN_API_KEY_R~true}
-    SN_DEV_API_KEY_RW: ${ssm:/${self:provider.stage}/research-hub/SN_DEV_API_KEY_RW~true}
+    SN_API_KEY_R: ${file(env/${self:provider.stage}.json):SN_API_KEY_R}
+    SN_DEV_API_KEY_RW: ${file(env/${self:provider.stage}.json):SN_DEV_API_KEY_RW}
     COGNITO_DOMAIN: ${file(env/${self:provider.stage}.json):COGNITO_DOMAIN}
   iamRoleStatements:
     - Effect: Allow
