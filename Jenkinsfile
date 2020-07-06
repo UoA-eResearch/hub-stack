@@ -182,6 +182,13 @@ pipeline {
                                         'E20R95KPAKSWTG'
                                     )
 
+                                    // TODO: Refactor
+                                    def awsProfile = (
+                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'nonprod' ? '' :
+                                        'uoa-sandbox'
+                                    )
+
                                     echo "Cloudfront distro id: ${awsCloudFrontDistroId}"
 
                                     sh "aws cloudfront create-invalidation --distribution-id ${awsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
