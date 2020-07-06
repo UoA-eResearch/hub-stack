@@ -3,6 +3,35 @@ pipeline {
         label("uoa-buildtools-ionic")
     }
 
+    // Define Global Variables
+    environment {
+        def awsCredentialsId, awsTokenId, awsProfile = '';
+        if(BRANCH_NAME == 'sandbox') {
+            echo 'Setting variables for sandbox deployment'
+            awsCredentialsId = 'aws-sandbox-user'
+            awsTokenId = 'aws-sandbox-token'
+            awsProfile = 'uoa-sandbox'
+
+        } else if (BRANCH_NAME == 'nonprod') {
+            echo 'Setting variables for nonprod deployment'
+            awsCredentialsId = 'aws-its-nonprod-access'
+            awsTokenId = 'aws-its-nonprod-token'
+            awsProfile = 'uoa-its-nonprod'
+
+        } else if (BRANCH_NAME == 'prod') {
+            echo 'Setting variables for prod deployment'
+            awsCredentialsId = 'uoa-its-prod-access'
+            awsTokenId = 'uoa-its-prod-token'
+            awsProfile = 'uoa-its-prod'
+
+        } else {
+            echo 'You are not on an environment branch, defaulting to sandbox'
+            awsCredentialsId = 'aws-sandbox-user'
+            awsTokenId = 'aws-sandbox-token'
+            awsProfile = 'uoa-sandbox'
+        }
+    }
+
     stages {
         stage("Checkout") {
             steps {
@@ -14,35 +43,6 @@ pipeline {
             steps{
                 script {
                     echo "☯ Authenticating with AWS"
-
-                    def awsCredentialsId = ''
-                    def awsTokenId = ''
-                    def awsProfile = ''
-
-                    if (BRANCH_NAME == 'sandbox') {
-                        echo 'Setting variables for sandbox deployment'
-                        awsCredentialsId = 'aws-sandbox-user'
-                        awsTokenId = 'aws-sandbox-token'
-                        awsProfile = 'uoa-sandbox'
-
-                    } else if (BRANCH_NAME == 'nonprod') {
-                        echo 'Setting variables for nonprod deployment'
-                        awsCredentialsId = 'aws-its-nonprod-access'
-                        awsTokenId = 'aws-its-nonprod-token'
-                        awsProfile = 'uoa-its-nonprod'
-
-                    } else if (BRANCH_NAME == 'prod') {
-                        echo 'Setting variables for prod deployment'
-                        awsCredentialsId = 'uoa-its-prod-access'
-                        awsTokenId = 'uoa-its-prod-token'
-                        awsProfile = 'uoa-its-prod'
-
-                    } else {
-                        echo 'You are not on an environment branch, defaulting to sandbox'
-                        awsCredentialsId = 'aws-sandbox-user'
-                        awsTokenId = 'aws-sandbox-token'
-                        awsProfile = 'uoa-sandbox'
-                    }
 
                     withCredentials([
                         usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
@@ -70,7 +70,6 @@ pipeline {
                             echo 'Building for production'
                             sh "npm run build --prod"
                         }
-
                     }
                 }
                 stage('Build cer-graphql') {
@@ -141,27 +140,7 @@ pipeline {
                             steps {
                                 script {
                                     echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
-
-                                    def awsProfile = ''
                                     def s3BucketName = 'research-hub-web'
-
-                                    // TODO: Refactor duplicate logic
-                                    if (BRANCH_NAME == 'sandbox') {
-                                        echo 'Setting variables for sandbox deployment'
-                                        awsProfile = "uoa-sandbox"
-
-                                    } else if (BRANCH_NAME == 'nonprod') {
-                                        echo 'Setting variables for TEST deployment'
-                                        awsProfile = "uoa-its-nonprod"
-
-                                    } else if (BRANCH_NAME == 'prod') {
-                                        echo 'Setting variables for PROD deployment'
-                                        awsProfile = "uoa-its-prod"
-
-                                    } else {
-                                        echo 'You are not on an environment branch, defaulting to sandbox'
-                                        awsProfile = "uoa-sandbox"
-                                    }
 
                                     dir("research-hub-web") {
                                         sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
@@ -182,15 +161,7 @@ pipeline {
                                         'E20R95KPAKSWTG'
                                     )
 
-                                    // TODO: Refactor
-                                    def awsProfile = (
-                                        env.BRANCH_NAME == 'prod' ? '' :
-                                        env.BRANCH_NAME == 'nonprod' ? '' :
-                                        'uoa-sandbox'
-                                    )
-
                                     echo "Cloudfront distro id: ${awsCloudFrontDistroId}"
-
                                     sh "aws cloudfront create-invalidation --distribution-id ${awsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
                                     echo "Invalidation started"
                                 }
