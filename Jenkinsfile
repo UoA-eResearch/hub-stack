@@ -3,39 +3,43 @@ pipeline {
         label("uoa-buildtools-ionic")
     }
 
-    // Define Global Variables
     environment {
-        def awsCredentialsId, awsTokenId, awsProfile = '';
-        if(BRANCH_NAME == 'sandbox') {
-            echo 'Setting variables for sandbox deployment'
-            awsCredentialsId = 'aws-sandbox-user'
-            awsTokenId = 'aws-sandbox-token'
-            awsProfile = 'uoa-sandbox'
-
-        } else if (BRANCH_NAME == 'nonprod') {
-            echo 'Setting variables for nonprod deployment'
-            awsCredentialsId = 'aws-its-nonprod-access'
-            awsTokenId = 'aws-its-nonprod-token'
-            awsProfile = 'uoa-its-nonprod'
-
-        } else if (BRANCH_NAME == 'prod') {
-            echo 'Setting variables for prod deployment'
-            awsCredentialsId = 'uoa-its-prod-access'
-            awsTokenId = 'uoa-its-prod-token'
-            awsProfile = 'uoa-its-prod'
-
-        } else {
-            echo 'You are not on an environment branch, defaulting to sandbox'
-            awsCredentialsId = 'aws-sandbox-user'
-            awsTokenId = 'aws-sandbox-token'
-            awsProfile = 'uoa-sandbox'
-        }
+        awsCredentialsId, awsTokenId, awsProfile = '';
     }
 
     stages {
+
         stage("Checkout") {
             steps {
                 checkout scm
+            }
+        }
+
+        // Define Global Variables
+        stage('Set environment variables') {
+            if(BRANCH_NAME == 'sandbox') {
+                echo 'Setting variables for sandbox deployment'
+                awsCredentialsId = 'aws-sandbox-user'
+                awsTokenId = 'aws-sandbox-token'
+                awsProfile = 'uoa-sandbox'
+
+            } else if (BRANCH_NAME == 'nonprod') {
+                echo 'Setting variables for nonprod deployment'
+                awsCredentialsId = 'aws-its-nonprod-access'
+                awsTokenId = 'aws-its-nonprod-token'
+                awsProfile = 'uoa-its-nonprod'
+
+            } else if (BRANCH_NAME == 'prod') {
+                echo 'Setting variables for prod deployment'
+                awsCredentialsId = 'uoa-its-prod-access'
+                awsTokenId = 'uoa-its-prod-token'
+                awsProfile = 'uoa-its-prod'
+
+            } else {
+                echo 'You are not on an environment branch, defaulting to sandbox'
+                awsCredentialsId = 'aws-sandbox-user'
+                awsTokenId = 'aws-sandbox-token'
+                awsProfile = 'uoa-sandbox'
             }
         }
 
