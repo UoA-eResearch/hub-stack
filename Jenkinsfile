@@ -13,31 +13,33 @@ pipeline {
 
         stage('Set environment variables') {
             steps {
-                echo 'Setting environment variables'
+                script {
+                    echo 'Setting environment variables'
 
-                if (BRANCH_NAME == 'sandbox') {
-                    echo 'Setting variables for sandbox deployment'
-                    env.awsCredentialsId = 'aws-sandbox-user'
-                    env.awsTokenId = 'aws-sandbox-token'
-                    env.awsProfile = 'uoa-sandbox'
+                    if (BRANCH_NAME == 'sandbox') {
+                        echo 'Setting variables for sandbox deployment'
+                        env.awsCredentialsId = 'aws-sandbox-user'
+                        env.awsTokenId = 'aws-sandbox-token'
+                        env.awsProfile = 'uoa-sandbox'
 
-                } else if (BRANCH_NAME == 'nonprod') {
-                    echo 'Setting variables for nonprod deployment'
-                    env.awsCredentialsId = 'aws-its-nonprod-access'
-                    env.awsTokenId = 'aws-its-nonprod-token'
-                    env.awsProfile = 'uoa-its-nonprod'
+                    } else if (BRANCH_NAME == 'nonprod') {
+                        echo 'Setting variables for nonprod deployment'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
 
-                } else if (BRANCH_NAME == 'prod') {
-                    echo 'Setting variables for prod deployment'
-                    env.awsCredentialsId = 'uoa-its-prod-access'
-                    env.awsTokenId = 'uoa-its-prod-token'
-                    env.awsProfile = 'uoa-its-prod'
+                    } else if (BRANCH_NAME == 'prod') {
+                        echo 'Setting variables for prod deployment'
+                        env.awsCredentialsId = 'uoa-its-prod-access'
+                        env.awsTokenId = 'uoa-its-prod-token'
+                        env.awsProfile = 'uoa-its-prod'
 
-                } else {
-                    echo 'You are not on an environment branch, defaulting to sandbox'
-                    env.awsCredentialsId = 'aws-sandbox-user'
-                    env.awsTokenId = 'aws-sandbox-token'
-                    env.awsProfile = 'uoa-sandbox'
+                    } else {
+                        echo 'You are not on an environment branch, defaulting to sandbox'
+                        env.awsCredentialsId = 'aws-sandbox-user'
+                        env.awsTokenId = 'aws-sandbox-token'
+                        env.awsProfile = 'uoa-sandbox'
+                    }
                 }
             }
         }
