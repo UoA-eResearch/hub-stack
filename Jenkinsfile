@@ -5,14 +5,16 @@ pipeline {
 
     stages {
 
-        stage("Checkout") {
+        stage('Checkout') {
             steps {
                 checkout scm
             }
         }
 
         stage('Set environment variables') {
-            if(BRANCH_NAME == 'sandbox') {
+            echo 'Setting environment variables'
+
+            if (BRANCH_NAME == 'sandbox') {
                 echo 'Setting variables for sandbox deployment'
                 env.awsCredentialsId = 'aws-sandbox-user'
                 env.awsTokenId = 'aws-sandbox-token'
