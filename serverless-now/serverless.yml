@@ -1,5 +1,15 @@
 service: serverless-now
 
+custom:
+  ResearchHub: ${self:service}
+  BusinessService: Faculty of Science
+  Department: Centre for eResearch
+  ProjectCode: N/A
+  WikiLink: N/A
+  Application: ${self:service}
+  CostCentre: N/A
+
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -7,14 +17,22 @@ provider:
   region: ap-southeast-2
   endpointType: regional
   role: arn:aws:iam::416527880812:role/lambda_basic_execution_with_read_only_access_to_SSM
+  tags:
+    ResearchHub: ${self:custom.ResearchHub}
+    BusinessService:  ${self:custom.BusinessService}
+    Department: ${self:custom.Department}
+    ProjectCode: ${self:custom.ProjectCode}
+    WikiLink: ${self:custom.WikiLink}
+    Application: ${self:custom.Application}
+    CostCentre: ${self:custom.CostCentre}
   stackTags:
-    ResearchHub: ${self:service}
-    BusinessService: Faculty of Science
-    Department: Centre for eResearch
-    ProjectCode: N/A
-    WikiLink: N/A
-    Application: ${self:service}
-    CostCentre: N/A
+    ResearchHub: ${self:custom.ResearchHub}
+    BusinessService:  ${self:custom.BusinessService}
+    Department: ${self:custom.Department}
+    ProjectCode: ${self:custom.ProjectCode}
+    WikiLink: ${self:custom.WikiLink}
+    Application: ${self:custom.Application}
+    CostCentre: ${self:custom.CostCentre}
   environment:
     # Environment variables available to all functions in this service
     ENV: ${self:provider.stage}
