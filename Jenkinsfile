@@ -4,9 +4,45 @@ pipeline {
     }
 
     stages {
-        stage("Checkout") {
+
+        stage('Checkout') {
             steps {
                 checkout scm
+            }
+        }
+
+        stage('Set environment variables') {
+            steps {
+                script {
+                    echo 'Setting environment variables'
+
+                    if (BRANCH_NAME == 'sandbox') {
+                        echo 'Setting variables for sandbox deployment'
+                        env.awsCredentialsId = 'aws-sandbox-user'
+                        env.awsTokenId = 'aws-sandbox-token'
+                        env.awsProfile = 'uoa-sandbox'
+
+                    } else if (BRANCH_NAME == 'nonprod') {
+                        echo 'Setting variables for nonprod deployment'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+
+                    } else if (BRANCH_NAME == 'prod') {
+                        echo 'Setting variables for prod deployment'
+                        env.awsCredentialsId = 'uoa-its-prod-access'
+                        env.awsTokenId = 'uoa-its-prod-token'
+                        env.awsProfile = 'uoa-its-prod'
+
+                    } else {
+                        echo 'You are not on an environment branch, defaulting to sandbox'
+                        BRANCH_NAME = 'sandbox'
+
+                        env.awsCredentialsId = 'aws-sandbox-user'
+                        env.awsTokenId = 'aws-sandbox-token'
+                        env.awsProfile = 'uoa-sandbox'
+                    }
+                }
             }
         }
 
@@ -14,35 +50,6 @@ pipeline {
             steps{
                 script {
                     echo "☯ Authenticating with AWS"
-
-                    def awsCredentialsId = ''
-                    def awsTokenId = ''
-                    def awsProfile = ''
-
-                    if (BRANCH_NAME == 'sandbox') {
-                        echo 'Setting variables for sandbox deployment'
-                        awsCredentialsId = 'aws-sandbox-user'
-                        awsTokenId = 'aws-sandbox-token'
-                        awsProfile = 'uoa-sandbox'
-
-                    } else if (BRANCH_NAME == 'nonprod') {
-                        echo 'Setting variables for nonprod deployment'
-                        awsCredentialsId = 'aws-its-nonprod-access'
-                        awsTokenId = 'aws-its-nonprod-token'
-                        awsProfile = 'uoa-its-nonprod'
-
-                    } else if (BRANCH_NAME == 'prod') {
-                        echo 'Setting variables for prod deployment'
-                        awsCredentialsId = 'uoa-its-prod-access'
-                        awsTokenId = 'uoa-its-prod-token'
-                        awsProfile = 'uoa-its-prod'
-
-                    } else {
-                        echo 'You are not on an environment branch, defaulting to sandbox'
-                        awsCredentialsId = 'aws-sandbox-user'
-                        awsTokenId = 'aws-sandbox-token'
-                        awsProfile = 'uoa-sandbox'
-                    }
 
                     withCredentials([
                         usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
@@ -57,7 +64,6 @@ pipeline {
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
-                    // TODO: Enable after devops setup completed
                     when {
                         changeset "**/research-hub-web/*.*"
                     }
@@ -67,10 +73,9 @@ pipeline {
                             echo 'Installing research-hub-web dependencies'
                             sh "npm install"
 
-                            echo 'Running unit tests'
-                            sh 'npm run test-headless'
+                            echo 'Building for production'
+                            sh "npm run build -- -c ${BRANCH_NAME}"
                         }
-
                     }
                 }
                 stage('Build cer-graphql') {
@@ -82,14 +87,11 @@ pipeline {
                     }
                 }
                 stage('Build serverless-now') {
-                    // when {
-                    //     changeset "**/serverless-now/*.*"
-                    // }
+                    when {
+                        changeset "**/serverless-now/*.*"
+                    }
                     steps {
-                        dir("serverless-now") {
-                            echo 'Building serverless-now project'
-                            sh "npm install"
-                        }
+                        echo 'Building serverless-now project'
                     }
                 }
             }
@@ -98,7 +100,6 @@ pipeline {
         stage('Run tests') {
             parallel {
                 stage('Run research-hub-web tests') {
-                    // TODO: Enable after devops setup completed
                     when {
                         changeset "**/research-hub-web/*.*"
                     }
@@ -107,7 +108,10 @@ pipeline {
 
                         dir("research-hub-web") {
                             echo 'Running research-hub-web unit tests'
-                            sh 'npm run test'
+                            sh 'npm run test-headless'
+
+                            echo 'Running research-hub-web e2e tests'
+                            sh 'npm run e2e'
                         }
                     }
                 }
@@ -120,19 +124,15 @@ pipeline {
                     }
                 }
                 stage('Run serverless-now tests') {
-                    // TODO: re-enable changeset when complete.
-                    // when {
-                    //     changeset "**/serverless-now/*.*"
-                    // }
+                    when {
+                        changeset "**/serverless-now/*.*"
+                    }
                     steps {
                         echo 'Testing serverless-now project'
-                        dir('serverless-now') {
-                           sh 'sls invoke test --aws-profile uoa-sandbox'
-                        }
                     }
                 }
             }
-        }  
+        }
 
         stage('Deploy projects') {
             parallel {
@@ -140,8 +140,38 @@ pipeline {
                     when {
                         changeset "**/research-hub-web/*.*"
                     }
-                    steps {
-                        echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
+                    stages {
+                        stage('Deploy to S3 bucket') {
+                            steps {
+                                script {
+                                    echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
+                                    def s3BucketName = 'research-hub-web'
+
+                                    dir("research-hub-web") {
+                                        sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
+                                        echo "Sync complete"
+                                    }
+                                }
+                            }
+                        }
+                        stage('Invalidate CloudFront') {
+                            steps {
+                                script {
+                                    echo "Invalidating..."
+
+                                    // TODO: Enter nonprod/prod CloudFrontDistroIds
+                                    def awsCloudFrontDistroId = (
+                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'nonprod' ? '' :
+                                        'E20R95KPAKSWTG'
+                                    )
+
+                                    echo "Cloudfront distro id: ${awsCloudFrontDistroId}"
+                                    sh "aws cloudfront create-invalidation --distribution-id ${awsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
+                                    echo "Invalidation started"
+                                }
+                            }
+                        }
                     }
                 }
                 stage('Deploy cer-graphql') {
@@ -154,14 +184,11 @@ pipeline {
                     }
                 }
                 stage('Deploy serverless-now') {
-                    // when {
-                    //     changeset "**/serverless-now/*.*"
-                    // }
+                    when {
+                        changeset "**/serverless-now/*.*"
+                    }
                     steps {
                         echo 'Deploying serverless-now Lambda function to ' + BRANCH_NAME
-                        dir("serverless-now") {
-                            sh 'sls deploy --aws-profile uoa-sandbox'
-                        }
                     }
                 }
             }
