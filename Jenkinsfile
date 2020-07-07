@@ -66,56 +66,6 @@ pipeline {
             }
         }
 
-        stage('Set environment variables') {
-            steps {
-                script {
-                    echo 'Setting environment variables'
-
-                    if (BRANCH_NAME == 'sandbox') {
-                        echo 'Setting variables for sandbox deployment'
-                        env.awsCredentialsId = 'aws-sandbox-user'
-                        env.awsTokenId = 'aws-sandbox-token'
-                        env.awsProfile = 'uoa-sandbox'
-
-                    } else if (BRANCH_NAME == 'nonprod') {
-                        echo 'Setting variables for nonprod deployment'
-                        env.awsCredentialsId = 'aws-its-nonprod-access'
-                        env.awsTokenId = 'aws-its-nonprod-token'
-                        env.awsProfile = 'uoa-its-nonprod'
-
-                    } else if (BRANCH_NAME == 'prod') {
-                        echo 'Setting variables for prod deployment'
-                        env.awsCredentialsId = 'uoa-its-prod-access'
-                        env.awsTokenId = 'uoa-its-prod-token'
-                        env.awsProfile = 'uoa-its-prod'
-
-                    } else {
-                        echo 'You are not on an environment branch, defaulting to sandbox'
-                        BRANCH_NAME = 'sandbox'
-
-                        env.awsCredentialsId = 'aws-sandbox-user'
-                        env.awsTokenId = 'aws-sandbox-token'
-                        env.awsProfile = 'uoa-sandbox'
-                    }
-                }
-            }
-        }
-
-        stage('AWS Credential Grab') {
-            steps{
-                script {
-                    echo "☯ Authenticating with AWS"
-
-                    withCredentials([
-                        usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
-                        string(credentialsId: "${awsTokenId}", variable: 'awsToken')
-                    ]) {
-                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile}"
-                    }
-                }
-            }
-        }
-        
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
