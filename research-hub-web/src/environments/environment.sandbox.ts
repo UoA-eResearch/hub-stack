@@ -8,13 +8,13 @@ export const environment = {
     cognitoUserPoolId: 'ap-southeast-2_pgErjyL4O',
     cognitoDomain: 'uoapool-sandbox',
     cognitoClientId: '53nj363gumskeibdir61nu1cs5',
-    redirectUri: 'http://localhost:4200', // TODO: Fix callback URLs
+    redirectUri: 'http://d35r3tpm7jlu7p.cloudfront.net',
     scopes: 'openid profile https://test-domain.auckland.ac.nz/lambda-hello-world',
     codeChallengeMethod: 'S256',
-    logout_uri: 'http://localhost:4200'
+    logout_uri: 'http://d35r3tpm7jlu7p.cloudfront.net'
   },
   privateUrlKeyWords: {
-    whoNeedBearerToken: ['apigw.sandbox.amazon.auckland.ac.nz', 'some-other-api'],
+    whoNeedBearerToken: ['apigw.sandbox.amazon.auckland.ac.nz'],
     whoNeedIdToken: []
   }
 };
