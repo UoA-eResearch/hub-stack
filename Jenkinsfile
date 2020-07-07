@@ -91,7 +91,10 @@ pipeline {
                         changeset "**/serverless-now/*.*"
                     }
                     steps {
-                        echo 'Building serverless-now project'
+                        dir("serverless-now") {
+                            echo 'Installing serverless-now dependencies...'
+                            sh "npm install"
+                        }
                     }
                 }
             }
@@ -128,7 +131,10 @@ pipeline {
                         changeset "**/serverless-now/*.*"
                     }
                     steps {
-                        echo 'Testing serverless-now project'
+                        echo "Invoking serverless-now tests..."
+                        dir('serverless-now') {
+                           sh "sls invoke test --aws-profile ${awsProfile}"
+                        }
                     }
                 }
             }
@@ -188,7 +194,10 @@ pipeline {
                         changeset "**/serverless-now/*.*"
                     }
                     steps {
-                        echo 'Deploying serverless-now Lambda function to ' + BRANCH_NAME
+                        echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
+                        dir("serverless-now") {
+                            sh "sls deploy --aws-profile ${awsProfile}"
+                        }
                     }
                 }
             }
