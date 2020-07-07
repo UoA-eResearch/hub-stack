@@ -1,3 +1,7 @@
+// Common Variables
+slackChannel = 'research-hub'
+slackCredentials = 'UoA-Slack-Access-Research-Hub'
+
 pipeline {
     agent  {
         label("uoa-buildtools-ionic")
@@ -8,6 +12,57 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            }
+        }
+
+        stage('Set environment variables') {
+            steps {
+                script {
+                    echo 'Setting environment variables'
+
+                    if (BRANCH_NAME == 'sandbox') {
+                        echo 'Setting variables for sandbox deployment'
+                        env.awsCredentialsId = 'aws-sandbox-user'
+                        env.awsTokenId = 'aws-sandbox-token'
+                        env.awsProfile = 'uoa-sandbox'
+
+                    } else if (BRANCH_NAME == 'nonprod') {
+                        echo 'Setting variables for nonprod deployment'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+
+                    } else if (BRANCH_NAME == 'prod') {
+                        echo 'Setting variables for prod deployment'
+                        env.awsCredentialsId = 'uoa-its-prod-access'
+                        env.awsTokenId = 'uoa-its-prod-token'
+                        env.awsProfile = 'uoa-its-prod'
+
+                    } else {
+                        echo 'You are not on an environment branch, defaulting to sandbox'
+                        BRANCH_NAME = 'sandbox'
+
+                        env.awsCredentialsId = 'aws-sandbox-user'
+                        env.awsTokenId = 'aws-sandbox-token'
+                        env.awsProfile = 'uoa-sandbox'
+                    }
+                }
+            }
+        }
+
+        stage('AWS Credential Grab') {
+            steps{
+                script {
+                    echo "☯ Authenticating with AWS"
+
+                    withCredentials([
+                        usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
+                        string(credentialsId: "${awsTokenId}", variable: 'awsToken')
+                    ]) {
+                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile}"
+                    }
+                }
             }
         }
 
@@ -207,9 +262,11 @@ pipeline {
     post {
         success {
             echo 'Jenkins job ran successfully. Deployed to ' + BRANCH_NAME
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🚀 Build successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
         failure {
             echo 'Jenkins job failed :('
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
     }
 }
