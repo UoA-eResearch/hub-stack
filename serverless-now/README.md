@@ -64,4 +64,3 @@ sls invoke -f serverless-now
 ## Resources
 * For general Serverless Framework help run: `sls help`
 * [Serverless Mocha Plugin](https://www.npmjs.com/package/serverless-mocha-plugin)
-
