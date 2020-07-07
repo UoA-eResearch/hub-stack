@@ -3,6 +3,7 @@ import { browser, by, element } from 'protractor';
 import { protractor } from 'protractor/built/ptor';
 
 let page: ResearchHubPage;
+const TIMEOUT_PERIOD = 12000;
 
 /**
  * Tests the basic functionality of the ResearchHub, e.g. whether the home page
@@ -142,7 +143,7 @@ describe('ResearchHub\'s Integrated Services', () => {
 
     await browser.driver.findElement(by.css('.mat-raised-button')).click();
     browser.ignoreSynchronization = true; // Don't wait for Angular components to load as this is an external site
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('h1'))), 7000);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('h1'))), TIMEOUT_PERIOD);
     browser.driver.takeScreenshot();
     expect(await browser.driver.findElement(by.css('h1')).getText()).toEqual('The University of Auckland');
   });
@@ -172,7 +173,7 @@ describe('ResearchHub\'s Research Impact Content', () => {
    * src attribute.
    */
   it('can load an iframe with youtube as src attribute', async () => {
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description iframe'))), 9000);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description iframe'))), TIMEOUT_PERIOD);
     expect(await browser.driver.findElement(by.css('.description iframe')).getAttribute('src')).toContain('youtube');
   });
 
@@ -183,7 +184,7 @@ describe('ResearchHub\'s Research Impact Content', () => {
   it('can correctly load a sub-page (guideCategory) item', async () => {
     await browser.driver.findElement(by.css('mat-grid-list .browse-tile')).click();
     await browser.waitForAngular();
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description h1'))), 9000);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description h1'))), TIMEOUT_PERIOD);
     expect(await browser.driver.findElement(by.css('.description h1')).getText()).toEqual('Planning for Impact');
   });
 
@@ -192,10 +193,10 @@ describe('ResearchHub\'s Research Impact Content', () => {
    * the final part of the breadcrumbs is 'Planning for Impact'.
    */
   it('can display the breadcrumbs correctly', async () => {
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('mat-grid-list .browse-tile:first-of-type'))), 9000);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('mat-grid-list .browse-tile:first-of-type'))), TIMEOUT_PERIOD);
     await browser.driver.findElement(by.css('mat-grid-list .browse-tile:first-of-type')).click();
     await browser.waitForAngular();
-    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description a:nth-of-type(3)'))), 9000);
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description a:nth-of-type(3)'))), TIMEOUT_PERIOD);
     expect(await browser.driver.findElement(by.css('.description a:nth-of-type(3)')).getText()).toEqual('Planning for Impact');
   });
 

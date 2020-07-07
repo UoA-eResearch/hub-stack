@@ -3,7 +3,7 @@ The front end for the [Research Hub](https://research-hub.auckland.ac.nz/), buil
 
 ## Build
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `www/` directory. 
+Run `npm run build` to build the project. The build artifacts will be stored in the `www/` directory.
 
 ## Build production and use webpack bundle analyzer
 
