@@ -26,7 +26,7 @@ pipeline {
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
-
+                        env.awsAccountId = '416527880812'
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
@@ -42,7 +42,7 @@ pipeline {
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
-
+                        env.awsAccountId = '416527880812'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
@@ -193,13 +193,13 @@ pipeline {
                         sh "(aws ecr get-login --no-include-email --region ${awsRegion} --profile=${awsProfile}) | /bin/bash"
 
                         echo "Tagging built image with ECR tag"
-                        sh "docker tag cer-graphql:latest 416527880812.dkr.ecr.ap-southeast-2.amazonaws.com/research-hub/cer-graphql:latest"
+                        sh "docker tag cer-graphql:latest ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
 
                         echo "Pushing built image to ECR"
-                        sh "docker push 416527880812.dkr.ecr.ap-southeast-2.amazonaws.com/research-hub/cer-graphql:latest"
+                        sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
 
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
-                        sh "aws ecs update-service --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment"
+                        sh "aws ecs update-service --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
                     }
                 }
                 stage('Deploy serverless-now') {
