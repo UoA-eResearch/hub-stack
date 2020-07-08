@@ -15,7 +15,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: ${opt:stage, 'dev'} # Deploy with sls deploy --stage STAGE (default dev)
+  stage: ${opt:stage, 'sandbox'} # Deploy with sls deploy --stage STAGE (default dev)
   region: ap-southeast-2
   endpointType: regional
   role: arn:aws:iam::416527880812:role/lambda_basic_execution_with_read_only_access_to_SSM
