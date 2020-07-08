@@ -110,6 +110,7 @@ module.exports.main = async (event) => {
     },
     body: JSON.stringify({
       message: "Welcome to serverless-now",
+      aws_message: process.env.EXAMPLE_KEY,
     }),
   };
 
