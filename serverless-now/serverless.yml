@@ -37,8 +37,9 @@ provider:
     CostCentre: ${self:custom.CostCentre}
   environment:
     # Environment variables available to all functions in this service
-    ENV: ${self:provider.stage}
+    ENV: ${file(env/${self:provider.stage}.json):ENV}
     LEVEL: INFO
+    EXAMPLE_KEY: ${file(env/${self:provider.stage}.json):EXAMPLE_KEY}
     SN_API_KEY_R: ${file(env/${self:provider.stage}.json):SN_API_KEY_R}
     SN_DEV_API_KEY_RW: ${file(env/${self:provider.stage}.json):SN_DEV_API_KEY_RW}
     COGNITO_DOMAIN: ${file(env/${self:provider.stage}.json):COGNITO_DOMAIN}
