@@ -138,7 +138,7 @@ pipeline {
                     steps {
                         echo "Invoking serverless-now tests..."
                         dir('serverless-now') {
-                           sh "sls invoke test --aws-profile ${awsProfile}"
+                           sh "sls invoke test --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
                         }
                     }
                 }
@@ -201,7 +201,7 @@ pipeline {
                     steps {
                         echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
                         dir("serverless-now") {
-                            sh "sls deploy --aws-profile ${awsProfile}"
+                            sh "sls deploy --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
                         }
                     }
                 }
