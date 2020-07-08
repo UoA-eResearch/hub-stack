@@ -6,7 +6,6 @@
     "SN_DEV_API_KEY_RW": "${ssm:/sandbox/research-hub/SN_DEV_API_KEY_RW~true}",
     "OAUTH_SCOPES": [
         "openid",
-        "profile",
-        "https://test-domain.auckland.ac.nz/lambda-hello-world"
+        "profile"
     ]
 }
