@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     echo 'Setting environment variables'
-
+                    env.awsRegion = "ap-southeast-2"
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
                         env.awsCredentialsId = 'aws-sandbox-user'
@@ -84,11 +84,15 @@ pipeline {
                     }
                 }
                 stage('Build cer-graphql') {
-                    when {
-                        changeset "**/cer-graphql/*.*"
-                    }
+                    // when {
+                    //     changeset "**/cer-graphql/*.*"
+                    // }
                     steps {
                         echo 'Building cer-graphql project'
+                        dir("cer-graphql") {
+                            echo "Building the docker image and tag it as latest"
+                            sh "docker build . -t cer-graphql:latest"
+                        }
                     }
                 }
                 stage('Build serverless-now') {
@@ -180,11 +184,20 @@ pipeline {
                     }
                 }
                 stage('Deploy cer-graphql') {
-                    when {
-                        changeset "**/cer-graphql/*.*"
-                    }
+                    // when {
+                    //     changeset "**/cer-graphql/*.*"
+                    // }
                     steps {
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
+                        echo "Logging in to ECR"
+                        sh "(aws ecr get-login --no-include-email --region ${awsRegion} --profile=${awsProfile}) | /bin/bash"
+
+                        echo "Tagging built image with ECR tag"
+                        sh "docker tag my_team/my-app:latest 416527880812.dkr.ecr.ap-southeast-2.amazonaws.com/research-hub/cer-graphql:latest"
+
+                        echo "Pushing built image to ECR"
+                        sh "docker push 416527880812.dkr.ecr.ap-southeast-2.amazonaws.com/research-hub/cer-graphql:latest"
+
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
                     }
                 }
