@@ -9,7 +9,7 @@ module.exports.main = async (event) => {
   // POST (Create) a new ServiceNow ticket
   if (event.httpMethod === "POST" && event.body) {
     // TODO: Enable POST to ServiceNow
-    
+
     let requesterData;
 
     // preferred username is the closest thing
@@ -112,7 +112,6 @@ module.exports.main = async (event) => {
     },
     body: JSON.stringify({
       message: "Welcome to serverless-now",
-      aws_message: process.env.EXAMPLE_KEY,
     }),
   };
 
