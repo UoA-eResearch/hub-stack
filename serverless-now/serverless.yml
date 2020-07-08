@@ -8,8 +8,11 @@ custom:
   WikiLink: N/A
   Application: ${self:service}
   CostCentre: N/A
-  # customDomain:
-  #   domainName: 
+  customDomain:
+    domainName: "apigw.sandbox.amazon.auckland.ac.nz"
+    basePath: ${self:service}
+    stage: ${self:provider.stage}
+    createRoute53Records: true
 
 
 provider:
@@ -93,3 +96,4 @@ functions:
 plugins:
   - serverless-offline
   - serverless-mocha-plugin
+  - serverless-domain-manager
