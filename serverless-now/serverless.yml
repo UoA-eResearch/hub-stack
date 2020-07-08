@@ -37,7 +37,7 @@ provider:
     CostCentre: ${self:custom.CostCentre}
   environment:
     # Environment variables available to all functions in this service
-    ENV: ${file(env/${self:provider.stage}.json):ENV}
+    SERVICENOW_BASE_URL: ${file(env/${self:provider.stage}.json):SERVICENOW_BASE_URL}
     LEVEL: INFO
     EXAMPLE_KEY: ${file(env/${self:provider.stage}.json):EXAMPLE_KEY}
     SN_API_KEY_R: ${file(env/${self:provider.stage}.json):SN_API_KEY_R}

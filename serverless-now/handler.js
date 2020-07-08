@@ -4,7 +4,7 @@ const utils = require("@uoa/utilities");
 const { v4: uuidv4 } = require("uuid");
 
 module.exports.main = async (event) => {
-  const BASE_URL = `api.${process.env.ENV}.auckland.ac.nz`;
+  const SERVICENOW_BASE_URL = process.env.SERVICENOW_BASE_URL;
 
   // POST (Create) a new ServiceNow ticket
   if (event.httpMethod === "POST" && event.body) {
@@ -119,7 +119,7 @@ module.exports.main = async (event) => {
   async function getRes(path, apiKey, data = null) {
     const options = {
       method: data ? "POST" : "GET",
-      hostname: BASE_URL,
+      hostname: SERVICENOW_BASE_URL,
       path: path,
       headers: {
         apiKey: apiKey,

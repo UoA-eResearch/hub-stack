@@ -8,6 +8,7 @@
     "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/sls offline",
     "test": "sls invoke test --aws-profile saml",
     "testw": "nodemon --watch . --exec 'sls invoke test || true'",
+    "deploy-quick": "sls deploy --stage sandbox --aws-profile saml",
     "deploy": "npm run test && sls deploy --stage sandbox --aws-profile saml"
   },
   "keywords": [
