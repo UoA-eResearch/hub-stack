@@ -21,6 +21,18 @@ exports.GET_ARTICLE_COLLECTION = gql`
 }
 `;
 
+exports.GET_ARTICLE_COLLECTION_PRIVATE = gql`
+{ 
+    articleCollection {
+        items {
+            body {
+                json
+            }
+        }
+    }
+}
+`;
+
 exports.GET_SUBHUB_COLLECTION = gql`
 { 
     subHubCollection {
@@ -41,11 +53,20 @@ exports.GET_EQUIPMENT_COLLECTION = gql`
 }
 `;
 
-// article(id: "fRd5opeuTFTvdS12aPjI2") {
 exports.GET_ARTICLE_BY_SYS_ID = gql`
     query ($id: String!) { 
         article(id: $id) {
             title 
+        }
+    }
+`;
+
+exports.GET_ARTICLE_BY_SYS_ID_PRIVATE = gql`
+    query ($id: String!) { 
+        article(id: $id) {
+            body {
+                json
+            } 
         }
     }
 `;
