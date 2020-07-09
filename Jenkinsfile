@@ -84,9 +84,9 @@ pipeline {
                     }
                 }
                 stage('Build cer-graphql') {
-                    // when {
-                    //     changeset "**/cer-graphql/*.*"
-                    // }
+                    when {
+                        changeset "**/cer-graphql/*.*"
+                    }
                     steps {
                         echo 'Building cer-graphql project'
                         dir("cer-graphql") {
@@ -184,9 +184,9 @@ pipeline {
                     }
                 }
                 stage('Deploy cer-graphql') {
-                    // when {
-                    //     changeset "**/cer-graphql/*.*"
-                    // }
+                    when {
+                        changeset "**/cer-graphql/*.*"
+                    }
                     steps {
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
                         echo "Logging in to ECR"
@@ -199,7 +199,7 @@ pipeline {
                         sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
 
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
-                        sh "aws ecs update-service --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
                     }
                 }
                 stage('Deploy serverless-now') {
