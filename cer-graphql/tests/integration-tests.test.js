@@ -13,8 +13,6 @@ async function createServerAndTestClient() {
     return createTestClient(server);
 }
 
-
-
 /**
  * Before any of the tests run create the query function and make
  * it available within all tests.
@@ -52,6 +50,21 @@ describe('Basic single resource queries', () => {
 
 })
 
+describe('Contentful filters (conditionals)', () => {
+
+    test('Can return an article from the articleCollection with a where clause', async function () {
+        const ARTICLE_TITLE = 'First article';
+
+        let res = await query({
+            query: TQ.GET_ARTICLE_BY_WHERE,
+            variables: { title: ARTICLE_TITLE }
+        });
+
+        expect(res.data.articleCollection.items[0].title).toEqual(ARTICLE_TITLE)
+    });
+
+})
+
 describe('Authorisation resolvers', () => {
 
     test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
@@ -67,5 +80,4 @@ describe('Authorisation resolvers', () => {
 
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
-
-})
+});
