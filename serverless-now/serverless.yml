@@ -9,7 +9,7 @@ custom:
   Application: ${self:service}
   CostCentre: N/A
   customDomain:
-    domainName: "apigw.sandbox.amazon.auckland.ac.nz"
+    domainName: ${file(env/${self:provider.stage}.json):infra.awsApiGatewayCustomDomainName}
     basePath: ${self:service}
     stage: ${self:provider.stage}
     createRoute53Records: true
@@ -73,7 +73,7 @@ functions:
     handler: handler.main
     events:
       - http:
-          path: serverless-now
+          path: /
           method: get
           cors: true
           authorizer:
@@ -83,7 +83,7 @@ functions:
             identitySource: method.request.header.Authorization
             scopes: ${file(env/${self:provider.stage}.json):OAUTH_SCOPES} 
       - http:
-          path: serverless-now
+          path: /
           method: post
           cors: true
           authorizer:
