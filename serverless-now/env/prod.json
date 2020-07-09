@@ -1,7 +1,6 @@
 {
     "OAUTH_SCOPES": [
         "openid",
-        "profile",
-        "https://test-domain.auckland.ac.nz/lambda-hello-world"
+        "profile"
     ]
 }
