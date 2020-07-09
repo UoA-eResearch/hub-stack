@@ -134,6 +134,7 @@ pipeline {
                     steps {
                         echo 'Testing cer-graphql project'
                         dir('cer-graphql') {
+                            sh "npm install"
                             sh "npm run test"
                         }
                     }
