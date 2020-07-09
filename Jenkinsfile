@@ -129,6 +129,9 @@ pipeline {
                     }
                     steps {
                         echo 'Testing cer-graphql project'
+                        dir('cer-graphql') {
+                            sh "npm run test"
+                        }
                     }
                 }
                 stage('Run serverless-now tests') {
@@ -138,7 +141,7 @@ pipeline {
                     steps {
                         echo "Invoking serverless-now tests..."
                         dir('serverless-now') {
-                           sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                            sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
                         }
                     }
                 }
