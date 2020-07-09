@@ -70,3 +70,16 @@ exports.GET_ARTICLE_BY_SYS_ID_PRIVATE = gql`
         }
     }
 `;
+
+exports.GET_ARTICLE_BY_WHERE = gql`
+query ($title: String!) {
+    articleCollection(where: {
+        title: $title
+    }){
+        items {
+            title
+            summary
+        }
+    }
+}
+`;
