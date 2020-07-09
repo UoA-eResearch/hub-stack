@@ -7,6 +7,14 @@ pipeline {
         label("uoa-buildtools-ionic")
     }
 
+    environment {
+        // Set environment variables for cer-graphql tests
+        CONTENTFUL_ACCESS_TOKEN = credentials('contentful-access-token')
+        CONTENTFUL_SPACE_ID = credentials('contentful-space-id')
+        COGNITO_REGION = credentials('cognito-region')
+        COGNITO_USER_POOL = credentials('cognito-user-pool')
+    }
+
     stages {
 
         stage('Checkout') {
