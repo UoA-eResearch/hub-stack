@@ -6,10 +6,9 @@
   "scripts": {
     "start": "sls offline",
     "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/sls offline",
-    "test": "sls invoke test --aws-profile saml",
+    "test": "sls invoke test",
     "testw": "nodemon --watch . --exec 'sls invoke test || true'",
-    "deploy-quick": "sls deploy --stage sandbox --aws-profile saml",
-    "deploy": "npm run test && sls deploy --stage sandbox --aws-profile saml"
+    "deploy": "sls deploy"
   },
   "keywords": [
     "Lambda",
