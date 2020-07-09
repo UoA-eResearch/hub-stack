@@ -65,7 +65,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
@@ -96,7 +96,10 @@ pipeline {
                         changeset "**/serverless-now/*.*"
                     }
                     steps {
-                        echo 'Building serverless-now project'
+                        dir("serverless-now") {
+                            echo 'Installing serverless-now dependencies...'
+                            sh "npm install"
+                        }
                     }
                 }
             }
@@ -133,7 +136,10 @@ pipeline {
                         changeset "**/serverless-now/*.*"
                     }
                     steps {
-                        echo 'Testing serverless-now project'
+                        echo "Invoking serverless-now tests..."
+                        dir('serverless-now') {
+                           sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                        }
                     }
                 }
             }
@@ -193,7 +199,10 @@ pipeline {
                         changeset "**/serverless-now/*.*"
                     }
                     steps {
-                        echo 'Deploying serverless-now Lambda function to ' + BRANCH_NAME
+                        echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
+                        dir("serverless-now") {
+                            sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                        }
                     }
                 }
             }
