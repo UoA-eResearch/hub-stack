@@ -39,7 +39,7 @@ describe('Basic collection queries', () => {
     });
 })
 
-describe('Single resource resolvers', () => {
+describe('Basic single resource queries', () => {
 
     test('Can return an individual article by its sys id', async function () {
         let res = await query({
@@ -48,6 +48,24 @@ describe('Single resource resolvers', () => {
         });
 
         expect(res.data.article.title).toEqual('Top Secret Article')
+    });
+
+})
+
+describe('Authorisation resolvers', () => {
+
+    test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
+        let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
+        expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
+    });
+
+    test('Requesting a article single resource non-public field returns an error', async function () {
+        let res = await query({
+            query: TQ.GET_ARTICLE_BY_SYS_ID_PRIVATE,
+            variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
+        });
+
+        expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 
 })
