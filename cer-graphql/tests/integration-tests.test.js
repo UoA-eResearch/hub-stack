@@ -23,7 +23,7 @@ beforeAll(async () => {
     return { query } = await createServerAndTestClient();
 });
 
-describe('Basic queries', () => {
+describe('Basic collection queries', () => {
 
     test('Querying the articleCollection searchable fields returns them', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION });
@@ -37,4 +37,17 @@ describe('Basic queries', () => {
         let res = await query({ query: TQ.GET_EQUIPMENT_COLLECTION });
         expect(res.data.equipmentCollection.items[0].title).toEqual('Death Star')
     });
+})
+
+describe('Single resource resolvers', () => {
+
+    test('Can return an individual article by its sys id', async function () {
+        let res = await query({
+            query: TQ.GET_ARTICLE_BY_SYS_ID,
+            variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
+        });
+
+        expect(res.data.article.title).toEqual('Top Secret Article')
+    });
+
 })

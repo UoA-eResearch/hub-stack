@@ -40,3 +40,12 @@ exports.GET_EQUIPMENT_COLLECTION = gql`
     }
 }
 `;
+
+// article(id: "fRd5opeuTFTvdS12aPjI2") {
+exports.GET_ARTICLE_BY_SYS_ID = gql`
+    query ($id: String!) { 
+        article(id: $id) {
+            title 
+        }
+    }
+`;
