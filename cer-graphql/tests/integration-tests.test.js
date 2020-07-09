@@ -35,7 +35,7 @@ describe('Basic collection queries', () => {
         let res = await query({ query: TQ.GET_EQUIPMENT_COLLECTION });
         expect(res.data.equipmentCollection.items[0].title).toEqual('Death Star')
     });
-})
+});
 
 describe('Basic single resource queries', () => {
 
@@ -48,7 +48,7 @@ describe('Basic single resource queries', () => {
         expect(res.data.article.title).toEqual('Top Secret Article')
     });
 
-})
+});
 
 describe('Contentful filters (conditionals)', () => {
 
@@ -63,7 +63,7 @@ describe('Contentful filters (conditionals)', () => {
         expect(res.data.articleCollection.items[0].title).toEqual(ARTICLE_TITLE)
     });
 
-})
+});
 
 describe('Authorisation resolvers', () => {
 

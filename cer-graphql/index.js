@@ -21,7 +21,7 @@ const COGNITO_PUBLIC_KEYS_URL = `https://cognito-idp.${COGNITO_REGION}.amazonaws
 // Load a remote schema and set up the http-link
 getRemoteSchema = async (remoteUri) => {
     try {
-        console.log('Loading remote schema:', remoteUri)
+        console.log('Loading remote schema...')
         const link = new HttpLink({ uri: remoteUri, fetch });
         const schema = await introspectSchema(link);
 
