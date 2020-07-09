@@ -1,20 +1,33 @@
 const { createTestClient } = require('apollo-server-testing');
 const { createServer } = require('../index')
 const TQ = require('./test-queries'); // Collection of test queries
-const { gql, introspectSchema } = require('apollo-server')
+const { gql, introspectSchema } = require('apollo-server');
+const { JsonWebTokenError } = require('jsonwebtoken');
 
-async function constructTestServer() {
-
-    // Create the e2e server 
+/**
+ * This function creates both the ApolloServer and test client
+ * used to make queries against it.
+ */
+async function createServerAndTestClient() {
     let server = await createServer();
-
-    // Create the query function
-    const { query } = createTestClient(server);
-
-    let res = await query({ query: TQ.GET_SUBHUB_COLLECTION });
-
-    console.log(JSON.stringify(res))
+    return createTestClient(server);
 }
 
-// Initialise the main (async) function
-constructTestServer();
+/**
+ * Before any of the tests run create the query function and make
+ * it available within all tests.
+ */
+beforeAll(async () => {
+    return { query } = await createServerAndTestClient();
+});
+
+describe('Basic queries', () => {
+    test('Querying the articleCollection returns the correct fields', async function () {
+
+        let res = await query({ query: TQ.GET_ARTICLE_COLLECTION });
+
+        // Get the fields returned from the first item
+        let returned_fields = Object.keys(res.data.articleCollection.items[0]);
+        expect(returned_fields).toEqual(TQ.SEARCHABLE_FIELDS)
+    })
+})
