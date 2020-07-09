@@ -9,7 +9,7 @@ const ALWAYS_PUBLIC_FIELDS = [
 ]
 
 // Fields that will be for searching
-const SEARCHABLE_FIELDS = ['title', 'summary', 'ssoProtected'];
+exports.SEARCHABLE_FIELDS = SEARCHABLE_FIELDS = ['title', 'summary', 'ssoProtected'];
 
 exports.GET_ARTICLE_COLLECTION = gql`
 { 
