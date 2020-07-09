@@ -13,6 +13,8 @@ async function createServerAndTestClient() {
     return createTestClient(server);
 }
 
+
+
 /**
  * Before any of the tests run create the query function and make
  * it available within all tests.
@@ -22,12 +24,17 @@ beforeAll(async () => {
 });
 
 describe('Basic queries', () => {
-    test('Querying the articleCollection returns the correct fields', async function () {
 
+    test('Querying the articleCollection searchable fields returns them', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION });
 
         // Get the fields returned from the first item
         let returned_fields = Object.keys(res.data.articleCollection.items[0]);
         expect(returned_fields).toEqual(TQ.SEARCHABLE_FIELDS)
-    })
+    });
+
+    test('Querying the equipment collection returns the correct first item', async function () {
+        let res = await query({ query: TQ.GET_EQUIPMENT_COLLECTION });
+        expect(res.data.equipmentCollection.items[0].title).toEqual('Death Star')
+    });
 })

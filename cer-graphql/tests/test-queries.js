@@ -30,3 +30,13 @@ exports.GET_SUBHUB_COLLECTION = gql`
     }
 }
 `;
+
+exports.GET_EQUIPMENT_COLLECTION = gql`
+{ 
+    equipmentCollection {
+        items {
+            ${SEARCHABLE_FIELDS}
+        }
+    }
+}
+`;
