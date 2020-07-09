@@ -21,7 +21,7 @@ const COGNITO_PUBLIC_KEYS_URL = `https://cognito-idp.${COGNITO_REGION}.amazonaws
 // Load a remote schema and set up the http-link
 getRemoteSchema = async (remoteUri) => {
     try {
-        console.log('Loading remote schema:', remoteUri)
+        console.log('Loading remote schema...')
         const link = new HttpLink({ uri: remoteUri, fetch });
         const schema = await introspectSchema(link);
 
@@ -63,7 +63,7 @@ const verifyJwt = (token, jwk) => {
 };
 
 // Set up the schemas and initialize the server
-(async () => {
+async function createServer() {
     // Check if access token and space ID are supplied.
     if (!CONTENTFUL_ACCESS_TOKEN || !CONTENTFUL_SPACE_ID ||
         !COGNITO_REGION || !COGNITO_USER_POOL) {
@@ -146,12 +146,12 @@ const verifyJwt = (token, jwk) => {
         resolvers: [{ Query: customQueryResolvers }],
     });
 
-    const server = new ApolloServer({
+    return new ApolloServer({
         schema,
         context: ({ req }) => {
             let user;
 
-            const authHeader = req.headers.authorization || '';
+            const authHeader = (req && req.headers && req.headers.authorization) || '';
             if (!authHeader || authHeader.indexOf('Bearer ') !== 0) {
                 return null;
             }
@@ -184,10 +184,20 @@ const verifyJwt = (token, jwk) => {
             }
         },
     });
+};
 
-    // The 'listen' method launches a web server.
-    server.listen().then(({ url }) => {
-        console.log(`🚀  Server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
-    });
+// If the file is being called directly instead of being required as a module.
+if (require.main === module) {
+    (async () => {
+        // Create the ApolloServer object
+        let server = await createServer();
 
-})();
+        // The 'listen' method launches a web server.
+        server.listen().then(({ url }) => {
+            console.log(`🚀  Server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
+        });
+    })();
+}
+
+// Export the createServer function to be used in e2e tests
+exports.createServer = createServer;
