@@ -21,5 +21,8 @@
     "apollo-server": "^2.12.0",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.3"
+  },
+  "devDependencies": {
+    "apollo-server-testing": "^2.15.1"
   }
 }
