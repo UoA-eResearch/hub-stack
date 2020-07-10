@@ -74,6 +74,9 @@ async function createServer() {
     // Load remote schemas here
     contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
 
+    // Load Cognito public keys in order to verify tokens.
+    const cognitoPublicKeys = await fetchCognitoPublicKeys(COGNITO_PUBLIC_KEYS_URL);
+
     // Get a list of the types that have the ssoProtected field
     let protectedTypes = Object.keys(contentfulSchema._typeMap)
         .filter(x => x.includes('Filter')) // Get all the filters
@@ -194,7 +197,7 @@ if (require.main === module) {
 
         // The 'listen' method launches a web server.
         server.listen().then(({ url }) => {
-            console.log(`🚀  Server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
+            console.log(`🚀  Content API server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
         });
     })();
 }
