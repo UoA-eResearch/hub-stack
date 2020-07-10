@@ -51,7 +51,7 @@ npm run deploy -- --stage=test
 ```
 
 ## Get info about existing deployment
-* To get information about the currently deployed endpoints, region, stage, layers etc execute:
+* To get information about the currently deployed endpoints, region, stage, layers and other things, execute:
 ```
 sls info
 ```

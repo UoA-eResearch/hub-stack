@@ -7,6 +7,14 @@ pipeline {
         label("uoa-buildtools-ionic")
     }
 
+    environment {
+        // Set environment variables for cer-graphql tests
+        CONTENTFUL_ACCESS_TOKEN = credentials('contentful-access-token')
+        CONTENTFUL_SPACE_ID = credentials('contentful-space-id')
+        COGNITO_REGION = credentials('cognito-region')
+        COGNITO_USER_POOL = credentials('cognito-user-pool')
+    }
+
     stages {
 
         stage('Checkout') {
@@ -20,13 +28,13 @@ pipeline {
             steps {
                 script {
                     echo 'Setting environment variables'
-
+                    env.awsRegion = "ap-southeast-2"
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
-
+                        env.awsAccountId = '416527880812'
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
@@ -42,7 +50,7 @@ pipeline {
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
-
+                        env.awsAccountId = '416527880812'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
@@ -89,6 +97,10 @@ pipeline {
                     }
                     steps {
                         echo 'Building cer-graphql project'
+                        dir("cer-graphql") {
+                            echo "Building the docker image and tag it as latest"
+                            sh "docker build . -t cer-graphql:latest"
+                        }
                     }
                 }
                 stage('Build serverless-now') {
@@ -130,6 +142,7 @@ pipeline {
                     steps {
                         echo 'Testing cer-graphql project'
                         dir('cer-graphql') {
+                            sh "npm install"
                             sh "npm run test"
                         }
                     }
@@ -194,7 +207,17 @@ pipeline {
                     }
                     steps {
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
+                        echo "Logging in to ECR"
+                        sh "(aws ecr get-login --no-include-email --region ${awsRegion} --profile=${awsProfile}) | /bin/bash"
+
+                        echo "Tagging built image with ECR tag"
+                        sh "docker tag cer-graphql:latest ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
+
+                        echo "Pushing built image to ECR"
+                        sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
+
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
                     }
                 }
                 stage('Deploy serverless-now') {
