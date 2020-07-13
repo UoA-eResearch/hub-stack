@@ -1,0 +1,7 @@
+{
+    "AWS_PROFILE":"",
+    "CONTENTFUL_ACCESS_TOKEN":"",
+    "CONTENTFUL_SPACE_ID":"",
+    "COGNITO_REGION":"",
+    "COGNITO_USER_POOL":""
+}
