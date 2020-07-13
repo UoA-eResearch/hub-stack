@@ -99,12 +99,25 @@ const verifyJwt = (token, jwk) => {
                     info.fieldNodes[0].selectionSet.selections)
                     .map(x => x.name.value);
 
+                // GraphQL introspection fields, these are used by GraphQL to query metadata
+                const GRAPHQL_INTROSPECTION_FIELDS = [
+                    '__Schema',
+                    '__Type',
+                    '__TypeKind',
+                    '__typename',
+                    '__Field',
+                    '__InputValue',
+                    '__EnumValue',
+                    '__Directive'
+                ];
+
                 // Check whether the user has requested only public fields
                 const ALWAYS_PUBLIC_FIELDS = [
                     'title',
                     'summary',
                     'name',
-                    'ssoProtected'
+                    'ssoProtected',
+                    ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
                 let userOnlyQueryingPublicFields = requestedFields

@@ -26,6 +26,9 @@ import {
   transition
 } from '@angular/animations';
 
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -92,7 +95,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: Title,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
-    public loginService: LoginService) {
+    public loginService: LoginService, public apollo: Apollo) {
+
   }
 
   getSearchQueryParams(item: any) {
@@ -103,6 +107,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       return { researchActivityIds: [item.id] };
     }
+
+
+
+
   }
 
   getRouteName(url: string) {
@@ -137,6 +145,27 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngOnInit() {
+
+    /**************** BEGIN GRAPHQL TESTS *****************/
+
+    // Mock GraphQL Query for initial testing
+    const getAllArticles = gql`
+        query { articleCollection {
+          items {
+            ssoProtected
+            title
+          }
+        }}
+    `;
+
+    this.apollo
+      .watchQuery<any>({ query: getAllArticles }).valueChanges.subscribe(result => {
+        console.log('result from graphql:');
+        console.log(result);
+      });
+
+    /****************** END GRAPHQL TESTS *******************/
+
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
       this.setTitleSearchBarHeaderCustomCSS(this.optionsService.getPageInfo(this.currentRoute, this.pageTitle));
