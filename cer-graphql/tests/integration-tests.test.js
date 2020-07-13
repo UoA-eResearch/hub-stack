@@ -1,6 +1,7 @@
 const { createTestClient } = require('apollo-server-testing');
 const { createServer } = require('../index')
 const TQ = require('./test-queries'); // Collection of test queries
+const serverConfig = require('./config');
 const { gql, introspectSchema } = require('apollo-server');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
@@ -9,7 +10,7 @@ const { JsonWebTokenError } = require('jsonwebtoken');
  * used to make queries against it.
  */
 async function createServerAndTestClient() {
-    let server = await createServer();
+    let server = await createServer(serverConfig);
     return createTestClient(server);
 }
 
