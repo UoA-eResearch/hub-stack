@@ -20,7 +20,7 @@ This project comes bundled with an interactive test runner capable of launching 
     - Using Protractor+Angular's built in Selenium server
     - Using BrowserStack's automation API/Selenium server, including BrowserStack-local (allowing you to run BrowserStack against local hosts)
 
- Simply run `./test.sh` to specify the sort of testing you would like to do.
+ Simply run `./test.sh` to specify what sort of testing you would like to do.
  
  Note: if you wish to use BrowserStack automated e2e testing you must store your BrowserStack credentials in a file `./e2e/browserstack-credentials.json` in the format:
 
