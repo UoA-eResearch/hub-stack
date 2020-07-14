@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { CognitoConfigService } from 'uoa-auth-angular';
+import { CognitoConfigService } from '@uoa/auth';
 
 import { environment } from '../../environments/environment';
 

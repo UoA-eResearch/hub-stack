@@ -11,7 +11,7 @@ import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
-import { LoginService } from 'uoa-auth-angular';
+import { LoginService } from '@uoa/auth';
 
 import { HeaderService } from './components/header/header.service';
 import { Location } from '@angular/common';

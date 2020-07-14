@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { LoginService } from 'uoa-auth-angular';
+import { LoginService } from '@uoa/auth';
 
 
 @Component({
