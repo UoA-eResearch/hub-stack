@@ -61,7 +61,8 @@ describe('ResearchHub\'s Search Functionality', () => {
    */
   it('displays search results after typing in homepage search bar', async () => {
     await page.navigateTo(browser.baseUrl);
-    await browser.driver.findElement(by.css('input')).sendKeys('vm');
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('app-search-bar input'))), TIMEOUT_PERIOD);
+    await browser.driver.findElement(by.css('app-search-bar input')).sendKeys('vm');
     await browser.waitForAngular();
     expect(await browser.driver.findElement(by.className('search-results-title')).getText()).toEqual('Results');
   });
@@ -72,7 +73,8 @@ describe('ResearchHub\'s Search Functionality', () => {
    */
   it('displays correct search results that can be navigated to', async () => {
     await page.navigateTo(browser.baseUrl);
-    await browser.driver.findElement(by.css('input')).sendKeys('biblioinformatics');
+    await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('app-search-bar input'))), TIMEOUT_PERIOD);
+    await browser.driver.findElement(by.css('app-search-bar input')).sendKeys('biblioinformatics');
     await browser.waitForAngular();
     await browser.driver.findElement(by.css('.results-list .mat-list-item')).click();
     await browser.waitForAngular();

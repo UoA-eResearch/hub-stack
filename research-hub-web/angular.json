@@ -39,12 +39,6 @@
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb"
                 }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.local.ts"
-                }
               ]
             },
             "dev": {
@@ -217,6 +211,20 @@
           "options": {
             "protractorConfig": "./protractor.conf.js",
             "devServerTarget": "research-hub-web:serve"
+          },
+          "configurations": {
+            "local": {
+              "devServerTarget": "research-hub-web:serve:local"
+            },
+            "sandbox": {
+              "devServerTarget": "research-hub-web:serve:sandbox"
+            },
+            "nonprod": {
+              "devServerTarget": "research-hub-web:serve:nonprod"
+            },
+            "prod": {
+              "devServerTarget": "research-hub-web:serve:prod"
+            }
           }
         },
         "lint": {
