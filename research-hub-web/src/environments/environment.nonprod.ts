@@ -3,6 +3,7 @@ export const environment = {
   production: true,
   researchHubApiUrl: '',
   cerApiUrl: '',
+  cerGraphQLUrl: '',
   analyticsCode: '',
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
