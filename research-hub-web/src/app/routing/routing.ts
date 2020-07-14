@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard, LoginSuccessGuard } from 'uoa-auth-angular';
+import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 import { HomeComponent } from '../components/home/home.component';
 
 
@@ -82,6 +82,6 @@ export const appRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: '/home'
   }
 ];

@@ -15,9 +15,9 @@ import { SearchBarService } from './components/search-bar/search-bar.service';
 import { AppComponentService } from './app.component.service';
 import { SearchFiltersService } from './components/search-results/search-filters/search-filters.service';
 
-import { AuthModule, CognitoConfigService } from 'uoa-auth-angular';
+import { AuthModule, CognitoConfigService, StorageService } from '@uoa/auth';
 import { AppAuthConfigService } from './services/app-auth-config.service';
-import { ErrorPagesModule } from 'uoa-error-pages-angular';
+import { ErrorPagesModule } from '@uoa/error-pages';
 import { HttpClientModule } from '@angular/common/http';
 import { RouteReuseStrategy } from '@angular/router';
 import { StorageServiceModule } from 'ngx-webstorage-service';
@@ -30,6 +30,7 @@ import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { environment } from '../environments/environment';
+import { AppStorageService } from './services/app-storage.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { environment } from '../environments/environment';
     HomeModule,
     HomeModule,
     ApolloModule,
-    HttpLinkModule
+    HttpLinkModule,
+    ErrorPagesModule
   ],
   entryComponents: [],
   providers: [
@@ -63,6 +65,7 @@ import { environment } from '../environments/environment';
     AppComponentService,
     SearchFiltersService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
+    { provide: StorageService, useClass: AppStorageService },
     {
       provide: APOLLO_OPTIONS,
       useFactory: (httpLink: HttpLink) => {

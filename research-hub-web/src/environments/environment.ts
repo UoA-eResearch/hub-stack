@@ -19,7 +19,14 @@ export const environment = {
     logout_uri: 'http://localhost:4200'
   },
   privateUrlKeyWords: {
-    whoNeedBearerToken: ['apigw.sandbox.amazon.auckland.ac.nz', 'some-other-api'],
-    whoNeedIdToken: []
-  }
+    get whoNeedBearerToken() {
+      return [
+        { url: 'apigw.sandbox.amazon.auckland.ac.nz', optional: false },
+        { url: environment.cerGraphQLUrl, optional: true }
+      ]
+    },
+    get whoNeedIdToken() {
+      return []
+    },
+  },
 }
