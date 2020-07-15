@@ -1,3 +1,11 @@
+<div>
+  <div *ngFor="let equipment of allEquipment.items">
+    Title: {{ equipment.title}}<br />
+    Summary: {{ equipment.summary }}<br />
+    SSO Protected: {{ equipment.ssoProtected }}
+  </div>
+</div>
+
 <section class="mat-typography">
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav mode="over" opened="false">
