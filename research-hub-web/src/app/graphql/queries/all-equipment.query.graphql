@@ -1,0 +1,7 @@
+    equipmentCollection {
+        items {
+            title
+            summary
+            ssoProtected
+        }
+    }
