@@ -165,28 +165,15 @@ async function createServer() {
     return new ApolloServer({
         schema,
         context: ({ req }) => {
-            let user;
-
-            // Log incoming requests
+            // Log incoming queries
             if (req.body.operationName != 'IntrospectionQuery')
                 console.log('\n===== Query Recieved: ======\n', req.body.query)
 
-            const authHeader = (req && req.headers && req.headers.authorization) || '';
-            if (!authHeader || authHeader.indexOf('Bearer ') !== 0) {
-                return null;
-            }
-            // Trim off the leading "Bearer"
-            const token = authHeader.substring('Bearer '.length);
+            // Verify the requestor's token and return their user info, or return null for unauthenticated users
             try {
-                user = verifyJwt(token, cognitoPublicKeys);
-            } catch (e) {
-                // TODO: Handle TokenExpiredError: jwt expired
-                console.log("Token failed verification.", e);
-                return null;
-            }
-            return { user };
+                return { user: verifyJwt(req.headers.authorization.substring('Hearer '.length), cognitoPublicKeys) }
+            } catch (e) { return null }
         }, formatResponse: (res, context) => {
-
             // Log the requestor's username or 'Unauthenticated'
             console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
 
