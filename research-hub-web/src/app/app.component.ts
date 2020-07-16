@@ -98,9 +98,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public authenticated;
 
   // GraphQL variables
-  public equipmentQueryLoading: Boolean = true;
-  public allEquipment$: Observable<EquipmentCollection>;
-  // public allEquipment2$: Observable<AllEquipmentQuery.equipmentCollection>;
+  public allEquipment$: Observable<AllEquipmentQuery['equipmentCollection']>;
 
   constructor(private location: Location, public optionsService: OptionsService, private headerService: HeaderService,
     private searchBarService: SearchBarService, private router: Router,
@@ -163,29 +161,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   async ngOnInit() {
 
     /**************** BEGIN GRAPHQL TESTS *****************/
-
-    // Using the plain Apollo service:
-    // Mock GraphQL Query for initial testing
-    // const getAllArticles = gql`
-    //     query { articleCollection {
-    //       items {
-    //         ssoProtected
-    //         title
-    //       }
-    //     }}
-    // `;
-
-    // this.apollo
-    //   .watchQuery<any>({ query: getAllArticles }).valueChanges.subscribe(result => {
-    //     console.log('result from graphql:');
-    //     console.log(JSON.stringify(result));
-    //   });
-
-
-    // Using generated schema services instead of the generic apollo watchQuery
-    this.allEquipment$ = this.allEquipmentGQL.fetch()
-      .pipe(map(res => res.data.equipmentCollection as EquipmentCollection))
-
+    this.allEquipment$ = this.allEquipmentGQL.fetch().pipe(pluck('data', 'equipmentCollection'));
     /****************** END GRAPHQL TESTS *******************/
 
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {

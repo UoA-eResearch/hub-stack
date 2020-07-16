@@ -167,8 +167,9 @@ async function createServer() {
         context: ({ req }) => {
             let user;
 
+            // Log incoming requests
             if (req.body.operationName != 'IntrospectionQuery')
-                console.log(req.body.query)
+                console.log('\n===== Query Recieved: ======\n', req.body.query)
 
             const authHeader = (req && req.headers && req.headers.authorization) || '';
             if (!authHeader || authHeader.indexOf('Bearer ') !== 0) {
@@ -183,11 +184,11 @@ async function createServer() {
                 console.log("Token failed verification.", e);
                 return null;
             }
-            if (user) {
-                console.log("Authenticated as user ", user.name)
-            }
             return { user };
         }, formatResponse: (res, context) => {
+
+            // Log the requestor's username or 'Unauthenticated'
+            console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
 
             /**
              * If the user is not signed in and the responseVerificationRequired flag is
@@ -197,7 +198,6 @@ async function createServer() {
             if (context.operationName != 'IntrospectionQuery'
                 && !(!!context.context.user)
                 && context.context.responseVerificationRequired) {
-
 
                 if (JSON.stringify(res).includes('\"ssoProtected\":true'))
                     throw new AuthenticationError('SSO authentication required to view this content.')

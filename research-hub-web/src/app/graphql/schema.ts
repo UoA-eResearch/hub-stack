@@ -31,179 +31,179 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
-  asset?: Maybe<Asset>;
-  assetCollection?: Maybe<AssetCollection>;
-  subHub?: Maybe<SubHub>;
-  subHubCollection?: Maybe<SubHubCollection>;
-  officialDocuments?: Maybe<OfficialDocuments>;
-  officialDocumentsCollection?: Maybe<OfficialDocumentsCollection>;
-  article?: Maybe<Article>;
-  articleCollection?: Maybe<ArticleCollection>;
-  service?: Maybe<Service>;
-  serviceCollection?: Maybe<ServiceCollection>;
-  equipment?: Maybe<Equipment>;
-  equipmentCollection?: Maybe<EquipmentCollection>;
-  caseStudy?: Maybe<CaseStudy>;
-  caseStudyCollection?: Maybe<CaseStudyCollection>;
-  person?: Maybe<Person>;
-  personCollection?: Maybe<PersonCollection>;
+  asset: Maybe<Asset>;
+  assetCollection: Maybe<AssetCollection>;
+  subHub: Maybe<SubHub>;
+  subHubCollection: Maybe<SubHubCollection>;
+  officialDocuments: Maybe<OfficialDocuments>;
+  officialDocumentsCollection: Maybe<OfficialDocumentsCollection>;
+  article: Maybe<Article>;
+  articleCollection: Maybe<ArticleCollection>;
+  service: Maybe<Service>;
+  serviceCollection: Maybe<ServiceCollection>;
+  equipment: Maybe<Equipment>;
+  equipmentCollection: Maybe<EquipmentCollection>;
+  caseStudy: Maybe<CaseStudy>;
+  caseStudyCollection: Maybe<CaseStudyCollection>;
+  person: Maybe<Person>;
+  personCollection: Maybe<PersonCollection>;
 };
 
 
 export type QueryAssetArgs = {
   id: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type QueryAssetCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-  where?: Maybe<AssetFilter>;
-  order?: Maybe<Array<Maybe<AssetOrder>>>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<AssetFilter>;
+  order: Maybe<Array<Maybe<AssetOrder>>>;
 };
 
 
 export type QuerySubHubArgs = {
   id: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type QuerySubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-  where?: Maybe<SubHubFilter>;
-  order?: Maybe<Array<Maybe<SubHubOrder>>>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<SubHubFilter>;
+  order: Maybe<Array<Maybe<SubHubOrder>>>;
 };
 
 
 export type QueryOfficialDocumentsArgs = {
   id: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type QueryOfficialDocumentsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-  where?: Maybe<OfficialDocumentsFilter>;
-  order?: Maybe<Array<Maybe<OfficialDocumentsOrder>>>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<OfficialDocumentsFilter>;
+  order: Maybe<Array<Maybe<OfficialDocumentsOrder>>>;
 };
 
 
 export type QueryArticleArgs = {
   id: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type QueryArticleCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-  where?: Maybe<ArticleFilter>;
-  order?: Maybe<Array<Maybe<ArticleOrder>>>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<ArticleFilter>;
+  order: Maybe<Array<Maybe<ArticleOrder>>>;
 };
 
 
 export type QueryServiceArgs = {
   id: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type QueryServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-  where?: Maybe<ServiceFilter>;
-  order?: Maybe<Array<Maybe<ServiceOrder>>>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<ServiceFilter>;
+  order: Maybe<Array<Maybe<ServiceOrder>>>;
 };
 
 
 export type QueryEquipmentArgs = {
   id: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type QueryEquipmentCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-  where?: Maybe<EquipmentFilter>;
-  order?: Maybe<Array<Maybe<EquipmentOrder>>>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<EquipmentFilter>;
+  order: Maybe<Array<Maybe<EquipmentOrder>>>;
 };
 
 
 export type QueryCaseStudyArgs = {
   id: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type QueryCaseStudyCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-  where?: Maybe<CaseStudyFilter>;
-  order?: Maybe<Array<Maybe<CaseStudyOrder>>>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<CaseStudyFilter>;
+  order: Maybe<Array<Maybe<CaseStudyOrder>>>;
 };
 
 
 export type QueryPersonArgs = {
   id: Scalars['String'];
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type QueryPersonCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
-  where?: Maybe<PersonFilter>;
-  order?: Maybe<Array<Maybe<PersonOrder>>>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<PersonFilter>;
+  order: Maybe<Array<Maybe<PersonOrder>>>;
 };
 
 /** Represents a binary file in a space. An asset can be any file type. */
 export type Asset = {
   __typename?: 'Asset';
   sys: Sys;
-  title?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  contentType?: Maybe<Scalars['String']>;
-  fileName?: Maybe<Scalars['String']>;
-  size?: Maybe<Scalars['Int']>;
-  url?: Maybe<Scalars['String']>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-  linkedFrom?: Maybe<AssetLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
+  contentType: Maybe<Scalars['String']>;
+  fileName: Maybe<Scalars['String']>;
+  size: Maybe<Scalars['Int']>;
+  url: Maybe<Scalars['String']>;
+  width: Maybe<Scalars['Int']>;
+  height: Maybe<Scalars['Int']>;
+  linkedFrom: Maybe<AssetLinkingCollections>;
 };
 
 
 /** Represents a binary file in a space. An asset can be any file type. */
 export type AssetUrlArgs = {
-  transform?: Maybe<ImageTransformOptions>;
+  transform: Maybe<ImageTransformOptions>;
 };
 
 export type Sys = {
@@ -211,40 +211,40 @@ export type Sys = {
   id: Scalars['String'];
   spaceId: Scalars['String'];
   environmentId: Scalars['String'];
-  publishedAt?: Maybe<Scalars['DateTime']>;
-  firstPublishedAt?: Maybe<Scalars['DateTime']>;
-  publishedVersion?: Maybe<Scalars['Int']>;
+  publishedAt: Maybe<Scalars['DateTime']>;
+  firstPublishedAt: Maybe<Scalars['DateTime']>;
+  publishedVersion: Maybe<Scalars['Int']>;
 };
 
 
 export type ImageTransformOptions = {
   /** Desired width in pixels. Defaults to the original image width. */
-  width?: Maybe<Scalars['Dimension']>;
+  width: Maybe<Scalars['Dimension']>;
   /** Desired height in pixels. Defaults to the original image height. */
-  height?: Maybe<Scalars['Dimension']>;
+  height: Maybe<Scalars['Dimension']>;
   /**
    * Desired quality of the image in percents.
    *         Used for `PNG8`, `JPG`, `JPG_PROGRESSIVE` and `WEBP` formats.
    */
-  quality?: Maybe<Scalars['Quality']>;
+  quality: Maybe<Scalars['Quality']>;
   /**
    * Desired corner radius in pixels.
    *         Results in an image with rounded corners (pass `-1` for a full circle/ellipse).
    *         Defaults to `0`. Uses desired background color as padding color,
    *         unless the format is `JPG` or `JPG_PROGRESSIVE` and resize strategy is `PAD`, then defaults to white.
    */
-  cornerRadius?: Maybe<Scalars['Int']>;
+  cornerRadius: Maybe<Scalars['Int']>;
   /** Desired resize strategy. Defaults to `FIT`. */
-  resizeStrategy?: Maybe<ImageResizeStrategy>;
+  resizeStrategy: Maybe<ImageResizeStrategy>;
   /** Desired resize focus area. Defaults to `CENTER`. */
-  resizeFocus?: Maybe<ImageResizeFocus>;
+  resizeFocus: Maybe<ImageResizeFocus>;
   /**
    * Desired background color, used with corner radius or `PAD` resize strategy.
    *         Defaults to transparent (for `PNG`, `PNG8` and `WEBP`) or white (for `JPG` and `JPG_PROGRESSIVE`).
    */
-  backgroundColor?: Maybe<Scalars['HexColor']>;
+  backgroundColor: Maybe<Scalars['HexColor']>;
   /** Desired image format. Defaults to the original image format. */
-  format?: Maybe<ImageFormat>;
+  format: Maybe<ImageFormat>;
 };
 
 
@@ -316,78 +316,78 @@ export enum ImageFormat {
 
 export type AssetLinkingCollections = {
   __typename?: 'AssetLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-  subHubCollection?: Maybe<SubHubCollection>;
-  officialDocumentsCollection?: Maybe<OfficialDocumentsCollection>;
-  articleCollection?: Maybe<ArticleCollection>;
-  serviceCollection?: Maybe<ServiceCollection>;
-  equipmentCollection?: Maybe<EquipmentCollection>;
-  caseStudyCollection?: Maybe<CaseStudyCollection>;
-  personCollection?: Maybe<PersonCollection>;
+  entryCollection: Maybe<EntryCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
+  officialDocumentsCollection: Maybe<OfficialDocumentsCollection>;
+  articleCollection: Maybe<ArticleCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
+  caseStudyCollection: Maybe<CaseStudyCollection>;
+  personCollection: Maybe<PersonCollection>;
 };
 
 
 export type AssetLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type AssetLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type AssetLinkingCollectionsOfficialDocumentsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type AssetLinkingCollectionsArticleCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type AssetLinkingCollectionsServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type AssetLinkingCollectionsEquipmentCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type AssetLinkingCollectionsCaseStudyCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type AssetLinkingCollectionsPersonCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type EntryCollection = {
@@ -419,17 +419,17 @@ export type SubHubCollection = {
 export type SubHub = Entry & {
   __typename?: 'SubHub';
   sys: Sys;
-  linkedFrom?: Maybe<SubHubLinkingCollections>;
-  title?: Maybe<Scalars['String']>;
-  summary?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
-  body?: Maybe<SubHubBody>;
-  bannerImage?: Maybe<Asset>;
-  subhubPagesCollection?: Maybe<SubHubSubhubPagesCollection>;
-  keywords?: Maybe<Array<Maybe<Scalars['String']>>>;
-  mediaCollection?: Maybe<AssetCollection>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
+  linkedFrom: Maybe<SubHubLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  summary: Maybe<Scalars['String']>;
+  slug: Maybe<Scalars['String']>;
+  body: Maybe<SubHubBody>;
+  bannerImage: Maybe<Asset>;
+  subhubPagesCollection: Maybe<SubHubSubhubPagesCollection>;
+  keywords: Maybe<Array<Maybe<Scalars['String']>>>;
+  mediaCollection: Maybe<AssetCollection>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -440,8 +440,8 @@ export type SubHub = Entry & {
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
 export type SubHubBannerImageArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -454,8 +454,8 @@ export type SubHubBannerImageArgs = {
 export type SubHubSubhubPagesCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -468,30 +468,30 @@ export type SubHubSubhubPagesCollectionArgs = {
 export type SubHubMediaCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type SubHubLinkingCollections = {
   __typename?: 'SubHubLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-  subHubCollection?: Maybe<SubHubCollection>;
+  entryCollection: Maybe<EntryCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
 };
 
 
 export type SubHubLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type SubHubLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type SubHubBody = {
@@ -534,27 +534,27 @@ export type SubHubSubhubPagesItem = Article | CaseStudy | Equipment | OfficialDo
 export type Article = Entry & {
   __typename?: 'Article';
   sys: Sys;
-  linkedFrom?: Maybe<ArticleLinkingCollections>;
-  title?: Maybe<Scalars['String']>;
-  summary?: Maybe<Scalars['String']>;
-  icon?: Maybe<Asset>;
-  body?: Maybe<ArticleBody>;
-  mediaCollection?: Maybe<AssetCollection>;
-  relatedItemsCollection?: Maybe<ArticleRelatedItemsCollection>;
-  officialDocumentsCollection?: Maybe<ArticleOfficialDocumentsCollection>;
-  relatedContactsCollection?: Maybe<ArticleRelatedContactsCollection>;
-  relatedOrganisationsCollection?: Maybe<ArticleRelatedOrganisationsCollection>;
-  keywords?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug?: Maybe<Scalars['String']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
+  linkedFrom: Maybe<ArticleLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  summary: Maybe<Scalars['String']>;
+  icon: Maybe<Asset>;
+  body: Maybe<ArticleBody>;
+  mediaCollection: Maybe<AssetCollection>;
+  relatedItemsCollection: Maybe<ArticleRelatedItemsCollection>;
+  officialDocumentsCollection: Maybe<ArticleOfficialDocumentsCollection>;
+  relatedContactsCollection: Maybe<ArticleRelatedContactsCollection>;
+  relatedOrganisationsCollection: Maybe<ArticleRelatedOrganisationsCollection>;
+  keywords: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug: Maybe<Scalars['String']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
 };
 
 
 /** A general information page. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/article) */
 export type ArticleIconArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -562,8 +562,8 @@ export type ArticleIconArgs = {
 export type ArticleMediaCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -571,8 +571,8 @@ export type ArticleMediaCollectionArgs = {
 export type ArticleRelatedItemsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -580,8 +580,8 @@ export type ArticleRelatedItemsCollectionArgs = {
 export type ArticleOfficialDocumentsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -589,8 +589,8 @@ export type ArticleOfficialDocumentsCollectionArgs = {
 export type ArticleRelatedContactsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -598,48 +598,48 @@ export type ArticleRelatedContactsCollectionArgs = {
 export type ArticleRelatedOrganisationsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type ArticleLinkingCollections = {
   __typename?: 'ArticleLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-  subHubCollection?: Maybe<SubHubCollection>;
-  serviceCollection?: Maybe<ServiceCollection>;
-  equipmentCollection?: Maybe<EquipmentCollection>;
+  entryCollection: Maybe<EntryCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
 };
 
 
 export type ArticleLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type ArticleLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type ArticleLinkingCollectionsServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type ArticleLinkingCollectionsEquipmentCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type ServiceCollection = {
@@ -654,36 +654,36 @@ export type ServiceCollection = {
 export type Service = Entry & {
   __typename?: 'Service';
   sys: Sys;
-  linkedFrom?: Maybe<ServiceLinkingCollections>;
-  title?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
-  summary?: Maybe<Scalars['String']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
-  icon?: Maybe<Asset>;
-  serviceOwnerCollection?: Maybe<ServiceServiceOwnerCollection>;
-  userFacingSupportCollection?: Maybe<ServiceUserFacingSupportCollection>;
-  callToAction?: Maybe<Scalars['String']>;
-  overview?: Maybe<Scalars['String']>;
-  eligibility?: Maybe<Scalars['String']>;
-  cost?: Maybe<Scalars['String']>;
-  access?: Maybe<Scalars['String']>;
-  helpAndSupport?: Maybe<ServiceHelpAndSupport>;
-  details?: Maybe<ServiceDetails>;
-  features?: Maybe<ServiceFeatures>;
-  limitations?: Maybe<ServiceLimitations>;
-  considerations?: Maybe<ServiceConsiderations>;
-  officialDocumentsCollection?: Maybe<ServiceOfficialDocumentsCollection>;
-  keywords?: Maybe<Array<Maybe<Scalars['String']>>>;
-  relatedItemsCollection?: Maybe<ServiceRelatedItemsCollection>;
-  mediaCollection?: Maybe<AssetCollection>;
+  linkedFrom: Maybe<ServiceLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  slug: Maybe<Scalars['String']>;
+  summary: Maybe<Scalars['String']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  icon: Maybe<Asset>;
+  serviceOwnerCollection: Maybe<ServiceServiceOwnerCollection>;
+  userFacingSupportCollection: Maybe<ServiceUserFacingSupportCollection>;
+  callToAction: Maybe<Scalars['String']>;
+  overview: Maybe<Scalars['String']>;
+  eligibility: Maybe<Scalars['String']>;
+  cost: Maybe<Scalars['String']>;
+  access: Maybe<Scalars['String']>;
+  helpAndSupport: Maybe<ServiceHelpAndSupport>;
+  details: Maybe<ServiceDetails>;
+  features: Maybe<ServiceFeatures>;
+  limitations: Maybe<ServiceLimitations>;
+  considerations: Maybe<ServiceConsiderations>;
+  officialDocumentsCollection: Maybe<ServiceOfficialDocumentsCollection>;
+  keywords: Maybe<Array<Maybe<Scalars['String']>>>;
+  relatedItemsCollection: Maybe<ServiceRelatedItemsCollection>;
+  mediaCollection: Maybe<AssetCollection>;
 };
 
 
 /** A research service catalogue item [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/service) */
 export type ServiceIconArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -691,8 +691,8 @@ export type ServiceIconArgs = {
 export type ServiceServiceOwnerCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -700,8 +700,8 @@ export type ServiceServiceOwnerCollectionArgs = {
 export type ServiceUserFacingSupportCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -709,8 +709,8 @@ export type ServiceUserFacingSupportCollectionArgs = {
 export type ServiceOfficialDocumentsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -718,8 +718,8 @@ export type ServiceOfficialDocumentsCollectionArgs = {
 export type ServiceRelatedItemsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -727,48 +727,48 @@ export type ServiceRelatedItemsCollectionArgs = {
 export type ServiceMediaCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type ServiceLinkingCollections = {
   __typename?: 'ServiceLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-  subHubCollection?: Maybe<SubHubCollection>;
-  serviceCollection?: Maybe<ServiceCollection>;
-  equipmentCollection?: Maybe<EquipmentCollection>;
+  entryCollection: Maybe<EntryCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
 };
 
 
 export type ServiceLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type ServiceLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type ServiceLinkingCollectionsServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type ServiceLinkingCollectionsEquipmentCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type EquipmentCollection = {
@@ -786,35 +786,35 @@ export type EquipmentCollection = {
 export type Equipment = Entry & {
   __typename?: 'Equipment';
   sys: Sys;
-  linkedFrom?: Maybe<EquipmentLinkingCollections>;
-  title?: Maybe<Scalars['String']>;
-  summary?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
-  mainImage?: Maybe<Asset>;
-  overview?: Maybe<EquipmentOverview>;
-  details?: Maybe<EquipmentDetails>;
-  callToAction?: Maybe<Scalars['String']>;
-  userFacingSupportCollection?: Maybe<EquipmentUserFacingSupportCollection>;
-  equipmentOwnerCollection?: Maybe<EquipmentEquipmentOwnerCollection>;
-  type?: Maybe<Array<Maybe<Scalars['String']>>>;
-  manufacturer?: Maybe<Scalars['String']>;
-  model?: Maybe<Scalars['String']>;
-  eligibility?: Maybe<EquipmentEligibility>;
-  costToUse?: Maybe<EquipmentCostToUse>;
-  location?: Maybe<Scalars['String']>;
-  trainingRequired?: Maybe<EquipmentTrainingRequired>;
-  trainingProvided?: Maybe<EquipmentTrainingProvided>;
-  yearOfManufacture?: Maybe<Scalars['Int']>;
-  access?: Maybe<EquipmentAccess>;
-  helpAndSupport?: Maybe<EquipmentHelpAndSupport>;
-  features?: Maybe<EquipmentFeatures>;
-  limitations?: Maybe<EquipmentLimitations>;
-  considerations?: Maybe<EquipmentConsiderations>;
-  relatedItemsCollection?: Maybe<EquipmentRelatedItemsCollection>;
-  keywords?: Maybe<Array<Maybe<Scalars['String']>>>;
-  mediaCollection?: Maybe<AssetCollection>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
+  linkedFrom: Maybe<EquipmentLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  summary: Maybe<Scalars['String']>;
+  slug: Maybe<Scalars['String']>;
+  mainImage: Maybe<Asset>;
+  overview: Maybe<EquipmentOverview>;
+  details: Maybe<EquipmentDetails>;
+  callToAction: Maybe<Scalars['String']>;
+  userFacingSupportCollection: Maybe<EquipmentUserFacingSupportCollection>;
+  equipmentOwnerCollection: Maybe<EquipmentEquipmentOwnerCollection>;
+  type: Maybe<Array<Maybe<Scalars['String']>>>;
+  manufacturer: Maybe<Scalars['String']>;
+  model: Maybe<Scalars['String']>;
+  eligibility: Maybe<EquipmentEligibility>;
+  costToUse: Maybe<EquipmentCostToUse>;
+  location: Maybe<Scalars['String']>;
+  trainingRequired: Maybe<EquipmentTrainingRequired>;
+  trainingProvided: Maybe<EquipmentTrainingProvided>;
+  yearOfManufacture: Maybe<Scalars['Int']>;
+  access: Maybe<EquipmentAccess>;
+  helpAndSupport: Maybe<EquipmentHelpAndSupport>;
+  features: Maybe<EquipmentFeatures>;
+  limitations: Maybe<EquipmentLimitations>;
+  considerations: Maybe<EquipmentConsiderations>;
+  relatedItemsCollection: Maybe<EquipmentRelatedItemsCollection>;
+  keywords: Maybe<Array<Maybe<Scalars['String']>>>;
+  mediaCollection: Maybe<AssetCollection>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -823,8 +823,8 @@ export type Equipment = Entry & {
  * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
  */
 export type EquipmentMainImageArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -835,8 +835,8 @@ export type EquipmentMainImageArgs = {
 export type EquipmentUserFacingSupportCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -847,8 +847,8 @@ export type EquipmentUserFacingSupportCollectionArgs = {
 export type EquipmentEquipmentOwnerCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -859,8 +859,8 @@ export type EquipmentEquipmentOwnerCollectionArgs = {
 export type EquipmentRelatedItemsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -871,48 +871,48 @@ export type EquipmentRelatedItemsCollectionArgs = {
 export type EquipmentMediaCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type EquipmentLinkingCollections = {
   __typename?: 'EquipmentLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-  subHubCollection?: Maybe<SubHubCollection>;
-  serviceCollection?: Maybe<ServiceCollection>;
-  equipmentCollection?: Maybe<EquipmentCollection>;
+  entryCollection: Maybe<EntryCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
 };
 
 
 export type EquipmentLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type EquipmentLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type EquipmentLinkingCollectionsServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type EquipmentLinkingCollectionsEquipmentCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type EquipmentOverview = {
@@ -977,71 +977,71 @@ export type EquipmentUserFacingSupportCollection = {
 export type Person = Entry & {
   __typename?: 'Person';
   sys: Sys;
-  linkedFrom?: Maybe<PersonLinkingCollections>;
-  username?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  jobTitle?: Maybe<Scalars['String']>;
-  image?: Maybe<Asset>;
-  slug?: Maybe<Scalars['String']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
+  linkedFrom: Maybe<PersonLinkingCollections>;
+  username: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
+  title: Maybe<Scalars['String']>;
+  jobTitle: Maybe<Scalars['String']>;
+  image: Maybe<Asset>;
+  slug: Maybe<Scalars['String']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
 };
 
 
 /** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
 export type PersonImageArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type PersonLinkingCollections = {
   __typename?: 'PersonLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-  officialDocumentsCollection?: Maybe<OfficialDocumentsCollection>;
-  serviceCollection?: Maybe<ServiceCollection>;
-  equipmentCollection?: Maybe<EquipmentCollection>;
-  caseStudyCollection?: Maybe<CaseStudyCollection>;
+  entryCollection: Maybe<EntryCollection>;
+  officialDocumentsCollection: Maybe<OfficialDocumentsCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
+  caseStudyCollection: Maybe<CaseStudyCollection>;
 };
 
 
 export type PersonLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type PersonLinkingCollectionsOfficialDocumentsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type PersonLinkingCollectionsServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type PersonLinkingCollectionsEquipmentCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type PersonLinkingCollectionsCaseStudyCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type OfficialDocumentsCollection = {
@@ -1060,12 +1060,12 @@ export type OfficialDocumentsCollection = {
 export type OfficialDocuments = Entry & {
   __typename?: 'OfficialDocuments';
   sys: Sys;
-  linkedFrom?: Maybe<OfficialDocumentsLinkingCollections>;
-  title?: Maybe<Scalars['String']>;
-  summary?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-  document?: Maybe<Asset>;
-  contactCollection?: Maybe<OfficialDocumentsContactCollection>;
+  linkedFrom: Maybe<OfficialDocumentsLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  summary: Maybe<Scalars['String']>;
+  url: Maybe<Scalars['String']>;
+  document: Maybe<Asset>;
+  contactCollection: Maybe<OfficialDocumentsContactCollection>;
 };
 
 
@@ -1075,8 +1075,8 @@ export type OfficialDocuments = Entry & {
  * related to research and research services.   [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/officialDocuments)
  */
 export type OfficialDocumentsDocumentArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -1088,39 +1088,39 @@ export type OfficialDocumentsDocumentArgs = {
 export type OfficialDocumentsContactCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type OfficialDocumentsLinkingCollections = {
   __typename?: 'OfficialDocumentsLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-  subHubCollection?: Maybe<SubHubCollection>;
-  serviceCollection?: Maybe<ServiceCollection>;
+  entryCollection: Maybe<EntryCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
 };
 
 
 export type OfficialDocumentsLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type OfficialDocumentsLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type OfficialDocumentsLinkingCollectionsServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type OfficialDocumentsContactCollection = {
@@ -1146,21 +1146,21 @@ export type CaseStudyCollection = {
 export type CaseStudy = Entry & {
   __typename?: 'CaseStudy';
   sys: Sys;
-  linkedFrom?: Maybe<CaseStudyLinkingCollections>;
-  title?: Maybe<Scalars['String']>;
-  summary?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
-  keywords?: Maybe<Array<Maybe<Scalars['String']>>>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
-  mainImage?: Maybe<Asset>;
-  content?: Maybe<CaseStudyContent>;
-  peopleCollection?: Maybe<CaseStudyPeopleCollection>;
-  callToActionButtonText?: Maybe<Scalars['String']>;
-  callToActionButtonLink?: Maybe<Scalars['String']>;
-  acknowledgement?: Maybe<CaseStudyAcknowledgement>;
-  references?: Maybe<CaseStudyReferences>;
-  relatedItemsCollection?: Maybe<CaseStudyRelatedItemsCollection>;
+  linkedFrom: Maybe<CaseStudyLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  summary: Maybe<Scalars['String']>;
+  slug: Maybe<Scalars['String']>;
+  keywords: Maybe<Array<Maybe<Scalars['String']>>>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  mainImage: Maybe<Asset>;
+  content: Maybe<CaseStudyContent>;
+  peopleCollection: Maybe<CaseStudyPeopleCollection>;
+  callToActionButtonText: Maybe<Scalars['String']>;
+  callToActionButtonLink: Maybe<Scalars['String']>;
+  acknowledgement: Maybe<CaseStudyAcknowledgement>;
+  references: Maybe<CaseStudyReferences>;
+  relatedItemsCollection: Maybe<CaseStudyRelatedItemsCollection>;
 };
 
 
@@ -1169,8 +1169,8 @@ export type CaseStudy = Entry & {
  * action. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/caseStudy)
  */
 export type CaseStudyMainImageArgs = {
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -1181,8 +1181,8 @@ export type CaseStudyMainImageArgs = {
 export type CaseStudyPeopleCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
@@ -1193,48 +1193,48 @@ export type CaseStudyPeopleCollectionArgs = {
 export type CaseStudyRelatedItemsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type CaseStudyLinkingCollections = {
   __typename?: 'CaseStudyLinkingCollections';
-  entryCollection?: Maybe<EntryCollection>;
-  subHubCollection?: Maybe<SubHubCollection>;
-  serviceCollection?: Maybe<ServiceCollection>;
-  equipmentCollection?: Maybe<EquipmentCollection>;
+  entryCollection: Maybe<EntryCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
 };
 
 
 export type CaseStudyLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type CaseStudyLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type CaseStudyLinkingCollectionsServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 
 export type CaseStudyLinkingCollectionsEquipmentCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
-  preview?: Maybe<Scalars['Boolean']>;
-  locale?: Maybe<Scalars['String']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
 };
 
 export type CaseStudyContent = {
@@ -1812,102 +1812,102 @@ export type PersonCollection = {
 };
 
 export type AssetFilter = {
-  sys?: Maybe<SysFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  description_exists?: Maybe<Scalars['Boolean']>;
-  description?: Maybe<Scalars['String']>;
-  description_not?: Maybe<Scalars['String']>;
-  description_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  description_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  description_contains?: Maybe<Scalars['String']>;
-  description_not_contains?: Maybe<Scalars['String']>;
-  url_exists?: Maybe<Scalars['Boolean']>;
-  url?: Maybe<Scalars['String']>;
-  url_not?: Maybe<Scalars['String']>;
-  url_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_contains?: Maybe<Scalars['String']>;
-  url_not_contains?: Maybe<Scalars['String']>;
-  size_exists?: Maybe<Scalars['Boolean']>;
-  size?: Maybe<Scalars['Int']>;
-  size_not?: Maybe<Scalars['Int']>;
-  size_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  size_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  size_gt?: Maybe<Scalars['Int']>;
-  size_gte?: Maybe<Scalars['Int']>;
-  size_lt?: Maybe<Scalars['Int']>;
-  size_lte?: Maybe<Scalars['Int']>;
-  contentType_exists?: Maybe<Scalars['Boolean']>;
-  contentType?: Maybe<Scalars['String']>;
-  contentType_not?: Maybe<Scalars['String']>;
-  contentType_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  contentType_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  contentType_contains?: Maybe<Scalars['String']>;
-  contentType_not_contains?: Maybe<Scalars['String']>;
-  fileName_exists?: Maybe<Scalars['Boolean']>;
-  fileName?: Maybe<Scalars['String']>;
-  fileName_not?: Maybe<Scalars['String']>;
-  fileName_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  fileName_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  fileName_contains?: Maybe<Scalars['String']>;
-  fileName_not_contains?: Maybe<Scalars['String']>;
-  width_exists?: Maybe<Scalars['Boolean']>;
-  width?: Maybe<Scalars['Int']>;
-  width_not?: Maybe<Scalars['Int']>;
-  width_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  width_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  width_gt?: Maybe<Scalars['Int']>;
-  width_gte?: Maybe<Scalars['Int']>;
-  width_lt?: Maybe<Scalars['Int']>;
-  width_lte?: Maybe<Scalars['Int']>;
-  height_exists?: Maybe<Scalars['Boolean']>;
-  height?: Maybe<Scalars['Int']>;
-  height_not?: Maybe<Scalars['Int']>;
-  height_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  height_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  height_gt?: Maybe<Scalars['Int']>;
-  height_gte?: Maybe<Scalars['Int']>;
-  height_lt?: Maybe<Scalars['Int']>;
-  height_lte?: Maybe<Scalars['Int']>;
-  OR?: Maybe<Array<Maybe<AssetFilter>>>;
-  AND?: Maybe<Array<Maybe<AssetFilter>>>;
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  description_exists: Maybe<Scalars['Boolean']>;
+  description: Maybe<Scalars['String']>;
+  description_not: Maybe<Scalars['String']>;
+  description_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  description_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  description_contains: Maybe<Scalars['String']>;
+  description_not_contains: Maybe<Scalars['String']>;
+  url_exists: Maybe<Scalars['Boolean']>;
+  url: Maybe<Scalars['String']>;
+  url_not: Maybe<Scalars['String']>;
+  url_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  url_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  url_contains: Maybe<Scalars['String']>;
+  url_not_contains: Maybe<Scalars['String']>;
+  size_exists: Maybe<Scalars['Boolean']>;
+  size: Maybe<Scalars['Int']>;
+  size_not: Maybe<Scalars['Int']>;
+  size_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  size_not_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  size_gt: Maybe<Scalars['Int']>;
+  size_gte: Maybe<Scalars['Int']>;
+  size_lt: Maybe<Scalars['Int']>;
+  size_lte: Maybe<Scalars['Int']>;
+  contentType_exists: Maybe<Scalars['Boolean']>;
+  contentType: Maybe<Scalars['String']>;
+  contentType_not: Maybe<Scalars['String']>;
+  contentType_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  contentType_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  contentType_contains: Maybe<Scalars['String']>;
+  contentType_not_contains: Maybe<Scalars['String']>;
+  fileName_exists: Maybe<Scalars['Boolean']>;
+  fileName: Maybe<Scalars['String']>;
+  fileName_not: Maybe<Scalars['String']>;
+  fileName_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  fileName_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  fileName_contains: Maybe<Scalars['String']>;
+  fileName_not_contains: Maybe<Scalars['String']>;
+  width_exists: Maybe<Scalars['Boolean']>;
+  width: Maybe<Scalars['Int']>;
+  width_not: Maybe<Scalars['Int']>;
+  width_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  width_not_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  width_gt: Maybe<Scalars['Int']>;
+  width_gte: Maybe<Scalars['Int']>;
+  width_lt: Maybe<Scalars['Int']>;
+  width_lte: Maybe<Scalars['Int']>;
+  height_exists: Maybe<Scalars['Boolean']>;
+  height: Maybe<Scalars['Int']>;
+  height_not: Maybe<Scalars['Int']>;
+  height_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  height_not_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  height_gt: Maybe<Scalars['Int']>;
+  height_gte: Maybe<Scalars['Int']>;
+  height_lt: Maybe<Scalars['Int']>;
+  height_lte: Maybe<Scalars['Int']>;
+  OR: Maybe<Array<Maybe<AssetFilter>>>;
+  AND: Maybe<Array<Maybe<AssetFilter>>>;
 };
 
 export type SysFilter = {
-  id_exists?: Maybe<Scalars['Boolean']>;
-  id?: Maybe<Scalars['String']>;
-  id_not?: Maybe<Scalars['String']>;
-  id_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  id_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  id_contains?: Maybe<Scalars['String']>;
-  id_not_contains?: Maybe<Scalars['String']>;
-  publishedAt_exists?: Maybe<Scalars['Boolean']>;
-  publishedAt?: Maybe<Scalars['String']>;
-  publishedAt_not?: Maybe<Scalars['String']>;
-  publishedAt_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  publishedAt_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  publishedAt_contains?: Maybe<Scalars['String']>;
-  publishedAt_not_contains?: Maybe<Scalars['String']>;
-  firstPublishedAt_exists?: Maybe<Scalars['Boolean']>;
-  firstPublishedAt?: Maybe<Scalars['String']>;
-  firstPublishedAt_not?: Maybe<Scalars['String']>;
-  firstPublishedAt_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  firstPublishedAt_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  firstPublishedAt_contains?: Maybe<Scalars['String']>;
-  firstPublishedAt_not_contains?: Maybe<Scalars['String']>;
-  publishedVersion_exists?: Maybe<Scalars['Boolean']>;
-  publishedVersion?: Maybe<Scalars['String']>;
-  publishedVersion_not?: Maybe<Scalars['String']>;
-  publishedVersion_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  publishedVersion_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  publishedVersion_contains?: Maybe<Scalars['String']>;
-  publishedVersion_not_contains?: Maybe<Scalars['String']>;
+  id_exists: Maybe<Scalars['Boolean']>;
+  id: Maybe<Scalars['String']>;
+  id_not: Maybe<Scalars['String']>;
+  id_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  id_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  id_contains: Maybe<Scalars['String']>;
+  id_not_contains: Maybe<Scalars['String']>;
+  publishedAt_exists: Maybe<Scalars['Boolean']>;
+  publishedAt: Maybe<Scalars['String']>;
+  publishedAt_not: Maybe<Scalars['String']>;
+  publishedAt_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  publishedAt_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  publishedAt_contains: Maybe<Scalars['String']>;
+  publishedAt_not_contains: Maybe<Scalars['String']>;
+  firstPublishedAt_exists: Maybe<Scalars['Boolean']>;
+  firstPublishedAt: Maybe<Scalars['String']>;
+  firstPublishedAt_not: Maybe<Scalars['String']>;
+  firstPublishedAt_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  firstPublishedAt_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  firstPublishedAt_contains: Maybe<Scalars['String']>;
+  firstPublishedAt_not_contains: Maybe<Scalars['String']>;
+  publishedVersion_exists: Maybe<Scalars['Boolean']>;
+  publishedVersion: Maybe<Scalars['String']>;
+  publishedVersion_not: Maybe<Scalars['String']>;
+  publishedVersion_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  publishedVersion_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  publishedVersion_contains: Maybe<Scalars['String']>;
+  publishedVersion_not_contains: Maybe<Scalars['String']>;
 };
 
 export enum AssetOrder {
@@ -1934,39 +1934,39 @@ export enum AssetOrder {
 }
 
 export type SubHubFilter = {
-  sys?: Maybe<SysFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  summary_exists?: Maybe<Scalars['Boolean']>;
-  summary?: Maybe<Scalars['String']>;
-  summary_not?: Maybe<Scalars['String']>;
-  summary_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains?: Maybe<Scalars['String']>;
-  summary_not_contains?: Maybe<Scalars['String']>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  keywords_contains_all?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_some?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_none?: Maybe<Array<Maybe<Scalars['String']>>>;
-  ssoProtected_exists?: Maybe<Scalars['Boolean']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  ssoProtected_not?: Maybe<Scalars['Boolean']>;
-  searchable_exists?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
-  searchable_not?: Maybe<Scalars['Boolean']>;
-  OR?: Maybe<Array<Maybe<SubHubFilter>>>;
-  AND?: Maybe<Array<Maybe<SubHubFilter>>>;
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  OR: Maybe<Array<Maybe<SubHubFilter>>>;
+  AND: Maybe<Array<Maybe<SubHubFilter>>>;
 };
 
 export enum SubHubOrder {
@@ -1991,30 +1991,30 @@ export enum SubHubOrder {
 }
 
 export type OfficialDocumentsFilter = {
-  sys?: Maybe<SysFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  summary_exists?: Maybe<Scalars['Boolean']>;
-  summary?: Maybe<Scalars['String']>;
-  summary_not?: Maybe<Scalars['String']>;
-  summary_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains?: Maybe<Scalars['String']>;
-  summary_not_contains?: Maybe<Scalars['String']>;
-  url_exists?: Maybe<Scalars['Boolean']>;
-  url?: Maybe<Scalars['String']>;
-  url_not?: Maybe<Scalars['String']>;
-  url_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_contains?: Maybe<Scalars['String']>;
-  url_not_contains?: Maybe<Scalars['String']>;
-  OR?: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
-  AND?: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  url_exists: Maybe<Scalars['Boolean']>;
+  url: Maybe<Scalars['String']>;
+  url_not: Maybe<Scalars['String']>;
+  url_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  url_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  url_contains: Maybe<Scalars['String']>;
+  url_not_contains: Maybe<Scalars['String']>;
+  OR: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
+  AND: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
 };
 
 export enum OfficialDocumentsOrder {
@@ -2035,39 +2035,39 @@ export enum OfficialDocumentsOrder {
 }
 
 export type ArticleFilter = {
-  sys?: Maybe<SysFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  summary_exists?: Maybe<Scalars['Boolean']>;
-  summary?: Maybe<Scalars['String']>;
-  summary_not?: Maybe<Scalars['String']>;
-  summary_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains?: Maybe<Scalars['String']>;
-  summary_not_contains?: Maybe<Scalars['String']>;
-  keywords_contains_all?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_some?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_none?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  ssoProtected_exists?: Maybe<Scalars['Boolean']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  ssoProtected_not?: Maybe<Scalars['Boolean']>;
-  searchable_exists?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
-  searchable_not?: Maybe<Scalars['Boolean']>;
-  OR?: Maybe<Array<Maybe<ArticleFilter>>>;
-  AND?: Maybe<Array<Maybe<ArticleFilter>>>;
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  OR: Maybe<Array<Maybe<ArticleFilter>>>;
+  AND: Maybe<Array<Maybe<ArticleFilter>>>;
 };
 
 export enum ArticleOrder {
@@ -2092,74 +2092,74 @@ export enum ArticleOrder {
 }
 
 export type ServiceFilter = {
-  sys?: Maybe<SysFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  summary_exists?: Maybe<Scalars['Boolean']>;
-  summary?: Maybe<Scalars['String']>;
-  summary_not?: Maybe<Scalars['String']>;
-  summary_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains?: Maybe<Scalars['String']>;
-  summary_not_contains?: Maybe<Scalars['String']>;
-  ssoProtected_exists?: Maybe<Scalars['Boolean']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  ssoProtected_not?: Maybe<Scalars['Boolean']>;
-  searchable_exists?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
-  searchable_not?: Maybe<Scalars['Boolean']>;
-  callToAction_exists?: Maybe<Scalars['Boolean']>;
-  callToAction?: Maybe<Scalars['String']>;
-  callToAction_not?: Maybe<Scalars['String']>;
-  callToAction_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  callToAction_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  callToAction_contains?: Maybe<Scalars['String']>;
-  callToAction_not_contains?: Maybe<Scalars['String']>;
-  overview_exists?: Maybe<Scalars['Boolean']>;
-  overview?: Maybe<Scalars['String']>;
-  overview_not?: Maybe<Scalars['String']>;
-  overview_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  overview_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  overview_contains?: Maybe<Scalars['String']>;
-  overview_not_contains?: Maybe<Scalars['String']>;
-  eligibility_exists?: Maybe<Scalars['Boolean']>;
-  eligibility?: Maybe<Scalars['String']>;
-  eligibility_not?: Maybe<Scalars['String']>;
-  eligibility_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  eligibility_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  eligibility_contains?: Maybe<Scalars['String']>;
-  eligibility_not_contains?: Maybe<Scalars['String']>;
-  cost_exists?: Maybe<Scalars['Boolean']>;
-  cost?: Maybe<Scalars['String']>;
-  cost_not?: Maybe<Scalars['String']>;
-  cost_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  cost_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  cost_contains?: Maybe<Scalars['String']>;
-  cost_not_contains?: Maybe<Scalars['String']>;
-  access_exists?: Maybe<Scalars['Boolean']>;
-  access?: Maybe<Scalars['String']>;
-  access_not?: Maybe<Scalars['String']>;
-  access_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  access_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  access_contains?: Maybe<Scalars['String']>;
-  access_not_contains?: Maybe<Scalars['String']>;
-  keywords_contains_all?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_some?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_none?: Maybe<Array<Maybe<Scalars['String']>>>;
-  OR?: Maybe<Array<Maybe<ServiceFilter>>>;
-  AND?: Maybe<Array<Maybe<ServiceFilter>>>;
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  callToAction_exists: Maybe<Scalars['Boolean']>;
+  callToAction: Maybe<Scalars['String']>;
+  callToAction_not: Maybe<Scalars['String']>;
+  callToAction_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  callToAction_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  callToAction_contains: Maybe<Scalars['String']>;
+  callToAction_not_contains: Maybe<Scalars['String']>;
+  overview_exists: Maybe<Scalars['Boolean']>;
+  overview: Maybe<Scalars['String']>;
+  overview_not: Maybe<Scalars['String']>;
+  overview_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  overview_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  overview_contains: Maybe<Scalars['String']>;
+  overview_not_contains: Maybe<Scalars['String']>;
+  eligibility_exists: Maybe<Scalars['Boolean']>;
+  eligibility: Maybe<Scalars['String']>;
+  eligibility_not: Maybe<Scalars['String']>;
+  eligibility_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  eligibility_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  eligibility_contains: Maybe<Scalars['String']>;
+  eligibility_not_contains: Maybe<Scalars['String']>;
+  cost_exists: Maybe<Scalars['Boolean']>;
+  cost: Maybe<Scalars['String']>;
+  cost_not: Maybe<Scalars['String']>;
+  cost_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  cost_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  cost_contains: Maybe<Scalars['String']>;
+  cost_not_contains: Maybe<Scalars['String']>;
+  access_exists: Maybe<Scalars['Boolean']>;
+  access: Maybe<Scalars['String']>;
+  access_not: Maybe<Scalars['String']>;
+  access_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  access_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  access_contains: Maybe<Scalars['String']>;
+  access_not_contains: Maybe<Scalars['String']>;
+  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  OR: Maybe<Array<Maybe<ServiceFilter>>>;
+  AND: Maybe<Array<Maybe<ServiceFilter>>>;
 };
 
 export enum ServiceOrder {
@@ -2186,79 +2186,79 @@ export enum ServiceOrder {
 }
 
 export type EquipmentFilter = {
-  sys?: Maybe<SysFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  summary_exists?: Maybe<Scalars['Boolean']>;
-  summary?: Maybe<Scalars['String']>;
-  summary_not?: Maybe<Scalars['String']>;
-  summary_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains?: Maybe<Scalars['String']>;
-  summary_not_contains?: Maybe<Scalars['String']>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  callToAction_exists?: Maybe<Scalars['Boolean']>;
-  callToAction?: Maybe<Scalars['String']>;
-  callToAction_not?: Maybe<Scalars['String']>;
-  callToAction_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  callToAction_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  callToAction_contains?: Maybe<Scalars['String']>;
-  callToAction_not_contains?: Maybe<Scalars['String']>;
-  type_contains_all?: Maybe<Array<Maybe<Scalars['String']>>>;
-  type_contains_some?: Maybe<Array<Maybe<Scalars['String']>>>;
-  type_contains_none?: Maybe<Array<Maybe<Scalars['String']>>>;
-  manufacturer_exists?: Maybe<Scalars['Boolean']>;
-  manufacturer?: Maybe<Scalars['String']>;
-  manufacturer_not?: Maybe<Scalars['String']>;
-  manufacturer_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  manufacturer_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  manufacturer_contains?: Maybe<Scalars['String']>;
-  manufacturer_not_contains?: Maybe<Scalars['String']>;
-  model_exists?: Maybe<Scalars['Boolean']>;
-  model?: Maybe<Scalars['String']>;
-  model_not?: Maybe<Scalars['String']>;
-  model_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  model_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  model_contains?: Maybe<Scalars['String']>;
-  model_not_contains?: Maybe<Scalars['String']>;
-  location_exists?: Maybe<Scalars['Boolean']>;
-  location?: Maybe<Scalars['String']>;
-  location_not?: Maybe<Scalars['String']>;
-  location_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  location_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  location_contains?: Maybe<Scalars['String']>;
-  location_not_contains?: Maybe<Scalars['String']>;
-  yearOfManufacture_exists?: Maybe<Scalars['Boolean']>;
-  yearOfManufacture?: Maybe<Scalars['Int']>;
-  yearOfManufacture_not?: Maybe<Scalars['Int']>;
-  yearOfManufacture_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  yearOfManufacture_not_in?: Maybe<Array<Maybe<Scalars['Int']>>>;
-  yearOfManufacture_gt?: Maybe<Scalars['Int']>;
-  yearOfManufacture_gte?: Maybe<Scalars['Int']>;
-  yearOfManufacture_lt?: Maybe<Scalars['Int']>;
-  yearOfManufacture_lte?: Maybe<Scalars['Int']>;
-  keywords_contains_all?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_some?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_none?: Maybe<Array<Maybe<Scalars['String']>>>;
-  ssoProtected_exists?: Maybe<Scalars['Boolean']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  ssoProtected_not?: Maybe<Scalars['Boolean']>;
-  searchable_exists?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
-  searchable_not?: Maybe<Scalars['Boolean']>;
-  OR?: Maybe<Array<Maybe<EquipmentFilter>>>;
-  AND?: Maybe<Array<Maybe<EquipmentFilter>>>;
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  callToAction_exists: Maybe<Scalars['Boolean']>;
+  callToAction: Maybe<Scalars['String']>;
+  callToAction_not: Maybe<Scalars['String']>;
+  callToAction_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  callToAction_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  callToAction_contains: Maybe<Scalars['String']>;
+  callToAction_not_contains: Maybe<Scalars['String']>;
+  type_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  type_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  type_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  manufacturer_exists: Maybe<Scalars['Boolean']>;
+  manufacturer: Maybe<Scalars['String']>;
+  manufacturer_not: Maybe<Scalars['String']>;
+  manufacturer_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  manufacturer_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  manufacturer_contains: Maybe<Scalars['String']>;
+  manufacturer_not_contains: Maybe<Scalars['String']>;
+  model_exists: Maybe<Scalars['Boolean']>;
+  model: Maybe<Scalars['String']>;
+  model_not: Maybe<Scalars['String']>;
+  model_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  model_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  model_contains: Maybe<Scalars['String']>;
+  model_not_contains: Maybe<Scalars['String']>;
+  location_exists: Maybe<Scalars['Boolean']>;
+  location: Maybe<Scalars['String']>;
+  location_not: Maybe<Scalars['String']>;
+  location_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  location_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  location_contains: Maybe<Scalars['String']>;
+  location_not_contains: Maybe<Scalars['String']>;
+  yearOfManufacture_exists: Maybe<Scalars['Boolean']>;
+  yearOfManufacture: Maybe<Scalars['Int']>;
+  yearOfManufacture_not: Maybe<Scalars['Int']>;
+  yearOfManufacture_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  yearOfManufacture_not_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  yearOfManufacture_gt: Maybe<Scalars['Int']>;
+  yearOfManufacture_gte: Maybe<Scalars['Int']>;
+  yearOfManufacture_lt: Maybe<Scalars['Int']>;
+  yearOfManufacture_lte: Maybe<Scalars['Int']>;
+  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  OR: Maybe<Array<Maybe<EquipmentFilter>>>;
+  AND: Maybe<Array<Maybe<EquipmentFilter>>>;
 };
 
 export enum EquipmentOrder {
@@ -2293,53 +2293,53 @@ export enum EquipmentOrder {
 }
 
 export type CaseStudyFilter = {
-  sys?: Maybe<SysFilter>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  summary_exists?: Maybe<Scalars['Boolean']>;
-  summary?: Maybe<Scalars['String']>;
-  summary_not?: Maybe<Scalars['String']>;
-  summary_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains?: Maybe<Scalars['String']>;
-  summary_not_contains?: Maybe<Scalars['String']>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  keywords_contains_all?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_some?: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_none?: Maybe<Array<Maybe<Scalars['String']>>>;
-  ssoProtected_exists?: Maybe<Scalars['Boolean']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  ssoProtected_not?: Maybe<Scalars['Boolean']>;
-  searchable_exists?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
-  searchable_not?: Maybe<Scalars['Boolean']>;
-  callToActionButtonText_exists?: Maybe<Scalars['Boolean']>;
-  callToActionButtonText?: Maybe<Scalars['String']>;
-  callToActionButtonText_not?: Maybe<Scalars['String']>;
-  callToActionButtonText_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  callToActionButtonText_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  callToActionButtonText_contains?: Maybe<Scalars['String']>;
-  callToActionButtonText_not_contains?: Maybe<Scalars['String']>;
-  callToActionButtonLink_exists?: Maybe<Scalars['Boolean']>;
-  callToActionButtonLink?: Maybe<Scalars['String']>;
-  callToActionButtonLink_not?: Maybe<Scalars['String']>;
-  callToActionButtonLink_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  callToActionButtonLink_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  callToActionButtonLink_contains?: Maybe<Scalars['String']>;
-  callToActionButtonLink_not_contains?: Maybe<Scalars['String']>;
-  OR?: Maybe<Array<Maybe<CaseStudyFilter>>>;
-  AND?: Maybe<Array<Maybe<CaseStudyFilter>>>;
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  callToActionButtonText_exists: Maybe<Scalars['Boolean']>;
+  callToActionButtonText: Maybe<Scalars['String']>;
+  callToActionButtonText_not: Maybe<Scalars['String']>;
+  callToActionButtonText_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  callToActionButtonText_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  callToActionButtonText_contains: Maybe<Scalars['String']>;
+  callToActionButtonText_not_contains: Maybe<Scalars['String']>;
+  callToActionButtonLink_exists: Maybe<Scalars['Boolean']>;
+  callToActionButtonLink: Maybe<Scalars['String']>;
+  callToActionButtonLink_not: Maybe<Scalars['String']>;
+  callToActionButtonLink_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  callToActionButtonLink_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  callToActionButtonLink_contains: Maybe<Scalars['String']>;
+  callToActionButtonLink_not_contains: Maybe<Scalars['String']>;
+  OR: Maybe<Array<Maybe<CaseStudyFilter>>>;
+  AND: Maybe<Array<Maybe<CaseStudyFilter>>>;
 };
 
 export enum CaseStudyOrder {
@@ -2366,50 +2366,50 @@ export enum CaseStudyOrder {
 }
 
 export type PersonFilter = {
-  sys?: Maybe<SysFilter>;
-  username_exists?: Maybe<Scalars['Boolean']>;
-  username?: Maybe<Scalars['String']>;
-  username_not?: Maybe<Scalars['String']>;
-  username_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  username_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  username_contains?: Maybe<Scalars['String']>;
-  username_not_contains?: Maybe<Scalars['String']>;
-  name_exists?: Maybe<Scalars['Boolean']>;
-  name?: Maybe<Scalars['String']>;
-  name_not?: Maybe<Scalars['String']>;
-  name_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  name_contains?: Maybe<Scalars['String']>;
-  name_not_contains?: Maybe<Scalars['String']>;
-  title_exists?: Maybe<Scalars['Boolean']>;
-  title?: Maybe<Scalars['String']>;
-  title_not?: Maybe<Scalars['String']>;
-  title_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains?: Maybe<Scalars['String']>;
-  title_not_contains?: Maybe<Scalars['String']>;
-  jobTitle_exists?: Maybe<Scalars['Boolean']>;
-  jobTitle?: Maybe<Scalars['String']>;
-  jobTitle_not?: Maybe<Scalars['String']>;
-  jobTitle_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  jobTitle_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  jobTitle_contains?: Maybe<Scalars['String']>;
-  jobTitle_not_contains?: Maybe<Scalars['String']>;
-  slug_exists?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
-  slug_not?: Maybe<Scalars['String']>;
-  slug_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains?: Maybe<Scalars['String']>;
-  slug_not_contains?: Maybe<Scalars['String']>;
-  ssoProtected_exists?: Maybe<Scalars['Boolean']>;
-  ssoProtected?: Maybe<Scalars['Boolean']>;
-  ssoProtected_not?: Maybe<Scalars['Boolean']>;
-  searchable_exists?: Maybe<Scalars['Boolean']>;
-  searchable?: Maybe<Scalars['Boolean']>;
-  searchable_not?: Maybe<Scalars['Boolean']>;
-  OR?: Maybe<Array<Maybe<PersonFilter>>>;
-  AND?: Maybe<Array<Maybe<PersonFilter>>>;
+  sys: Maybe<SysFilter>;
+  username_exists: Maybe<Scalars['Boolean']>;
+  username: Maybe<Scalars['String']>;
+  username_not: Maybe<Scalars['String']>;
+  username_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  username_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  username_contains: Maybe<Scalars['String']>;
+  username_not_contains: Maybe<Scalars['String']>;
+  name_exists: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  name_not: Maybe<Scalars['String']>;
+  name_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  name_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  name_contains: Maybe<Scalars['String']>;
+  name_not_contains: Maybe<Scalars['String']>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  jobTitle_exists: Maybe<Scalars['Boolean']>;
+  jobTitle: Maybe<Scalars['String']>;
+  jobTitle_not: Maybe<Scalars['String']>;
+  jobTitle_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  jobTitle_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  jobTitle_contains: Maybe<Scalars['String']>;
+  jobTitle_not_contains: Maybe<Scalars['String']>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  OR: Maybe<Array<Maybe<PersonFilter>>>;
+  AND: Maybe<Array<Maybe<PersonFilter>>>;
 };
 
 export enum PersonOrder {
@@ -2440,16 +2440,7 @@ export enum PersonOrder {
 export type AllEquipmentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllEquipmentQuery = (
-  { __typename?: 'Query' }
-  & { equipmentCollection?: Maybe<(
-    { __typename?: 'EquipmentCollection' }
-    & { items: Array<Maybe<(
-      { __typename?: 'Equipment' }
-      & Pick<Equipment, 'title' | 'summary' | 'ssoProtected'>
-    )>> }
-  )> }
-);
+export type AllEquipmentQuery = { __typename?: 'Query', equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<{ __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> };
 
 export const AllEquipmentDocument = gql`
     query AllEquipment {
