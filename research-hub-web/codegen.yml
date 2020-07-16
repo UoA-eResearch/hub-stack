@@ -4,7 +4,15 @@
 overwrite: true
 schema: http://localhost:4000 # URL to fetch the schema from
 documents: src/app/graphql/queries/*.graphql # Our predefined queries, used to generate services
-# config: 
+documentMode: documentNode
+config: 
+    flattenGeneratedTypes: true
+    preResolveTypes: true
+    # skipTypename: true
+    avoidOptionals: true
+        # field: true
+        # object: true
+    # declarationKind: 'interface'
     # nonOptionalTypename: true
 # # namingConvention: 
     # typeNames: enumValues
@@ -14,3 +22,5 @@ generates:
             - typescript
             - typescript-operations
             - typescript-apollo-angular
+            # - typescript-graphql-files-modules
+            # - named-operations-object

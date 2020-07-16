@@ -4,11 +4,11 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "dev": "concurrently \"npm run graphql-server-watch\" \"npm run generate-watch\" \"npm start\"",
     "start": "ng serve",
+    "prestart": "npm run generate",
     "build": "ng build",
     "postinstall": "ngcc",
-    "build-prod": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod --stats-json",
-    "test-prod": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng serve --port 4000 --prod",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "test": "ng test",
     "ci-test": "ng test --environment prod --single-run",
@@ -16,7 +16,10 @@
     "e2e": "ng e2e",
     "bundle-report": "webpack-bundle-analyzer dist/stats.json",
     "testrunner": "./test.sh",
-    "generate": "graphql-codegen"
+    "generate": "graphql-codegen",
+    "generate-watch": "graphql-codegen --watch './src/app/graphql/queries/*.graphql'",
+    "graphql-server": "nodemon ../cer-graphql/index.js",
+    "graphql-server-watch": "nodemon ../cer-graphql/index.js --watch ../cer-graphql/index.js"
   },
   "private": true,
   "dependencies": {
@@ -66,6 +69,7 @@
     "@types/node": "^12.11.1",
     "browserstack-local": "^1.4.5",
     "codelyzer": "^5.1.2",
+    "concurrently": "^5.2.0",
     "fibers": "^5.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -74,6 +78,7 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~3.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "nodemon": "^2.0.4",
     "protractor": "~5.4.3",
     "sass": "^1.26.9",
     "ts-node": "~8.3.0",
