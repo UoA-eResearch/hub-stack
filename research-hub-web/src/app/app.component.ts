@@ -5,7 +5,7 @@ import { CategoryId, OptionsService, OptionType } from './services/options.servi
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, Observable, fromEvent } from 'rxjs';
-import { debounceTime, tap, pluck } from 'rxjs/operators';
+import { debounceTime, tap, pluck, map } from 'rxjs/operators';
 import { ResearchHubApiService } from './services/research-hub-api.service';
 import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -33,7 +33,9 @@ import {
   AllEquipmentGQL,
   EquipmentCollection,
   Equipment,
-  ArticleCollection
+  ArticleCollection,
+  AllEquipmentQuery,
+  EquipmentUserFacingSupportCollectionArgs
 } from './graphql/schema';
 
 @Component({
@@ -97,7 +99,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // GraphQL variables
   public equipmentQueryLoading: Boolean = true;
-  public allEquipment: EquipmentCollection;
+  public allEquipment$: Observable<EquipmentCollection>;
+  // public allEquipment2$: Observable<AllEquipmentQuery.equipmentCollection>;
 
   constructor(private location: Location, public optionsService: OptionsService, private headerService: HeaderService,
     private searchBarService: SearchBarService, private router: Router,
@@ -161,28 +164,27 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     /**************** BEGIN GRAPHQL TESTS *****************/
 
+    // Using the plain Apollo service:
     // Mock GraphQL Query for initial testing
-    const getAllArticles = gql`
-        query { articleCollection {
-          items {
-            ssoProtected
-            title
-          }
-        }}
-    `;
+    // const getAllArticles = gql`
+    //     query { articleCollection {
+    //       items {
+    //         ssoProtected
+    //         title
+    //       }
+    //     }}
+    // `;
 
-    this.apollo
-      .watchQuery<any>({ query: getAllArticles }).valueChanges.subscribe(result => {
-        console.log('result from graphql:');
-        console.log(result);
-      });
+    // this.apollo
+    //   .watchQuery<any>({ query: getAllArticles }).valueChanges.subscribe(result => {
+    //     console.log('result from graphql:');
+    //     console.log(JSON.stringify(result));
+    //   });
+
 
     // Using generated schema services instead of the generic apollo watchQuery
-    this.allEquipmentGQL.fetch()
-      .pipe(pluck('data', 'equipmentCollection'))
-      .subscribe(res => {
-        this.allEquipment = <EquipmentCollection>res;
-      });
+    this.allEquipment$ = this.allEquipmentGQL.fetch()
+      .pipe(map(res => res.data.equipmentCollection as EquipmentCollection))
 
     /****************** END GRAPHQL TESTS *******************/
 

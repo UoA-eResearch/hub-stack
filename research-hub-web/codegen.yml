@@ -4,6 +4,10 @@
 overwrite: true
 schema: http://localhost:4000 # URL to fetch the schema from
 documents: src/app/graphql/queries/*.graphql # Our predefined queries, used to generate services
+# config: 
+    # nonOptionalTypename: true
+# # namingConvention: 
+    # typeNames: enumValues
 generates:
     ./src/app/graphql/schema.ts: # Output file: Where we store our schema types
         plugins:

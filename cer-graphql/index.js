@@ -167,6 +167,9 @@ async function createServer() {
         context: ({ req }) => {
             let user;
 
+            if (req.body.operationName != 'IntrospectionQuery')
+                console.log(req.body.query)
+
             const authHeader = (req && req.headers && req.headers.authorization) || '';
             if (!authHeader || authHeader.indexOf('Bearer ') !== 0) {
                 return null;
@@ -194,6 +197,7 @@ async function createServer() {
             if (context.operationName != 'IntrospectionQuery'
                 && !(!!context.context.user)
                 && context.context.responseVerificationRequired) {
+
 
                 if (JSON.stringify(res).includes('\"ssoProtected\":true'))
                     throw new AuthenticationError('SSO authentication required to view this content.')
