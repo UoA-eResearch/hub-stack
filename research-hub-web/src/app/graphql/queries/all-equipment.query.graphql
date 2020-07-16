@@ -1,3 +1,4 @@
+query AllEquipment {
     equipmentCollection {
         items {
             title
@@ -5,3 +6,4 @@
             ssoProtected
         }
     }
+}
