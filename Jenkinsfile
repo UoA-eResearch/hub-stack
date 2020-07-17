@@ -40,13 +40,13 @@ pipeline {
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
                         env.awsProfile = 'uoa-its-nonprod'
-
+                        env.awsAccountId = 'uoa-nonprod-account-id'
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
                         env.awsCredentialsId = 'uoa-its-prod-access'
                         env.awsTokenId = 'uoa-its-prod-token'
                         env.awsProfile = 'uoa-its-prod'
-
+                        env.awsAccountId = 'uoa-prod-account-id'
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
