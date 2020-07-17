@@ -97,9 +97,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public userInfo;
   public authenticated;
 
-  // GraphQL variables
-  public allEquipment$: Observable<AllEquipmentQuery['equipmentCollection']>;
-
   constructor(private location: Location, public optionsService: OptionsService, private headerService: HeaderService,
     private searchBarService: SearchBarService, private router: Router,
     public apiService: ResearchHubApiService, public analyticsService: AnalyticsService,
@@ -159,10 +156,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngOnInit() {
-
-    /**************** BEGIN GRAPHQL TESTS *****************/
-    this.allEquipment$ = this.allEquipmentGQL.fetch().pipe(pluck('data', 'equipmentCollection'));
-    /****************** END GRAPHQL TESTS *******************/
 
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;

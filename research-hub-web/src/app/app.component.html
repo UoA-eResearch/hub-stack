@@ -1,13 +1,3 @@
-<div *ngIf="allEquipment$ | async as allEquipment">
-  JSON Result:
-  <pre><code>{{allEquipment | json}}</code></pre>
-  <ul *ngFor=" let equipment of allEquipment.items">
-    <li><strong>Title:</strong> {{ equipment.title }} </li>
-    <li><strong>Summary:</strong> {{ equipment.summary }} </li>
-    <li><strong>SSO Protected:</strong> {{ equipment.ssoProtected }} </li>
-  </ul>
-</div>
-
 <section class="mat-typography">
   <mat-sidenav-container class="sidenav-container">
     <mat-sidenav #sidenav mode="over" opened="false">

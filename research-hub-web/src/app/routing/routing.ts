@@ -39,7 +39,6 @@ export const appRoutes: Routes = [
     path: 'contact',
     loadChildren: () => import('../components/contact/contact.module').then(m => m.ContactModule)
   },
-
   {
     path: 'orgUnit/:orgUnitId',
     loadChildren: () => import('../components/org-unit-details/org-unit-details.module').then(m => m.OrgUnitDetailsModule)
@@ -48,7 +47,11 @@ export const appRoutes: Routes = [
     path: 'person/:personId',
     loadChildren: () => import('../components/person-details/person-details.module').then(m => m.PersonDetailsModule)
   },
-
+  // GraphQL routes
+  {
+    path: 'equipment',
+    loadChildren: () => import('../components/equipment/equipment.module').then(m => m.EquipmentModule)
+  },
   /**
    * Custom Route Redirects:
    * Define routes here where you would rather display a custom URL than the standard content/id
