@@ -36,9 +36,9 @@ pipeline {
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
                         withCredentials([
-                            file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentials-env-file")
+                            file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentialsfile")
                         ]) {
-                            sh "cp $credentials-env-file /cer-graphql/.env"
+                            sh "cp $credentialsfile /cer-graphql/.env"
                         }
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
@@ -60,9 +60,9 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         withCredentials([
-                            file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentials-env-file")
+                            file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentialsfile")
                         ]) {
-                            sh "cp $credentials-env-file /cer-graphql/.env"
+                            sh "cp $credentialsfile /cer-graphql/.env"
                         }
                     }
                 }
