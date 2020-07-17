@@ -5,20 +5,24 @@ const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
 
+
+
 // Measure server startup time
 var startTime = new Date().getTime();
 
-const getConfig = () => {
-    if (process.argv.includes("--config-from-file")) {
-        return require('./config');
-    } else {
-        return {
-            CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
-            CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
-            COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
-            COGNITO_REGION: process.env.COGNITO_REGION
-        };
+const getCredentials = (isFromFile) => {
+    if (isFromFile) {
+        const configResult = require('dotenv').config();
+        if (configResult.error){
+            throw configResult.error;
+        }
     }
+    return {
+        CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
+        CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
+        COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
+        COGNITO_REGION: process.env.COGNITO_REGION
+    };
 };
 
 // Set up remote schemas
@@ -194,8 +198,14 @@ async function createServer(config) {
 if (require.main === module) {
     (async () => {
         // Create the ApolloServer object
-        const config = getConfig();
-
+        const isConfigFromFile = process.argv.includes("--config-from-file")
+        let config;
+        try {
+            config = getCredentials(isConfigFromFile);
+        } catch (error) {
+            console.error("Could not load credentials from file. Make sure you have filled in credentials in the .env file, or try running the server without --config-from-file.");
+            process.exit(1);
+        }
         // Check if access token and space ID are supplied.
         if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
             !config.COGNITO_REGION || !config.COGNITO_USER_POOL) {
@@ -214,3 +224,4 @@ if (require.main === module) {
 
 // Export the createServer function to be used in e2e tests
 exports.createServer = createServer;
+exports.getCredentials = getCredentials;

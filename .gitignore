@@ -31,7 +31,7 @@ research-hub-web/typings
 
 # ====================== cer-graphql =================== #
 # Ignore config file so secrets are not automatically checked in
-cer-graphql/config.json
+cer-graphql/.env
 
 
 # ====================== serverless-now ================ #
