@@ -1,7 +1,6 @@
 const { createTestClient } = require('apollo-server-testing');
-const { createServer } = require('../index')
+const { createServer,getCredentials } = require('../index')
 const TQ = require('./test-queries'); // Collection of test queries
-const serverConfig = require('./config');
 const { gql, introspectSchema } = require('apollo-server');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
@@ -10,8 +9,8 @@ const { JsonWebTokenError } = require('jsonwebtoken');
  * used to make queries against it.
  */
 async function createServerAndTestClient() {
-    let server = await createServer(serverConfig);
-    return createTestClient(server);
+    let server = await createServer(getCredentials(true));
+    return createTestClient(server);    
 }
 
 /**
@@ -19,7 +18,11 @@ async function createServerAndTestClient() {
  * it available within all tests.
  */
 beforeAll(async () => {
-    return { query } = await createServerAndTestClient();
+    try {
+        return { query } = await createServerAndTestClient();
+    } catch (error) {
+        fail("An error occurred when trying to setup the server. Have you filled in credentials in the .env file?");
+    }
 });
 
 describe('Basic collection queries', () => {
