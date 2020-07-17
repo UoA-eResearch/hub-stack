@@ -40,8 +40,6 @@ pipeline {
                         ]) {
                             sh "cp \$credentials-env-file /cer-graphql/.env"
                         }
-                    }
-
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
@@ -143,7 +141,7 @@ pipeline {
                             sh 'npm run test-headless'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh 'npm run e2e -- -c ${BRANCH_NAME}'
+                            sh 'npm run e2e'
                         }
                     }
                 }
