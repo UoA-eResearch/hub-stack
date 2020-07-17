@@ -38,7 +38,9 @@ pipeline {
                         withCredentials([
                             file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentialsfile")
                         ]) {
-                            sh "cp $credentialsfile /cer-graphql/.env"
+                            dir("cer-graphql"){
+                                sh "cp $credentialsfile .env"
+                            }                        
                         }
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
@@ -62,7 +64,9 @@ pipeline {
                         withCredentials([
                             file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentialsfile")
                         ]) {
-                            sh "cp $credentialsfile /cer-graphql/.env"
+                            dir("cer-graphql"){
+                                sh "cp $credentialsfile .env"
+                            }
                         }
                     }
                 }
