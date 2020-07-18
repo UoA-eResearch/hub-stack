@@ -52,6 +52,10 @@ export const appRoutes: Routes = [
     path: 'equipment',
     loadChildren: () => import('../components/equipment/equipment.module').then(m => m.EquipmentModule)
   },
+  {
+    path: 'articles',
+    loadChildren: () => import('../components/articles/articles.module').then(m => m.ArticlesModule)
+  },
   /**
    * Custom Route Redirects:
    * Define routes here where you would rather display a custom URL than the standard content/id

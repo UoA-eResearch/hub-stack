@@ -35,3 +35,7 @@ To get more help on the Angular CLI use `npm run ng help` or go check out the [A
 ## Dev
 
 For local development run `npm run dev`
+
+## Generate new GraphQL schema types
+
+To generate new types run `npm run generate`

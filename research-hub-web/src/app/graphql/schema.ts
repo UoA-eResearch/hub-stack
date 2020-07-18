@@ -2437,11 +2437,35 @@ export enum PersonOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
+export type AllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllArticlesQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> };
+
 export type AllEquipmentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllEquipmentQuery = { __typename?: 'Query', equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<{ __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> };
 
+export const AllArticlesDocument = gql`
+    query AllArticles {
+  articleCollection {
+    items {
+      title
+      summary
+      ssoProtected
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AllArticlesGQL extends Apollo.Query<AllArticlesQuery, AllArticlesQueryVariables> {
+    document = AllArticlesDocument;
+    
+  }
 export const AllEquipmentDocument = gql`
     query AllEquipment {
   equipmentCollection {
