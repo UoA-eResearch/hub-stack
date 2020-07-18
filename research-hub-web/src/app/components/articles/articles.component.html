@@ -1,0 +1,34 @@
+<div class="results" *ngIf="allArticles$ | async as allArticles">
+    <h2>Results</h2>
+    Found <span class="search-results-text">{{ allArticles.items.length }}</span> results in <span
+        class="search-results-text">Articles</span>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                JSON Result
+            </mat-panel-title>
+            <mat-panel-description>Click to see raw JSON</mat-panel-description>
+        </mat-expansion-panel-header>
+        <pre><code>{{ allArticles | async | json}}</code></pre>
+    </mat-expansion-panel>
+
+    <mat-nav-list>
+        <mat-card *ngFor="let article of allArticles.items">
+            <mat-card-header>
+                <div mat-card-avatar>
+                    <mat-icon>build</mat-icon>
+                </div>
+                <mat-card-title>
+                    {{ article.title }}
+                </mat-card-title>
+                <mat-card-subtitle>
+                    {{ article.summary }}
+                </mat-card-subtitle>
+                <mat-chip-avatar *ngIf="article.ssoProtected">
+                    <mat-icon color='accent' matTooltip="SSO Login Required">lock</mat-icon>
+                </mat-chip-avatar>
+            </mat-card-header>
+        </mat-card>
+    </mat-nav-list>
+</div>
