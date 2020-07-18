@@ -1,0 +1,9 @@
+query AllArticles {
+    articleCollection {
+        items {
+            title
+            summary
+            ssoProtected
+        }
+    }
+}
