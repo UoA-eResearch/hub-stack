@@ -35,18 +35,25 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
+                        withCredentials([
+                            file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentialsfile")
+                        ]) {
+                            dir("cer-graphql"){
+                                sh "cp $credentialsfile .env"
+                            }                        
+                        }
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
                         env.awsProfile = 'uoa-its-nonprod'
-
+                        env.awsAccountId = 'uoa-nonprod-account-id'
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
                         env.awsCredentialsId = 'uoa-its-prod-access'
                         env.awsTokenId = 'uoa-its-prod-token'
                         env.awsProfile = 'uoa-its-prod'
-
+                        env.awsAccountId = 'uoa-prod-account-id'
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
@@ -54,6 +61,13 @@ pipeline {
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
+                        withCredentials([
+                            file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentialsfile")
+                        ]) {
+                            dir("cer-graphql"){
+                                sh "cp $credentialsfile .env"
+                            }
+                        }
                     }
                 }
             }
@@ -131,7 +145,7 @@ pipeline {
                             sh 'npm run test-headless'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh 'npm run e2e -- -c ${BRANCH_NAME}'
+                            sh 'npm run e2e'
                         }
                     }
                 }
