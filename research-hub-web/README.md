@@ -34,7 +34,10 @@ To get more help on the Angular CLI use `npm run ng help` or go check out the [A
 
 ## Dev
 
-For local development run `npm run dev`
+For local development run `npm run dev`. This will concurrently:
+1. Boot up the `cer-graphql` server locally
+2. Generate new schema types in the web project, monitor any changes to the `research-hub-web/src/app/graphql/` folder and automatically regenerate the schema if any changes are detected
+3. Serve the web project locally on port 4200, querying the locally running GraphQL server
 
 ## GraphQL Schema Types
 
