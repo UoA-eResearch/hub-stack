@@ -182,8 +182,6 @@ async function createServer(config) {
                 return { user: verifyJwt(req.headers.authorization.substring('Hearer '.length), cognitoPublicKeys) }
             } catch (e) { return null }
         }, formatResponse: (res, context) => {
-            // Log the requestor's username or 'Unauthenticated'
-            console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
 
             /**
              * If the user is not signed in and the responseVerificationRequired flag is
@@ -193,6 +191,9 @@ async function createServer(config) {
             if (context.operationName != 'IntrospectionQuery'
                 && !(!!context.context.user)
                 && context.context.responseVerificationRequired) {
+
+                // Log the requestor's username or 'Unauthenticated'
+                console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
 
                 if (JSON.stringify(res).includes('\"ssoProtected\":true'))
                     throw new AuthenticationError('SSO authentication required to view this content.')
