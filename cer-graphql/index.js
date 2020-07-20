@@ -13,7 +13,7 @@ var startTime = new Date().getTime();
 const getCredentials = (isFromFile) => {
     if (isFromFile) {
         const configResult = require('dotenv').config();
-        if (configResult.error){
+        if (configResult.error) {
             throw configResult.error;
         }
     }
@@ -125,12 +125,46 @@ async function createServer(config) {
                     'summary',
                     'name',
                     'ssoProtected',
+                    'searchable',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
-                let userOnlyQueryingPublicFields = requestedFields
-                    .every(y => ALWAYS_PUBLIC_FIELDS.includes(y));
+                /**
+                 * Check if the query contains any fragments. If so, get the names of all
+                 * of the fragments. These will be permitted along with our ALWAYS_PUBLIC_FIGURES
+                 */
+                let fragmentNames = Object.keys(info.fragments);
 
+                // Variable to store the fields reque
+                let fragmentsFields = [];
+
+                //  Get all of the fields requested by all of the fragments
+                if (!!fragmentNames.length) { // If the query contains fragments
+                    fragmentNames.forEach(fragmentName => { // Loop through each fragment
+                        fragmentsFields = [...fragmentsFields, // Add fragments fields to the all fragments fields array
+                        ...info.fragments[fragmentName].selectionSet.selections
+                            .filter(x => x.kind === 'InlineFragment')
+                            .flatMap(y => y.selectionSet.selections)
+                            .map(z => z.name.value)
+                        ]
+                    });
+                }
+
+                /**
+                 * Check whether the user is only querying public fields, or fragment names.
+                 * This also checks the fields within all fragments.
+                 */
+                let userOnlyQueryingPublicFields = [...requestedFields, ...fragmentsFields]
+                    .every(y => [...ALWAYS_PUBLIC_FIELDS, ...fragmentNames].includes(y));
+
+                // Log any non-public fields the user is requesting
+                if (!userOnlyQueryingPublicFields) {
+                    console.log('User requested non-public field(s):',
+                        [...requestedFields, ...fragmentsFields]
+                            .filter(y => ![...ALWAYS_PUBLIC_FIELDS, ...fragmentNames].includes(y)));
+                }
+
+                // If the user is only querying public fields, forward the request on to Contentful
                 if (userOnlyQueryingPublicFields) return forwardReqToContentful(args, context, info);
 
                 /**
@@ -171,17 +205,18 @@ async function createServer(config) {
         schema,
         context: ({ req }) => {
             // Log incoming queries
-            if (req && req.body && (req.body.operationName != 'IntrospectionQuery'))
-                console.log('\n===== Query Recieved: ======\n', req.body.query)
+            // if (req && req.body && (req.body.operationName != 'IntrospectionQuery'))
+            // console.log('\n===== Query Recieved: ======\n', req.body.query)
 
             // Verify the requestor's token and return their user info, or return null for unauthenticated users
             try {
-                return { user: verifyJwt(req.headers.authorization.substring('Hearer '.length), cognitoPublicKeys) }
+                return { user: verifyJwt(req.headers.authorization.substring('Bearer '.length), cognitoPublicKeys) }
             } catch (e) { return null }
         }, formatResponse: (res, context) => {
-            // Log the requestor's username or 'Unauthenticated'
-            console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
 
+            // Log the requestor's username or 'Unauthenticated'
+            if (context.operationName != 'IntrospectionQuery')
+                console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
             /**
              * If the user is not signed in and the responseVerificationRequired flag is
              * true (i.e. they requested potentially non-public information), check the response
