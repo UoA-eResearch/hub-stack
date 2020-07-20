@@ -125,6 +125,7 @@ async function createServer(config) {
                     'summary',
                     'name',
                     'ssoProtected',
+                    // 'commonFields',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
@@ -182,9 +183,10 @@ async function createServer(config) {
                 return { user: verifyJwt(req.headers.authorization.substring('Hearer '.length), cognitoPublicKeys) }
             } catch (e) { return null }
         }, formatResponse: (res, context) => {
-            // Log the requestor's username or 'Unauthenticated'
-            console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
 
+            // Log the requestor's username or 'Unauthenticated'
+            if (context.operationName != 'IntrospectionQuery')
+                console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
             /**
              * If the user is not signed in and the responseVerificationRequired flag is
              * true (i.e. they requested potentially non-public information), check the response
