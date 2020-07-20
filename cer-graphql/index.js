@@ -125,6 +125,7 @@ async function createServer(config) {
                     'summary',
                     'name',
                     'ssoProtected',
+                    // 'commonFields',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
@@ -183,6 +184,9 @@ async function createServer(config) {
             } catch (e) { return null }
         }, formatResponse: (res, context) => {
 
+            // Log the requestor's username or 'Unauthenticated'
+            if (context.operationName != 'IntrospectionQuery')
+                console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
             /**
              * If the user is not signed in and the responseVerificationRequired flag is
              * true (i.e. they requested potentially non-public information), check the response
@@ -191,9 +195,6 @@ async function createServer(config) {
             if (context.operationName != 'IntrospectionQuery'
                 && !(!!context.context.user)
                 && context.context.responseVerificationRequired) {
-
-                // Log the requestor's username or 'Unauthenticated'
-                console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
 
                 if (JSON.stringify(res).includes('\"ssoProtected\":true'))
                     throw new AuthenticationError('SSO authentication required to view this content.')
