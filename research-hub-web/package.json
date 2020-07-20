@@ -19,7 +19,8 @@
     "generate": "graphql-codegen",
     "generate-watch": "graphql-codegen --watch './src/app/graphql/queries/*.graphql'",
     "graphql-server": "nodemon ../cer-graphql/index.js",
-    "graphql-server-watch": "nodemon ../cer-graphql/index.js --watch ../cer-graphql/index.js"
+    "testt": "npm run dev --prefix ../cer-graphql",
+    "graphql-server-watch": "npm run dev --prefix ../cer-graphql --config-from-file --watch ./index.js"
   },
   "private": true,
   "dependencies": {
