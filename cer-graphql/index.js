@@ -126,6 +126,7 @@ async function createServer(config) {
                     'name',
                     'ssoProtected',
                     // 'commonFields',
+                    'subhubPagesCollection',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
