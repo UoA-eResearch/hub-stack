@@ -145,7 +145,7 @@ pipeline {
                             sh 'npm run test-headless'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh "npm run e2e -- c ${BRANCH_NAME}"
+                            sh "npm run e2e -- -c ${BRANCH_NAME}"
                         }
                     }
                 }
