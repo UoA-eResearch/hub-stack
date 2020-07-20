@@ -13,7 +13,7 @@ var startTime = new Date().getTime();
 const getCredentials = (isFromFile) => {
     if (isFromFile) {
         const configResult = require('dotenv').config();
-        if (configResult.error){
+        if (configResult.error) {
             throw configResult.error;
         }
     }
@@ -130,6 +130,9 @@ async function createServer(config) {
 
                 let userOnlyQueryingPublicFields = requestedFields
                     .every(y => ALWAYS_PUBLIC_FIELDS.includes(y));
+
+                if (!userOnlyQueryingPublicFields)
+                    console.log('User requested non public field(s):', requestedFields.filter(x => !ALWAYS_PUBLIC_FIELDS.includes(x)))
 
                 if (userOnlyQueryingPublicFields) return forwardReqToContentful(args, context, info);
 
