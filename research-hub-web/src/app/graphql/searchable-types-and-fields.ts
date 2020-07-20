@@ -7,8 +7,7 @@ export enum SEARCHABLE_TYPES {
     Equipment = 'equipment',
     Service = 'service',
     CaseStudy = 'caseStudy',
-    SubHub = 'subHub',
-    Person = 'person'
+    SubHub = 'subHub'
 }
 
 /**
