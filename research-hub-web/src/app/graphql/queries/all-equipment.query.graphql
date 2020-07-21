@@ -1,9 +1,7 @@
 query AllEquipment {
     equipmentCollection {
         items {
-            title
-            summary
-            ssoProtected
+        ...PublicFields
         }
     }
 }
