@@ -27,11 +27,24 @@ import { HomeModule } from './components/home/home.module';
 
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 
 import { environment } from '../environments/environment';
 import { AppStorageService } from './services/app-storage.service';
 
+/**
+ * Generated from Fragment matcher graphql-code-generator plugi
+ * For more information see:
+ * - https://graphql-code-generator.com/docs/plugins/fragment-matcher
+ * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
+ */
+import result from './graphql/possible-types';
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData: {
+    __schema: result.__schema
+  }
+});
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +61,6 @@ import { AppStorageService } from './services/app-storage.service';
     RoutingModule,
     ErrorPagesModule,
     HttpClientModule,
-    // MaterialModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
@@ -70,7 +82,9 @@ import { AppStorageService } from './services/app-storage.service';
       provide: APOLLO_OPTIONS,
       useFactory: (httpLink: HttpLink) => {
         return {
-          cache: new InMemoryCache(),
+          cache: new InMemoryCache({
+            fragmentMatcher
+          }),
           link: httpLink.create({
             uri: environment.cerGraphQLUrl
           })
