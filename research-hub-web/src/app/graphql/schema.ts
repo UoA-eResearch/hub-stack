@@ -2437,6 +2437,22 @@ export enum PersonOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
+type PublicFields_SubHub_Fragment = { __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+
+type PublicFields_Article_Fragment = { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+
+type PublicFields_Service_Fragment = { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+
+type PublicFields_Equipment_Fragment = { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+
+type PublicFields_Person_Fragment = { __typename?: 'Person', name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> };
+
+type PublicFields_OfficialDocuments_Fragment = { __typename?: 'OfficialDocuments' };
+
+type PublicFields_CaseStudy_Fragment = { __typename?: 'CaseStudy', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+
+export type PublicFieldsFragment = PublicFields_SubHub_Fragment | PublicFields_Article_Fragment | PublicFields_Service_Fragment | PublicFields_Equipment_Fragment | PublicFields_Person_Fragment | PublicFields_OfficialDocuments_Fragment | PublicFields_CaseStudy_Fragment;
+
 export type AllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2452,6 +2468,65 @@ export type AllSubHubChildPagesQueryVariables = Exact<{ [key: string]: never; }>
 
 export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'CaseStudy', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'Equipment', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'OfficialDocuments', title: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> }>> }> };
 
+export type AllSearchableContentPublicFieldsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllSearchableContentPublicFieldsQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<(
+      { __typename?: 'Article' }
+      & PublicFields_Article_Fragment
+    )>> }>, equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<(
+      { __typename?: 'Equipment' }
+      & PublicFields_Equipment_Fragment
+    )>> }>, serviceCollection: Maybe<{ __typename?: 'ServiceCollection', items: Array<Maybe<(
+      { __typename?: 'Service' }
+      & PublicFields_Service_Fragment
+    )>> }>, subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<(
+      { __typename?: 'SubHub' }
+      & PublicFields_SubHub_Fragment
+    )>> }>, caseStudyCollection: Maybe<{ __typename?: 'CaseStudyCollection', items: Array<Maybe<(
+      { __typename?: 'CaseStudy' }
+      & PublicFields_CaseStudy_Fragment
+    )>> }> };
+
+export const PublicFieldsFragmentDoc = gql`
+    fragment PublicFields on Entry {
+  ... on Article {
+    title
+    summary
+    ssoProtected
+    searchable
+  }
+  ... on Equipment {
+    title
+    summary
+    ssoProtected
+    searchable
+  }
+  ... on Service {
+    title
+    summary
+    ssoProtected
+    searchable
+  }
+  ... on SubHub {
+    title
+    summary
+    ssoProtected
+    searchable
+  }
+  ... on CaseStudy {
+    title
+    summary
+    ssoProtected
+    searchable
+  }
+  ... on Person {
+    name
+    searchable
+    ssoProtected
+  }
+}
+    `;
 export const AllArticlesDocument = gql`
     query AllArticles {
   articleCollection {
@@ -2527,11 +2602,43 @@ export const AllSubHubChildPagesDocument = gql`
   }
 }
     `;
+export const AllSearchableContentPublicFieldsDocument = gql`
+    query AllSearchableContentPublicFields {
+  articleCollection(where: {searchable: true}) {
+    items {
+      ...PublicFields
+    }
+  }
+  equipmentCollection(where: {searchable: true}) {
+    items {
+      ...PublicFields
+    }
+  }
+  serviceCollection(where: {searchable: true}) {
+    items {
+      ...PublicFields
+    }
+  }
+  subHubCollection(where: {searchable: true}) {
+    items {
+      ...PublicFields
+    }
+  }
+  caseStudyCollection(where: {searchable: true}) {
+    items {
+      ...PublicFields
+    }
+  }
+}
+    ${PublicFieldsFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
   })
   export class AllSubHubChildPagesGQL extends Apollo.Query<AllSubHubChildPagesQuery, AllSubHubChildPagesQueryVariables> {
     document = AllSubHubChildPagesDocument;
+  }
+  export class AllSearchableContentPublicFieldsGQL extends Apollo.Query<AllSearchableContentPublicFieldsQuery, AllSearchableContentPublicFieldsQueryVariables> {
+    document = AllSearchableContentPublicFieldsDocument;
     
   }
