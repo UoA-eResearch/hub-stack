@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AllArticlesGQL, AllArticlesQuery } from '../../graphql/schema';
+import { AllArticlesGQL, AllArticlesQuery, ArticleCollection } from '../../graphql/schema';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 
@@ -17,5 +17,4 @@ export class ArticlesComponent implements OnInit {
   ngOnInit(): void {
     this.allArticles$ = this.allArticlesGQL.fetch().pipe(pluck('data', 'articleCollection'));
   }
-
 }
