@@ -1,0 +1,37 @@
+fragment PublicFields on Entry {
+    ... on Article {
+        title
+        summary
+        ssoProtected
+        searchable
+    } 
+    ... on Equipment {
+        title
+        summary
+        ssoProtected
+        searchable
+    }
+    ... on Service {
+        title
+        summary
+        ssoProtected
+        searchable
+    }
+    ... on SubHub {
+        title
+        summary
+        ssoProtected
+        searchable
+    }
+    ... on CaseStudy {
+        title
+        summary
+        ssoProtected
+        searchable
+    }
+    ... on Person {
+        name
+        searchable
+        ssoProtected
+    }
+}
