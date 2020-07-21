@@ -1,4 +1,5 @@
 <div class="results" *ngIf="allSubHubChildPages$ | async as allSubHubChildPages">
+
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title>
@@ -6,6 +7,22 @@
             </mat-panel-title>
             <mat-panel-description>Click to see raw JSON</mat-panel-description>
         </mat-expansion-panel-header>
-        <pre><code>{{ allSubHubChildPages$ | async | json}}</code></pre>
+        <pre><code>{{ allSubHubChildPages | json}}</code></pre>
     </mat-expansion-panel>
+
+    <mat-nav-list>
+        <mat-card *ngFor="let page of allSubHubChildPages.items">
+            <mat-card-header>
+                <div mat-card-avatar>
+                    <mat-icon>build</mat-icon>
+                </div>
+                <mat-card-title>
+                    {{ page.title }}
+                </mat-card-title>
+                <mat-card-subtitle>
+                    summary
+                </mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+    </mat-nav-list>
 </div>
