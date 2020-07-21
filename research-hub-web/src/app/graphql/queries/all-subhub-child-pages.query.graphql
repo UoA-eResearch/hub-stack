@@ -1,0 +1,35 @@
+query AllSubHubChildPages {
+    subHubCollection(where: { slug: "landing-page-for-a-sub-hub" }) {
+        items {
+            title
+            ssoProtected
+            subhubPagesCollection {
+                items {
+                    ... on Article {
+                        title
+                        ssoProtected
+                    }
+                    ... on CaseStudy {
+                        title
+                        ssoProtected
+                    }
+                    ... on Equipment {
+                        title
+                        ssoProtected
+                    }
+                    ... on OfficialDocuments {
+                        title
+                    }
+                    ... on Service {
+                        title
+                        ssoProtected
+                    }
+                    ... on SubHub {
+                        title
+                        ssoProtected
+                    }
+                }
+            }
+        }
+    }
+}
