@@ -1,13 +1,14 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
-import {FlexLayoutModule} from '@angular/flex-layout';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MaterialModule} from '../../app.material.module';
-import {MarkdownComponent} from './markdown/markdown.component';
-import {ListItemToRouterLinkPipe} from 'app/pipes/list-item-to-router-link.pipe';
-import {ErrorDialogComponent} from './error-dialog/error-dialog.component';
-import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../app.material.module';
+import { MarkdownComponent } from './markdown/markdown.component';
+import { ListItemToRouterLinkPipe } from '../../pipes/list-item-to-router-link.pipe';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { HumanCasePipe } from '../../pipes/human-case.pipe';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component'
     MarkdownComponent,
     ListItemToRouterLinkPipe,
     ErrorDialogComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    HumanCasePipe
   ],
   exports: [
     FlexLayoutModule,
@@ -31,7 +33,8 @@ import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component'
     MaterialModule,
     MarkdownComponent,
     ErrorDialogComponent,
-    ListItemToRouterLinkPipe
+    ListItemToRouterLinkPipe,
+    HumanCasePipe
   ],
   entryComponents: [
     ErrorDialogComponent,
