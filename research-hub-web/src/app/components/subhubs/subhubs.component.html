@@ -22,6 +22,9 @@
                 <mat-card-subtitle>
                     summary
                 </mat-card-subtitle>
+                <mat-chip-avatar *ngIf="page.ssoProtected">
+                    <mat-icon color='accent' matTooltip="SSO Login Required">lock</mat-icon>
+                </mat-chip-avatar>
             </mat-card-header>
         </mat-card>
     </mat-nav-list>
