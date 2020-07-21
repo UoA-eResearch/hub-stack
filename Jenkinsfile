@@ -92,7 +92,7 @@ pipeline {
             parallel {
                 stage('Build research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        changeset "**/research-hub-web/**/*.*"
                     }
                     steps {
                         echo 'Building research-hub-web project'
@@ -135,7 +135,7 @@ pipeline {
             parallel {
                 stage('Run research-hub-web tests') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        changeset "**/research-hub-web/**/*.*"
                     }
                     steps {
                         echo 'Testing research-hub-web project'
@@ -179,7 +179,7 @@ pipeline {
             parallel {
                 stage('Deploy research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        changeset "**/research-hub-web/**/*.*"
                     }
                     stages {
                         stage('Deploy to S3 bucket') {
