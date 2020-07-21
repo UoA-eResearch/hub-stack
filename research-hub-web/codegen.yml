@@ -3,24 +3,20 @@
 # A new file can be generated at any time by running: npm run generate
 overwrite: true
 schema: http://localhost:4000 # URL to fetch the schema from
-documents: src/app/graphql/queries/*.graphql # Our predefined queries, used to generate services
+documents: src/app/graphql/**/*.graphql # Our predefined queries, used to generate services
 documentMode: documentNode
 config: 
-    flattenGeneratedTypes: true
     preResolveTypes: true
-    # skipTypename: true
     avoidOptionals: true
-        # field: true
-        # object: true
-    # declarationKind: 'interface'
-    # nonOptionalTypename: true
-# # namingConvention: 
-    # typeNames: enumValues
 generates:
     ./src/app/graphql/schema.ts: # Output file: Where we store our schema types
         plugins:
             - typescript
             - typescript-operations
             - typescript-apollo-angular
-            # - typescript-graphql-files-modules
-            # - named-operations-object
+    ./src/app/graphql/possible-types.ts: # Used by Apollo Cache in AppModule
+        plugins:
+            - fragment-matcher
+        config:
+            apolloClientVersion: 2
+
