@@ -32,18 +32,3 @@
         </mat-card>
     </mat-nav-list>
 </div>
-
-<div class="results" *ngIf="allSearchableContent$ | async as allSearchableContent" style="margin-top: 5vh">
-    <h2>All Searchable Content</h2>
-
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                JSON Result
-            </mat-panel-title>
-            <mat-panel-description>Click to see raw JSON</mat-panel-description>
-        </mat-expansion-panel-header>
-        <pre><code>{{ allSearchableContent$ | async | json}}</code></pre>
-    </mat-expansion-panel>
-
-</div>

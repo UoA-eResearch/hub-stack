@@ -2456,12 +2456,18 @@ export type PublicFieldsFragment = PublicFields_SubHub_Fragment | PublicFields_A
 export type AllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllArticlesQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> };
+export type AllArticlesQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<(
+      { __typename?: 'Article' }
+      & PublicFields_Article_Fragment
+    )>> }> };
 
 export type AllEquipmentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllEquipmentQuery = { __typename?: 'Query', equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<{ __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> };
+export type AllEquipmentQuery = { __typename?: 'Query', equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<(
+      { __typename?: 'Equipment' }
+      & PublicFields_Equipment_Fragment
+    )>> }> };
 
 export type AllSearchableContentPublicFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2533,13 +2539,11 @@ export const AllArticlesDocument = gql`
     query AllArticles {
   articleCollection {
     items {
-      title
-      summary
-      ssoProtected
+      ...PublicFields
     }
   }
 }
-    `;
+    ${PublicFieldsFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -2552,13 +2556,11 @@ export const AllEquipmentDocument = gql`
     query AllEquipment {
   equipmentCollection {
     items {
-      title
-      summary
-      ssoProtected
+      ...PublicFields
     }
   }
 }
-    `;
+    ${PublicFieldsFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

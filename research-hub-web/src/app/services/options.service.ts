@@ -97,9 +97,10 @@ export class OptionsService {
     ];
 
     this.categoryOptionsGQL = [
+      { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
       { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
       { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
-      { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' },
+      { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }
     ];
 
     this.researchActivityOptions = [
@@ -211,6 +212,13 @@ export class OptionsService {
         title: 'SubHubs',
         description: 'A collection of all SubHubs',
         imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
+      all: {
+        title: 'All Content',
+        description: 'Browse all content available to you on the ResearchHub.',
+        imageUrl: 'page-elements/20130930_UoA_Details_225_1680x220_BW.jpg',
         isHeaderVisible: true,
         isSearchBarVisible: false
       },
