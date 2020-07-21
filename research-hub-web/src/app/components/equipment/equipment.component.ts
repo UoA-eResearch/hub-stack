@@ -11,13 +11,11 @@ import { pluck, tap } from 'rxjs/operators';
 export class EquipmentComponent implements OnInit {
 
   public allEquipment$: Observable<AllEquipmentQuery['equipmentCollection']>;
-  public allSearchableContent$: Observable<AllSearchableContentPublicFieldsQuery>;
 
-  constructor(public allEquipmentGQL: AllEquipmentGQL, public allSearchContentPublicFieldsGQL: AllSearchableContentPublicFieldsGQL) { }
+  constructor(public allEquipmentGQL: AllEquipmentGQL) { }
 
   ngOnInit(): void {
     this.allEquipment$ = this.allEquipmentGQL.fetch().pipe(pluck('data', 'equipmentCollection'));
-    this.allSearchableContent$ = this.allSearchContentPublicFieldsGQL.fetch().pipe(pluck('data'));
   }
 
 }
