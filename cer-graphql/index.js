@@ -206,8 +206,8 @@ async function createServer(config) {
         schema,
         context: ({ req }) => {
             // Log incoming queries
-            // if (req && req.body && (req.body.operationName != 'IntrospectionQuery'))
-            // console.log('\n===== Query Recieved: ======\n', req.body.query)
+            if (req && req.body && (req.body.operationName != 'IntrospectionQuery'))
+                console.log('\n===== Query Recieved: ======\n', req.body.query)
 
             // Verify the requestor's token and return their user info, or return null for unauthenticated users
             try {
