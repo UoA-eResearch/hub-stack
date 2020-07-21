@@ -60,6 +60,12 @@ export const appRoutes: Routes = [
     path: 'subhubs',
     loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
+  {
+    path: 'subhubs/:subhub-slug',
+    // loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+    redirectTo: 'subhubs',
+    pathMatch: 'full'
+  },
   /**
    * Custom Route Redirects:
    * Define routes here where you would rather display a custom URL than the standard content/id
