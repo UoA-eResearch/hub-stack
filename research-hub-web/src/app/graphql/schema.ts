@@ -2463,6 +2463,11 @@ export type AllEquipmentQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type AllEquipmentQuery = { __typename?: 'Query', equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<{ __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> };
 
+export type AllSubHubChildPagesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'CaseStudy', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'Equipment', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'OfficialDocuments', title: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> }>> }> };
+
 export type AllSearchableContentPublicFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2560,6 +2565,43 @@ export const AllEquipmentDocument = gql`
     document = AllEquipmentDocument;
     
   }
+export const AllSubHubChildPagesDocument = gql`
+    query AllSubHubChildPages {
+  subHubCollection(where: {slug: "landing-page-for-a-sub-hub"}) {
+    items {
+      title
+      ssoProtected
+      subhubPagesCollection {
+        items {
+          ... on Article {
+            title
+            ssoProtected
+          }
+          ... on CaseStudy {
+            title
+            ssoProtected
+          }
+          ... on Equipment {
+            title
+            ssoProtected
+          }
+          ... on OfficialDocuments {
+            title
+          }
+          ... on Service {
+            title
+            ssoProtected
+          }
+          ... on SubHub {
+            title
+            ssoProtected
+          }
+        }
+      }
+    }
+  }
+}
+    `;
 export const AllSearchableContentPublicFieldsDocument = gql`
     query AllSearchableContentPublicFields {
   articleCollection(where: {searchable: true}) {
@@ -2593,6 +2635,9 @@ export const AllSearchableContentPublicFieldsDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
+  export class AllSubHubChildPagesGQL extends Apollo.Query<AllSubHubChildPagesQuery, AllSubHubChildPagesQueryVariables> {
+    document = AllSubHubChildPagesDocument;
+  }
   export class AllSearchableContentPublicFieldsGQL extends Apollo.Query<AllSearchableContentPublicFieldsQuery, AllSearchableContentPublicFieldsQueryVariables> {
     document = AllSearchableContentPublicFieldsDocument;
     
