@@ -5,12 +5,13 @@ const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
 
-
-
 // Measure server startup time
 var startTime = new Date().getTime();
 
 const getCredentials = (isFromFile) => {
+    // isFromFile determines where we load the credentials from.
+    // If true we load from the .env file in the folder. 
+    // If false, we load from environment variables.
     if (isFromFile) {
         const configResult = require('dotenv').config();
         if (configResult.error) {
@@ -76,10 +77,12 @@ async function createServer(config) {
     const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION, COGNITO_USER_POOL } = config;
 
     // Load remote schemas here
-    contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
+    contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}`+
+        `?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
 
     // Load Cognito public keys in order to verify tokens.
-    const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}/.well-known/jwks.json`,
+    const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` + 
+        "/.well-known/jwks.json",
         cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl);
 
     // Get a list of the types that have the ssoProtected field
@@ -243,13 +246,15 @@ if (require.main === module) {
         try {
             config = getCredentials(isConfigFromFile);
         } catch (error) {
-            console.error("Could not load credentials from file. Make sure you have filled in credentials in the .env file, or try running the server without --config-from-file.");
+            console.error("Could not load credentials from file. Make sure you have filled in credentials in the .env file,"+
+                "or try running the server without --config-from-file.");
             process.exit(1);
         }
         // Check if access token and space ID are supplied.
         if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
             !config.COGNITO_REGION || !config.COGNITO_USER_POOL) {
-            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
+            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN,"+
+                "CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
             process.exit(1);
         }
 
