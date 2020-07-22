@@ -107,7 +107,7 @@ pipeline {
                 }
                 stage('Build cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
                         echo 'Building cer-graphql project'
@@ -119,7 +119,7 @@ pipeline {
                 }
                 stage('Build serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        changeset "**/serverless-now/**/*.*"
                     }
                     steps {
                         dir("serverless-now") {
@@ -151,7 +151,7 @@ pipeline {
                 }
                 stage('Run cer-graphql tests') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
                         echo 'Testing cer-graphql project'
@@ -163,7 +163,7 @@ pipeline {
                 }
                 stage('Run serverless-now tests') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        changeset "**/serverless-now/**/*.*"
                     }
                     steps {
                         echo "Invoking serverless-now tests..."
@@ -217,7 +217,7 @@ pipeline {
                 }
                 stage('Deploy cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
@@ -236,7 +236,7 @@ pipeline {
                 }
                 stage('Deploy serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        changeset "**/serverless-now/**/*.*"
                     }
                     steps {
                         echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
