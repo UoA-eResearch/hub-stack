@@ -149,14 +149,6 @@ pipeline {
                     }
                     steps {
                         echo 'Testing cer-graphql project'
-                        // Copy in credentials from Jenkins.
-                        withCredentials([
-                            file(credentialsId: "cer-graphql-credentials-${BRANCH_NAME}",variable:"credentialsfile")
-                        ]) {
-                            dir("cer-graphql"){
-                                sh "cp $credentialsfile .env"
-                            }                        
-                        }
                         dir('cer-graphql') {
                             sh "npm install"
                             sh "npm run test"
