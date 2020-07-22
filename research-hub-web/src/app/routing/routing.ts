@@ -61,14 +61,12 @@ export const appRoutes: Routes = [
     loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {
-    path: 'all',
-    loadChildren: () => import('../components/all/all.module').then(m => m.AllModule)
+    path: 'subhubs/:slug',
+    loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {
-    path: 'subhubs/:subhub-slug',
-    // loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
-    redirectTo: 'subhubs',
-    pathMatch: 'full'
+    path: 'all',
+    loadChildren: () => import('../components/all/all.module').then(m => m.AllModule)
   },
   /**
    * Custom Route Redirects:
