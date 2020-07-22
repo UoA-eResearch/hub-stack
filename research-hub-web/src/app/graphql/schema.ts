@@ -2494,7 +2494,7 @@ export type AllSubHubChildPagesQueryVariables = Exact<{
 }>;
 
 
-export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'CaseStudy', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'Equipment', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'OfficialDocuments', title: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, ssoProtected: Maybe<boolean> } | { __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean> }>> }> }>> }> };
+export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'CaseStudy', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }>> }> };
 
 export const PublicFieldsFragmentDoc = gql`
     fragment PublicFields on Entry {
@@ -2611,31 +2611,42 @@ export const AllSubHubChildPagesDocument = gql`
   subHubCollection(where: {slug: $slug}) {
     items {
       title
+      summary
+      body {
+        json
+      }
       ssoProtected
+      searchable
       subhubPagesCollection {
         items {
           ... on Article {
             title
             ssoProtected
+            summary
           }
           ... on CaseStudy {
             title
             ssoProtected
+            summary
           }
           ... on Equipment {
             title
             ssoProtected
+            summary
           }
           ... on OfficialDocuments {
             title
+            summary
           }
           ... on Service {
             title
             ssoProtected
+            summary
           }
           ... on SubHub {
             title
             ssoProtected
+            summary
           }
         }
       }
