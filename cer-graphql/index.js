@@ -9,6 +9,9 @@ const jwkToPem = require('jwk-to-pem');
 var startTime = new Date().getTime();
 
 const getCredentials = (isFromFile) => {
+    // isFromFile determines where we load the credentials from.
+    // If true we load from the .env file in the folder. 
+    // If false, we load from environment variables.
     if (isFromFile) {
         const configResult = require('dotenv').config();
         if (configResult.error){
