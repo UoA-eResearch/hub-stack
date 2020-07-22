@@ -34,13 +34,18 @@
             <mat-card *ngFor="let subHubChildPage of subhub.subhubPagesCollection.items">
                 <mat-card-header>
                     {{ subHubChildPage.title }}
+                    <mat-chip-avatar *ngIf="subHubChildPage.ssoProtected">
+                        <mat-icon color="accent" matTooltip="SSO Login Required">lock</mat-icon>
+                    </mat-chip-avatar>
                 </mat-card-header>
                 <mat-card-subtitle>
                     {{ subHubChildPage.summary }}
                 </mat-card-subtitle>
-                <mat-chip-avatar *ngIf="subHubChildPage.ssoProtected">
-                    <mat-icon color="accent" matTooltip="SSO Login Required">lock</mat-icon>
-                </mat-chip-avatar>
+                <a href="/subhubs/{{subHubChildPage.slug}}" *ngIf="subHubChildPage.__typename==='SubHub' ">
+                    <button>
+                        View {{subHubChildPage.title}}
+                    </button>
+                </a>
             </mat-card>
         </mat-nav-list>
     </mat-card>
