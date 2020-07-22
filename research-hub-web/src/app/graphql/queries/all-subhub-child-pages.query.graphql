@@ -1,32 +1,43 @@
-query AllSubHubChildPages($slug: String) {
-  subHubCollection(where: { slug: $slug }) {
+query AllSubHubChildPages ($slug: String) {
+  subHubCollection (where:{slug: $slug}) {
     items {
       title
+      summary
+      body {
+        json
+      }
       ssoProtected
+      searchable
       subhubPagesCollection {
         items {
-          ... on Article {
+        	...on Article {
             title
             ssoProtected
+            summary
           }
-          ... on CaseStudy {
+          ...on CaseStudy {
             title
             ssoProtected
+            summary
           }
-          ... on Equipment {
+          ...on Equipment{
             title
             ssoProtected
-          }
+            summary
+          } 
           ... on OfficialDocuments {
-            title
+              title
+            	summary
           }
-          ... on Service {
+          ...on Service {
             title
             ssoProtected
+            summary
           }
-          ... on SubHub {
+          ...on SubHub {
             title
             ssoProtected
+            summary
           }
         }
       }
