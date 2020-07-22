@@ -5,8 +5,6 @@ const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
 
-
-
 // Measure server startup time
 var startTime = new Date().getTime();
 
