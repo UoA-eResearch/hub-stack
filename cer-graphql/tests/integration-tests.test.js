@@ -1,5 +1,5 @@
 const { createTestClient } = require('apollo-server-testing');
-const { createServer,getCredentials } = require('../index')
+const { createServer, getCredentials } = require('../index')
 const TQ = require('./test-queries'); // Collection of test queries
 const { gql, introspectSchema } = require('apollo-server');
 const { JsonWebTokenError } = require('jsonwebtoken');
