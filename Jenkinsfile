@@ -7,14 +7,6 @@ pipeline {
         label("uoa-buildtools-ionic")
     }
 
-    environment {
-        // Set environment variables for cer-graphql tests
-        CONTENTFUL_ACCESS_TOKEN = credentials('contentful-access-token')
-        CONTENTFUL_SPACE_ID = credentials('contentful-space-id')
-        COGNITO_REGION = credentials('cognito-region')
-        COGNITO_USER_POOL = credentials('cognito-user-pool')
-    }
-
     stages {
 
         stage('Checkout') {
@@ -35,13 +27,6 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
-                        withCredentials([
-                            file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentialsfile")
-                        ]) {
-                            dir("cer-graphql"){
-                                sh "cp $credentialsfile .env"
-                            }                        
-                        }
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
@@ -61,13 +46,6 @@ pipeline {
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
-                        withCredentials([
-                            file(credentialsId: "cer-graphql-credentials-sandbox",variable:"credentialsfile")
-                        ]) {
-                            dir("cer-graphql"){
-                                sh "cp $credentialsfile .env"
-                            }
-                        }
                     }
                 }
             }
@@ -111,6 +89,14 @@ pipeline {
                     }
                     steps {
                         echo 'Building cer-graphql project'
+                        // Copy in credentials from Jenkins.
+                        withCredentials([
+                            file(credentialsId: "cer-graphql-credentials-${BRANCH_NAME}",variable:"credentialsfile")
+                        ]) {
+                            dir("cer-graphql"){
+                                sh "cp $credentialsfile .env"
+                            }                        
+                        }
                         dir("cer-graphql") {
                             echo "Building the docker image and tag it as latest"
                             sh "docker build . -t cer-graphql:latest"
@@ -154,7 +140,7 @@ pipeline {
                         changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
-                        echo 'Testing cer-graphql project'
+                        echo 'Testing cer-graphql project'  
                         dir('cer-graphql') {
                             sh "npm install"
                             sh "npm run test"
