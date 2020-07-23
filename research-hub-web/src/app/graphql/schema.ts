@@ -2461,6 +2461,13 @@ export type AllArticlesQuery = { __typename?: 'Query', articleCollection: Maybe<
       & PublicFields_Article_Fragment
     )>> }> };
 
+export type AllContentItemParentSubHubsQueryVariables = Exact<{
+  slug: Maybe<Scalars['String']>;
+}>;
+
+
+export type AllContentItemParentSubHubsQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, linkedFrom: Maybe<{ __typename?: 'ArticleLinkingCollections', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string> }>> }> }> }>> }> };
+
 export type AllEquipmentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2550,6 +2557,34 @@ export const AllArticlesDocument = gql`
   })
   export class AllArticlesGQL extends Apollo.Query<AllArticlesQuery, AllArticlesQueryVariables> {
     document = AllArticlesDocument;
+    
+  }
+export const AllContentItemParentSubHubsDocument = gql`
+    query AllContentItemParentSubHubs($slug: String) {
+  articleCollection(where: {slug: $slug}) {
+    items {
+      slug
+      title
+      ssoProtected
+      linkedFrom {
+        subHubCollection {
+          items {
+            slug
+            title
+            summary
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AllContentItemParentSubHubsGQL extends Apollo.Query<AllContentItemParentSubHubsQuery, AllContentItemParentSubHubsQueryVariables> {
+    document = AllContentItemParentSubHubsDocument;
     
   }
 export const AllEquipmentDocument = gql`

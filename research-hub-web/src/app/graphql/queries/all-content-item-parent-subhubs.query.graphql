@@ -1,0 +1,18 @@
+query AllContentItemParentSubHubs ($slug: String) {
+  articleCollection (where: {slug: $slug} ) {
+    items {
+      slug
+      title
+      ssoProtected
+      linkedFrom {
+        subHubCollection  {
+          items{
+            slug
+            title
+            summary
+          }
+        }
+      }
+    }
+  }
+}
