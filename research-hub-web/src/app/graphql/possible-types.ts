@@ -37,6 +37,9 @@
           },
           {
             "name": "CaseStudy"
+          },
+          {
+            "name": "Testing"
           }
         ]
       },
