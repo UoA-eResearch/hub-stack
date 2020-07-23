@@ -126,6 +126,7 @@ async function createServer(config) {
                     'name',
                     'ssoProtected',
                     'searchable',
+                    'slug',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 

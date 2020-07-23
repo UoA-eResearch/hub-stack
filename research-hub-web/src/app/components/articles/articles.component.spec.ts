@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
+import { RouterModule } from '@angular/router';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
@@ -11,7 +12,10 @@ describe('ArticlesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ArticlesComponent],
-      imports: [ApolloTestingModule]
+      imports: [
+        ApolloTestingModule,
+        RouterModule.forRoot([])
+      ]
     })
       .compileComponents();
   }));
