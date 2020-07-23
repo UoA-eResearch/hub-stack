@@ -37,6 +37,9 @@
           },
           {
             "name": "CaseStudy"
+          },
+          {
+            "name": "Testing"
           }
         ]
       },
@@ -97,6 +100,30 @@
           },
           {
             "name": "Service"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "SubHubRelatedItemsItem",
+        "possibleTypes": [
+          {
+            "name": "Article"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
+            "name": "Equipment"
+          },
+          {
+            "name": "OfficialDocuments"
+          },
+          {
+            "name": "Service"
+          },
+          {
+            "name": "SubHub"
           }
         ]
       }

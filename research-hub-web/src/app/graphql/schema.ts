@@ -33,6 +33,8 @@ export type Query = {
   __typename?: 'Query';
   asset: Maybe<Asset>;
   assetCollection: Maybe<AssetCollection>;
+  testing: Maybe<Testing>;
+  testingCollection: Maybe<TestingCollection>;
   subHub: Maybe<SubHub>;
   subHubCollection: Maybe<SubHubCollection>;
   officialDocuments: Maybe<OfficialDocuments>;
@@ -64,6 +66,23 @@ export type QueryAssetCollectionArgs = {
   locale: Maybe<Scalars['String']>;
   where: Maybe<AssetFilter>;
   order: Maybe<Array<Maybe<AssetOrder>>>;
+};
+
+
+export type QueryTestingArgs = {
+  id: Scalars['String'];
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type QueryTestingCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<TestingFilter>;
+  order: Maybe<Array<Maybe<TestingOrder>>>;
 };
 
 
@@ -430,6 +449,7 @@ export type SubHub = Entry & {
   mediaCollection: Maybe<AssetCollection>;
   ssoProtected: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
+  relatedItemsCollection: Maybe<SubHubRelatedItemsCollection>;
 };
 
 
@@ -466,6 +486,20 @@ export type SubHubSubhubPagesCollectionArgs = {
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
 export type SubHubMediaCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubRelatedItemsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1795,6 +1829,16 @@ export type ArticleRelatedOrganisationsCollection = {
   items: Array<Maybe<Entry>>;
 };
 
+export type SubHubRelatedItemsCollection = {
+  __typename?: 'SubHubRelatedItemsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<SubHubRelatedItemsItem>>;
+};
+
+export type SubHubRelatedItemsItem = Article | CaseStudy | Equipment | OfficialDocuments | Service | SubHub;
+
 export type ArticleCollection = {
   __typename?: 'ArticleCollection';
   total: Scalars['Int'];
@@ -1932,6 +1976,51 @@ export enum AssetOrder {
   SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
+
+/** [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/testing) */
+export type Testing = Entry & {
+  __typename?: 'Testing';
+  sys: Sys;
+  linkedFrom: Maybe<TestingLinkingCollections>;
+};
+
+export type TestingLinkingCollections = {
+  __typename?: 'TestingLinkingCollections';
+  entryCollection: Maybe<EntryCollection>;
+};
+
+
+export type TestingLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+export type TestingFilter = {
+  sys: Maybe<SysFilter>;
+  OR: Maybe<Array<Maybe<TestingFilter>>>;
+  AND: Maybe<Array<Maybe<TestingFilter>>>;
+};
+
+export enum TestingOrder {
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
+export type TestingCollection = {
+  __typename?: 'TestingCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Testing>>;
+};
 
 export type SubHubFilter = {
   sys: Maybe<SysFilter>;
@@ -2437,21 +2526,23 @@ export enum PersonOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-type PublicFields_SubHub_Fragment = { __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-type PublicFields_Article_Fragment = { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_Article_Fragment = { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-type PublicFields_Service_Fragment = { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-type PublicFields_Equipment_Fragment = { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-type PublicFields_Person_Fragment = { __typename?: 'Person', name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> };
+type PublicFields_Person_Fragment = { __typename: 'Person', slug: Maybe<string>, name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> };
 
 type PublicFields_OfficialDocuments_Fragment = { __typename?: 'OfficialDocuments' };
 
-type PublicFields_CaseStudy_Fragment = { __typename?: 'CaseStudy', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-export type PublicFieldsFragment = PublicFields_SubHub_Fragment | PublicFields_Article_Fragment | PublicFields_Service_Fragment | PublicFields_Equipment_Fragment | PublicFields_Person_Fragment | PublicFields_OfficialDocuments_Fragment | PublicFields_CaseStudy_Fragment;
+type PublicFields_Testing_Fragment = { __typename?: 'Testing' };
+
+export type PublicFieldsFragment = PublicFields_SubHub_Fragment | PublicFields_Article_Fragment | PublicFields_Service_Fragment | PublicFields_Equipment_Fragment | PublicFields_Person_Fragment | PublicFields_OfficialDocuments_Fragment | PublicFields_CaseStudy_Fragment | PublicFields_Testing_Fragment;
 
 export type AllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2496,39 +2587,58 @@ export type AllSubHubChildPagesQueryVariables = Exact<{
 
 export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'CaseStudy', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }>> }> };
 
+export type GetArticleBySlugQueryVariables = Exact<{
+  slug: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetArticleBySlugQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'ArticleBody', json: any }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'SubHub' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'CaseStudy' } | { __typename?: 'Testing' }>> }> }>> }> };
+
 export const PublicFieldsFragmentDoc = gql`
     fragment PublicFields on Entry {
   ... on Article {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on Equipment {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on Service {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on SubHub {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on CaseStudy {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on Person {
+    __typename
+    slug
     name
     searchable
     ssoProtected
@@ -2660,5 +2770,55 @@ export const AllSubHubChildPagesDocument = gql`
   })
   export class AllSubHubChildPagesGQL extends Apollo.Query<AllSubHubChildPagesQuery, AllSubHubChildPagesQueryVariables> {
     document = AllSubHubChildPagesDocument;
+    
+  }
+export const GetArticleBySlugDocument = gql`
+    query GetArticleBySlug($slug: String) {
+  articleCollection(where: {slug: $slug}) {
+    items {
+      title
+      summary
+      ssoProtected
+      body {
+        json
+      }
+      keywords
+      slug
+      ssoProtected
+      searchable
+      icon {
+        title
+        description
+        url
+      }
+      relatedItemsCollection {
+        items {
+          ... on Article {
+            title
+            summary
+            slug
+          }
+          ... on Service {
+            title
+            summary
+            slug
+          }
+          ... on Equipment {
+            title
+            summary
+            slug
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetArticleBySlugGQL extends Apollo.Query<GetArticleBySlugQuery, GetArticleBySlugQueryVariables> {
+    document = GetArticleBySlugDocument;
     
   }

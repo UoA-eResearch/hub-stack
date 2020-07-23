@@ -1,35 +1,47 @@
 fragment PublicFields on Entry {
     ... on Article {
+        __typename
+        slug
         title
         summary
         ssoProtected
         searchable
     } 
     ... on Equipment {
+        __typename
+        slug
         title
         summary
         ssoProtected
         searchable
     }
     ... on Service {
+        __typename
+        slug
         title
         summary
         ssoProtected
         searchable
     }
     ... on SubHub {
+        __typename
+        slug
         title
         summary
         ssoProtected
         searchable
     }
     ... on CaseStudy {
+        __typename
+        slug
         title
         summary
         ssoProtected
         searchable
     }
     ... on Person {
+        __typename
+        slug
         name
         searchable
         ssoProtected
