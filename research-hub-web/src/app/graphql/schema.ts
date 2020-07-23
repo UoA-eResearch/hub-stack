@@ -430,6 +430,7 @@ export type SubHub = Entry & {
   mediaCollection: Maybe<AssetCollection>;
   ssoProtected: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
+  relatedItemsCollection: Maybe<SubHubRelatedItemsCollection>;
 };
 
 
@@ -466,6 +467,20 @@ export type SubHubSubhubPagesCollectionArgs = {
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
 export type SubHubMediaCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubRelatedItemsCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1794,6 +1809,16 @@ export type ArticleRelatedOrganisationsCollection = {
   limit: Scalars['Int'];
   items: Array<Maybe<Entry>>;
 };
+
+export type SubHubRelatedItemsCollection = {
+  __typename?: 'SubHubRelatedItemsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<SubHubRelatedItemsItem>>;
+};
+
+export type SubHubRelatedItemsItem = Article | CaseStudy | Equipment | OfficialDocuments | Service | SubHub;
 
 export type ArticleCollection = {
   __typename?: 'ArticleCollection';
