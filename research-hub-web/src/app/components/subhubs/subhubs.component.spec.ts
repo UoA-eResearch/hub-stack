@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubhubsComponent } from './subhubs.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
+import { SharedModule } from '../shared/app.shared.module';
+import { SubhubsRoutingModule } from './subhubs-routing.module';
+import { RouterModule } from '@angular/router';
 
 describe('SubhubsComponent', () => {
   let component: SubhubsComponent;
@@ -11,7 +14,10 @@ describe('SubhubsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SubhubsComponent],
-      imports: [ApolloTestingModule]
+      imports: [
+        ApolloTestingModule,
+        RouterModule.forRoot([]),
+      ]
     })
       .compileComponents();
   }));
