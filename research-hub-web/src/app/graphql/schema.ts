@@ -4,7 +4,7 @@ import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
 /** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
+export interface Scalars {
   ID: string;
   String: string;
   Boolean: boolean;
@@ -25,11 +25,11 @@ export type Scalars = {
   HexColor: any;
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: any;
-};
+}
 
 
 
-export type Query = {
+export interface Query {
   __typename?: 'Query';
   asset: Maybe<Asset>;
   assetCollection: Maybe<AssetCollection>;
@@ -49,163 +49,163 @@ export type Query = {
   caseStudyCollection: Maybe<CaseStudyCollection>;
   person: Maybe<Person>;
   personCollection: Maybe<PersonCollection>;
-};
+}
 
 
-export type QueryAssetArgs = {
+export interface QueryAssetArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QueryAssetCollectionArgs = {
+export interface QueryAssetCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<AssetFilter>;
   order: Maybe<Array<Maybe<AssetOrder>>>;
-};
+}
 
 
-export type QueryTestingArgs = {
+export interface QueryTestingArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QueryTestingCollectionArgs = {
+export interface QueryTestingCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<TestingFilter>;
   order: Maybe<Array<Maybe<TestingOrder>>>;
-};
+}
 
 
-export type QuerySubHubArgs = {
+export interface QuerySubHubArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QuerySubHubCollectionArgs = {
+export interface QuerySubHubCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<SubHubFilter>;
   order: Maybe<Array<Maybe<SubHubOrder>>>;
-};
+}
 
 
-export type QueryOfficialDocumentsArgs = {
+export interface QueryOfficialDocumentsArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QueryOfficialDocumentsCollectionArgs = {
+export interface QueryOfficialDocumentsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<OfficialDocumentsFilter>;
   order: Maybe<Array<Maybe<OfficialDocumentsOrder>>>;
-};
+}
 
 
-export type QueryArticleArgs = {
+export interface QueryArticleArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QueryArticleCollectionArgs = {
+export interface QueryArticleCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<ArticleFilter>;
   order: Maybe<Array<Maybe<ArticleOrder>>>;
-};
+}
 
 
-export type QueryServiceArgs = {
+export interface QueryServiceArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QueryServiceCollectionArgs = {
+export interface QueryServiceCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<ServiceFilter>;
   order: Maybe<Array<Maybe<ServiceOrder>>>;
-};
+}
 
 
-export type QueryEquipmentArgs = {
+export interface QueryEquipmentArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QueryEquipmentCollectionArgs = {
+export interface QueryEquipmentCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<EquipmentFilter>;
   order: Maybe<Array<Maybe<EquipmentOrder>>>;
-};
+}
 
 
-export type QueryCaseStudyArgs = {
+export interface QueryCaseStudyArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QueryCaseStudyCollectionArgs = {
+export interface QueryCaseStudyCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<CaseStudyFilter>;
   order: Maybe<Array<Maybe<CaseStudyOrder>>>;
-};
+}
 
 
-export type QueryPersonArgs = {
+export interface QueryPersonArgs {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type QueryPersonCollectionArgs = {
+export interface QueryPersonCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
   where: Maybe<PersonFilter>;
   order: Maybe<Array<Maybe<PersonOrder>>>;
-};
+}
 
 /** Represents a binary file in a space. An asset can be any file type. */
-export type Asset = {
+export interface Asset {
   __typename?: 'Asset';
   sys: Sys;
   title: Maybe<Scalars['String']>;
@@ -217,15 +217,15 @@ export type Asset = {
   width: Maybe<Scalars['Int']>;
   height: Maybe<Scalars['Int']>;
   linkedFrom: Maybe<AssetLinkingCollections>;
-};
+}
 
 
 /** Represents a binary file in a space. An asset can be any file type. */
-export type AssetUrlArgs = {
+export interface AssetUrlArgs {
   transform: Maybe<ImageTransformOptions>;
-};
+}
 
-export type Sys = {
+export interface Sys {
   __typename?: 'Sys';
   id: Scalars['String'];
   spaceId: Scalars['String'];
@@ -233,10 +233,10 @@ export type Sys = {
   publishedAt: Maybe<Scalars['DateTime']>;
   firstPublishedAt: Maybe<Scalars['DateTime']>;
   publishedVersion: Maybe<Scalars['Int']>;
-};
+}
 
 
-export type ImageTransformOptions = {
+export interface ImageTransformOptions {
   /** Desired width in pixels. Defaults to the original image width. */
   width: Maybe<Scalars['Dimension']>;
   /** Desired height in pixels. Defaults to the original image height. */
@@ -264,7 +264,7 @@ export type ImageTransformOptions = {
   backgroundColor: Maybe<Scalars['HexColor']>;
   /** Desired image format. Defaults to the original image format. */
   format: Maybe<ImageFormat>;
-};
+}
 
 
 
@@ -333,7 +333,7 @@ export enum ImageFormat {
   Webp = 'WEBP'
 }
 
-export type AssetLinkingCollections = {
+export interface AssetLinkingCollections {
   __typename?: 'AssetLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   subHubCollection: Maybe<SubHubCollection>;
@@ -343,91 +343,91 @@ export type AssetLinkingCollections = {
   equipmentCollection: Maybe<EquipmentCollection>;
   caseStudyCollection: Maybe<CaseStudyCollection>;
   personCollection: Maybe<PersonCollection>;
-};
+}
 
 
-export type AssetLinkingCollectionsEntryCollectionArgs = {
+export interface AssetLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type AssetLinkingCollectionsSubHubCollectionArgs = {
+export interface AssetLinkingCollectionsSubHubCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type AssetLinkingCollectionsOfficialDocumentsCollectionArgs = {
+export interface AssetLinkingCollectionsOfficialDocumentsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type AssetLinkingCollectionsArticleCollectionArgs = {
+export interface AssetLinkingCollectionsArticleCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type AssetLinkingCollectionsServiceCollectionArgs = {
+export interface AssetLinkingCollectionsServiceCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type AssetLinkingCollectionsEquipmentCollectionArgs = {
+export interface AssetLinkingCollectionsEquipmentCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type AssetLinkingCollectionsCaseStudyCollectionArgs = {
+export interface AssetLinkingCollectionsCaseStudyCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type AssetLinkingCollectionsPersonCollectionArgs = {
+export interface AssetLinkingCollectionsPersonCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type EntryCollection = {
+export interface EntryCollection {
   __typename?: 'EntryCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Entry>>;
-};
+}
 
-export type Entry = {
+export interface Entry {
   sys: Sys;
-};
+}
 
-export type SubHubCollection = {
+export interface SubHubCollection {
   __typename?: 'SubHubCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<SubHub>>;
-};
+}
 
 /**
  * A 'mini site' within the hub - this is both the landing page, or sub-pages for
@@ -459,10 +459,10 @@ export type SubHub = Entry & {
  * guidance.  [See type
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
-export type SubHubBannerImageArgs = {
+export interface SubHubBannerImageArgs {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
@@ -471,12 +471,12 @@ export type SubHubBannerImageArgs = {
  * guidance.  [See type
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
-export type SubHubSubhubPagesCollectionArgs = {
+export interface SubHubSubhubPagesCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
@@ -485,12 +485,12 @@ export type SubHubSubhubPagesCollectionArgs = {
  * guidance.  [See type
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
-export type SubHubMediaCollectionArgs = {
+export interface SubHubMediaCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
@@ -499,68 +499,68 @@ export type SubHubMediaCollectionArgs = {
  * guidance.  [See type
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
-export type SubHubRelatedItemsCollectionArgs = {
+export interface SubHubRelatedItemsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type SubHubLinkingCollections = {
+export interface SubHubLinkingCollections {
   __typename?: 'SubHubLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   subHubCollection: Maybe<SubHubCollection>;
-};
+}
 
 
-export type SubHubLinkingCollectionsEntryCollectionArgs = {
+export interface SubHubLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type SubHubLinkingCollectionsSubHubCollectionArgs = {
+export interface SubHubLinkingCollectionsSubHubCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type SubHubBody = {
+export interface SubHubBody {
   __typename?: 'SubHubBody';
   json: Scalars['JSON'];
   links: SubHubBodyLinks;
-};
+}
 
 
-export type SubHubBodyLinks = {
+export interface SubHubBodyLinks {
   __typename?: 'SubHubBodyLinks';
   entries: SubHubBodyEntries;
   assets: SubHubBodyAssets;
-};
+}
 
-export type SubHubBodyEntries = {
+export interface SubHubBodyEntries {
   __typename?: 'SubHubBodyEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type SubHubBodyAssets = {
+export interface SubHubBodyAssets {
   __typename?: 'SubHubBodyAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type SubHubSubhubPagesCollection = {
+export interface SubHubSubhubPagesCollection {
   __typename?: 'SubHubSubhubPagesCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<SubHubSubhubPagesItem>>;
-};
+}
 
 export type SubHubSubhubPagesItem = Article | CaseStudy | Equipment | OfficialDocuments | Service | SubHub;
 
@@ -586,103 +586,103 @@ export type Article = Entry & {
 
 
 /** A general information page. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/article) */
-export type ArticleIconArgs = {
+export interface ArticleIconArgs {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A general information page. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/article) */
-export type ArticleMediaCollectionArgs = {
+export interface ArticleMediaCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A general information page. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/article) */
-export type ArticleRelatedItemsCollectionArgs = {
+export interface ArticleRelatedItemsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A general information page. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/article) */
-export type ArticleOfficialDocumentsCollectionArgs = {
+export interface ArticleOfficialDocumentsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A general information page. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/article) */
-export type ArticleRelatedContactsCollectionArgs = {
+export interface ArticleRelatedContactsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A general information page. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/article) */
-export type ArticleRelatedOrganisationsCollectionArgs = {
+export interface ArticleRelatedOrganisationsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type ArticleLinkingCollections = {
+export interface ArticleLinkingCollections {
   __typename?: 'ArticleLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   subHubCollection: Maybe<SubHubCollection>;
   serviceCollection: Maybe<ServiceCollection>;
   equipmentCollection: Maybe<EquipmentCollection>;
-};
+}
 
 
-export type ArticleLinkingCollectionsEntryCollectionArgs = {
+export interface ArticleLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type ArticleLinkingCollectionsSubHubCollectionArgs = {
+export interface ArticleLinkingCollectionsSubHubCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type ArticleLinkingCollectionsServiceCollectionArgs = {
+export interface ArticleLinkingCollectionsServiceCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type ArticleLinkingCollectionsEquipmentCollectionArgs = {
+export interface ArticleLinkingCollectionsEquipmentCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type ServiceCollection = {
+export interface ServiceCollection {
   __typename?: 'ServiceCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Service>>;
-};
+}
 
 /** A research service catalogue item [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/service) */
 export type Service = Entry & {
@@ -715,103 +715,103 @@ export type Service = Entry & {
 
 
 /** A research service catalogue item [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/service) */
-export type ServiceIconArgs = {
+export interface ServiceIconArgs {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A research service catalogue item [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/service) */
-export type ServiceServiceOwnerCollectionArgs = {
+export interface ServiceServiceOwnerCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A research service catalogue item [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/service) */
-export type ServiceUserFacingSupportCollectionArgs = {
+export interface ServiceUserFacingSupportCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A research service catalogue item [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/service) */
-export type ServiceOfficialDocumentsCollectionArgs = {
+export interface ServiceOfficialDocumentsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A research service catalogue item [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/service) */
-export type ServiceRelatedItemsCollectionArgs = {
+export interface ServiceRelatedItemsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /** A research service catalogue item [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/service) */
-export type ServiceMediaCollectionArgs = {
+export interface ServiceMediaCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type ServiceLinkingCollections = {
+export interface ServiceLinkingCollections {
   __typename?: 'ServiceLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   subHubCollection: Maybe<SubHubCollection>;
   serviceCollection: Maybe<ServiceCollection>;
   equipmentCollection: Maybe<EquipmentCollection>;
-};
+}
 
 
-export type ServiceLinkingCollectionsEntryCollectionArgs = {
+export interface ServiceLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type ServiceLinkingCollectionsSubHubCollectionArgs = {
+export interface ServiceLinkingCollectionsSubHubCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type ServiceLinkingCollectionsServiceCollectionArgs = {
+export interface ServiceLinkingCollectionsServiceCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type ServiceLinkingCollectionsEquipmentCollectionArgs = {
+export interface ServiceLinkingCollectionsEquipmentCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type EquipmentCollection = {
+export interface EquipmentCollection {
   __typename?: 'EquipmentCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Equipment>>;
-};
+}
 
 /**
  * Hardware, research instruments, or physical equipment used to conduct or support
@@ -856,156 +856,156 @@ export type Equipment = Entry & {
  * Hardware, research instruments, or physical equipment used to conduct or support
  * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
  */
-export type EquipmentMainImageArgs = {
+export interface EquipmentMainImageArgs {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
  * Hardware, research instruments, or physical equipment used to conduct or support
  * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
  */
-export type EquipmentUserFacingSupportCollectionArgs = {
+export interface EquipmentUserFacingSupportCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
  * Hardware, research instruments, or physical equipment used to conduct or support
  * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
  */
-export type EquipmentEquipmentOwnerCollectionArgs = {
+export interface EquipmentEquipmentOwnerCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
  * Hardware, research instruments, or physical equipment used to conduct or support
  * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
  */
-export type EquipmentRelatedItemsCollectionArgs = {
+export interface EquipmentRelatedItemsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
  * Hardware, research instruments, or physical equipment used to conduct or support
  * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
  */
-export type EquipmentMediaCollectionArgs = {
+export interface EquipmentMediaCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type EquipmentLinkingCollections = {
+export interface EquipmentLinkingCollections {
   __typename?: 'EquipmentLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   subHubCollection: Maybe<SubHubCollection>;
   serviceCollection: Maybe<ServiceCollection>;
   equipmentCollection: Maybe<EquipmentCollection>;
-};
+}
 
 
-export type EquipmentLinkingCollectionsEntryCollectionArgs = {
+export interface EquipmentLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type EquipmentLinkingCollectionsSubHubCollectionArgs = {
+export interface EquipmentLinkingCollectionsSubHubCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type EquipmentLinkingCollectionsServiceCollectionArgs = {
+export interface EquipmentLinkingCollectionsServiceCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type EquipmentLinkingCollectionsEquipmentCollectionArgs = {
+export interface EquipmentLinkingCollectionsEquipmentCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type EquipmentOverview = {
+export interface EquipmentOverview {
   __typename?: 'EquipmentOverview';
   json: Scalars['JSON'];
   links: EquipmentOverviewLinks;
-};
+}
 
-export type EquipmentOverviewLinks = {
+export interface EquipmentOverviewLinks {
   __typename?: 'EquipmentOverviewLinks';
   entries: EquipmentOverviewEntries;
   assets: EquipmentOverviewAssets;
-};
+}
 
-export type EquipmentOverviewEntries = {
+export interface EquipmentOverviewEntries {
   __typename?: 'EquipmentOverviewEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentOverviewAssets = {
+export interface EquipmentOverviewAssets {
   __typename?: 'EquipmentOverviewAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentDetails = {
+export interface EquipmentDetails {
   __typename?: 'EquipmentDetails';
   json: Scalars['JSON'];
   links: EquipmentDetailsLinks;
-};
+}
 
-export type EquipmentDetailsLinks = {
+export interface EquipmentDetailsLinks {
   __typename?: 'EquipmentDetailsLinks';
   entries: EquipmentDetailsEntries;
   assets: EquipmentDetailsAssets;
-};
+}
 
-export type EquipmentDetailsEntries = {
+export interface EquipmentDetailsEntries {
   __typename?: 'EquipmentDetailsEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentDetailsAssets = {
+export interface EquipmentDetailsAssets {
   __typename?: 'EquipmentDetailsAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentUserFacingSupportCollection = {
+export interface EquipmentUserFacingSupportCollection {
   __typename?: 'EquipmentUserFacingSupportCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Person>>;
-};
+}
 
 /** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
 export type Person = Entry & {
@@ -1024,67 +1024,67 @@ export type Person = Entry & {
 
 
 /** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonImageArgs = {
+export interface PersonImageArgs {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type PersonLinkingCollections = {
+export interface PersonLinkingCollections {
   __typename?: 'PersonLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   officialDocumentsCollection: Maybe<OfficialDocumentsCollection>;
   serviceCollection: Maybe<ServiceCollection>;
   equipmentCollection: Maybe<EquipmentCollection>;
   caseStudyCollection: Maybe<CaseStudyCollection>;
-};
+}
 
 
-export type PersonLinkingCollectionsEntryCollectionArgs = {
+export interface PersonLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type PersonLinkingCollectionsOfficialDocumentsCollectionArgs = {
+export interface PersonLinkingCollectionsOfficialDocumentsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type PersonLinkingCollectionsServiceCollectionArgs = {
+export interface PersonLinkingCollectionsServiceCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type PersonLinkingCollectionsEquipmentCollectionArgs = {
+export interface PersonLinkingCollectionsEquipmentCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type PersonLinkingCollectionsCaseStudyCollectionArgs = {
+export interface PersonLinkingCollectionsCaseStudyCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type OfficialDocumentsCollection = {
+export interface OfficialDocumentsCollection {
   __typename?: 'OfficialDocumentsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<OfficialDocuments>>;
-};
+}
 
 /**
  * Describes and hosts or links to offical documents such as uni policies,
@@ -1108,10 +1108,10 @@ export type OfficialDocuments = Entry & {
  * guidelines, codes of conduct, terms of use/service, government laws/acts etc
  * related to research and research services.   [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/officialDocuments)
  */
-export type OfficialDocumentsDocumentArgs = {
+export interface OfficialDocumentsDocumentArgs {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
@@ -1119,59 +1119,59 @@ export type OfficialDocumentsDocumentArgs = {
  * guidelines, codes of conduct, terms of use/service, government laws/acts etc
  * related to research and research services.   [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/officialDocuments)
  */
-export type OfficialDocumentsContactCollectionArgs = {
+export interface OfficialDocumentsContactCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type OfficialDocumentsLinkingCollections = {
+export interface OfficialDocumentsLinkingCollections {
   __typename?: 'OfficialDocumentsLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   subHubCollection: Maybe<SubHubCollection>;
   serviceCollection: Maybe<ServiceCollection>;
-};
+}
 
 
-export type OfficialDocumentsLinkingCollectionsEntryCollectionArgs = {
+export interface OfficialDocumentsLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type OfficialDocumentsLinkingCollectionsSubHubCollectionArgs = {
+export interface OfficialDocumentsLinkingCollectionsSubHubCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type OfficialDocumentsLinkingCollectionsServiceCollectionArgs = {
+export interface OfficialDocumentsLinkingCollectionsServiceCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type OfficialDocumentsContactCollection = {
+export interface OfficialDocumentsContactCollection {
   __typename?: 'OfficialDocumentsContactCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Person>>;
-};
+}
 
-export type CaseStudyCollection = {
+export interface CaseStudyCollection {
   __typename?: 'CaseStudyCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<CaseStudy>>;
-};
+}
 
 /**
  * An article that describes an example of University research support service in
@@ -1202,660 +1202,660 @@ export type CaseStudy = Entry & {
  * An article that describes an example of University research support service in
  * action. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/caseStudy)
  */
-export type CaseStudyMainImageArgs = {
+export interface CaseStudyMainImageArgs {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
  * An article that describes an example of University research support service in
  * action. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/caseStudy)
  */
-export type CaseStudyPeopleCollectionArgs = {
+export interface CaseStudyPeopleCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
 /**
  * An article that describes an example of University research support service in
  * action. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/caseStudy)
  */
-export type CaseStudyRelatedItemsCollectionArgs = {
+export interface CaseStudyRelatedItemsCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type CaseStudyLinkingCollections = {
+export interface CaseStudyLinkingCollections {
   __typename?: 'CaseStudyLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   subHubCollection: Maybe<SubHubCollection>;
   serviceCollection: Maybe<ServiceCollection>;
   equipmentCollection: Maybe<EquipmentCollection>;
-};
+}
 
 
-export type CaseStudyLinkingCollectionsEntryCollectionArgs = {
+export interface CaseStudyLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type CaseStudyLinkingCollectionsSubHubCollectionArgs = {
+export interface CaseStudyLinkingCollectionsSubHubCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type CaseStudyLinkingCollectionsServiceCollectionArgs = {
+export interface CaseStudyLinkingCollectionsServiceCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
 
-export type CaseStudyLinkingCollectionsEquipmentCollectionArgs = {
+export interface CaseStudyLinkingCollectionsEquipmentCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type CaseStudyContent = {
+export interface CaseStudyContent {
   __typename?: 'CaseStudyContent';
   json: Scalars['JSON'];
   links: CaseStudyContentLinks;
-};
+}
 
-export type CaseStudyContentLinks = {
+export interface CaseStudyContentLinks {
   __typename?: 'CaseStudyContentLinks';
   entries: CaseStudyContentEntries;
   assets: CaseStudyContentAssets;
-};
+}
 
-export type CaseStudyContentEntries = {
+export interface CaseStudyContentEntries {
   __typename?: 'CaseStudyContentEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type CaseStudyContentAssets = {
+export interface CaseStudyContentAssets {
   __typename?: 'CaseStudyContentAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type CaseStudyPeopleCollection = {
+export interface CaseStudyPeopleCollection {
   __typename?: 'CaseStudyPeopleCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Person>>;
-};
+}
 
-export type CaseStudyAcknowledgement = {
+export interface CaseStudyAcknowledgement {
   __typename?: 'CaseStudyAcknowledgement';
   json: Scalars['JSON'];
   links: CaseStudyAcknowledgementLinks;
-};
+}
 
-export type CaseStudyAcknowledgementLinks = {
+export interface CaseStudyAcknowledgementLinks {
   __typename?: 'CaseStudyAcknowledgementLinks';
   entries: CaseStudyAcknowledgementEntries;
   assets: CaseStudyAcknowledgementAssets;
-};
+}
 
-export type CaseStudyAcknowledgementEntries = {
+export interface CaseStudyAcknowledgementEntries {
   __typename?: 'CaseStudyAcknowledgementEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type CaseStudyAcknowledgementAssets = {
+export interface CaseStudyAcknowledgementAssets {
   __typename?: 'CaseStudyAcknowledgementAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type CaseStudyReferences = {
+export interface CaseStudyReferences {
   __typename?: 'CaseStudyReferences';
   json: Scalars['JSON'];
   links: CaseStudyReferencesLinks;
-};
+}
 
-export type CaseStudyReferencesLinks = {
+export interface CaseStudyReferencesLinks {
   __typename?: 'CaseStudyReferencesLinks';
   entries: CaseStudyReferencesEntries;
   assets: CaseStudyReferencesAssets;
-};
+}
 
-export type CaseStudyReferencesEntries = {
+export interface CaseStudyReferencesEntries {
   __typename?: 'CaseStudyReferencesEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type CaseStudyReferencesAssets = {
+export interface CaseStudyReferencesAssets {
   __typename?: 'CaseStudyReferencesAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type CaseStudyRelatedItemsCollection = {
+export interface CaseStudyRelatedItemsCollection {
   __typename?: 'CaseStudyRelatedItemsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentEquipmentOwnerCollection = {
+export interface EquipmentEquipmentOwnerCollection {
   __typename?: 'EquipmentEquipmentOwnerCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Person>>;
-};
+}
 
-export type EquipmentEligibility = {
+export interface EquipmentEligibility {
   __typename?: 'EquipmentEligibility';
   json: Scalars['JSON'];
   links: EquipmentEligibilityLinks;
-};
+}
 
-export type EquipmentEligibilityLinks = {
+export interface EquipmentEligibilityLinks {
   __typename?: 'EquipmentEligibilityLinks';
   entries: EquipmentEligibilityEntries;
   assets: EquipmentEligibilityAssets;
-};
+}
 
-export type EquipmentEligibilityEntries = {
+export interface EquipmentEligibilityEntries {
   __typename?: 'EquipmentEligibilityEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentEligibilityAssets = {
+export interface EquipmentEligibilityAssets {
   __typename?: 'EquipmentEligibilityAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentCostToUse = {
+export interface EquipmentCostToUse {
   __typename?: 'EquipmentCostToUse';
   json: Scalars['JSON'];
   links: EquipmentCostToUseLinks;
-};
+}
 
-export type EquipmentCostToUseLinks = {
+export interface EquipmentCostToUseLinks {
   __typename?: 'EquipmentCostToUseLinks';
   entries: EquipmentCostToUseEntries;
   assets: EquipmentCostToUseAssets;
-};
+}
 
-export type EquipmentCostToUseEntries = {
+export interface EquipmentCostToUseEntries {
   __typename?: 'EquipmentCostToUseEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentCostToUseAssets = {
+export interface EquipmentCostToUseAssets {
   __typename?: 'EquipmentCostToUseAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentTrainingRequired = {
+export interface EquipmentTrainingRequired {
   __typename?: 'EquipmentTrainingRequired';
   json: Scalars['JSON'];
   links: EquipmentTrainingRequiredLinks;
-};
+}
 
-export type EquipmentTrainingRequiredLinks = {
+export interface EquipmentTrainingRequiredLinks {
   __typename?: 'EquipmentTrainingRequiredLinks';
   entries: EquipmentTrainingRequiredEntries;
   assets: EquipmentTrainingRequiredAssets;
-};
+}
 
-export type EquipmentTrainingRequiredEntries = {
+export interface EquipmentTrainingRequiredEntries {
   __typename?: 'EquipmentTrainingRequiredEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentTrainingRequiredAssets = {
+export interface EquipmentTrainingRequiredAssets {
   __typename?: 'EquipmentTrainingRequiredAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentTrainingProvided = {
+export interface EquipmentTrainingProvided {
   __typename?: 'EquipmentTrainingProvided';
   json: Scalars['JSON'];
   links: EquipmentTrainingProvidedLinks;
-};
+}
 
-export type EquipmentTrainingProvidedLinks = {
+export interface EquipmentTrainingProvidedLinks {
   __typename?: 'EquipmentTrainingProvidedLinks';
   entries: EquipmentTrainingProvidedEntries;
   assets: EquipmentTrainingProvidedAssets;
-};
+}
 
-export type EquipmentTrainingProvidedEntries = {
+export interface EquipmentTrainingProvidedEntries {
   __typename?: 'EquipmentTrainingProvidedEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentTrainingProvidedAssets = {
+export interface EquipmentTrainingProvidedAssets {
   __typename?: 'EquipmentTrainingProvidedAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentAccess = {
+export interface EquipmentAccess {
   __typename?: 'EquipmentAccess';
   json: Scalars['JSON'];
   links: EquipmentAccessLinks;
-};
+}
 
-export type EquipmentAccessLinks = {
+export interface EquipmentAccessLinks {
   __typename?: 'EquipmentAccessLinks';
   entries: EquipmentAccessEntries;
   assets: EquipmentAccessAssets;
-};
+}
 
-export type EquipmentAccessEntries = {
+export interface EquipmentAccessEntries {
   __typename?: 'EquipmentAccessEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentAccessAssets = {
+export interface EquipmentAccessAssets {
   __typename?: 'EquipmentAccessAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentHelpAndSupport = {
+export interface EquipmentHelpAndSupport {
   __typename?: 'EquipmentHelpAndSupport';
   json: Scalars['JSON'];
   links: EquipmentHelpAndSupportLinks;
-};
+}
 
-export type EquipmentHelpAndSupportLinks = {
+export interface EquipmentHelpAndSupportLinks {
   __typename?: 'EquipmentHelpAndSupportLinks';
   entries: EquipmentHelpAndSupportEntries;
   assets: EquipmentHelpAndSupportAssets;
-};
+}
 
-export type EquipmentHelpAndSupportEntries = {
+export interface EquipmentHelpAndSupportEntries {
   __typename?: 'EquipmentHelpAndSupportEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentHelpAndSupportAssets = {
+export interface EquipmentHelpAndSupportAssets {
   __typename?: 'EquipmentHelpAndSupportAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentFeatures = {
+export interface EquipmentFeatures {
   __typename?: 'EquipmentFeatures';
   json: Scalars['JSON'];
   links: EquipmentFeaturesLinks;
-};
+}
 
-export type EquipmentFeaturesLinks = {
+export interface EquipmentFeaturesLinks {
   __typename?: 'EquipmentFeaturesLinks';
   entries: EquipmentFeaturesEntries;
   assets: EquipmentFeaturesAssets;
-};
+}
 
-export type EquipmentFeaturesEntries = {
+export interface EquipmentFeaturesEntries {
   __typename?: 'EquipmentFeaturesEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentFeaturesAssets = {
+export interface EquipmentFeaturesAssets {
   __typename?: 'EquipmentFeaturesAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentLimitations = {
+export interface EquipmentLimitations {
   __typename?: 'EquipmentLimitations';
   json: Scalars['JSON'];
   links: EquipmentLimitationsLinks;
-};
+}
 
-export type EquipmentLimitationsLinks = {
+export interface EquipmentLimitationsLinks {
   __typename?: 'EquipmentLimitationsLinks';
   entries: EquipmentLimitationsEntries;
   assets: EquipmentLimitationsAssets;
-};
+}
 
-export type EquipmentLimitationsEntries = {
+export interface EquipmentLimitationsEntries {
   __typename?: 'EquipmentLimitationsEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentLimitationsAssets = {
+export interface EquipmentLimitationsAssets {
   __typename?: 'EquipmentLimitationsAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentConsiderations = {
+export interface EquipmentConsiderations {
   __typename?: 'EquipmentConsiderations';
   json: Scalars['JSON'];
   links: EquipmentConsiderationsLinks;
-};
+}
 
-export type EquipmentConsiderationsLinks = {
+export interface EquipmentConsiderationsLinks {
   __typename?: 'EquipmentConsiderationsLinks';
   entries: EquipmentConsiderationsEntries;
   assets: EquipmentConsiderationsAssets;
-};
+}
 
-export type EquipmentConsiderationsEntries = {
+export interface EquipmentConsiderationsEntries {
   __typename?: 'EquipmentConsiderationsEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type EquipmentConsiderationsAssets = {
+export interface EquipmentConsiderationsAssets {
   __typename?: 'EquipmentConsiderationsAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type EquipmentRelatedItemsCollection = {
+export interface EquipmentRelatedItemsCollection {
   __typename?: 'EquipmentRelatedItemsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<EquipmentRelatedItemsItem>>;
-};
+}
 
 export type EquipmentRelatedItemsItem = Article | CaseStudy | Equipment | Service;
 
-export type AssetCollection = {
+export interface AssetCollection {
   __typename?: 'AssetCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Asset>>;
-};
+}
 
-export type ServiceServiceOwnerCollection = {
+export interface ServiceServiceOwnerCollection {
   __typename?: 'ServiceServiceOwnerCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Person>>;
-};
+}
 
-export type ServiceUserFacingSupportCollection = {
+export interface ServiceUserFacingSupportCollection {
   __typename?: 'ServiceUserFacingSupportCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Person>>;
-};
+}
 
-export type ServiceHelpAndSupport = {
+export interface ServiceHelpAndSupport {
   __typename?: 'ServiceHelpAndSupport';
   json: Scalars['JSON'];
   links: ServiceHelpAndSupportLinks;
-};
+}
 
-export type ServiceHelpAndSupportLinks = {
+export interface ServiceHelpAndSupportLinks {
   __typename?: 'ServiceHelpAndSupportLinks';
   entries: ServiceHelpAndSupportEntries;
   assets: ServiceHelpAndSupportAssets;
-};
+}
 
-export type ServiceHelpAndSupportEntries = {
+export interface ServiceHelpAndSupportEntries {
   __typename?: 'ServiceHelpAndSupportEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type ServiceHelpAndSupportAssets = {
+export interface ServiceHelpAndSupportAssets {
   __typename?: 'ServiceHelpAndSupportAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type ServiceDetails = {
+export interface ServiceDetails {
   __typename?: 'ServiceDetails';
   json: Scalars['JSON'];
   links: ServiceDetailsLinks;
-};
+}
 
-export type ServiceDetailsLinks = {
+export interface ServiceDetailsLinks {
   __typename?: 'ServiceDetailsLinks';
   entries: ServiceDetailsEntries;
   assets: ServiceDetailsAssets;
-};
+}
 
-export type ServiceDetailsEntries = {
+export interface ServiceDetailsEntries {
   __typename?: 'ServiceDetailsEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type ServiceDetailsAssets = {
+export interface ServiceDetailsAssets {
   __typename?: 'ServiceDetailsAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type ServiceFeatures = {
+export interface ServiceFeatures {
   __typename?: 'ServiceFeatures';
   json: Scalars['JSON'];
   links: ServiceFeaturesLinks;
-};
+}
 
-export type ServiceFeaturesLinks = {
+export interface ServiceFeaturesLinks {
   __typename?: 'ServiceFeaturesLinks';
   entries: ServiceFeaturesEntries;
   assets: ServiceFeaturesAssets;
-};
+}
 
-export type ServiceFeaturesEntries = {
+export interface ServiceFeaturesEntries {
   __typename?: 'ServiceFeaturesEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type ServiceFeaturesAssets = {
+export interface ServiceFeaturesAssets {
   __typename?: 'ServiceFeaturesAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type ServiceLimitations = {
+export interface ServiceLimitations {
   __typename?: 'ServiceLimitations';
   json: Scalars['JSON'];
   links: ServiceLimitationsLinks;
-};
+}
 
-export type ServiceLimitationsLinks = {
+export interface ServiceLimitationsLinks {
   __typename?: 'ServiceLimitationsLinks';
   entries: ServiceLimitationsEntries;
   assets: ServiceLimitationsAssets;
-};
+}
 
-export type ServiceLimitationsEntries = {
+export interface ServiceLimitationsEntries {
   __typename?: 'ServiceLimitationsEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type ServiceLimitationsAssets = {
+export interface ServiceLimitationsAssets {
   __typename?: 'ServiceLimitationsAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type ServiceConsiderations = {
+export interface ServiceConsiderations {
   __typename?: 'ServiceConsiderations';
   json: Scalars['JSON'];
   links: ServiceConsiderationsLinks;
-};
+}
 
-export type ServiceConsiderationsLinks = {
+export interface ServiceConsiderationsLinks {
   __typename?: 'ServiceConsiderationsLinks';
   entries: ServiceConsiderationsEntries;
   assets: ServiceConsiderationsAssets;
-};
+}
 
-export type ServiceConsiderationsEntries = {
+export interface ServiceConsiderationsEntries {
   __typename?: 'ServiceConsiderationsEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type ServiceConsiderationsAssets = {
+export interface ServiceConsiderationsAssets {
   __typename?: 'ServiceConsiderationsAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type ServiceOfficialDocumentsCollection = {
+export interface ServiceOfficialDocumentsCollection {
   __typename?: 'ServiceOfficialDocumentsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<OfficialDocuments>>;
-};
+}
 
-export type ServiceRelatedItemsCollection = {
+export interface ServiceRelatedItemsCollection {
   __typename?: 'ServiceRelatedItemsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<ServiceRelatedItemsItem>>;
-};
+}
 
 export type ServiceRelatedItemsItem = Article | CaseStudy | Equipment | Service;
 
-export type ArticleBody = {
+export interface ArticleBody {
   __typename?: 'ArticleBody';
   json: Scalars['JSON'];
   links: ArticleBodyLinks;
-};
+}
 
-export type ArticleBodyLinks = {
+export interface ArticleBodyLinks {
   __typename?: 'ArticleBodyLinks';
   entries: ArticleBodyEntries;
   assets: ArticleBodyAssets;
-};
+}
 
-export type ArticleBodyEntries = {
+export interface ArticleBodyEntries {
   __typename?: 'ArticleBodyEntries';
   inline: Array<Maybe<Entry>>;
   hyperlink: Array<Maybe<Entry>>;
   block: Array<Maybe<Entry>>;
-};
+}
 
-export type ArticleBodyAssets = {
+export interface ArticleBodyAssets {
   __typename?: 'ArticleBodyAssets';
   hyperlink: Array<Maybe<Asset>>;
   block: Array<Maybe<Asset>>;
-};
+}
 
-export type ArticleRelatedItemsCollection = {
+export interface ArticleRelatedItemsCollection {
   __typename?: 'ArticleRelatedItemsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Entry>>;
-};
+}
 
-export type ArticleOfficialDocumentsCollection = {
+export interface ArticleOfficialDocumentsCollection {
   __typename?: 'ArticleOfficialDocumentsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Entry>>;
-};
+}
 
-export type ArticleRelatedContactsCollection = {
+export interface ArticleRelatedContactsCollection {
   __typename?: 'ArticleRelatedContactsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Entry>>;
-};
+}
 
-export type ArticleRelatedOrganisationsCollection = {
+export interface ArticleRelatedOrganisationsCollection {
   __typename?: 'ArticleRelatedOrganisationsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Entry>>;
-};
+}
 
-export type SubHubRelatedItemsCollection = {
+export interface SubHubRelatedItemsCollection {
   __typename?: 'SubHubRelatedItemsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<SubHubRelatedItemsItem>>;
-};
+}
 
 export type SubHubRelatedItemsItem = Article | CaseStudy | Equipment | OfficialDocuments | Service | SubHub;
 
-export type ArticleCollection = {
+export interface ArticleCollection {
   __typename?: 'ArticleCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Article>>;
-};
+}
 
-export type PersonCollection = {
+export interface PersonCollection {
   __typename?: 'PersonCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Person>>;
-};
+}
 
-export type AssetFilter = {
+export interface AssetFilter {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -1921,9 +1921,9 @@ export type AssetFilter = {
   height_lte: Maybe<Scalars['Int']>;
   OR: Maybe<Array<Maybe<AssetFilter>>>;
   AND: Maybe<Array<Maybe<AssetFilter>>>;
-};
+}
 
-export type SysFilter = {
+export interface SysFilter {
   id_exists: Maybe<Scalars['Boolean']>;
   id: Maybe<Scalars['String']>;
   id_not: Maybe<Scalars['String']>;
@@ -1952,7 +1952,7 @@ export type SysFilter = {
   publishedVersion_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   publishedVersion_contains: Maybe<Scalars['String']>;
   publishedVersion_not_contains: Maybe<Scalars['String']>;
-};
+}
 
 export enum AssetOrder {
   UrlAsc = 'url_ASC',
@@ -1984,24 +1984,24 @@ export type Testing = Entry & {
   linkedFrom: Maybe<TestingLinkingCollections>;
 };
 
-export type TestingLinkingCollections = {
+export interface TestingLinkingCollections {
   __typename?: 'TestingLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
-};
+}
 
 
-export type TestingLinkingCollectionsEntryCollectionArgs = {
+export interface TestingLinkingCollectionsEntryCollectionArgs {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-};
+}
 
-export type TestingFilter = {
+export interface TestingFilter {
   sys: Maybe<SysFilter>;
   OR: Maybe<Array<Maybe<TestingFilter>>>;
   AND: Maybe<Array<Maybe<TestingFilter>>>;
-};
+}
 
 export enum TestingOrder {
   SysIdAsc = 'sys_id_ASC',
@@ -2014,15 +2014,15 @@ export enum TestingOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type TestingCollection = {
+export interface TestingCollection {
   __typename?: 'TestingCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Testing>>;
-};
+}
 
-export type SubHubFilter = {
+export interface SubHubFilter {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -2056,7 +2056,7 @@ export type SubHubFilter = {
   searchable_not: Maybe<Scalars['Boolean']>;
   OR: Maybe<Array<Maybe<SubHubFilter>>>;
   AND: Maybe<Array<Maybe<SubHubFilter>>>;
-};
+}
 
 export enum SubHubOrder {
   TitleAsc = 'title_ASC',
@@ -2079,7 +2079,7 @@ export enum SubHubOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type OfficialDocumentsFilter = {
+export interface OfficialDocumentsFilter {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -2104,7 +2104,7 @@ export type OfficialDocumentsFilter = {
   url_not_contains: Maybe<Scalars['String']>;
   OR: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
   AND: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
-};
+}
 
 export enum OfficialDocumentsOrder {
   TitleAsc = 'title_ASC',
@@ -2123,7 +2123,7 @@ export enum OfficialDocumentsOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type ArticleFilter = {
+export interface ArticleFilter {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -2157,7 +2157,7 @@ export type ArticleFilter = {
   searchable_not: Maybe<Scalars['Boolean']>;
   OR: Maybe<Array<Maybe<ArticleFilter>>>;
   AND: Maybe<Array<Maybe<ArticleFilter>>>;
-};
+}
 
 export enum ArticleOrder {
   TitleAsc = 'title_ASC',
@@ -2180,7 +2180,7 @@ export enum ArticleOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type ServiceFilter = {
+export interface ServiceFilter {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -2249,7 +2249,7 @@ export type ServiceFilter = {
   keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
   OR: Maybe<Array<Maybe<ServiceFilter>>>;
   AND: Maybe<Array<Maybe<ServiceFilter>>>;
-};
+}
 
 export enum ServiceOrder {
   TitleAsc = 'title_ASC',
@@ -2274,7 +2274,7 @@ export enum ServiceOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type EquipmentFilter = {
+export interface EquipmentFilter {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -2348,7 +2348,7 @@ export type EquipmentFilter = {
   searchable_not: Maybe<Scalars['Boolean']>;
   OR: Maybe<Array<Maybe<EquipmentFilter>>>;
   AND: Maybe<Array<Maybe<EquipmentFilter>>>;
-};
+}
 
 export enum EquipmentOrder {
   TitleAsc = 'title_ASC',
@@ -2381,7 +2381,7 @@ export enum EquipmentOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type CaseStudyFilter = {
+export interface CaseStudyFilter {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -2429,7 +2429,7 @@ export type CaseStudyFilter = {
   callToActionButtonLink_not_contains: Maybe<Scalars['String']>;
   OR: Maybe<Array<Maybe<CaseStudyFilter>>>;
   AND: Maybe<Array<Maybe<CaseStudyFilter>>>;
-};
+}
 
 export enum CaseStudyOrder {
   TitleAsc = 'title_ASC',
@@ -2454,7 +2454,7 @@ export enum CaseStudyOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type PersonFilter = {
+export interface PersonFilter {
   sys: Maybe<SysFilter>;
   username_exists: Maybe<Scalars['Boolean']>;
   username: Maybe<Scalars['String']>;
@@ -2499,7 +2499,7 @@ export type PersonFilter = {
   searchable_not: Maybe<Scalars['Boolean']>;
   OR: Maybe<Array<Maybe<PersonFilter>>>;
   AND: Maybe<Array<Maybe<PersonFilter>>>;
-};
+}
 
 export enum PersonOrder {
   UsernameAsc = 'username_ASC',
@@ -2526,73 +2526,102 @@ export enum PersonOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-type PublicFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+interface PublicFields_SubHub_Fragment { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> }
 
-type PublicFields_Article_Fragment = { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+interface PublicFields_Article_Fragment { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> }
 
-type PublicFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+interface PublicFields_Service_Fragment { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> }
 
-type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+interface PublicFields_Equipment_Fragment { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> }
 
-type PublicFields_Person_Fragment = { __typename: 'Person', slug: Maybe<string>, name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> };
+interface PublicFields_Person_Fragment { __typename: 'Person', slug: Maybe<string>, name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> }
 
-type PublicFields_OfficialDocuments_Fragment = { __typename?: 'OfficialDocuments' };
+interface PublicFields_OfficialDocuments_Fragment { __typename?: 'OfficialDocuments' }
 
-type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+interface PublicFields_CaseStudy_Fragment { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> }
 
-type PublicFields_Testing_Fragment = { __typename?: 'Testing' };
+interface PublicFields_Testing_Fragment { __typename?: 'Testing' }
+
+interface PublicFields_Testing_Fragment { __typename?: 'Testing' }
 
 export type PublicFieldsFragment = PublicFields_SubHub_Fragment | PublicFields_Article_Fragment | PublicFields_Service_Fragment | PublicFields_Equipment_Fragment | PublicFields_Person_Fragment | PublicFields_OfficialDocuments_Fragment | PublicFields_CaseStudy_Fragment | PublicFields_Testing_Fragment;
 
 export type AllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllArticlesQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<(
+export interface AllArticlesQuery {
+  __typename?: 'Query', articleCollection: Maybe<{
+    __typename?: 'ArticleCollection', items: Array<Maybe<(
       { __typename?: 'Article' }
       & PublicFields_Article_Fragment
-    )>> }> };
+    )>>
+  }>
+}
+
+export type AllContentItemParentSubHubsQueryVariables = Exact<{
+  slug: Maybe<Scalars['String']>;
+}>;
+
+
+export interface AllContentItemParentSubHubsQuery { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, linkedFrom: Maybe<{ __typename?: 'ArticleLinkingCollections', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string> }>> }> }> }>> }> }
 
 export type AllEquipmentQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllEquipmentQuery = { __typename?: 'Query', equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<(
+export interface AllEquipmentQuery {
+  __typename?: 'Query', equipmentCollection: Maybe<{
+    __typename?: 'EquipmentCollection', items: Array<Maybe<(
       { __typename?: 'Equipment' }
       & PublicFields_Equipment_Fragment
-    )>> }> };
+    )>>
+  }>
+}
 
 export type AllSearchableContentPublicFieldsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllSearchableContentPublicFieldsQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<(
+export interface AllSearchableContentPublicFieldsQuery {
+  __typename?: 'Query', articleCollection: Maybe<{
+    __typename?: 'ArticleCollection', items: Array<Maybe<(
       { __typename?: 'Article' }
       & PublicFields_Article_Fragment
-    )>> }>, equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<(
+    )>>
+  }>, equipmentCollection: Maybe<{
+    __typename?: 'EquipmentCollection', items: Array<Maybe<(
       { __typename?: 'Equipment' }
       & PublicFields_Equipment_Fragment
-    )>> }>, serviceCollection: Maybe<{ __typename?: 'ServiceCollection', items: Array<Maybe<(
+    )>>
+  }>, serviceCollection: Maybe<{
+    __typename?: 'ServiceCollection', items: Array<Maybe<(
       { __typename?: 'Service' }
       & PublicFields_Service_Fragment
-    )>> }>, subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<(
+    )>>
+  }>, subHubCollection: Maybe<{
+    __typename?: 'SubHubCollection', items: Array<Maybe<(
       { __typename?: 'SubHub' }
       & PublicFields_SubHub_Fragment
-    )>> }>, caseStudyCollection: Maybe<{ __typename?: 'CaseStudyCollection', items: Array<Maybe<(
+    )>>
+  }>, caseStudyCollection: Maybe<{
+    __typename?: 'CaseStudyCollection', items: Array<Maybe<(
       { __typename?: 'CaseStudy' }
       & PublicFields_CaseStudy_Fragment
-    )>> }> };
+    )>>
+  }>
+}
 
 export type AllSubHubChildPagesQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
 }>;
 
 
-export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'CaseStudy', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'SubHub', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }>> }> };
+export interface AllSubHubChildPagesQuery { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename: 'Article', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename: 'Service', title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }>> }> }
 
 export type GetArticleBySlugQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
 }>;
 
 
-export type GetArticleBySlugQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'ArticleBody', json: any }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'SubHub' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'CaseStudy' } | { __typename?: 'Testing' }>> }> }>> }> };
+export interface GetArticleBySlugQuery { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'ArticleBody', json: any }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'SubHub' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'CaseStudy' } | { __typename?: 'Testing' }>> }> }>> }> }
 
 export const PublicFieldsFragmentDoc = gql`
     fragment PublicFields on Entry {
@@ -2655,13 +2684,41 @@ export const AllArticlesDocument = gql`
 }
     ${PublicFieldsFragmentDoc}`;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AllArticlesGQL extends Apollo.Query<AllArticlesQuery, AllArticlesQueryVariables> {
-    document = AllArticlesDocument;
-    
+@Injectable({
+  providedIn: 'root'
+})
+export class AllArticlesGQL extends Apollo.Query<AllArticlesQuery, AllArticlesQueryVariables> {
+  document = AllArticlesDocument;
+
+}
+export const AllContentItemParentSubHubsDocument = gql`
+    query AllContentItemParentSubHubs($slug: String) {
+  articleCollection(where: {slug: $slug}) {
+    items {
+      slug
+      title
+      ssoProtected
+      linkedFrom {
+        subHubCollection {
+          items {
+            slug
+            title
+            summary
+          }
+        }
+      }
+    }
   }
+}
+    `;
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AllContentItemParentSubHubsGQL extends Apollo.Query<AllContentItemParentSubHubsQuery, AllContentItemParentSubHubsQueryVariables> {
+  document = AllContentItemParentSubHubsDocument;
+
+}
 export const AllEquipmentDocument = gql`
     query AllEquipment {
   equipmentCollection {
@@ -2672,13 +2729,13 @@ export const AllEquipmentDocument = gql`
 }
     ${PublicFieldsFragmentDoc}`;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AllEquipmentGQL extends Apollo.Query<AllEquipmentQuery, AllEquipmentQueryVariables> {
-    document = AllEquipmentDocument;
-    
-  }
+@Injectable({
+  providedIn: 'root'
+})
+export class AllEquipmentGQL extends Apollo.Query<AllEquipmentQuery, AllEquipmentQueryVariables> {
+  document = AllEquipmentDocument;
+
+}
 export const AllSearchableContentPublicFieldsDocument = gql`
     query AllSearchableContentPublicFields {
   articleCollection(where: {searchable: true}) {
@@ -2709,13 +2766,13 @@ export const AllSearchableContentPublicFieldsDocument = gql`
 }
     ${PublicFieldsFragmentDoc}`;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AllSearchableContentPublicFieldsGQL extends Apollo.Query<AllSearchableContentPublicFieldsQuery, AllSearchableContentPublicFieldsQueryVariables> {
-    document = AllSearchableContentPublicFieldsDocument;
-    
-  }
+@Injectable({
+  providedIn: 'root'
+})
+export class AllSearchableContentPublicFieldsGQL extends Apollo.Query<AllSearchableContentPublicFieldsQuery, AllSearchableContentPublicFieldsQueryVariables> {
+  document = AllSearchableContentPublicFieldsDocument;
+
+}
 export const AllSubHubChildPagesDocument = gql`
     query AllSubHubChildPages($slug: String) {
   subHubCollection(where: {slug: $slug}) {
@@ -2730,30 +2787,37 @@ export const AllSubHubChildPagesDocument = gql`
       subhubPagesCollection {
         items {
           ... on Article {
+            __typename
             title
             ssoProtected
             summary
           }
           ... on CaseStudy {
+            __typename
             title
             ssoProtected
             summary
           }
           ... on Equipment {
+            __typename
             title
             ssoProtected
             summary
           }
           ... on OfficialDocuments {
+            __typename
             title
             summary
           }
           ... on Service {
+            __typename
             title
             ssoProtected
             summary
           }
           ... on SubHub {
+            __typename
+            slug
             title
             ssoProtected
             summary
@@ -2765,13 +2829,13 @@ export const AllSubHubChildPagesDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class AllSubHubChildPagesGQL extends Apollo.Query<AllSubHubChildPagesQuery, AllSubHubChildPagesQueryVariables> {
-    document = AllSubHubChildPagesDocument;
-    
-  }
+@Injectable({
+  providedIn: 'root'
+})
+export class AllSubHubChildPagesGQL extends Apollo.Query<AllSubHubChildPagesQuery, AllSubHubChildPagesQueryVariables> {
+  document = AllSubHubChildPagesDocument;
+
+}
 export const GetArticleBySlugDocument = gql`
     query GetArticleBySlug($slug: String) {
   articleCollection(where: {slug: $slug}) {
@@ -2815,10 +2879,10 @@ export const GetArticleBySlugDocument = gql`
 }
     `;
 
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetArticleBySlugGQL extends Apollo.Query<GetArticleBySlugQuery, GetArticleBySlugQueryVariables> {
-    document = GetArticleBySlugDocument;
-    
-  }
+@Injectable({
+  providedIn: 'root'
+})
+export class GetArticleBySlugGQL extends Apollo.Query<GetArticleBySlugQuery, GetArticleBySlugQueryVariables> {
+  document = GetArticleBySlugDocument;
+
+}
