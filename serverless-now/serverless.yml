@@ -1,5 +1,4 @@
 service: serverless-now
-
 custom:
   ResearchHub: ${self:service}
   BusinessService: Faculty of Science
@@ -13,15 +12,13 @@ custom:
     basePath: ${self:service}
     stage: ${self:provider.stage}
     createRoute53Records: true
-
-
 provider:
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage, 'sandbox'} # Deploy with sls deploy --stage STAGE (default dev)
   region: ap-southeast-2
   endpointType: regional
-  role: arn:aws:iam::416527880812:role/lambda_basic_execution_with_read_only_access_to_SSM
+  role: arn:aws:iam::${file(env/${self:provider.stage}.json):awsAccountId}:${file(env/${self:provider.stage}.json):lambdaRole}
   tags:
     ResearchHub: ${self:custom.ResearchHub}
     BusinessService:  ${self:custom.BusinessService}
@@ -52,13 +49,27 @@ provider:
         - ssm:GetParameter
         - ssm:GetParameters
       Resource:
-        - "arn:aws:ssm:${self:provider.region}:416527880812:parameter/${self:provider.stage}/research-hub/*"
+        - arn:
+          Fn::Join:
+            - ':'
+            - - arn
+              - aws
+              - ssm:${self:provider.region}
+              - ${file(env/${self:provider.stage}.json):awsAccountId}
+              - parameter/${self:provider.stage}/research-hub/*"
     - Effect: Allow
       Action:
         - kms:Decrypt
       Resource:
-        - "arn:aws:kms:ap-southeast-2:416527880812:key/3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d"
-
+        - arn:
+          Fn::Join:
+            - ':'
+            - - arn
+              - aws
+              - kms
+              - ${self:provider.region}
+              - ${file(env/${self:provider.stage}.json):awsAccountId}
+              - ${file(env/${self:provider.stage}.json):resourceKey}
 package:
   exclude:
     - .git/**
@@ -67,7 +78,6 @@ package:
     - node_modules/**
     - '!node_modules/@uoa/**'
     - '!node_modules/uuid/**'
-
 functions:
   serverless-now:
     handler: handler.main
@@ -92,7 +102,6 @@ functions:
             arn: arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O
             identitySource: method.request.header.Authorization
             scopes: ${file(env/${self:provider.stage}.json):OAUTH_SCOPES}
-              
 plugins:
   - serverless-offline
   - serverless-mocha-plugin
