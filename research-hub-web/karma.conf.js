@@ -16,7 +16,7 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     files: [
-
+      { pattern: './src/**/*.*', watched: true, included: false, served: true }
     ],
     preprocessors: {
 
@@ -35,9 +35,9 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: false,
-    browsers: ['Chrome'],
-    singleRun: true,
+    autoWatch: true,
+    browsers: ['ChromeHeadless'],
+    singleRun: false,
     failOnEmptyTestSuite: false
   });
 };
