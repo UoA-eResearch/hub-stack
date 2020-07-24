@@ -8,14 +8,23 @@ const jwkToPem = require('jwk-to-pem');
 // Measure server startup time
 var startTime = new Date().getTime();
 
-// Contentful settings
-const CONTENTFUL_ACCESS_TOKEN = process.env.CONTENTFUL_ACCESS_TOKEN;
-const CONTENTFUL_SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
-const COGNITO_USER_POOL = process.env.COGNITO_USER_POOL;
-const COGNITO_REGION = process.env.COGNITO_REGION;
-
-// Cognito public key URL
-const COGNITO_PUBLIC_KEYS_URL = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}/.well-known/jwks.json`;
+const getCredentials = (isFromFile) => {
+    // isFromFile determines where we load the credentials from.
+    // If true we load from the .env file in the folder. 
+    // If false, we load from environment variables.
+    if (isFromFile) {
+        const configResult = require('dotenv').config();
+        if (configResult.error){
+            throw configResult.error;
+        }
+    }
+    return {
+        CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
+        CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
+        COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
+        COGNITO_REGION: process.env.COGNITO_REGION
+    };
+};
 
 // Set up remote schemas
 // Load a remote schema and set up the http-link
@@ -63,19 +72,18 @@ const verifyJwt = (token, jwk) => {
 };
 
 // Set up the schemas and initialize the server
-async function createServer() {
-    // Check if access token and space ID are supplied.
-    if (!CONTENTFUL_ACCESS_TOKEN || !CONTENTFUL_SPACE_ID ||
-        !COGNITO_REGION || !COGNITO_USER_POOL) {
-        console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
-        process.exit(1);
-    }
+async function createServer(config) {
+
+    const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION, COGNITO_USER_POOL } = config;
 
     // Load remote schemas here
-    contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
+    contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}`+
+        `?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
 
     // Load Cognito public keys in order to verify tokens.
-    const cognitoPublicKeys = await fetchCognitoPublicKeys(COGNITO_PUBLIC_KEYS_URL);
+    const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` + 
+        "/.well-known/jwks.json",
+        cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl);
 
     // Get a list of the types that have the ssoProtected field
     let protectedTypes = Object.keys(contentfulSchema._typeMap)
@@ -193,7 +201,24 @@ async function createServer() {
 if (require.main === module) {
     (async () => {
         // Create the ApolloServer object
-        let server = await createServer();
+        const isConfigFromFile = process.argv.includes("--config-from-file")
+        let config;
+        try {
+            config = getCredentials(isConfigFromFile);
+        } catch (error) {
+            console.error("Could not load credentials from file. Make sure you have filled in credentials in the .env file,"+
+                "or try running the server without --config-from-file.");
+            process.exit(1);
+        }
+        // Check if access token and space ID are supplied.
+        if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
+            !config.COGNITO_REGION || !config.COGNITO_USER_POOL) {
+            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN,"+
+                "CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
+            process.exit(1);
+        }
+
+        let server = await createServer(config);
 
         // The 'listen' method launches a web server.
         server.listen().then(({ url }) => {
@@ -204,3 +229,4 @@ if (require.main === module) {
 
 // Export the createServer function to be used in e2e tests
 exports.createServer = createServer;
+exports.getCredentials = getCredentials;
