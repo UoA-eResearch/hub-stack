@@ -77,11 +77,11 @@ async function createServer(config) {
     const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION, COGNITO_USER_POOL } = config;
 
     // Load remote schemas here
-    contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}`+
+    contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
         `?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
 
     // Load Cognito public keys in order to verify tokens.
-    const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` + 
+    const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
         "/.well-known/jwks.json",
         cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl);
 
@@ -129,10 +129,7 @@ async function createServer(config) {
                     'name',
                     'ssoProtected',
                     'searchable',
-<<<<<<< HEAD
-=======
                     'linkedFrom',
->>>>>>> 02a37b093a4fd9da101883a9efbadec8a00cda39
                     'slug',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
@@ -250,14 +247,14 @@ if (require.main === module) {
         try {
             config = getCredentials(isConfigFromFile);
         } catch (error) {
-            console.error("Could not load credentials from file. Make sure you have filled in credentials in the .env file,"+
+            console.error("Could not load credentials from file. Make sure you have filled in credentials in the .env file," +
                 "or try running the server without --config-from-file.");
             process.exit(1);
         }
         // Check if access token and space ID are supplied.
         if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
             !config.COGNITO_REGION || !config.COGNITO_USER_POOL) {
-            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN,"+
+            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN," +
                 "CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
             process.exit(1);
         }
