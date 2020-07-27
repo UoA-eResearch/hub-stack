@@ -18,17 +18,21 @@ module.exports = function (config) {
     files: [
       { pattern: './src/**/*.*', watched: true, included: false, served: true }
     ],
-    preprocessors: {
-
-    },
+    preprocessors: {},
     mime: {
       'text/x-typescript': ['ts', 'tsx']
     },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, 'coverage'), reports: ['html', 'lcovonly'],
+      dir: require('path').join(__dirname, 'coverage'),
+      reports: ['html', 'lcovonly', 'text-summary'],
+      thresholds: {
+        statements: 80,
+        lines: 80,
+        branches: 80,
+        functions: 80
+      },
       fixWebpackSourcePaths: true
     },
-
     reporters: config.angularCli && config.angularCli.codeCoverage
       ? ['progress', 'coverage-istanbul']
       : ['progress', 'kjhtml'],
@@ -37,7 +41,8 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['ChromeHeadless'],
-    singleRun: false,
-    failOnEmptyTestSuite: false
+    singleRun: true,
+    failOnEmptyTestSuite: false,
+    codeCoverage: true
   });
 };

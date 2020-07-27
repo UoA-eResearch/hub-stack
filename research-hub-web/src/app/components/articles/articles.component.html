@@ -1,6 +1,6 @@
 <!-- If we're displaying all articles, not an individual article -->
+<h2 id="title">Results</h2>
 <div class="results" *ngIf="allArticles$ | async as allArticles">
-    <h2>Results</h2>
     Found <span class="search-results-text">{{ allArticles.items.length }}</span> results in <span
         class="search-results-text">Articles:</span>
 
