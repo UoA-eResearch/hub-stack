@@ -12,18 +12,21 @@ query AllSubHubChildPages ($slug: String) {
         items {
         	...on Article {
             __typename
+            slug
             title
             ssoProtected
             summary
           }
           ...on CaseStudy {
             __typename
+            slug
             title
             ssoProtected
             summary
           }
           ...on Equipment{
             __typename
+            slug
             title
             ssoProtected
             summary
@@ -35,6 +38,7 @@ query AllSubHubChildPages ($slug: String) {
           }
           ...on Service {
             __typename
+            slug
             title
             ssoProtected
             summary

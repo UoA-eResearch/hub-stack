@@ -1,3 +1,10 @@
+<div class="parent-results" *ngIf="allContentItemParentSubHubs$ | async as subHubParentData">
+    <pre><code>{{ subHubParentData | json}}</code></pre>
+    <div *ngFor="let parentSubHub of subHubParentData.items">
+        <h3>{{parentSubHub.title}}</h3>
+    </div>
+</div>
+
 <div class="results" *ngIf="allSubHubChildPages$ | async as subHubData">
     <mat-expansion-panel>
         <mat-expansion-panel-header>
