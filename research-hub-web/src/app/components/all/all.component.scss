@@ -12,3 +12,15 @@ div.mat-card-avatar mat-icon {
 div.collection {
     margin: 3vh 0 3vh 0;
 }
+
+.result-item {
+    cursor: pointer;
+
+    &.ssoProtected {
+        // Any optional styling to add to ssoProtected items
+    }
+
+    &:hover {
+        border: 1px solid map-get($hub-teal, 50);
+    }
+}

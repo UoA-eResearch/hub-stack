@@ -1,3 +1,4 @@
+<!-- If we're displaying all articles, not an individual article -->
 <div class="results" *ngIf="allArticles$ | async as allArticles">
     <h2>Results</h2>
     Found <span class="search-results-text">{{ allArticles.items.length }}</span> results in <span
@@ -10,14 +11,14 @@
             </mat-panel-title>
             <mat-panel-description>Click to see raw JSON</mat-panel-description>
         </mat-expansion-panel-header>
-        <pre><code>{{ allArticles | async | json}}</code></pre>
+        <pre><code>{{ allArticles | json}}</code></pre>
     </mat-expansion-panel>
 
     <mat-nav-list>
         <mat-card *ngFor="let article of allArticles.items">
             <mat-card-header>
-                <div mat-card-avatar>
-                    <mat-icon>build</mat-icon>
+                <div mat-card-avatar id="item-avatar">
+                    <mat-icon>import_contacts</mat-icon>
                 </div>
                 <mat-card-title>
                     {{ article.title }}
@@ -31,4 +32,68 @@
             </mat-card-header>
         </mat-card>
     </mat-nav-list>
+</div>
+
+<!-- If we're displaying an individual article -->
+<div id="article-container" *ngIf="article$ | async as article">
+
+    <mat-expansion-panel id="json">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                JSON Result
+            </mat-panel-title>
+            <mat-panel-description>Click to see raw JSON</mat-panel-description>
+        </mat-expansion-panel-header>
+        <pre><code>{{ article | json}}</code></pre>
+    </mat-expansion-panel>
+
+    <mat-card id="overview">
+        <mat-card-header>
+            <div mat-card-avatar id="item-avatar">
+                <div *ngIf="article.icon; else avatarIcon">
+                    <img src="{{article?.icon?.url}}" alt="{{article?.icon?.description}}" class="item-avatar"
+                        width="100%" height="100%" />
+                </div>
+                <ng-template #avatarIcon>
+                    <mat-icon id="item-avatar-icon">import_contacts</mat-icon>
+                </ng-template>
+            </div>
+            <mat-card-title>
+                <h2>{{ article.title }}</h2>
+            </mat-card-title>
+            <mat-card-subtitle>
+                <span id="keywords">{{ article.keywords.join(', ') | titlecase }}</span>
+            </mat-card-subtitle>
+            <mat-chip-avatar *ngIf="article.ssoProtected">
+                <mat-icon color='accent' matTooltip="SSO Login Required">lock</mat-icon>
+            </mat-chip-avatar>
+        </mat-card-header>
+        <mat-card-content>
+            {{ article.summary }}
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <h2>Body</h2>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <code>{{article.body | json}}</code>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="article.relatedItemsCollection" id="you-might-be-interested-in">
+
+        <h3>You might also be interested in</h3>
+
+        <mat-nav-list *ngFor="let relatedItem of article.relatedItemsCollection.items" class="collection">
+            <mat-list-item>
+                <h4> {{ relatedItem['title'] + ': ' + relatedItem['summary'] }}</h4>
+            </mat-list-item>
+
+        </mat-nav-list>
+    </mat-card>
+
 </div>

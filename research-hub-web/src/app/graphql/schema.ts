@@ -2526,19 +2526,19 @@ export enum PersonOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-type PublicFields_SubHub_Fragment = { __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-type PublicFields_Article_Fragment = { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_Article_Fragment = { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-type PublicFields_Service_Fragment = { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-type PublicFields_Equipment_Fragment = { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
-type PublicFields_Person_Fragment = { __typename?: 'Person', name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> };
+type PublicFields_Person_Fragment = { __typename: 'Person', slug: Maybe<string>, name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> };
 
 type PublicFields_OfficialDocuments_Fragment = { __typename?: 'OfficialDocuments' };
 
-type PublicFields_CaseStudy_Fragment = { __typename?: 'CaseStudy', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
 type PublicFields_Testing_Fragment = { __typename?: 'Testing' };
 
@@ -2594,39 +2594,58 @@ export type AllSubHubChildPagesQueryVariables = Exact<{
 
 export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }>> }> };
 
+export type GetArticleBySlugQueryVariables = Exact<{
+  slug: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetArticleBySlugQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'ArticleBody', json: any }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'SubHub' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'CaseStudy' } | { __typename?: 'Testing' }>> }> }>> }> };
+
 export const PublicFieldsFragmentDoc = gql`
     fragment PublicFields on Entry {
   ... on Article {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on Equipment {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on Service {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on SubHub {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on CaseStudy {
+    __typename
+    slug
     title
     summary
     ssoProtected
     searchable
   }
   ... on Person {
+    __typename
+    slug
     name
     searchable
     ssoProtected
@@ -2797,5 +2816,55 @@ export const AllSubHubChildPagesDocument = gql`
   })
   export class AllSubHubChildPagesGQL extends Apollo.Query<AllSubHubChildPagesQuery, AllSubHubChildPagesQueryVariables> {
     document = AllSubHubChildPagesDocument;
+    
+  }
+export const GetArticleBySlugDocument = gql`
+    query GetArticleBySlug($slug: String) {
+  articleCollection(where: {slug: $slug}) {
+    items {
+      title
+      summary
+      ssoProtected
+      body {
+        json
+      }
+      keywords
+      slug
+      ssoProtected
+      searchable
+      icon {
+        title
+        description
+        url
+      }
+      relatedItemsCollection {
+        items {
+          ... on Article {
+            title
+            summary
+            slug
+          }
+          ... on Service {
+            title
+            summary
+            slug
+          }
+          ... on Equipment {
+            title
+            summary
+            slug
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetArticleBySlugGQL extends Apollo.Query<GetArticleBySlugQuery, GetArticleBySlugQueryVariables> {
+    document = GetArticleBySlugDocument;
     
   }
