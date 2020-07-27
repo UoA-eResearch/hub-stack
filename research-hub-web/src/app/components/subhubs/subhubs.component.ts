@@ -23,7 +23,7 @@ export class SubhubsComponent implements OnInit {
     AllContentItemParentSubHubsQuery["subHubCollection"]
   >;
 
-  public parentSubHubs;
+  public parentSubHubs =  [];
 
   constructor(
     private route: ActivatedRoute,
@@ -104,14 +104,12 @@ export class SubhubsComponent implements OnInit {
           )
         )
         .subscribe(subHubData => {
-          console.log(subHubData);
-          // if contains any child links to the current page, it's a parent.
+          // if contains any child links to the current page then it's a parent.
           let linksToCurPageAsChild  = subHubData.subhubPagesCollection.items
           .filter(childPage => !!childPage['slug'])
           .filter(childPage => childPage['slug'] === currentPageSlug);
 
           if (linksToCurPageAsChild.length > 0) {
-            console.log('pushing');
             parentSubHubs.push(subHubData);
           }
           console.log(`Contains ${parentSubHubs.length} subhubs: `, parentSubHubs);

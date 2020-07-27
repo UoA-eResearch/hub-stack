@@ -1,6 +1,7 @@
 query AllSubHubChildPages ($slug: String) {
   subHubCollection (where:{slug: $slug}) {
     items {
+      slug
       title
       summary
       body {
