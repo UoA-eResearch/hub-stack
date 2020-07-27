@@ -53,7 +53,15 @@ export const appRoutes: Routes = [
     loadChildren: () => import('../components/equipment/equipment.module').then(m => m.EquipmentModule)
   },
   {
+    path: 'equipment/:slug',
+    loadChildren: () => import('../components/equipment/equipment.module').then(m => m.EquipmentModule)
+  },
+  {
     path: 'articles',
+    loadChildren: () => import('../components/articles/articles.module').then(m => m.ArticlesModule)
+  },
+  {
+    path: 'article/:slug',
     loadChildren: () => import('../components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {

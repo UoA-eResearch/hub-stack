@@ -25,6 +25,7 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import { BypassErrorService } from '@uoa/error-pages';
 
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
@@ -37,6 +38,8 @@ import {
   AllEquipmentQuery,
   EquipmentUserFacingSupportCollectionArgs
 } from './graphql/schema';
+import { env } from 'process';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -106,8 +109,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private ngZone: NgZone,
     public loginService: LoginService,
     public apollo: Apollo,
-    public allEquipmentGQL: AllEquipmentGQL) {
-
+    public allEquipmentGQL: AllEquipmentGQL,
+    private _bypass: BypassErrorService) {
+    this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
   }
 
   getSearchQueryParams(item: any) {

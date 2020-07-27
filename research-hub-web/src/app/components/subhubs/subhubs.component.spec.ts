@@ -16,7 +16,7 @@ describe('SubhubsComponent', () => {
       declarations: [SubhubsComponent],
       imports: [
         ApolloTestingModule,
-        RouterModule.forRoot([]),
+        RouterModule.forRoot([])
       ]
     })
       .compileComponents();
