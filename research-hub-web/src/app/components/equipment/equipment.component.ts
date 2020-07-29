@@ -15,8 +15,10 @@ export class EquipmentComponent implements OnInit {
   constructor(public allEquipmentGQL: AllEquipmentGQL) { }
 
   ngOnInit(): void {
-    this.allEquipment$ = this.allEquipmentGQL.fetch()
-      .pipe(pluck('data', 'equipmentCollection'));
+    try {
+      this.allEquipment$ = this.allEquipmentGQL.fetch()
+        .pipe(pluck('data', 'equipmentCollection'));
+    } catch (e) { console.log('Error loading equipment:', e); }
   }
 
 }

@@ -6,7 +6,7 @@ import { SharedModule } from '../shared/app.shared.module';
 import { SubhubsRoutingModule } from './subhubs-routing.module';
 import { RouterModule } from '@angular/router';
 
-describe('SubhubsComponent', () => {
+xdescribe('SubhubsComponent', () => {
   let component: SubhubsComponent;
   let fixture: ComponentFixture<SubhubsComponent>;
   let backend: ApolloTestingController;
