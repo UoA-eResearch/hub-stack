@@ -1,9 +1,9 @@
 <ng-container *ngIf="collection">
-    <h1 id="title">{{ collection['__typename'] | humanCase }}</h1>
-    Found <span class="search-results-text">{{ collection['items'].length }}</span> results in <span
-        class="search-results-text">{{ collection['__typename'] | humanCase }}</span>
+    <h1 id="title">{{ collection.__typename | humanCase }}</h1>
+    Found <span class="search-results-text">{{ collection.items.length }}</span> results in <span
+        class="search-results-text">{{ collection.__typename | humanCase }}</span>
 
-    <mat-expansion-panel>
+    <mat-expansion-panel *ngIf="collection.items.length">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 JSON Result
@@ -14,7 +14,7 @@
     </mat-expansion-panel>
 
     <mat-nav-list>
-        <mat-card *ngFor="let content of collection['items']"
+        <mat-card *ngFor="let content of collection.items"
             [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" class="result-item"
             [ngClass]="{'ssoProtected': content.ssoProtected }">
             <mat-card-header>
