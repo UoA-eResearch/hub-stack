@@ -71,9 +71,9 @@ describe('ArticlesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have Results as title', async () => {
+  it('should have Article Collection as title', async () => {
     const de = fixture.debugElement.query(By.css('#title'));
-    expect(de.nativeElement.innerHTML).toEqual('Results');
+    expect(de.nativeElement.innerHTML).toEqual('Article Collection');
   });
 
 });
