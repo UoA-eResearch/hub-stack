@@ -15,7 +15,9 @@ export class AllComponent implements OnInit {
   constructor(public allSearchableContentPublicFieldsGQL: AllSearchableContentPublicFieldsGQL) { }
 
   ngOnInit(): void {
-    this.allSearchableContent$ = this.allSearchableContentPublicFieldsGQL.fetch().pipe(pluck('data'));
+    try {
+      this.allSearchableContent$ = this.allSearchableContentPublicFieldsGQL.fetch().pipe(pluck('data'));
+    } catch (e) { console.error('Error loading all content:', e); }
   }
 
 }

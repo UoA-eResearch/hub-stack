@@ -4,28 +4,67 @@ import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+import { ArticleCollection, AllArticlesGQL } from '../../graphql/schema';
+import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../../app.material.module';
+import { SharedModule } from '../shared/app.shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
   let fixture: ComponentFixture<ArticlesComponent>;
-  let backend: ApolloTestingController;
+  let controller: ApolloTestingController;
+  let spy: any; // Returns mock query data
+  const mockAllArticles$: Observable<ArticleCollection> = of({
+    'items': [
+      {
+        '__typename': 'Article',
+        'slug': 'first-article',
+        'title': 'First article',
+        'summary': 'A brief description of the first article. I\'m writing some more stuff here just so that this seems a little more realistic. Sam was here. Have a good day.',
+        'ssoProtected': false,
+        'searchable': true
+      },
+      {
+        '__typename': 'Article',
+        'slug': 'top-secret-article',
+        'title': 'Top Secret Article',
+        'summary': 'For testing SSO',
+        'ssoProtected': true,
+        'searchable': true
+      }
+    ],
+    '__typename': 'ArticleCollection'
+  } as ArticleCollection);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ArticlesComponent],
       imports: [
+        RouterModule.forRoot([]),
         ApolloTestingModule,
-        RouterModule.forRoot([])
+        CommonModule,
+        MaterialModule,
+        SharedModule,
+        BrowserAnimationsModule
+      ], providers: [
+        AllArticlesGQL
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    backend = TestBed.get(ApolloTestingController);
+    controller = TestBed.get(ApolloTestingController);
+    spy = spyOn(ArticlesComponent.prototype, 'getAllArticles').and.returnValue(mockAllArticles$);
+
     fixture = TestBed.createComponent(ArticlesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    controller.verify();
   });
 
   it('should create', () => {
