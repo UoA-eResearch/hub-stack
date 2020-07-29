@@ -20,4 +20,15 @@ export class AllComponent implements OnInit {
     } catch (e) { console.error('Error loading all content:', e); }
   }
 
+  /**
+   * Iterates through all the collections and returns the total number of content items.
+   */
+  public allContentLength(collectionCollection): number {
+    let count = 0;
+    for (const collection of Object.keys(collectionCollection)) {
+      count += collectionCollection[collection].items.length;
+    }
+    return count;
+  }
+
 }
