@@ -1,38 +1,5 @@
 <!-- If we're displaying all articles, not an individual article -->
-<h2 id="title">Results</h2>
-<div class="results" *ngIf="allArticles$ | async as allArticles">
-    Found <span class="search-results-text">{{ allArticles.items.length }}</span> results in <span
-        class="search-results-text">Articles:</span>
-
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                JSON Result
-            </mat-panel-title>
-            <mat-panel-description>Click to see raw JSON</mat-panel-description>
-        </mat-expansion-panel-header>
-        <pre><code>{{ allArticles | json}}</code></pre>
-    </mat-expansion-panel>
-
-    <mat-nav-list>
-        <mat-card *ngFor="let article of allArticles.items">
-            <mat-card-header>
-                <div mat-card-avatar id="item-avatar">
-                    <mat-icon>import_contacts</mat-icon>
-                </div>
-                <mat-card-title>
-                    {{ article.title }}
-                </mat-card-title>
-                <mat-card-subtitle>
-                    {{ article.summary }}
-                </mat-card-subtitle>
-                <mat-chip-avatar *ngIf="article.ssoProtected">
-                    <mat-icon color='accent' matTooltip="SSO Login Required">lock</mat-icon>
-                </mat-chip-avatar>
-            </mat-card-header>
-        </mat-card>
-    </mat-nav-list>
-</div>
+<app-collection-list *ngIf="allArticles$ | async as allArticles" [collection]="allArticles"></app-collection-list>
 
 <!-- If we're displaying an individual article -->
 <div id="article-container" *ngIf="article$ | async as article">
@@ -95,5 +62,6 @@
 
         </mat-nav-list>
     </mat-card>
+
 
 </div>
