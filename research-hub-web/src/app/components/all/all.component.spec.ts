@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AllComponent } from './all.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 
-describe('AllComponent', () => {
+xdescribe('AllComponent', () => {
   let component: AllComponent;
   let fixture: ComponentFixture<AllComponent>;
   let backend: ApolloTestingController;

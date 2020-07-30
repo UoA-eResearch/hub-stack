@@ -15,7 +15,20 @@ export class AllComponent implements OnInit {
   constructor(public allSearchableContentPublicFieldsGQL: AllSearchableContentPublicFieldsGQL) { }
 
   ngOnInit(): void {
-    this.allSearchableContent$ = this.allSearchableContentPublicFieldsGQL.fetch().pipe(pluck('data'));
+    try {
+      this.allSearchableContent$ = this.allSearchableContentPublicFieldsGQL.fetch().pipe(pluck('data'));
+    } catch (e) { console.error('Error loading all content:', e); }
+  }
+
+  /**
+   * Iterates through all the collections and returns the total number of content items.
+   */
+  public allContentLength(collectionCollection): number {
+    let count = 0;
+    for (const collection of Object.keys(collectionCollection)) {
+      count += collectionCollection[collection].items.length;
+    }
+    return count;
   }
 
 }

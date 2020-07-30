@@ -131,6 +131,7 @@ async function createServer(config) {
                     'searchable',
                     'linkedFrom',
                     'slug',
+                    'icon',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 

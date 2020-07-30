@@ -9,6 +9,9 @@ import { ListItemToRouterLinkPipe } from '../../pipes/list-item-to-router-link.p
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { HumanCasePipe } from '../../pipes/human-case.pipe';
+import { CollectionListComponent } from './collection-list/collection-list.component';
+import { RouterModule } from '@angular/router';
+import { RichTextToHTML } from '../../pipes/rich-text.pipe';
 
 
 @NgModule({
@@ -17,14 +20,17 @@ import { HumanCasePipe } from '../../pipes/human-case.pipe';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
   declarations: [
     MarkdownComponent,
     ListItemToRouterLinkPipe,
     ErrorDialogComponent,
     ConfirmDialogComponent,
-    HumanCasePipe
+    HumanCasePipe,
+    CollectionListComponent,
+    RichTextToHTML
   ],
   exports: [
     FlexLayoutModule,
@@ -34,7 +40,9 @@ import { HumanCasePipe } from '../../pipes/human-case.pipe';
     MarkdownComponent,
     ErrorDialogComponent,
     ListItemToRouterLinkPipe,
-    HumanCasePipe
+    HumanCasePipe,
+    CollectionListComponent,
+    RichTextToHTML
   ],
   entryComponents: [
     ErrorDialogComponent,
