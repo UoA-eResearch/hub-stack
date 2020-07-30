@@ -24,7 +24,7 @@
                             width="100%" height="100%" />
                     </div>
                     <ng-template #avatarIcon>
-                        <mat-icon id="item-avatar-icon">import_contacts</mat-icon>
+                        <mat-icon id="item-avatar-icon" [innerHTML]="getDefaultTypeIcon(content.__typename)"></mat-icon>
                     </ng-template>
                 </div>
                 <mat-card-title>

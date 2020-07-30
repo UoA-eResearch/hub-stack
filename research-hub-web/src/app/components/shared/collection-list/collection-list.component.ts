@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 interface Collection {
   __typename: string;
@@ -29,7 +28,21 @@ export class CollectionListComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  /**
+   * Returns a material-icon name. Called in the component when a content item doesn't
+   * have an avatar defined.
+   * @param __typename the type for which we're searching for a default icon.
+   */
+  public getDefaultTypeIcon(__typename: string): string {
+    switch (__typename) {
+      case 'Article': return 'import_contacts';
+      case 'Equipment': return 'build';
+      case 'SubHub': return 'layers';
+      case 'Service': return 'home_repair_services';
+      default: return 'article'
+    }
   }
 
 }
