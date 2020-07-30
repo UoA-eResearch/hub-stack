@@ -30,6 +30,10 @@ export class ArticlesComponent implements OnInit {
 
   ngOnInit(): void {
 
+    /**
+     * Check if there is a slug URL parameter present. If so, this is
+     * passed to the getArticleBySlug() method.
+     */
     this.route.params.subscribe(params => {
       this.slug = params['slug'];
     });
@@ -38,15 +42,42 @@ export class ArticlesComponent implements OnInit {
      * If this.slug is defined, we're loading an individual article,
      * therefore run the corresponding query. If not, return all articles.
      */
-    try {
-      if (this.slug) {
-        this.article$ = this.getArticleBySlugGQL.fetch({ slug: this.slug })
-          .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
-      } else {
-        this.allArticles$ = this.allArticlesGQL.fetch()
-          .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>;
-      }
-    } catch (e) { console.error('caught it!!!' + e) };
-
+    if (!!this.slug) {
+      this.article$ = this.getArticleBySlug(this.slug);
+    } else {
+      this.allArticles$ = this.getAllArticles();
+    }
   }
+
+  /**
+   * Function that returns all articles from the ArticleCollection as an observable
+   * of type ArticleCollection. This is then unwrapped with the async pipe.
+   *
+   * This function is only called if no slug parameter is present in the URL, i.e. the
+   * user is visiting article/slug-name.
+   */
+  public getAllArticles(): Observable<ArticleCollection> {
+    try {
+      return this.allArticlesGQL.fetch()
+        .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
+    } catch (e) { console.error('Error loading all aticles:', e) };
+  }
+
+  /**
+   * Function that returns an individual article from the ArticleCollection by it's slug
+   * as an observable of type Article. This is then unwrapped with the async pipe.
+   *
+   * This function is only called if no slug parameter is present in the URL, i.e.
+   * the user is visiting /articles.
+   *
+   * @param slug The article's slug. Retrieved from the route parameter of the same name.
+   */
+  public getArticleBySlug(slug: string): Observable<Article> {
+    try {
+      console.log('Loading article with slug:', slug)
+      return this.getArticleBySlugGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
+    } catch (e) { console.error(`Error loading article ${slug}:`, e); }
+  }
+
 }

@@ -7,11 +7,10 @@ import { CommonModule } from '@angular/common';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { By } from '@angular/platform-browser';
 
-describe('EquipmentComponent', () => {
+xdescribe('EquipmentComponent', () => {
   let component: EquipmentComponent;
   let fixture: ComponentFixture<EquipmentComponent>;
   let backend: ApolloTestingController;
-
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
