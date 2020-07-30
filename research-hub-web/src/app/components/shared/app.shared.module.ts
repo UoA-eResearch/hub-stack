@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { HumanCasePipe } from '../../pipes/human-case.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
+import { RichTextToHTML } from '../../pipes/rich-text.pipe';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RouterModule } from '@angular/router';
     ErrorDialogComponent,
     ConfirmDialogComponent,
     HumanCasePipe,
-    CollectionListComponent
+    CollectionListComponent,
+    RichTextToHTML
   ],
   exports: [
     FlexLayoutModule,
@@ -39,7 +41,8 @@ import { RouterModule } from '@angular/router';
     ErrorDialogComponent,
     ListItemToRouterLinkPipe,
     HumanCasePipe,
-    CollectionListComponent
+    CollectionListComponent,
+    RichTextToHTML
   ],
   entryComponents: [
     ErrorDialogComponent,
