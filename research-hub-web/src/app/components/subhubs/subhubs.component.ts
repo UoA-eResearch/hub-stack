@@ -36,24 +36,11 @@ export class SubhubsComponent implements OnInit {
       const currentPageSlug = params["slug"];
       // test slug: landing-page-for-a-sub-hub
 
-      if (!!currentPageSlug) {
-        console.log(currentPageSlug);
-        // query for slug's target subhub info + items here
-      } else {
-        console.log("no slug");
-        // render generic test about all the subhubs of the r-hub
-      }
-
       // in theory contains an array of 1 which contains the subhub in the slug.
       this.allSubHubChildPages$ = this.AllSubHubChildPagesGQL.fetch({
         slug: currentPageSlug,
       }).pipe(pluck("data", "subHubCollection"));
 
-      this.allContentItemParentSubHubs$ = this.AllContentItemParentSubHubsGQL.fetch(
-        {
-          slug: currentPageSlug,
-        }
-      ).pipe(pluck("data", "subHubCollection"));
 
       this.allContentItemParentSubHubs$ = this.AllContentItemParentSubHubsGQL.fetch(
         {
