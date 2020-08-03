@@ -51,7 +51,7 @@
             <h2>Pages in this SubHub</h2>
             <mat-nav-list>
                 <mat-card *ngFor="let subHubChildPage of subhub.subhubPagesCollection.items">
-                    <mat-card-header>
+                    <mat-card-header id="title">
                         {{ subHubChildPage.title }}
                         <mat-chip-avatar *ngIf="subHubChildPage.ssoProtected">
                             <mat-icon color="accent" matTooltip="SSO Login Required">lock</mat-icon>

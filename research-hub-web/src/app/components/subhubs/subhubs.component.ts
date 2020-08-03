@@ -49,6 +49,10 @@ export class SubhubsComponent implements OnInit {
     });
   }
 
+  /**
+   * Retrieves all subhubs that link to this current page/subhub.
+   * @param slug Page slug
+   */
   public getPossibleParentPages(slug: string): Observable<SubHubCollection> {
     try {
       return this.AllContentItemParentSubHubsGQL.fetch(
@@ -71,6 +75,10 @@ export class SubhubsComponent implements OnInit {
     }
   }
 
+  /**
+   * Runs the query for the main body of a subhub item as including it's child pages but excluding it's ancestor/parent data.
+   * @param slug Page slug
+   */
   public getSubHubInfoAndChildren(slug: string): Observable<SubHubCollection> {
     try {
       return this.AllSubHubChildPagesGQL.fetch({
