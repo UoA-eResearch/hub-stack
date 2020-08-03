@@ -16,12 +16,13 @@ import {
   SubHubCollection,
   AllSubHubChildPagesGQL,
   AllContentItemParentSubHubsGQL,
+  SubHubOrder,
   // AllSubHubChildPagesQuery,
   // AllContentItemParentSubHubsQuery
 } from "../../graphql/schema";
 
 
-xdescribe('SubhubsComponent', () => {
+describe('SubhubsComponent', () => {
   let component: SubhubsComponent;
   let fixture: ComponentFixture<SubhubsComponent>;
   let backend: ApolloTestingController;
@@ -409,6 +410,76 @@ xdescribe('SubhubsComponent', () => {
     "__typename": "SubHubCollection"
   } as SubHubCollection);
 
+  const parentSubHubs = [
+    {
+      "slug": "a-subhub-to-be-included-as-level-2-of-a-landing-page-subhub",
+      "title": "a subhub to be included as level 2 of a landing page subhub",
+      "summary": "as the title says",
+      "body": {
+        "json": {
+          "data": {},
+          "content": [
+            {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "marks": [],
+                  "value": "Some more stuff here. This subhub is intended as the second level of a landing page (top level) subhub.",
+                  "nodeType": "text"
+                }
+              ],
+              "nodeType": "paragraph"
+            },
+            {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "marks": [],
+                  "value": "",
+                  "nodeType": "text"
+                }
+              ],
+              "nodeType": "paragraph"
+            }
+          ],
+          "nodeType": "document"
+        },
+        "__typename": "SubHubBody"
+      },
+      "ssoProtected": true,
+      "searchable": true,
+      "subhubPagesCollection": {
+        "items": [
+          {
+            "__typename": "Equipment",
+            "slug": "death-star",
+            "title": "Death Star",
+            "ssoProtected": true,
+            "summary": "Mobile space station and galactic superweapon."
+          },
+          {
+            "__typename": "Article",
+            "slug": "first-article",
+            "title": "First article",
+            "ssoProtected": false,
+            "summary": "A brief description of the first article. I'm writing some more stuff here just so that this seems a little more realistic. Sam was here. Have a good day."
+          },
+          {
+            "__typename": "SubHub",
+            "slug": "level-3-subhub",
+            "title": "Level 3 Subhub",
+            "ssoProtected": false,
+            "summary": "Subhub for testing deeper levels of subhub nesting."
+          }
+        ],
+        "__typename": "SubHubSubhubPagesCollection"
+      },
+      "__typename": "SubHub"
+    }
+  ];
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -429,7 +500,11 @@ xdescribe('SubhubsComponent', () => {
 
   beforeEach(() => {
     controller = TestBed.get(ApolloTestingController);
-    spy = spyOn(SubhubsComponent.prototype, 'getSubHubInfoAndChildren').and.returnValue(currentSubHubData$);
+    spy = spyOn(SubhubsComponent.prototype, 'getSubHubInfoAndChildrenObservable').and.returnValue(currentSubHubData$);
+    spyOn(SubhubsComponent.prototype, 'getPossibleParentPagesObservable').and.returnValue(mockParentLinks$)
+    // spyOn(SubhubsComponent.prototype, 'getPossibleParentPages').and.returnValue(mockParentLinks$)
+
+    spyOn(SubhubsComponent.prototype, 'getParentSubHubsFromCurrentSlug').and.returnValue(parentSubHubs);
 
     backend = TestBed.get(ApolloTestingController);
     fixture = TestBed.createComponent(SubhubsComponent);

@@ -40,6 +40,12 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['ChromeHeadless'],
     singleRun: true,
-    failOnEmptyTestSuite: false
+    failOnEmptyTestSuite: false,
+    captureConsole:true,
+    browserConsoleLogOptions: {
+      level: 'log',
+      format: '%b %T: %m',
+      terminal: true
+    }
   });
 };
