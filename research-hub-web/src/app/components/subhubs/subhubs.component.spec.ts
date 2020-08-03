@@ -237,7 +237,7 @@ xdescribe('SubhubsComponent', () => {
   // const the all items in the linkedFromResponse (maybe do two, a right and a wrong one.)
 
   // const allMockSubHubs$:   // the result when no subhub slug is found.
-  const allMockSubHubs$$: Observabler<SubHubCollection> = of({
+  const allMockSubHubs$$: Observable<SubHubCollection> = of({
     "items": [
       {
         "slug": "a-subhub-to-be-included-as-level-2-of-a-landing-page-subhub",
@@ -429,7 +429,7 @@ xdescribe('SubhubsComponent', () => {
 
   beforeEach(() => {
     controller = TestBed.get(ApolloTestingController);
-    // spy = spyOn(SubhubsComponent.prototype, 'getAllSubHubs').andReturnValue(currentSubHubData$);
+    spy = spyOn(SubhubsComponent.prototype, 'getSubHubInfoAndChildren').and.returnValue(currentSubHubData$);
 
     backend = TestBed.get(ApolloTestingController);
     fixture = TestBed.createComponent(SubhubsComponent);
@@ -437,7 +437,20 @@ xdescribe('SubhubsComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    controller.verify();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have Landing page for a \'sub-hub\' as the title.', async () => {
+    const de = fixture.debugElement.query(By.css('#title'));
+    expect(de.nativeElement.innerHTML).toEqual("Landing page for a 'sub-hub'");
+  })
+
+  it('test', () => {
+     expect(true).toEqual(true);
+    });
 });
