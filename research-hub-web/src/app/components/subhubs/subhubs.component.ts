@@ -6,6 +6,7 @@ import {
   AllContentItemParentSubHubsGQL,
   AllContentItemParentSubHubsQuery,
   SubHubCollection,
+  SubHub
 } from "../../graphql/schema";
 import { Observable } from "rxjs";
 import { pluck } from "rxjs/operators";
@@ -35,14 +36,17 @@ export class SubhubsComponent implements OnInit {
       // test slug: landing-page-for-a-sub-hub
       this.slug = params['slug'];
 
-      this.allSubHubChildPages$ = this.getSubHubInfoAndChildren(this.slug);
+      this.allSubHubChildPages$ = this.getSubHubInfoAndChildrenObservable(this.slug);
 
-      this.allContentItemParentSubHubs$ = this.getPossibleParentPages(this.slug);
+      this.allContentItemParentSubHubs$ = this.getPossibleParentPagesObservable(this.slug);
 
       const GetSubHubParentsObserver = {
         next: (contentItemLinkedSubHubs) => {
           this.parentSubHubs = this.getParentSubHubsFromCurrentSlug(contentItemLinkedSubHubs, this.slug);
         },
+        error: (error) => {
+          console.error("Could not retrieve linkedFrom items for this page.");
+        }
       };
 
       this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
@@ -53,7 +57,8 @@ export class SubhubsComponent implements OnInit {
    * Retrieves all subhubs that link to this current page/subhub.
    * @param slug Page slug
    */
-  public getPossibleParentPages(slug: string): Observable<SubHubCollection> {
+  public getPossibleParentPagesObservable(slug: string): Observable<SubHubCollection> {
+    // TODO: make the possible parent retrieval recursive until no valid parent can be found.
     try {
       return this.AllContentItemParentSubHubsGQL.fetch(
         {
@@ -79,7 +84,7 @@ export class SubhubsComponent implements OnInit {
    * Runs the query for the main body of a subhub item as including it's child pages but excluding it's ancestor/parent data.
    * @param slug Page slug
    */
-  public getSubHubInfoAndChildren(slug: string): Observable<SubHubCollection> {
+  public getSubHubInfoAndChildrenObservable(slug: string): Observable<SubHubCollection> {
     try {
       return this.AllSubHubChildPagesGQL.fetch({
         slug
@@ -94,7 +99,7 @@ export class SubhubsComponent implements OnInit {
    * @param linkedItem A link item of the current page. Assumed to be a SubHubCollection item.
    * @param currentPageSlug The slug of the current page.
    */
-  private getParentSubHubsFromCurrentSlug(
+  public getParentSubHubsFromCurrentSlug(
     contentItemsLinkedSubHubs: any,
     currentPageSlug: any
   ) {
