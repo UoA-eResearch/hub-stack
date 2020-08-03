@@ -40,16 +40,16 @@ export class SubhubsComponent implements OnInit {
 
       this.allContentItemParentSubHubs$ = this.getPossibleParentPagesObservable(this.slug);
 
-      const GetSubHubParentsObserver = {
-        next: (contentItemLinkedSubHubs) => {
-          this.parentSubHubs = this.getParentSubHubsFromCurrentSlug(contentItemLinkedSubHubs, this.slug);
-        },
-        error: (error) => {
-          console.error("Could not retrieve linkedFrom items for this page.");
-        }
-      };
+      // const GetSubHubParentsObserver = {
+      //   next: (contentItemLinkedSubHubs) => {
+      //     this.parentSubHubs = this.getParentSubHubsFromCurrentSlug(contentItemLinkedSubHubs, this.slug);
+      //   },
+      //   error: (error) => {
+      //     console.error("Could not retrieve linkedFrom items for this page.");
+      //   }
+      // };
 
-      this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
+      // this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
     });
   }
 
@@ -100,11 +100,11 @@ export class SubhubsComponent implements OnInit {
    * @param currentPageSlug The slug of the current page.
    */
   public getParentSubHubsFromCurrentSlug(
-    contentItemsLinkedSubHubs: any,
-    currentPageSlug: any
+    possibleParentItems: Array<SubHub>,
+    currentPageSlug: string
   ) {
     let parentSubHubs = [];
-    contentItemsLinkedSubHubs.map((linkedItem) => {
+    possibleParentItems.map((linkedItem: SubHub) => {
       this.AllSubHubChildPagesGQL.fetch({
         slug: linkedItem.slug,
       })
