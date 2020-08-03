@@ -99,10 +99,10 @@ export class SubhubsComponent implements OnInit {
    * @param linkedItem A link item of the current page. Assumed to be a SubHubCollection item.
    * @param currentPageSlug The slug of the current page.
    */
-  public getParentSubHubsFromCurrentSlug(
+  public getParentSubHubsFromCurrentSlug (
     possibleParentItems: Array<SubHub>,
     currentPageSlug: string
-  ) {
+  ): Array<SubHub> {
     let parentSubHubs = [];
     possibleParentItems.map((linkedItem: SubHub) => {
       this.AllSubHubChildPagesGQL.fetch({
