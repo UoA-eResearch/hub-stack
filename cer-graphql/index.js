@@ -101,15 +101,6 @@ async function createServer(config) {
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
 
-                /**
-                 * Get list of requested fields. The location of these differs depending on whether
-                 * this is the resolver for a collection or a single resource.
-                 */
-                let requestedFields = (info.fieldName.endsWith('Collection') ?
-                    info.fieldNodes[0].selectionSet.selections[0].selectionSet.selections :
-                    info.fieldNodes[0].selectionSet.selections)
-                    .map(x => x.name.value);
-
                 // GraphQL introspection fields, these are used by GraphQL to query metadata
                 const GRAPHQL_INTROSPECTION_FIELDS = [
                     '__Schema',
@@ -135,39 +126,49 @@ async function createServer(config) {
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
-                /**
-                 * Check if the query contains any fragments. If so, get the names of all
-                 * of the fragments. These will be permitted along with our ALWAYS_PUBLIC_FIGURES
-                 */
-                let fragmentNames = Object.keys(info.fragments);
+                var requestedFields = []; // List of fields requested, populated in the recursive function below
 
-                // Variable to store the fields reque
-                let fragmentsFields = [];
+                let recursive_iteration_count = 0; // Tracks the number of recursive iterations
+                const MAX_RECURSIVE_ITERATIONS = 500; // The maximum allowed number of recursive iterations
+                var getRequestedFields = function (obj) {
+                    recursive_iteration_count++;
+                    if (recursive_iteration_count > MAX_RECURSIVE_ITERATIONS) {
+                        throw new Error('Max recursive iterations exceeded when checking for field names.');
+                    }
 
-                //  Get all of the fields requested by all of the fragments
-                if (!!fragmentNames.length) { // If the query contains fragments
-                    fragmentNames.forEach(fragmentName => { // Loop through each fragment
-                        fragmentsFields = [...fragmentsFields, // Add fragments fields to the all fragments fields array
-                        ...info.fragments[fragmentName].selectionSet.selections
-                            .filter(x => x.kind === 'InlineFragment')
-                            .flatMap(y => y.selectionSet.selections)
-                            .map(z => z.name.value)
-                        ]
-                    });
+                    if (Array.isArray(obj)) { // If the object is an array
+                        for (let x of obj) {
+                            getRequestedFields(x); // Call the function recursively only each element in the array
+                        }
+                    } else { // Else it's an object
+                        if (obj.kind && obj.kind == 'Field' && obj.name.value != 'items' && !obj.name.value.includes('Collection')) {
+                            requestedFields.push(obj.name.value); // *Add it to the array if it's valid (and not a collection/items)
+                        }
+                        for (let key in obj) { // Loop over all the properties in this object
+                            if (Array.isArray(obj[key]) && obj[key].length != 0) { // If this property is an array, return it
+                                getRequestedFields(obj[key]);
+                            } else { // Else this property is an object, check if it's valid
+                                if (!Array.isArray(obj[key]) && !!obj[key] && typeof (obj[key]) == 'object' && obj[key] != {}) {
+                                    if (obj[key].kind && obj[key].kind != 'Name') {
+                                        getRequestedFields(obj[key]); // If so, call the function recursively on it
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
-                /**
-                 * Check whether the user is only querying public fields, or fragment names.
-                 * This also checks the fields within all fragments.
-                 */
-                let userOnlyQueryingPublicFields = [...requestedFields, ...fragmentsFields]
-                    .every(y => [...ALWAYS_PUBLIC_FIELDS, ...fragmentNames].includes(y));
+                getRequestedFields(info.fieldNodes[0].selectionSet.selections); // Call the recursive function, populating the requestedFields array.
+                console.log({ requestedFields: requestedFields })
+
+                userOnlyQueryingPublicFields = requestedFields.every(y => ALWAYS_PUBLIC_FIELDS.includes(y));
+                console.log('User only querying public fields?', userOnlyQueryingPublicFields);
 
                 // Log any non-public fields the user is requesting
                 if (!userOnlyQueryingPublicFields) {
                     console.log('User requested non-public field(s):',
-                        [...requestedFields, ...fragmentsFields]
-                            .filter(y => ![...ALWAYS_PUBLIC_FIELDS, ...fragmentNames].includes(y)));
+                        requestedFields
+                            .filter(y => !ALWAYS_PUBLIC_FIELDS.includes(y)));
                 }
 
                 // If the user is only querying public fields, forward the request on to Contentful
