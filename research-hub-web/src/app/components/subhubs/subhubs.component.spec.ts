@@ -410,7 +410,7 @@ describe('SubhubsComponent', () => {
     "__typename": "SubHubCollection"
   } as SubHubCollection);
 
-  const parentSubHubs = [
+  const parentSubHubs = of ([
     {
       "slug": "a-subhub-to-be-included-as-level-2-of-a-landing-page-subhub",
       "title": "a subhub to be included as level 2 of a landing page subhub",
@@ -478,7 +478,7 @@ describe('SubhubsComponent', () => {
       },
       "__typename": "SubHub"
     }
-  ];
+  ]) as any;
 
 
   beforeEach(async(() => {
@@ -519,6 +519,7 @@ describe('SubhubsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 
   it('should have Landing page for a \'sub-hub\' as the title.', async () => {
     const de = fixture.debugElement.query(By.css('#title'));
