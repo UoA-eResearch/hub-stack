@@ -27,7 +27,9 @@ describe('SubhubsComponent', () => {
   let fixture: ComponentFixture<SubhubsComponent>;
   let backend: ApolloTestingController;
   let controller: ApolloTestingController;
-  let spy: any; // returns mock query data
+  let subHubInfoAndChildrenSpy: any; // returns mock query data
+  let possibleSubHubParentsSpy: any;
+  let validParentsSpy: any;
 
   // all the linkedFrom pages that are subhubs for the current subhub
   const mockParentLinks$: Observable<SubHubCollection> = of({
@@ -489,6 +491,7 @@ describe('SubhubsComponent', () => {
         CommonModule,
         MaterialModule,
         SharedModule,
+        BrowserAnimationsModule,
         RouterModule.forRoot([])
       ], providers: [
         AllSubHubChildPagesGQL,
@@ -500,11 +503,9 @@ describe('SubhubsComponent', () => {
 
   beforeEach(() => {
     controller = TestBed.get(ApolloTestingController);
-    spy = spyOn(SubhubsComponent.prototype, 'getSubHubInfoAndChildrenObservable').and.returnValue(currentSubHubData$);
-    spyOn(SubhubsComponent.prototype, 'getPossibleParentPagesObservable').and.returnValue(mockParentLinks$)
-    // spyOn(SubhubsComponent.prototype, 'getPossibleParentPages').and.returnValue(mockParentLinks$)
-
-    spyOn(SubhubsComponent.prototype, 'getParentSubHubsFromCurrentSlug').and.returnValue(parentSubHubs);
+    subHubInfoAndChildrenSpy = spyOn(SubhubsComponent.prototype, 'getSubHubInfoAndChildrenObservable').and.returnValue(currentSubHubData$);
+    possibleSubHubParentsSpy = spyOn(SubhubsComponent.prototype, 'getPossibleParentPagesObservable').and.returnValue(mockParentLinks$);
+    validParentsSpy = spyOn(SubhubsComponent.prototype, 'getParentSubHubsFromCurrentSlug').and.returnValue(parentSubHubs);
 
     backend = TestBed.get(ApolloTestingController);
     fixture = TestBed.createComponent(SubhubsComponent);

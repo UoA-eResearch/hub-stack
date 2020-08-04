@@ -19,7 +19,7 @@ import { pluck } from "rxjs/operators";
 export class SubhubsComponent implements OnInit {
   public allSubHubChildPages$: Observable<SubHubCollection>;
 
-  public allContentItemParentSubHubs$: Observable< AllContentItemParentSubHubsQuery["subHubCollection"] >;
+  public allContentItemParentSubHubs$: Observable< AllContentItemParentSubHubsQuery["subHubCollection"]>;
 
   public parentSubHubs =  [];
 
@@ -48,7 +48,6 @@ export class SubhubsComponent implements OnInit {
           console.error("Could not retrieve linkedFrom items for this page.");
         }
       };
-
       this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
     });
   }
