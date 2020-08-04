@@ -40,16 +40,16 @@ export class SubhubsComponent implements OnInit {
 
       this.allContentItemParentSubHubs$ = this.getPossibleParentPagesObservable(this.slug);
 
-      // const GetSubHubParentsObserver = {
-      //   next: (contentItemLinkedSubHubs) => {
-      //     this.parentSubHubs = this.getParentSubHubsFromCurrentSlug(contentItemLinkedSubHubs, this.slug);
-      //   },
-      //   error: (error) => {
-      //     console.error("Could not retrieve linkedFrom items for this page.");
-      //   }
-      // };
+      const GetSubHubParentsObserver = {
+        next: (contentItemLinkedSubHubs) => {
+          this.parentSubHubs = this.getParentSubHubsFromCurrentSlug(contentItemLinkedSubHubs, this.slug);
+        },
+        error: (error) => {
+          console.error("Could not retrieve linkedFrom items for this page.");
+        }
+      };
 
-      // this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
+      this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
     });
   }
 
