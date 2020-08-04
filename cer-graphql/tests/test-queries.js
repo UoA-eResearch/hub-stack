@@ -57,6 +57,7 @@ exports.GET_ARTICLE_BY_SYS_ID = gql`
     query ($id: String!) { 
         article(id: $id) {
             title 
+            ssoProtected
         }
     }
 `;
