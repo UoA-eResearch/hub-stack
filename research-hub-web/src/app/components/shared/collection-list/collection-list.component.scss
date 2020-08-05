@@ -1,0 +1,45 @@
+@import '../../../../themes.scss';
+
+mat-expansion-panel, mat-card  {
+    margin: 1vh 0;
+}
+
+div.mat-card-avatar mat-icon {
+    color: map-get($hub-teal, 800);
+}
+
+div.collection {
+    margin: 3vh 0 3vh 0;
+}
+
+.result-item {
+    cursor: pointer;
+
+    &.ssoProtected {
+        // Any optional styling to add to ssoProtected items
+    }
+
+    &:hover {
+        border: 1px solid map-get($hub-teal, 50);
+    }
+
+    // Used to set the height/width of both avatar images and icons.
+    $avatar-size: 55px;
+
+    #item-avatar {
+        width: $avatar-size;
+        height: $avatar-size;
+
+        margin-right: $avatar-size * 0.1;
+        margin-bottom: $avatar-size * 0.25;
+
+        img {
+            border-radius: 50%;
+        }
+    }
+
+    #item-avatar-icon {
+        font-size: $avatar-size;
+        color: $color-primary;
+    }
+}
