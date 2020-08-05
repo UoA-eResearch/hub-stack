@@ -18,7 +18,7 @@ import { pluck } from "rxjs/operators";
 })
 export class SubhubsComponent implements OnInit {
   public allSubHubChildPages$: Observable<SubHubCollection>;
-  public allContentItemParentSubHubs$: Observable<AllContentItemParentSubHubsQuery["subHubCollection"]>;
+  public allContentItemParentSubHubs$: Observable<SubHubCollection>;
   public parentSubHubs =  [];
   public slug: string;
 
@@ -32,9 +32,7 @@ export class SubhubsComponent implements OnInit {
     this.route.params.subscribe((params) => {
       // test slug: landing-page-for-a-sub-hub
       this.slug = params['slug'];
-
       this.allSubHubChildPages$ = this.getSubHubInfoAndChildrenObservable(this.slug);
-
       this.allContentItemParentSubHubs$ = this.getPossibleParentPagesObservable(this.slug);
 
       const GetSubHubParentsObserver = {
@@ -43,8 +41,13 @@ export class SubhubsComponent implements OnInit {
         },
         error: (error) => {
           console.error("Could not retrieve linkedFrom items for this page.");
+        },
+        complete: () => {
+          console.log('Get subhub parents observer is complete.')
         }
       };
+
+      // working
       this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
     });
   }

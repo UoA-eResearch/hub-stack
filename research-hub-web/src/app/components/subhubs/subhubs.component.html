@@ -1,9 +1,3 @@
-<div class="parent-results" *ngIf="parentSubHubs | async as test">
-    <p>
-        {{ test | json }}
-    </p>
-
-<pre id="parent-code"><code>{{ parentSubHubs | json}}</code></pre>
 <mat-card *ngIf="parentSubHubs.length > 0">
     <!-- <pre><code>{{ parentSubHubs | json}}</code></pre> -->
     <div *ngFor="let parentSubHub of parentSubHubs">
@@ -15,7 +9,6 @@
         </a>
     </div>
 </mat-card>
-</div>
 
 <div class="results" *ngIf="allSubHubChildPages$ | async as subHubData">
     <mat-card>
