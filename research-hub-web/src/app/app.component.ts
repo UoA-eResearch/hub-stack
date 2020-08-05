@@ -115,8 +115,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getSearchQueryParams(item: any) {
-    const type = item['type'];
-    return type === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
+    return item['type'] === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
   }
 
   getRouteName(url: string) {
@@ -151,7 +150,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngOnInit() {
-
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
       this.setTitleSearchBarHeaderCustomCSS(this.optionsService.getPageInfo(this.currentRoute, this.pageTitle));
