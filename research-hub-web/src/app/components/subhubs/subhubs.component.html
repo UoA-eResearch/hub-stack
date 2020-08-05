@@ -1,5 +1,4 @@
 <mat-card class="parent-results" *ngIf="parentSubHubs.length > 0">
-    <!-- <pre><code>{{ parentSubHubs | json}}</code></pre> -->
     <div *ngFor="let parentSubHub of parentSubHubs">
         <h2>Parent SubHub</h2>
         <a href="/subhubs/{{parentSubHub.slug}}">

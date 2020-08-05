@@ -1,59 +1,57 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
   AllSubHubChildPagesGQL,
   AllSubHubChildPagesQuery,
   AllContentItemParentSubHubsGQL,
   AllContentItemParentSubHubsQuery,
-} from "../../graphql/schema";
-import { Observable } from "rxjs";
-import { pluck } from "rxjs/operators";
+} from '../../graphql/schema';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 @Component({
-  selector: "app-subhubs",
-  templateUrl: "./subhubs.component.html",
-  styleUrls: ["./subhubs.component.scss"],
+  selector: 'app-subhubs',
+  templateUrl: './subhubs.component.html',
+  styleUrls: ['./subhubs.component.scss'],
 })
 export class SubhubsComponent implements OnInit {
   public allSubHubChildPages$: Observable<
-    AllSubHubChildPagesQuery["subHubCollection"]
+    AllSubHubChildPagesQuery['subHubCollection']
   >;
 
   public allContentItemParentSubHubs$: Observable<
-    AllContentItemParentSubHubsQuery["subHubCollection"]
+    AllContentItemParentSubHubsQuery['subHubCollection']
   >;
 
-  public parentSubHubs =  [];
+  public parentSubHubs = [];
 
   constructor(
     private route: ActivatedRoute,
     public AllSubHubChildPagesGQL: AllSubHubChildPagesGQL,
     public AllContentItemParentSubHubsGQL: AllContentItemParentSubHubsGQL
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const currentPageSlug = params["slug"];
+      const currentPageSlug = params['slug'];
       // test slug: landing-page-for-a-sub-hub
 
       if (!!currentPageSlug) {
-        console.log(currentPageSlug);
         // query for slug's target subhub info + items here
       } else {
-        console.log("no slug");
         // render generic test about all the subhubs of the r-hub
       }
 
       // in theory contains an array of 1 which contains the subhub in the slug.
       this.allSubHubChildPages$ = this.AllSubHubChildPagesGQL.fetch({
         slug: currentPageSlug,
-      }).pipe(pluck("data", "subHubCollection"));
+      }).pipe(pluck('data', 'subHubCollection'));
 
       this.allContentItemParentSubHubs$ = this.AllContentItemParentSubHubsGQL.fetch(
         {
           slug: currentPageSlug,
         }
-      ).pipe(pluck("data", "subHubCollection"));
+      ).pipe(pluck('data', 'subHubCollection'));
 
       this.allContentItemParentSubHubs$ = this.AllContentItemParentSubHubsGQL.fetch(
         {
@@ -61,13 +59,13 @@ export class SubhubsComponent implements OnInit {
         }
       ).pipe(
         pluck(
-          "data",
-          "subHubCollection",
-          "items",
-          "0",
-          "linkedFrom",
-          "subHubCollection",
-          "items"
+          'data',
+          'subHubCollection',
+          'items',
+          '0',
+          'linkedFrom',
+          'subHubCollection',
+          'items'
         )
       );
 
@@ -90,29 +88,28 @@ export class SubhubsComponent implements OnInit {
     contentItemsLinkedSubHubs: any,
     currentPageSlug: any
   ) {
-    let parentSubHubs = [];
+    const parentSubHubs = [];
     contentItemsLinkedSubHubs.map((linkedItem) => {
       this.AllSubHubChildPagesGQL.fetch({
         slug: linkedItem.slug,
       })
         .pipe(
           pluck(
-            "data",
-            "subHubCollection",
-            "items",
+            'data',
+            'subHubCollection',
+            'items',
             0,
           )
         )
         .subscribe(subHubData => {
           // if contains any child links to the current page then it's a parent.
-          let linksToCurPageAsChild  = subHubData.subhubPagesCollection.items
-          .filter(childPage => !!childPage['slug'])
-          .filter(childPage => childPage['slug'] === currentPageSlug);
+          const linksToCurPageAsChild = subHubData.subhubPagesCollection.items
+            .filter(childPage => !!childPage['slug'])
+            .filter(childPage => childPage['slug'] === currentPageSlug);
 
           if (linksToCurPageAsChild.length > 0) {
             parentSubHubs.push(subHubData);
           }
-          console.log(`Contains ${parentSubHubs.length} subhubs: `, parentSubHubs);
         });
     });
     return parentSubHubs;
