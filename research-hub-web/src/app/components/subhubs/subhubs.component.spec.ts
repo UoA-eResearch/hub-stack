@@ -556,7 +556,7 @@ describe('SubhubsComponent', () => {
     expect(de.nativeElement.innerHTML).toBeTruthy();
   });
 
-  it('Should contain a parent subhub', () => {
+  xit('Should contain a parent subhub', () => {
     let d = document.getElementsByClassName('parent-title');
     console.log(d);
 
