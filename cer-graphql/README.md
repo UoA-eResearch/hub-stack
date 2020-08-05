@@ -27,8 +27,6 @@ This project includes `integration tests` written for the [Jest](https://jestjs.
 ### Executing Tests
 To execute the integration tests execute `npm run test`.
 
----
-
 ## Startup Process
 ![Architecture Overview](./documentation/cer-graphql-startup.png)
 
