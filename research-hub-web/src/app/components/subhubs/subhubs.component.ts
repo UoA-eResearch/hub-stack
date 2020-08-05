@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
   AllSubHubChildPagesGQL,
   AllSubHubChildPagesQuery,
@@ -12,9 +12,9 @@ import { Observable } from "rxjs";
 import { pluck } from "rxjs/operators";
 
 @Component({
-  selector: "app-subhubs",
-  templateUrl: "./subhubs.component.html",
-  styleUrls: ["./subhubs.component.scss"],
+  selector: 'app-subhubs',
+  templateUrl: './subhubs.component.html',
+  styleUrls: ['./subhubs.component.scss'],
 })
 export class SubhubsComponent implements OnInit {
   public allSubHubChildPages$: Observable<SubHubCollection>;
@@ -26,7 +26,7 @@ export class SubhubsComponent implements OnInit {
     private route: ActivatedRoute,
     public AllSubHubChildPagesGQL: AllSubHubChildPagesGQL,
     public AllContentItemParentSubHubsGQL: AllContentItemParentSubHubsGQL
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -65,13 +65,13 @@ export class SubhubsComponent implements OnInit {
         }
       ).pipe(
         pluck(
-          "data",
-          "subHubCollection",
-          "items",
-          "0",
-          "linkedFrom",
-          "subHubCollection",
-          "items"
+          'data',
+          'subHubCollection',
+          'items',
+          '0',
+          'linkedFrom',
+          'subHubCollection',
+          'items'
         )
       ) as Observable<SubHubCollection>;    
     } catch (error) {
@@ -109,17 +109,17 @@ export class SubhubsComponent implements OnInit {
       })
         .pipe(
           pluck(
-            "data",
-            "subHubCollection",
-            "items",
+            'data',
+            'subHubCollection',
+            'items',
             0,
           )
         )
         .subscribe(subHubData => {
           // if contains any child links to the current page then it's a parent.
-          let linksToCurPageAsChild  = subHubData.subhubPagesCollection.items
-          .filter(childPage => !!childPage['slug'])
-          .filter(childPage => childPage['slug'] === currentPageSlug);
+          const linksToCurPageAsChild = subHubData.subhubPagesCollection.items
+            .filter(childPage => !!childPage['slug'])
+            .filter(childPage => childPage['slug'] === currentPageSlug);
 
           if (linksToCurPageAsChild.length > 0) {
             parentSubHubs.push(subHubData);
