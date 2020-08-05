@@ -11,8 +11,9 @@ import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../app.material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Observable, of } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 import {
+  SubHub,
   SubHubCollection,
   AllSubHubChildPagesGQL,
   AllContentItemParentSubHubsGQL,
@@ -237,10 +238,10 @@ describe('SubhubsComponent', () => {
     "__typename": "SubHubCollection"
   } as SubHubCollection);
 
-  // const the all items in the linkedFromResponse (maybe do two, a right and a wrong one.)
+  // need to evaluate that its eliminating wrong parents. the all items in the linkedFromResponse (maybe do two, a right and a wrong one.)
 
   // const allMockSubHubs$:   // the result when no subhub slug is found.
-  const allMockSubHubs$$: Observable<SubHubCollection> = of({
+  const allMockSubHubs$: Observable<SubHubCollection> = of({
     "items": [
       {
         "slug": "a-subhub-to-be-included-as-level-2-of-a-landing-page-subhub",
@@ -412,7 +413,7 @@ describe('SubhubsComponent', () => {
     "__typename": "SubHubCollection"
   } as SubHubCollection);
 
-  const parentSubHubs = of ([
+  const parentSubHubs = of([
     {
       "slug": "landing-page-for-a-sub-hub",
       "title": "Landing page for a 'sub-hub'",
@@ -556,17 +557,13 @@ describe('SubhubsComponent', () => {
   });
 
   it('Should contain a parent subhub', () => {
-    // const de = fixture.debugElement.query(By.css('#parent-title'));
-    
-    // works
-    // const de = fixture.debugElement.query(By.css('.parent-results'));
-    // console.log(de.nativeElement.innerHTML);
-    // expect(de).toBeTruthy();
+    let d = document.getElementsByClassName('parent-title');
+    console.log(d);
 
-    // let e = document.getElementsByClassName('parent-title')[0];
-    // let e = document.getElementsByClassName('parent-results');
-    let e = fixture.debugElement.query(By.css('#parent-code'));
+    let e = fixture.debugElement.query(By.css('#parent-title'));
     console.log(e);
     expect(e).toBeTruthy();
-    });
+  });
+
+  xit('Should not list invalid parents as parent.');
 });
