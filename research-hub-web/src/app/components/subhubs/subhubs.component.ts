@@ -18,11 +18,8 @@ import { pluck } from "rxjs/operators";
 })
 export class SubhubsComponent implements OnInit {
   public allSubHubChildPages$: Observable<SubHubCollection>;
-
-  public allContentItemParentSubHubs$: Observable< AllContentItemParentSubHubsQuery["subHubCollection"]>;
-
+  public allContentItemParentSubHubs$: Observable<AllContentItemParentSubHubsQuery["subHubCollection"]>;
   public parentSubHubs =  [];
-
   public slug: string;
 
   constructor(
@@ -124,7 +121,6 @@ export class SubhubsComponent implements OnInit {
           if (linksToCurPageAsChild.length > 0) {
             parentSubHubs.push(subHubData);
           }
-          console.log(`Contains ${parentSubHubs.length} subhubs: `, parentSubHubs);
         });
     });
     return parentSubHubs;
