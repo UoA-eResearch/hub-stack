@@ -1,17 +1,60 @@
 # Research Hub Web
-The front end for the [Research Hub](https://research-hub.auckland.ac.nz/), built with [Angular](https://angular.io/) and [Angular Material](https://material.angular.io/).
 
-## Test runner
+## Overview
+The front end for the [Research Hub](https://research-hub.auckland.ac.nz/). Deployed on AWS via [Jenkins Pipeline](../Jenkinsfile).
 
-This project comes bundled with an interactive test runner capable of launching your:
- - Unit tests
- - e2e tests
-    - Using Protractor+Angular's built in Selenium server
-    - Using BrowserStack's automation API/Selenium server, including BrowserStack-local (allowing you to run BrowserStack against local hosts)
+### Languages/Frameworks:
+* [Angular](https://angular.io/)
+* [Angular Material](https://material.angular.io/)
+* [Apollo GraphQL](http://apollographql.com/)
 
- Simply run `./test.sh` to specify what sort of testing you would like to do.
+### Other Technologies:
+* [AWS S3](https://aws.amazon.com/s3/): Bucket contains static build files
+* [AWS CloudFront](https://aws.amazon.com/cloudfront/): S3 assets are distributed via this CDN
+* [AWS Cognito](https://aws.amazon.com/cognito/): Used for user authentication
+* [Contentful](https://contentful.com/): Headless Content Management System where the site's content is hosted
+
+## Local Development
+
+For local development run `npm run dev`. This will concurrently:
+
+1. Boot up the `cer-graphql` server locally
+2. Generate the [schema types/GraphQL services file](./src/app/graphql/schema.ts) by introspecting the locally running `cer-graphql` instance
+3. Monitor any changes to the `research-hub-web/src/app/graphql/` folder and automatically regenerate the schema types file if any changes are detected
+4. Serve the web project locally on port `4200`, querying the locally running GraphQL server
+5. Run the unit tests, with test-coverage reporting enabled. These unit tests are re-run whenever any files are changed
+
+## Testing
+This project includes both [unit](#unit-tests) and [e2e](#end-to-end-tests) tests, which can either be run manually, or with an [interactive CLI test runner](./test.sh) included with the project. Further detail is provided in the corresponding sections below.
+
+### Unit Tests
+Unit tests are stored in `.spec.ts` files throughout the project. These can be run with [Karma](https://karma-runner) using headless-Chrome in several different ways:
+
+* `npm run test`/`ng test`: Runs the unit tests **once**. The unit test-coverage report **is** displayed in the CLI
+* `npm run test-ci`: Runs the unit tests **once**. The unit test-coverage report **IS NOT** displayed in the CLI. Used in Jenkins
+* `npm run test-watch`: Runs the unit tests **continuously** (re-runs whenever any files are updated). The unit test-coverage report **IS** displayed in the CLI
+* `npm run dev`: As mentioned [above](#local-development), this command also executes `npm run test-watch`
+* `./test.sh`: The unit tests can also be executed via the [Interactive Test Runner](#interactive-test-runner)
+
+### End-to-End Tests
+E2e tests are stored in `.e2e.ts` files throughout the project. These are executed via [Protractor](http://www.protractortest.org/). 
+
+* This project is capable of executing these tests either in a locally running [Selenium Instance](https://www.selenium.dev/), or via BrowserStack automation.
+* The tests themselves can be executed against a locally compiled version, or against a remote URL. 
+
+The recommended way to execute these tests is via the [Interactive Test Runner](#interactive-test-runner).
+
+### Interactive Test Runner
+This project comes bundled with an interactive bash CLI test runner capable of launching your:
+ * [Unit tests](#unit-tests)
+ * [e2e tests](#end-to-end-tests)
+    * Using Protractor+Angular's built in Selenium server
+    * Using BrowserStack's automation API/Selenium server, including BrowserStack-local (allowing you to run BrowserStack against local hosts. *Note: This required you to install the BrowserStack Local Chrome Extension*)
+
+Simply run `./test.sh` to specify what sort of testing you would like to do.
  
- Note: if you wish to use BrowserStack automated e2e testing you must store your BrowserStack credentials in a file `./e2e/browserstack-credentials.json` in the format:
+#### BrowserStack Automation
+Note: if you wish to use BrowserStack automated e2e testing you must store your BrowserStack credentials in a file `./e2e/browserstack-credentials.json` in the format:
 
 ```
  {
@@ -20,28 +63,22 @@ This project comes bundled with an interactive test runner capable of launching 
  }
 ```
 
-## Running unit tests
+In order to view the results, visit the [BrowserStack Automation Dashboard](https://automate.browserstack.com/dashboard). This can be accessed once you are logged into Chrome with the `uoaeresearch@gmail.com` account. The credentials for this account are available [here](https://secretserver.auckland.ac.nz/secretserver/SecretView.aspx?secretid=24118).
 
-Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## GraphQL Schema Types & Services
+This project contains an automatically generated [schema types/GraphQL services file](./src/app/graphql/schema.ts). This is generated by introspecting a running `cer-graphql` instance (by default it looks for a locally running instance). This is done with the [GraphQL Code Generate Tool](http://graphql-code-generator.com/).
 
-## Running end-to-end tests
+This generated file contains both:
+* TypeScript `types` corresponding to the GraphQL server's schema
+* Angular `services` automatically generated from any `.query.graphql` files located in the [queries](./src/app/graphql/queries/) folder.
 
-Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `npm run ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md)
-
-## Dev
-
-For local development run `npm run dev`. This will concurrently:
-
-1. Boot up the `cer-graphql` server locally
-2. Generate new schema types in the web project, monitor any changes to the `research-hub-web/src/app/graphql/` folder and automatically regenerate the schema if any changes are detected
-3. Serve the web project locally on port 4200, querying the locally running GraphQL server
-
-## GraphQL Schema Types
+### GraphQL Generator Settings
+The GraphQL Generator Tool's settings are controlled via the [codegen.yml](./codegen.yml). Documentation for which can be found [here](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular).
 
 ### Generate new GraphQL schema types
 
-To generate new types run `npm run generate`
+The generator can be executed in several ways:
+
+* `npm run generate`: Regenerates **once** and then exits
+* `npm run generate-watch`: Regenerates once, then watches for any changes to `.graphql` files in the [queries](./src/app/graphql/queries/) folder
+* `npm run dev`: As mentioned in the [Local Development Section](#local-development), this command also executes `npm run generate-watch`
