@@ -116,16 +116,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getSearchQueryParams(item: any) {
     const type = item['type'];
-
-    if (type === OptionType.Category) {
-      return { categoryId: item.id };
-    } else {
-      return { researchActivityIds: [item.id] };
-    }
-
-
-
-
+    return type === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
   }
 
   getRouteName(url: string) {

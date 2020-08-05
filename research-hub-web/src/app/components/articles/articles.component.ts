@@ -74,7 +74,6 @@ export class ArticlesComponent implements OnInit {
    */
   public getArticleBySlug(slug: string): Observable<Article> {
     try {
-      console.log('Loading article with slug:', slug)
       return this.getArticleBySlugGQL.fetch({ slug: this.slug })
         .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }

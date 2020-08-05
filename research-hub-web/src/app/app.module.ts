@@ -92,23 +92,13 @@ export class AppModule {
      * Creates global Apollo client and error handler.
      */
     const errorLink = onError(({ graphQLErrors, networkError }) => {
-      if (graphQLErrors) {
-        graphQLErrors.map(({ message, locations, path }) =>
-          console.log(`[GraphQL error]: Message: ${message}, Location: ${location}, Path: ${path}`),
-        );
-      }
       if (networkError) {
-        console.error('Network error detected');
-        console.log(`[Network error]: ${JSON.stringify(networkError, null, 2)}`);
-
         // Check for SSO protected error
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
-          console.log('SSO Authentication Error Detected at route:', this.router.url);
           this.loginService.doLogin(this.router.url);
         }
       }
     });
-
 
     apollo.create({
       link: ApolloLink.from([errorLink, httpLink.create({ uri: environment.cerGraphQLUrl })]),
