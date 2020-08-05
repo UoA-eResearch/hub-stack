@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routing';
 import { ConfirmDeactivateGuard } from './routing.confirm-deactivate';
 
-import { AuthGuard, LoginSuccessGuard } from 'uoa-auth-angular';
+import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 
 @NgModule({
   imports: [

@@ -70,7 +70,7 @@ pipeline {
             parallel {
                 stage('Build research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        changeset "**/research-hub-web/**/*.*"
                     }
                     steps {
                         echo 'Building research-hub-web project'
@@ -85,7 +85,7 @@ pipeline {
                 }
                 stage('Build cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
                         echo 'Building cer-graphql project'
@@ -105,7 +105,7 @@ pipeline {
                 }
                 stage('Build serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        changeset "**/serverless-now/**/*.*"
                     }
                     steps {
                         dir("serverless-now") {
@@ -121,23 +121,23 @@ pipeline {
             parallel {
                 stage('Run research-hub-web tests') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        changeset "**/research-hub-web/**/*.*"
                     }
                     steps {
                         echo 'Testing research-hub-web project'
 
                         dir("research-hub-web") {
                             echo 'Running research-hub-web unit tests'
-                            sh 'npm run test-headless'
+                            sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh 'npm run e2e'
+                            sh "npm run e2e -- -c ${BRANCH_NAME}"
                         }
                     }
                 }
                 stage('Run cer-graphql tests') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
                         echo 'Testing cer-graphql project'  
@@ -149,7 +149,7 @@ pipeline {
                 }
                 stage('Run serverless-now tests') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        changeset "**/serverless-now/**/*.*"
                     }
                     steps {
                         echo "Invoking serverless-now tests..."
@@ -165,7 +165,7 @@ pipeline {
             parallel {
                 stage('Deploy research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        changeset "**/research-hub-web/**/*.*"
                     }
                     stages {
                         stage('Deploy to S3 bucket') {
@@ -203,7 +203,7 @@ pipeline {
                 }
                 stage('Deploy cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
@@ -222,7 +222,7 @@ pipeline {
                 }
                 stage('Deploy serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        changeset "**/serverless-now/**/*.*"
                     }
                     steps {
                         echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
