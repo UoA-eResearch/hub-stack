@@ -5,9 +5,9 @@ slackCredentials = 'UoA-Slack-Access-Research-Hub'
 pipeline {
 
     parameters {
-        booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend.' )
-        booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API.')
-        booleanParam(name: "FORCE_REDEPLOY_SN", defaultValue: false, description: 'Force redeploy the serverless-now API.')
+        booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend even if there are no code changes.' )
+        booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API even if there are no code changes.')
+        booleanParam(name: "FORCE_REDEPLOY_SN", defaultValue: false, description: 'Force redeploy the serverless-now API even if there are no code changes.')
     }
 
     agent  {
@@ -77,7 +77,10 @@ pipeline {
             parallel {
                 stage('Build research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/**/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     steps {
                         echo 'Building research-hub-web project'
@@ -112,7 +115,10 @@ pipeline {
                 }
                 stage('Build serverless-now') {
                     when {
-                        changeset "**/serverless-now/**/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
                         dir("serverless-now") {
@@ -128,7 +134,10 @@ pipeline {
             parallel {
                 stage('Run research-hub-web tests') {
                     when {
-                        changeset "**/research-hub-web/**/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     steps {
                         echo 'Testing research-hub-web project'
@@ -156,7 +165,10 @@ pipeline {
                 }
                 stage('Run serverless-now tests') {
                     when {
-                        changeset "**/serverless-now/**/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
                         echo "Invoking serverless-now tests..."
