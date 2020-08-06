@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { SharedModule } from '../shared/app.shared.module';
 import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
@@ -11,14 +10,11 @@ import { PersonDetailsComponent } from "./person-details.component";
 describe('Person Details Component', () => {
   let component: PersonDetailsComponent;
   let fixture: ComponentFixture<PersonDetailsComponent>;
-  let backend: ApolloTestingController;
-  let controller: ApolloTestingController;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PersonDetailsComponent],
       imports: [
-        ApolloTestingModule,
         CommonModule,
         MaterialModule,
         SharedModule,
@@ -30,17 +26,14 @@ describe('Person Details Component', () => {
   }));
 
   beforeEach(() => {
-    controller = TestBed.get(ApolloTestingController);
-
-    backend = TestBed.get(ApolloTestingController);
     fixture = TestBed.createComponent(PersonDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  afterEach(() => {
-    controller.verify();
-  });
+//   afterEach(() => {
+
+//   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
