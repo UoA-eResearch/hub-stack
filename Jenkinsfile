@@ -95,7 +95,10 @@ pipeline {
                 }
                 stage('Build cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/**/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Building cer-graphql project'
@@ -153,7 +156,10 @@ pipeline {
                 }
                 stage('Run cer-graphql tests') {
                     when {
-                        changeset "**/cer-graphql/**/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Testing cer-graphql project'
