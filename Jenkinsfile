@@ -14,14 +14,6 @@ pipeline {
         label("uoa-buildtools-ionic")
     }
 
-    environment {
-        // Set environment variables for cer-graphql tests
-        CONTENTFUL_ACCESS_TOKEN = credentials('contentful-access-token')
-        CONTENTFUL_SPACE_ID = credentials('contentful-space-id')
-        COGNITO_REGION = credentials('cognito-region')
-        COGNITO_USER_POOL = credentials('cognito-user-pool')
-    }
-
     stages {
 
         stage('Checkout') {
@@ -47,13 +39,13 @@ pipeline {
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
                         env.awsProfile = 'uoa-its-nonprod'
-
+                        env.awsAccountId = 'uoa-nonprod-account-id'
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
                         env.awsCredentialsId = 'uoa-its-prod-access'
                         env.awsTokenId = 'uoa-its-prod-token'
                         env.awsProfile = 'uoa-its-prod'
-
+                        env.awsAccountId = 'uoa-prod-account-id'
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
@@ -85,7 +77,7 @@ pipeline {
             parallel {
                 stage('Build research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        changeset "**/research-hub-web/**/*.*"
                     }
                     steps {
                         echo 'Building research-hub-web project'
@@ -100,10 +92,18 @@ pipeline {
                 }
                 stage('Build cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
                         echo 'Building cer-graphql project'
+                        // Copy in credentials from Jenkins.
+                        withCredentials([
+                            file(credentialsId: "cer-graphql-credentials-${BRANCH_NAME}",variable:"credentialsfile")
+                        ]) {
+                            dir("cer-graphql"){
+                                sh "cp $credentialsfile .env"
+                            }                        
+                        }
                         dir("cer-graphql") {
                             echo "Building the docker image and tag it as latest"
                             sh "docker build . -t cer-graphql:latest"
@@ -112,7 +112,7 @@ pipeline {
                 }
                 stage('Build serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        changeset "**/serverless-now/**/*.*"
                     }
                     steps {
                         dir("serverless-now") {
@@ -128,23 +128,23 @@ pipeline {
             parallel {
                 stage('Run research-hub-web tests') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        changeset "**/research-hub-web/**/*.*"
                     }
                     steps {
                         echo 'Testing research-hub-web project'
 
                         dir("research-hub-web") {
                             echo 'Running research-hub-web unit tests'
-                            sh 'npm run test-headless'
+                            sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh 'npm run e2e'
+                            sh "npm run e2e -- -c ${BRANCH_NAME}"
                         }
                     }
                 }
                 stage('Run cer-graphql tests') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        changeset "**/cer-graphql/**/*.*"
                     }
                     steps {
                         echo 'Testing cer-graphql project'
@@ -156,7 +156,7 @@ pipeline {
                 }
                 stage('Run serverless-now tests') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        changeset "**/serverless-now/**/*.*"
                     }
                     steps {
                         echo "Invoking serverless-now tests..."
@@ -173,7 +173,7 @@ pipeline {
                 stage('Deploy research-hub-web') {
                     when {
                         anyOf {
-                            changeset "**/research-hub-web/*.*"
+                            changeset "**/research-hub-web/**/*.*"
                             equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                         }
                     }
@@ -214,7 +214,7 @@ pipeline {
                 stage('Deploy cer-graphql') {
                     when {
                         anyOf {
-                            changeset "**/cer-graphql/*.*"
+                            changeset "**/cer-graphql/**/*.*"
                             equals expected: true, actual: params.FORCE_REDEPLOY_CG
                         }
                     }
@@ -236,7 +236,7 @@ pipeline {
                 stage('Deploy serverless-now') {
                     when {
                         anyOf {
-                            changeset "**/serverless-now/*.*"
+                            changeset "**/serverless-now/**/*.*"
                             equals expected: true, actual: params.FORCE_REDEPLOY_SN
                         }
                     }
