@@ -8,7 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeaturedComponent } from "./featured.component";
 
 import { ResearchHubApiService } from "../../../services/research-hub-api.service";
-import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http'
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { AnalyticsService } from "../../../services/analytics.service";
 
 describe('Feature component', () => {
@@ -29,8 +30,7 @@ describe('Feature component', () => {
                 AnalyticsService,
                 ResearchHubApiService,
                 HttpClientModule,
-                HttpClient,
-                HttpHandler
+                HttpClientTestingModule
             ],
         })
             .compileComponents();
