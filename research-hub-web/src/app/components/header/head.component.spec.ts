@@ -8,8 +8,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from "./header.component";
 
 import { HeaderService } from "./header.service";
+import { ResearchHubApiService } from "../../services/research-hub-api.service";
+import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 
-describe('Person Details Component', () => {
+describe('Header Component', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
 
@@ -24,7 +26,11 @@ describe('Person Details Component', () => {
                 RouterModule.forRoot([]),
             ],
             providers: [
-                HeaderService
+                HeaderService,
+                ResearchHubApiService,
+                HttpClientModule,
+                HttpClient,
+                HttpHandler
             ],
         })
             .compileComponents();
@@ -42,6 +48,32 @@ describe('Person Details Component', () => {
 
     it('should create', () => {
         expect(component).toBeTruthy();
+    });
+
+    it('Should contain a title', () => {
+        expect(component.title).toBeTruthy();
+    });
+
+    it('Should contain a description', () => {
+        expect(component.description).toBeTruthy();
+    });
+
+    it('Should return empty object if no image url is given', () => {
+        let imageUrl;
+        expect(component.getBackgroundStyle(imageUrl)).toEqual({});
+    });
+
+    it('Should return an object with style information if an image url is given.', () => {
+        let imageUrl = "example";
+        let expectedStyle = {
+            'margin-bottom': '6em'
+        }
+        expect(component.getInfoStyle(imageUrl)).toEqual(expectedStyle);
+    });
+
+    it('Should return an empty object for styling if a url is given', () => {
+        let imageUrl;
+        expect(component.getInfoStyle(imageUrl)).toEqual({});
     });
 
 });
