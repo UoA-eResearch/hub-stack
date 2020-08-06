@@ -3,6 +3,13 @@ slackChannel = 'research-hub'
 slackCredentials = 'UoA-Slack-Access-Research-Hub'
 
 pipeline {
+
+    parameters {
+        booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend.' )
+        booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API.')
+        booleanParam(name: "FORCE_REDEPLOY_SN", defaultValue: false, description: 'Force redeploy the serverless-now API.')
+    }
+
     agent  {
         label("uoa-buildtools-ionic")
     }
@@ -165,7 +172,10 @@ pipeline {
             parallel {
                 stage('Deploy research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     stages {
                         stage('Deploy to S3 bucket') {
@@ -203,7 +213,10 @@ pipeline {
                 }
                 stage('Deploy cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
@@ -222,7 +235,10 @@ pipeline {
                 }
                 stage('Deploy serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
                         echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
