@@ -33,29 +33,20 @@ describe("serverless-now", () => {
   });
 
   // TODO: commenting out until POST requests are working.
-    // it("responds to POST requests with a valid body", async () => {
-    //   const resBody = await getResBody({
-    //     httpMethod: "POST",
-    //     body: {
-    //       upi: EXAMPLE_UPI,
-    //       comment: "Example ticket comment.",
-    //     },
-    //   });
-    //   expect(resBody.object).deep.to.contain({ upi: EXAMPLE_UPI });
-    // });
+  // it("responds to POST requests with a valid body", async () => {
+  //   const resBody = await getResBody({
+  //     httpMethod: "POST",
+  //     body: {
+  //       upi: EXAMPLE_UPI,
+  //       comment: "Example ticket comment.",
+  //     },
+  //   });
+  //   expect(resBody.object).deep.to.contain({ upi: EXAMPLE_UPI });
+  // });
 
   it("returns a decrypted example secret from AWS parameter store", async () => {
     const resBody = await getResBody({});
     expect(resBody.aws_message).to.equal(EXAMPLE_SECRET_VALUE);
-  });
-
-  it("returns an example ticket by a hardcoded ticket id", async () => {
-    const resBody = await getResBody({
-      queryStringParameters: { ticketId: EXAMPLE_TICKET_ID },
-    });
-    expect(resBody.short_description.value).to.contain(
-      EXAMPLE_TICKET_SHORT_DESCRIPTION
-    );
   });
 
   xit("returns the UPI of the requestor");
