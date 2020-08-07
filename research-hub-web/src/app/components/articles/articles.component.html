@@ -1,10 +1,18 @@
 <!-- If we're displaying all articles, not an individual article -->
 <app-collection-list *ngIf="allArticles$ | async as allArticles" [collection]="allArticles"></app-collection-list>
 
+
 <!-- If we're displaying an individual article -->
 <div id="article-container" *ngIf="article$ | async as article">
 
-    <mat-expansion-panel id="json">
+    <div *ngIf="!!parentSubHubs" style="margin-bottom: 2rem; text-align: center;">
+        <!-- <mat-card style="text-align: center;"> -->
+        <span id="keywords">{{ parentSubHubs.join('&nbsp;&nbsp; > &nbsp;&nbsp;') | titlecase }}&nbsp;&nbsp; > </span>
+        &nbsp;&nbsp;<span style="color: #b13462">{{ article.title }}</span>
+        <!-- </mat-card> -->
+    </div>
+
+    <!-- <mat-expansion-panel id="json">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 JSON Result
@@ -12,7 +20,7 @@
             <mat-panel-description>Click to see raw JSON</mat-panel-description>
         </mat-expansion-panel-header>
         <pre><code>{{ article | json}}</code></pre>
-    </mat-expansion-panel>
+    </mat-expansion-panel> -->
 
     <mat-card id="overview">
         <mat-card-header>

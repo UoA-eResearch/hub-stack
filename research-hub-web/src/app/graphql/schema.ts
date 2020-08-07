@@ -2587,6 +2587,11 @@ export type AllSearchableContentPublicFieldsQuery = { __typename?: 'Query', arti
       & PublicFields_CaseStudy_Fragment
     )>> }> };
 
+export type GetAllSubHubChildPagesSlugsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllSubHubChildPagesSlugsQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Article', slug: Maybe<string> } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment', slug: Maybe<string> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'Service', slug: Maybe<string> } | { __typename?: 'SubHub', slug: Maybe<string> }>> }> }>> }> };
+
 export type AllSubHubChildPagesQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
 }>;
@@ -2753,6 +2758,40 @@ export const AllSearchableContentPublicFieldsDocument = gql`
   })
   export class AllSearchableContentPublicFieldsGQL extends Apollo.Query<AllSearchableContentPublicFieldsQuery, AllSearchableContentPublicFieldsQueryVariables> {
     document = AllSearchableContentPublicFieldsDocument;
+    
+  }
+export const GetAllSubHubChildPagesSlugsDocument = gql`
+    query GetAllSubHubChildPagesSlugs {
+  subHubCollection {
+    items {
+      slug
+      title
+      subhubPagesCollection {
+        items {
+          ... on Article {
+            slug
+          }
+          ... on Equipment {
+            slug
+          }
+          ... on Service {
+            slug
+          }
+          ... on SubHub {
+            slug
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAllSubHubChildPagesSlugsGQL extends Apollo.Query<GetAllSubHubChildPagesSlugsQuery, GetAllSubHubChildPagesSlugsQueryVariables> {
+    document = GetAllSubHubChildPagesSlugsDocument;
     
   }
 export const AllSubHubChildPagesDocument = gql`

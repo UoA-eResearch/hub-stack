@@ -8,7 +8,8 @@ import {
   GetArticleBySlugGQL,
   GetArticleBySlugQuery,
   ArticleCollection,
-  Article
+  Article,
+  GetAllSubHubChildPagesSlugsGQL
 } from '../../graphql/schema';
 
 @Component({
@@ -21,11 +22,13 @@ export class ArticlesComponent implements OnInit {
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
   public slug: string;
+  public parentSubHubs: string[] = [];
 
   constructor(
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
-    public getArticleBySlugGQL: GetArticleBySlugGQL
+    public getArticleBySlugGQL: GetArticleBySlugGQL,
+    public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +47,21 @@ export class ArticlesComponent implements OnInit {
      */
     if (!!this.slug) {
       this.article$ = this.getArticleBySlug(this.slug);
+
+      // Breadcrumb test
+      this.getArticleBySlug(this.slug).subscribe(x => {
+        const articleSlug = x.slug;
+
+        // Run the query to get all subhub breadcrumbs
+        this.getAllSubHubChildPagesSlugs.fetch().subscribe(y => {
+          const subHubItems = y;
+          console.log(subHubItems)
+
+          this.getParentSubHubs(articleSlug, subHubItems.data.subHubCollection.items);
+          console.log(this.parentSubHubs);
+        })
+      });
+
     } else {
       this.allArticles$ = this.getAllArticles();
     }
@@ -77,6 +95,25 @@ export class ArticlesComponent implements OnInit {
       return this.getArticleBySlugGQL.fetch({ slug: this.slug })
         .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
+  }
+
+  /**
+   * Get the parent sub-hubs of a content item.
+   */
+  public getParentSubHubs(entrySlug, subHubCollectionItems) {
+    console.log(subHubCollectionItems)
+    console.log(this.parentSubHubs)
+    for (const item of subHubCollectionItems) {
+      item.subhubPagesCollection.items.forEach(subPage => {
+        if (subPage.slug === entrySlug) {
+          if (this.parentSubHubs.includes(item.title)) {
+            return console.error('Circular SubHub structure detected');
+          }
+          this.parentSubHubs.push(item.title)
+          return this.getParentSubHubs(item.slug, subHubCollectionItems)
+        }
+      });
+    }
   }
 
 }
