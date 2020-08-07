@@ -34,8 +34,14 @@ describe('Header Component', () => {
                 HttpClient,
                 HttpHandler,
                 // MatDialogRef,
-                { provide: MAT_DIALOG_DATA, useValue: {} },
-                { provide: MatDialogRef, useValue: {} }
+                {
+                    provide: MAT_DIALOG_DATA,
+                    useValue: {}
+                },
+                {
+                    provide: MatDialogRef,
+                    useValue: {}
+                },
             ],
         })
             .compileComponents();
