@@ -101,6 +101,8 @@ async function createServer(config) {
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
 
+                console.log(JSON.stringify(info))
+
                 // GraphQL introspection fields, these are used by GraphQL to query metadata
                 const GRAPHQL_INTROSPECTION_FIELDS = [
                     '__Schema',
@@ -135,13 +137,16 @@ async function createServer(config) {
                     if (recursive_iteration_count > MAX_RECURSIVE_ITERATIONS) {
                         throw new Error('Max recursive iterations exceeded when checking for field names.');
                     }
-
                     if (Array.isArray(obj)) { // If the object is an array
                         for (let x of obj) {
                             getRequestedFields(x); // Call the function recursively only each element in the array
                         }
                     } else { // Else it's an object
                         if (obj.kind && obj.kind == 'Field' && obj.name.value != 'items' && !obj.name.value.includes('Collection')) {
+                            //  Throw an error if they have tried to alias the ssoProtected result
+                            if (obj.name.value === 'ssoProtected' && !!obj.alias) {
+                                throw new AuthenticationError('Aliasing the ssoProtected field is forbidden');
+                            }
                             requestedFields.push(obj.name.value); // *Add it to the array if it's valid (and not a collection/items)
                         }
                         for (let key in obj) { // Loop over all the properties in this object
