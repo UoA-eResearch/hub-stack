@@ -5,12 +5,12 @@ import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ErrorDialogComponent } from "./error-dialog.component";
+import { ErrorDialogComponent } from './error-dialog.component';
 
 // import { ResearchHubApiService } from "../../services/research-hub-api.service";
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 
-describe('Header Component', () => {
+xdescribe('Header Component', () => {
     let component: ErrorDialogComponent;
     let fixture: ComponentFixture<ErrorDialogComponent>;
 
