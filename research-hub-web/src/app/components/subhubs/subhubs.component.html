@@ -1,6 +1,6 @@
 <mat-card class="parent-results" *ngIf="parentSubHubs.length > 0">
     <div *ngFor="let parentSubHub of parentSubHubs">
-        <h2>Parent SubHub</h2>
+        <h2 id="parent-title">Parent SubHub</h2>
         <a href="/subhubs/{{parentSubHub.slug}}">
             <button mat-stroked-button>
                 {{parentSubHub.title}}
@@ -50,7 +50,7 @@
             <h2>Pages in this SubHub</h2>
             <mat-nav-list>
                 <mat-card *ngFor="let subHubChildPage of subhub.subhubPagesCollection.items">
-                    <mat-card-header>
+                    <mat-card-header id="title">
                         {{ subHubChildPage.title }}
                         <mat-chip-avatar *ngIf="subHubChildPage.ssoProtected">
                             <mat-icon color="accent" matTooltip="SSO Login Required">lock</mat-icon>
