@@ -101,8 +101,6 @@ async function createServer(config) {
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
 
-                console.log(JSON.stringify(info))
-
                 // GraphQL introspection fields, these are used by GraphQL to query metadata
                 const GRAPHQL_INTROSPECTION_FIELDS = [
                     '__Schema',

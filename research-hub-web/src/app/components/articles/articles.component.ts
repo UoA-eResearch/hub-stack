@@ -95,14 +95,11 @@ export class ArticlesComponent implements OnInit {
       return this.getArticleBySlugGQL.fetch({ slug: this.slug })
         .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
-  }
 
   /**
    * Get the parent sub-hubs of a content item.
    */
   public getParentSubHubs(entrySlug, subHubCollectionItems) {
-    console.log(subHubCollectionItems)
-    console.log(this.parentSubHubs)
     for (const item of subHubCollectionItems) {
       item.subhubPagesCollection.items.forEach(subPage => {
         if (subPage.slug === entrySlug) {
