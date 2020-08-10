@@ -16,10 +16,6 @@ module.exports = function (config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    files: [
-      { pattern: './src/**/*.*', watched: true, included: false, served: true }
-    ],
-    preprocessors: {},
     mime: {
       'text/x-typescript': ['ts', 'tsx']
     },
