@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   researchHubApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/api/',
   cerApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/cer-api/', // TODO: Remove cer-api logic
+  cerGraphQLUrl: 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/',
   analyticsCode: '', // TODO: Add Google Analytics
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
@@ -14,7 +15,14 @@ export const environment = {
     logout_uri: 'https://d35r3tpm7jlu7p.cloudfront.net'
   },
   privateUrlKeyWords: {
-    whoNeedBearerToken: ['apigw.sandbox.amazon.auckland.ac.nz'],
-    whoNeedIdToken: []
-  }
+    get whoNeedBearerToken() {
+      return [
+        { url: 'apigw.sandbox.amazon.auckland.ac.nz', optional: false },
+        { url: environment.cerGraphQLUrl, optional: true }
+      ]
+    },
+    get whoNeedIdToken() {
+      return []
+    }
+  },
 };
