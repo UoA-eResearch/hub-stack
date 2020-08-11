@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../app.material.module';
 import { SharedModule } from '../shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CerGraphqlService } from '../../services/cer-graphql.service';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
@@ -49,7 +50,8 @@ describe('ArticlesComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
-        AllArticlesGQL
+        AllArticlesGQL,
+        CerGraphqlService
       ]
     }).compileComponents();
   }));

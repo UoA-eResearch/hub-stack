@@ -11,6 +11,7 @@ import {
   Article,
   GetAllSubHubChildPagesSlugsGQL
 } from '../../graphql/schema';
+import { CerGraphqlService } from '../../services/cer-graphql.service';
 
 @Component({
   selector: 'app-articles',
@@ -22,16 +23,17 @@ export class ArticlesComponent implements OnInit {
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
   public slug: string;
-  public parentSubHubs: string[] = [];
+  public parentSubHubs;
 
   constructor(
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
-    public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL
+    public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL,
+    public cerGraphQLService: CerGraphqlService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
     /**
      * Check if there is a slug URL parameter present. If so, this is
@@ -48,19 +50,33 @@ export class ArticlesComponent implements OnInit {
     if (!!this.slug) {
       this.article$ = this.getArticleBySlug(this.slug);
 
+      // this.parentSubHubs = this.cerGraphQLService.getParentSubHubs(this.slug).then(x => x);
+
+      // this.cerGraphQLService.getParentSubHubs('first-article').then(x => {
+      //   console.log(x)
+      // });
+
+      // this.cerGraphQLService.getParentSubHubs(this.slug).then(x => {
+      //   this.parentSubHubs = x
+      // })
+
+      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+
+
+
       // Breadcrumb test
-      this.getArticleBySlug(this.slug).subscribe(x => {
-        const articleSlug = x.slug;
+      // this.getArticleBySlug(this.slug).subscribe(x => {
+      //   const articleSlug = x.slug;
 
-        // Run the query to get all subhub breadcrumbs
-        this.getAllSubHubChildPagesSlugs.fetch().subscribe(y => {
-          const subHubItems = y;
-          console.log(subHubItems)
+      //   // Run the query to get all subhub breadcrumbs
+      //   this.getAllSubHubChildPagesSlugs.fetch().subscribe(y => {
+      //     const subHubItems = y;
+      //     console.log(subHubItems)
 
-          this.getParentSubHubs(articleSlug, subHubItems.data.subHubCollection.items);
-          console.log(this.parentSubHubs);
-        })
-      });
+      //     this.getParentSubHubs(articleSlug, subHubItems.data.subHubCollection.items);
+      //     console.log(this.parentSubHubs);
+      //   })
+      // });
 
     } else {
       this.allArticles$ = this.getAllArticles();
@@ -95,6 +111,7 @@ export class ArticlesComponent implements OnInit {
       return this.getArticleBySlugGQL.fetch({ slug: this.slug })
         .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
+  }
 
   /**
    * Get the parent sub-hubs of a content item.
@@ -114,3 +131,4 @@ export class ArticlesComponent implements OnInit {
   }
 
 }
+
