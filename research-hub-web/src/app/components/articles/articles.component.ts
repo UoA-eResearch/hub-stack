@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck, map, filter, first, flatMap, reduce } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+
 import {
   AllArticlesGQL,
   AllArticlesQuery,
@@ -49,35 +50,7 @@ export class ArticlesComponent implements OnInit {
      */
     if (!!this.slug) {
       this.article$ = this.getArticleBySlug(this.slug);
-
-      // this.parentSubHubs = this.cerGraphQLService.getParentSubHubs(this.slug).then(x => x);
-
-      // this.cerGraphQLService.getParentSubHubs('first-article').then(x => {
-      //   console.log(x)
-      // });
-
-      // this.cerGraphQLService.getParentSubHubs(this.slug).then(x => {
-      //   this.parentSubHubs = x
-      // })
-
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-
-
-
-      // Breadcrumb test
-      // this.getArticleBySlug(this.slug).subscribe(x => {
-      //   const articleSlug = x.slug;
-
-      //   // Run the query to get all subhub breadcrumbs
-      //   this.getAllSubHubChildPagesSlugs.fetch().subscribe(y => {
-      //     const subHubItems = y;
-      //     console.log(subHubItems)
-
-      //     this.getParentSubHubs(articleSlug, subHubItems.data.subHubCollection.items);
-      //     console.log(this.parentSubHubs);
-      //   })
-      // });
-
     } else {
       this.allArticles$ = this.getAllArticles();
     }
