@@ -58,7 +58,8 @@
 
         <mat-nav-list *ngFor="let relatedItem of article.relatedItemsCollection.items" class="collection">
             <mat-list-item>
-                <h4> {{ relatedItem['title'] + ': ' + relatedItem['summary'] }}</h4>
+                <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                    {{ relatedItem['title'] + ': ' + relatedItem['summary'] }}</a>
             </mat-list-item>
 
         </mat-nav-list>
