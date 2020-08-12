@@ -2,10 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
-import { ArticleCollection, AllArticlesGQL } from '../../graphql/schema';
+import { ArticleCollection, AllArticlesGQL, Article } from '../../graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../app.material.module';
 import { SharedModule } from '../shared/app.shared.module';
@@ -16,6 +16,7 @@ describe('ArticlesComponent', () => {
   let fixture: ComponentFixture<ArticlesComponent>;
   let controller: ApolloTestingController;
   let spy: any; // Returns mock query data
+  let spy2: any; // Returns mock query data
   const mockAllArticles$: Observable<ArticleCollection> = of({
     'items': [
       {
@@ -38,6 +39,15 @@ describe('ArticlesComponent', () => {
     '__typename': 'ArticleCollection'
   } as ArticleCollection);
 
+  const mockArticle$: Observable<Article> = of({
+        '__typename': 'Article',
+        'slug': 'first-article',
+        'title': 'First article',
+        'summary': 'A brief description of the first article. I\'m writing some more stuff here just so that this seems a little more realistic. Sam was here. Have a good day.',
+        'ssoProtected': false,
+        'searchable': true
+  } as Article);
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ArticlesComponent],
@@ -49,7 +59,15 @@ describe('ArticlesComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
-        AllArticlesGQL
+        AllArticlesGQL,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of([{
+              slug: 'first-article'
+            }])
+          }
+        }
       ]
     }).compileComponents();
   }));
@@ -57,6 +75,7 @@ describe('ArticlesComponent', () => {
   beforeEach(() => {
     controller = TestBed.get(ApolloTestingController);
     spy = spyOn(ArticlesComponent.prototype, 'getAllArticles').and.returnValue(mockAllArticles$);
+    spy2 = spyOn(ArticlesComponent.prototype, 'getArticleBySlug').and.returnValue(mockArticle$);
 
     fixture = TestBed.createComponent(ArticlesComponent);
     component = fixture.componentInstance;
@@ -74,6 +93,10 @@ describe('ArticlesComponent', () => {
   it('should have Article Collection as title', async () => {
     const de = fixture.debugElement.query(By.css('#title'));
     expect(de.nativeElement.innerHTML).toEqual('Article Collection');
+  });
+
+  xit('should have an specified article\'s data', () => {
+    //sdfksl
   });
 
 });
