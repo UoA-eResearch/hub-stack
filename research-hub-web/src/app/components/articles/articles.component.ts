@@ -67,7 +67,7 @@ export class ArticlesComponent implements OnInit {
     try {
       return this.allArticlesGQL.fetch()
         .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all aticles:', e) };
+    } catch (e) { console.error('Error loading all articles:', e) };
   }
 
   /**
@@ -84,23 +84,6 @@ export class ArticlesComponent implements OnInit {
       return this.getArticleBySlugGQL.fetch({ slug: this.slug })
         .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
-  }
-
-  /**
-   * Get the parent sub-hubs of a content item.
-   */
-  public getParentSubHubs(entrySlug, subHubCollectionItems) {
-    for (const item of subHubCollectionItems) {
-      item.subhubPagesCollection.items.forEach(subPage => {
-        if (subPage.slug === entrySlug) {
-          if (this.parentSubHubs.includes(item.title)) {
-            return console.error('Circular SubHub structure detected');
-          }
-          this.parentSubHubs.push(item.title)
-          return this.getParentSubHubs(item.slug, subHubCollectionItems)
-        }
-      });
-    }
   }
 
 }
