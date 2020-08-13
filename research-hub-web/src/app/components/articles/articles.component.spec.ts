@@ -329,10 +329,6 @@ describe('ArticlesComponent', () => {
       expect(component.slug).toBeTruthy();
     });
 
-    it('should have an specified article\'s data', () => {
-      console.log(component.slug);
-    });
-
     it('Should get a single article data', () => {
       component.getArticleBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('first-article');
