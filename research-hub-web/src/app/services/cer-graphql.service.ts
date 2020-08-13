@@ -43,7 +43,7 @@ export class CerGraphqlService {
       const breadCrumbsArray: SubHubTitleAndSlug[] = []; // The array to be populated by the recursive function
       this._getBreadCrumbsArray(entrySlug, breadCrumbsArray); // Populate the breadcrumbs array
       return breadCrumbsArray;
-    } catch (e) { console.error('Error loading breadcrumbs: ', e) }
+    } catch (e) { throw new Error('Error loading breadcrumbs') }
   }
 
   /**
@@ -61,7 +61,7 @@ export class CerGraphqlService {
         if (subPage.slug === entrySlug) { // The SubHub's childPages contains the current entry we're searching for
           for (const subHub of breadcrumbsArray) { // Check it's not already known
             if (subHub.slug === item.slug) {
-              return console.error('Circular SubHub structure detected');
+              throw new Error('Circular SubHub structure detected');
             }
           };
           breadcrumbsArray.push({ title: item.title, slug: item.slug }); // Push it to the breadcrumbsArray
