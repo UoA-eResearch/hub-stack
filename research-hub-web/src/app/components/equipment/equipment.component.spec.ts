@@ -65,7 +65,7 @@ describe('EquipmentComponent', () => {
     controller.verify();
   })
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
