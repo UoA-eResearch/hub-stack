@@ -18,6 +18,9 @@
         "name": "Entry",
         "possibleTypes": [
           {
+            "name": "Equipment"
+          },
+          {
             "name": "SubHub"
           },
           {
@@ -25,9 +28,6 @@
           },
           {
             "name": "Service"
-          },
-          {
-            "name": "Equipment"
           },
           {
             "name": "Person"
@@ -64,24 +64,6 @@
           },
           {
             "name": "SubHub"
-          }
-        ]
-      },
-      {
-        "kind": "UNION",
-        "name": "EquipmentRelatedItemsItem",
-        "possibleTypes": [
-          {
-            "name": "Article"
-          },
-          {
-            "name": "CaseStudy"
-          },
-          {
-            "name": "Equipment"
-          },
-          {
-            "name": "Service"
           }
         ]
       },
@@ -124,6 +106,24 @@
           },
           {
             "name": "SubHub"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "EquipmentRelatedItemsItem",
+        "possibleTypes": [
+          {
+            "name": "Article"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
+            "name": "Equipment"
+          },
+          {
+            "name": "Service"
           }
         ]
       }
