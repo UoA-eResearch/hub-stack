@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipmentCollection, AllEquipmentGQL, AllEquipmentQuery, AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery } from '../../graphql/schema';
+import { EquipmentCollection, AllEquipmentGQL, AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery } from '../../graphql/schema';
 import { Observable } from 'rxjs';
 import { pluck, tap } from 'rxjs/operators';
 
@@ -22,8 +22,8 @@ export class EquipmentComponent implements OnInit {
     try {
       return this.allEquipmentGQL.fetch()
         .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>;
-    } catch (e) { 
-      console.log('Error loading equipment:', e); 
+    } catch (e) {
+      console.log('Error loading equipment:', e);
     }
   }
 
