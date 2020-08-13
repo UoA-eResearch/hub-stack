@@ -16,7 +16,7 @@ export class AllComponent implements OnInit {
 
   ngOnInit(): void {
     try {
-      this.allSearchableContent$ = this.allSearchableContentPublicFieldsGQL.fetch().pipe(pluck('data'));
+      this.allSearchableContent$ = this.getAllSearchableContent();
     } catch (e) { console.error('Error loading all content:', e); }
   }
 
@@ -28,7 +28,15 @@ export class AllComponent implements OnInit {
     for (const collection of Object.keys(collectionCollection)) {
       count += collectionCollection[collection].items.length;
     }
+    console.log(count);
     return count;
+  }
+
+  /**
+   * A wrapper function that returns all collections of all searchable content types.
+   */
+  public getAllSearchableContent() {
+    return this.allSearchableContentPublicFieldsGQL.fetch().pipe(pluck('data'));
   }
 
 }
