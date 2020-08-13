@@ -7,7 +7,7 @@ import { ResearchHubApiService } from 'app/services/research-hub-api.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ErrorStateMatcher } from '@angular/material/core';
 
-describe('CategoryListComponent', () => {
+xdescribe('CategoryListComponent', () => {
   let component: CategoryListComponent;
   let fixture: ComponentFixture<CategoryListComponent>;
 
@@ -26,7 +26,7 @@ describe('CategoryListComponent', () => {
         ErrorStateMatcher
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
