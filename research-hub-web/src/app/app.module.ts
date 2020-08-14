@@ -73,7 +73,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     HttpLinkModule,
     ErrorPagesModule
   ],
-  entryComponents: [],
   providers: [
     HeaderService,
     SearchBarService,

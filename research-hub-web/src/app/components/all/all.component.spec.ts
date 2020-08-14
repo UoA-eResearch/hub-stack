@@ -17,7 +17,7 @@ xdescribe('AllComponent', () => {
   }));
 
   beforeEach(() => {
-    backend = TestBed.get(ApolloTestingController);
+    backend = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(AllComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
