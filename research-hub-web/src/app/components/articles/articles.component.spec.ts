@@ -57,7 +57,7 @@ describe('ArticlesComponent', () => {
   }));
 
   beforeEach(() => {
-    controller = TestBed.get(ApolloTestingController);
+    controller = TestBed.inject(ApolloTestingController);
     spy = spyOn(ArticlesComponent.prototype, 'getAllArticles').and.returnValue(mockAllArticles$);
 
     fixture = TestBed.createComponent(ArticlesComponent);

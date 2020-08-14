@@ -18,18 +18,18 @@ xdescribe('EquipmentComponent', () => {
   let controller: ApolloTestingController;
   let spy: any;
 
-  const mockAllEquipment$: Observable<EquipmentCollection> = of ({
-    "items": [
+  const mockAllEquipment$: Observable<EquipmentCollection> = of({
+    'items': [
       {
-        "__typename": "Equipment",
-        "slug": "death-star",
-        "title": "Death Star",
-        "summary": "Mobile space station and galactic superweapon.",
-        "ssoProtected": true,
-        "searchable": false
+        '__typename': 'Equipment',
+        'slug': 'death-star',
+        'title': 'Death Star',
+        'summary': 'Mobile space station and galactic superweapon.',
+        'ssoProtected': true,
+        'searchable': false
       }
     ],
-    "__typename": "EquipmentCollection"
+    '__typename': 'EquipmentCollection'
   } as EquipmentCollection);
 
   beforeEach(async(() => {
@@ -52,10 +52,10 @@ xdescribe('EquipmentComponent', () => {
   }));
 
   beforeEach(() => {
-    controller = TestBed.get(ApolloTestingController);
+    controller = TestBed.inject(ApolloTestingController);
     spy = spyOn(EquipmentComponent.prototype, 'getAllEquipment').and.returnValue(mockAllEquipment$);
 
-    backend = TestBed.get(ApolloTestingController);
+    backend = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(EquipmentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
