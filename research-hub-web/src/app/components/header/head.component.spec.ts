@@ -12,9 +12,18 @@ import { ResearchHubApiService } from '../../services/research-hub-api.service';
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-xdescribe('Header Component', () => {
+const mockHeaderService = {
+    'title': 'Welcome to the ResearchHub',
+    'description': 'The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research.',
+    'imageUrl': 'page-elements/20151005_Science Detail_001_1680x220_BW.jpg',
+    'isVisible': true
+};
+
+describe('Header Component', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
+    let spy: any;
+    let headerService: HeaderService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -48,8 +57,11 @@ xdescribe('Header Component', () => {
     }));
 
     beforeEach(() => {
+        headerService = new HeaderService();
         fixture = TestBed.createComponent(HeaderComponent);
         component = fixture.componentInstance;
+        // spy = spyOn(headerService.batchParamsChange, ).and.returnValue(mockHeaderService);
+
         fixture.detectChanges();
     });
 
@@ -60,7 +72,8 @@ xdescribe('Header Component', () => {
         expect(component).toBeTruthy();
     });
 
-    xit('Should contain a title', () => {
+    it('Should contain a title', () => {
+        console.log(JSON.stringify(component));
         expect(component.title).toBeTruthy();
     });
 
