@@ -36,4 +36,5 @@ cer-graphql/.env
 
 # ====================== serverless-now ================ #
 serverless-now/.serverless/
+serverless-now/env/local.env
 
