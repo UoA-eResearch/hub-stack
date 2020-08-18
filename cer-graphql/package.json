@@ -19,7 +19,7 @@
   "homepage": "https://github.com/UoA-eResearch/cer-graphql#readme",
   "dependencies": {
     "apollo-link-http": "^1.5.16",
-    "apollo-server": "^2.12.0",
+    "apollo-server": "^2.14.2",
     "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.3"
