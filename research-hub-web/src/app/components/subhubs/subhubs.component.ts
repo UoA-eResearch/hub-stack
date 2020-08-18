@@ -5,9 +5,11 @@ import {
   AllSubHubChildPagesQuery,
   AllContentItemParentSubHubsGQL,
   AllContentItemParentSubHubsQuery,
-} from '../../graphql/schema';
-import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+  SubHubCollection,
+  SubHub
+} from "../../graphql/schema";
+import { Observable } from "rxjs";
+import { pluck } from "rxjs/operators";
 
 @Component({
   selector: 'app-subhubs',
@@ -15,15 +17,10 @@ import { pluck } from 'rxjs/operators';
   styleUrls: ['./subhubs.component.scss'],
 })
 export class SubhubsComponent implements OnInit {
-  public allSubHubChildPages$: Observable<
-    AllSubHubChildPagesQuery['subHubCollection']
-  >;
-
-  public allContentItemParentSubHubs$: Observable<
-    AllContentItemParentSubHubsQuery['subHubCollection']
-  >;
-
-  public parentSubHubs = [];
+  public allSubHubChildPages$: Observable<SubHubCollection>;
+  public allContentItemParentSubHubs$: Observable<SubHubCollection>;
+  public parentSubHubs =  [];
+  public slug: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,29 +30,38 @@ export class SubhubsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const currentPageSlug = params['slug'];
       // test slug: landing-page-for-a-sub-hub
+      this.slug = params['slug'];
+      this.allSubHubChildPages$ = this.getSubHubInfoAndChildrenObservable(this.slug);
+      this.allContentItemParentSubHubs$ = this.getPossibleParentPagesObservable(this.slug);
 
-      if (!!currentPageSlug) {
-        // query for slug's target subhub info + items here
-      } else {
-        // render generic test about all the subhubs of the r-hub
-      }
-
-      // in theory contains an array of 1 which contains the subhub in the slug.
-      this.allSubHubChildPages$ = this.AllSubHubChildPagesGQL.fetch({
-        slug: currentPageSlug,
-      }).pipe(pluck('data', 'subHubCollection'));
-
-      this.allContentItemParentSubHubs$ = this.AllContentItemParentSubHubsGQL.fetch(
-        {
-          slug: currentPageSlug,
+      const GetSubHubParentsObserver = {
+        next: (contentItemLinkedSubHubs) => {
+          this.parentSubHubs = this.getParentSubHubsFromCurrentSlug(contentItemLinkedSubHubs, this.slug);
+        },
+        error: (error) => {
+          console.error("Could not retrieve linkedFrom items for this page.");
+        },
+        complete: () => {
+          console.log('Get subhub parents observer is complete.')
         }
-      ).pipe(pluck('data', 'subHubCollection'));
+      };
 
-      this.allContentItemParentSubHubs$ = this.AllContentItemParentSubHubsGQL.fetch(
+      // working
+      this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
+    });
+  }
+
+  /**
+   * Retrieves all subhubs that link to this current page/subhub.
+   * @param slug Page slug
+   */
+  public getPossibleParentPagesObservable(slug: string): Observable<SubHubCollection> {
+    // TODO: make the possible parent retrieval recursive until no valid parent can be found.
+    try {
+      return this.AllContentItemParentSubHubsGQL.fetch(
         {
-          slug: currentPageSlug,
+          slug
         }
       ).pipe(
         pluck(
@@ -67,16 +73,24 @@ export class SubhubsComponent implements OnInit {
           'subHubCollection',
           'items'
         )
-      );
+      ) as Observable<SubHubCollection>;    
+    } catch (error) {
+      console.log('Error retrieving possible parent pages: ', error);
+    }
+  }
 
-      const GetSubHubParentsObserver = {
-        next: (contentItemLinkedSubHubs) => {
-          this.parentSubHubs = this.getParentSubHubsFromCurrentSlug(contentItemLinkedSubHubs, currentPageSlug);
-        },
-      };
-
-      this.allContentItemParentSubHubs$.subscribe(GetSubHubParentsObserver);
-    });
+  /**
+   * Runs the query for the main body of a subhub item as including it's child pages but excluding it's ancestor/parent data.
+   * @param slug Page slug
+   */
+  public getSubHubInfoAndChildrenObservable(slug: string): Observable<SubHubCollection> {
+    try {
+      return this.AllSubHubChildPagesGQL.fetch({
+        slug
+      }).pipe(pluck("data", "subHubCollection")) as Observable<SubHubCollection>;
+    } catch (e) {
+      console.error('Error loading subhub body info and children')
+    }
   }
 
   /**
@@ -84,12 +98,12 @@ export class SubhubsComponent implements OnInit {
    * @param linkedItem A link item of the current page. Assumed to be a SubHubCollection item.
    * @param currentPageSlug The slug of the current page.
    */
-  private getParentSubHubsFromCurrentSlug(
-    contentItemsLinkedSubHubs: any,
-    currentPageSlug: any
-  ) {
-    const parentSubHubs = [];
-    contentItemsLinkedSubHubs.map((linkedItem) => {
+  public getParentSubHubsFromCurrentSlug (
+    possibleParentItems: Array<SubHub>,
+    currentPageSlug: string
+  ): Array<SubHub> {
+    let parentSubHubs = [];
+    possibleParentItems.map((linkedItem: SubHub) => {
       this.AllSubHubChildPagesGQL.fetch({
         slug: linkedItem.slug,
       })
