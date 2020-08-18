@@ -14,13 +14,17 @@ describe('Google Analytics service', () => {
         expect(analyticsService.isKnownUXEvent('blah', '')).toBe(false);
     });
 
-    it('Should return true for a known UX event', () => {
-        expect(analyticsService.isKnownUXEvent(mockUXEventLabel, analyticsService.eventActionClick)).toBe(true);
-    });
+    describe("isKnownUXEvent (function)", () => {
+        it('Should return true for a known UX event', () => {
+            expect(analyticsService.isKnownUXEvent(mockUXEventLabel, analyticsService.eventActionClick)).toBe(true);
+        });
+    })
 
-    it('Should throw an error at an invalid UX event', () => {
-        expect(() => analyticsService.trackUserExperience('blah', '')).toThrowError();
-    });
+    describe("trackUserExperience (function)", () => {
+        it('Should throw an error with invalid input', () => {
+            expect(() => analyticsService.trackUserExperience('blah', '')).toThrowError();
+        });
+    })
 
     it('Should not throw error when calling track policy valid inputs', () => {
         expect(() => analyticsService.trackPolicy('test', 'test')).not.toThrowError();
