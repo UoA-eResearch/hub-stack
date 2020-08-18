@@ -1,49 +1,75 @@
 service: serverless-now
-
+custom:
+  ResearchHub: ${self:service}
+  BusinessService: Faculty of Science
+  Department: Centre for eResearch
+  ProjectCode: N/A
+  WikiLink: N/A
+  Application: ${self:service}
+  CostCentre: N/A
+  customDomain:
+    domainName: ${file(env/${self:provider.stage}.json):infra.awsApiGatewayCustomDomainName}
+    basePath: ${self:service}
+    stage: ${self:provider.stage}
+    createRoute53Records: true
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: ${opt:stage, 'dev'} # Deploy with sls deploy --stage STAGE (default dev)
+  stage: ${opt:stage, 'sandbox'} # Deploy with sls deploy --stage STAGE (default dev)
   region: ap-southeast-2
   endpointType: regional
-  role: arn:aws:iam::416527880812:role/lambda_basic_execution_with_read_only_access_to_SSM
+  role: arn:aws:iam::${file(env/${self:provider.stage}.json):awsAccountId}:${file(env/${self:provider.stage}.json):lambdaRole}
+  tags:
+    ResearchHub: ${self:custom.ResearchHub}
+    BusinessService:  ${self:custom.BusinessService}
+    Department: ${self:custom.Department}
+    ProjectCode: ${self:custom.ProjectCode}
+    WikiLink: ${self:custom.WikiLink}
+    Application: ${self:custom.Application}
+    CostCentre: ${self:custom.CostCentre}
   stackTags:
-    ResearchHub: ${self:service}
-    BusinessService: Faculty of Science
-    Department: Centre for eResearch
-    ProjectCode: N/A
-    WikiLink: N/A
-    Application: ${self:service}
-    CostCentre: N/A
+    ResearchHub: ${self:custom.ResearchHub}
+    BusinessService:  ${self:custom.BusinessService}
+    Department: ${self:custom.Department}
+    ProjectCode: ${self:custom.ProjectCode}
+    WikiLink: ${self:custom.WikiLink}
+    Application: ${self:custom.Application}
+    CostCentre: ${self:custom.CostCentre}
   environment:
     # Environment variables available to all functions in this service
-    ENV: ${self:provider.stage}
+    SERVICENOW_BASE_URL: ${file(env/${self:provider.stage}.json):SERVICENOW_BASE_URL}
     LEVEL: INFO
-    EXAMPLE_KEY: ${ssm:/${self:provider.stage}/research-hub/example-key~true}
-    SN_API_KEY_R: ${ssm:/${self:provider.stage}/research-hub/SN_API_KEY_R~true}
-    SN_DEV_API_KEY_RW: ${ssm:/${self:provider.stage}/research-hub/SN_DEV_API_KEY_RW~true}
-    COGNITO_DOMAIN: "uoapool-sandbox.auth.ap-southeast-2.amazoncognito.com"
+    EXAMPLE_KEY: ${file(env/${self:provider.stage}.json):EXAMPLE_KEY}
+    SN_API_KEY_R: ${file(env/${self:provider.stage}.json):SN_API_KEY_R}
+    SN_DEV_API_KEY_RW: ${file(env/${self:provider.stage}.json):SN_DEV_API_KEY_RW}
+    COGNITO_DOMAIN: ${file(env/${self:provider.stage}.json):COGNITO_DOMAIN}
   iamRoleStatements:
     - Effect: Allow
       Action:
         - ssm:GetParameter
         - ssm:GetParameters
       Resource:
-        - "arn:aws:ssm:${self:provider.region}:416527880812:parameter/${self:provider.stage}/research-hub/*"
+        - arn:
+          Fn::Join:
+            - ':'
+            - - arn
+              - aws
+              - ssm:${self:provider.region}
+              - ${file(env/${self:provider.stage}.json):awsAccountId}
+              - parameter/${self:provider.stage}/research-hub/*"
     - Effect: Allow
       Action:
         - kms:Decrypt
       Resource:
-        - "arn:aws:kms:ap-southeast-2:416527880812:key/3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d"
-  alb:
-    authorizers:
-      cognito-authorizer-uoapool:
-        type: 'cognito'
-        userPoolArn: 'arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O'
-        userPoolClientId: 'lrju6v80vse4bbaesjvnr2ff0' # required
-        userPoolDomain: 'uoapool-sandbox' # required
-        scope: 'openid profile https://my-domain.auckland.ac.nz/angular-test' 
-
+        - arn:
+          Fn::Join:
+            - ':'
+            - - arn
+              - aws
+              - kms
+              - ${self:provider.region}
+              - ${file(env/${self:provider.stage}.json):awsAccountId}
+              - ${file(env/${self:provider.stage}.json):resourceKey}
 package:
   exclude:
     - .git/**
@@ -52,13 +78,12 @@ package:
     - node_modules/**
     - '!node_modules/@uoa/**'
     - '!node_modules/uuid/**'
-
 functions:
   serverless-now:
     handler: handler.main
     events:
       - http:
-          path: serverless-now
+          path: /
           method: get
           cors: true
           authorizer:
@@ -66,12 +91,9 @@ functions:
             type: cognito_user_pools
             arn: arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O
             identitySource: method.request.header.Authorization
-            scopes: 
-              - openid
-              - profile
-              - https://test-domain.auckland.ac.nz/lambda-hello-world
+            scopes: ${file(env/${self:provider.stage}.json):OAUTH_SCOPES} 
       - http:
-          path: serverless-now
+          path: /
           method: post
           cors: true
           authorizer:
@@ -79,11 +101,8 @@ functions:
             type: cognito_user_pools
             arn: arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O
             identitySource: method.request.header.Authorization
-            scopes: 
-              - openid
-              - profile
-              - https://test-domain.auckland.ac.nz/lambda-hello-world
-              
+            scopes: ${file(env/${self:provider.stage}.json):OAUTH_SCOPES}
 plugins:
   - serverless-offline
   - serverless-mocha-plugin
+  - serverless-domain-manager

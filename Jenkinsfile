@@ -3,6 +3,13 @@ slackChannel = 'research-hub'
 slackCredentials = 'UoA-Slack-Access-Research-Hub'
 
 pipeline {
+
+    parameters {
+        booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend even if there are no code changes.' )
+        booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API even if there are no code changes.')
+        booleanParam(name: "FORCE_REDEPLOY_SN", defaultValue: false, description: 'Force redeploy the serverless-now API even if there are no code changes.')
+    }
+
     agent  {
         label("uoa-buildtools-ionic")
     }
@@ -20,29 +27,29 @@ pipeline {
             steps {
                 script {
                     echo 'Setting environment variables'
-
+                    env.awsRegion = "ap-southeast-2"
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
-
+                        env.awsAccountId = '416527880812'
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
                         env.awsProfile = 'uoa-its-nonprod'
-
+                        env.awsAccountId = 'uoa-nonprod-account-id'
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
                         env.awsCredentialsId = 'uoa-its-prod-access'
                         env.awsTokenId = 'uoa-its-prod-token'
                         env.awsProfile = 'uoa-its-prod'
-
+                        env.awsAccountId = 'uoa-prod-account-id'
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
-
+                        env.awsAccountId = '416527880812'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
@@ -65,12 +72,15 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     steps {
                         echo 'Building research-hub-web project'
@@ -85,18 +95,39 @@ pipeline {
                 }
                 stage('Build cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Building cer-graphql project'
+                        // Copy in credentials from Jenkins.
+                        withCredentials([
+                            file(credentialsId: "cer-graphql-credentials-${BRANCH_NAME}",variable:"credentialsfile")
+                        ]) {
+                            dir("cer-graphql"){
+                                sh "cp $credentialsfile .env"
+                            }                        
+                        }
+                        dir("cer-graphql") {
+                            echo "Building the docker image and tag it as latest"
+                            sh "docker build . -t cer-graphql:latest"
+                        }
                     }
                 }
                 stage('Build serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
-                        echo 'Building serverless-now project'
+                        dir("serverless-now") {
+                            echo 'Installing serverless-now dependencies...'
+                            sh "npm install"
+                        }
                     }
                 }
             }
@@ -106,34 +137,50 @@ pipeline {
             parallel {
                 stage('Run research-hub-web tests') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     steps {
                         echo 'Testing research-hub-web project'
 
                         dir("research-hub-web") {
                             echo 'Running research-hub-web unit tests'
-                            sh 'npm run test-headless'
+                            sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh 'npm run e2e'
+                            sh "npm run e2e -- -c ${BRANCH_NAME}"
                         }
                     }
                 }
                 stage('Run cer-graphql tests') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Testing cer-graphql project'
+                        dir('cer-graphql') {
+                            sh "npm install"
+                            sh "npm run test"
+                        }
                     }
                 }
                 stage('Run serverless-now tests') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
-                        echo 'Testing serverless-now project'
+                        echo "Invoking serverless-now tests..."
+                        dir('serverless-now') {
+                            sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                        }
                     }
                 }
             }
@@ -143,7 +190,10 @@ pipeline {
             parallel {
                 stage('Deploy research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     stages {
                         stage('Deploy to S3 bucket') {
@@ -181,19 +231,38 @@ pipeline {
                 }
                 stage('Deploy cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
+                        echo "Logging in to ECR"
+                        sh "(aws ecr get-login --no-include-email --region ${awsRegion} --profile=${awsProfile}) | /bin/bash"
+
+                        echo "Tagging built image with ECR tag"
+                        sh "docker tag cer-graphql:latest ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
+
+                        echo "Pushing built image to ECR"
+                        sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
+
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
                     }
                 }
                 stage('Deploy serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
-                        echo 'Deploying serverless-now Lambda function to ' + BRANCH_NAME
+                        echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
+                        dir("serverless-now") {
+                            sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                        }
                     }
                 }
             }

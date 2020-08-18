@@ -1,0 +1,6 @@
+{
+    "OAUTH_SCOPES": [
+        "openid",
+        "profile"
+    ]
+}
