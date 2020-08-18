@@ -1,14 +1,14 @@
 
 import { of, combineLatest, Subscription, Observable, Subject, forkJoin } from 'rxjs';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { SearchBarService } from 'app/components/search-bar/search-bar.service';
-import { CategoryId, OptionsService, RoleTypeId } from 'app/services/options.service';
+import { SearchBarService } from '../../components/search-bar/search-bar.service';
+import { CategoryId, OptionsService, RoleTypeId } from '../../services/options.service';
 import {
   ResearchHubApiService, OrderBy,
   SearchResultsParams
-} from 'app/services/research-hub-api.service';
-import { Page } from 'app/model/Page';
-import { AnalyticsService } from 'app/services/analytics.service';
+} from '../../services/research-hub-api.service';
+import { Page } from '../../model/Page';
+import { AnalyticsService } from '../../services/analytics.service';
 
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
