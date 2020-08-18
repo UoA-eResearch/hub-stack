@@ -1,0 +1,17 @@
+{
+    "awsAccountId": "416527880812",
+    "infra": {
+        "awsApiGatewayCustomDomainName": "apigw.sandbox.amazon.auckland.ac.nz"
+    },
+    "SERVICENOW_BASE_URL": "api.dev.auckland.ac.nz",
+    "COGNITO_DOMAIN": "uoapool-sandbox.auth.ap-southeast-2.amazoncognito.com",
+    "EXAMPLE_KEY": "${ssm:/sandbox/research-hub/example-key~true}",
+    "SN_API_KEY_R": "${ssm:/sandbox/research-hub/SN_API_KEY_R~true}",
+    "SN_DEV_API_KEY_RW": "${ssm:/sandbox/research-hub/SN_DEV_API_KEY_RW~true}",
+    "OAUTH_SCOPES": [
+        "openid",
+        "profile"
+    ],
+    "resourceKey": "key/3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d",
+    "lambdaRole": "role/lambda_basic_execution_with_read_only_access_to_SSM"
+}
