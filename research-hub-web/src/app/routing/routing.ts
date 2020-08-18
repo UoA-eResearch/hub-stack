@@ -69,7 +69,7 @@ export const appRoutes: Routes = [
     loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {
-    path: 'subhubs/:slug',
+    path: 'subhub/:slug',
     loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {

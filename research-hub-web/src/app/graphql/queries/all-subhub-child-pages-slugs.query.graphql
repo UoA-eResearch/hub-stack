@@ -1,0 +1,24 @@
+query GetAllSubHubChildPagesSlugs {
+    subHubCollection {
+        items {
+            slug
+            title
+            subhubPagesCollection {
+                items {
+                    ...on Article {
+                        slug
+                    }
+                    ...on Equipment {
+                        slug
+                    }
+                    ...on Service {
+                        slug
+                    }
+                    ...on SubHub {
+                        slug
+                    }
+                }
+            }
+        }
+    }
+}

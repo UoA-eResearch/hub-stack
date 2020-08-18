@@ -2598,6 +2598,11 @@ export type AllSearchableContentPublicFieldsQuery = { __typename?: 'Query', arti
       & PublicFields_CaseStudy_Fragment
     )>> }> };
 
+export type GetAllSubHubChildPagesSlugsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllSubHubChildPagesSlugsQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Article', slug: Maybe<string> } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment', slug: Maybe<string> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'Service', slug: Maybe<string> } | { __typename?: 'SubHub', slug: Maybe<string> }>> }> }>> }> };
+
 export type AllSubHubChildPagesQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
 }>;
@@ -2611,6 +2616,13 @@ export type GetArticleBySlugQueryVariables = Exact<{
 
 
 export type GetArticleBySlugQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'ArticleBody', json: any }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'SubHub' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'CaseStudy' } | { __typename?: 'Testing' }>> }> }>> }> };
+
+export type GetEquipmentBySlugQueryVariables = Exact<{
+  slug: Maybe<Scalars['String']>;
+}>;
+
+
+export type GetEquipmentBySlugQuery = { __typename?: 'Query', equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<{ __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'EquipmentBody', json: any }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedItemsCollection: Maybe<{ __typename?: 'EquipmentRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> }>> }> }>> }> };
 
 export const PublicFieldsFragmentDoc = gql`
     fragment PublicFields on Entry {
@@ -2766,6 +2778,40 @@ export const AllSearchableContentPublicFieldsDocument = gql`
     document = AllSearchableContentPublicFieldsDocument;
     
   }
+export const GetAllSubHubChildPagesSlugsDocument = gql`
+    query GetAllSubHubChildPagesSlugs {
+  subHubCollection {
+    items {
+      slug
+      title
+      subhubPagesCollection {
+        items {
+          ... on Article {
+            slug
+          }
+          ... on Equipment {
+            slug
+          }
+          ... on Service {
+            slug
+          }
+          ... on SubHub {
+            slug
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAllSubHubChildPagesSlugsGQL extends Apollo.Query<GetAllSubHubChildPagesSlugsQuery, GetAllSubHubChildPagesSlugsQueryVariables> {
+    document = GetAllSubHubChildPagesSlugsDocument;
+    
+  }
 export const AllSubHubChildPagesDocument = gql`
     query AllSubHubChildPages($slug: String) {
   subHubCollection(where: {slug: $slug}) {
@@ -2882,5 +2928,55 @@ export const GetArticleBySlugDocument = gql`
   })
   export class GetArticleBySlugGQL extends Apollo.Query<GetArticleBySlugQuery, GetArticleBySlugQueryVariables> {
     document = GetArticleBySlugDocument;
+    
+  }
+export const GetEquipmentBySlugDocument = gql`
+    query GetEquipmentBySlug($slug: String) {
+  equipmentCollection(where: {slug: $slug}) {
+    items {
+      title
+      summary
+      ssoProtected
+      body {
+        json
+      }
+      keywords
+      slug
+      ssoProtected
+      searchable
+      icon {
+        title
+        description
+        url
+      }
+      relatedItemsCollection {
+        items {
+          ... on Article {
+            title
+            summary
+            slug
+          }
+          ... on Service {
+            title
+            summary
+            slug
+          }
+          ... on Equipment {
+            title
+            summary
+            slug
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetEquipmentBySlugGQL extends Apollo.Query<GetEquipmentBySlugQuery, GetEquipmentBySlugQueryVariables> {
+    document = GetEquipmentBySlugDocument;
     
   }
