@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, forwardRef, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, ViewChild, forwardRef, OnChanges, SimpleChanges } from '@angular/core';
 import {
   MatInput
 } from '@angular/material/input';
@@ -12,7 +12,7 @@ import {
   NG_VALUE_ACCESSOR,
   NG_VALIDATORS
 } from '@angular/forms';
-import { AnalyticsService } from 'app/services/analytics.service';
+import { AnalyticsService } from '../../../services/analytics.service';
 
 export interface Tag {
   id: number;
@@ -58,7 +58,7 @@ export class MatTagsComponent implements ControlValueAccessor, OnChanges {
 
   @Input() placeholder = '';
 
-  constructor(public analyticsService: AnalyticsService) {}
+  constructor(public analyticsService: AnalyticsService) { }
 
   @Input()
   set value(v: Tag[]) {
@@ -69,7 +69,7 @@ export class MatTagsComponent implements ControlValueAccessor, OnChanges {
     return this._value;
   }
 
-  isDisabled : boolean;
+  isDisabled: boolean;
 
   onChange = (_: any): void => {
     // mock
@@ -78,7 +78,7 @@ export class MatTagsComponent implements ControlValueAccessor, OnChanges {
     // mock
   };
 
-  setDisabledState(isDisabled){
+  setDisabledState(isDisabled) {
     this.isDisabled = isDisabled;
   }
 
@@ -133,11 +133,11 @@ export class MatTagsComponent implements ControlValueAccessor, OnChanges {
     this.placeholder.search('person') != -1 ? this.analyticsService.trackUserExperience('Filter panel', 'refine by person') : this.analyticsService.trackUserExperience('Filter panel', 'refine by org unit');
   }
 
-  triggerAutocomplete(){
-    if (this.isDisabled){
+  triggerAutocomplete() {
+    if (this.isDisabled) {
       return;
     }
-    if (!this.autoTrigger.panelOpen){
+    if (!this.autoTrigger.panelOpen) {
       this.autoTrigger.openPanel();
     }
   }
@@ -146,7 +146,7 @@ export class MatTagsComponent implements ControlValueAccessor, OnChanges {
     if (this.addNew) {
       if (input.value && !this.autoTrigger.activeOption) {
         const newId: number = Math.floor(Math.random() * (100000 - 10000 + 1)) + 10000;
-        const newTag: Tag = {id: newId, text: input.value, imageUrl: undefined};
+        const newTag: Tag = { id: newId, text: input.value, imageUrl: undefined };
         this.source.push(newTag);
         this.addTag(newTag, input);
       }
