@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck, map, filter, first, flatMap, reduce } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+
 import {
   AllArticlesGQL,
   AllArticlesQuery,
   GetArticleBySlugGQL,
   GetArticleBySlugQuery,
   ArticleCollection,
-  Article
+  Article,
+  GetAllSubHubChildPagesSlugsGQL
 } from '../../graphql/schema';
+import { CerGraphqlService } from '../../services/cer-graphql.service';
 
 @Component({
   selector: 'app-articles',
@@ -21,14 +24,17 @@ export class ArticlesComponent implements OnInit {
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
   public slug: string;
+  public parentSubHubs;
 
   constructor(
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
-    public getArticleBySlugGQL: GetArticleBySlugGQL
+    public getArticleBySlugGQL: GetArticleBySlugGQL,
+    public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL,
+    public cerGraphQLService: CerGraphqlService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
 
     /**
      * Check if there is a slug URL parameter present. If so, this is
@@ -44,6 +50,7 @@ export class ArticlesComponent implements OnInit {
      */
     if (!!this.slug) {
       this.article$ = this.getArticleBySlug(this.slug);
+      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.allArticles$ = this.getAllArticles();
     }
@@ -60,7 +67,7 @@ export class ArticlesComponent implements OnInit {
     try {
       return this.allArticlesGQL.fetch()
         .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all aticles:', e) };
+    } catch (e) { console.error('Error loading all articles:', e) };
   }
 
   /**
@@ -80,3 +87,4 @@ export class ArticlesComponent implements OnInit {
   }
 
 }
+

@@ -12,6 +12,21 @@ mat-expansion-panel, mat-card  {
 // The container for an individual article
 #article-container {
 
+    #breadcrumbs {
+        margin-bottom: 3vh;
+
+        .breadcrumb-subhub {
+            &::after {
+                margin: 0 0.5em 0 0.5em;
+                content: ' >'
+            }
+        }
+
+        #breadcrumb-current-page {
+            color: $color-pink;
+        }
+    }
+
     #item-avatar {
         $avatar-size: 75px;
         width: $avatar-size;
