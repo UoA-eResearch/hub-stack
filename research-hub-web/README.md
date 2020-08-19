@@ -51,15 +51,15 @@ This project comes bundled with an interactive bash CLI test runner capable of l
     * Using Protractor+Angular's built in Selenium server
     * Using BrowserStack's automation API/Selenium server, including BrowserStack-local (allowing you to run BrowserStack against local hosts. *Note: This required you to install the BrowserStack Local Chrome Extension*)
 
-Simply run `./test.sh` to specify what sort of testing you would like to do.
+Simply run `./test.sh` to specify what sort of testing you would like to do. If you are doing local testing, you must first run `npm run dev` first.
  
 #### BrowserStack Automation
-Note: if you wish to use BrowserStack automated e2e testing you must store your BrowserStack credentials in a file `./e2e/browserstack-credentials.json` in the format:
+Note: if you wish to use BrowserStack automated e2e testing you must store your BrowserStack credentials in the file `.env` in the monorepo folder in the format:
 
 ```
  {
-    "USER": "BrowserStack-username-here",
-    "KEY": "BrowserStack-api-key-here"
+    "BROWSERSTACK_CREDENTIALS_USER": "BrowserStack-username-here",
+    "BROWSERSTACK_CREDENTIALS_KEY": "BrowserStack-api-key-here"
  }
 ```
 
