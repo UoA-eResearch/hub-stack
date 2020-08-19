@@ -29,9 +29,8 @@ research-hub-web/npm-debug.log
 research-hub-web/testem.log
 research-hub-web/typings
 
-# ====================== cer-graphql =================== #
 # Ignore config file so secrets are not automatically checked in
-cer-graphql/.env
+.env
 
 
 # ====================== serverless-now ================ #
