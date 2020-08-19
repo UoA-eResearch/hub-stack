@@ -51,7 +51,7 @@ run_protractor() {
         fi
     else
         echo "Running Local Selenium tests against host: $1"
-        ng e2e
+        npx ng e2e
     fi
 }
 
