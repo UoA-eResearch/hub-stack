@@ -47,7 +47,6 @@
     "apollo-link-error": "^1.1.13",
     "classlist.js": "^1.1.20150312",
     "contentful": "^7.14.6",
-    "crypto-js": "3.3.0",
     "date-fns": "~2.14.0",
     "graphql": "^15.3.0",
     "graphql-tag": "^2.10.4",
