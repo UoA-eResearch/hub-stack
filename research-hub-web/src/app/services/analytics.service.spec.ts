@@ -21,8 +21,8 @@ describe('Google Analytics service', () => {
     })
 
     describe("trackUserExperience (function)", () => {
-        it('Should throw an error with invalid input', () => {
-            expect(() => analyticsService.trackUserExperience('blah', '')).toThrowError();
+        it('Should not throw an error with invalid input', () => {
+            expect(() => analyticsService.trackUserExperience('test', 'test')).not.toThrowError();
         });
     })
 
