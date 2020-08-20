@@ -1,24 +1,32 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "downlevelIteration": true,
     "importHelpers": true,
-    "outDir": "./dist/out-tsc",
-    "baseUrl": "./",
-    "sourceMap": false,
+    "sourceMap": true,
     "declaration": false,
     "module": "es2020",
     "moduleResolution": "node",
-    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es2015",
+    "types": [],
     "lib": [
       "es2018",
       "dom",
       "esnext.asynciterable"
     ],
   },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts",
+  ],
+  "include": [
+    "**/src/**/*.d.ts"
+  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
