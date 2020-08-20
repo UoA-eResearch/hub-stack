@@ -34,12 +34,6 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
-                        // Copy in credentials from Jenkins.
-                        withCredentials([
-                            file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
-                        ]) {
-                            sh "cp $credentialsfile .env"
-                        }
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
@@ -60,7 +54,15 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                     }
-                    
+                    echo "Copying in credentials file"
+                        // Copy in credentials from Jenkins so build and test
+                        // works properly.
+                        withCredentials([
+                            file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
+                        ]) {
+                            sh "cp $credentialsfile .env"
+                        }
+
                 }
             }
         }
