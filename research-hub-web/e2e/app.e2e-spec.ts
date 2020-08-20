@@ -20,6 +20,10 @@ describe('ResearchHub\'s Basic Functionality', () => {
    * Visits the home page and checks it contains the heading 'Welcome to the ResearchHub'.
    */
   it('can display welcome message', async () => {
+    browser.wait(() => {
+      // Test sometimes fail because the element is not yet present, so we wait.
+      return element(by.css('app-root h1')).isPresent();
+    },5000);
     const welcomeMsg = await browser.driver.findElement(by.css('app-root h1')).getText();
     expect(welcomeMsg).toEqual('Welcome to the ResearchHub');
   });
