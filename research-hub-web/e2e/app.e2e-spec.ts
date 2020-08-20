@@ -188,17 +188,11 @@ describe('ResearchHub\'s Research Impact Content', () => {
    * its title is 'Planning for Impact'.
    */
   it('can correctly load a sub-page (guideCategory) item', async () => {
-    console.log("Beginning impact test.");
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('mat-grid-list .browse-tile:first-of-type'))), TIMEOUT_PERIOD);
-    console.log("Found buttons");
     await browser.driver.findElement(by.css('mat-grid-list .browse-tile:first-of-type')).click();
-    console.log("Clicked the button")
     await browser.waitForAngular();
-    console.log("Angular finished waiting");
     await browser.driver.wait(protractor.ExpectedConditions.visibilityOf(element(by.css('.description h1'))), TIMEOUT_PERIOD);
-    console.log("Found h1");
     expect(await browser.driver.findElement(by.css('.description h1')).getText()).toEqual('Planning for Impact');
-    console.log("Finished");
   });
 
   /**
