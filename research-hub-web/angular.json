@@ -210,7 +210,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "e2e/tsconfig.json"
+              "tsconfig.e2e.json"
             ],
             "exclude": []
           }
