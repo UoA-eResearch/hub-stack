@@ -1,8 +1,8 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
-import {OptionsService} from 'app/services/options.service';
-import {Subscription} from 'rxjs';
-import {MediaChange, MediaObserver} from '@angular/flex-layout';
-import {LayoutService} from 'app/services/layout.service';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { OptionsService } from '../../../services/options.service';
+import { Subscription } from 'rxjs';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { LayoutService } from '../../../services/layout.service';
 
 @Component({
   selector: 'app-browse',
@@ -23,7 +23,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   numCols = 4;
 
   constructor(public optionsService: OptionsService, private media: MediaObserver,
-              private layoutService: LayoutService) {
+    private layoutService: LayoutService) {
   }
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   }
 
   getCategoryDescription(categoryId: number) {
-    switch(categoryId) {
+    switch (categoryId) {
       case 1:
         return 'Browse all the items listed in the Hub.';
       case 2:

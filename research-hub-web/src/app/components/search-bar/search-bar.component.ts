@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {SearchBarService} from './search-bar.service';
-import {Subscription} from 'rxjs';
-import {MatInput} from '@angular/material/input';
-import {NavigationEnd, Router} from "@angular/router";
-import {filter} from 'rxjs/operators';
-import {AnalyticsService} from 'app/services/analytics.service';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { SearchBarService } from './search-bar.service';
+import { Subscription } from 'rxjs';
+import { MatInput } from '@angular/material/input';
+import { NavigationEnd, Router } from "@angular/router";
+import { filter } from 'rxjs/operators';
+import { AnalyticsService } from '../../services/analytics.service';
 
 
 @Component({
@@ -56,8 +56,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.searchCategoryChangeSub.unsubscribe();
     this.searchTextChangeSub.unsubscribe();
-      this.routerSub.unsubscribe();
-    }
+    this.routerSub.unsubscribe();
+  }
 
   @Input()
   get categories() {

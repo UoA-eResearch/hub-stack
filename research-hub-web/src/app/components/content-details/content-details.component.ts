@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ResearchHubApiService, PeopleParams } from 'app/services/research-hub-api.service';
-import { Content } from 'app/model/Content';
+import { ResearchHubApiService, PeopleParams } from '../../services/research-hub-api.service';
+import { Content } from '../../model/Content';
 import { Location } from '@angular/common';
-import { AnalyticsService } from 'app/services/analytics.service';
+import { AnalyticsService } from '../../services/analytics.service';
 import { ListItem } from '../../model/ListItem';
 import { ActionTypeId, ContentTypeId, RoleTypeId } from '../../services/options.service';
 import { Subscription } from 'rxjs';
