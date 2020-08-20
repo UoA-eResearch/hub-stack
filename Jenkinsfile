@@ -55,14 +55,13 @@ pipeline {
                         env.awsProfile = 'uoa-sandbox'
                     }
                     echo "Copying in credentials file"
-                        // Copy in credentials from Jenkins so build and test
-                        // works properly.
-                        withCredentials([
-                            file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
-                        ]) {
-                            sh "cp $credentialsfile .env"
-                        }
-
+                    // Copy in secrets file from Jenkins so build and test
+                    // work properly.
+                    withCredentials([
+                        file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
+                    ]) {
+                        sh "cp $credentialsfile .env"
+                    }
                 }
             }
         }
