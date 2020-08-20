@@ -23,7 +23,7 @@ describe('ResearchHub\'s Basic Functionality', () => {
     browser.wait(() => {
       // Test sometimes fail because the element is not yet present, so we wait.
       return element(by.css('app-root h1')).isPresent();
-    },5000);
+    },TIMEOUT_PERIOD);
     const welcomeMsg = await browser.driver.findElement(by.css('app-root h1')).getText();
     expect(welcomeMsg).toEqual('Welcome to the ResearchHub');
   });
