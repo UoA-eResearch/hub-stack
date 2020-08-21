@@ -14,7 +14,7 @@
     "test-watch": "ng test --watch=true",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "bundle-report": "webpack-bundle-analyzer dist/stats.json",
+    "bundle-report": "ng build --stats-json && webpack-bundle-analyzer www/stats.json",
     "testrunner": "./test.sh",
     "generate": "graphql-codegen",
     "generate-watch": "graphql-codegen --watch './src/app/graphql/queries/*.graphql'",
