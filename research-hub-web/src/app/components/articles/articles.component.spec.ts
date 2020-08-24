@@ -320,7 +320,6 @@ describe('ArticlesComponent', () => {
       controller = TestBed.get(ApolloTestingController);
       fixture = TestBed.createComponent(ArticlesComponent);
       component = fixture.componentInstance;
-      component.slug = 'first-article';
       TestBed.get(ActivatedRoute).params = of({
         slug: 'first-article'
       });
