@@ -40,6 +40,7 @@ describe('ArticlesComponent', () => {
     '__typename': 'ArticleCollection'
   } as ArticleCollection);
 
+  // TODO: See if this can mocked to be casted directly to Article type.
   const mockArticle$: Observable<Article> = of({
       'title': 'First article',
       'summary': 'A brief description of the first article. I\'m writing some more stuff here just so that this seems a little more realistic. Sam was here. Have a good day.',
