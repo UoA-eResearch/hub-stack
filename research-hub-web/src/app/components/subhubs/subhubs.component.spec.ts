@@ -5,7 +5,6 @@ import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/tes
 import { SharedModule } from '../shared/app.shared.module';
 import { SubhubsRoutingModule } from './subhubs-routing.module';
 import { RouterModule } from '@angular/router';
-// import { Observable } from 'apollo-link';
 
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
