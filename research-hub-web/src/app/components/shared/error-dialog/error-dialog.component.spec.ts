@@ -38,9 +38,6 @@ xdescribe('Header Component', () => {
         fixture.detectChanges();
     });
 
-    //   afterEach(() => {
-    //   });
-
     it('should create', () => {
         expect(component).toBeTruthy();
     });
