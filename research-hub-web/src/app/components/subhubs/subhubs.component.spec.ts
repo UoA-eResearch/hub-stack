@@ -18,8 +18,6 @@ import {
   AllSubHubChildPagesGQL,
   AllContentItemParentSubHubsGQL,
   SubHubOrder,
-  // AllSubHubChildPagesQuery,
-  // AllContentItemParentSubHubsQuery
 } from "../../graphql/schema";
 
 
@@ -425,19 +423,7 @@ describe('SubhubsComponent', () => {
 
   it('Title for a subhub page collection item should be truthy.', async () => {
     const de = fixture.debugElement.query(By.css('#title'));
-    // expect(de.nativeElement.innerHTML).toEqual("Landing page for a 'sub-hub'");
-    // console.log(de);
     expect(de.nativeElement.innerHTML).toBeTruthy();
   });
 
-  xit('Should contain a parent subhub', () => {
-    let d = document.getElementsByClassName('parent-title');
-    console.log(d);
-
-    let e = fixture.debugElement.query(By.css('#parent-title'));
-    console.log(e);
-    expect(e).toBeTruthy();
-  });
-
-  xit('Should not list invalid parents as parent.');
 });
