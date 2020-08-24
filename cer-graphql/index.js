@@ -13,7 +13,7 @@ const getCredentials = (isFromFile) => {
     // If true we load from the .env file in the folder. 
     // If false, we load from environment variables.
     if (isFromFile) {
-        const configResult = require('dotenv').config();
+        const configResult = require('dotenv').config({path: '../.env'});
         if (configResult.error) {
             throw configResult.error;
         }

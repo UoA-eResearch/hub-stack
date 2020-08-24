@@ -3,7 +3,10 @@
 // Note that this is the config file for e2e tests using BrowserStack's automation API (against local hosts). See protractor.conf.browserstack-remote.js for remote-test settings.
 
 const { SpecReporter } = require('jasmine-spec-reporter');
-var BROWSERSTACK_CREDENTIALS = require('./e2e/browserstack-credentials');
+var { 
+  BROWSERSTACK_CREDENTIALS_USER, 
+  BROWSERSTACK_CREDENTIALS_KEY 
+} = require('dotenv').config({path: '../.env'}).parsed;
 var browserstack = require('browserstack-local');
 
 exports.config = {
@@ -27,8 +30,8 @@ exports.config = {
   ],
 
   'commonCapabilities': {
-    'browserstack.user': BROWSERSTACK_CREDENTIALS.USER,
-    'browserstack.key': BROWSERSTACK_CREDENTIALS.KEY,
+    'browserstack.user': BROWSERSTACK_CREDENTIALS_USER,
+    'browserstack.key': BROWSERSTACK_CREDENTIALS_KEY,
     'project': 'ResearchHub',
     'build': 'Internal',
     'browserstack.debug': true,
