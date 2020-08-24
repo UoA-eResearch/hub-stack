@@ -315,7 +315,7 @@ describe('ArticlesComponent', () => {
     expect(de.nativeElement.innerHTML).toEqual('Article Collection');
   });
 
-  describe('When a truthy url slug is present', () => {
+  describe('When a url slug is present.', () => {
     beforeEach(() => {
       controller = TestBed.get(ApolloTestingController);
       fixture = TestBed.createComponent(ArticlesComponent);
@@ -327,7 +327,7 @@ describe('ArticlesComponent', () => {
       fixture.detectChanges();
     })
 
-    it('Should have a truthy slug', () => {
+    it('Should evaluate components slug property to be truthy', () => {
       expect(component.slug).toBeTruthy();
     });
 

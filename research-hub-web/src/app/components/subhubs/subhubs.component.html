@@ -51,27 +51,6 @@
         <mat-card>
             <h2>Pages in this SubHub</h2>
             <app-collection-list *ngIf="subhub.subhubPagesCollection.items" [collection]="subhub.subhubPagesCollection"></app-collection-list>
-            <!-- <mat-nav-list>
-                <mat-card *ngFor="let subHubChildPage of subhub.subhubPagesCollection.items">
-                    <mat-card-header id="title">
-                        {{ subHubChildPage.title }}
-                        <mat-chip-avatar *ngIf="subHubChildPage.ssoProtected">
-                            <mat-icon color="accent" matTooltip="SSO Login Required">lock</mat-icon>
-                        </mat-chip-avatar>
-                    </mat-card-header>
-                    <mat-card-subtitle>
-                        {{ subHubChildPage.summary }}
-                    </mat-card-subtitle>
-                    <div>
-                        {{subHubChildPage.__typename}}
-                    </div>
-                    <a href="/{{subHubChildPage.__typename.toLowerCase()}}/{{subHubChildPage.slug}}">
-                        <button mat-stroked-button>
-                            View {{subHubChildPage.title}}
-                        </button>
-                    </a>
-                </mat-card>
-            </mat-nav-list> -->
         </mat-card>
     </div>
 </div>

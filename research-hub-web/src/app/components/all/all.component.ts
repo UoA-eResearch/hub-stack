@@ -28,7 +28,6 @@ export class AllComponent implements OnInit {
     for (const collection of Object.keys(collectionCollection)) {
       count += collectionCollection[collection].items.length;
     }
-    console.log(count);
     return count;
   }
 
