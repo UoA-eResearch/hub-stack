@@ -414,6 +414,7 @@ describe('SubhubsComponent', () => {
 
   afterEach(() => {
     controller.verify();
+    fixture.destroy();
   });
 
   it('should create', () => {
