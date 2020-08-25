@@ -11,7 +11,7 @@ import { MaterialModule } from '../../app.material.module';
 import { SharedModule } from '../shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-xdescribe('EquipmentComponent', () => {
+describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
   let fixture: ComponentFixture<EquipmentComponent>;
   let backend: ApolloTestingController;
@@ -19,17 +19,17 @@ xdescribe('EquipmentComponent', () => {
   let spy: any;
 
   const mockAllEquipment$: Observable<EquipmentCollection> = of ({
-    "items": [
+    'items': [
       {
-        "__typename": "Equipment",
-        "slug": "death-star",
-        "title": "Death Star",
-        "summary": "Mobile space station and galactic superweapon.",
-        "ssoProtected": true,
-        "searchable": false
+        '__typename': 'Equipment',
+        'slug': 'death-star',
+        'title': 'Death Star',
+        'summary': 'Mobile space station and galactic superweapon.',
+        'ssoProtected': true,
+        'searchable': false
       }
     ],
-    "__typename": "EquipmentCollection"
+    '__typename': 'EquipmentCollection'
   } as EquipmentCollection);
 
   beforeEach(async(() => {
@@ -65,7 +65,7 @@ xdescribe('EquipmentComponent', () => {
     controller.verify();
   })
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
