@@ -122,6 +122,10 @@ describe('AllComponent', () => {
     fixture.detectChanges();
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  })
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

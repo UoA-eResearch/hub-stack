@@ -63,6 +63,7 @@ describe('EquipmentComponent', () => {
 
   afterEach(() => {
     controller.verify();
+    fixture.destroy();
   })
 
   it('should be created', () => {
