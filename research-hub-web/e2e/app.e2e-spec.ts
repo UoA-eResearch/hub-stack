@@ -2,6 +2,7 @@ import { ResearchHubPage } from './app.po';
 import { browser, by, element, $, $$, ExpectedConditions, ElementFinder, ElementArrayFinder } from 'protractor';
 
 let page: ResearchHubPage;
+const TIMEOUT_PERIOD = 12000;
 
 /**
  * Wrapper around the standard $() and $$() Protractor functions that add extra waits
@@ -25,22 +26,6 @@ export let _$$ = (search): ElementArrayFinder => {
   browser.driver.wait(ExpectedConditions.visibilityOf($$(search).first()), TIMEOUT_PERIOD);
   browser.waitForAngular();
   return $$(search);
-}
-
-/**
- * Wrapper around the standard element.sendKeys() method that fixes sync issues causing
- * some keys to be dropped.
- * Bug reference: https://github.com/angular/protractor/issues/698
- * 
- * @param element The element the keys are being sent to
- * @param keys The string of keys to be sent to the element
- */
-export let sendKeysSafely = (element: ElementFinder, keys: string) => {
-  element.click().then(() => element.clear().then(() => {
-    keys.split('').forEach(c => element.sendKeys(c));
-  }));
-
-  browser.driver.sleep(3000); // Allow 3 seconds after typing input
 }
 
 /**
@@ -96,7 +81,8 @@ describe('ResearchHub\'s Search Functionality', () => {
    */
   it('displays search results after typing in homepage search bar', async () => {
     await page.navigateTo(browser.baseUrl);
-    sendKeysSafely(await _$('app-search-bar input'), 'biblioinformatics');
+    let searchBar = await _$('app-search-bar input');
+    'vm'.split('').forEach(c => searchBar.sendKeys(c));
     expect(await _$('.search-results-title').getText()).toEqual('Results');
   });
 
@@ -106,10 +92,10 @@ describe('ResearchHub\'s Search Functionality', () => {
    */
   it('displays correct search results that can be navigated to', async () => {
     await page.navigateTo(browser.baseUrl);
-    sendKeysSafely(await _$('app-search-bar input'), 'biblioinformatics');
-
+    let searchBar = await _$('app-search-bar input');
+    'biblioinformatics'.split('').forEach(c => searchBar.sendKeys(c));
     await _$$('.results-list .mat-list-item').first().click();
-    expect(_$('h2').getText()).toEqual('BiblioInformatics');
+    expect(await _$('mat-card-title h2').getText()).toEqual('BiblioInformatics');
   });
 
 });
