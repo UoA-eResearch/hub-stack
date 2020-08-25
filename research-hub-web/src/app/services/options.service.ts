@@ -215,6 +215,13 @@ export class OptionsService {
         isHeaderVisible: true,
         isSearchBarVisible: false
       },
+      subhub: {
+        title: 'SubHubs',
+        description: 'A collection of pages',
+        imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
       subhubs: {
         title: 'SubHubs',
         description: 'A collection of all SubHubs',

@@ -35,4 +35,5 @@ research-hub-web/typings
 
 # ====================== serverless-now ================ #
 serverless-now/.serverless/
+serverless-now/env/local.env
 
