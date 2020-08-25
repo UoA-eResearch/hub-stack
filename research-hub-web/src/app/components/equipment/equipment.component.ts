@@ -25,9 +25,6 @@ export class EquipmentComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    // this.allEquipment$ = this.getAllEquipment();
-
-
     /**
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
