@@ -88,7 +88,6 @@ describe('ResearchHub\'s Search Functionality', () => {
    */
   it('can directly navigate to search results page', async () => {
     await page.navigateTo(browser.baseUrl + '/search');
-    await browser.driver.wait(ExpectedConditions.visibilityOf(_$('.search-results-title')), TIMEOUT_PERIOD);
     expect(await _$('.search-results-title').getText()).toEqual('Results');
   });
 
