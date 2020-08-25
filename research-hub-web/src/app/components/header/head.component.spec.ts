@@ -12,9 +12,10 @@ import { ResearchHubApiService } from '../../services/research-hub-api.service';
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-xdescribe('Header Component', () => {
+describe('Header Component', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
+    let headerService: HeaderService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -48,13 +49,11 @@ xdescribe('Header Component', () => {
     }));
 
     beforeEach(() => {
+        headerService = new HeaderService();
         fixture = TestBed.createComponent(HeaderComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
-
-    //   afterEach(() => {
-    //   });
 
     it('should create', () => {
         expect(component).toBeTruthy();
