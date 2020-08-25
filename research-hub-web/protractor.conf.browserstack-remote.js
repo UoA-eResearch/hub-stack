@@ -3,16 +3,18 @@
 // Note that this is the config file for e2e tests using BrowserStack's automation API (against remote hosts). See protractor.conf.browserstack-local.js for local-test settings.
 
 const { SpecReporter } = require('jasmine-spec-reporter');
-var { 
-  BROWSERSTACK_CREDENTIALS_USER, 
-  BROWSERSTACK_CREDENTIALS_KEY 
-} = require('dotenv').config({path: '../.env'}).parsed;
+var {
+  BROWSERSTACK_CREDENTIALS_USER,
+  BROWSERSTACK_CREDENTIALS_KEY
+} = require('dotenv').config({ path: '../.env' }).parsed;
 
 exports.config = {
   allScriptsTimeout: 11000,
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
+    defaultTimeoutInterval: 30000,
+    print: function () { }
   },
   onPrepare: function () {
     require('ts-node').register({
