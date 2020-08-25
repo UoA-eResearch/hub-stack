@@ -51,4 +51,9 @@ fragment PublicFields on Entry {
         searchable
         ssoProtected
     }
+    ... on OfficialDocuments {
+        __typename
+        title
+        summary
+    }
 }
