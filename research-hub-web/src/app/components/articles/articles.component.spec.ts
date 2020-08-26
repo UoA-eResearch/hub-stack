@@ -288,7 +288,7 @@ describe('ArticlesComponent', () => {
             })
           }
         },
-        CerGraphqlService
+        // CerGraphqlService
       ]
     }).compileComponents();
   }));
