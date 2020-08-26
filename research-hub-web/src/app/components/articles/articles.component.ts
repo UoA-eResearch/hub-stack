@@ -10,7 +10,7 @@ import {
   GetArticleBySlugQuery,
   ArticleCollection,
   Article,
-  GetAllSubHubChildPagesSlugsGQL
+  // GetAllSubHubChildPagesSlugsGQL
 } from '../../graphql/schema';
 import { CerGraphqlService } from '../../services/cer-graphql.service';
 
@@ -30,7 +30,7 @@ export class ArticlesComponent implements OnInit {
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
-    public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL,
+    // public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL,
     public cerGraphQLService: CerGraphqlService
   ) { }
 
