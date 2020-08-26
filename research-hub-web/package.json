@@ -10,7 +10,7 @@
     "build": "ng build",
     "postinstall": "ngcc",
     "test": "ng test",
-    "test-ci": "ng test --watch=false --code-coverage=false",
+    "test-ci": "ng test --watch=false",
     "test-watch": "ng test --watch=true",
     "lint": "ng lint",
     "e2e": "ng e2e",
