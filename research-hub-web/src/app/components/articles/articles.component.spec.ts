@@ -304,6 +304,7 @@ describe('ArticlesComponent', () => {
   });
 
   afterEach(() => {
+    fixture.destroy();
     controller.verify();
   });
 
@@ -334,7 +335,7 @@ describe('ArticlesComponent', () => {
     it('Should get a single article data', () => {
       component.getArticleBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('first-article');
-      })
+      });
     })
 
   });
