@@ -318,6 +318,9 @@ describe('ArticlesComponent', () => {
 
   describe('When a url slug is present.', () => {
     beforeEach(() => {
+    });
+
+    it('Should evaluate components slug property to be truthy', () => {
       controller = TestBed.get(ApolloTestingController);
       fixture = TestBed.createComponent(ArticlesComponent);
       component = fixture.componentInstance;
@@ -325,16 +328,20 @@ describe('ArticlesComponent', () => {
         slug: 'first-article'
       });
       fixture.detectChanges();
-    })
-
-    it('Should evaluate components slug property to be truthy', () => {
       expect(component.slug).toBeTruthy();
     });
 
     it('Should get a single article data', () => {
+      controller = TestBed.get(ApolloTestingController);
+      fixture = TestBed.createComponent(ArticlesComponent);
+      component = fixture.componentInstance;
+      TestBed.get(ActivatedRoute).params = of({
+        slug: 'first-article'
+      });
+      fixture.detectChanges();
       component.getArticleBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('first-article');
-      })
+      });
     })
 
   });
