@@ -154,9 +154,9 @@ describe('ResearchHub\'s Research Impact Content', () => {
    * Directly navigates to the Research Impact guide page and checks the presence of an iframe with YouTube set as its
    * src attribute.
    */
-  it('can load an iframe with youtube as src attribute', async () => {
-    expect(await _$('.description iframe').getAttribute('src')).toContain('youtube');
-  });
+  // it('can load an iframe with youtube as src attribute', async () => {
+  // expect(await _$('.description iframe').getAttribute('src')).toContain('youtube');
+  // });
 
   /**
    * Directly navigates to the Research Impact guide page, clicks on the first sub-page (guideCategory) and checks that
