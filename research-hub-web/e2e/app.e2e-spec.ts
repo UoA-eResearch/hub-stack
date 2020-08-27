@@ -135,9 +135,12 @@ describe('ResearchHub\'s Filter Functionality', () => {
  */
 describe('ResearchHub\'s Research Impact Content', () => {
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     page = new ResearchHubPage();
-    await page.navigateTo(browser.baseUrl + 'researchimpact');
+  })
+
+  beforeEach(async () => {
+    return await page.navigateTo(browser.baseUrl + 'researchimpact');
   });
 
   /**
