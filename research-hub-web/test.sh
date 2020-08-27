@@ -50,7 +50,7 @@ run_protractor() {
         fi
     else
         echo "Running Local Selenium tests against host: $1"
-        echo "Make sure you are already serving locally on port 4200"
+        echo "Make sure you are already serving locally on port 4200 (otherwise simply run ng e2e)"
         ./node_modules/.bin/protractor protractor.conf.js --baseUrl "$1"
     fi
 }
