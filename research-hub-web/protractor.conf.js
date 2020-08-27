@@ -14,12 +14,11 @@ exports.config = {
     chromeOptions: {
       args: [
         '--headless',
-        '--window-size=1920,1080',
-        '--no-sandbox'
+        '--window-size=1920,1080'
       ]
     }
   },
-  directConnect: false,
+  directConnect: true,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
   jasmineNodeOpts: {
