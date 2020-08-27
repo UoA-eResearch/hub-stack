@@ -107,7 +107,7 @@ describe('ResearchHub\'s Filter Functionality', () => {
 
   beforeEach(async () => {
     page = new ResearchHubPage();
-    await page.navigateTo(browser.baseUrl + '/search');
+    await page.navigateTo(browser.baseUrl + 'search');
   });
 
   /**
@@ -137,7 +137,7 @@ describe('ResearchHub\'s Research Impact Content', () => {
 
   beforeEach(async () => {
     page = new ResearchHubPage();
-    await page.navigateTo(browser.baseUrl + '/researchimpact');
+    await page.navigateTo(browser.baseUrl + 'researchimpact');
   });
 
   /**
