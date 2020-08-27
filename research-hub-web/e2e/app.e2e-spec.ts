@@ -140,7 +140,7 @@ describe('ResearchHub\'s Research Impact Content', () => {
   })
 
   beforeEach(async () => {
-    return await page.navigateTo(browser.baseUrl + 'researchimpact');
+    return await page.navigateTo(browser.baseUrl + '/researchimpact');
   });
 
   /**

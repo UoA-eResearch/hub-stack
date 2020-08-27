@@ -14,8 +14,7 @@ exports.config = {
     chromeOptions: {
       args: [
         '--headless',
-        '--window-size=1920,1080',
-        '--no-sandbox'
+        '--window-size=1920,1080'
       ]
     }
   },
