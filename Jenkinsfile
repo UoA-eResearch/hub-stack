@@ -150,7 +150,7 @@ pipeline {
                             sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh "npm run e2e -- -c ${BRANCH_NAME}"
+                            sh "npm run e2e-ci -- -c ${BRANCH_NAME}"
                         }
                     }
                 }
