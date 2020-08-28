@@ -2,7 +2,7 @@ import { ResearchHubPage } from './app.po';
 import { browser, by, element, $, $$, ExpectedConditions, ElementFinder, ElementArrayFinder } from 'protractor';
 
 let page: ResearchHubPage;
-const TIMEOUT_PERIOD = 12000;
+const TIMEOUT_PERIOD = 20000;
 
 /**
  * Wrapper around the standard $() and $$() Protractor functions that add extra waits
@@ -135,9 +135,12 @@ describe('ResearchHub\'s Filter Functionality', () => {
  */
 describe('ResearchHub\'s Research Impact Content', () => {
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     page = new ResearchHubPage();
-    await page.navigateTo(browser.baseUrl + 'researchimpact');
+  })
+
+  beforeEach(async () => {
+    await page.navigateTo(browser.baseUrl + '/researchimpact');
   });
 
   /**
