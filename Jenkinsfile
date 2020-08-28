@@ -147,7 +147,7 @@ pipeline {
 
                         dir("research-hub-web") {
                             echo 'Running research-hub-web unit tests'
-                            // sh 'npm run test-ci'
+                            sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
                             sh "npx webdriver-manager update --versions.chrome=\$(google-chrome --version | grep -ioE \"[0-9.]{10,20}\")"
