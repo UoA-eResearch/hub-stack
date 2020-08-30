@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {OptionsService} from 'app/services/options.service';
-import {AnalyticsService} from 'app/services/analytics.service';
+import { Component, OnInit } from '@angular/core';
+import { OptionsService } from '../../../services/options.service';
+import { AnalyticsService } from '../../../services/analytics.service';
 
 @Component({
   selector: 'app-research-activity',
@@ -14,7 +14,7 @@ export class ResearchActivityComponent implements OnInit {
   }
 
   getQueryParams(activity) {
-    return {researchActivityIds: [activity.id]};
+    return { researchActivityIds: [activity.id] };
   }
 
   ngOnInit() {

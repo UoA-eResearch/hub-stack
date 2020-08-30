@@ -1,7 +1,7 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {OptionsService} from 'app/services/options.service';
-import {AnalyticsService} from 'app/services/analytics.service';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { OptionsService } from '../../../services/options.service';
+import { AnalyticsService } from '../../../services/analytics.service';
 
 
 @Component({
@@ -29,9 +29,9 @@ export class ResearchActivityInputComponent implements OnInit, ControlValueAcces
   /**
    * Determines whether we show the larger, thicker inputs that are touch-friendly.
    */
-  @Input() touchFriendly : boolean = false;
+  @Input() touchFriendly: boolean = false;
 
-  isDisabled : boolean;
+  isDisabled: boolean;
 
   get value() {
     return this._value;
@@ -46,18 +46,18 @@ export class ResearchActivityInputComponent implements OnInit, ControlValueAcces
 
   constructor(public optionsService: OptionsService, public analyticsService: AnalyticsService) {
     for (const activity of optionsService.researchActivityOptions) {
-      this.model[activity.id] = {selected: false};
+      this.model[activity.id] = { selected: false };
     }
   }
 
   ngOnInit() {
   }
 
-  setDisabledState(isDisabled){
+  setDisabledState(isDisabled) {
     this.isDisabled = isDisabled;
   }
 
-  onToggle(activityId,toggleEvent) {
+  onToggle(activityId, toggleEvent) {
     this.model[activityId].selected = !this.model[activityId].selected;
     this.updateValue();
     this.analyticsService.trackUserExperience('Filter panel', 'filter by research activity');
@@ -68,7 +68,7 @@ export class ResearchActivityInputComponent implements OnInit, ControlValueAcces
   }
 
   writeValue(value) {
-    if (value === null || value === undefined){
+    if (value === null || value === undefined) {
       value = [];
     }
     this.value = value;

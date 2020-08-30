@@ -24,16 +24,17 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { HomeModule } from './components/home/home.module';
+import { CerApiService } from './services/cer-api.service';
 
-import { ApolloModule, APOLLO_OPTIONS, Apollo } from 'apollo-angular';
+import { Apollo, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { onError } from 'apollo-link-error';
+import { ApolloLink } from 'apollo-link';
 
 import { environment } from '../environments/environment';
 import { AppStorageService } from './services/app-storage.service';
 
-import { onError, ErrorLink } from 'apollo-link-error';
-import { ApolloLink } from 'apollo-link';
 
 /**
  * Generated from Fragment matcher graphql-code-generator plugi
@@ -42,7 +43,6 @@ import { ApolloLink } from 'apollo-link';
  * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
  */
 import result from './graphql/possible-types';
-import { CerApiService } from './services/cer-api.service';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData: {
@@ -69,11 +69,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     FlexLayoutModule,
     HomeModule,
     HomeModule,
-    ApolloModule,
     HttpLinkModule,
     ErrorPagesModule
   ],
-  entryComponents: [],
   providers: [
     HeaderService,
     SearchBarService,
@@ -85,28 +83,32 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private apollo: Apollo, private httpLink: HttpLink, private loginService: LoginService, private router: Router) {
+  constructor(httpLink: HttpLink, apollo: Apollo, public loginService: LoginService, public router: Router) {
 
-    /**
-     * Creates global Apollo client and error handler.
-     */
-    const errorLink = onError(({ graphQLErrors, networkError }) => {
+    // The httpLink between Apollo and the GraphQL server
+    const http = httpLink.create({ uri: environment.cerGraphQLUrl });
+
+    // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
+    const error = onError(({ networkError, graphQLErrors }) => {
       if (networkError) {
-        // Check for SSO protected error
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
           this.loginService.doLogin(this.router.url);
         }
       }
     });
 
-    apollo.create({
-      link: ApolloLink.from([errorLink, httpLink.create({ uri: environment.cerGraphQLUrl })]),
-      cache: new InMemoryCache({ fragmentMatcher }),
+    // Join the primary link and the error handler link
+    // const link = error.concat(http);
+
+    // Create the default (global) Apollo client
+    const client = apollo.create({
+      cache: new InMemoryCache({ fragmentMatcher }) as InMemoryCache,
+      link: error.concat(http),
       defaultOptions: {
         watchQuery: {
           errorPolicy: 'all'
         }
       }
-    }, 'default');
+    } as any, 'default');
   }
 }
