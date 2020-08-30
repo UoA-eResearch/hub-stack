@@ -54,6 +54,14 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                     }
+                    echo "Copying in credentials file"
+                    // Copy in secrets file from Jenkins so build and test
+                    // work properly.
+                    withCredentials([
+                        file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
+                    ]) {
+                        sh "cp $credentialsfile .env"
+                    }
                 }
             }
         }
@@ -102,14 +110,6 @@ pipeline {
                     }
                     steps {
                         echo 'Building cer-graphql project'
-                        // Copy in credentials from Jenkins.
-                        withCredentials([
-                            file(credentialsId: "cer-graphql-credentials-${BRANCH_NAME}",variable:"credentialsfile")
-                        ]) {
-                            dir("cer-graphql"){
-                                sh "cp $credentialsfile .env"
-                            }                        
-                        }
                         dir("cer-graphql") {
                             echo "Building the docker image and tag it as latest"
                             sh "docker build . -t cer-graphql:latest"
@@ -150,7 +150,8 @@ pipeline {
                             sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh "npm run e2e -- -c ${BRANCH_NAME}"
+                            sh "npx webdriver-manager update --versions.chrome=\$(google-chrome --version | grep -ioE \"[0-9.]{10,20}\")"
+                            sh "npm run e2e-ci -- -c ${BRANCH_NAME}"
                         }
                     }
                 }

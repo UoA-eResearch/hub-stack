@@ -2547,7 +2547,7 @@ type PublicFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string
 
 type PublicFields_Person_Fragment = { __typename: 'Person', slug: Maybe<string>, name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> };
 
-type PublicFields_OfficialDocuments_Fragment = { __typename?: 'OfficialDocuments' };
+type PublicFields_OfficialDocuments_Fragment = { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> };
 
 type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
@@ -2677,6 +2677,11 @@ export const PublicFieldsFragmentDoc = gql`
     name
     searchable
     ssoProtected
+  }
+  ... on OfficialDocuments {
+    __typename
+    title
+    summary
   }
 }
     `;
