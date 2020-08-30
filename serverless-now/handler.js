@@ -26,7 +26,6 @@ module.exports.main = async (event) => {
         requesterData = data;
       }
     } catch (e) {
-      // console.log("Error getting user.");
       return {
         statusCode: 500,
         body: JSON.stringify(
@@ -50,7 +49,6 @@ module.exports.main = async (event) => {
       u_correlation_display: "cerhub",
       u_work_notes: event.body,
     };
-    // console.log(serviceNowTicketBody);
 
     try {
       return await getRes(
@@ -60,13 +58,13 @@ module.exports.main = async (event) => {
       ).then((res) =>
         ([res] = res.result) // Destructure to first object in result array (first ticket)
           ? {
-              statusCode: 200,
-              body: JSON.stringify(res),
-            }
+            statusCode: 200,
+            body: JSON.stringify(res),
+          }
           : {
-              statusCode: 500,
-              body: JSON.stringify("Error retrieving ticket from ServiceNow"),
-            }
+            statusCode: 500,
+            body: JSON.stringify("Error retrieving ticket from ServiceNow"),
+          }
       );
     } catch (error) {
       console.error(error);
@@ -89,9 +87,9 @@ module.exports.main = async (event) => {
         return ([res] = res.result)
           ? { statusCode: 200, body: JSON.stringify(res) }
           : {
-              statusCode: 500,
-              body: JSON.stringify("Error retrieving ticket from ServiceNow"),
-            };
+            statusCode: 500,
+            body: JSON.stringify("Error retrieving ticket from ServiceNow"),
+          };
       });
     } catch (error) {
       console.error(error);
