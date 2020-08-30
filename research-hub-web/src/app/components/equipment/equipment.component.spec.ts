@@ -11,7 +11,7 @@ import { MaterialModule } from '../../app.material.module';
 import { SharedModule } from '../shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-xdescribe('EquipmentComponent', () => {
+describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
   let fixture: ComponentFixture<EquipmentComponent>;
   let backend: ApolloTestingController;
@@ -65,7 +65,7 @@ xdescribe('EquipmentComponent', () => {
     controller.verify();
   })
 
-  it('should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
