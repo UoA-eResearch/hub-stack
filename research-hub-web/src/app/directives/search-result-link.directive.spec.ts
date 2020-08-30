@@ -1,21 +1,21 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import { AnalyticsService } from 'app/services/analytics.service';
-import { SharedModule } from 'app/components/shared/app.shared.module';
+import { AnalyticsService } from '../services/analytics.service';
+import { SharedModule } from '../components/shared/app.shared.module';
 import { CommonModule } from '@angular/common';
 import { SearchResultLinkDirective } from './search-result-link.directive';
 import { ActivatedRoute } from '@angular/router';
-import { routing } from 'app/components/search-results/search-results.routing';
-import { SearchResultsModule } from 'app/components/search-results/search-results.module';
-import { SearchResultsComponentService } from 'app/components/search-results/search-results-component.service';
+import { routing } from '../components/search-results/search-results.routing';
+import { SearchResultsModule } from '../components/search-results/search-results.module';
+import { SearchResultsComponentService } from '../components/search-results/search-results-component.service';
 import { By } from '@angular/platform-browser';
-import { ListItem } from 'app/model/ListItem';
-import { FilterDialogComponent } from 'app/components/search-results/filter-dialog/filter-dialog.component';
-import { SearchFiltersService } from 'app/components/search-results/search-filters/search-filters.service';
-import { FilterSidenavComponent } from 'app/components/search-results/filter-sidenav/filter-sidenav.component';
+import { ListItem } from '../model/ListItem';
+import { FilterDialogComponent } from '../components/search-results/filter-dialog/filter-dialog.component';
+import { SearchFiltersService } from '../components/search-results/search-filters/search-filters.service';
+import { FilterSidenavComponent } from '../components/search-results/filter-sidenav/filter-sidenav.component';
 
 @Component({
-  template: `
+    template: `
     <a appSearchResultLink [item]="nonPolicyExample" id="nonPolicyExample">Non Policy Example Link</a>
     <a appSearchResultLink [item]="policyExample" id="policyExample">Policy Example Link</a>
   `
@@ -61,13 +61,13 @@ describe('Directive: SearchResultLink', () => {
     let de: DebugElement;
 
     const fakeActivatedRoute = {
-        snapshot: { data: { } }
+        snapshot: { data: {} }
     } as ActivatedRoute;
 
     beforeEach(() => {
 
         // Fake Google analytics function (used rather than importing script unnecessarily)
-        (<any>window).ga = function() {}
+        (<any>window).ga = function () { }
 
         fixture = TestBed.configureTestingModule({
             declarations: [
@@ -107,22 +107,22 @@ describe('Directive: SearchResultLink', () => {
     });
 
     it('should have an internal link if it is not a policy', () => {
-         const a = fixture.debugElement.query(By.css('#nonPolicyExample')).nativeElement;
-         expect(a.href).toContain(document.location.hostname);
+        const a = fixture.debugElement.query(By.css('#nonPolicyExample')).nativeElement;
+        expect(a.href).toContain(document.location.hostname);
     });
 
     it('should have an external link if it is a policy', () => {
-         const a = fixture.debugElement.query(By.css('#policyExample')).nativeElement;
-         expect(a.href).not.toContain(document.location.hostname);
+        const a = fixture.debugElement.query(By.css('#policyExample')).nativeElement;
+        expect(a.href).not.toContain(document.location.hostname);
     });
 
     it('should open in the same tab if it is not a policy', () => {
-         const aTarget = fixture.debugElement.query(By.css('#nonPolicyExample')).nativeElement.target;
-         expect(aTarget).toBe('_self');
+        const aTarget = fixture.debugElement.query(By.css('#nonPolicyExample')).nativeElement.target;
+        expect(aTarget).toBe('_self');
     });
 
     it('should open in a new tab if it is a policy', () => {
-         const aTarget = fixture.debugElement.query(By.css('#policyExample')).nativeElement.target;
-         expect(aTarget).toBe('_blank');
+        const aTarget = fixture.debugElement.query(By.css('#policyExample')).nativeElement.target;
+        expect(aTarget).toBe('_blank');
     });
 });

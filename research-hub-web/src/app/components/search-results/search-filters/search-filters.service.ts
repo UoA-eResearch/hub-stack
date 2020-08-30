@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {FormGroup, FormControl } from '@angular/forms';
-import { CategoryId } from 'app/services/options.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { CategoryId } from '../../../services/options.service';
 import { Subject, Observable } from 'rxjs';
 
 export const DEFAULT_FILTERS_VALUE = {
@@ -14,12 +14,12 @@ export const DEFAULT_FILTERS_VALUE = {
 @Injectable()
 export class SearchFiltersService {
 
-  readonly filtersForm : FormGroup;
+  readonly filtersForm: FormGroup;
 
   private filtersOpenSubject: Subject<boolean>;
-  public filtersOpen$ : Observable<boolean>;
+  public filtersOpen$: Observable<boolean>;
   // The current value of whether the filters are in open state.
-  public areFiltersOpen : boolean;
+  public areFiltersOpen: boolean;
 
 
   constructor() {
@@ -28,12 +28,12 @@ export class SearchFiltersService {
     this.filtersOpen$ = this.filtersOpenSubject.asObservable();
   }
 
-  public closeFilters(){
+  public closeFilters() {
     this.filtersOpenSubject.next(false);
     this.areFiltersOpen = false;
   }
 
-  public openFilters(){
+  public openFilters() {
     this.filtersOpenSubject.next(true);
     this.areFiltersOpen = true;
   }
@@ -43,13 +43,13 @@ export class SearchFiltersService {
    * values as the current filters.
    * Used for filter dialog which does not change values instantly.
    */
-  public duplicateFilters() : FormGroup {
+  public duplicateFilters(): FormGroup {
     const duplicate = this.createFilters();
     duplicate.patchValue(this.filtersForm.getRawValue());
     return duplicate;
   }
 
-  public patchFilters(newFilters : FormGroup) : FormGroup {
+  public patchFilters(newFilters: FormGroup): FormGroup {
     if (!newFilters) {
       return this.filtersForm;
     }
@@ -57,7 +57,7 @@ export class SearchFiltersService {
     return this.filtersForm;
   }
 
-  private createFilters() : FormGroup {
+  private createFilters(): FormGroup {
     const newFilters = new FormGroup({
       categoryId: new FormControl(),
       personTags: new FormControl([]),

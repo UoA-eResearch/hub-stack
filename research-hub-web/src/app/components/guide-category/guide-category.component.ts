@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { GuideCategory } from 'app/model/GuideCategory';
+import { GuideCategory } from '../../model/GuideCategory';
 import { ActivatedRoute } from '@angular/router';
-import { ResearchHubApiService } from 'app/services/research-hub-api.service';
+import { ResearchHubApiService } from '../../services/research-hub-api.service';
 import { Location } from '@angular/common';
-import { AnalyticsService } from 'app/services/analytics.service';
+import { AnalyticsService } from '../../services/analytics.service';
 import { AppComponentService } from '../../app.component.service';
 import { Content } from '../../model/Content';
 import { ContentTypeId } from '../../services/options.service';

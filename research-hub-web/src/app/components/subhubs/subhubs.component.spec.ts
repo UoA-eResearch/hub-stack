@@ -402,11 +402,11 @@ describe('SubhubsComponent', () => {
   }));
 
   beforeEach(() => {
-    controller = TestBed.get(ApolloTestingController);
+    controller = TestBed.inject(ApolloTestingController);
     subHubSpy = spyOn(SubhubsComponent.prototype, 'getSubHub').and.returnValue(currentSubHubData$);
     allSubHubsSpy = spyOn(SubhubsComponent.prototype, 'getAllSubHubs').and.returnValue(currentSubHubData$);
 
-    backend = TestBed.get(ApolloTestingController);
+    backend = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(SubhubsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
