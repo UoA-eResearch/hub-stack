@@ -18,7 +18,7 @@ describe('EquipmentComponent', () => {
   let controller: ApolloTestingController;
   let spy: any;
 
-  const mockAllEquipment$: Observable<EquipmentCollection> = of ({
+  const mockAllEquipment$: Observable<EquipmentCollection> = of({
     'items': [
       {
         '__typename': 'Equipment',
@@ -52,10 +52,10 @@ describe('EquipmentComponent', () => {
   }));
 
   beforeEach(() => {
-    controller = TestBed.get(ApolloTestingController);
+    controller = TestBed.inject(ApolloTestingController);
     spy = spyOn(EquipmentComponent.prototype, 'getAllEquipment').and.returnValue(mockAllEquipment$);
 
-    backend = TestBed.get(ApolloTestingController);
+    backend = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(EquipmentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

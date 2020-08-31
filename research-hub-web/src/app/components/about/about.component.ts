@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ResearchHubApiService} from 'app/services/research-hub-api.service';
+import { Component } from '@angular/core';
+import { ResearchHubApiService } from '../../services/research-hub-api.service';
 
 
 @Component({
