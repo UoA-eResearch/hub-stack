@@ -7,7 +7,6 @@ const TIMEOUT_PERIOD = 20000;
 /**
  * Wrapper around the standard $() and $$() Protractor functions that add extra waits
  * required to make the tests work reliably in BrowserStack Automation.
- * 
  * @param search CSS element finder
  */
 export let _$ = (search): ElementFinder => {
@@ -19,7 +18,6 @@ export let _$ = (search): ElementFinder => {
 /**
  * Wrapper around the standard $() and $$() Protractor functions that add extra waits
  * required to make the tests work reliably in BrowserStack Automation.
- * 
  * @param search CSS element finder
  */
 export let _$$ = (search): ElementArrayFinder => {
@@ -81,7 +79,7 @@ describe('ResearchHub\'s Search Functionality', () => {
    */
   it('displays search results after typing in homepage search bar', async () => {
     await page.navigateTo(browser.baseUrl);
-    let searchBar = await _$('app-search-bar input');
+    const searchBar = await _$('app-search-bar input');
     'vm'.split('').forEach(c => searchBar.sendKeys(c));
     expect(await _$('.search-results-title').getText()).toEqual('Results');
   });
@@ -92,7 +90,7 @@ describe('ResearchHub\'s Search Functionality', () => {
    */
   it('displays correct search results that can be navigated to', async () => {
     await page.navigateTo(browser.baseUrl);
-    let searchBar = await _$('app-search-bar input');
+    const searchBar = await _$('app-search-bar input');
     'biblioinformatics'.split('').forEach(c => searchBar.sendKeys(c));
     await _$$('.results-list .mat-list-item').first().click();
     expect(await _$('mat-card-title h2').getText()).toEqual('BiblioInformatics');
