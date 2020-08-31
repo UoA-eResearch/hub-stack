@@ -44,10 +44,6 @@ import { RichTextToHTML } from '../../pipes/rich-text.pipe';
     CollectionListComponent,
     RichTextToHTML
   ],
-  entryComponents: [
-    ErrorDialogComponent,
-    ConfirmDialogComponent
-  ],
   providers: [],
 })
 export class SharedModule {

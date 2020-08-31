@@ -1,38 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Page } from 'app/model/Page';
-import { ListItem } from 'app/model/ListItem';
-import { ResearchHubApiService, SearchResultsParams } from 'app/services/research-hub-api.service';
-import { map ,  delay } from 'rxjs/operators';
-import { forkJoin ,  BehaviorSubject, Observable } from 'rxjs';
+import { Page } from '../../model/Page';
+import { ListItem } from '../../model/ListItem';
+import { ResearchHubApiService, SearchResultsParams } from '../../services/research-hub-api.service';
+import { map, delay } from 'rxjs/operators';
+import { forkJoin, BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class SearchResultsComponentService {
 
   private resultsSubject: BehaviorSubject<Page<ListItem>>;
-  public results$ : Observable<Page<ListItem>>;
-  private resultsLoadingSubject : BehaviorSubject<boolean>;
-  public resultsLoading$ : Observable<boolean>;
+  public results$: Observable<Page<ListItem>>;
+  private resultsLoadingSubject: BehaviorSubject<boolean>;
+  public resultsLoading$: Observable<boolean>;
 
   private categorySubject: BehaviorSubject<Array<Object>>;
-  public resultsCategories$ : Observable<Array<Object>>;
-  private categoriesLoadingSubject : BehaviorSubject<boolean>;
-  public categoriesLoading$ : Observable<boolean>;
+  public resultsCategories$: Observable<Array<Object>>;
+  private categoriesLoadingSubject: BehaviorSubject<boolean>;
+  public categoriesLoading$: Observable<boolean>;
 
   constructor(public apiService: ResearchHubApiService) {
     this.initialiseSubjects();
   }
 
-  public searchWithParams(params: SearchResultsParams){
+  public searchWithParams(params: SearchResultsParams) {
     this.resultsLoadingSubject.next(true);
     const resultsSub = this.updateSearchResults(params)
       .pipe(delay(250)) // Add delay to make result changes obvious.
-      .subscribe(page =>
-                 {
-                   this.resultsSubject.next(page);
-                   this.resultsLoadingSubject.next(false);
-                   resultsSub.unsubscribe();
-                 }
-                );
+      .subscribe(page => {
+        this.resultsSubject.next(page);
+        this.resultsLoadingSubject.next(false);
+        resultsSub.unsubscribe();
+      }
+      );
 
     this.categoriesLoadingSubject.next(true);
     const categorySub = this.updateSearchResultsCategories(params)
@@ -43,7 +42,7 @@ export class SearchResultsComponentService {
       });
   }
 
-  initialiseSubjects(){
+  initialiseSubjects() {
     // We initialise the Subjects with an empty initial value.
     this.resultsSubject = new BehaviorSubject<Page<ListItem>>(<Page<ListItem>>{});
     this.results$ = this.resultsSubject.asObservable();
@@ -58,14 +57,14 @@ export class SearchResultsComponentService {
     this.categoriesLoading$ = this.categoriesLoadingSubject.asObservable();
   }
 
-  private updateSearchResults(params: SearchResultsParams){
+  private updateSearchResults(params: SearchResultsParams) {
     return this.apiService.getSearchResults(params);
   }
 
-  private updateSearchResultsCategories(params: SearchResultsParams){
+  private updateSearchResultsCategories(params: SearchResultsParams) {
     const categoryList = {};
     const categoryListArray = [];
-    return  this.apiService.getSearchResultsCategories(params).pipe(
+    return this.apiService.getSearchResultsCategories(params).pipe(
       map(res => {
         for (let i = 0; i < res['content'].length; i++) {
           for (let j = 0; j < res['content'][i]['categories'].length; j++) {
