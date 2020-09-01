@@ -1,7 +1,7 @@
 const { createTestClient } = require('apollo-server-testing');
 const { createServer, getCredentials } = require('../index')
 const TQ = require('./test-queries'); // Collection of test queries
-const { gql, introspectSchema } = require('apollo-server');
+const { gql, introspectSchema, ApolloServer } = require('apollo-server');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
 /**
@@ -10,7 +10,7 @@ const { JsonWebTokenError } = require('jsonwebtoken');
  */
 async function createServerAndTestClient() {
     let server = await createServer(getCredentials(true));
-    return createTestClient(server);    
+    return createTestClient(new ApolloServer({ ...server, context: () => { } }));
 }
 
 /**
