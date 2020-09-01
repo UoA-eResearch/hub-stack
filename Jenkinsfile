@@ -274,6 +274,7 @@ pipeline {
         success {
             echo 'Jenkins job ran successfully. Deployed to ' + BRANCH_NAME
             slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🚀 Build successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+             sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl 'http://d35r3tpm7jlu7p.cloudfront.net/home'" // TODO: Replace hardcoded URL
         }
         failure {
             echo 'Jenkins job failed :('
