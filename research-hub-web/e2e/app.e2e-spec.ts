@@ -69,7 +69,7 @@ describe('ResearchHub\'s Search Functionality', () => {
    * Directly navigates to the search results page and checks the presence of the search results page title 'Results'.
    */
   it('can directly navigate to search results page', async () => {
-    await page.navigateTo(browser.baseUrl + '/search');
+    await page.navigateTo(browser.baseUrl + 'search');
     expect(await _$('.search-results-title').getText()).toEqual('Results');
   });
 
@@ -138,7 +138,7 @@ describe('ResearchHub\'s Research Impact Content', () => {
   })
 
   beforeEach(async () => {
-    await page.navigateTo(browser.baseUrl + '/researchimpact');
+    await page.navigateTo(browser.baseUrl + 'researchimpact');
   });
 
   /**
