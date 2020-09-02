@@ -133,11 +133,8 @@ describe('ResearchHub\'s Filter Functionality', () => {
  */
 describe('ResearchHub\'s Research Impact Content', () => {
 
-  beforeAll(async () => {
-    page = new ResearchHubPage();
-  })
-
   beforeEach(async () => {
+    page = new ResearchHubPage();
     await page.navigateTo(browser.baseUrl + 'researchimpact');
   });
 
