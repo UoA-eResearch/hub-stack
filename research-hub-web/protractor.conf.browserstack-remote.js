@@ -13,11 +13,11 @@ var {
 } = require('dotenv').config({ path: '../.env' }).parsed;
 
 exports.config = {
-  allScriptsTimeout: 36000,
+  allScriptsTimeout: 65000,
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 65000,
     print: function () { }
   },
   onPrepare: function () {
