@@ -42,11 +42,11 @@ run_protractor() {
     if [ "$seleniumServer" = 1 ]; then
         if [ "$host" = 1 ]; then
             echo "Running BrowserStack tests against remote host: $1"
-            ./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl "$1"
+            ./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl="$1"
         else
             echo "Running BrowserStack tests against local host: $1"
             echo "Safari testing only supported on remote hosts, see https://www.browserstack.com/question/664"
-            ./node_modules/.bin/protractor protractor.conf.browserstack-local --baseUrl "$1"
+            ./node_modules/.bin/protractor protractor.conf.browserstack-local --baseUrl="$1"
         fi
     else
         echo "Running Local Selenium tests against host: $1"
