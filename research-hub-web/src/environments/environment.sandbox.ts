@@ -9,10 +9,10 @@ export const environment = {
     cognitoUserPoolId: 'ap-southeast-2_pgErjyL4O',
     cognitoDomain: 'uoapool-sandbox',
     cognitoClientId: '53nj363gumskeibdir61nu1cs5',
-    redirectUri: 'https://d35r3tpm7jlu7p.cloudfront.net',
+    redirectUri: 'https://research-hub.sandbox.amazon.auckland.ac.nz',
     scopes: 'openid profile https://test-domain.auckland.ac.nz/lambda-hello-world',
     codeChallengeMethod: 'S256',
-    logout_uri: 'https://d35r3tpm7jlu7p.cloudfront.net'
+    logout_uri: 'https://research-hub.sandbox.amazon.auckland.ac.nz'
   },
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
