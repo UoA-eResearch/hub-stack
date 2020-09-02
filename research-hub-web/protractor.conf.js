@@ -8,7 +8,7 @@ const {
 } = require('jasmine-spec-reporter');
 
 exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 30000,
   specs: [
     './e2e/**/*.e2e-spec.ts'
   ],
@@ -17,7 +17,8 @@ exports.config = {
     chromeOptions: {
       args: [
         '--headless',
-        '--window-size=1920,1080'
+        '--window-size=1920,1080',
+        '--disable-extensions'
       ]
     }
   },
