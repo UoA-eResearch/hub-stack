@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Specify host_urls here
-host_urls[1]='https://research-hub.auckland.ac.nz/#/'
-host_urls[2]='https://test.research-hub.cer.auckland.ac.nz/#/'
-host_urls[3]='https://dev.research-hub.cer.auckland.ac.nz/#/'
-host_urls[4]='http://localhost:4200/'
+host_urls[1]='https://research-hub.sandbox.amazon.auckland.ac.nz/'
+host_urls[2]='https://research-hub.auckland.ac.nz/#/'
+host_urls[3]='https://test.research-hub.cer.auckland.ac.nz/#/'
+host_urls[4]='https://dev.research-hub.cer.auckland.ac.nz/#/'
+host_urls[5]='http://localhost:4200/'
 
 echo "======================================================"
 echo "=        Welcome to the ResearchHub Test Runner      ="
@@ -25,10 +26,11 @@ fi
 
 # E2E Testing Functionality
 echo -e "\nWhich host would you like to test?"
-echo "[1] Prod"
-echo "[2] Test"
-echo "[3] Dev"
-echo "[4] Local"
+echo "[1] Sandbox"
+echo "[2] Prod"
+echo "[3] Test"
+echo "[4] Dev"
+echo "[5] Local"
 read -p "Choice: " host
 
 echo -e "\nWhich Selenium server would you like to use for testing?"

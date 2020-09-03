@@ -44,10 +44,10 @@ exports.config = {
     'browserstack.key': BROWSERSTACK_CREDENTIALS_KEY,
     'project': 'ResearchHub',
     'build': 'Internal',
-    'browserstack.debug': true,
-    'browserstack.video': true,
-    'browserstack.local': true,
-    'acceptSslCerts': true,
+    'browserstack.debug': 'true',
+    'browserstack.video': 'true',
+    'browserstack.local': 'true',
+    'acceptSslCerts': 'true',
   },
 
   'multiCapabilities': [{

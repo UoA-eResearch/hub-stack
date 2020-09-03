@@ -13,11 +13,11 @@ var {
 } = require('dotenv').config({ path: '../.env' }).parsed;
 
 exports.config = {
-  allScriptsTimeout: 65000,
+  allScriptsTimeout: 150000,
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 65000,
+    defaultTimeoutInterval: 150000,
     print: function () { }
   },
   onPrepare: function () {
@@ -46,10 +46,10 @@ exports.config = {
     'browserstack.local': 'false',
     'project': 'ResearchHub',
     'build': 'Production',
-    'browserstack.debug': 'false',
+    'browserstack.debug': 'true',
     'browserstack.video': 'true',
     'acceptSslCerts': 'true',
-    'browserstack.idleTimeout': '120'
+    'browserstack.idleTimeout': '180'
   },
 
   'multiCapabilities': [
