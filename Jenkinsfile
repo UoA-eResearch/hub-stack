@@ -268,15 +268,24 @@ pipeline {
                 }
             }
         }
+
+        stage('BrowserStack e2e Tests') {
+            steps {
+                echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: """🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)
+                📹 Launching BrowserStack e2e tests - Watch videos: https://automate.browserstack.com/dashboard
+                """
+                )
+                dir("research-hub-web") {
+                    sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
+                }
+            }
+        }
     }
     
     post {
         success {
-            echo 'Jenkins job ran successfully. Deployed to ' + BRANCH_NAME
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🚀 Build successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
-            dir("research-hub-web") {
-                sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
-            }
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🎉 All BrowserStack e2e tests passed")
         }
         failure {
             echo 'Jenkins job failed :('
