@@ -277,7 +277,13 @@ pipeline {
                 """
                 )
                 dir("research-hub-web") {
-                    sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
+                    try {
+                        sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
+                    } catch(exc) {
+                        echo 'BrowserStack e2e tests failed'
+                        slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
+                        throw
+                    }
                 }
             }
         }
@@ -285,7 +291,7 @@ pipeline {
     
     post {
         success {
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🎉 All BrowserStack e2e tests passed")
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
         }
         failure {
             echo 'Jenkins job failed :('
