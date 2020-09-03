@@ -19,7 +19,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#D4DADF", message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
             }
         }
 
@@ -272,16 +272,13 @@ pipeline {
         stage('BrowserStack e2e Tests') {
             steps {
                 echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: """🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)
-                📹 Launching BrowserStack e2e tests - Watch videos: https://automate.browserstack.com/dashboard
-                """
-                )
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) \n📹 Launching BrowserStack e2e tests - Watch videos: https://automate.browserstack.com/dashboard")
                 dir("research-hub-web") {
                     try {
                         sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
                     } catch(exc) {
                         echo 'BrowserStack e2e tests failed'
-                        slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
+                        slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#f2ae3f", message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
                         throw
                     }
                 }
@@ -291,11 +288,11 @@ pipeline {
     
     post {
         success {
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#BDFFC3", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
         }
         failure {
             echo 'Jenkins job failed :('
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#FF9FA1", message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
     }
 }
