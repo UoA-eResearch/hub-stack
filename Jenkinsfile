@@ -272,11 +272,7 @@ pipeline {
         stage('BrowserStack e2e Tests') {
             steps {
                 echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: """\
-                🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)
-                📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>
-                """
-                )
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).\n 📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>")
                 dir("research-hub-web") {
                     script {
                         try {
@@ -293,7 +289,7 @@ pipeline {
     
     post {
         success {
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#BDFFC3", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
         }
         failure {
             echo 'Jenkins job failed :('
