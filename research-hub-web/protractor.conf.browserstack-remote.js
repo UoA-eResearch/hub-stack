@@ -13,11 +13,11 @@ var {
 } = require('dotenv').config({ path: '../.env' }).parsed;
 
 exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 150000,
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 150000,
     print: function () { }
   },
   onPrepare: function () {
@@ -43,29 +43,34 @@ exports.config = {
   'commonCapabilities': {
     'browserstack.user': BROWSERSTACK_CREDENTIALS_USER,
     'browserstack.key': BROWSERSTACK_CREDENTIALS_KEY,
+    'browserstack.local': 'false',
     'project': 'ResearchHub',
     'build': 'Production',
-    'browserstack.debug': true,
-    'browserstack.video': true,
-    'acceptSslCerts': true
+    'browserstack.debug': 'true',
+    'browserstack.video': 'true',
+    'acceptSslCerts': 'true',
+    'browserstack.idleTimeout': '180'
   },
 
-  'multiCapabilities': [{
-    'browserName': 'Chrome',
-    'os': 'Windows',
-    'os_version': '10',
-    'resolution': '1920x1080'
-  }, {
-    'browserName': 'Firefox',
-    'os': 'Windows',
-    'os_version': '10',
-    'resolution': '1920x1080'
-  }, {
-    'browserName': 'Safari',
-    'os': 'OS X',
-    'os_version': 'Mojave',
-    'resolution': '1600x1200'
-  }]
+  'multiCapabilities': [
+    {
+      'os': 'Windows',
+      'os_version': '10',
+      'browserName': 'Chrome',
+      'resolution': '1920x1080',
+    },
+    {
+      'os': 'Windows',
+      'os_version': '10',
+      'browserName': 'Firefox',
+      'resolution': '1920x1080',
+    },
+    {
+      'os': 'OS X',
+      'browserName': 'Safari',
+      'os_version': 'Catalina',
+      'resolution': '1920x1080'
+    }]
 };
 
 // Code to support common capabilities

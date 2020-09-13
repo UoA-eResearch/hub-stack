@@ -30,7 +30,7 @@ module.exports = function (config) {
       },
       fixWebpackSourcePaths: true
     },
-    reporters: ['progress', 'kjhtml', 'verbose'],
+    reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
@@ -40,7 +40,7 @@ module.exports = function (config) {
     failOnEmptyTestSuite: false,
     captureConsole: true,
     browserConsoleLogOptions: {
-      level: 'log',
+      level: 'error',
       format: '%b %T: %m',
       terminal: true
     }
