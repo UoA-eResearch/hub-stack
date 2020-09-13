@@ -1,7 +1,7 @@
-import { browser, by, element } from 'protractor';
+import { browser } from 'protractor';
 
 export class ResearchHubPage {
-  async navigateTo(url) {
-    return await browser.driver.get(url);
+  navigateTo(url) {
+    return browser.driver.get(url);
   }
 }

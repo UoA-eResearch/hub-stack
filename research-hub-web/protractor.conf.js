@@ -8,7 +8,7 @@ const {
 } = require('jasmine-spec-reporter');
 
 exports.config = {
-  allScriptsTimeout: 11000,
+  allScriptsTimeout: 150000,
   specs: [
     './e2e/**/*.e2e-spec.ts'
   ],
@@ -17,7 +17,8 @@ exports.config = {
     chromeOptions: {
       args: [
         '--headless',
-        '--window-size=1920,1080'
+        '--window-size=1920,1080',
+        '--disable-extensions'
       ]
     }
   },
@@ -26,7 +27,7 @@ exports.config = {
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
-    defaultTimeoutInterval: 30000,
+    defaultTimeoutInterval: 150000,
     print: function () { }
   },
   logLevel: 'WARN',

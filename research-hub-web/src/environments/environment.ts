@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 export const environment = {
   production: false,
-  researchHubApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/api/',
+  researchHubApiUrl: 'https://research-hub.auckland.ac.nz/api/',
   cerApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/cer-api/',
   cerGraphQLUrl: 'http://localhost:4000/',
   analyticsCode: 'UA-77710107-3',

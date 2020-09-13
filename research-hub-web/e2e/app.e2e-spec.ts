@@ -2,7 +2,7 @@ import { ResearchHubPage } from './app.po';
 import { browser, by, element, $, $$, ExpectedConditions, ElementFinder, ElementArrayFinder } from 'protractor';
 
 let page: ResearchHubPage;
-const TIMEOUT_PERIOD = 20000;
+const TIMEOUT_PERIOD = 65000;
 
 /**
  * Wrapper around the standard $() and $$() Protractor functions that add extra waits
@@ -69,7 +69,7 @@ describe('ResearchHub\'s Search Functionality', () => {
    * Directly navigates to the search results page and checks the presence of the search results page title 'Results'.
    */
   it('can directly navigate to search results page', async () => {
-    await page.navigateTo(browser.baseUrl + '/search');
+    await page.navigateTo(browser.baseUrl + 'search');
     expect(await _$('.search-results-title').getText()).toEqual('Results');
   });
 
@@ -133,12 +133,9 @@ describe('ResearchHub\'s Filter Functionality', () => {
  */
 describe('ResearchHub\'s Research Impact Content', () => {
 
-  beforeAll(async () => {
-    page = new ResearchHubPage();
-  })
-
   beforeEach(async () => {
-    await page.navigateTo(browser.baseUrl + '/researchimpact');
+    page = new ResearchHubPage();
+    await page.navigateTo(browser.baseUrl + 'researchimpact');
   });
 
   /**
