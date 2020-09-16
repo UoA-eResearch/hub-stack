@@ -168,6 +168,7 @@ $color-guide-tile-bg: #0294a5;
  * These are used apply custom themes to Angular components (buttons, sliders etc)
  * The research activity colour palettes are defined in research-activity.scss
  */
+$mat-theme-ignore-duplication-warnings: true; // Allow multiple theme declarations
 @mixin research-activity-theme($class-name, $research-activity-palette) {
   .#{$class-name} {
     $research-activity-primary: mat-palette($research-activity-palette);

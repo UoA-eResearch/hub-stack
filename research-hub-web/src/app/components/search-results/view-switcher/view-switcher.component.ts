@@ -1,5 +1,5 @@
-import { Component, OnInit, Input,Output, EventEmitter } from '@angular/core';
-import { AnalyticsService } from 'app/services/analytics.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AnalyticsService } from '../../../services/analytics.service';
 
 @Component({
   selector: 'view-switcher',
@@ -9,14 +9,14 @@ import { AnalyticsService } from 'app/services/analytics.service';
 export class ViewSwitcherComponent implements OnInit {
 
   @Input()
-  public showCardView : boolean;
+  public showCardView: boolean;
 
   @Output()
   public showCardViewChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  toggleView(){
+  toggleView() {
     this.showCardViewChange.emit(!this.showCardView);
-    this.showCardView ? this.analyticsService.trackUserExperience('Card view', 'show list view') : this.analyticsService.trackUserExperience('Card view', 'show card view') ;
+    this.showCardView ? this.analyticsService.trackUserExperience('Card view', 'show list view') : this.analyticsService.trackUserExperience('Card view', 'show card view');
   }
 
   constructor(public analyticsService: AnalyticsService) { }

@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc/e2e",
+    "baseUrl": "./e2e/",
+    "module": "commonjs",
+    "target": "es2018",
+    "types": [
+      "jasmine",
+      "jasminewd2",
+      "node"
+    ],
+  },
+  "files": [
+    "src/main.ts",
+    "src/polyfills.ts"
+  ],
+  "include": [
+    "**/e2e/**/*.e2e-spec.ts"
+  ]
+}
