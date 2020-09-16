@@ -11,7 +11,7 @@ describe('AllComponent', () => {
   let backend: ApolloTestingController;
   let spy: any;
 
-  const mockAllSearchableContent$: Observable<AllSearchableContentPublicFieldsQuery> = of ({
+  const mockAllSearchableContent$: Observable<AllSearchableContentPublicFieldsQuery> = of({
     'articleCollection': {
       'items': [
         {
@@ -114,7 +114,7 @@ describe('AllComponent', () => {
   }));
 
   beforeEach(() => {
-    backend = TestBed.get(ApolloTestingController);
+    backend = TestBed.inject(ApolloTestingController);
     spy = spyOn(AllComponent.prototype, 'getAllSearchableContent').and.returnValue(mockAllSearchableContent$);
 
     fixture = TestBed.createComponent(AllComponent);

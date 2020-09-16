@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {environment} from 'environments/environment';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 declare const ga: any;
 
 /**
@@ -8,13 +8,13 @@ declare const ga: any;
  * UX events (along with their corresponding actions).
  */
 class UXEvent {
-    eventLabel: string;
-    eventActions: string[];
+  eventLabel: string;
+  eventActions: string[];
 
-    constructor(eventLabel: string, ...eventActions: string[]) {
-        this.eventLabel = eventLabel;
-        this.eventActions = eventActions;
-    }
+  constructor(eventLabel: string, ...eventActions: string[]) {
+    this.eventLabel = eventLabel;
+    this.eventActions = eventActions;
+  }
 }
 
 @Injectable()
@@ -39,7 +39,7 @@ export class AnalyticsService {
    */
   readonly UX_EVENTS: UXEvent[] = [];
 
-  constructor () {
+  constructor() {
     this.initialize();
 
     /**
@@ -70,7 +70,7 @@ export class AnalyticsService {
    * @param eventAction Google Analytics eventAction
    */
   trackUserExperience(eventLabel: string, eventAction: string) {
-    if(this.isKnownUXEvent(eventLabel, eventAction)) {
+    if (this.isKnownUXEvent(eventLabel, eventAction)) {
       this.trackEvent(this.eventCategoryUserExperience, eventAction, eventLabel);
     } else {
       console.error('This is not a known Google Analytics UX event');
@@ -85,9 +85,9 @@ export class AnalyticsService {
    */
   isKnownUXEvent(eventLabel: string, eventAction: string) {
     return this.UX_EVENTS
-        .filter(x => x.eventLabel === eventLabel)
-        .filter(x => x.eventActions.indexOf(eventAction) != -1)
-        .length != 0;
+      .filter(x => x.eventLabel === eventLabel)
+      .filter(x => x.eventActions.indexOf(eventAction) != -1)
+      .length != 0;
   }
 
   trackContent(name: string, url: string) {

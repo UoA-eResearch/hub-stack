@@ -1,9 +1,9 @@
 import { Component, OnInit, SimpleChanges, OnChanges, Input, EventEmitter, Output } from '@angular/core';
 import { SearchResultsComponentService } from '../search-results-component.service';
 import { Observable } from 'rxjs';
-import { Page } from 'app/model/Page';
-import { ListItem } from 'app/model/ListItem';
-import { CategoryId, CategoryDisplayNames } from 'app/services/options.service';
+import { Page } from '../../../model/Page';
+import { ListItem } from '../../../model/ListItem';
+import { CategoryId, CategoryDisplayNames } from '../../../services/options.service';
 
 @Component({
   selector: 'category-list',
