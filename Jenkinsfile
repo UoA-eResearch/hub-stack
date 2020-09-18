@@ -281,6 +281,7 @@ pipeline {
                         } catch(exc) {
                             echo 'BrowserStack e2e tests failed'
                             slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#f2ae3f", message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
+                            exit 1
                         }
                     }
                 }
