@@ -68,7 +68,7 @@ describe("serverless-now", () => {
     expect(resBody.number.value).to.equal(EXAMPLE_TICKET_ID);
   });
 
-  it("responds to POST requests with a valid body", async function () {
+  it("Post returns a response from service now.", async function () {
     this.timeout(20000);
     let authTokens = await getTokens();
     const resBody = await getResBody({
@@ -82,8 +82,6 @@ describe("serverless-now", () => {
         comment: "Example ticket comment.",
       },
     });
-    console.log(resBody);
-    // expect(resBody.table).to.equal('u_request');
     expect(resBody.status).to.equal('error');
     return;
   });
