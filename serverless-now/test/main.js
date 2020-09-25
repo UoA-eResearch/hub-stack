@@ -68,7 +68,7 @@ describe("serverless-now", () => {
     expect(resBody.number.value).to.equal(EXAMPLE_TICKET_ID);
   });
 
-  it("Post returns a response from service now.", async function () {
+  it("POST request returns a response from service now.", async function () {
     this.timeout(20000);
     let authTokens = await getTokens();
     const resBody = await getResBody({
