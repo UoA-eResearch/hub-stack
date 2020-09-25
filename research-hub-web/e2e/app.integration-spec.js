@@ -42,13 +42,19 @@ const getTokens = async () => {
 
 describe('ResearchHub\'s integration functionality', () => {
 
+  let authTokens; 
+
+  beforeAll(async function() {
+    authTokens = await getTokens();
+  });
+
   it("Returns access tokens correctly", async function () {
-    let authToken = await getTokens();
+    // authToken = await getTokens();
     expect(authToken['access_token'].length).toBeGreaterThan(20);
   })
 
   it("Returns subhub data when ", async function () {
-    let authToken = await getTokens();
+    // let authToken = await getTokens();
 
   })
 
