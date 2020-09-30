@@ -13,7 +13,27 @@ const fetch = require('node-fetch');
  */
 async function createServerAndTestClient() {
     let server = await createServer(getCredentials(true));
-    return createTestClient(new ApolloServer({ ...server, context: () => { } }));
+
+    //original 
+    // return createTestClient(new ApolloServer({ ...server, context: () => { } }));
+
+    // return createTestClient(new ApolloServer({ ...server, context: server.context }));
+    // return createTestClient(new ApolloServer({ ...server}));
+    return createTestClient(new ApolloServer(server));
+}
+
+async function createServerAndTestClientWithAuth() {
+    let server = await createServer(getCredentials(true));
+    let tokens = await getTokens();
+    
+    // server.context = () => ({
+    //     bearerToken: `Bearer ${tokens.sessionToken}`
+    // });
+    // return createTestClient(new ApolloServer({ ...server}));
+
+    return createTestClient(new ApolloServer({ ...server, context: () => {
+        bearerToken: `Bearer ${tokens.sessionToken}`
+    }}));
 }
 
 /**
@@ -114,12 +134,15 @@ describe('Authorisation resolvers', () => {
 
     test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
+        console.log(JSON.stringify(res));
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 
     test('Requesting an articleCollection non-public field with a valid Authorization header returns an response', async function () {
-        oAuthTokens = await getTokens(); 
-        let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
+        // oAuthTokens = await getTokens(); 
+        // let { query } = await createServerAndTestClientWithAuth();
+        let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+        console.log(JSON.stringify(res));
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     }, 20000);
 

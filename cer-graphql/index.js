@@ -220,6 +220,8 @@ async function createServer(config) {
 
             // Verify the requestor's token and return their user info, or return null for unauthenticated users
             try {
+                console.log(req.headers.authorization);
+                console.log('hi');
                 return { user: verifyJwt(req.headers.authorization.substring('Bearer '.length), cognitoPublicKeys) }
             } catch (e) { return null }
         }, formatResponse: (res, context) => {
