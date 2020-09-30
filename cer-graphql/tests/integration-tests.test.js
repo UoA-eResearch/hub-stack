@@ -13,27 +13,22 @@ const fetch = require('node-fetch');
  */
 async function createServerAndTestClient() {
     let server = await createServer(getCredentials(true));
-
-    //original 
-    // return createTestClient(new ApolloServer({ ...server, context: () => { } }));
-
-    // return createTestClient(new ApolloServer({ ...server, context: server.context }));
-    // return createTestClient(new ApolloServer({ ...server}));
-    return createTestClient(new ApolloServer(server));
+    return createTestClient(new ApolloServer({ ...server, context: () => { } }));
 }
 
 async function createServerAndTestClientWithAuth() {
     let server = await createServer(getCredentials(true));
     let tokens = await getTokens();
-    
-    // server.context = () => ({
-    //     bearerToken: `Bearer ${tokens.sessionToken}`
-    // });
-    // return createTestClient(new ApolloServer({ ...server}));
-
-    return createTestClient(new ApolloServer({ ...server, context: () => {
-        bearerToken: `Bearer ${tokens.sessionToken}`
-    }}));
+    return createTestClient(new ApolloServer({
+        ...server.config,
+        context: () => server.config.context({
+            req: {
+                headers: {
+                    authorization: `Bearer ${tokens['access_token']}`
+                }
+            }
+        })
+    }));
 }
 
 /**
@@ -60,7 +55,7 @@ const getTokens = async () => {
     });
     let res = await fetch('https://ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com/sandbox/', opts);
     const resJson = await res.json();
-    console.log(resJson);
+    // console.log(resJson);
     return resJson;
 }
 
@@ -123,15 +118,6 @@ describe('Contentful filters (conditionals)', () => {
 
 describe('Authorisation resolvers', () => {
 
-    let oAuthTokens;
-    beforeAll(async () => {
-        
-        // console.log('beginning getting oauth tokens');
-        // oAuthTokens = await getTokens(); 
-        // console.log('tokens got');
-        // console.log(oAuthTokens);
-    }, 20000)
-
     test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
         console.log(JSON.stringify(res));
@@ -139,11 +125,10 @@ describe('Authorisation resolvers', () => {
     });
 
     test('Requesting an articleCollection non-public field with a valid Authorization header returns an response', async function () {
-        // oAuthTokens = await getTokens(); 
-        // let { query } = await createServerAndTestClientWithAuth();
+        let { query } = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
         console.log(JSON.stringify(res));
-        expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
+        expect(res.data.articleCollection).toBeTruthy();
     }, 20000);
 
     test('Requesting a article single resource non-public field returns an error', async function () {
