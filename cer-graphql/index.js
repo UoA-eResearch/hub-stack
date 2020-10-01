@@ -221,7 +221,10 @@ async function createServer(config) {
             // Verify the requestor's token and return their user info, or return null for unauthenticated users
             try {
                 return { user: verifyJwt(req.headers.authorization.substring('Bearer '.length), cognitoPublicKeys) }
-            } catch (e) { return null }
+            } catch (e) { 
+                throw new AuthenticationError('The included token for this request is invalid.');
+                // return null;
+            }
         }, formatResponse: (res, context) => {
 
             // Log the requestor's username or 'Unauthenticated'
