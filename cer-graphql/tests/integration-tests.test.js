@@ -16,6 +16,10 @@ async function createServerAndTestClient() {
     return createTestClient(new ApolloServer({ ...server, context: () => { } }));
 }
 
+/**
+ * Creates as testing server using the real server's configuration 
+ * with an injected context so we can add an authorization header to our query requests.
+ */
 async function createServerAndTestClientWithAuth() {
     let server = await createServer(getCredentials(true));
     let tokens = await getTokens();
