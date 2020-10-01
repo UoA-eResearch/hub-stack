@@ -38,7 +38,6 @@ const getTokens = async () => {
     let awsCreds = new aws.SharedIniFileCredentials({
         profile: 'saml',
     });
-    console.log(awsCreds);
 
     let opts = {
         host: 'ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com',
@@ -55,7 +54,6 @@ const getTokens = async () => {
     });
     let res = await fetch('https://ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com/sandbox/', opts);
     const resJson = await res.json();
-    // console.log(resJson);
     return resJson;
 }
 
@@ -120,14 +118,12 @@ describe('Authorisation resolvers', () => {
 
     test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
-        console.log(JSON.stringify(res));
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 
     test('Requesting an articleCollection non-public field with a valid Authorization header returns an response', async function () {
         let { query } = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
-        console.log(JSON.stringify(res));
         expect(res.data.articleCollection).toBeTruthy();
     }, 20000);
 
