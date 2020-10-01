@@ -63,12 +63,15 @@ const getTokens = async () => {
     });
     let res = await fetch('https://ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com/sandbox/', opts);
     const resJson = await res.json();
-    if (!resJson['access_token']) {
-        console.log('Failed fetching OAuth2.0 access token.');
+    try {
+        if (!resJson['access_token']) {
+            throw 'Fetching response for OAuth2.0 tokens does not contain access token.';
+        }
     }
-    else {
-        return resJson;
+    catch (error) {
+        console.error(error);
     }
+    return resJson;
 }
 
 
