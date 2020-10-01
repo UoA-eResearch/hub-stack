@@ -39,9 +39,14 @@ async function createServerAndTestClientWithAuth() {
  * Gets OAuth tokens
  */
 const getTokens = async () => {
-    let awsCreds = new aws.SharedIniFileCredentials({
-        profile: 'saml',
-    });
+    let awsCreds;
+    try {
+        awsCreds = new aws.SharedIniFileCredentials({
+            profile: 'saml',
+        });
+    } catch (error) {
+        console.log("Could not retrieve AWS credentials. Try re-running the credential python script.");
+    }
 
     let opts = {
         host: 'ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com',
@@ -58,7 +63,12 @@ const getTokens = async () => {
     });
     let res = await fetch('https://ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com/sandbox/', opts);
     const resJson = await res.json();
-    return resJson;
+    if (!resJson['access_token']) {
+        console.log('Failed fetching OAuth2.0 access token.');
+    }
+    else {
+        return resJson;
+    }
 }
 
 
