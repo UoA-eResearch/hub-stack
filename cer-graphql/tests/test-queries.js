@@ -33,19 +33,6 @@ exports.GET_ARTICLE_COLLECTION_PRIVATE = gql`
 }
 `;
 
-exports.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO = gql`
-{ 
-    articleCollection {
-        items {
-            ssoProtected
-            body {
-                json
-            }
-        }
-    }
-}
-`;
-
 exports.GET_SUBHUB_COLLECTION = gql`
 { 
     subHubCollection {
