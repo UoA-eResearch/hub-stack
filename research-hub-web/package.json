@@ -20,8 +20,7 @@
     "generate": "graphql-codegen",
     "generate-watch": "graphql-codegen --watch './src/app/graphql/queries/*.graphql'",
     "graphql-server": "nodemon ../cer-graphql/index.js",
-    "graphql-server-watch": "npm run dev --prefix ../cer-graphql",
-    "integration-tests": "./node_modules/.bin/protractor protractor.conf.js --specs e2e/*.integration-spec.*"
+    "graphql-server-watch": "npm run dev --prefix ../cer-graphql"
   },
   "private": true,
   "dependencies": {
