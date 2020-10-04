@@ -23,6 +23,8 @@ async function createServerAndTestClient() {
 async function createServerAndTestClientWithAuth() {
     let server = await createServer(getCredentials(true));
     let tokens = await getTokens();
+    console.log(tokens);
+    // console.log(tokens['access_token']);
     return createTestClient(new ApolloServer({
         ...server.config,
         context: () => server.config.context({
@@ -73,7 +75,6 @@ const getTokens = async () => {
     }
     return resJson;
 }
-
 
 /**
  * Before any of the tests run create the query function and make
