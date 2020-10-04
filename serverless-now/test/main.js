@@ -1,5 +1,6 @@
 "use strict";
 
+
 const mochaPlugin = require("serverless-mocha-plugin");
 const expect = mochaPlugin.chai.expect;
 let wrapped = mochaPlugin.getWrapper("main", "/handler.js", "main");
@@ -18,7 +19,7 @@ let getResBody = async (req) =>
  */
 const getAwsCredentials = () => {
   let credentials = new aws.SharedIniFileCredentials({
-    profile: 'saml',
+    profile: process.env.awsProfile,
   });
   credentials = credentials;
   return credentials;
