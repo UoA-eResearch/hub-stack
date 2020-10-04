@@ -142,6 +142,7 @@ describe('Authorisation resolvers', () => {
     test('Requesting an articleCollection non-public field with a valid Authorization header returns an response', async function () {
         let { query } = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+        console.log(JSON.stringify(res));
         expect(res.data.articleCollection).toBeTruthy();
     }, 20000);
 
