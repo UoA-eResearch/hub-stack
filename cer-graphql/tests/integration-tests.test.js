@@ -44,7 +44,7 @@ const getTokens = async () => {
     let awsCreds;
     try {
         awsCreds = new aws.SharedIniFileCredentials({
-            profile: 'saml',
+            profile: 'uoa-sandbox',
         });
     } catch (error) {
         console.log("Could not retrieve AWS credentials. Try re-running the credential python script.");
