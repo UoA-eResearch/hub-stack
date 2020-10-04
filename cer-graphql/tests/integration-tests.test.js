@@ -23,8 +23,6 @@ async function createServerAndTestClient() {
 async function createServerAndTestClientWithAuth() {
     let server = await createServer(getCredentials(true));
     let tokens = await getTokens();
-    console.log(tokens);
-    // console.log(tokens['access_token']);
     return createTestClient(new ApolloServer({
         ...server.config,
         context: () => server.config.context({
@@ -47,7 +45,7 @@ const getTokens = async () => {
             profile: 'uoa-sandbox',
         });
     } catch (error) {
-        console.log("Could not retrieve AWS credentials. Try re-running the credential python script.");
+        console.error("Could not retrieve AWS credentials. Try re-running the credential python script.");
     }
 
     let opts = {
@@ -142,7 +140,6 @@ describe('Authorisation resolvers', () => {
     test('Requesting an articleCollection non-public field with a valid Authorization header returns an response', async function () {
         let { query } = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
-        console.log(JSON.stringify(res));
         expect(res.data.articleCollection).toBeTruthy();
     }, 20000);
 
