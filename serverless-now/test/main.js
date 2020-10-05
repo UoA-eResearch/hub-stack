@@ -1,6 +1,4 @@
 "use strict";
-
-
 const mochaPlugin = require("serverless-mocha-plugin");
 const expect = mochaPlugin.chai.expect;
 let wrapped = mochaPlugin.getWrapper("main", "/handler.js", "main");
