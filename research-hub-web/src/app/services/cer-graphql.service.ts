@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GetAllSubHubChildPagesSlugsGQL } from '../graphql/schema';
 import { map } from 'rxjs/operators';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 /**
  * The interface of the breadcrumbsArray object returned by this service's getParentSubHubs()
@@ -20,6 +22,8 @@ export class CerGraphqlService {
 
   constructor(
     public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL,
+    public location: Location,
+    public router: Router
   ) { }
 
   /**
@@ -42,6 +46,16 @@ export class CerGraphqlService {
       }
       const breadCrumbsArray: SubHubTitleAndSlug[] = []; // The array to be populated by the recursive function
       this._getBreadCrumbsArray(entrySlug, breadCrumbsArray); // Populate the breadcrumbs array
+
+      // If the current item belongs to a SubHub
+      if (breadCrumbsArray.length) {
+        const locPath = breadCrumbsArray.map(x => x.slug).reverse().join('/') + '/' + entrySlug;
+        this.location.go(locPath); // Update the current location
+
+        console.log('This item is in subhub: ', breadCrumbsArray[0].slug)
+        console.log('This route should load the: ', this.getContentType(`${breadCrumbsArray[0].slug}`, entrySlug).toLowerCase() + 'Component');
+      }
+
       return breadCrumbsArray;
     } catch (e) { throw new Error('Error loading breadcrumbs') }
   }
@@ -70,4 +84,19 @@ export class CerGraphqlService {
       });
     }
   }
+
+  /**
+   * Loops through the subHubCollectionWithChildPagesSlugs object, finds the containing SubHub.
+   * Once it finds the correct SubHub, it loops through the SubHubs items, and finds the child page with the correct
+   * slug and returns its Contentful content type.
+   *
+   * @param subHubSlug the SubHub containing the content item we are searched for
+   * @param contentItemSlug the slug of the content item we are searching for
+   */
+  public getContentType(subHubSlug: string, contentItemSlug: string) {
+    return this._subHubCollectionWithChildPagesSlugs
+      .filter(x => x.slug === subHubSlug)[0].subhubPagesCollection.items
+      .filter(y => y.slug === contentItemSlug)[0].__typename;
+  }
+
 }
