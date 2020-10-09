@@ -75,6 +75,11 @@
             </div>
             <div *ngSwitchCase="'View 2'">
                 <div class="view2">
+                    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+                    <ng-container *ngTemplateOutlet="jsonData"></ng-container>
+                    <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
+                    <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
+                    <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
                 </div>
             </div>
             <div *ngSwitchDefault>
