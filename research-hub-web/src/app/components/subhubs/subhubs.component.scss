@@ -64,6 +64,11 @@ div.mat-card-avatar mat-icon {
 
 .view1 {
     background-color: #a4c1ec;
-    border-radius: 50%;
-    padding: 1rem;
+    border-radius: 5rem;
+    padding: 5rem;
+
+    * {
+        border-radius: 5rem !important;
+        padding: 1rem;
+    };
 }
