@@ -58,23 +58,23 @@
             <mat-card>
                 <h2>Pages in this SubHub</h2>
                 <app-collection-list *ngIf="subhub.subhubPagesCollection.items"
-                    [collection]="subhub.subhubPagesCollection"></app-collection-list>
+                    [collection]="subhub.subhubPagesCollection"
+                    ></app-collection-list>
             </mat-card>
         </ng-template>
 
         <div [ngSwitch]="subhub.viewType">
             <div *ngSwitchCase="'View 1'">
                 <div class="view1">
-                    This subhub is view type 1
-                </div>
-            </div>
-            <div *ngSwitchCase="'View 2'">
-                <div class="view2">
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
                     <ng-container *ngTemplateOutlet="jsonData"></ng-container>
                     <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
                     <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
                     <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
+                </div>
+            </div>
+            <div *ngSwitchCase="'View 2'">
+                <div class="view2">
                 </div>
             </div>
             <div *ngSwitchDefault>
