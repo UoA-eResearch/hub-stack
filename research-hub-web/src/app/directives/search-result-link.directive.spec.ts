@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import { AnalyticsService } from '../services/analytics.service';
+import { AnalyticsService } from '@services/analytics.service';
 import { SharedModule } from '../components/shared/app.shared.module';
 import { CommonModule } from '@angular/common';
 import { SearchResultLinkDirective } from './search-result-link.directive';

@@ -7,9 +7,9 @@ import { MaterialModule } from '../../../app.material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FeaturedComponent } from "./featured.component";
 
-import { ResearchHubApiService } from "../../../services/research-hub-api.service";
+import { ResearchHubApiService } from "@services/research-hub-api.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { AnalyticsService } from "../../../services/analytics.service";
+import { AnalyticsService } from "@services/analytics.service";
 
 describe('Feature component', () => {
     let component: FeaturedComponent;

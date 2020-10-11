@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { SearchFiltersService, DEFAULT_FILTERS_VALUE } from '../search-filters/search-filters.service';
 import { AppComponentService } from '../../../app.component.service';
 import { SearchResultsComponentService } from '../search-results-component.service';
-import { AnalyticsService } from '../../../services/analytics.service';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-filter-sidenav',

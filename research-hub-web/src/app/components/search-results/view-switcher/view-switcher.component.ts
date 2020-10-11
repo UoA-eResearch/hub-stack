@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AnalyticsService } from '../../../services/analytics.service';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'view-switcher',

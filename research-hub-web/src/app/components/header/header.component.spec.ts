@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header.component';
 
 import { HeaderService } from './header.service';
-import { ResearchHubApiService } from '../../services/research-hub-api.service';
+import { ResearchHubApiService } from '@services/research-hub-api.service';
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 

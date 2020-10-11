@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ResearchHubApiService, PeopleParams } from '../../services/research-hub-api.service';
+import { ResearchHubApiService, PeopleParams } from '@services/research-hub-api.service';
 import { OrgUnit } from '../../model/OrgUnit';
 import { Location } from '@angular/common';
-import { AnalyticsService } from '../../services/analytics.service';
+import { AnalyticsService } from '@services/analytics.service';
 import { ListItem } from '../../model/ListItem';
 import { AppComponentService } from '../../app.component.service';
-import { RoleTypeId } from '../../services/options.service';
+import { RoleTypeId } from '@services/options.service';
 
 
 @Component({
