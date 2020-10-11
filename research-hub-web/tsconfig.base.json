@@ -27,6 +27,11 @@
   "include": [
     "**/src/**/*.d.ts"
   ],
+  "paths": {
+    "@services": [
+      "src/app/services/*"
+    ]
+  },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
