@@ -19,6 +19,11 @@
       "dom",
       "esnext.asynciterable"
     ],
+    "paths": {
+      "@services/*": [
+        "src/app/services/*"
+      ],
+    },
   },
   "files": [
     "src/main.ts",
@@ -27,11 +32,6 @@
   "include": [
     "**/src/**/*.d.ts"
   ],
-  "paths": {
-    "@services": [
-      "src/app/services/*"
-    ]
-  },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true

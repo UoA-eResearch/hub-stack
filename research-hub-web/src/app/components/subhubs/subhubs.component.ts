@@ -7,7 +7,7 @@ import {
   SubHubCollection,
   SubHub
 } from "../../graphql/schema";
-import { CerGraphqlService } from "../../services/cer-graphql.service";
+import { CerGraphqlService } from "@services/cer-graphql.service";
 
 
 @Component({
