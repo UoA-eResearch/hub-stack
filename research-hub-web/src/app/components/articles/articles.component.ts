@@ -9,7 +9,7 @@ import {
   ArticleCollection,
   Article,
 } from '../../graphql/schema';
-import { CerGraphqlService } from '../../services/cer-graphql.service';
+import { CerGraphqlService } from '@services/cer-graphql.service';
 
 @Component({
   selector: 'app-articles',

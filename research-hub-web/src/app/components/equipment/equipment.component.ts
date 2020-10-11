@@ -3,7 +3,7 @@ import { EquipmentCollection, AllEquipmentGQL, AllEquipmentQuery, AllSearchableC
 import { Observable } from 'rxjs';
 import { pluck, tap, flatMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { CerGraphqlService } from '../../services/cer-graphql.service';
+import { CerGraphqlService } from '@services/cer-graphql.service';
 
 @Component({
   selector: 'app-equipment',
