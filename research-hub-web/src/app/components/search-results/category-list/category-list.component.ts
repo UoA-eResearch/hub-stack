@@ -3,7 +3,7 @@ import { SearchResultsComponentService } from '../search-results-component.servi
 import { Observable } from 'rxjs';
 import { Page } from '../../../model/Page';
 import { ListItem } from '../../../model/ListItem';
-import { CategoryId, CategoryDisplayNames } from '../../../services/options.service';
+import { CategoryId, CategoryDisplayNames } from '@services/options.service';
 
 @Component({
   selector: 'category-list',

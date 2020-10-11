@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchResultsComponent } from './search-results.component';
 import { SearchResultsModule } from './search-results.module';
-import { ServicesModule } from '../../services/services.module';
+import { ServicesModule } from '@services/services.module';
 import { SearchBarService } from '../search-bar/search-bar.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';

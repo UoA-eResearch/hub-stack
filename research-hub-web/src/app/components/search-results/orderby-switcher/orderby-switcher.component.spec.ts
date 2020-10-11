@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchResultsComponentService } from '../search-results-component.service';
-import { ResearchHubApiService } from '../../../services/research-hub-api.service';
-import { AnalyticsService } from '../../../services/analytics.service';
+import { ResearchHubApiService } from '@services/research-hub-api.service';
+import { AnalyticsService } from '@services/analytics.service';
 
 describe('OrderbySwitcherComponent', () => {
   let component: OrderbySwitcherComponent;

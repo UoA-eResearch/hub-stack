@@ -2,13 +2,13 @@
 import { of, combineLatest, Subscription, Observable, Subject, forkJoin } from 'rxjs';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SearchBarService } from '../../components/search-bar/search-bar.service';
-import { CategoryId, OptionsService, RoleTypeId } from '../../services/options.service';
+import { CategoryId, OptionsService, RoleTypeId } from '@services/options.service';
 import {
   ResearchHubApiService, OrderBy,
   SearchResultsParams
-} from '../../services/research-hub-api.service';
+} from '@services/research-hub-api.service';
 import { Page } from '../../model/Page';
-import { AnalyticsService } from '../../services/analytics.service';
+import { AnalyticsService } from '@services/analytics.service';
 
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -24,7 +24,7 @@ import { ListItem } from '../../model/ListItem';
 import { AppComponentService } from '../../app.component.service';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
-import { LayoutService } from '../../services/layout.service';
+import { LayoutService } from '@services/layout.service';
 
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
