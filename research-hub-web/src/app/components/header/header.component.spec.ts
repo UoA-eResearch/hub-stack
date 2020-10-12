@@ -3,7 +3,7 @@ import { SharedModule } from '../shared/app.shared.module';
 import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../app.material.module';
+import { MaterialModule } from '@app/app.material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header.component';
 

@@ -9,7 +9,7 @@ import { ActionTypeId, ContentTypeId, RoleTypeId } from '@services/options.servi
 import { Subscription } from 'rxjs';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { LayoutService } from '@services/layout.service';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
 
 @Component({
   selector: 'app-content-details',

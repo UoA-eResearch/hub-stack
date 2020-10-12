@@ -5,7 +5,7 @@ import { OrgUnit } from '../../model/OrgUnit';
 import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
 import { ListItem } from '../../model/ListItem';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
 import { RoleTypeId } from '@services/options.service';
 
 

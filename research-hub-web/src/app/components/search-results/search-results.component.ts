@@ -21,7 +21,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Tag } from './mat-tags/mat-tags.component';
 import { ListItem } from '../../model/ListItem';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { LayoutService } from '@services/layout.service';
