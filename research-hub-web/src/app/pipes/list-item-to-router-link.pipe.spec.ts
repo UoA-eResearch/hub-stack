@@ -1,5 +1,5 @@
 import { ListItemToRouterLinkPipe } from "./list-item-to-router-link.pipe";
-import { ListItem } from '../model/ListItem';
+import { ListItem } from '@model/ListItem';
 
 describe('List item to router link : pipe', () => {
     let pipe: ListItemToRouterLinkPipe;
