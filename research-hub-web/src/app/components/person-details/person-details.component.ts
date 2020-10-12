@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ResearchHubApiService, ContentItemsParams } from '@services/research-hub-api.service';
 import { ActivatedRoute } from '@angular/router';
-import { Person } from '../../model/Person';
+import { Person } from '@model/Person';
 import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
-import { ListItem } from '../../model/ListItem';
+import { ListItem } from '@model/ListItem';
 import { AppComponentService } from '@app/app.component.service';
 import { CategoryId, RoleTypeId } from '@services/options.service';
 

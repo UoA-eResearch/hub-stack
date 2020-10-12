@@ -17,6 +17,9 @@
       "@app/*": [
         "src/app/*"
       ],
+      "@model/*": [
+        "src/app/model/*"
+      ]
     },
   },
   "files": [

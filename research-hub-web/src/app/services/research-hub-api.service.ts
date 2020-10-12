@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
-import { Content } from '../model/Content';
-import { GuideCategory } from '../model/GuideCategory';
-import { Person } from '../model/Person';
-import { OrgUnit } from '../model/OrgUnit';
-import { Page } from '../model/Page';
-import { ListItem } from '../model/ListItem';
+import { Content } from '@model/Content';
+import { GuideCategory } from '@model/GuideCategory';
+import { Person } from '@model/Person';
+import { OrgUnit } from '@model/OrgUnit';
+import { Page } from '@model/Page';
+import { ListItem } from '@model/ListItem';
 
 
 

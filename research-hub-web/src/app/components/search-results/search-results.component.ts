@@ -7,7 +7,7 @@ import {
   ResearchHubApiService, OrderBy,
   SearchResultsParams
 } from '@services/research-hub-api.service';
-import { Page } from '../../model/Page';
+import { Page } from '@model/Page';
 import { AnalyticsService } from '@services/analytics.service';
 
 import { FormControl, FormGroup } from '@angular/forms';
@@ -20,7 +20,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Tag } from './mat-tags/mat-tags.component';
-import { ListItem } from '../../model/ListItem';
+import { ListItem } from '@model/ListItem';
 import { AppComponentService } from '@app/app.component.service';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';

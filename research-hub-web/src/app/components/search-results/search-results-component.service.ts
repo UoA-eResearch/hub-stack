@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Page } from '../../model/Page';
-import { ListItem } from '../../model/ListItem';
+import { Page } from '@model/Page';
+import { ListItem } from '@model/ListItem';
 import { ResearchHubApiService, SearchResultsParams } from '@services/research-hub-api.service';
 import { map, delay } from 'rxjs/operators';
 import { forkJoin, BehaviorSubject, Observable } from 'rxjs';
