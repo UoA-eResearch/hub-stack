@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../../app.material.module';
+import { MaterialModule } from '@app/app.material.module';
 import { MarkdownComponent } from './markdown/markdown.component';
 import { ListItemToRouterLinkPipe } from '@pipes/list-item-to-router-link.pipe';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';

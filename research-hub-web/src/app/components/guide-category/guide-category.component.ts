@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ResearchHubApiService } from '@services/research-hub-api.service';
 import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
 import { Content } from '../../model/Content';
 import { ContentTypeId } from '@services/options.service';
 

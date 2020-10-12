@@ -5,7 +5,7 @@ import { ServicesModule } from '@services/services.module';
 import { SearchBarService } from '../search-bar/search-bar.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
 import { SearchFiltersService } from './search-filters/search-filters.service';
 import { SearchResultsComponentService } from './search-results-component.service';
 import { Observable } from 'rxjs';
