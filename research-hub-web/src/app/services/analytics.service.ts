@@ -45,7 +45,7 @@ export class AnalyticsService {
     /**
      * Register known Google Analytics UX events.
      * These are used to ensure that events are consistently being tracked.
-     * A UX event must be registered here to be permitted to be sent to Google Analytics. 
+     * A UX event must be registered here to be permitted to be sent to Google Analytics.
      */
     this.UX_EVENTS.push(new UXEvent('Have you seen', 'click'))
     this.UX_EVENTS.push(new UXEvent('Card view', 'click', 'show card view', 'show list view'));
@@ -158,6 +158,8 @@ export class AnalyticsService {
   }
 
   trackPageView(url: string, title: string) {
+    // console.log('Tracking page view: ', { url }, { title });
+    // return; // TODO: Properly remove service
     if (typeof ga === 'undefined') { return; }
     ga('set', 'page', url);
     ga('set', 'title', title);
@@ -165,6 +167,7 @@ export class AnalyticsService {
   }
 
   trackEvent(eventCategory, eventAction, eventLabel) {
+    return;
     if (typeof ga === 'undefined') { return; }
     ga('set', 'eventCategory', eventCategory);
     ga('set', 'eventAction', eventAction);
