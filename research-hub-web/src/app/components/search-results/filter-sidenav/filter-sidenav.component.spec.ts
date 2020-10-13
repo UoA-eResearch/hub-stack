@@ -7,7 +7,7 @@ import { ResearchHubApiService } from '@services/research-hub-api.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { OptionsService } from '@services/options.service';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../components/shared/app.shared.module';
+import { SharedModule } from '@components/shared/app.shared.module';
 import { SearchResultsComponentService } from '../search-results-component.service';
 
 describe('FilterSidenavComponent', () => {

@@ -9,7 +9,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { SearchFiltersService } from './search-filters/search-filters.service';
 import { SearchResultsComponentService } from './search-results-component.service';
 import { Observable } from 'rxjs';
-import { SharedModule } from '../../components/shared/app.shared.module';
+import { SharedModule } from '@components/shared/app.shared.module';
 import { Page } from '@model/Page';
 import { ListItem } from '@model/ListItem';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
