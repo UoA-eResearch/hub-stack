@@ -5,7 +5,7 @@ import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/tes
 import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
-import { EquipmentCollection, AllEquipmentGQL, AllEquipmentDocument } from '../../graphql/schema';
+import { EquipmentCollection, AllEquipmentGQL, AllEquipmentDocument } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '../shared/app.shared.module';

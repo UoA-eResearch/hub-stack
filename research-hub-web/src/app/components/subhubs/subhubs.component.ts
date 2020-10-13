@@ -6,7 +6,7 @@ import {
   AllSubHubChildPagesGQL,
   SubHubCollection,
   SubHub
-} from "../../graphql/schema";
+} from "@graphql/schema";
 import { CerGraphqlService } from "@services/cer-graphql.service";
 
 
