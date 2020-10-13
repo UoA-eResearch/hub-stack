@@ -31,7 +31,10 @@
       ],
       "@model/*": [
         "src/app/model/*"
-      ]
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
     },
   },
   "files": [
