@@ -8,7 +8,7 @@ import {
   GetArticleBySlugGQL,
   ArticleCollection,
   Article,
-} from '../../graphql/schema';
+} from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
 
 @Component({

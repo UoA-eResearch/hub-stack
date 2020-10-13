@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GetAllSubHubChildPagesSlugsGQL } from '../graphql/schema';
+import { GetAllSubHubChildPagesSlugsGQL } from '@graphql/schema';
 import { map } from 'rxjs/operators';
 
 /**

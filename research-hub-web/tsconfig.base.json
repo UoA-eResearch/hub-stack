@@ -35,6 +35,9 @@
       "@environments/*": [
         "src/environments/*"
       ],
+      "@graphql/*": [
+        "src/app/graphql/*"
+      ],
     },
   },
   "files": [

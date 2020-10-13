@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery } from '../../graphql/schema';
+import { AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery } from '@graphql/schema';
 import { Observable } from 'rxjs';
 import { pluck, tap } from 'rxjs/operators';
 

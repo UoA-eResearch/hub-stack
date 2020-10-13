@@ -17,7 +17,7 @@ import {
   AllSubHubChildPagesGQL,
   AllContentItemParentSubHubsGQL,
   SubHubOrder,
-} from "../../graphql/schema";
+} from "@graphql/schema";
 
 
 describe('SubhubsComponent', () => {

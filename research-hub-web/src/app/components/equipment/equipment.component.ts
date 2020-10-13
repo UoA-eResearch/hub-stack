@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipmentCollection, AllEquipmentGQL, AllEquipmentQuery, AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery, GetEquipmentBySlugGQL, Equipment } from '../../graphql/schema';
+import { EquipmentCollection, AllEquipmentGQL, AllEquipmentQuery, AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery, GetEquipmentBySlugGQL, Equipment } from '@graphql/schema';
 import { Observable } from 'rxjs';
 import { pluck, tap, flatMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
