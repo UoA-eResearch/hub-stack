@@ -26,6 +26,9 @@
       "@graphql/*": [
         "src/app/graphql/*"
       ],
+      "@components/*": [
+        "src/app/components/*"
+      ],
     },
   },
   "files": [

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { routing } from './search-results.routing';
-import { SharedModule } from '../../components/shared/app.shared.module';
+import { SharedModule } from '@components/shared/app.shared.module';
 import { SearchResultsComponent } from './search-results.component';
 import { ViewSwitcherComponent } from './view-switcher/view-switcher.component';
 import { OrderbySwitcherComponent } from './orderby-switcher/orderby-switcher.component';

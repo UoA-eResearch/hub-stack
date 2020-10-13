@@ -1,7 +1,7 @@
 
 import { of, combineLatest, Subscription, Observable, Subject, forkJoin } from 'rxjs';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { SearchBarService } from '../../components/search-bar/search-bar.service';
+import { SearchBarService } from '@components/search-bar/search-bar.service';
 import { CategoryId, OptionsService, RoleTypeId } from '@services/options.service';
 import {
   ResearchHubApiService, OrderBy,
