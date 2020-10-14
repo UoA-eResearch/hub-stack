@@ -19,6 +19,7 @@ import { CerGraphqlService } from '../../services/cer-graphql.service';
 export class ArticlesComponent implements OnInit {
 
   public allArticles$: Observable<ArticleCollection>;
+  public articleLoading: boolean;
   public article$: Observable<Article>;
   public slug: string;
   public parentSubHubs;
@@ -45,7 +46,13 @@ export class ArticlesComponent implements OnInit {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
+      this.articleLoading = true; 
       this.article$ = this.getArticleBySlug(this.slug);
+      this.article$.subscribe(article => {
+        if (!!article) {
+          this.articleLoading = false;
+        }
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.allArticles$ = this.getAllArticles();
@@ -61,6 +68,7 @@ export class ArticlesComponent implements OnInit {
    */
   public getAllArticles(): Observable<ArticleCollection> {
     try {
+      this.allArticlesGQL.fetch().pipe()
       return this.allArticlesGQL.fetch()
         .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
     } catch (e) { console.error('Error loading all articles:', e) };

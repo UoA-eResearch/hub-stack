@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ArticlesRoutingModule } from './articles-routing.module';
 import { ArticlesComponent } from './articles.component';
 import { SharedModule } from '../shared/app.shared.module';
+import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { SharedModule } from '../shared/app.shared.module';
   imports: [
     CommonModule,
     ArticlesRoutingModule,
-    SharedModule
+    SharedModule,
+    NgxSkeletonLoaderModule
   ]
 })
 export class ArticlesModule { }

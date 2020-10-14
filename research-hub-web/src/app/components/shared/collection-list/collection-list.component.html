@@ -1,3 +1,7 @@
+<ng-container *ngIf="!collection">
+    <ngx-skeleton-loader count="5" animation="pulse"></ngx-skeleton-loader>
+</ng-container>
+
 <ng-container *ngIf="collection">
     <h1 id="title">{{ collection.__typename | humanCase }}</h1>
     Found <span class="search-results-text">{{ collection.items.length }}</span> results in <span

@@ -12,7 +12,7 @@ import { HumanCasePipe } from '../../pipes/human-case.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
 import { RichTextToHTML } from '../../pipes/rich-text.pipe';
-
+import { NgxSkeletonLoaderModule  } from "ngx-skeleton-loader";
 
 @NgModule({
   imports: [
@@ -21,7 +21,8 @@ import { RichTextToHTML } from '../../pipes/rich-text.pipe';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    NgxSkeletonLoaderModule
   ],
   declarations: [
     MarkdownComponent,
