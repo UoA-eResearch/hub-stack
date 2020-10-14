@@ -93,13 +93,39 @@ pipeline {
                     }
                     steps {
                         echo 'Building research-hub-web project'
-                        dir("research-hub-web") {
-                            echo 'Installing research-hub-web dependencies'
-                            sh "npm install"
-
-                            echo 'Building for production'
-                            sh "npm run build -- -c ${BRANCH_NAME}"
+                        echo 'Installing research-hub-web dependencies'
+                        stage('Create new node_modules/ cache') {
+                            when {
+                                anyOf {
+                                    changeset "**/research-hub-web/package.json"
+                                    equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                                }
+                            }
+                            steps {
+                                dir("research-hub-web") {
+                                    sh "npm install"
+                                    sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                }
+                            }
                         }
+                        stage('Load node_modules/ cache') {
+                            when {
+                                not {
+                                    anyOf {
+                                        changeset "**/research-hub-web/package.json"
+                                        equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                                    }
+                                }
+                            }
+                            steps {
+                                dir("research-hub-web") {
+                                    sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
+                                    sh "npm install"
+                                }
+                            }
+                        }
+                        echo 'Building for production'
+                        sh "npm run build -- -c ${BRANCH_NAME}"
                     }
                 }
                 stage('Build cer-graphql') {
