@@ -12,7 +12,7 @@ import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { ResearchActivityInputComponent } from './research-activity-input/research-activity-input.component';
 import { FilterSidenavComponent } from './filter-sidenav/filter-sidenav.component';
 import { MatTagsComponent } from './mat-tags/mat-tags.component';
-import { SearchResultLinkDirective } from '../../directives/search-result-link.directive';
+import { SearchResultLinkDirective } from '@directives/search-result-link.directive';
 
 @NgModule({
   imports: [

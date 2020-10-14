@@ -41,6 +41,9 @@
       "@components/*": [
         "src/app/components/*"
       ],
+      "@directives/*": [
+        "src/app/directives/*"
+      ],
     },
   },
   "files": [
