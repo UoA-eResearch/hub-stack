@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import { EquipmentCollection, AllEquipmentGQL, AllEquipmentDocument } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
-import { SharedModule } from '../shared/app.shared.module';
+import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('EquipmentComponent', () => {
