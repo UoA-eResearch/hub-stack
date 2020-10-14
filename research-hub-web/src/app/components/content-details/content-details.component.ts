@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ResearchHubApiService, PeopleParams } from '@services/research-hub-api.service';
-import { Content } from '../../model/Content';
+import { Content } from '@model/Content';
 import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
-import { ListItem } from '../../model/ListItem';
+import { ListItem } from '@model/ListItem';
 import { ActionTypeId, ContentTypeId, RoleTypeId } from '@services/options.service';
 import { Subscription } from 'rxjs';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
