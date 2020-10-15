@@ -109,7 +109,8 @@ pipeline {
                         when {
                             not {
                                 // anyOf {
-                                    changeset "**/research-hub-web/package.json"
+                                    expression { changeset "**/research-hub-web/package.json" }
+                                    // changeset "**/research-hub-web/package.json"
                                     // equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                                 // }
                             }
