@@ -85,10 +85,17 @@ pipeline {
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
+                    // when {
+                    //     anyOf {
+                    //         changeset "**/research-hub-web/**/*.*"
+                    //         equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                    //     }
+                    // }
                     when {
-                        anyOf {
-                            changeset "**/research-hub-web/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        not {
+                            anyOf {
+                                changeset "**/research-hub-web/package.json"
+                            }
                         }
                     }
                     steps {
