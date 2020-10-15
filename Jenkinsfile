@@ -93,13 +93,26 @@ pipeline {
                     }
                     steps {
                         echo 'Building research-hub-web project'
-                        dir("research-hub-web") {
-                            echo 'Installing research-hub-web dependencies'
-                            sh "npm install"
 
-                            echo 'Building for production'
-                            sh "npm run build -- -c ${BRANCH_NAME}"
+                        when {
+                            not {
+                                anyOf {
+                                    changeset '**/research-hub-web/package.json'
+                                    equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                                }
+                            }
                         }
+                        steps {
+                            echo 'package.json unchanged.'
+                        }
+
+                        // dir("research-hub-web") {
+                        //     echo 'Installing research-hub-web dependencies'
+                        //     sh "npm install"
+
+                        //     echo 'Building for production'
+                        //     sh "npm run build -- -c ${BRANCH_NAME}"
+                        // }
                     }
                 }
                 stage('Build cer-graphql') {
