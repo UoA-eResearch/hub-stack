@@ -94,7 +94,7 @@ pipeline {
                     steps {
                         echo 'Building research-hub-web project'
                         echo 'Installing research-hub-web dependencies'
-                        stage('Create new node_modules/ cache') {
+                        // stage('Create new node_modules/ cache') {
                             when {
                                 anyOf {
                                     changeset "**/research-hub-web/package.json"
@@ -107,8 +107,8 @@ pipeline {
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                 }
                             }
-                        }
-                        stage('Load node_modules/ cache') {
+                        // }
+                        // stage('Load node_modules/ cache') {
                             when {
                                 not {
                                     anyOf {
@@ -123,7 +123,7 @@ pipeline {
                                     sh "npm install"
                                 }
                             }
-                        }
+                        // }
                         echo 'Building for production'
                         sh "npm run build -- -c ${BRANCH_NAME}"
                     }
