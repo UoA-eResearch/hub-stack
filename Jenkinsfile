@@ -93,7 +93,6 @@ pipeline {
                     }
                     stages {
                         stage ('Caching new node_modules folder') {
-                            echo 'Installing research-hub-web dependencies'
                             when {
                                 anyOf {
                                     changeset "**/research-hub-web/package.json"
@@ -101,6 +100,7 @@ pipeline {
                                 }
                             }
                             steps {
+                                echo 'Installing research-hub-web dependencies'
                                 dir("research-hub-web") {
                                     sh "npm install"
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
@@ -108,7 +108,6 @@ pipeline {
                             }
                         }
                         stage ('Unzipping existing cached node_modules.') {
-                            echo 'Building research-hub-web project'
                             when {
                                 not {
                                     anyOf {
@@ -117,6 +116,7 @@ pipeline {
                                 }
                             }
                             steps {
+                                echo 'Building research-hub-web project'
                                 dir("research-hub-web") {
                                     sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "npm install"
