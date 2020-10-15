@@ -106,7 +106,8 @@ pipeline {
                                 sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                             }
                         }
-                        if (!( changeset "**/research-hub-web/package.json" )) {
+                        if ( changeset "**/research-hub-web/package.json" ) {
+                        } else {
                             dir("research-hub-web") {
                                 sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                 sh "npm install"
