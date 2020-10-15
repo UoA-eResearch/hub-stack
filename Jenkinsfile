@@ -95,11 +95,11 @@ pipeline {
                         echo 'Building research-hub-web project'
                         echo 'Installing research-hub-web dependencies'
                         when {
-                            expression {
-                                anyOf {
+                            // expression {
+                                // anyOf {
                                     changeset "**/research-hub-web/package.json"
-                                    equals expected: true, actual: params.FORCE_REDEPLOY_WEB
-                                }
+                                    // equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                                // }
                             }
                         }
                         steps {
@@ -109,13 +109,13 @@ pipeline {
                             }
                         }
                         when {
-                            expression {
+                            // expression {
                                 not {
-                                    anyOf {
+                                    // anyOf {
                                         changeset "**/research-hub-web/package.json"
-                                    }
+                                    // }
                                 }
-                            }
+                            // }
                         }
                         steps {
                             dir("research-hub-web") {
