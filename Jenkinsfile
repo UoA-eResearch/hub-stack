@@ -124,8 +124,10 @@ pipeline {
                             }
                         }
                         stage ('Building for production') {
-                            echo 'Building for production'
-                            sh "npm run build -- -c ${BRANCH_NAME}"
+                            steps {
+                                echo 'Building for production'
+                                sh "npm run build -- -c ${BRANCH_NAME}"
+                            }
                         }
                     }
                 }
