@@ -100,12 +100,13 @@ pipeline {
                                 }
                             }
                             steps {
-
-                                OUTPUT2 = sh(
-                                    script: "ls ${HOME}/research-hub-web", 
-                                    returnStdout: true
-                                )
-                                echo "${OUTPUT2}"
+                                script {
+                                    OUTPUT2 = sh(
+                                        script: "ls ${HOME}/research-hub-web", 
+                                        returnStdout: true
+                                    )
+                                    echo "${OUTPUT2}"
+                                }
 
                                 echo 'Installing research-hub-web dependencies'
                                 dir("research-hub-web") {
