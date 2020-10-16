@@ -85,16 +85,6 @@ pipeline {
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
-                    steps {
-                        echo("Debugging")
-                        // OUTPUT = (sh "ls", return Stdout: true)
-                        OUTPUT2 = sh(
-                            script: "ls ${HOME}/research-hub-web", 
-                            returnStdout: true
-                        )
-                        // echo "${OUTPUT1}"
-                        echo "${OUTPUT2}"
-                    }
                     when {
                         anyOf {
                             changeset "**/research-hub-web/**/*.*"
@@ -110,6 +100,13 @@ pipeline {
                                 }
                             }
                             steps {
+
+                                OUTPUT2 = sh(
+                                    script: "ls ${HOME}/research-hub-web", 
+                                    returnStdout: true
+                                )
+                                echo "${OUTPUT2}"
+
                                 echo 'Installing research-hub-web dependencies'
                                 dir("research-hub-web") {
                                     sh "npm install"
