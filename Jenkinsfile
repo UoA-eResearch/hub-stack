@@ -90,7 +90,7 @@ pipeline {
                         // OUTPUT = (sh "ls", return Stdout: true)
                         OUTPUT2 = sh(
                             script: "ls ${HOME}/research-hub-web", 
-                            return stdOut: true
+                            returnStdout: true
                         )
                         // echo "${OUTPUT1}"
                         echo "${OUTPUT2}"
