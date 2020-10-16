@@ -87,9 +87,12 @@ pipeline {
                 stage('Build research-hub-web') {
                     steps {
                         echo("Debugging")
-                        OUTPUT = (sh "ls", return Stdout: true)
-                        OUTPUT2 = (sh "ls ${HOME}/research-hub-web", return stdOut: true)
-                        echo "${OUTPUT1}"
+                        // OUTPUT = (sh "ls", return Stdout: true)
+                        OUTPUT2 = sh(
+                            script: "ls ${HOME}/research-hub-web", 
+                            return stdOut: true
+                        )
+                        // echo "${OUTPUT1}"
                         echo "${OUTPUT2}"
                     }
                     when {
