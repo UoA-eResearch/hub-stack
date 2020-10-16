@@ -100,13 +100,6 @@ pipeline {
                                 }
                             }
                             steps {
-                                // script {
-                                    // OUTPUT2 = sh(
-                                    //     script: "ls ${HOME}/research-hub-web", 
-                                    //     returnStdout: true
-                                    // )
-                                    // echo "${OUTPUT2}"
-                                // }
 
                                 echo 'Installing research-hub-web dependencies'
                                 dir("research-hub-web") {
@@ -134,8 +127,10 @@ pipeline {
                         }
                         stage ('Building for production') {
                             steps {
-                                echo 'Building for production'
-                                sh "npm run build -- -c ${BRANCH_NAME}"
+                                dir("research-hub-web") {
+                                    echo 'Building for production'
+                                    sh "npm run build -- -c ${BRANCH_NAME}"
+                                }
                             }
                         }
                     }
