@@ -85,6 +85,11 @@ pipeline {
         stage('Build projects') {
             parallel {
                 stage('Build research-hub-web') {
+                    steps {
+                        echo("Debugging")
+                        sh "ls", return Stdout: true
+                        sh "ls ${HOME}/research-hub-web", return stdOut: true
+                    }
                     when {
                         anyOf {
                             changeset "**/research-hub-web/**/*.*"
@@ -103,7 +108,6 @@ pipeline {
                                 echo 'Installing research-hub-web dependencies'
                                 dir("research-hub-web") {
                                     sh "npm install"
-                                    sh "ls ${HOME} | grep research-hub"
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                 }
                             }
