@@ -100,17 +100,18 @@ pipeline {
                                 }
                             }
                             steps {
-                                script {
-                                    OUTPUT2 = sh(
-                                        script: "ls ${HOME}/research-hub-web", 
-                                        returnStdout: true
-                                    )
-                                    echo "${OUTPUT2}"
-                                }
+                                // script {
+                                    // OUTPUT2 = sh(
+                                    //     script: "ls ${HOME}/research-hub-web", 
+                                    //     returnStdout: true
+                                    // )
+                                    // echo "${OUTPUT2}"
+                                // }
 
                                 echo 'Installing research-hub-web dependencies'
                                 dir("research-hub-web") {
                                     sh "npm install"
+                                    sh "mkdir -p ${HOME}/research-hub-web/"
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                 }
                             }
