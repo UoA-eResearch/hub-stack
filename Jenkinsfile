@@ -103,6 +103,7 @@ pipeline {
                                 echo 'Installing research-hub-web dependencies'
                                 dir("research-hub-web") {
                                     sh "npm install"
+                                    sh "ls ${HOME} | grep research-hub"
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                 }
                             }
