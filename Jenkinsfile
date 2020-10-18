@@ -119,11 +119,13 @@ pipeline {
                             }
                             steps {
                                 echo 'Building research-hub-web project'
-                                OUTPUT = sh(
-                                    script: "ls ${HOME}/research-hub-web", 
-                                    returnStdout: true
-                                )
-                                echo "${OUTPUT}"
+                                script {
+                                    OUTPUT = sh(
+                                        script: "ls ${HOME}/research-hub-web", 
+                                        returnStdout: true
+                                    )
+                                    echo "${OUTPUT}"
+                                }
                                 dir("research-hub-web") {
                                     sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "npm install"
