@@ -105,6 +105,13 @@ pipeline {
                                 dir("research-hub-web") {
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
+                                    script {
+                                        OUTPUT = sh(
+                                                script: "ls ${HOME}/research-hub-web", 
+                                                returnStdout: true
+                                            )
+                                            echo "${OUTPUT}"
+                                        }
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                 }
                             }
