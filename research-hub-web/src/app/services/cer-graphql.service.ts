@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GetAllSubHubChildPagesSlugsGQL } from '../graphql/schema';
 import { map } from 'rxjs/operators';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 
 /**
  * The interface of the breadcrumbsArray object returned by this service's getParentSubHubs()
@@ -19,6 +19,32 @@ export interface SubHubTitleAndSlug {
 export class CerGraphqlService {
 
   private _subHubCollectionWithChildPagesSlugs;
+
+  public async pushSubHubRoutes() {
+    const routes = this.router.config;
+    const newNewDynamicRoutes = await this.generateSubHubRoutes();
+    console.log({ newNewDynamicRoutes })
+
+    // Push the generated routes to the array
+    newNewDynamicRoutes.forEach(route => {
+      routes.push(route);
+    });
+
+    this.router.resetConfig(routes);
+    return;
+  }
+
+  public async generateSubHubRoutes() {
+    const subHubRoutes: Routes = [
+      {
+        path: 'cer',
+        loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule),
+        data: { slug: 'cer' }
+      }
+    ];
+
+    return subHubRoutes;
+  }
 
   constructor(
     public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL,

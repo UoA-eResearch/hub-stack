@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "concurrently \"npm run graphql-server-watch\" \"sleep 3 && npm run generate-watch\" \"sleep 3 && npm start\" \"sleep 3 && npm run test-watch\"",
+    "qdev": "concurrently \"npm run graphql-server-watch\" \"sleep 3 && npm run generate-watch\" \"sleep 3 && npm start\"",
     "start": "ng serve",
     "prestart": "npm run generate",
     "build": "ng build",
