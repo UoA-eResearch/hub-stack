@@ -117,15 +117,13 @@ pipeline {
                             }
                         }
                         stage ('Unzipping existing cached node_modules.') {
-                            when {
-                                not {
-                                    anyOf {
-                                        // TODO: testing forcing this code block execution.
-                                        equals expected: true, actual: params.FORCE_REDEPLOY_WEB
-                                        changeset "**/research-hub-web/package.json"
-                                    }
-                                }
-                            }
+                            // when {
+                            //     not {
+                            //         anyOf {
+                            //             changeset "**/research-hub-web/package.json"
+                            //         }
+                            //     }
+                            // }
                             steps {
                                 echo 'Building research-hub-web project'
                                 script {
