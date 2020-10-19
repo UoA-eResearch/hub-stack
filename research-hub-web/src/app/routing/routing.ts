@@ -107,8 +107,8 @@ export const appRoutes: Routes = [
     loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule),
     data: { contentId: 73 }
   },
-  {
-    path: '**',
-    redirectTo: '/home'
-  }
+  // {
+  //   path: '**',
+  //   redirectTo: '/home'
+  // }
 ];
