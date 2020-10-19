@@ -96,7 +96,7 @@ pipeline {
                             when {
                                 anyOf {
                                     changeset "**/research-hub-web/package.json"
-                                    equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                                    // equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                                 }
                             }
                             steps {
@@ -113,15 +113,6 @@ pipeline {
                                             echo "${OUTPUT}"
                                     }
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
-                                    // TODO: testing tar can be extracted in same build step.
-                                    script {
-                                        OUTPUT = sh(
-                                                script: "ls ${HOME}/research-hub-web", 
-                                                returnStdout: true
-                                            )
-                                            echo "${OUTPUT}"
-                                    }
-                                    sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                 }
                             }
                         }
@@ -129,6 +120,8 @@ pipeline {
                             when {
                                 not {
                                     anyOf {
+                                        // TODO: testing forcing this code block execution.
+                                        equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                                         changeset "**/research-hub-web/package.json"
                                     }
                                 }
