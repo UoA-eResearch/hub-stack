@@ -111,8 +111,17 @@ pipeline {
                                                 returnStdout: true
                                             )
                                             echo "${OUTPUT}"
-                                        }
+                                    }
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                    // TODO: testing tar can be extracted in same build step.
+                                    script {
+                                        OUTPUT = sh(
+                                                script: "ls ${HOME}/research-hub-web", 
+                                                returnStdout: true
+                                            )
+                                            echo "${OUTPUT}"
+                                    }
+                                    sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                 }
                             }
                         }
