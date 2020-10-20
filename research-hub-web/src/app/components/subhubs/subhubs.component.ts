@@ -29,16 +29,10 @@ export class SubhubsComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    // console.log(this.route.snapshot);
     this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
     // this.route.params.subscribe((params) => {
-    //   // test slug: landing-page-for-a-sub-hub
     //   this.slug = params['slug'];
-    //   console.log('this.slug: ', this.slug);
-    //   // console.log(this.route.data);
-    //   console.log({ params })
-    //   // this.route.data.subscribe(x => console.log({ x }))
     // });
 
     if (!!this.slug) {
