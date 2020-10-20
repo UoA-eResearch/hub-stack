@@ -19,38 +19,41 @@ export interface SubHubTitleAndSlug {
 export class CerGraphqlService {
 
   private _subHubCollectionWithChildPagesSlugs;
-
-  public async pushSubHubRoutes() {
-    const routes = this.router.config;
-    const newNewDynamicRoutes = await this.generateSubHubRoutes();
-    console.log({ newNewDynamicRoutes })
-
-    // Push the generated routes to the array
-    newNewDynamicRoutes.forEach(route => {
-      routes.push(route);
-    });
-
-    this.router.resetConfig(routes);
-    return;
-  }
-
-  public async generateSubHubRoutes() {
-    const subHubRoutes: Routes = [
-      {
-        path: 'cer',
-        loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule),
-        data: { slug: 'cer' }
-      }
-    ];
-
-    return subHubRoutes;
-  }
+  private _subHubMap: SubHubMap = new SubHubMap();
 
   constructor(
     public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL,
     public location: Location,
     public router: Router
   ) { }
+
+  /**
+   * Dynamically pushes the SubHubs and the SubHub child pages to the application's routing array
+   */
+  public async pushSubHubRoutes() {
+    const routes = this.router.config;
+    await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
+    this._subHubMap.routes.forEach(route => { routes.push(route); }); // Push the new routes to the application's routes.
+    this.router.resetConfig(routes);
+    console.log('Generated these dynamic routes routes: ', routes);
+  }
+
+  /**
+   * This function first executes the GraphQL query to load all SubHubs and their child page's slugs, if it hasn't already been
+   * loaded. This populates the private member _subHubCollectionWithChildPagesSlugs.
+   *
+   * Once that is loaded, it generates the _subHubMap SubHub object.
+   * Once that object is created, it calls _subHubMap's populateRouteArray() method, which populates its routes member.
+   */
+  private async _generateSubHubMapAndRoutes() {
+    if (!this._subHubCollectionWithChildPagesSlugs) { this._subHubCollectionWithChildPagesSlugs = await this._loadSubHubCollection(); }
+
+    this._subHubCollectionWithChildPagesSlugs // Load the SiteMap
+      .forEach(subHub => this._subHubMap.addSubHub(subHub));
+
+    Object.keys(this._subHubMap.map) // Populate _siteMap.routes
+      .forEach(rootSubHub => this._subHubMap.populateRouteArray(this._subHubMap.map[rootSubHub]));
+  }
 
   /**
    * Returns the results of the query response's .data.subHubCollection.items array
@@ -77,9 +80,6 @@ export class CerGraphqlService {
       if (breadCrumbsArray.length) {
         const locPath = breadCrumbsArray.map(x => x.slug).reverse().join('/') + '/' + entrySlug;
         this.location.go(locPath); // Update the current location
-
-        console.log('This item is in subhub: ', breadCrumbsArray[0].slug)
-        console.log('This route should load the: ', this.getContentType(`${breadCrumbsArray[0].slug}`, entrySlug).toLowerCase() + 'Component');
       }
 
       return breadCrumbsArray;
@@ -124,5 +124,61 @@ export class CerGraphqlService {
       .filter(x => x.slug === subHubSlug)[0].subhubPagesCollection.items
       .filter(y => y.slug === contentItemSlug)[0].__typename;
   }
+}
 
+class SubHubMap {
+  map = {};
+  routes: Routes = [];
+
+  findParentSubHub(subHubSlug, subHub) {
+    if (subHub[subHubSlug]) { return subHub; }; // If the subHub is in the current SubHub
+
+    const childSubHubs = Object.keys(subHub) // Otherwise look at its children
+      .filter(key => subHub[key].typeName && subHub[key].typeName === 'SubHub')
+
+    for (const childSubHub of childSubHubs) {
+      const parentSubHub = this.findParentSubHub(subHubSlug, subHub[childSubHub]);
+      if (parentSubHub) { return parentSubHub; }
+    }
+  }
+
+  addSubHub(subHub) {
+    const parentSubHub = this.findParentSubHub(subHub.slug, this.map) || this.map; // Parent SubHub (or root SubHubMap)
+    parentSubHub[subHub.slug] = { slug: subHub.slug, typeName: subHub.__typename }; // Add to the right parent subhub
+
+    for (const subHubChildPage of subHub.subhubPagesCollection.items) { // Then loop through its child pages
+      if (subHubChildPage.__typename === 'SubHub') { // If the child page is a SubHub, check if its known
+        const subHubChildPageExistingParentSubHub = this.findParentSubHub(subHubChildPage.slug, this.map);
+        if (subHubChildPageExistingParentSubHub) { // The child SubHub is known, so move it here
+          parentSubHub[subHub.slug][subHubChildPage.slug] = subHubChildPageExistingParentSubHub[subHubChildPage.slug];
+          delete subHubChildPageExistingParentSubHub[subHubChildPage.slug]; // Then delete it from its existing place
+        } else { // The SubHub is not known, so just add it as a child page
+          parentSubHub[subHub.slug][subHubChildPage.slug] = { slug: subHubChildPage.slug, typeName: subHubChildPage.__typename };
+        }
+      } else { // This is not a SubHub so just add it to the new SubHub without checking if it's already known
+        parentSubHub[subHub.slug][subHubChildPage.slug] = { slug: subHubChildPage.slug, typeName: subHubChildPage.__typename };
+      }
+    }
+  }
+
+  getType = (url) => url.split('/').reduce((obj, key) => obj && obj[key], this.map).typeName;
+
+  populateRouteArray(curObject, curPath = '') {
+
+    curPath = curPath ? curPath + '/' + curObject.slug : curObject.slug;
+
+    this.routes.push({
+      path: curPath,
+      loadChildren: () => import(`../components/${curObject.typeName.toLowerCase()}s/${curObject.typeName.toLowerCase()}s.module`)
+        .then(m => m[curObject.typeName.toLowerCase().charAt(0).toUpperCase() + curObject.typeName.toLowerCase().slice(1) + 'sModule']),
+      data: { slug: curObject.slug }
+    });
+
+    if (curObject.typeName === 'SubHub') {
+      for (const subHubChild of Object.keys(curObject).filter(x => x !== 'typeName' && x !== 'slug')) {
+        this.populateRouteArray(curObject[subHubChild], curPath);
+      }
+    }
+
+  }
 }

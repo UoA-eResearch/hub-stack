@@ -36,9 +36,13 @@ export class ArticlesComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.route.params.subscribe(params => {
-      this.slug = params['slug'];
-    });
+    // this.route.params.subscribe(params => {
+    //   this.slug = params['slug'];
+    // });
+    console.log('hi?');
+    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
+
+    console.log('hi from article component, trying to load article: ', this.slug)
 
     /**
      * If this.slug is defined, we're loading an individual article,
@@ -46,7 +50,8 @@ export class ArticlesComponent implements OnInit {
      */
     if (!!this.slug) {
       this.article$ = this.getArticleBySlug(this.slug);
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+      // this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+
     } else {
       this.allArticles$ = this.getAllArticles();
     }
