@@ -100,20 +100,12 @@ pipeline {
                                 }
                             }
                             steps {
-
                                 echo 'Installing research-hub-web dependencies'
                                 dir("research-hub-web") {
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
-                                    // script {
-                                    //     OUTPUT = sh(
-                                    //             script: "ls ${HOME}/research-hub-web", 
-                                    //             returnStdout: true
-                                    //         )
-                                    //         echo "${OUTPUT}"
-                                    // }
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
-                                    archiveArtifacts artifacts: 'node_modules.tar.gz', onlyIfSuccessful: true
+                                    // archiveArtifacts artifacts: 'node_modules.tar.gz', onlyIfSuccessful: true
                                 }
                             }
                         }
@@ -127,16 +119,8 @@ pipeline {
                             }
                             steps {
                                 echo 'Building research-hub-web project'
-                                // script {
-                                //     OUTPUT = sh(
-                                //         script: "ls ${HOME}/research-hub-web", 
-                                //         returnStdout: true
-                                //     )
-                                //     echo "${OUTPUT}"
-                                // }
                                 dir("research-hub-web") {
-                                    // copyArtifacts filter: '*/research-hub-web/node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'hub-stack-pipeline', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
-                                    copyArtifacts filter: '*/research-hub-web/node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: "${env.PROJECT_NAME}", selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
+                                    copyArtifacts filter: '*/research-hub-web/node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'hub-stack-pipeline', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
                                     sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "npm install"
                                 }
