@@ -120,8 +120,8 @@ pipeline {
                             steps {
                                 echo 'Building research-hub-web project'
                                 dir("research-hub-web") {
-                                    copyArtifacts filter: '*/research-hub-web/node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'hub-stack-pipeline', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
-                                    sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
+                                    // copyArtifacts filter: '*/research-hub-web/node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'hub-stack-pipeline', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
+                                    // sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "npm install"
                                 }
                             }
