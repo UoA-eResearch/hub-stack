@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GetAllSubHubChildPagesSlugsGQL } from '../graphql/schema';
-import { map } from 'rxjs/operators';
+import { GetAllSubHubChildPagesSlugsGQL, GetArticleBySlugQuery, SubHubCollection } from '../graphql/schema';
+import { map, pluck } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { Router, Routes } from '@angular/router';
 
@@ -12,18 +12,6 @@ export interface SubHubTitleAndSlug {
   title: String,
   slug: String
 };
-
-export class Content {
-  constructor(
-    public slug?: string,
-    public typeName?: string,
-  ) { }
-  public get Children() { return 'hi' }
-}
-
-export interface ContentMap {
-  [property: string]: Content
-}
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +30,7 @@ export class CerGraphqlService {
   /**
    * Dynamically pushes the SubHubs and the SubHub child pages to the application's routing array
    */
-  public async pushSubHubRoutes() {
+  public async pushSubHubRoutes(): Promise<void> {
     const routes = this.router.config;
     await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
     this._subHubMap.routes.forEach(route => { routes.push(route); }); // Push the new routes to the application's routes.
@@ -80,7 +68,7 @@ export class CerGraphqlService {
    *
    * @param entrySlug The slug of the content item we are searching for breadcrumbs for
    */
-  public async getParentSubHubs(entrySlug) {
+  public async getParentSubHubs(entrySlug: string) {
     try {
       if (!this._subHubCollectionWithChildPagesSlugs) {
         this._subHubCollectionWithChildPagesSlugs = await this._loadSubHubCollection();
@@ -138,11 +126,53 @@ export class CerGraphqlService {
   }
 }
 
+/* ------------------------------------------------------
+  The functions and helper classes/interfaces below are
+  used to generate the SubHub map and dynamic routing
+------------------------------------------------------ */
+
+/**
+ * This interface is used to type the results of a subset of the GetAllSubHubChildPagesSlugsGQL
+ * query results.
+ */
+export interface SubHubFromQuery {
+  slug: string,
+  title: string,
+  __typename,
+  subhubPagesCollection: {
+    items: [{
+      slug: string,
+      __typename: string
+    }],
+  }
+}
+export class Content {
+  constructor(
+    public slug?: string,
+    public typeName?: string
+  ) { }
+
+  public get ChildKeys(): string[] { return Object.keys(this).filter(key => key !== 'slug' && key !== 'typeName') }
+  public get ChildSubHubKeys(): string[] { return Object.keys(this).filter(key => key !== 'slug' && key !== 'typeName') }
+  public isSubHub = () => { return this.typeName === 'SubHub' }
+}
+
+export interface ContentMap {
+  [property: string]: Content
+}
+
 class SubHubMap {
   public map: ContentMap = {};
   public routes: Routes = [];
 
-  findParentSubHub(subHubSlug: string, subHub): Content {
+  /**
+   * This function recursively searches through all SubHubs in SubHubMap.map for another
+   * SubHub with a given slug. It returns either the parent SubHub (of type Content) or the
+   * root ContentMap.map object (of type ContentMap) if the SubHub is not found.
+   * @param subHubSlug The slug o the SubHub we are looking for
+   * @param subHub The current SubHub we are looking in
+   */
+  findParentSubHub(subHubSlug: string, subHub: Content | ContentMap): Content | ContentMap {
     if (subHub[subHubSlug]) { return subHub; }; // If the subHub is in the current SubHub
 
     const childSubHubs: string[] = Object.keys(subHub) // Otherwise look at its children
@@ -154,12 +184,26 @@ class SubHubMap {
     }
   }
 
-  addSubHub(subHub) {
+  /**
+   * This function adds a SubHub to the correct place in SubHubMap.map.
+   *
+   * It first checks if the SubHub is already known (by calling findParentSubHub()), if so,
+   * it adds it to the returned parent SubHub, otherwise it adds it to the root SubHubMap.map
+   * object.
+   *
+   * It then loops through the SubHub's child pages, and checks if any of these are SubHubs. If
+   * it finds any, it then checks if those are already known SubHubs. If so, it moves the existing
+   * SubHubs (and all their child objects) to this new SubHub, and deletes them from their existing
+   * position.
+   *
+   * The generated SubHubMap.map object is later used to generate the SubHubMap.routes object.
+   *
+   * @param subHub The SubHub object returned from the GetAllSubHubChildPagesSlugsGQL query
+   */
+  addSubHub(subHub: SubHubFromQuery): void {
     const parentSubHub: Content | ContentMap =
       this.findParentSubHub(subHub.slug, this.map) || this.map; // Parent SubHub (or root SubHubMap)
     parentSubHub[subHub.slug] = new Content(subHub.slug, subHub.__typename); // Add to the right parent subhub
-    console.log('Children: ', parentSubHub.Children);
-
 
     for (const subHubChildPage of subHub.subhubPagesCollection.items) { // Then loop through its child pages
       if (subHubChildPage.__typename === 'SubHub') { // If the child page is a SubHub, check if its known
@@ -177,7 +221,7 @@ class SubHubMap {
   }
 
   /**
-   * Helpe function that returns the type of a page given a particular path, e.g. /cer/our-services/engagement/first-article
+   * Helper function that returns the type of a page given a particular path, e.g. /cer/our-services/engagement/first-article
    * will return 'Article'
    * @param url Path to content
    */
@@ -194,8 +238,8 @@ class SubHubMap {
     });
 
     if (curObject.typeName === 'SubHub') {
-      for (const subHubChild of Object.keys(curObject).filter(x => x !== 'typeName' && x !== 'slug')) {
-        this.populateRouteArray(curObject[subHubChild], curPath);
+      for (const subHubChildKey of curObject.ChildKeys) {
+        this.populateRouteArray(curObject[subHubChildKey], curPath);
       }
     }
 
