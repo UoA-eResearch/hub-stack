@@ -13,6 +13,18 @@ export interface SubHubTitleAndSlug {
   slug: String
 };
 
+export class Content {
+  constructor(
+    public slug?: string,
+    public typeName?: string,
+  ) { }
+  public get Children() { return 'hi' }
+}
+
+export interface ContentMap {
+  [property: string]: Content
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -127,13 +139,13 @@ export class CerGraphqlService {
 }
 
 class SubHubMap {
-  map = {};
-  routes: Routes = [];
+  public map: ContentMap = {};
+  public routes: Routes = [];
 
-  findParentSubHub(subHubSlug, subHub) {
+  findParentSubHub(subHubSlug: string, subHub): Content {
     if (subHub[subHubSlug]) { return subHub; }; // If the subHub is in the current SubHub
 
-    const childSubHubs = Object.keys(subHub) // Otherwise look at its children
+    const childSubHubs: string[] = Object.keys(subHub) // Otherwise look at its children
       .filter(key => subHub[key].typeName && subHub[key].typeName === 'SubHub')
 
     for (const childSubHub of childSubHubs) {
@@ -143,8 +155,11 @@ class SubHubMap {
   }
 
   addSubHub(subHub) {
-    const parentSubHub = this.findParentSubHub(subHub.slug, this.map) || this.map; // Parent SubHub (or root SubHubMap)
-    parentSubHub[subHub.slug] = { slug: subHub.slug, typeName: subHub.__typename }; // Add to the right parent subhub
+    const parentSubHub: Content | ContentMap =
+      this.findParentSubHub(subHub.slug, this.map) || this.map; // Parent SubHub (or root SubHubMap)
+    parentSubHub[subHub.slug] = new Content(subHub.slug, subHub.__typename); // Add to the right parent subhub
+    console.log('Children: ', parentSubHub.Children);
+
 
     for (const subHubChildPage of subHub.subhubPagesCollection.items) { // Then loop through its child pages
       if (subHubChildPage.__typename === 'SubHub') { // If the child page is a SubHub, check if its known
@@ -161,10 +176,14 @@ class SubHubMap {
     }
   }
 
+  /**
+   * Helpe function that returns the type of a page given a particular path, e.g. /cer/our-services/engagement/first-article
+   * will return 'Article'
+   * @param url Path to content
+   */
   getType = (url) => url.split('/').reduce((obj, key) => obj && obj[key], this.map).typeName;
 
-  populateRouteArray(curObject, curPath = '') {
-
+  populateRouteArray(curObject: Content, curPath = '') {
     curPath = curPath ? curPath + '/' + curObject.slug : curObject.slug;
 
     this.routes.push({
