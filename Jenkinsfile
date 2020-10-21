@@ -105,7 +105,7 @@ pipeline {
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
                                     sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
-                                    // archiveArtifacts artifacts: 'node_modules.tar.gz', onlyIfSuccessful: true
+                                    archiveArtifacts artifacts: 'node_modules.tar.gz', onlyIfSuccessful: true
                                 }
                             }
                         }
