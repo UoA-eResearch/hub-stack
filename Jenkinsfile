@@ -104,11 +104,12 @@ pipeline {
                                 dir("research-hub-web") {
                                     // sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
-                                    // sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
-                                    sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                    sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+
+                                    // sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
 
                                     // TEST: copying the tar to the relative dir.
-                                    // sh "cp ${HOME}/research-hub-web/node_modules.tar.gz ." // Cache new node_modules/ folder
+                                    sh "cp ${HOME}/research-hub-web/node_modules.tar.gz ." // Cache new node_modules/ folder
                                     
                                     script {
                                         OUTPUT = sh(
