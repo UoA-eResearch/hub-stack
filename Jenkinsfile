@@ -158,7 +158,7 @@ pipeline {
                             steps {
                                 dir("research-hub-web") {
                                     echo 'Building for production'
-                                    // sh "npm run build -- -c ${BRANCH_NAME}"
+                                    sh "npm run build -- -c ${BRANCH_NAME}"
                                 }
                             }
                         }
