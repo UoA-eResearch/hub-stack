@@ -104,7 +104,8 @@ pipeline {
                                 dir("research-hub-web") {
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
-                                    sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                    // sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                    sh "tar cvfz ${HOME}/research-hub-web/e2e.tar.gz e2e" // Cache new node_modules/ folder
                                     script {
                                         OUTPUT = sh(
                                                 script: "ls", 
@@ -123,7 +124,8 @@ pipeline {
                                             )
                                             echo "${OUTPUT3}"
                                     }
-                                    archiveArtifacts artifacts: "${HOME}/research-hub-web/node_modules.tar.gz", onlyIfSuccessful: true
+                                    // archiveArtifacts artifacts: "${HOME}/research-hub-web/node_modules.tar.gz", onlyIfSuccessful: true
+                                    archiveArtifacts artifacts: "${HOME}/research-hub-web/e2e.tar.gz", onlyIfSuccessful: true
                                 }
                             }
                         }
