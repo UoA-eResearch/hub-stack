@@ -117,6 +117,11 @@ pipeline {
                                                 returnStdout: true
                                             )
                                             echo "${OUTPUT2}"
+                                        OUTPUT3 = sh(
+                                                script: "ls ${HOME}/research-hub-web/", 
+                                                returnStdout: true
+                                            )
+                                            echo "${OUTPUT3}
                                     }
                                     archiveArtifacts artifacts: "${HOME}/research-hub-web/node_modules.tar.gz", onlyIfSuccessful: true
                                 }
