@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GetAllSubHubChildPagesSlugsGQL, GetArticleBySlugQuery, SubHubCollection } from '../graphql/schema';
+import { GetAllSubHubChildPagesSlugsGQL, GetAllSubHubChildPagesSlugsQuery, GetArticleBySlugQuery, SubHub, SubHubCollection } from '../graphql/schema';
 import { map, pluck } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { Router, Routes } from '@angular/router';
@@ -58,7 +58,7 @@ export class CerGraphqlService {
   /**
    * Returns the results of the query response's .data.subHubCollection.items array
    */
-  private async _loadSubHubCollection() {
+  private _loadSubHubCollection() {
     return this.getAllSubHubChildPagesSlugs.fetch().toPromise().then(x => x.data.subHubCollection.items);
   }
 
@@ -144,8 +144,13 @@ export interface SubHubFromQuery {
       slug: string,
       __typename: string
     }],
-  }
+  },
 }
+/**
+ * A class representing any Content item in Contentful, including SubHubs.
+ * The SubHubMap.map contains an arbitrary number of these.
+ * The class also includes a few accessor methods for getting its child keys etc.
+ */
 export class Content {
   constructor(
     public slug?: string,
@@ -153,10 +158,13 @@ export class Content {
   ) { }
 
   public get ChildKeys(): string[] { return Object.keys(this).filter(key => key !== 'slug' && key !== 'typeName') }
-  public get ChildSubHubKeys(): string[] { return Object.keys(this).filter(key => key !== 'slug' && key !== 'typeName') }
-  public isSubHub = () => { return this.typeName === 'SubHub' }
+  public get ChildSubHubKeys(): string[] { return this.ChildKeys.filter(key => this[key].isChildHub()) }
+  public isSubHub(): boolean { return this.typeName === 'SubHub' }
 }
 
+/**
+ * The root SubHubMap.map type, contains an arbitrary number of root-level SubHubs.
+ */
 export interface ContentMap {
   [property: string]: Content
 }
@@ -176,7 +184,7 @@ class SubHubMap {
     if (subHub[subHubSlug]) { return subHub; }; // If the subHub is in the current SubHub
 
     const childSubHubs: string[] = Object.keys(subHub) // Otherwise look at its children
-      .filter(key => subHub[key].typeName && subHub[key].typeName === 'SubHub')
+      .filter(key => subHub[key].typeName === 'SubHub')
 
     for (const childSubHub of childSubHubs) {
       const parentSubHub = this.findParentSubHub(subHubSlug, subHub[childSubHub]);
@@ -212,10 +220,10 @@ class SubHubMap {
           parentSubHub[subHub.slug][subHubChildPage.slug] = subHubChildPageExistingParentSubHub[subHubChildPage.slug];
           delete subHubChildPageExistingParentSubHub[subHubChildPage.slug]; // Then delete it from its existing place
         } else { // The SubHub is not known, so just add it as a child page
-          parentSubHub[subHub.slug][subHubChildPage.slug] = { slug: subHubChildPage.slug, typeName: subHubChildPage.__typename };
+          parentSubHub[subHub.slug][subHubChildPage.slug] = new Content(subHubChildPage.slug, subHubChildPage.__typename);
         }
       } else { // This is not a SubHub so just add it to the new SubHub without checking if it's already known
-        parentSubHub[subHub.slug][subHubChildPage.slug] = { slug: subHubChildPage.slug, typeName: subHubChildPage.__typename };
+        parentSubHub[subHub.slug][subHubChildPage.slug] = new Content(subHubChildPage.slug, subHubChildPage.__typename);
       }
     }
   }
@@ -227,6 +235,12 @@ class SubHubMap {
    */
   getType = (url) => url.split('/').reduce((obj, key) => obj && obj[key], this.map).typeName;
 
+  /**
+   * This function pushes new routes to the SubHubMap.routes array, using the slug of the content item to be added,
+   * and then (if the content is a SubHub) recursively calling itself on any of its child pages.
+   * @param curObject the Content item to create a route for
+   * @param curPath the path to the current item's parent
+   */
   populateRouteArray(curObject: Content, curPath = '') {
     curPath = curPath ? curPath + '/' + curObject.slug : curObject.slug;
 
@@ -237,7 +251,7 @@ class SubHubMap {
       data: { slug: curObject.slug }
     });
 
-    if (curObject.typeName === 'SubHub') {
+    if (curObject.isSubHub()) {
       for (const subHubChildKey of curObject.ChildKeys) {
         this.populateRouteArray(curObject[subHubChildKey], curPath);
       }
