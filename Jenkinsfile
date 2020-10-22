@@ -202,7 +202,7 @@ pipeline {
                     when {
                         anyOf {
                             changeset "**/research-hub-web/**/*.*"
-                            // equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                         }
                     }
                     steps {
