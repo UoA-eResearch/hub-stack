@@ -104,13 +104,8 @@ pipeline {
                                 dir("research-hub-web") {
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
-
                                     // sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                     sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
-
-                                    // TEST: copying the tar to the relative dir.
-                                    // sh "cp ${HOME}/research-hub-web/node_modules.tar.gz ." // Cache new node_modules/ folder
-                                    
                                     script {
                                         OUTPUT = sh(
                                                 script: "ls", 
@@ -128,7 +123,6 @@ pipeline {
                                                 returnStdout: true
                                             )
                                             echo "${OUTPUT3}"
-
                                         // TEST: testing in script block
                                         // archiveArtifacts artifacts: "${HOME}/research-hub-web/e2e.tar.gz", onlyIfSuccessful: true
                                         archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
@@ -148,6 +142,10 @@ pipeline {
                                 echo 'Building research-hub-web project from stored dependencies.'
                                 dir("research-hub-web") {
                                     copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
+
+                                    // re-archive the artifact to be picked up for the next build.
+                                    archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
+
                                     // sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "npm install"
