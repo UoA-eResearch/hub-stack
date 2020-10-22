@@ -106,6 +106,10 @@ pipeline {
                                     sh "mkdir -p ${HOME}/research-hub-web/"
                                     // sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                     sh "tar cvfz ${HOME}/research-hub-web/e2e.tar.gz e2e" // Cache new node_modules/ folder
+
+                                    // TEST: copying the tar to the relative dir.
+                                    sh "cp ${HOME}/research-hub-web/e2e.tar.gz ." // Cache new node_modules/ folder
+                                    
                                     script {
                                         OUTPUT = sh(
                                                 script: "ls", 
@@ -123,9 +127,13 @@ pipeline {
                                                 returnStdout: true
                                             )
                                             echo "${OUTPUT3}"
+
+
+                                        // TEST: testing in script block
+                                        archiveArtifacts artifacts: "${HOME}/research-hub-web/e2e.tar.gz", onlyIfSuccessful: true
                                     }
                                     // archiveArtifacts artifacts: "${HOME}/research-hub-web/node_modules.tar.gz", onlyIfSuccessful: true
-                                    archiveArtifacts artifacts: "${HOME}/research-hub-web/e2e.tar.gz", onlyIfSuccessful: true
+                                    // archiveArtifacts artifacts: "${HOME}/research-hub-web/e2e.tar.gz", onlyIfSuccessful: true
                                 }
                             }
                         }
