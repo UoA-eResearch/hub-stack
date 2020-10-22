@@ -148,7 +148,8 @@ pipeline {
                                 echo 'Building research-hub-web project'
                                 dir("research-hub-web") {
                                     copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
-                                    sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
+                                    // sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
+                                    sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "npm install"
                                 }
                             }
