@@ -100,7 +100,7 @@ pipeline {
                                 }
                             }
                             steps {
-                                echo 'Installing research-hub-web dependencies'
+                                echo 'Installing research-hub-web dependencies.'
                                 dir("research-hub-web") {
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
@@ -145,7 +145,7 @@ pipeline {
                                 }
                             }
                             steps {
-                                echo 'Building research-hub-web project'
+                                echo 'Building research-hub-web project from stored dependencies.'
                                 dir("research-hub-web") {
                                     copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
                                     // sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
