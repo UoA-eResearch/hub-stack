@@ -131,6 +131,7 @@ pipeline {
 
                                         // TEST: testing in script block
                                         archiveArtifacts artifacts: "${HOME}/research-hub-web/e2e.tar.gz", onlyIfSuccessful: true
+                                        archiveArtifacts artifacts: "e2e.tar.gz", onlyIfSuccessful: true
                                     }
                                     // archiveArtifacts artifacts: "${HOME}/research-hub-web/node_modules.tar.gz", onlyIfSuccessful: true
                                     // archiveArtifacts artifacts: "${HOME}/research-hub-web/e2e.tar.gz", onlyIfSuccessful: true
