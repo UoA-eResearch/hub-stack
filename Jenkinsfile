@@ -19,7 +19,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                // slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#D4DADF", message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#D4DADF", message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
             }
         }
 
@@ -104,27 +104,8 @@ pipeline {
                                 dir("research-hub-web") {
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
-                                    // sh "tar cvfz ${HOME}/research-hub-web/node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                     sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                     script {
-                                        OUTPUT = sh(
-                                                script: "ls", 
-                                                returnStdout: true
-                                            )
-                                            echo "${OUTPUT}"
-
-                                        OUTPUT2 = sh(
-                                                script: "pwd", 
-                                                returnStdout: true
-                                            )
-                                            echo "${OUTPUT2}"
-                                        OUTPUT3 = sh(
-                                                script: "ls ${HOME}/research-hub-web/", 
-                                                returnStdout: true
-                                            )
-                                            echo "${OUTPUT3}"
-                                        // TEST: testing in script block
-                                        // archiveArtifacts artifacts: "${HOME}/research-hub-web/e2e.tar.gz", onlyIfSuccessful: true
                                         archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
                                     }
                                 }
@@ -141,13 +122,7 @@ pipeline {
                             steps {
                                 echo 'Building research-hub-web project from stored dependencies.'
                                 dir("research-hub-web") {
-                                    // copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
                                     copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox' , selector: lastWithArtifacts()
-
-                                    // re-archive the artifact to be picked up for the next build.
-                                    // archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
-
-                                    // sh "tar xf ${HOME}/research-hub-web/node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "npm install"
                                 }
@@ -201,7 +176,7 @@ pipeline {
                     when {
                         anyOf {
                             changeset "**/research-hub-web/**/*.*"
-                            // equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                         }
                     }
                     steps {
@@ -331,24 +306,24 @@ pipeline {
             }
         }
 
-        // stage('BrowserStack e2e Tests') {
-        //     steps {
-        //         echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
-        //         slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).\n 📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>")
-        //         dir("research-hub-web") {
-        //             script {
-        //                 try {
-        //                     sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
-        //                     slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
-        //                 } catch (e) {
-        //                     echo 'BrowserStack e2e tests failed'
-        //                     slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#f2ae3f", message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
-        //                     sh "exit 1"
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        stage('BrowserStack e2e Tests') {
+            steps {
+                echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).\n 📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>")
+                dir("research-hub-web") {
+                    script {
+                        try {
+                            sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
+                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
+                        } catch (e) {
+                            echo 'BrowserStack e2e tests failed'
+                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#f2ae3f", message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
+                            sh "exit 1"
+                        }
+                    }
+                }
+            }
+        }
     }
     
     post {
