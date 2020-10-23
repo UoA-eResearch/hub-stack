@@ -142,7 +142,7 @@ pipeline {
                                 echo 'Building research-hub-web project from stored dependencies.'
                                 dir("research-hub-web") {
                                     // copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox', selector: lastCompleted() // Copy the existing zipped node_modules/ artifact
-                                    copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox', selector: 'node_modules.tar.gz'
+                                    copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox' // , selector: 'node_modules.tar.gz'
 
                                     // re-archive the artifact to be picked up for the next build.
                                     // archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
