@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { routing } from './user-study.routing';
 
-import { SharedModule } from '../../components/shared/app.shared.module';
+import { SharedModule } from '@components/shared/app.shared.module';
 import { UserStudyComponent } from './user-study.component';
 
 

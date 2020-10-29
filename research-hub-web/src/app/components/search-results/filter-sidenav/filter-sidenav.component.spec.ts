@@ -3,11 +3,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FilterSidenavComponent } from './filter-sidenav.component';
 import { SearchResultsModule } from '../search-results.module';
 import { SearchFiltersService } from '../search-filters/search-filters.service';
-import { ResearchHubApiService } from '../../../services/research-hub-api.service';
+import { ResearchHubApiService } from '@services/research-hub-api.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { OptionsService } from '../../../services/options.service';
+import { OptionsService } from '@services/options.service';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../components/shared/app.shared.module';
+import { SharedModule } from '@components/shared/app.shared.module';
 import { SearchResultsComponentService } from '../search-results-component.service';
 
 describe('FilterSidenavComponent', () => {

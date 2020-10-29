@@ -91,14 +91,50 @@ pipeline {
                             equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                         }
                     }
-                    steps {
-                        echo 'Building research-hub-web project'
-                        dir("research-hub-web") {
-                            echo 'Installing research-hub-web dependencies'
-                            sh "npm install"
-
-                            echo 'Building for production'
-                            sh "npm run build -- -c ${BRANCH_NAME}"
+                    stages {
+                        stage ('Caching new node_modules folder') {
+                            when {
+                                anyOf {
+                                    changeset "**/research-hub-web/package.json"
+                                    equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                                }
+                            }
+                            steps {
+                                echo 'Installing research-hub-web dependencies.'
+                                dir("research-hub-web") {
+                                    sh "npm install"
+                                    sh "mkdir -p ${HOME}/research-hub-web/"
+                                    sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                    script {
+                                        archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
+                                    }
+                                }
+                            }
+                        }
+                        stage ('Unzipping existing cached node_modules.') {
+                            when {
+                                not {
+                                    anyOf {
+                                        changeset "**/research-hub-web/package.json"
+                                    }
+                                }
+                            }
+                            steps {
+                                echo 'Building research-hub-web project from stored dependencies.'
+                                dir("research-hub-web") {
+                                    copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox' , selector: lastWithArtifacts()
+                                    sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
+                                    sh "npm install"
+                                }
+                            }
+                        }
+                        stage ('Building for production') {
+                            steps {
+                                dir("research-hub-web") {
+                                    echo 'Building for production'
+                                    sh "npm run build -- -c ${BRANCH_NAME}"
+                                }
+                            }
                         }
                     }
                 }
@@ -293,7 +329,7 @@ pipeline {
     post {
         failure {
             echo 'Jenkins job failed :('
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#FF9FA1", message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            // slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#FF9FA1", message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
     }
 }
