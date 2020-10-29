@@ -9,7 +9,7 @@ import {
     AllSearchableContentPublicFieldsGQL, 
     AllSearchableContentPublicFieldsQuery, 
     GetEquipmentBySlugGQL,
-    GetEquipmentByIDGQL,
+    GetEquipmentByIdGQL,
     Equipment 
 } from '../../graphql/schema';
 import { CerGraphqlService } from '../../services/cer-graphql.service';
@@ -35,7 +35,7 @@ export class EquipmentComponent implements OnInit {
     public route: ActivatedRoute,
     public allEquipmentGQL: AllEquipmentGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
-    public getEquipmentByIDGQL: GetEquipmentByIDGQL,
+    public getEquipmentByIDGQL: GetEquipmentByIdGQL,
     public cerGraphQLService: CerGraphqlService
   ) { }
 

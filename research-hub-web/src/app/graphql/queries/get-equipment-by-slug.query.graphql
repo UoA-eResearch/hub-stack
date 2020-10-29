@@ -1,79 +1,11 @@
 query GetEquipmentBySlug($slug: String) {
-    equipmentCollection (where:{slug: $slug}) {
+      equipmentCollection(where: {slug: $slug}) {
         items {
-            title
-            summary
-            ssoProtected
-            viewType
-            body {
-                json 
-            }
-            keywords
-            slug
-            ssoProtected
-            searchable
-            overview {
-                json
-            }
-            mainImage {
-                url
-            }
-            icon {
-                title
-                description
-                url
-            }
-            features {
-                json
-            }
-            limitations {
-                json
-            }
-            type
-            manufacturer
-            model
-            eligibility {
-                json
-            }
-            costToUse {
-                json
-            }
-            location
-            trainingRequired {
-                json
-            }
-            trainingProvided {
-                json
-            }
-            yearOfManufacture
-            access {
-                json
-            }
-            helpAndSupport {
-                json
-            }
-            considerations {
-                json
-            } 
-            relatedItemsCollection {
-                items {
-                    ...on Article {
-                        title
-                        summary
-                        slug
-                    }
-                    ...on Service {
-                        title
-                        summary
-                        slug
-                    }
-                    ...on Equipment {
-                        title
-                        summary
-                        slug
-                    }
-                }
-            }
+          title
+          ssoProtected
+          sys {
+            id
+          }
         }
+      }
     }
-}
