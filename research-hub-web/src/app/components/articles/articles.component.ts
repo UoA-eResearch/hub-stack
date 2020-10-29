@@ -58,10 +58,6 @@ export class ArticlesComponent implements OnInit {
           this.inlineEntry = data.body.links.entries.inline;
           this.blockEntry = data.body.links.entries.block;
           this.hyperlinkEntry = data.body.links.entries.hyperlink;
-          console.log(this.assets);
-          console.log(this.blockEntry);
-          console.log(this.inlineEntry);
-          console.log(this.hyperlinkEntry);
         });
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

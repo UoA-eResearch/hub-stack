@@ -97,6 +97,17 @@ mat-expansion-panel, mat-card  {
     display: inline-block;
 }
 
+// Related Item Card
+.related-item-card {
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.related-item-card-mobile {
+    height: 70px;
+}
+
 // Card Title
 .card-title {
     color: #0294a5
