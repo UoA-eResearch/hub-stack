@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipmentCollection, AllEquipmentGQL, AllEquipmentQuery, AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery, GetEquipmentBySlugGQL, Equipment } from '../../graphql/schema';
 import { Observable } from 'rxjs';
-import { pluck, tap, flatMap } from 'rxjs/operators';
+import { pluck, tap, flatMap, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { 
+    EquipmentCollection, 
+    AllEquipmentGQL, 
+    AllEquipmentQuery, 
+    AllSearchableContentPublicFieldsGQL, 
+    AllSearchableContentPublicFieldsQuery, 
+    GetEquipmentBySlugGQL,
+    GetEquipmentByIDGQL,
+    Equipment 
+} from '../../graphql/schema';
 import { CerGraphqlService } from '../../services/cer-graphql.service';
+
 
 @Component({
   selector: 'app-equipment',
@@ -21,6 +31,7 @@ export class EquipmentComponent implements OnInit {
     public route: ActivatedRoute,
     public allEquipmentGQL: AllEquipmentGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
+    public getEquipmentByIDGQL: GetEquipmentByIDGQL,
     public cerGraphQLService: CerGraphqlService
   ) { }
 
@@ -38,13 +49,13 @@ export class EquipmentComponent implements OnInit {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
-      this.equipment$ = this.getEquipmentBySlug(this.slug);
+      this.getEquipmentBySlug(this.slug).subscribe(data => {
+        this.equipment$ = this.getEquipmentByID(data.sys.id);
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.allEquipment$ = this.getAllEquipment();
     }
-
-
   }
 
   /**
@@ -77,5 +88,15 @@ export class EquipmentComponent implements OnInit {
     } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
   }
 
-
+  /**
+   * Function that returns an individual article from the ArticleCollection by it's ID
+   * as an observable of type Article. This is then unwrapped with the async pipe.
+   * ID is retrieved by subscribing to 'getArticleBySlug'.
+   */
+  public getEquipmentByID(id: string): Observable<Equipment> {
+    try {
+      return this.getEquipmentByIDGQL.fetch({id: id})
+        .pipe(map(x => x.data.equipment)) as unknown as Observable<Equipment>;
+    } catch (e) { console.error(`Error loading article ${id}:`, e); }
+  }
 }

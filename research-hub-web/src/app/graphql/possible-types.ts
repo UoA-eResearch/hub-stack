@@ -18,13 +18,13 @@
         "name": "Entry",
         "possibleTypes": [
           {
+            "name": "Equipment"
+          },
+          {
             "name": "SubHub"
           },
           {
             "name": "Article"
-          },
-          {
-            "name": "Equipment"
           },
           {
             "name": "Service"
@@ -87,24 +87,6 @@
       },
       {
         "kind": "UNION",
-        "name": "EquipmentRelatedItemsItem",
-        "possibleTypes": [
-          {
-            "name": "Article"
-          },
-          {
-            "name": "CaseStudy"
-          },
-          {
-            "name": "Equipment"
-          },
-          {
-            "name": "Service"
-          }
-        ]
-      },
-      {
-        "kind": "UNION",
         "name": "SubHubRelatedItemsItem",
         "possibleTypes": [
           {
@@ -124,6 +106,24 @@
           },
           {
             "name": "SubHub"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "EquipmentRelatedItemsItem",
+        "possibleTypes": [
+          {
+            "name": "Article"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
+            "name": "Equipment"
+          },
+          {
+            "name": "Service"
           }
         ]
       }

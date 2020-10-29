@@ -4,8 +4,12 @@ query GetArticleBySlug($slug: String) {
             title
             summary
             ssoProtected
+            viewType
+            sys {
+                id
+            }
             body {
-                json 
+                json
             }
             keywords
             slug

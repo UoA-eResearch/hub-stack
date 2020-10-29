@@ -198,7 +198,7 @@ export class OptionsService {
         title: 'Equipment',
         description: 'Large scale and specialist equipment available across the University that can help you answer your research questions or produce creative works.',
         imageUrl: 'page-elements/20151005_Science Detail_013_1680x220_BW.jpg',
-        isHeaderVisible: true,
+        isHeaderVisible: false,
         isSearchBarVisible: false
       },
       articles: {
@@ -212,7 +212,7 @@ export class OptionsService {
         title: 'Articles',
         description: 'General information pages.',
         imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
-        isHeaderVisible: true,
+        isHeaderVisible: false,
         isSearchBarVisible: false
       },
       subhub: {
