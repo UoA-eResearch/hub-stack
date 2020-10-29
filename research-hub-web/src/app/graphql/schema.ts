@@ -3801,8 +3801,183 @@ export const GetArticleByIDDocument = gql`
         body {
           json
           links {
-            assets {
+            entries {
+              block {
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+              }
+              inline {
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+              }
               hyperlink {
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+              }
+            }
+            assets {
+              block {
+                title
+                description
                 url
               }
             }
@@ -3939,6 +4114,188 @@ export const GetEquipmentBySlugDocument = gql`
         viewType
         body {
           json
+          links {
+            entries {
+              block {
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+              }
+              inline {
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+              }
+              hyperlink {
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+              }
+            }
+            assets {
+              block {
+                title
+                description
+                url
+              }
+            }
+          }
         }
         keywords
         slug
