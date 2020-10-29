@@ -68,6 +68,10 @@ export class EquipmentComponent implements OnInit {
     }
   }
 
+
+  public getSomething() {
+    console.log("something");
+  }
   /**
    * Function that returns all articles from the ArticleCollection as an observable
    * of type ArticleCollection. This is then unwrapped with the async pipe.

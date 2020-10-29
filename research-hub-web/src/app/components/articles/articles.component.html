@@ -253,10 +253,12 @@
                     </h3>
 
                     <hr style="margin: 25px 0px;"/>
-                        <mat-card-content 
-                            style="margin-bottom: 50px;" 
-                            [innerHTML]="article.body.json | richTextToHTML">
-                        </mat-card-content>
+
+                    <!-- Article Body -->
+                    <mat-card-content 
+                        style="margin-bottom: 50px;" 
+                        [innerHTML]="article.body.json | richTextToHTML">
+                    </mat-card-content>
                 </div>
 
                 <!-- Extra Links -->
@@ -362,13 +364,15 @@
                 <mat-nav-list 
                     *ngFor="let relatedItem of article.relatedItemsCollection.items" 
                     class="collection">
-                        <mat-card>
+                        <mat-card 
+                            class=related-item-card 
+                            ngClass.xs="related-item-card-mobile">
                             <span class="card-title">
                                 {{ relatedItem['title'] }}
                             </span> 
                             <br/>
                             <span class="related-item-summary">
-                                {{ (relatedItem['summary'].length > 95)? (relatedItem['summary']| slice:0:95) + ' ...' : (relatedItem['summary']) }}
+                                {{ (relatedItem['summary'])}}
                             </span>
                         </mat-card>
                 </mat-nav-list>
