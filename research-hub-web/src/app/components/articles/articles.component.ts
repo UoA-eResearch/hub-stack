@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import {
   AllArticlesGQL,
   GetArticleBySlugGQL,
+  GetArticleByIdGQL,
   ArticleCollection,
   Article,
 } from '../../graphql/schema';
@@ -27,6 +28,7 @@ export class ArticlesComponent implements OnInit {
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
+    public getArticleByIDGQL: GetArticleByIdGQL,
     public cerGraphQLService: CerGraphqlService
   ) { }
 
@@ -45,7 +47,9 @@ export class ArticlesComponent implements OnInit {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
-      this.article$ = this.getArticleBySlug(this.slug);
+      this.getArticleBySlug(this.slug).subscribe(data => {
+        this.article$ = this.getArticleByID(data.sys.id);
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.allArticles$ = this.getAllArticles();
@@ -82,5 +86,16 @@ export class ArticlesComponent implements OnInit {
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
   }
 
+  /**
+   * Function that returns an individual article from the ArticleCollection by it's ID
+   * as an observable of type Article. This is then unwrapped with the async pipe.
+   * ID is retrieved by subscribing to 'getArticleBySlug'.
+   */
+  public getArticleByID(id: string): Observable<Article> {
+    try {
+      return this.getArticleByIDGQL.fetch({id: id})
+        .pipe(map(x => x.data.article)) as unknown as Observable<Article>;
+    } catch (e) { console.error(`Error loading article ${id}:`, e); }
+  }
 }
 

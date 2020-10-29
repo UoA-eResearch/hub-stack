@@ -4,6 +4,7 @@ query GetEquipmentBySlug($slug: String) {
             title
             summary
             ssoProtected
+            viewType
             body {
                 json 
             }
@@ -11,11 +12,49 @@ query GetEquipmentBySlug($slug: String) {
             slug
             ssoProtected
             searchable
+            overview {
+                json
+            }
+            mainImage {
+                url
+            }
             icon {
                 title
                 description
                 url
             }
+            features {
+                json
+            }
+            limitations {
+                json
+            }
+            type
+            manufacturer
+            model
+            eligibility {
+                json
+            }
+            costToUse {
+                json
+            }
+            location
+            trainingRequired {
+                json
+            }
+            trainingProvided {
+                json
+            }
+            yearOfManufacture
+            access {
+                json
+            }
+            helpAndSupport {
+                json
+            }
+            considerations {
+                json
+            } 
             relatedItemsCollection {
                 items {
                     ...on Article {

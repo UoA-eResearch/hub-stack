@@ -9,7 +9,7 @@ mat-expansion-panel, mat-card  {
     color: map-get($hub-teal, 800);
 }
 
-// The container for an individual article
+// The container for an individual equipment
 #equipment-container {
 
     #breadcrumbs {
@@ -18,12 +18,12 @@ mat-expansion-panel, mat-card  {
         .breadcrumb-subhub {
             &::after {
                 margin: 0 0.5em 0 0.5em;
-                content: ' >'
+                content: '/'
             }
         }
 
         #breadcrumb-current-page {
-            color: $color-pink;
+            color: $color-icon;
         }
     }
 
@@ -52,4 +52,121 @@ mat-expansion-panel, mat-card  {
     .related-item-summary {
         color: gray;
     }
+}
+
+/* CSS Styling */
+
+// Main Content
+.main-content {
+    padding: 0px 150px;
+}
+
+.main-content-mobile {
+    padding: 0px;
+}
+
+// HR Tag
+hr {
+    background-color: #dbdbdb;
+    border: none;
+    height: 1px;
+}
+
+// Section
+.section {
+    margin: 20px 0px;
+}
+
+// Default Banner
+.banner-container {
+    text-align: center;
+    min-width: 100vw; 
+    margin: -3em 0PX 20PX -7.5vw;
+    min-height: 40vh;
+    max-height: auto;
+    overflow: hidden;
+    background-size: 100%;
+    background-image: url('https://images.unsplash.com/photo-1518152006812-edab29b069ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'); // Default banner image if none supplied
+}
+
+// Equipment Titles
+.equipment-title {
+    color: black; 
+    font-size: 50px;
+    font-weight: bold; 
+    line-height: 110%;
+}
+
+.equipment-title-sm {
+    font-size: 35px;
+}
+
+.equipment-title-xs {
+    font-size: 25px;
+}
+
+// Equipment Summary
+.equipment-summary {
+    color: grey; 
+    font-size: 25px; 
+    line-height: 110%;
+}
+
+.equipment-summary-sm {
+    font-size: 20px; 
+}
+
+.equipment-summary-xs {
+    font-size: 15px; 
+}
+
+// Equipment Image
+.equipment-image {
+    margin: 0 auto;
+}
+
+// Keyword Card
+.keyword-card {
+    background-color: #f0f0f0; 
+    margin: 5px; 
+    padding: 10px; 
+    font-size: 12px;
+}
+
+// Related Item
+.related-item-summary {
+    color: #313131; 
+    font-size: 12px;
+}
+
+// Specifications Table
+.specifications-table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .specifications-table td, .specifications-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .specifications-table tr:nth-child(even){
+      background-color: #f2f2f2;
+    }
+  .specifications-table td:nth-child(odd){
+      font-weight: bold;
+      width: 25%}
+  
+  .specifications-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0294a5;
+    color: white;
+  }
+
+  // Card Title
+.card-title {
+    color: #0294a5
 }
