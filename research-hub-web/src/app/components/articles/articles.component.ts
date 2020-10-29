@@ -9,8 +9,8 @@ import {
   GetArticleByIdGQL,
   ArticleCollection,
   Article,
-} from '../../graphql/schema';
-import { CerGraphqlService } from '../../services/cer-graphql.service';
+} from '@graphql/schema';
+import { CerGraphqlService } from '@services/cer-graphql.service';
 
 @Component({
   selector: 'app-articles',
