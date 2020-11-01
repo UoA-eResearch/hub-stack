@@ -7,6 +7,8 @@ const aws = require('aws-sdk');
 const aws4 = require('aws4');
 const fetch = require('node-fetch');
 
+const TIMEOUT_PERIOD = 20000;
+
 const configResult = require('dotenv').config({ path: '../.env' });
 if (configResult.error) {
     throw configResult.error;
@@ -53,11 +55,12 @@ const getTokens = async () => {
         console.log("Could not retrieve AWS credentials. Try re-running the credential python script.");
     }
 
+    // Adding the AWS4 Signature to our request parameters
     let opts = {
-        host: 'ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com',
-        path: '/sandbox/',
-        region: 'ap-southeast-2',
-        service: 'execute-api',
+        host: process.env.OAUTH_LAMBDA_HOST,
+        path: process.env.OAUTH_LAMBDA_PATH,
+        region: process.env.OAUTH_LAMBDA_REGION,
+        service: process.env.OAUTH_LAMBDA_SERVICE,
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br'
     };
@@ -66,7 +69,9 @@ const getTokens = async () => {
         secretAccessKey: awsCreds.secretAccessKey,
         sessionToken: awsCreds.sessionToken
     });
-    let res = await fetch('https://ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com/sandbox/', opts);
+
+    // Making request to 2FAB Lambda using 
+    let res = await fetch(`https://${opts.host}${opts.path}`, opts);
     const resJson = await res.json();
     try {
         if (!resJson['access_token']) {
@@ -147,7 +152,7 @@ describe('Authorisation resolvers', () => {
         let { query } = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
         expect(res.data.articleCollection).toBeTruthy();
-    }, 20000);
+    }, TIMEOUT_PERIOD);
 
     test('Requesting a article single resource non-public field returns an error', async function () {
         let res = await query({
