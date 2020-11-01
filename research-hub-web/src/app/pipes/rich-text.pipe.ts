@@ -10,14 +10,6 @@ import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 })
 export class RichTextToHTML implements PipeTransform {
     transform(value: any): string {
-        const options = {
-            renderNode: {
-                [BLOCKS.EMBEDDED_ASSET]: (node) => `<p>Asset Block: ${node.data.target.sys.id} </p>`,
-                [BLOCKS.EMBEDDED_ENTRY]: (node) => `<p>Entry Block: ${node.data.target.sys.id}</p>`,
-                [INLINES.EMBEDDED_ENTRY]: (node) => `<p>Entry Inline: ${node.data.target.sys.id}</p>`,
-                [INLINES.ENTRY_HYPERLINK]: (node) => `<p>Entry Hyperlink: ${node.data.target.sys.id}</p>`,
-            }
-        }
-        return documentToHtmlString(value, options);
+        return documentToHtmlString(value);
     }
 }
