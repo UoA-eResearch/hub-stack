@@ -25,10 +25,10 @@ export class EquipmentComponent implements OnInit {
   public allEquipment$: Observable<EquipmentCollection>;
   public equipment$: Observable<Equipment>;
   public slug: string;
-  public assets: Array<any>;
-  public inlineEntry: Array<any>;
-  public blockEntry: Array<any>;
-  public hyperlinkEntry: Array<any>;
+  // public assets: Array<any>;
+  // public inlineEntry: Array<any>;
+  // public blockEntry: Array<any>;
+  // public hyperlinkEntry: Array<any>;
   public parentSubHubs;
 
   constructor(
@@ -55,12 +55,12 @@ export class EquipmentComponent implements OnInit {
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
         this.equipment$ = this.getEquipmentByID(data.sys.id);
-        this.equipment$.subscribe(data => {
-          this.assets = data.body.links.assets.block;
-          this.inlineEntry = data.body.links.entries.inline;
-          this.blockEntry = data.body.links.entries.block;
-          this.hyperlinkEntry = data.body.links.entries.hyperlink;
-        });
+        // this.equipment$.subscribe(data => {
+        //   this.assets = data.body.links.assets.block;
+        //   this.inlineEntry = data.body.links.entries.inline;
+        //   this.blockEntry = data.body.links.entries.block;
+        //   this.hyperlinkEntry = data.body.links.entries.hyperlink;
+        // });
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -68,10 +68,6 @@ export class EquipmentComponent implements OnInit {
     }
   }
 
-
-  public getSomething() {
-    console.log("something");
-  }
   /**
    * Function that returns all articles from the ArticleCollection as an observable
    * of type ArticleCollection. This is then unwrapped with the async pipe.
