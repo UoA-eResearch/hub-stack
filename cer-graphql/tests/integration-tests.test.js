@@ -26,10 +26,14 @@ async function createServerAndTestClient() {
 /**
  * Creates as testing server using the real server's configuration 
  * with an injected context so we can add an authorization header to our query requests.
+ * If passed false, will create a query with an valid authorization header.
  */
-async function createServerAndTestClientWithAuth() {
+async function createServerAndTestClientWithAuth(useValidToken = true) {
     let server = await createServer(getCredentials(true));
     let tokens = await getTokens();
+    if (!useValidToken) {
+        tokens['access_token'] = 'Bearer fake token value';
+    }
     return createTestClient(new ApolloServer({
         ...server.config,
         context: () => server.config.context({
@@ -46,12 +50,12 @@ async function createServerAndTestClientWithAuth() {
  * Gets OAuth tokens
  */
 const getTokens = async () => {
-    let credentials = new aws.SharedIniFileCredentials({
+    let awsCreds = new aws.SharedIniFileCredentials({
         profile: process.env.AWS_PROFILE,
     });
-    if (credentials.sessionToken === undefined) {
+    if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
-        credentials = new aws.SharedIniFileCredentials({
+        awsCreds = new aws.SharedIniFileCredentials({
             profile: 'saml',
         });
     }
@@ -76,7 +80,7 @@ const getTokens = async () => {
     const resJson = await res.json();
     try {
         if (!resJson['access_token']) {
-            throw 'Fetching response for OAuth2.0 tokens does not contain access token.';
+            throw 'Fetching response for OAuth2.0 tokens does not contain access token. You may need to renew locally stored AWS credentials.';
         }
     }
     catch (error) {
@@ -144,6 +148,17 @@ describe('Contentful filters (conditionals)', () => {
 
 describe('Authorization resolvers', () => {
 
+    test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
+        let { query } = await createServerAndTestClientWithAuth(false);
+        let message = false;
+        try {
+            await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+        } catch (err) {
+            message = err.message;
+        }
+        expect(message).toBeTruthy();
+    }, TIMEOUT_PERIOD);
+
     test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
@@ -151,12 +166,6 @@ describe('Authorization resolvers', () => {
 
     test('Requesting an articleCollection non-public field with a valid Authorization header returns data', async function () {
         let { query } = await createServerAndTestClientWithAuth();
-        let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
-        expect(res.data.articleCollection).toBeTruthy();
-    }, TIMEOUT_PERIOD);
-
-    test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
-        let query = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
         expect(res.data.articleCollection).toBeTruthy();
     }, TIMEOUT_PERIOD);
