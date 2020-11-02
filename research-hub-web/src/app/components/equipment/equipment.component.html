@@ -269,7 +269,7 @@
  
             <!-- Related Items -->
             <div 
-                *ngIf="equipment.relatedItemsCollection.length > 0" 
+                *ngIf="equipment.relatedItemsCollection.items.length > 0" 
                 id="you-might-be-interested-in">
                 <h4>You might also be interested in<hr/></h4>
 
@@ -391,7 +391,7 @@
                                                 </span> 
                                                 <br/>
                                                 <span class="related-item-summary">
-                                                    {{ (support['jobTitle'].length > 95)? (support['jobTitle']| slice:0:95) + ' ...' : (support['jobTitle']) }}
+                                                    {{ (support['jobTitle']) }}
                                                 </span>
                                             </mat-card>
                                         </a>
@@ -451,7 +451,7 @@
 
                     <!-- Related Items -->
                     <div 
-                        *ngIf="equipment.relatedItemsCollection.length > 0" 
+                        *ngIf="equipment.relatedItemsCollection.items.length > 0" 
                         id="you-might-be-interested-in">
                         <h4>You might also be interested in<hr/></h4>
 
@@ -460,10 +460,16 @@
                             *ngFor="let relatedItem of equipment.relatedItemsCollection.items" 
                             class="collection">
                             <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                                {{ relatedItem['title'] }} <br/>
+                                <mat-card>
+                                    <span class="card-title">
+                                        {{ relatedItem['title'] }}
+                                    </span> 
+                                    <br/>
+                                    <span class="related-item-summary">
+                                        {{ (relatedItem['summary']) }}
+                                    </span>
+                                </mat-card>
                             </a>
-                            <span class="related-item-summary">
-                                {{ relatedItem['summary'] }}</span>
                         </mat-nav-list>
                     </div>
                 </div>

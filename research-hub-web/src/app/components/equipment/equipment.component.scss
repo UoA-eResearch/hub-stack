@@ -54,7 +54,7 @@ mat-expansion-panel, mat-card  {
     }
 }
 
-/* CSS Styling */
+/* Vanilla CSS Styling */
 
 // Main Content
 .main-content {
@@ -107,7 +107,7 @@ hr {
 
 // Equipment Summary
 .equipment-summary {
-    color: grey; 
+    color: $color-icon; 
     font-size: 25px; 
     line-height: 110%;
 }
@@ -127,7 +127,7 @@ hr {
 
 // Keyword Card
 .keyword-card {
-    background-color: #f0f0f0; 
+    background-color: $color-background; 
     margin: 5px; 
     padding: 10px; 
     font-size: 12px;
@@ -135,13 +135,11 @@ hr {
 
 // Related Item
 .related-item-summary {
-    color: #313131; 
     font-size: 12px;
 }
 
 // Specifications Table
 .specifications-table {
-    font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
@@ -162,11 +160,11 @@ hr {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #0294a5;
-    color: white;
+    background-color: map-get($hub-teal, 500);
+    color: $color-background;
   }
 
   // Card Title
 .card-title {
-    color: #0294a5
+    color: map-get($hub-teal, 500);
 }
