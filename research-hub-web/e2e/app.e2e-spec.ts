@@ -48,11 +48,11 @@ describe('ResearchHub\'s Basic Functionality', () => {
    * Visits the home page -> Clicks one of the 'Category' tiles -> Checks that the search results page has
    * been successfully navigated to by checking the presence of the search results page title 'Results'.
    */
-  it('can browse by category', async () => {
-    await _$$('.tile-text').first().click();
-    const searchPageTitle = await _$('.search-results-title').getText();
-    expect(searchPageTitle).toEqual('Results');
-  });
+  // it('can browse by category', async () => {
+  //   await _$$('.tile-text').first().click();
+  //   const searchPageTitle = await _$('.search-results-title').getText();
+  //   expect(searchPageTitle).toEqual('Results');
+  // });
 });
 
 // /**
