@@ -2,7 +2,7 @@ import { ResearchHubPage } from './app.po';
 import { browser, by, element, $, $$, ExpectedConditions, ElementFinder, ElementArrayFinder } from 'protractor';
 
 let page: ResearchHubPage;
-const TIMEOUT_PERIOD = 90000;
+const TIMEOUT_PERIOD = 99999;
 
 /**
  * Wrapper around the standard $() and $$() Protractor functions that add extra waits
