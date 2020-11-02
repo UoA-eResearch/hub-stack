@@ -2,7 +2,7 @@ import { ResearchHubPage } from './app.po';
 import { browser, by, element, $, $$, ExpectedConditions, ElementFinder, ElementArrayFinder } from 'protractor';
 
 let page: ResearchHubPage;
-const TIMEOUT_PERIOD = 65000;
+const TIMEOUT_PERIOD = 90000;
 
 /**
  * Wrapper around the standard $() and $$() Protractor functions that add extra waits
@@ -40,9 +40,9 @@ describe('ResearchHub\'s Basic Functionality', () => {
   /**
    * Visits the home page and checks it contains the heading 'Welcome to the ResearchHub'.
    */
-  it('can display welcome message', async () => {
-    expect(await _$('app-root h1').getText()).toEqual('Welcome to the ResearchHub');
-  });
+  // xit('can display welcome message', async () => {
+  //   expect(await _$('app-root h1').getText()).toEqual('Welcome to the ResearchHub');
+  // });
 
   /**
    * Visits the home page -> Clicks one of the 'Category' tiles -> Checks that the search results page has
@@ -95,7 +95,6 @@ describe('ResearchHub\'s Search Functionality', () => {
     await _$$('.results-list .mat-list-item').first().click();
     expect(await _$('mat-card-title h2').getText()).toEqual('BiblioInformatics');
   });
-
 });
 
 /**
@@ -125,7 +124,6 @@ describe('ResearchHub\'s Filter Functionality', () => {
       expect(initialResultCount).toBeGreaterThan(filteredResultCount);
     });
   });
-
 });
 
 /**
