@@ -1,12 +1,17 @@
 "use strict";
-
 const mochaPlugin = require("serverless-mocha-plugin");
 const expect = mochaPlugin.chai.expect;
 let wrapped = mochaPlugin.getWrapper("main", "/handler.js", "main");
 const fetch = require('node-fetch');
 const aws = require('aws-sdk');
-const crypto = require('crypto');
 const aws4 = require('aws4');
+
+const TIMEOUT_PERIOD = 20000;
+
+const configResult = require('dotenv').config({ path: '../.env' });
+if (configResult.error) {
+  throw configResult.error;
+}
 
 // Function to return the JSON parsed response body
 let getResBody = async (req) =>
@@ -18,19 +23,28 @@ let getResBody = async (req) =>
  */
 const getAwsCredentials = () => {
   let credentials = new aws.SharedIniFileCredentials({
+    profile: process.env.AWS_PROFILE,
+  });
+  if (credentials.sessionToken === undefined) {
+    // falling back to local def profile.
+    credentials = new aws.SharedIniFileCredentials({
     profile: 'saml',
   });
-  credentials = credentials;
+  }
   return credentials;
 }
 
+/**
+ * Retrieves OAuth2.0 tokens by making a request from the 2FAB lambda function.
+ */
 const getTokens = async () => {
+  // Generating AWS4 Signature from locally stored aws tokens.
   let awsCreds = getAwsCredentials();
   let opts = {
-    host: 'ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com',
-    path: '/sandbox/',
-    region: 'ap-southeast-2',
-    service: 'execute-api',
+    host: process.env.OAUTH_LAMBDA_HOST,
+    path: process.env.OAUTH_LAMBDA_PATH,
+    region: process.env.OAUTH_LAMBDA_REGION,
+    service: process.env.OAUTH_LAMBDA_SERVICE,
     'Accept': '*/*',
     'Accept-Encoding': 'gzip, deflate, br'
   };
@@ -39,7 +53,9 @@ const getTokens = async () => {
     secretAccessKey: awsCreds.secretAccessKey,
     sessionToken: awsCreds.sessionToken
   });
-  let res = await fetch('https://ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com/sandbox/', opts);
+
+  // making request to 2FAB with AWS4 Signature included.
+  let res = await fetch(`https://${opts.host}${opts.path}`, opts);
   const resJson = await res.json();
   return resJson;
 }
@@ -69,7 +85,7 @@ describe("serverless-now", () => {
   });
 
   it("POST request returns a response from service now.", async function () {
-    this.timeout(20000);
+    this.timeout(TIMEOUT_PERIOD);
     let authTokens = await getTokens();
     const resBody = await getResBody({
       httpMethod: "POST",
