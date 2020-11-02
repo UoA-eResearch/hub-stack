@@ -28,8 +28,8 @@ const getAwsCredentials = () => {
   if (credentials.sessionToken === undefined) {
     // falling back to local def profile.
     credentials = new aws.SharedIniFileCredentials({
-    profile: 'saml',
-  });
+      profile: 'saml',
+    });
   }
   return credentials;
 }
@@ -99,7 +99,6 @@ describe("serverless-now", () => {
       },
     });
     expect(resBody.status).to.equal('error');
-    return;
   });
 
   it("returns a decrypted example secret from AWS parameter store", async () => {

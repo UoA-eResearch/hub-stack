@@ -46,13 +46,14 @@ async function createServerAndTestClientWithAuth() {
  * Gets OAuth tokens
  */
 const getTokens = async () => {
-    let awsCreds;
-    try {
-        awsCreds = new aws.SharedIniFileCredentials({
+    let credentials = new aws.SharedIniFileCredentials({
+        profile: process.env.AWS_PROFILE,
+    });
+    if (credentials.sessionToken === undefined) {
+        // falling back to local def profile.
+        credentials = new aws.SharedIniFileCredentials({
             profile: 'saml',
         });
-    } catch (error) {
-        console.log("Could not retrieve AWS credentials. Try re-running the credential python script.");
     }
 
     // Adding the AWS4 Signature to our request parameters
@@ -141,15 +142,21 @@ describe('Contentful filters (conditionals)', () => {
 
 });
 
-describe('Authorisation resolvers', () => {
+describe('Authorization resolvers', () => {
 
     test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 
-    test('Requesting an articleCollection non-public field with a valid Authorization header returns an response', async function () {
+    test('Requesting an articleCollection non-public field with a valid Authorization header returns data', async function () {
         let { query } = await createServerAndTestClientWithAuth();
+        let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+        expect(res.data.articleCollection).toBeTruthy();
+    }, TIMEOUT_PERIOD);
+
+    test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
+        let query = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
         expect(res.data.articleCollection).toBeTruthy();
     }, TIMEOUT_PERIOD);
