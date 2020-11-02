@@ -116,7 +116,9 @@
                     fxFlexOrder="1">
 
                     <!-- Official Documents -->
-                    <div class="column-header">
+                    <div 
+                        *ngIf="article.officialDocumentsCollection.items.length > 0" 
+                        class="column-header">
                         <h4>Official Documents</h4>
                         <hr/>
 
@@ -132,7 +134,7 @@
                                         </span> 
                                         <br/>
                                         <span class="related-item-summary">
-                                            {{ (document['summary'].length > 95)? (document['summary']| slice:0:95) + ' ...' : (document['summary']) }}
+                                            {{ (document['summary']) }}
                                         </span>
                                     </mat-card>
                                 </a>
@@ -140,7 +142,9 @@
                     </div>
 
                     <!-- Contacts -->
-                    <div class="column-header">
+                    <div 
+                        *ngIf="article.relatedContactsCollection.items.length > 0" 
+                        class="column-header">
                         <h4>Contacts</h4>
                         <hr/>
                         <mat-nav-list 
@@ -155,7 +159,7 @@
                                         </span> 
                                         <br/>
                                         <span class="related-item-summary">
-                                            {{ (contact['jobTitle'].length > 95)? (contact['jobTitle']| slice:0:95) + ' ...' : (contact['jobTitle']) }}
+                                            {{ (contact['jobTitle']) }}
                                         </span>
                                     </mat-card>
                                 </a>
@@ -163,7 +167,9 @@
                     </div>
 
                     <!-- Organizations -->
-                    <div class="column-header">
+                    <div 
+                        *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
+                        class="column-header">
                         <h4>Organizations</h4>
                         <hr/>
                         <mat-nav-list 
@@ -178,7 +184,7 @@
                                         </span> 
                                         <br/>
                                         <span class="related-item-summary">
-                                            {{ (organisation['summary'].length > 95)? (organisation['summary']| slice:0:95) + ' ...' : (organisation['summary']) }}
+                                            {{ (organisation['summary']) }}
                                         </span>
                                     </mat-card>
                                 </a>
@@ -193,7 +199,7 @@
                     fxFlexOrder="3">
 
                     <div 
-                        *ngIf="article.relatedItemsCollection" 
+                        *ngIf="article.relatedItemsCollection.items.length > 0" 
                         id="you-might-be-interested-in">
                         <h4>You might also be interested in<hr/></h4>
 
@@ -210,7 +216,7 @@
                                         </span> 
                                         <br/>
                                         <span class="related-item-summary">
-                                            {{ (relatedItem['summary'].length > 95)? (relatedItem['summary']| slice:0:95) + ' ...' : (relatedItem['summary']) }}
+                                            {{ (relatedItem['summary']) }}
                                         </span>
                                     </mat-card>
                                 </a>
@@ -267,7 +273,9 @@
                     fxFlex="25%">
 
                     <!-- Official Documents -->
-                    <div class="column-header">
+                    <div 
+                        *ngIf="article.officialDocumentsCollection.items.length > 0" 
+                        class="column-header">
                         <h4>Official Documents</h4>
                         <hr/>
 
@@ -283,7 +291,7 @@
                                         </span> 
                                         <br/>
                                         <span class="related-item-summary">
-                                            {{ (document['summary'].length > 95)? (document['summary']| slice:0:95) + ' ...' : (document['summary']) }}
+                                            {{ (document['summary']) }}
                                         </span>
                                     </mat-card>
                                 </a>
@@ -291,7 +299,9 @@
                     </div>
 
                     <!-- Contacts -->
-                    <div class="column-header">
+                    <div 
+                        *ngIf="article.relatedContactsCollection.items.length > 0" 
+                        class="column-header">
                         <h4>Contacts</h4>
                         <hr/>
                         <mat-nav-list 
@@ -306,7 +316,7 @@
                                         </span> 
                                         <br/>
                                         <span class="related-item-summary">
-                                            {{ (contact['jobTitle'].length > 95)? (contact['jobTitle']| slice:0:95) + ' ...' : (contact['jobTitle']) }}
+                                            {{ (contact['jobTitle']) }}
                                         </span>
                                     </mat-card>
                                 </a>
@@ -314,7 +324,9 @@
                     </div>
 
                     <!-- Organizations -->
-                    <div class="column-header">
+                    <div 
+                        *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
+                        class="column-header">
                         <h4>Organizations</h4>
                         <hr/>
                         <mat-nav-list 
@@ -329,7 +341,7 @@
                                         </span> 
                                         <br/>
                                         <span class="related-item-summary">
-                                            {{ (organisation['summary'].length > 95)? (organisation['summary']| slice:0:95) + ' ...' : (organisation['summary']) }}
+                                            {{ (organisation['summary']) }}
                                         </span>
                                     </mat-card>
                                 </a>
@@ -357,7 +369,7 @@
 
             <!-- Related Items -->
             <div
-                *ngIf="article.relatedItemsCollection" 
+                *ngIf="article.relatedItemsCollection.items.length > 0" 
                 id="you-might-be-interested-in">
                 <h4>You might also be interested in<hr/></h4>
         
