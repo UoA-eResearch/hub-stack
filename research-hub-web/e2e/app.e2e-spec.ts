@@ -10,6 +10,8 @@ const TIMEOUT_PERIOD = 65000;
  * @param search CSS element finder
  */
 export let _$ = (search): ElementFinder => {
+  const done = () => { };
+  setTimeout(done, 20000);
   browser.driver.wait(ExpectedConditions.visibilityOf($(search)), TIMEOUT_PERIOD);
   browser.waitForAngular();
   return $(search);
@@ -21,6 +23,8 @@ export let _$ = (search): ElementFinder => {
  * @param search CSS element finder
  */
 export let _$$ = (search): ElementArrayFinder => {
+  const done = () => { };
+  setTimeout(done, 20000);
   browser.driver.wait(ExpectedConditions.visibilityOf($$(search).first()), TIMEOUT_PERIOD);
   browser.waitForAngular();
   return $$(search);
@@ -32,7 +36,8 @@ export let _$$ = (search): ElementArrayFinder => {
  */
 describe('ResearchHub\'s Basic Functionality', () => {
 
-  beforeEach(async () => {
+  beforeEach(async (done) => {
+    setTimeout(done, 10000);
     page = new ResearchHubPage();
     await page.navigateTo(browser.baseUrl);
   });
@@ -40,7 +45,8 @@ describe('ResearchHub\'s Basic Functionality', () => {
   /**
    * Visits the home page and checks it contains the heading 'Welcome to the ResearchHub'.
    */
-  it('can display welcome message', async () => {
+  it('can display welcome message', async (done) => {
+    setTimeout(done, 10000);
     expect(await _$('app-root h1').getText()).toEqual('Welcome to the ResearchHub');
   });
 
@@ -61,14 +67,16 @@ describe('ResearchHub\'s Basic Functionality', () => {
  */
 describe('ResearchHub\'s Search Functionality', () => {
 
-  beforeEach(() => {
+  beforeEach((done) => {
+    setTimeout(done, 20000);
     page = new ResearchHubPage();
   });
 
   /**
    * Directly navigates to the search results page and checks the presence of the search results page title 'Results'.
    */
-  it('can directly navigate to search results page', async () => {
+  it('can directly navigate to search results page', async (done) => {
+    setTimeout(done, 20000);
     await page.navigateTo(browser.baseUrl + 'search');
     expect(await _$('.search-results-title').getText()).toEqual('Results');
   });
@@ -77,7 +85,8 @@ describe('ResearchHub\'s Search Functionality', () => {
    * Navigates to the home page -> Types 'vm' in the home page search bar -> Checks that the search results page has
    * been successfully navigated to by checking the presence of the search results page title 'Results'.
    */
-  it('displays search results after typing in homepage search bar', async () => {
+  it('displays search results after typing in homepage search bar', async (done) => {
+    setTimeout(done, 20000);
     await page.navigateTo(browser.baseUrl);
     const searchBar = await _$('app-search-bar input');
     'vm'.split('').forEach(c => searchBar.sendKeys(c));
@@ -88,7 +97,8 @@ describe('ResearchHub\'s Search Functionality', () => {
    * Visits the home page -> Types 'biblioinformatics' in the home page search bar -> Clicks the first search result
    * item -> Checks that its title = 'BiblioInformatics'.
    */
-  it('displays correct search results that can be navigated to', async () => {
+  it('displays correct search results that can be navigated to', async (done) => {
+    setTimeout(done, 20000);
     await page.navigateTo(browser.baseUrl);
     const searchBar = await _$('app-search-bar input');
     'biblioinformatics'.split('').forEach(c => searchBar.sendKeys(c));
@@ -103,7 +113,8 @@ describe('ResearchHub\'s Search Functionality', () => {
  */
 describe('ResearchHub\'s Filter Functionality', () => {
 
-  beforeEach(async () => {
+  beforeEach(async (done) => {
+    setTimeout(done, TIMEOUT_PERIOD);
     page = new ResearchHubPage();
     await page.navigateTo(browser.baseUrl + 'search');
   });
@@ -133,7 +144,8 @@ describe('ResearchHub\'s Filter Functionality', () => {
  */
 describe('ResearchHub\'s Research Impact Content', () => {
 
-  beforeEach(async () => {
+  beforeEach(async (done) => {
+    setTimeout(done, TIMEOUT_PERIOD);
     page = new ResearchHubPage();
     await page.navigateTo(browser.baseUrl + 'researchimpact');
   });
