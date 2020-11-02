@@ -67,6 +67,7 @@ export class OptionsService {
     '483_Pacific_28Sep10_1680x220_BW.jpg',
     '20130930_UoA_Details_225_1680x220_BW.jpg'
   ];
+
   public categoryOptions: any[];
   public categoryOptionsGQL: any[];
   public researchActivityOptions: any[];
