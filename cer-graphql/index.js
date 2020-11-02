@@ -222,7 +222,6 @@ async function createServer(config) {
             try {
                 return { user: verifyJwt(req.headers.authorization.substring('Bearer '.length), cognitoPublicKeys) }
             } catch (e) { 
-                // throw new AuthenticationError('The included token for this request is invalid.');
                 return null;
             }
         }, formatResponse: (res, context) => {
