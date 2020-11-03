@@ -9,11 +9,10 @@
 <div 
     id="article-container" 
     *ngIf="article$ | async as article">
-    
     <!-- Dynamic Banner -->
     <div 
         class="banner-container"
-        [style.background]="article.icon ? 'url(' + article.icon.url + ') no-repeat' : 'url(https://images.unsplash.com/photo-1542810444-515316abdc7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80x)'">
+        [style]="article.displayBanner ? article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : 'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : article.viewType == 'View 2' ? 'display: none;' : ''">
         <div 
             class="banner-content" 
             *ngIf="article.viewType == 'View 1'">
@@ -21,7 +20,7 @@
                 class="article-title" 
                 ngClass.sm="article-title-sm" 
                 ngClass.xs="article-title-xs"
-                style="color: white">
+                [style.color]="article.displayBanner ? 'white' : '#004059'">
                     {{ article.title }}
             </h1>
 

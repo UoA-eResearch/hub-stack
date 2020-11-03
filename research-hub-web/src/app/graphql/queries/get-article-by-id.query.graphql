@@ -4,6 +4,12 @@ query GetArticleByID($id: String!) {
         summary
         ssoProtected
         viewType
+        banner {
+          title
+          url
+          description
+        }
+        displayBanner
         body {
           json
           links {
