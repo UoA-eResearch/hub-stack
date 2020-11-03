@@ -2,13 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SubhubsComponent } from './subhubs.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { SharedModule } from '../shared/app.shared.module';
+import { SharedModule } from '@components/shared/app.shared.module';
 import { SubhubsRoutingModule } from './subhubs-routing.module';
 import { RouterModule } from '@angular/router';
 
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '../../app.material.module';
+import { MaterialModule } from '@app/app.material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable, of, from } from 'rxjs';
 import {
@@ -17,7 +17,7 @@ import {
   AllSubHubChildPagesGQL,
   AllContentItemParentSubHubsGQL,
   SubHubOrder,
-} from "../../graphql/schema";
+} from "@graphql/schema";
 
 
 describe('SubhubsComponent', () => {

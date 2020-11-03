@@ -1,39 +1,9 @@
 query GetArticleBySlug($slug: String) {
-    articleCollection (where:{slug: $slug}) {
+    articleCollection(where: {slug: $slug}) {
         items {
-            title
-            summary
             ssoProtected
-            body {
-                json 
-            }
-            keywords
-            slug
-            ssoProtected
-            searchable
-            icon {
-                title
-                description
-                url
-            }
-            relatedItemsCollection {
-                items {
-                    ...on Article {
-                        title
-                        summary
-                        slug
-                    }
-                    ...on Service {
-                        title
-                        summary
-                        slug
-                    }
-                    ...on Equipment {
-                        title
-                        summary
-                        slug
-                    }
-                }
+            sys {
+                id
             }
         }
     }

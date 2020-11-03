@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
-import { OrderBy } from '../../../services/research-hub-api.service';
-import { AnalyticsService } from '../../../services/analytics.service';
+import { OrderBy } from '@services/research-hub-api.service';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'orderby-switcher',

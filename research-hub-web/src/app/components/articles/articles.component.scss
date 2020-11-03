@@ -5,10 +5,6 @@ mat-expansion-panel, mat-card  {
     margin: 1vh 0;
 }
 
-#mat-card-avatar mat-icon {
-    color: map-get($hub-teal, 800);
-}
-
 // The container for an individual article
 #article-container {
 
@@ -17,32 +13,18 @@ mat-expansion-panel, mat-card  {
 
         .breadcrumb-subhub {
             &::after {
+                color: $color-icon;
                 margin: 0 0.5em 0 0.5em;
-                content: ' >'
+                content: '/'
             }
         }
 
         #breadcrumb-current-page {
-            color: $color-pink;
+            color: $color-icon;
         }
     }
-
-    #item-avatar {
-        $avatar-size: 75px;
-        width: $avatar-size;
-        height: $avatar-size;
-
-        margin-right: $avatar-size * 0.1;
-        margin-bottom: $avatar-size * 0.25;
-
-        img {
-            border-radius: 50%;
-        }
-    }
-
-    #item-avatar-icon {
-        font-size: 55pt;
-        color: $color-primary;
+    .breadcrumbs-mobile {
+        font-size: 8px;
     }
 
     #keywords {
@@ -52,4 +34,81 @@ mat-expansion-panel, mat-card  {
     .related-item-summary {
         color: gray;
     }
+}
+
+/* Vanilla CSS Styling */
+// Article Titles
+
+.article-title {
+    color: map-get($hub-navy, 500);
+    font-size: 50px;
+    font-weight: bold; 
+    line-height: 110%;
+}
+
+.article-title-sm {
+    font-size: 35px;
+}
+
+.article-title-xs {
+    font-size: 25px;
+}
+
+// Article Summary
+.article-summary {
+    color: $color-icon; 
+    font-size: 25px; 
+    line-height: 110%;
+}
+
+.article-summary-sm {
+    font-size: 20px; 
+}
+
+.article-summary-xs {
+    font-size: 15px; 
+}
+
+.keyword-card {
+    background-color: $color-background;
+    margin: 5px; 
+    padding: 10px; 
+    font-size: 12px;
+}
+
+.related-item-summary {
+    font-size: 12px;
+}
+
+.banner-container {
+    text-align: center;
+    min-width: 100vw; 
+    margin: -3em 0PX 20PX -7.5vw;
+    min-height: 40vh;
+    max-height: auto;
+    overflow: hidden;
+    background-size: cover!important;
+}
+
+.banner-content {
+    width: 50%;
+    margin: 10em auto;
+    color: white;
+    display: inline-block;
+}
+
+// Related Item Card
+.related-item-card {
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.related-item-card-mobile {
+    height: 70px;
+}
+
+// Card Title
+.card-title {
+    color: map-get($hub-teal, 500);
 }
