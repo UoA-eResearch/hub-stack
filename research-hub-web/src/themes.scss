@@ -145,7 +145,7 @@ $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn
 @include angular-material-theme($hub-app-theme);
 
 // Site wide measurements
-$width-page-max: 85vw;
+$width-page-max: 960px;
 $offset-xs: 1em;
 $offset-gt-xs: 2em;
 $height-footer: 12em;

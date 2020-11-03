@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {HeaderService} from './header.service';
 import {Subscription} from 'rxjs';
-import {ResearchHubApiService} from '@services/research-hub-api.service';
+import {ResearchHubApiService} from '../../services/research-hub-api.service';
 
 @Component({
   selector: 'app-header',

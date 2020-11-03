@@ -56,7 +56,7 @@ const getTokens = async () => {
     if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
         awsCreds = new aws.SharedIniFileCredentials({
-            profile: process.env.awsProfile,
+            profile: 'saml',
         });
     }
 
@@ -88,6 +88,7 @@ const getTokens = async () => {
     }
     return resJson;
 }
+
 
 /**
  * Before any of the tests run create the query function and make

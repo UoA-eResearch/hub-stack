@@ -39,7 +39,7 @@ import {
   EquipmentUserFacingSupportCollectionArgs
 } from './graphql/schema';
 import { env } from 'process';
-import { environment } from '@environments/environment';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',

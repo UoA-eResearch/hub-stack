@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { MatInput } from '@angular/material/input';
 import { NavigationEnd, Router } from "@angular/router";
 import { filter } from 'rxjs/operators';
-import { AnalyticsService } from '@services/analytics.service';
+import { AnalyticsService } from '../../services/analytics.service';
 
 
 @Component({

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
-import { HomeComponent } from '@components/home/home.component';
+import { HomeComponent } from '../components/home/home.component';
 
 
 export const appRoutes: Routes = [
@@ -11,70 +11,70 @@ export const appRoutes: Routes = [
   },
   {
     path: 'error/:errorCode',
-    loadChildren: () => import('@components/error-routing/error-routing.module').then((m) => m.ErrorRoutingModule),
+    loadChildren: () => import('../components/error-routing/error-routing.module').then((m) => m.ErrorRoutingModule),
   },
   {
     path: 'home',
     canActivate: [LoginSuccessGuard],
     component: HomeComponent,
-    // loadChildren: () => import('@components/home/home.module').then((m) => m.HomeModule),
+    // loadChildren: () => import('../components/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'search',
-    loadChildren: () => import('@components/search-results/search-results.module').then(m => m.SearchResultsModule)
+    loadChildren: () => import('../components/search-results/search-results.module').then(m => m.SearchResultsModule)
   },
   {
     path: 'feedback',
-    loadChildren: () => import('@components/feedback/feedback.module').then(m => m.FeedbackModule), canActivate: [AuthGuard]
+    loadChildren: () => import('../components/feedback/feedback.module').then(m => m.FeedbackModule), canActivate: [AuthGuard]
   },
   {
     path: 'userStudy',
-    loadChildren: () => import('@components/user-study/user-study.module').then(m => m.UserStudyModule)
+    loadChildren: () => import('../components/user-study/user-study.module').then(m => m.UserStudyModule)
   },
   {
     path: 'about',
-    loadChildren: () => import('@components/about/about.module').then(m => m.AboutModule)
+    loadChildren: () => import('../components/about/about.module').then(m => m.AboutModule)
   },
   {
     path: 'contact',
-    loadChildren: () => import('@components/contact/contact.module').then(m => m.ContactModule)
+    loadChildren: () => import('../components/contact/contact.module').then(m => m.ContactModule)
   },
   {
     path: 'orgUnit/:orgUnitId',
-    loadChildren: () => import('@components/org-unit-details/org-unit-details.module').then(m => m.OrgUnitDetailsModule)
+    loadChildren: () => import('../components/org-unit-details/org-unit-details.module').then(m => m.OrgUnitDetailsModule)
   },
   {
     path: 'person/:personId',
-    loadChildren: () => import('@components/person-details/person-details.module').then(m => m.PersonDetailsModule)
+    loadChildren: () => import('../components/person-details/person-details.module').then(m => m.PersonDetailsModule)
   },
   // GraphQL routes
   {
     path: 'equipment',
-    loadChildren: () => import('@components/equipment/equipment.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('../components/equipment/equipment.module').then(m => m.EquipmentModule)
   },
   {
     path: 'equipment/:slug',
-    loadChildren: () => import('@components/equipment/equipment.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('../components/equipment/equipment.module').then(m => m.EquipmentModule)
   },
   {
     path: 'articles',
-    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
+    loadChildren: () => import('../components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {
     path: 'article/:slug',
-    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
+    loadChildren: () => import('../components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {
     path: 'subhubs',
-    loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+    loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {
     path: 'subhub/:slug',
-    loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+    loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {
     path: 'all',
-    loadChildren: () => import('@components/all/all.module').then(m => m.AllModule)
+    loadChildren: () => import('../components/all/all.module').then(m => m.AllModule)
   },
   /**
    * Custom Route Redirects:
@@ -89,11 +89,11 @@ export const appRoutes: Routes = [
 
   {
     path: 'content/:contentId',
-    loadChildren: () => import('@components/content-details/content-details.module').then(m => m.ContentDetailsModule)
+    loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule)
   },
   {
     path: 'guideCategory/:guideCategoryId',
-    loadChildren: () => import('@components/guide-category/guide-category.module').then(m => m.GuideCategoryModule)
+    loadChildren: () => import('../components/guide-category/guide-category.module').then(m => m.GuideCategoryModule)
   },
 
   /**
@@ -104,7 +104,7 @@ export const appRoutes: Routes = [
    */
   {
     path: 'researchimpact',
-    loadChildren: () => import('@components/content-details/content-details.module').then(m => m.ContentDetailsModule),
+    loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule),
     data: { contentId: 73 }
   },
   {

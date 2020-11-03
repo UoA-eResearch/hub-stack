@@ -123,7 +123,6 @@ async function createServer(config) {
                     'linkedFrom',
                     'slug',
                     'icon',
-                    'viewType',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 

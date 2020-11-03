@@ -191,8 +191,6 @@ footer.footer-xs {
 .footer-content {
   @extend .site-content;
   height: $height-footer !important;
-  display: grid;
-  grid-auto-flow: row;
 }
 
 .footer-content-xs {

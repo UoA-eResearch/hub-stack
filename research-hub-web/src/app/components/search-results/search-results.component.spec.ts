@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchResultsComponent } from './search-results.component';
 import { SearchResultsModule } from './search-results.module';
-import { ServicesModule } from '@services/services.module';
+import { ServicesModule } from '../../services/services.module';
 import { SearchBarService } from '../search-bar/search-bar.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponentService } from '@app/app.component.service';
+import { AppComponentService } from '../../app.component.service';
 import { SearchFiltersService } from './search-filters/search-filters.service';
 import { SearchResultsComponentService } from './search-results-component.service';
 import { Observable } from 'rxjs';
-import { SharedModule } from '@components/shared/app.shared.module';
-import { Page } from '@model/Page';
-import { ListItem } from '@model/ListItem';
+import { SharedModule } from '../../components/shared/app.shared.module';
+import { Page } from '../../model/Page';
+import { ListItem } from '../../model/ListItem';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 

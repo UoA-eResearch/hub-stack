@@ -137,7 +137,7 @@
             </mat-sidenav>
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
-              <div class="site-padding" #content ngClass.xs="site-padding-xs" ngClass.sm="site-padding-sm"> 
+              <div class="site-padding" #content ngClass.xs="site-padding-xs" ngClass.sm="site-padding-sm">
                 <app-search-bar [categories]="optionsService.categoryOptions" [category]="selectedCategory"
                   [searchText]="searchText"></app-search-bar>
                 <!-- Page content -->

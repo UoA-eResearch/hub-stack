@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AllComponent } from './all.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery } from '@graphql/schema';
+import { AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery } from '../../graphql/schema';
 import { Observable, of } from 'rxjs';
 
 describe('AllComponent', () => {

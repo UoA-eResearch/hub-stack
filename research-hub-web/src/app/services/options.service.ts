@@ -67,7 +67,6 @@ export class OptionsService {
     '483_Pacific_28Sep10_1680x220_BW.jpg',
     '20130930_UoA_Details_225_1680x220_BW.jpg'
   ];
-
   public categoryOptions: any[];
   public categoryOptionsGQL: any[];
   public researchActivityOptions: any[];
@@ -158,8 +157,8 @@ export class OptionsService {
         title: 'Welcome to the ResearchHub',
         description: 'The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research.',
         imageUrl: 'page-elements/' + this.coverImages[Math.floor(Math.random() * 3)], // Generate a random number between 1 and 3 and
-        isHeaderVisible: false,
-        isSearchBarVisible: false
+        isHeaderVisible: true,
+        isSearchBarVisible: true
       },
       search: { title: 'Search', isHeaderVisible: false, isSearchBarVisible: true },
       feedback: {
@@ -199,21 +198,21 @@ export class OptionsService {
         title: 'Equipment',
         description: 'Large scale and specialist equipment available across the University that can help you answer your research questions or produce creative works.',
         imageUrl: 'page-elements/20151005_Science Detail_013_1680x220_BW.jpg',
-        isHeaderVisible: false,
+        isHeaderVisible: true,
         isSearchBarVisible: false
       },
-      // articles: {
-      //   title: 'Articles',
-      //   description: 'General information pages.',
-      //   imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
-      //   isHeaderVisible: false,
-      //   isSearchBarVisible: false
-      // },
+      articles: {
+        title: 'Articles',
+        description: 'General information pages.',
+        imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
       article: {
         title: 'Articles',
         description: 'General information pages.',
         imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
-        isHeaderVisible: false,
+        isHeaderVisible: true,
         isSearchBarVisible: false
       },
       subhub: {

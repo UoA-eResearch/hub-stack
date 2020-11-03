@@ -2,18 +2,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EquipmentComponent } from './equipment.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
-import { EquipmentCollection, AllEquipmentGQL, Equipment } from '@graphql/schema';
+import { EquipmentCollection, AllEquipmentGQL, AllEquipmentDocument } from '../../graphql/schema';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from '@app/app.material.module';
-import { SharedModule } from '@components/shared/app.shared.module';
+import { MaterialModule } from '../../app.material.module';
+import { SharedModule } from '../shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
   let fixture: ComponentFixture<EquipmentComponent>;
+  let backend: ApolloTestingController;
   let controller: ApolloTestingController;
+  let spy: any;
 
   const mockAllEquipment$: Observable<EquipmentCollection> = of({
     'items': [
@@ -28,19 +31,6 @@ describe('EquipmentComponent', () => {
     ],
     '__typename': 'EquipmentCollection'
   } as EquipmentCollection);
-
-  const mockEquipment$: Observable<Equipment> = of(
-    {
-      '__typename': 'Equipment',
-      'sys': {
-        'id': '111'
-      },
-      'slug': 'death-star',
-      'title': 'Death Star',
-      'summary': 'Mobile space station and galactic superweapon.',
-      'ssoProtected': true,
-      'searchable': false
-    } as Equipment);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -63,54 +53,21 @@ describe('EquipmentComponent', () => {
 
   beforeEach(() => {
     controller = TestBed.inject(ApolloTestingController);
+    spy = spyOn(EquipmentComponent.prototype, 'getAllEquipment').and.returnValue(mockAllEquipment$);
+
+    backend = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(EquipmentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   afterEach(() => {
-    fixture.destroy();
     controller.verify();
-  });
+    fixture.destroy();
+  })
 
-  it('Should create', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all equipment', async () => {
-    spyOn(component, 'getAllEquipment').and.returnValue(mockAllEquipment$);
-    component.getAllEquipment().subscribe(res => {
-      expect(res).toBeTruthy();
-    });
-  })
-
-  describe('When a url slug is present', async () => {
-    beforeEach(() => {
-      controller = TestBed.inject(ApolloTestingController);
-      fixture = TestBed.createComponent(EquipmentComponent);
-      component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: 'death-star'
-      });
-      fixture.detectChanges();
-    })
-
-    it('Should evaluate components slug property to be truthy', () => {
-      expect(component.slug).toBeTruthy();
-    });
-
-    it('Should get a single equipment data by Slug', async () => {
-      spyOn(component, 'getEquipmentBySlug').and.returnValue(mockEquipment$);
-      component.getEquipmentBySlug(component.slug).subscribe(res => {
-        expect(res.slug).toEqual('death-star');
-      });
-    })
-
-    it('Should get a single equipment data by ID', async () => {
-      spyOn(component, 'getEquipmentByID').and.returnValue(mockEquipment$);
-      component.getEquipmentByID('').subscribe(res => {
-        expect(res.sys.id).toEqual('111');
-      });
-    })
-  });
 });

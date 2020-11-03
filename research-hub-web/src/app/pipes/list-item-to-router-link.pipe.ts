@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {ListItem} from '@model/ListItem';
+import {ListItem} from '../model/ListItem';
 
 
 @Pipe({

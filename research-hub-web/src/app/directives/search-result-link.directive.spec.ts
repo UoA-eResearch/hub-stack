@@ -1,18 +1,18 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component, DebugElement } from '@angular/core';
-import { AnalyticsService } from '@services/analytics.service';
-import { SharedModule } from '@components/shared/app.shared.module';
+import { AnalyticsService } from '../services/analytics.service';
+import { SharedModule } from '../components/shared/app.shared.module';
 import { CommonModule } from '@angular/common';
 import { SearchResultLinkDirective } from './search-result-link.directive';
 import { ActivatedRoute } from '@angular/router';
-import { routing } from '@components/search-results/search-results.routing';
-import { SearchResultsModule } from '@components/search-results/search-results.module';
-import { SearchResultsComponentService } from '@components/search-results/search-results-component.service';
+import { routing } from '../components/search-results/search-results.routing';
+import { SearchResultsModule } from '../components/search-results/search-results.module';
+import { SearchResultsComponentService } from '../components/search-results/search-results-component.service';
 import { By } from '@angular/platform-browser';
-import { ListItem } from '@model/ListItem';
-import { FilterDialogComponent } from '@components/search-results/filter-dialog/filter-dialog.component';
-import { SearchFiltersService } from '@components/search-results/search-filters/search-filters.service';
-import { FilterSidenavComponent } from '@components/search-results/filter-sidenav/filter-sidenav.component';
+import { ListItem } from '../model/ListItem';
+import { FilterDialogComponent } from '../components/search-results/filter-dialog/filter-dialog.component';
+import { SearchFiltersService } from '../components/search-results/search-filters/search-filters.service';
+import { FilterSidenavComponent } from '../components/search-results/filter-sidenav/filter-sidenav.component';
 
 @Component({
     template: `

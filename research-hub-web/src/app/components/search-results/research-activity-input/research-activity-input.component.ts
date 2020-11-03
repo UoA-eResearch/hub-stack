@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OptionsService } from '@services/options.service';
-import { AnalyticsService } from '@services/analytics.service';
+import { OptionsService } from '../../../services/options.service';
+import { AnalyticsService } from '../../../services/analytics.service';
 
 
 @Component({

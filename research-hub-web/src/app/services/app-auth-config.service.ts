@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CognitoConfigService } from '@uoa/auth';
 
-import { environment } from '@environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'

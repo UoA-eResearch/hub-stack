@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { OptionsService } from '@services/options.service';
+import { OptionsService } from '../../../services/options.service';
 import { Subscription } from 'rxjs';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { LayoutService } from '@services/layout.service';
+import { LayoutService } from '../../../services/layout.service';
 
 @Component({
   selector: 'app-browse',

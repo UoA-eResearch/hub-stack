@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { routing } from './guide-category.routing';
 
-import { SharedModule } from '@components/shared/app.shared.module';
+import { SharedModule } from '../../components/shared/app.shared.module';
 import { GuideCategoryComponent } from './guide-category.component';
 
 

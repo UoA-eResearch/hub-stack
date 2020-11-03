@@ -31,7 +31,6 @@ h3 {
 h4 {
   color: $heading-4-font-color;
   font-family: $font-family;
-  font-size: 20px;
 }
 
 p {
@@ -116,13 +115,14 @@ mat-chip.mat-chip {
 
 .site-content {
   @extend .flex-hack;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
   max-width: $width-page-max !important; // If not important then gets overidden by some fxLayout styles
 }
 
 .site-padding {
   @extend .site-content;
-  // margin-top: $offset-gt-xs / 2.0;
+  margin-top: $offset-gt-xs / 2.0;
   margin-bottom: 5em;
   padding-top: $padding-site;
   padding-left: $padding-site;
@@ -131,7 +131,7 @@ mat-chip.mat-chip {
 
 .site-padding-xs {
   @extend .site-content;
-  // margin-top: $offset-xs / 2.0;
+  margin-top: $offset-xs / 2.0;
   margin-bottom: $offset-xs;
   padding-top: $offset-xs;
   padding-left: $offset-xs;
@@ -140,7 +140,7 @@ mat-chip.mat-chip {
 
 .site-padding-sm {
   @extend .site-content;
-  // margin-top: $offset-xs / 2.0;
+  margin-top: $offset-xs / 2.0;
   margin-bottom: 5em;
   padding-top: $padding-site / 2.0;
   padding-left: $padding-site;
