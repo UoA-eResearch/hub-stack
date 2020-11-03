@@ -158,8 +158,8 @@ export class OptionsService {
         title: 'Welcome to the ResearchHub',
         description: 'The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research.',
         imageUrl: 'page-elements/' + this.coverImages[Math.floor(Math.random() * 3)], // Generate a random number between 1 and 3 and
-        isHeaderVisible: true,
-        isSearchBarVisible: true
+        isHeaderVisible: false,
+        isSearchBarVisible: false
       },
       search: { title: 'Search', isHeaderVisible: false, isSearchBarVisible: true },
       feedback: {
