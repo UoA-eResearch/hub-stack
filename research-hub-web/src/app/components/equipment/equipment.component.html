@@ -1,0 +1,69 @@
+<app-collection-list *ngIf="allEquipment$ | async as allEquipment" [collection]="allEquipment"></app-collection-list>
+
+
+<!-- If we're displaying an individual equipment -->
+
+<div id="equipment-container" *ngIf="equipment$ | async as equipment">
+
+    <div id="breadcrumbs" *ngIf="!!parentSubHubs">
+        <span class="breadcrumb-subhub" *ngFor="let subHub of parentSubHubs.slice().reverse()">
+            <a [routerLink]="'/subhub/' + subHub.slug">{{ subHub.title }}</a>
+        </span>
+        <span id="breadcrumb-current-page">{{ equipment.title }}</span>
+    </div>
+
+    <mat-expansion-panel id="json">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                JSON Result
+            </mat-panel-title>
+            <mat-panel-description>Click to see raw JSON</mat-panel-description>
+        </mat-expansion-panel-header>
+        <pre><code>{{ equipment | json}}</code></pre>
+    </mat-expansion-panel>
+
+    <mat-card id="overview">
+        <mat-card-header>
+            <div mat-card-avatar id="item-avatar">
+                <div *ngIf="equipment.icon; else avatarIcon">
+                    <img src="{{equipment?.icon?.url}}" alt="{{equipment?.icon?.description}}" class="item-avatar"
+                        width="100%" height="100%" />
+                </div>
+                <ng-template #avatarIcon>
+                    <mat-icon id="item-avatar-icon">import_contacts</mat-icon>
+                </ng-template>
+            </div>
+            <mat-card-title>
+                <h2>{{ equipment.title }}</h2>
+            </mat-card-title>
+            <mat-card-subtitle>
+                <span id="keywords">{{ equipment.keywords.join(', ') | titlecase }}</span>
+            </mat-card-subtitle>
+            <mat-chip-avatar *ngIf="equipment.ssoProtected">
+                <mat-icon color='accent' matTooltip="SSO Login Required">lock</mat-icon>
+            </mat-chip-avatar>
+        </mat-card-header>
+        <mat-card-content>
+            {{ equipment.summary }}
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+        <mat-card-content [innerHTML]="equipment.body.json | richTextToHTML"></mat-card-content>
+    </mat-card>
+
+    <mat-card *ngIf="equipment.relatedItemsCollection" id="you-might-be-interested-in">
+
+        <h3>You might also be interested in</h3>
+
+        <mat-nav-list *ngFor="let relatedItem of equipment.relatedItemsCollection.items" class="collection">
+            <mat-list-item>
+                <a [routerLink]="'/' + relatedItem.__typename.toLowerCase() + '/' + relatedItem.slug">
+                    {{ relatedItem['title'] + ': ' + relatedItem['summary'] }}</a>
+            </mat-list-item>
+
+        </mat-nav-list>
+    </mat-card>
+
+
+</div>

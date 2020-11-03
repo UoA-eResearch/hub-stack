@@ -1,0 +1,58 @@
+query AllSubHubChildPages ($slug: String) {
+  subHubCollection (where:{slug: $slug}) {
+    items {
+      slug
+      title
+      summary
+      body {
+        json
+      }
+      ssoProtected
+      searchable
+      subhubPagesCollection {
+        items {
+        	...on Article {
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+          ...on CaseStudy {
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+          ...on Equipment{
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          } 
+          ... on OfficialDocuments {
+            __typename
+              title
+            	summary
+          }
+          ...on Service {
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+          ...on SubHub {
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+        }
+      }
+    }
+  }
+}

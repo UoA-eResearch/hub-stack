@@ -1,4 +1,5 @@
 {
+    "awsAccountId": "416527880812",
     "infra": {
         "awsApiGatewayCustomDomainName": "apigw.sandbox.amazon.auckland.ac.nz"
     },
@@ -9,6 +10,9 @@
     "SN_DEV_API_KEY_RW": "${ssm:/sandbox/research-hub/SN_DEV_API_KEY_RW~true}",
     "OAUTH_SCOPES": [
         "openid",
-        "profile"
-    ]
+        "profile",
+        "https://research.auckland.ac.nz/servicenow"
+    ],
+    "resourceKey": "key/3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d",
+    "lambdaRole": "role/lambda_basic_execution_with_read_only_access_to_SSM"
 }

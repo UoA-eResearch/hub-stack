@@ -34,7 +34,9 @@ export enum CategoryId {
   Facilities,
   Guide,
   Person,
-  Policies
+  Policies,
+  Articles,
+  SubHubs
 }
 
 export const CategoryDisplayNames = {
@@ -66,6 +68,7 @@ export class OptionsService {
     '20130930_UoA_Details_225_1680x220_BW.jpg'
   ];
   public categoryOptions: any[];
+  public categoryOptionsGQL: any[];
   public researchActivityOptions: any[];
   public menuOptions: any[];
   private _pageInfo: any;
@@ -90,7 +93,14 @@ export class OptionsService {
       { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
       { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
       { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
-      { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category }
+      { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
+    ];
+
+    this.categoryOptionsGQL = [
+      { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
+      { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
+      { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
+      { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }
     ];
 
     this.researchActivityOptions = [
@@ -184,6 +194,48 @@ export class OptionsService {
       content: { isHeaderVisible: false, isSearchBarVisible: false },
       guide: { isHeaderVisible: false, isSearchBarVisible: false },
       guideCategory: { isHeaderVisible: false, isSearchBarVisible: false },
+      equipment: {
+        title: 'Equipment',
+        description: 'Large scale and specialist equipment available across the University that can help you answer your research questions or produce creative works.',
+        imageUrl: 'page-elements/20151005_Science Detail_013_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
+      articles: {
+        title: 'Articles',
+        description: 'General information pages.',
+        imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
+      article: {
+        title: 'Articles',
+        description: 'General information pages.',
+        imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
+      subhub: {
+        title: 'SubHubs',
+        description: 'A collection of pages',
+        imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
+      subhubs: {
+        title: 'SubHubs',
+        description: 'A collection of all SubHubs',
+        imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
+      all: {
+        title: 'All Content',
+        description: 'Browse all content available to you on the ResearchHub.',
+        imageUrl: 'page-elements/20130930_UoA_Details_225_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
       impact: {
         title: 'Research Impact Guide',
         description: 'These pages contain tools and resources to support you in generating impact from your research.',

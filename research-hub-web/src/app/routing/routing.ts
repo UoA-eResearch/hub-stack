@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AuthGuard, LoginSuccessGuard } from 'uoa-auth-angular';
+import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 import { HomeComponent } from '../components/home/home.component';
 
 
@@ -39,7 +39,6 @@ export const appRoutes: Routes = [
     path: 'contact',
     loadChildren: () => import('../components/contact/contact.module').then(m => m.ContactModule)
   },
-
   {
     path: 'orgUnit/:orgUnitId',
     loadChildren: () => import('../components/org-unit-details/org-unit-details.module').then(m => m.OrgUnitDetailsModule)
@@ -48,7 +47,35 @@ export const appRoutes: Routes = [
     path: 'person/:personId',
     loadChildren: () => import('../components/person-details/person-details.module').then(m => m.PersonDetailsModule)
   },
-
+  // GraphQL routes
+  {
+    path: 'equipment',
+    loadChildren: () => import('../components/equipment/equipment.module').then(m => m.EquipmentModule)
+  },
+  {
+    path: 'equipment/:slug',
+    loadChildren: () => import('../components/equipment/equipment.module').then(m => m.EquipmentModule)
+  },
+  {
+    path: 'articles',
+    loadChildren: () => import('../components/articles/articles.module').then(m => m.ArticlesModule)
+  },
+  {
+    path: 'article/:slug',
+    loadChildren: () => import('../components/articles/articles.module').then(m => m.ArticlesModule)
+  },
+  {
+    path: 'subhubs',
+    loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+  },
+  {
+    path: 'subhub/:slug',
+    loadChildren: () => import('../components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+  },
+  {
+    path: 'all',
+    loadChildren: () => import('../components/all/all.module').then(m => m.AllModule)
+  },
   /**
    * Custom Route Redirects:
    * Define routes here where you would rather display a custom URL than the standard content/id
@@ -82,6 +109,6 @@ export const appRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: '/home'
   }
 ];
