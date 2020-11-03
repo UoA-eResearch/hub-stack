@@ -3,16 +3,15 @@ slackChannel = 'research-hub'
 slackCredentials = 'UoA-Slack-Access-Research-Hub'
 
 pipeline {
-    agent  {
-        label("uoa-buildtools-ionic")
+
+    parameters {
+        booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend even if there are no code changes.' )
+        booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API even if there are no code changes.')
+        booleanParam(name: "FORCE_REDEPLOY_SN", defaultValue: false, description: 'Force redeploy the serverless-now API even if there are no code changes.')
     }
 
-    environment {
-        // Set environment variables for cer-graphql tests
-        CONTENTFUL_ACCESS_TOKEN = credentials('contentful-access-token')
-        CONTENTFUL_SPACE_ID = credentials('contentful-space-id')
-        COGNITO_REGION = credentials('cognito-region')
-        COGNITO_USER_POOL = credentials('cognito-user-pool')
+    agent  {
+        label("uoa-buildtools-ionic")
     }
 
     stages {
@@ -20,7 +19,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#D4DADF", message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
             }
         }
 
@@ -35,18 +34,19 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
+                        env.awsRole = 'devops'
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
                         env.awsProfile = 'uoa-its-nonprod'
-
+                        env.awsAccountId = 'uoa-nonprod-account-id'
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
                         env.awsCredentialsId = 'uoa-its-prod-access'
                         env.awsTokenId = 'uoa-its-prod-token'
                         env.awsProfile = 'uoa-its-prod'
-
+                        env.awsAccountId = 'uoa-prod-account-id'
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
@@ -54,6 +54,14 @@ pipeline {
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
+                    }
+                    echo "Copying in credentials file"
+                    // Copy in secrets file from Jenkins so build and test
+                    // work properly.
+                    withCredentials([
+                        file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
+                    ]) {
+                        sh "cp $credentialsfile .env"
                     }
                 }
             }
@@ -68,7 +76,7 @@ pipeline {
                         usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
                         string(credentialsId: "${awsTokenId}", variable: 'awsToken')
                     ]) {
-                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile}"
+                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile} --role ${awsRole}"
                     }
                 }
             }
@@ -78,7 +86,10 @@ pipeline {
             parallel {
                 stage('Build research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     steps {
                         echo 'Building research-hub-web project'
@@ -93,7 +104,10 @@ pipeline {
                 }
                 stage('Build cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Building cer-graphql project'
@@ -105,7 +119,10 @@ pipeline {
                 }
                 stage('Build serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
                         dir("serverless-now") {
@@ -121,23 +138,30 @@ pipeline {
             parallel {
                 stage('Run research-hub-web tests') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     steps {
                         echo 'Testing research-hub-web project'
 
                         dir("research-hub-web") {
                             echo 'Running research-hub-web unit tests'
-                            sh 'npm run test-headless'
+                            sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh 'npm run e2e'
+                            sh "npx webdriver-manager update --versions.chrome=\$(google-chrome --version | grep -ioE \"[0-9.]{10,20}\")"
+                            sh "npm run e2e-ci -- -c ${BRANCH_NAME}"
                         }
                     }
                 }
                 stage('Run cer-graphql tests') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Testing cer-graphql project'
@@ -149,7 +173,10 @@ pipeline {
                 }
                 stage('Run serverless-now tests') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
                         echo "Invoking serverless-now tests..."
@@ -165,7 +192,10 @@ pipeline {
             parallel {
                 stage('Deploy research-hub-web') {
                     when {
-                        changeset "**/research-hub-web/*.*"
+                        anyOf {
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                        }
                     }
                     stages {
                         stage('Deploy to S3 bucket') {
@@ -203,7 +233,10 @@ pipeline {
                 }
                 stage('Deploy cer-graphql') {
                     when {
-                        changeset "**/cer-graphql/*.*"
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
                     }
                     steps {
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
@@ -222,7 +255,10 @@ pipeline {
                 }
                 stage('Deploy serverless-now') {
                     when {
-                        changeset "**/serverless-now/*.*"
+                        anyOf {
+                            changeset "**/serverless-now/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                        }
                     }
                     steps {
                         echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
@@ -233,16 +269,33 @@ pipeline {
                 }
             }
         }
+
+        stage('BrowserStack e2e Tests') {
+            steps {
+                echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).\n 📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>")
+                dir("research-hub-web") {
+                    script {
+                        try {
+                            sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
+                        } catch(exc) {
+                            echo 'BrowserStack e2e tests failed'
+                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#f2ae3f", message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
+                            exit 1
+                        }
+                    }
+                }
+            }
+        }
     }
     
     post {
         success {
-            echo 'Jenkins job ran successfully. Deployed to ' + BRANCH_NAME
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🚀 Build successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
         }
         failure {
             echo 'Jenkins job failed :('
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#FF9FA1", message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
         }
     }
 }

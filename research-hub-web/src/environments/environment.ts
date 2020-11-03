@@ -4,8 +4,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 export const environment = {
   production: false,
-  researchHubApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/api/',
+  researchHubApiUrl: 'https://research-hub.auckland.ac.nz/api/',
   cerApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/cer-api/',
+  cerGraphQLUrl: 'http://localhost:4000/',
   analyticsCode: 'UA-77710107-3',
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
@@ -18,7 +19,14 @@ export const environment = {
     logout_uri: 'http://localhost:4200'
   },
   privateUrlKeyWords: {
-    whoNeedBearerToken: ['apigw.sandbox.amazon.auckland.ac.nz', 'some-other-api'],
-    whoNeedIdToken: []
-  }
+    get whoNeedBearerToken() {
+      return [
+        { url: 'apigw.sandbox.amazon.auckland.ac.nz', optional: false },
+        { url: environment.cerGraphQLUrl, optional: true }
+      ]
+    },
+    get whoNeedIdToken() {
+      return []
+    },
+  },
 }

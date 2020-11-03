@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {AnalyticsService} from 'app/services/analytics.service';
-import {Location} from '@angular/common';
+import { Component } from '@angular/core';
+import { AnalyticsService } from '../../services/analytics.service';
+import { Location } from '@angular/common';
 
 
 @Component({

@@ -5,13 +5,13 @@ import { CategoryId, OptionsService, OptionType } from './services/options.servi
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, Observable, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, tap, pluck, map } from 'rxjs/operators';
 import { ResearchHubApiService } from './services/research-hub-api.service';
 import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
-import { LoginService } from 'uoa-auth-angular';
+import { LoginService } from '@uoa/auth';
 
 import { HeaderService } from './components/header/header.service';
 import { Location } from '@angular/common';
@@ -25,6 +25,21 @@ import {
   animate,
   transition
 } from '@angular/animations';
+import { BypassErrorService } from '@uoa/error-pages';
+
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+
+import {
+  AllEquipmentGQL,
+  EquipmentCollection,
+  Equipment,
+  ArticleCollection,
+  AllEquipmentQuery,
+  EquipmentUserFacingSupportCollectionArgs
+} from './graphql/schema';
+import { env } from 'process';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -92,17 +107,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private titleService: Title,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
-    public loginService: LoginService) {
+    public loginService: LoginService,
+    public apollo: Apollo,
+    public allEquipmentGQL: AllEquipmentGQL,
+    private _bypass: BypassErrorService) {
+    this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
   }
 
   getSearchQueryParams(item: any) {
-    const type = item['type'];
-
-    if (type === OptionType.Category) {
-      return { categoryId: item.id };
-    } else {
-      return { researchActivityIds: [item.id] };
-    }
+    return item['type'] === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
   }
 
   getRouteName(url: string) {

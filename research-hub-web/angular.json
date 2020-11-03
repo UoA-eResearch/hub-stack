@@ -15,22 +15,20 @@
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.base.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              "src/login.html",
-              "src/assets",
-              "src/favicon.ico",
-              {
-                "glob": "**/*",
-                "input": "node_modules/@angular/material/prebuilt-themes",
-                "output": "/material/prebuilt-themes"
-              }
+              "./src/assets"
             ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "graphql-tag",
+              "crypto-js",
+              "zen-observable"
+            ]
           },
           "configurations": {
             "local": {
@@ -38,40 +36,6 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.local.ts"
-                }
-              ]
-            },
-            "dev": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.dev.ts"
-                }
-              ]
-            },
-            "test": {
-              "budgets": [
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
                 }
               ]
             },
@@ -176,22 +140,31 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
+            "codeCoverage": true,
+            "codeCoverageExclude": [
+              "src/environments/**",
+              "src/**/**.module.ts",
+              "src/test.ts",
+              "src/polyfills.ts",
+              "src/**/search-results/**/*.ts",
+              "src/**/search-bar/**/*.ts",
+              "src/**/shared/confirm-dialog/**/*.ts",
+              "src/**/shared/error-dialog/**/*.ts",
+              "src/**/shared/markdown/**/*.ts",
+              "src/**/services/cer-api.service.ts",
+              "src/**/services/research-hub-api.service.ts",
+              "src/**/directives/search-result-link.directive.ts",
+              "src/**/pipes/list-item-to-router-link.pipe.ts"
+            ],
+            "karmaConfig": "karma.conf.js",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "scripts": [],
             "styles": [
               "src/styles.scss"
             ],
             "assets": [
-              "src/login.html",
-              "src/assets",
-              "src/favicon.ico",
-              {
-                "glob": "**/*",
-                "input": "node_modules/@angular/material/prebuilt-themes",
-                "output": "/material/prebuilt-themes"
-              }
+              "src/assets"
             ]
           }
         },
@@ -199,8 +172,8 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "tsconfig.base.json",
+              "tsconfig.spec.json"
             ],
             "exclude": []
           }
@@ -215,15 +188,29 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
+            "protractorConfig": "protractor.conf.js",
             "devServerTarget": "research-hub-web:serve"
+          },
+          "configurations": {
+            "local": {
+              "devServerTarget": "research-hub-web:serve:local"
+            },
+            "sandbox": {
+              "devServerTarget": "research-hub-web:serve:sandbox"
+            },
+            "nonprod": {
+              "devServerTarget": "research-hub-web:serve:nonprod"
+            },
+            "prod": {
+              "devServerTarget": "research-hub-web:serve:prod"
+            }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "e2e/tsconfig.e2e.json"
+              "tsconfig.e2e.json"
             ],
             "exclude": []
           }
@@ -231,7 +218,6 @@
       }
     }
   },
-  "defaultProject": "research-hub-web",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
@@ -240,5 +226,6 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
-  }
+  },
+  "defaultProject": "research-hub-web"
 }

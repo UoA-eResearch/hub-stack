@@ -2,8 +2,15 @@
 // https://github.com/angular/protractor/blob/master/lib/config.ts
 // Note that this is the config file for e2e tests using BrowserStack's automation API (against local hosts). See protractor.conf.browserstack-remote.js for remote-test settings.
 
-const { SpecReporter } = require('jasmine-spec-reporter');
-var BROWSERSTACK_CREDENTIALS = require('./e2e/browserstack-credentials');
+const {
+  SpecReporter,
+  StacktraceOption
+} = require('jasmine-spec-reporter');
+
+var {
+  BROWSERSTACK_CREDENTIALS_USER,
+  BROWSERSTACK_CREDENTIALS_KEY
+} = require('dotenv').config({ path: '../.env' }).parsed;
 var browserstack = require('browserstack-local');
 
 exports.config = {
@@ -14,9 +21,15 @@ exports.config = {
   },
   onPrepare: function () {
     require('ts-node').register({
-      project: require('path').join(__dirname, './e2e/tsconfig.json')
+      project: require('path').join(__dirname, 'tsconfig.e2e.json')
     });
-    jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+    jasmine.getEnv().addReporter(
+      new SpecReporter({
+        spec: {
+          displayStacktrace: StacktraceOption.PRETTY
+        }
+      })
+    );
     browser.driver.manage().window().maximize();
   },
 
@@ -27,14 +40,14 @@ exports.config = {
   ],
 
   'commonCapabilities': {
-    'browserstack.user': BROWSERSTACK_CREDENTIALS.USER,
-    'browserstack.key': BROWSERSTACK_CREDENTIALS.KEY,
+    'browserstack.user': BROWSERSTACK_CREDENTIALS_USER,
+    'browserstack.key': BROWSERSTACK_CREDENTIALS_KEY,
     'project': 'ResearchHub',
     'build': 'Internal',
-    'browserstack.debug': true,
-    'browserstack.video': true,
-    'browserstack.local': true,
-    'acceptSslCerts': true,
+    'browserstack.debug': 'true',
+    'browserstack.video': 'true',
+    'browserstack.local': 'true',
+    'acceptSslCerts': 'true',
   },
 
   'multiCapabilities': [{

@@ -4,7 +4,8 @@
   "description": "An Apollo GraphQL server used to proxy and authorise requests to external data sources.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "dev": "nodemon ./index.js --config-from-file --watch=./**/*"
   },
   "repository": {
     "type": "git",
@@ -17,13 +18,14 @@
   },
   "homepage": "https://github.com/UoA-eResearch/cer-graphql#readme",
   "dependencies": {
-    "apollo-link-http": "^1.5.16",
-    "apollo-server": "^2.12.0",
+    "apollo-link-http": "^1.5.17",
+    "apollo-server": "^2.17.0",
+    "dotenv": "^8.2.0",
     "jsonwebtoken": "^8.5.1",
-    "jwk-to-pem": "^2.0.3"
+    "jwk-to-pem": "^2.0.4"
   },
   "devDependencies": {
-    "apollo-server-testing": "^2.15.1",
-    "jest": "^26.1.0"
+    "apollo-server-testing": "^2.17.0",
+    "jest": "^26.4.2"
   }
 }
