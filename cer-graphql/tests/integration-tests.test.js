@@ -55,6 +55,7 @@ const getTokens = async () => {
     });
     if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
+        console.log("Couldn't find aws profile matching environment variable awsProfile. Falling back to saml profile for local development.");
         awsCreds = new aws.SharedIniFileCredentials({
             profile: 'saml',
         });
@@ -76,12 +77,8 @@ const getTokens = async () => {
     });
 
     // Making request to 2FAB Lambda using 
-    let url = oauthLambdaUrl = `https://${opts.host}${opts.path}`;
-    console.log(JSON.stringify(awsCreds));
-    console.log(url);
     let res = await fetch(`https://${opts.host}${opts.path}`, opts);
     const resJson = await res.json();
-    console.log(JSON.stringify(resJson));
     try {
         if (!resJson['access_token']) {
             throw 'Fetching response for OAuth2.0 tokens does not contain access token. You may need to renew locally stored AWS credentials.';
