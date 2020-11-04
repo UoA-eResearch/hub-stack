@@ -1,9 +1,8 @@
 // import {Component} from '@angular/core';
 import { AnalyticsService } from '@services/analytics.service';
 import { Location } from '@angular/common';
-
+import { AppComponentService } from '../../app.component.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { LoginService } from '@uoa/auth';
 
@@ -19,9 +18,14 @@ export class FeedbackComponent implements OnInit {
   public helloWorld;
   public loading$ = new Subject<boolean>();
 
-  constructor(public analyticsService: AnalyticsService, public location: Location, private loginService: LoginService) { }
+  constructor(
+    public analyticsService: AnalyticsService, 
+    public location: Location, 
+    private loginService: LoginService,
+    public appCcomponentService: AppComponentService) { }
 
   async ngOnInit() {
+    this.appCcomponentService.setTitle('Feedback');
     this.authenticated = await this.loginService.isAuthenticated();
     console.log('User is authenticated: ' + this.authenticated);
     this.userInfo = await this.loginService.getUserInfo();

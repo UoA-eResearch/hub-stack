@@ -35,18 +35,18 @@ import { Apollo } from 'apollo-angular';
 import { AllEquipmentGQL } from './graphql/schema';
 import { environment } from '@environments/environment';
 
+enum OptionType {
+  ResearchActivity = 1,
+  Category,
+  Menu
+}
+
 enum ResearchActivityId {
   PlanDesign = 1,
   CreateCollectCapture,
   AnalyzeInterpret,
   PublishReport,
   DiscoverReuse
-}
-
-enum OptionType {
-  ResearchActivity = 1,
-  Category,
-  Menu
 }
 
 enum CategoryId {
@@ -229,27 +229,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngOnInit() {  
-    this.titleService.setTitle('ResearchHub | Home');
-    
-    enum CategoryId {
-      All = 1,
-      Support,
-      Equipment,
-      Training,
-      Software,
-      Facilities,
-      Guide,
-      Person,
-      Policies,
-      Articles,
-      SubHubs
-    }
 
+    // Methods dependent on URL
     this.url = this.appComponentService.url.subscribe(url => {
+      if (url == 'home') this.titleService.setTitle('ResearchHub | Home');
       this.searchBarService.setVisibility(url == 'home' || url.substring(0, 6) == 'search' ? true : false);
     });
-
-    this.selectedCategory = CategoryId.All;
 
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;

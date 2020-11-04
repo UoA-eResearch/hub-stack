@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Subscription, Observable, forkJoin } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { Tag } from '../mat-tags/mat-tags.component';
 import { ResearchHubApiService, PeopleParams, Params } from '@services/research-hub-api.service';
 import { SearchResultsComponent } from '../search-results.component';
@@ -68,26 +68,28 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   public personTagSource: Tag[] = [];
   public orgUnitTagSource: Tag[] = [];
 
-  constructor(private apiService: ResearchHubApiService, public analyticsService: AnalyticsService) {
-    this.contentTypeMap = {};
-    this.contentTypeMap[CategoryId.Support] = [ContentTypeId.Support];
-    this.contentTypeMap[CategoryId.Equipment] = [ContentTypeId.Equipment];
-    this.contentTypeMap[CategoryId.Training] = [ContentTypeId.Training];
-    this.contentTypeMap[CategoryId.Software] = [ContentTypeId.Software];
-    this.contentTypeMap[CategoryId.Facilities] = [ContentTypeId.Facilities];
-    this.contentTypeMap[CategoryId.Guide] = [ContentTypeId.Guide, ContentTypeId.KnowledgeArticle];
+  constructor(
+    private apiService: ResearchHubApiService, 
+    public analyticsService: AnalyticsService) {
+      this.contentTypeMap = {};
+      this.contentTypeMap[CategoryId.Support] = [ContentTypeId.Support];
+      this.contentTypeMap[CategoryId.Equipment] = [ContentTypeId.Equipment];
+      this.contentTypeMap[CategoryId.Training] = [ContentTypeId.Training];
+      this.contentTypeMap[CategoryId.Software] = [ContentTypeId.Software];
+      this.contentTypeMap[CategoryId.Facilities] = [ContentTypeId.Facilities];
+      this.contentTypeMap[CategoryId.Guide] = [ContentTypeId.Guide, ContentTypeId.KnowledgeArticle];
 
-    this.categoryOptions = [
-      { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
-      { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
-      { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
-      { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
-      { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
-      { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
-      { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
-      { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
-      { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
-    ];
+      this.categoryOptions = [
+        { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
+        { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
+        { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
+        { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
+        { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
+        { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
+        { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
+        { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
+        { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
+      ];
   }
 
   ngOnInit() {

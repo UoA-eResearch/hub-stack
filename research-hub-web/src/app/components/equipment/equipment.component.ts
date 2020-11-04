@@ -26,10 +26,12 @@ export class EquipmentComponent implements OnInit {
   public allEquipment$: Observable<EquipmentCollection>;
   public equipment$: Observable<Equipment>;
   public slug: string;
+
   // public assets: Array<any>;
   // public inlineEntry: Array<any>;
   // public blockEntry: Array<any>;
   // public hyperlinkEntry: Array<any>;
+
   public parentSubHubs;
 
   constructor(
@@ -46,8 +48,6 @@ export class EquipmentComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-
-    this.appComponentService.setTitle("Equipment");
     this.route.params.subscribe(params => {
       this.slug = params['slug'];
     });
@@ -59,15 +59,19 @@ export class EquipmentComponent implements OnInit {
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
         this.equipment$ = this.getEquipmentByID(data.sys.id);
-        // this.equipment$.subscribe(data => {
-        //   this.assets = data.body.links.assets.block;
-        //   this.inlineEntry = data.body.links.entries.inline;
-        //   this.blockEntry = data.body.links.entries.block;
-        //   this.hyperlinkEntry = data.body.links.entries.hyperlink;
-        // });
+        this.equipment$.subscribe(data => {
+          this.appComponentService.setTitle(data.title);
+
+          // this.assets = data.body.links.assets.block;
+          // this.inlineEntry = data.body.links.entries.inline;
+          // this.blockEntry = data.body.links.entries.block;
+          // this.hyperlinkEntry = data.body.links.entries.hyperlink;
+          
+        });
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
+      this.appComponentService.setTitle('Equipment');
       this.allEquipment$ = this.getAllEquipment();
     }
   }

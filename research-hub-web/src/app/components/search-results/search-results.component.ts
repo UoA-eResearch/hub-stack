@@ -2,21 +2,14 @@
 import { of, combineLatest, Subscription, Observable, Subject, forkJoin } from 'rxjs';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SearchBarService } from '@components/search-bar/search-bar.service';
-import {
-  ResearchHubApiService, OrderBy,
-  SearchResultsParams
-} from '@services/research-hub-api.service';
+import { ResearchHubApiService, OrderBy, SearchResultsParams } from '@services/research-hub-api.service';
 import { Page } from '@model/Page';
 import { AnalyticsService } from '@services/analytics.service';
-
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-
-
-
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Tag } from './mat-tags/mat-tags.component';
 import { ListItem } from '@model/ListItem';
@@ -39,6 +32,12 @@ enum RoleTypeId {
   UserSupport
 }
 
+enum OptionType {
+  ResearchActivity = 1,
+  Category,
+  Menu
+}
+
 enum CategoryId {
   All = 1,
   Support,
@@ -51,12 +50,6 @@ enum CategoryId {
   Policies,
   Articles,
   SubHubs
-}
-
-enum OptionType {
-  ResearchActivity = 1,
-  Category,
-  Menu
 }
 
 enum ContentTypeId {
@@ -194,11 +187,16 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
   constructor(private searchBarService: SearchBarService,
     public apiService: ResearchHubApiService,
-    public analyticsService: AnalyticsService, private route: ActivatedRoute,
-    private location: Location, public dialog: MatDialog, private appComponentService: AppComponentService,
+    public analyticsService: AnalyticsService, 
+    private route: ActivatedRoute,
+    private location: Location, 
+    public dialog: MatDialog, 
+    private appComponentService: AppComponentService,
     private componentService: SearchResultsComponentService,
-    private layoutService: LayoutService, private media: MediaObserver,
+    private layoutService: LayoutService, 
+    private media: MediaObserver,
     public searchFiltersService: SearchFiltersService) {
+      
       this.researchActivityOptions = [
         {
           id: ResearchActivityId.PlanDesign,
@@ -239,6 +237,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         this.contentTypeMap[CategoryId.Software] = [ContentTypeId.Software];
         this.contentTypeMap[CategoryId.Facilities] = [ContentTypeId.Facilities];
         this.contentTypeMap[CategoryId.Guide] = [ContentTypeId.Guide, ContentTypeId.KnowledgeArticle];
+
       this.categoryOptions = [
         { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
         { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
@@ -250,6 +249,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
         { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
       ];
+
     this.filtersForm = searchFiltersService.filtersForm;
   }
 
@@ -315,6 +315,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.appComponentService.setTitle('Search');
     this.initFilter();
     this.initResultSubs();
     // Results cards

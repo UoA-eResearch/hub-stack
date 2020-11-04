@@ -30,14 +30,6 @@
                     {{ article.title }}
             </h1>
 
-            <mat-chip-avatar *ngIf="article.ssoProtected">
-                <mat-icon 
-                    color='accent' 
-                    matTooltip="SSO Login Required">
-                        lock
-                </mat-icon>
-            </mat-chip-avatar>
-
             <h3 
                 class="article-summary" 
                 ngClass.sm="article-summary-sm" 
@@ -247,14 +239,6 @@
                         ngClass.xs="article-title-xs">
                         {{ article.title }}
                     </h1>
-
-                    <mat-chip-avatar *ngIf="article.ssoProtected">
-                        <mat-icon 
-                            color='accent' 
-                            matTooltip="SSO Login Required">
-                            lock
-                        </mat-icon>
-                    </mat-chip-avatar>
 
                     <h3 
                         class="article-summary" 

@@ -8,6 +8,7 @@ import {
   SubHub
 } from "@graphql/schema";
 import { CerGraphqlService } from "@services/cer-graphql.service";
+import { AppComponentService } from '../../app.component.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class SubhubsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public AllSubHubChildPagesGQL: AllSubHubChildPagesGQL,
-    public cerGraphQLService: CerGraphqlService
+    public cerGraphQLService: CerGraphqlService,
+    public appComponentService: AppComponentService
   ) { }
 
   async ngOnInit() {
@@ -36,8 +38,12 @@ export class SubhubsComponent implements OnInit {
 
     if (!!this.slug) {
       this.subhub$ = this.getSubHub(this.slug);
+      this.subhub$.subscribe(data => {
+        this.appComponentService.setTitle(data.items[0].title);
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
+      this.appComponentService.setTitle('SubHubs');
       this.allSubHubs$ = this.getAllSubHubs(this.slug);
     }
   }

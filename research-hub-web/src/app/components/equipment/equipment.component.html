@@ -86,14 +86,6 @@
                         {{ equipment.title }}
                     </h1>
 
-                    <mat-chip-avatar *ngIf="equipment.ssoProtected">
-                        <mat-icon 
-                            color='accent' 
-                            matTooltip="SSO Login Required">
-                            lock
-                        </mat-icon>
-                    </mat-chip-avatar>
-
                     <h3 class="equipment-summary" 
                         ngClass.sm="equipment-summary-sm" 
                         ngClass.xs="equipment-summary-xs">
@@ -123,7 +115,7 @@
                                             </span> 
                                             <br/>
                                             <span class="related-item-summary">
-                                                {{ (owner['jobTitle'].length > 95)? (owner['jobTitle']| slice:0:95) + ' ...' : (owner['jobTitle']) }}
+                                                {{ (owner['jobTitle']) }}
                                             </span>
                                         </mat-card>
                                     </a>
@@ -144,7 +136,7 @@
                                             </span> 
                                             <br/>
                                             <span class="related-item-summary">
-                                                {{ (support['jobTitle'].length > 95)? (support['jobTitle']| slice:0:95) + ' ...' : (support['jobTitle']) }}
+                                                {{ (support['jobTitle']) }}
                                             </span>
                                         </mat-card>
                                     </a>
@@ -333,14 +325,6 @@
                                 {{ equipment.title }}
                             </h1>
 
-                            <mat-chip-avatar *ngIf="equipment.ssoProtected">
-                                <mat-icon 
-                                    color='accent' 
-                                    matTooltip="SSO Login Required">
-                                    lock
-                                </mat-icon>
-                            </mat-chip-avatar>
-
                             <h3 class="equipment-summary" 
                                 ngClass.sm="equipment-summary-sm" 
                                 ngClass.xs="equipment-summary-xs">
@@ -370,7 +354,7 @@
                                                 </span> 
                                                 <br/>
                                                 <span class="related-item-summary">
-                                                    {{ (owner['jobTitle'].length > 95)? (owner['jobTitle']| slice:0:95) + ' ...' : (owner['jobTitle']) }}
+                                                    {{ (owner['jobTitle']) }}
                                                 </span>
                                             </mat-card>
                                         </a>
