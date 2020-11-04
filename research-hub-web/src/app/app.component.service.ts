@@ -4,6 +4,7 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 @Injectable()
 export class AppComponentService {
 
+  public url: Subject<string> = new Subject<string>();
   public titleChange: Subject<string> = new Subject<string>();
   public customCSSClassName: Subject<string> = new Subject<string>();
   public progressBarVisibilityChange: Subject<boolean> = new Subject<boolean>();
@@ -19,6 +20,10 @@ export class AppComponentService {
     this.customCSSClassName = new BehaviorSubject<string>(null);
     this.contentSidenavVisibility$ = this.contentSidenavVisibilityChange.asObservable();
     this.isContentSidenavVisible = false;
+  }
+
+  getRouteSlug(url: string) {
+    this.url.next(url.substring(1));
   }
 
   setTitle(title: string) {

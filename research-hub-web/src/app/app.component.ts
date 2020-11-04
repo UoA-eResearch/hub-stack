@@ -1,6 +1,15 @@
 
 import { filter, distinctUntilChanged } from 'rxjs/operators';
-import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild, AfterViewInit, ElementRef, NgZone } from '@angular/core';
+import { 
+  Component, 
+  OnDestroy, 
+  OnInit, 
+  ViewEncapsulation, 
+  ViewChild, 
+  AfterViewInit, 
+  ElementRef, 
+  NgZone 
+} from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, Observable, fromEvent } from 'rxjs';
@@ -11,30 +20,21 @@ import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
 import { LoginService } from '@uoa/auth';
-
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition
-} from '@angular/animations';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { BypassErrorService } from '@uoa/error-pages';
-
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-
-import {
-  AllEquipmentGQL,
-  EquipmentCollection,
-  Equipment,
-  ArticleCollection,
-  AllEquipmentQuery,
-  EquipmentUserFacingSupportCollectionArgs
+import { 
+  AllEquipmentGQL, 
+  EquipmentCollection, 
+  Equipment, 
+  ArticleCollection, 
+  AllEquipmentQuery, 
+  EquipmentUserFacingSupportCollectionArgs 
 } from './graphql/schema';
 import { env } from 'process';
 import { environment } from '@environments/environment';
@@ -87,6 +87,7 @@ enum CategoryId {
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public researchActivityOptions: any[];
+  public url: Subscription;
 
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
@@ -146,6 +147,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public allEquipmentGQL: AllEquipmentGQL,
     private _bypass: BypassErrorService) 
     {
+
       this.researchActivityOptions = [
         {
           id: ResearchActivityId.PlanDesign,
@@ -226,6 +228,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getRouteName(url: string) {
+    this.appComponentService.getRouteSlug(url);
     const routeName = url.replace('?', '/');
     return routeName.split('/')[1];
   }
@@ -242,14 +245,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.appComponentService.setContentSidenavHasContent(hasContent);
   }
 
-  setTitleSearchBarHeaderCustomCSS(pageInfo: any) {
-    if (pageInfo.title) {
-      this.titleService.setTitle('ResearchHub: ' + this.pageTitle);
-    }
-    this.searchBarService.setVisibility(pageInfo.isSearchBarVisible);
-  }
-
-  async ngOnInit() {
+  async ngOnInit() {    
     enum CategoryId {
       All = 1,
       Support,
@@ -264,6 +260,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       SubHubs
     }
 
+    this.url = this.appComponentService.url.subscribe(url => {
+      this.searchBarService.setVisibility(url == 'home' || url == 'search' ? true : false);
+    });
+
     this.selectedCategory = CategoryId.All;
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
@@ -271,7 +271,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
       this.showProgressBar = isVisible;
-      this.searchBarService.setVisibility(true);
     });
 
     // Navigate to the search page if user starts typing
@@ -416,6 +415,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.contentSidenavVisibilitySub.unsubscribe();
     this.scrollSub.unsubscribe();
     this.winResizeSub.unsubscribe();
+    this.url.unsubscribe();
   }
 
   getYear() {
