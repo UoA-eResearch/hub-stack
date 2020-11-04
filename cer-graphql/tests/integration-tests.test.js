@@ -76,8 +76,12 @@ const getTokens = async () => {
     });
 
     // Making request to 2FAB Lambda using 
+    let url = oauthLambdaUrl = `https://${opts.host}${opts.path}`;
+    console.log(JSON.stringify(awsCreds));
+    console.log(url);
     let res = await fetch(`https://${opts.host}${opts.path}`, opts);
     const resJson = await res.json();
+    console.log(JSON.stringify(resJson));
     try {
         if (!resJson['access_token']) {
             throw 'Fetching response for OAuth2.0 tokens does not contain access token. You may need to renew locally stored AWS credentials.';
