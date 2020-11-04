@@ -1756,6 +1756,24 @@ export type PersonSearchableArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
+
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonSlugArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonSsoProtectedArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonSearchableArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
 export type PersonLinkingCollections = {
   __typename?: 'PersonLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
@@ -2542,6 +2560,47 @@ export type ArticleOfficialDocumentsCollection = {
   items: Array<Maybe<Entry>>;
 };
 
+export type ArticleBody = {
+  __typename?: 'ArticleBody';
+  json: Scalars['JSON'];
+  links: ArticleBodyLinks;
+};
+
+export type ArticleBodyLinks = {
+  __typename?: 'ArticleBodyLinks';
+  entries: ArticleBodyEntries;
+  assets: ArticleBodyAssets;
+};
+
+export type ArticleBodyEntries = {
+  __typename?: 'ArticleBodyEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type ArticleBodyAssets = {
+  __typename?: 'ArticleBodyAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type ArticleRelatedItemsCollection = {
+  __typename?: 'ArticleRelatedItemsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Entry>>;
+};
+
+export type ArticleOfficialDocumentsCollection = {
+  __typename?: 'ArticleOfficialDocumentsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Entry>>;
+};
+
 export type ArticleRelatedContactsCollection = {
   __typename?: 'ArticleRelatedContactsCollection';
   total: Scalars['Int'];
@@ -2994,38 +3053,11 @@ export type TestingCollection = {
 
 export type OfficialDocumentsFilter = {
   sys: Maybe<SysFilter>;
-  title_exists: Maybe<Scalars['Boolean']>;
-  title: Maybe<Scalars['String']>;
-  title_not: Maybe<Scalars['String']>;
-  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains: Maybe<Scalars['String']>;
-  title_not_contains: Maybe<Scalars['String']>;
-  summary_exists: Maybe<Scalars['Boolean']>;
-  summary: Maybe<Scalars['String']>;
-  summary_not: Maybe<Scalars['String']>;
-  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains: Maybe<Scalars['String']>;
-  summary_not_contains: Maybe<Scalars['String']>;
-  url_exists: Maybe<Scalars['Boolean']>;
-  url: Maybe<Scalars['String']>;
-  url_not: Maybe<Scalars['String']>;
-  url_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_contains: Maybe<Scalars['String']>;
-  url_not_contains: Maybe<Scalars['String']>;
-  OR: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
-  AND: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
+  OR: Maybe<Array<Maybe<TestingFilter>>>;
+  AND: Maybe<Array<Maybe<TestingFilter>>>;
 };
 
-export enum OfficialDocumentsOrder {
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-  SummaryAsc = 'summary_ASC',
-  SummaryDesc = 'summary_DESC',
-  UrlAsc = 'url_ASC',
-  UrlDesc = 'url_DESC',
+export enum TestingOrder {
   SysIdAsc = 'sys_id_ASC',
   SysIdDesc = 'sys_id_DESC',
   SysPublishedAtAsc = 'sys_publishedAt_ASC',
