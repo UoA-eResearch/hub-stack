@@ -114,9 +114,8 @@
 
                     <div fxLayout="row" fxLayoutAlign="end">
                       <button mat-raised-button style="color: black; background-color: white;"
-                        href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">
-                          Sign Out
-                      </button>
+                        href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">Sign 
+                        Out</button>
                     </div>
                   </div>
                 </mat-menu>
@@ -138,11 +137,8 @@
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
               <div class="site-padding" #content ngClass.xs="site-padding-xs" ngClass.sm="site-padding-sm"> 
-                <app-search-bar 
-                  [categories]="categoryOptions" 
-                  [category]="selectedCategory"
-                  [searchText]="searchText">
-                </app-search-bar>
+                <app-search-bar [categories]="categoryOptions" [category]="selectedCategory"
+                  [searchText]="searchText"></app-search-bar>
                 <!-- Page content -->
                 <router-outlet></router-outlet>
               </div>

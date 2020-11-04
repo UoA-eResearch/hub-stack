@@ -13,6 +13,7 @@ import {
     Equipment 
 } from '../../graphql/schema';
 import { CerGraphqlService } from '../../services/cer-graphql.service';
+import { AppComponentService } from '../../app.component.service';
 
 
 @Component({
@@ -36,7 +37,8 @@ export class EquipmentComponent implements OnInit {
     public allEquipmentGQL: AllEquipmentGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public getEquipmentByIDGQL: GetEquipmentByIdGQL,
-    public cerGraphQLService: CerGraphqlService
+    public cerGraphQLService: CerGraphqlService,
+    public appComponentService: AppComponentService,
   ) { }
 
   async ngOnInit() {
@@ -44,6 +46,8 @@ export class EquipmentComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
+
+    this.appComponentService.setTitle("Equipment");
     this.route.params.subscribe(params => {
       this.slug = params['slug'];
     });

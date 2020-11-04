@@ -1,4 +1,3 @@
-
 import { filter, distinctUntilChanged } from 'rxjs/operators';
 import { 
   Component, 
@@ -12,8 +11,8 @@ import {
 } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, Observable, fromEvent } from 'rxjs';
-import { debounceTime, tap, pluck, map } from 'rxjs/operators';
+import { Subscription, fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { ResearchHubApiService } from './services/research-hub-api.service';
 import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -24,19 +23,16 @@ import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { 
+  trigger, 
+  state, 
+  style, 
+  animate, 
+  transition 
+} from '@angular/animations';
 import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
-import { 
-  AllEquipmentGQL, 
-  EquipmentCollection, 
-  Equipment, 
-  ArticleCollection, 
-  AllEquipmentQuery, 
-  EquipmentUserFacingSupportCollectionArgs 
-} from './graphql/schema';
-import { env } from 'process';
+import { AllEquipmentGQL } from './graphql/schema';
 import { environment } from '@environments/environment';
 
 enum ResearchActivityId {
@@ -86,13 +82,16 @@ enum CategoryId {
   ]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+  public menuOptions: any[];
+  public categoryOptions: any[];
+  public categoryOptionsGQL: any[];
   public researchActivityOptions: any[];
-  public url: Subscription;
 
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
 
+  public url: Subscription;
   private mediaChangeSub: Subscription;
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
@@ -102,7 +101,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private scrollSub: Subscription;
   private winResizeSub: Subscription;
 
-  public selectedCategory;
+  public selectedCategory = CategoryId.All;
   public searchText = '';
   public showFilterButton = false;
   public showLoginBtn = true;
@@ -127,26 +126,21 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public userInfo;
   public authenticated;
-  public menuOptions: any[];
-  public categoryOptions: any[];
-  public categoryOptionsGQL: any[];
 
   constructor(
     private location: Location, 
     private searchBarService: SearchBarService, 
     private router: Router,
+    private titleService: Title,
     public apiService: ResearchHubApiService, 
     public analyticsService: AnalyticsService,
-    private ref: ChangeDetectorRef, 
     public appComponentService: AppComponentService,
-    private titleService: Title,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
     public loginService: LoginService,
     public apollo: Apollo,
     public allEquipmentGQL: AllEquipmentGQL,
-    private _bypass: BypassErrorService) 
-    {
+    private _bypass: BypassErrorService) {
 
       this.researchActivityOptions = [
         {
@@ -203,13 +197,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.menuOptions = [
         { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
         { name: 'Browse', icon: 'view_list', routerLink: '', sublist: this.categoryOptions, type: OptionType.Menu },
-        {
-          name: 'Research Activities',
-          icon: 'school',
-          routerLink: '',
-          sublist: this.researchActivityOptions,
-          type: OptionType.Menu
-        },
+        { name: 'Research Activities', icon: 'school', routerLink: '', sublist: this.researchActivityOptions, type: OptionType.Menu },
         { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
         { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },
         { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
@@ -219,11 +207,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getSearchQueryParams(item: any) {
-    enum OptionType {
-      ResearchActivity = 1,
-      Category,
-      Menu
-    }
     return item['type'] === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
   }
 
@@ -245,7 +228,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.appComponentService.setContentSidenavHasContent(hasContent);
   }
 
-  async ngOnInit() {    
+  async ngOnInit() {  
+    this.titleService.setTitle('ResearchHub | Home');
+    
     enum CategoryId {
       All = 1,
       Support,
@@ -262,12 +247,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.url = this.appComponentService.url.subscribe(url => {
       this.searchBarService.setVisibility(url == 'home' || url.substring(0, 6) == 'search' ? true : false);
-      console.log(url);
     });
 
     this.selectedCategory = CategoryId.All;
+
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
+      this.titleService.setTitle('ResearchHub | ' + this.pageTitle);
     });
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
