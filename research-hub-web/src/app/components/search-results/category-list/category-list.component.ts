@@ -3,7 +3,27 @@ import { SearchResultsComponentService } from '../search-results-component.servi
 import { Observable } from 'rxjs';
 import { Page } from '@model/Page';
 import { ListItem } from '@model/ListItem';
-import { CategoryId, CategoryDisplayNames } from '@services/options.service';
+
+enum CategoryId {
+  All = 1,
+  Support,
+  Equipment,
+  Training,
+  Software,
+  Facilities,
+  Guide,
+  Person,
+  Policies,
+  Articles,
+  SubHubs
+}
+
+const CategoryDisplayNames = {
+  'Policies': 'Policy',
+  'Support': 'Service',
+  'Facilities': 'Facility',
+  'Person': 'People'
+};
 
 @Component({
   selector: 'category-list',

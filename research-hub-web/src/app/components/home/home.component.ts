@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryId, OptionsService } from '@services/options.service';
 import { SearchBarService } from '../search-bar/search-bar.service';
 import { FeaturedComponent } from './featured/featured.component';
 import { BrowseComponent } from './browse/browse.component';
@@ -12,10 +11,23 @@ import { BrowseComponent } from './browse/browse.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public optionsService: OptionsService, private searchBarService: SearchBarService) {
+  constructor(private searchBarService: SearchBarService) {
   }
 
   ngOnInit() {
+    enum CategoryId {
+      All = 1,
+      Support,
+      Equipment,
+      Training,
+      Software,
+      Facilities,
+      Guide,
+      Person,
+      Policies,
+      Articles,
+      SubHubs
+    }
     this.searchBarService.setSearchText('');
     this.searchBarService.setCategory(CategoryId.All);
   }

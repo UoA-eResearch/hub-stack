@@ -1,8 +1,19 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OptionsService } from '@services/options.service';
 import { AnalyticsService } from '@services/analytics.service';
 
+enum ResearchActivityId {
+  PlanDesign = 1,
+  CreateCollectCapture,
+  AnalyzeInterpret,
+  PublishReport,
+  DiscoverReuse
+}
+enum OptionType {
+  ResearchActivity = 1,
+  Category,
+  Menu
+}
 
 @Component({
   selector: 'app-research-activity-input',
@@ -17,6 +28,40 @@ import { AnalyticsService } from '@services/analytics.service';
   ]
 })
 export class ResearchActivityInputComponent implements OnInit, ControlValueAccessor {
+
+  researchActivityOptions = [
+    {
+      id: ResearchActivityId.PlanDesign,
+      name: 'Plan & Design',
+      className: 'plan',
+      type: OptionType.ResearchActivity
+    },
+    {
+      id: ResearchActivityId.CreateCollectCapture,
+      name: 'Create, Collect & Capture',
+      className: 'create',
+      type: OptionType.ResearchActivity
+    },
+    {
+      id: ResearchActivityId.AnalyzeInterpret,
+      name: 'Analyze & Interpret',
+      className: 'analyze',
+      type: OptionType.ResearchActivity
+    },
+    {
+      id: ResearchActivityId.PublishReport,
+      name: 'Publish & Report',
+      className: 'publish',
+      type: OptionType.ResearchActivity
+    },
+    {
+      id: ResearchActivityId.DiscoverReuse,
+      name: 'Discover & Reuse',
+      className: 'discover',
+      type: OptionType.ResearchActivity
+    }
+  ];
+  
 
   public model = {};
 
@@ -44,14 +89,13 @@ export class ResearchActivityInputComponent implements OnInit, ControlValueAcces
     this.updateState();
   }
 
-  constructor(public optionsService: OptionsService, public analyticsService: AnalyticsService) {
-    for (const activity of optionsService.researchActivityOptions) {
+  constructor(public analyticsService: AnalyticsService) {
+    for (const activity of this.researchActivityOptions) {
       this.model[activity.id] = { selected: false };
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   setDisabledState(isDisabled) {
     this.isDisabled = isDisabled;

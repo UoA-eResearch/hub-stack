@@ -6,7 +6,16 @@ import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
 import { AppComponentService } from '@app/app.component.service';
 import { Content } from '@model/Content';
-import { ContentTypeId } from '@services/options.service';
+
+export enum ContentTypeId {
+  Support = 1,
+  Equipment,
+  Training,
+  Software,
+  Facilities,
+  KnowledgeArticle,
+  Guide
+}
 
 @Component({
   selector: 'app-guide-category',

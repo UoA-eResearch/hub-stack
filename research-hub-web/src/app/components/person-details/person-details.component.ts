@@ -6,8 +6,26 @@ import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
 import { ListItem } from '@model/ListItem';
 import { AppComponentService } from '@app/app.component.service';
-import { CategoryId, RoleTypeId } from '@services/options.service';
 
+enum RoleTypeId {
+  ServiceOwner = 1,
+  CopyOwner,
+  UserSupport
+}
+
+enum CategoryId {
+  All = 1,
+  Support,
+  Equipment,
+  Training,
+  Software,
+  Facilities,
+  Guide,
+  Person,
+  Policies,
+  Articles,
+  SubHubs
+}
 
 @Component({
   selector: 'app-person-details',

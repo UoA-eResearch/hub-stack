@@ -10,7 +10,7 @@
       </div>
 
       <mat-nav-list>
-        <ng-container *ngFor="let menuOption of optionsService.menuOptions;">
+        <ng-container *ngFor="let menuOption of menuOptions;">
           <ng-container *ngIf="menuOption.sublist === undefined">
             <mat-list-item [routerLink]="menuOption.routerLink" (click)="sidenav.close()">
               <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
@@ -66,7 +66,7 @@
                 </button>
 
                 <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
-                  <button mat-menu-item *ngFor="let item of optionsService.categoryOptions" [routerLink]="['/search']"
+                  <button mat-menu-item *ngFor="let item of categoryOptions" [routerLink]="['/search']"
                     [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
                 </mat-menu>
 
@@ -76,7 +76,7 @@
                 </button>
 
                 <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
-                  <button mat-menu-item *ngFor="let item of optionsService.researchActivityOptions"
+                  <button mat-menu-item *ngFor="let item of researchActivityOptions"
                     [routerLink]="['/search']" [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
                 </mat-menu>
 
@@ -138,7 +138,7 @@
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
               <div class="site-padding" #content ngClass.xs="site-padding-xs" ngClass.sm="site-padding-sm"> 
-                <app-search-bar [categories]="optionsService.categoryOptions" [category]="selectedCategory"
+                <app-search-bar [categories]="categoryOptions" [category]="selectedCategory"
                   [searchText]="searchText"></app-search-bar>
                 <!-- Page content -->
                 <router-outlet></router-outlet>

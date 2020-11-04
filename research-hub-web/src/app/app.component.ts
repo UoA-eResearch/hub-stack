@@ -1,7 +1,6 @@
 
 import { filter, distinctUntilChanged } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild, AfterViewInit, ElementRef, NgZone } from '@angular/core';
-import { CategoryId, OptionsService, OptionType } from './services/options.service';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, Observable, fromEvent } from 'rxjs';
@@ -41,6 +40,34 @@ import {
 import { env } from 'process';
 import { environment } from '@environments/environment';
 
+enum ResearchActivityId {
+  PlanDesign = 1,
+  CreateCollectCapture,
+  AnalyzeInterpret,
+  PublishReport,
+  DiscoverReuse
+}
+
+enum OptionType {
+  ResearchActivity = 1,
+  Category,
+  Menu
+}
+
+enum CategoryId {
+  All = 1,
+  Support,
+  Equipment,
+  Training,
+  Software,
+  Facilities,
+  Guide,
+  Person,
+  Policies,
+  Articles,
+  SubHubs
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -60,6 +87,7 @@ import { environment } from '@environments/environment';
   ]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+  public researchActivityOptions: any[];
 
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
@@ -74,7 +102,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private scrollSub: Subscription;
   private winResizeSub: Subscription;
 
-  public selectedCategory = CategoryId.All;
+  public selectedCategory;
   public searchText = '';
   public showFilterButton = false;
   public showLoginBtn = true;
@@ -99,8 +127,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public userInfo;
   public authenticated;
+  public menuOptions: any[];
+  public categoryOptions: any[];
+  public categoryOptionsGQL: any[];
 
-  constructor(private location: Location, public optionsService: OptionsService, private headerService: HeaderService,
+  constructor(private location: Location, private headerService: HeaderService,
     private searchBarService: SearchBarService, private router: Router,
     public apiService: ResearchHubApiService, public analyticsService: AnalyticsService,
     private ref: ChangeDetectorRef, public appComponentService: AppComponentService,
@@ -111,10 +142,70 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public apollo: Apollo,
     public allEquipmentGQL: AllEquipmentGQL,
     private _bypass: BypassErrorService) {
+      this.researchActivityOptions = [
+        {
+          id: ResearchActivityId.PlanDesign,
+          name: 'Plan & Design',
+          className: 'plan',
+          type: OptionType.ResearchActivity
+        },
+        {
+          id: ResearchActivityId.CreateCollectCapture,
+          name: 'Create, Collect & Capture',
+          className: 'create',
+          type: OptionType.ResearchActivity
+        },
+        {
+          id: ResearchActivityId.AnalyzeInterpret,
+          name: 'Analyze & Interpret',
+          className: 'analyze',
+          type: OptionType.ResearchActivity
+        },
+        {
+          id: ResearchActivityId.PublishReport,
+          name: 'Publish & Report',
+          className: 'publish',
+          type: OptionType.ResearchActivity
+        },
+        {
+          id: ResearchActivityId.DiscoverReuse,
+          name: 'Discover & Reuse',
+          className: 'discover',
+          type: OptionType.ResearchActivity
+        }
+      ];
+    
+      this.categoryOptionsGQL = [
+        { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
+        { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
+        { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
+        { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }
+      ];
+  
+      this.menuOptions = [
+        { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
+        { name: 'Browse', icon: 'view_list', routerLink: '', sublist: this.categoryOptions, type: OptionType.Menu },
+        {
+          name: 'Research Activities',
+          icon: 'school',
+          routerLink: '',
+          sublist: this.researchActivityOptions,
+          type: OptionType.Menu
+        },
+        { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
+        { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },
+        { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
+        { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
+      ];
     this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
   }
 
   getSearchQueryParams(item: any) {
+    enum OptionType {
+      ResearchActivity = 1,
+      Category,
+      Menu
+    }
     return item['type'] === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
   }
 
@@ -140,19 +231,32 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
    * Also sets any custom CSS for the page.
    * @param pageInfo currentPage information object.
    */
-  setTitleSearchBarHeaderCustomCSS(pageInfo: any) {
-    if (pageInfo.title) {
-      this.titleService.setTitle('ResearchHub: ' + this.pageTitle);
-    }
-    this.headerService.setBatchParams(pageInfo.title, pageInfo.description, pageInfo.imageUrl, pageInfo.isHeaderVisible);
-    this.searchBarService.setVisibility(pageInfo.isSearchBarVisible);
-    this.appComponentService.setCustomCSSClassName(pageInfo.customCSSClassName);
-  }
+  // setTitleSearchBarHeaderCustomCSS(pageInfo: any) {
+  //   if (pageInfo.title) {
+  //     this.titleService.setTitle('ResearchHub: ' + this.pageTitle);
+  //   }
+  //   this.headerService.setBatchParams(pageInfo.title, pageInfo.description, pageInfo.imageUrl, pageInfo.isHeaderVisible);
+  //   this.searchBarService.setVisibility(pageInfo.isSearchBarVisible);
+  //   this.appComponentService.setCustomCSSClassName(pageInfo.customCSSClassName);
+  // }
 
   async ngOnInit() {
+    enum CategoryId {
+      All = 1,
+      Support,
+      Equipment,
+      Training,
+      Software,
+      Facilities,
+      Guide,
+      Person,
+      Policies,
+      Articles,
+      SubHubs
+    }
+    this.selectedCategory = CategoryId.All;
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
-      this.setTitleSearchBarHeaderCustomCSS(this.optionsService.getPageInfo(this.currentRoute, this.pageTitle));
     });
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
@@ -195,20 +299,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             this.showBackBtn = routeName !== 'home';
 
             this.appComponentService.setProgressBarVisibility(false);
-            const pageInfo = this.optionsService.getPageInfo(routeName);
-
-            if (pageInfo) {
-              this.pageTitle = pageInfo.title;
-
-              // Track page view for pages with pre-defined titles
-              if (pageInfo.title) {
-                this.analyticsService.trackPageView(url, pageInfo.title);
-              }
-
-              this.setTitleSearchBarHeaderCustomCSS(this.optionsService.getPageInfo(this.currentRoute, this.pageTitle));
-            } else {
-              console.log('Error pageInfo not set for route:', routeName);
-            }
 
             this.showFilterButton = routeName === 'search';
             window.scrollTo(0, 0); // TODO: remove or change when this pull request is merged https://github.com/angular/angular/pull/20030
