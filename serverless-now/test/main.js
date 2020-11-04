@@ -23,10 +23,11 @@ let getResBody = async (req) =>
  */
 const getAwsCredentials = () => {
   let credentials = new aws.SharedIniFileCredentials({
-    profile: process.env.AWS_PROFILE,
+    profile: process.env.awsProfile,
   });
   if (credentials.sessionToken === undefined) {
     // falling back to local def profile.
+    console.log("Couldn't find aws profile matching environment variable awsProfile. Falling back to saml profile for local development.");
     credentials = new aws.SharedIniFileCredentials({
       profile: 'saml',
     });
