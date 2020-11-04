@@ -261,7 +261,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.url = this.appComponentService.url.subscribe(url => {
-      this.searchBarService.setVisibility(url == 'home' || url == 'search' ? true : false);
+      this.searchBarService.setVisibility(url == 'home' || url.substring(0, 6) == 'search' ? true : false);
+      console.log(url);
     });
 
     this.selectedCategory = CategoryId.All;
