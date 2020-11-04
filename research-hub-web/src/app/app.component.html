@@ -138,8 +138,11 @@
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
               <div class="site-padding" #content ngClass.xs="site-padding-xs" ngClass.sm="site-padding-sm"> 
-                <app-search-bar [categories]="categoryOptions" [category]="selectedCategory"
-                  [searchText]="searchText"></app-search-bar>
+                <app-search-bar 
+                  [categories]="categoryOptions" 
+                  [category]="selectedCategory"
+                  [searchText]="searchText">
+                </app-search-bar>
                 <!-- Page content -->
                 <router-outlet></router-outlet>
               </div>

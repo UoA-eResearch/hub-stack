@@ -242,6 +242,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.appComponentService.setContentSidenavHasContent(hasContent);
   }
 
+  setTitleSearchBarHeaderCustomCSS(pageInfo: any) {
+    if (pageInfo.title) {
+      this.titleService.setTitle('ResearchHub: ' + this.pageTitle);
+    }
+    this.searchBarService.setVisibility(pageInfo.isSearchBarVisible);
+  }
+
   async ngOnInit() {
     enum CategoryId {
       All = 1,
@@ -264,6 +271,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
       this.showProgressBar = isVisible;
+      this.searchBarService.setVisibility(true);
     });
 
     // Navigate to the search page if user starts typing

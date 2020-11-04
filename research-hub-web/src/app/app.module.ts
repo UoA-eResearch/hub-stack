@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { RoutingModule } from './routing/routing.module';
 import { SharedModule } from './components/shared/app.shared.module';
 import { ServicesModule } from './services/services.module';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { AppComponentService } from './app.component.service';
 import { SearchFiltersService } from './components/search-results/search-filters/search-filters.service';
@@ -49,6 +50,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 @NgModule({
   declarations: [
     AppComponent,
+    SearchBarComponent
   ],
   imports: [
     AuthModule,
