@@ -92,3 +92,4 @@ Serverless-now integration tests require valid `OAuth` 2.0 `access tokens` to wo
 4. Select request token. **(may need to enter in token renewal details in order for this to work).**
 5. If you require credentials to renew the access token enter the following. Replace `sandbox` with the aws account you are using the lambda on.
 5. Hover over the collection and click the arrow to run the collection's tests.
+
