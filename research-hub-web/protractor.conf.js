@@ -6,6 +6,7 @@ const {
   SpecReporter,
   StacktraceOption
 } = require('jasmine-spec-reporter');
+const { browser } = require('protractor');
 
 exports.config = {
   allScriptsTimeout: 150000,

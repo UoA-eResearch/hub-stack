@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   researchHubApiUrl: 'https://research-hub.auckland.ac.nz/api/',
   cerApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/cer-api/',
-  cerGraphQLUrl: 'http://localhost:4000/',
+  // cerGraphQLUrl: 'http://localhost:4000/',
+  cerGraphQLUrl: 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/',
   analyticsCode: 'UA-77710107-3',
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
