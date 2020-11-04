@@ -151,8 +151,8 @@ pipeline {
                             sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh "npx webdriver-manager update --versions.chrome=\$(google-chrome --version | grep -ioE \"[0-9.]{10,20}\")"
-                            sh "npm run e2e-ci -- -c ${BRANCH_NAME}"
+                            // sh "npx webdriver-manager update --versions.chrome=\$(google-chrome --version | grep -ioE \"[0-9.]{10,20}\")"
+                            // sh "npm run e2e-ci -- -c ${BRANCH_NAME}"
                         }
                     }
                 }
@@ -271,6 +271,7 @@ pipeline {
         }
 
         stage('BrowserStack e2e Tests') {
+            when { expression { false } } // TODO: Refactor with Cypress
             steps {
                 echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
                 slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).\n 📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>")
@@ -291,7 +292,7 @@ pipeline {
     
     post {
         success {
-            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
+            // slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
         }
         failure {
             echo 'Jenkins job failed :('
