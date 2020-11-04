@@ -51,7 +51,7 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
  */
 const getTokens = async () => {
     let awsCreds = new aws.SharedIniFileCredentials({
-        profile: process.env.AWS_PROFILE,
+        profile: process.env.awsProfile,
     });
     if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
