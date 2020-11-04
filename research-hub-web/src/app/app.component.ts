@@ -12,7 +12,6 @@ import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
 import { LoginService } from '@uoa/auth';
 
-import { HeaderService } from './components/header/header.service';
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
@@ -131,17 +130,22 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public categoryOptions: any[];
   public categoryOptionsGQL: any[];
 
-  constructor(private location: Location, private headerService: HeaderService,
-    private searchBarService: SearchBarService, private router: Router,
-    public apiService: ResearchHubApiService, public analyticsService: AnalyticsService,
-    private ref: ChangeDetectorRef, public appComponentService: AppComponentService,
+  constructor(
+    private location: Location, 
+    private searchBarService: SearchBarService, 
+    private router: Router,
+    public apiService: ResearchHubApiService, 
+    public analyticsService: AnalyticsService,
+    private ref: ChangeDetectorRef, 
+    public appComponentService: AppComponentService,
     private titleService: Title,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
     public loginService: LoginService,
     public apollo: Apollo,
     public allEquipmentGQL: AllEquipmentGQL,
-    private _bypass: BypassErrorService) {
+    private _bypass: BypassErrorService) 
+    {
       this.researchActivityOptions = [
         {
           id: ResearchActivityId.PlanDesign,
@@ -173,6 +177,18 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           className: 'discover',
           type: OptionType.ResearchActivity
         }
+      ];
+
+      this.categoryOptions = [
+        { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
+        { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
+        { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
+        { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
+        { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
+        { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
+        { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
+        { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
+        { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
       ];
     
       this.categoryOptionsGQL = [
@@ -226,20 +242,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.appComponentService.setContentSidenavHasContent(hasContent);
   }
 
-  /**
-   * Sets the page title, and enables/disables the search bar and header.
-   * Also sets any custom CSS for the page.
-   * @param pageInfo currentPage information object.
-   */
-  // setTitleSearchBarHeaderCustomCSS(pageInfo: any) {
-  //   if (pageInfo.title) {
-  //     this.titleService.setTitle('ResearchHub: ' + this.pageTitle);
-  //   }
-  //   this.headerService.setBatchParams(pageInfo.title, pageInfo.description, pageInfo.imageUrl, pageInfo.isHeaderVisible);
-  //   this.searchBarService.setVisibility(pageInfo.isSearchBarVisible);
-  //   this.appComponentService.setCustomCSSClassName(pageInfo.customCSSClassName);
-  // }
-
   async ngOnInit() {
     enum CategoryId {
       All = 1,
@@ -254,6 +256,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       Articles,
       SubHubs
     }
+
     this.selectedCategory = CategoryId.All;
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
@@ -263,7 +266,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.showProgressBar = isVisible;
     });
 
-    // Navigate to the search page if the user types text in
+    // Navigate to the search page if user starts typing
     this.searchTextChangeSub = this.searchBarService.searchTextChange.pipe(distinctUntilChanged()).subscribe(searchText => {
       const url = this.location.path();
       if (url && !url.startsWith('/search') && searchText != null && searchText !== '') {
