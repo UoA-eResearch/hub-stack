@@ -18,13 +18,19 @@
         "name": "Entry",
         "possibleTypes": [
           {
+            "name": "Article"
+          },
+          {
             "name": "Equipment"
           },
           {
             "name": "SubHub"
           },
           {
-            "name": "Article"
+            "name": "CaseStudy"
+          },
+          {
+            "name": "Equipment"
           },
           {
             "name": "Service"
@@ -34,9 +40,6 @@
           },
           {
             "name": "OfficialDocuments"
-          },
-          {
-            "name": "CaseStudy"
           },
           {
             "name": "Testing"
@@ -87,6 +90,24 @@
       },
       {
         "kind": "UNION",
+        "name": "EquipmentRelatedItemsItem",
+        "possibleTypes": [
+          {
+            "name": "Article"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
+            "name": "Equipment"
+          },
+          {
+            "name": "Service"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
         "name": "SubHubRelatedItemsItem",
         "possibleTypes": [
           {
@@ -106,24 +127,6 @@
           },
           {
             "name": "SubHub"
-          }
-        ]
-      },
-      {
-        "kind": "UNION",
-        "name": "EquipmentRelatedItemsItem",
-        "possibleTypes": [
-          {
-            "name": "Article"
-          },
-          {
-            "name": "CaseStudy"
-          },
-          {
-            "name": "Equipment"
-          },
-          {
-            "name": "Service"
           }
         ]
       }
