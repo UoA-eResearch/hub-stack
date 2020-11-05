@@ -3,6 +3,7 @@ query AllSubHubChildPages ($slug: String) {
     items {
       slug
       title
+      viewType
       summary
       body {
         json
