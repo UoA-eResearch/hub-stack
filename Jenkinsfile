@@ -54,6 +54,7 @@ pipeline {
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
+                        env.awsRole = 'devops'
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
