@@ -222,8 +222,6 @@ async function createServer(config) {
             try {
                 return { user: verifyJwt(req.headers.authorization.substring('Bearer '.length), cognitoPublicKeys) }
             } catch (e) { 
-                // TODO: Need to throw and error or deny requests without headers when running integration tests and in production.
-                // throw new AuthenticationError('The included token for this request is invalid.');
                 return null;
             }
         }, formatResponse: (res, context) => {
