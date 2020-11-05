@@ -33,6 +33,9 @@
             "name": "Equipment"
           },
           {
+            "name": "Equipment"
+          },
+          {
             "name": "Service"
           },
           {
