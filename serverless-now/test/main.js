@@ -1,12 +1,64 @@
 "use strict";
-
 const mochaPlugin = require("serverless-mocha-plugin");
 const expect = mochaPlugin.chai.expect;
 let wrapped = mochaPlugin.getWrapper("main", "/handler.js", "main");
+const fetch = require('node-fetch');
+const aws = require('aws-sdk');
+const aws4 = require('aws4');
+
+const TIMEOUT_PERIOD = 20000;
+
+const configResult = require('dotenv').config({ path: '../.env' });
+if (configResult.error) {
+  throw configResult.error;
+}
 
 // Function to return the JSON parsed response body
 let getResBody = async (req) =>
   await wrapped.run(req).then((res) => JSON.parse(res.body));
+
+/**
+ * Gets the credentials stored locally on file, 
+ * assigns them to aws config and returns the credential object.
+ */
+const getAwsCredentials = () => {
+  let credentials = new aws.SharedIniFileCredentials({
+    profile: process.env.AWS_PROFILE,
+  });
+  if (credentials.sessionToken === undefined) {
+    // falling back to local def profile.
+    credentials = new aws.SharedIniFileCredentials({
+      profile: 'saml',
+    });
+  }
+  return credentials;
+}
+
+/**
+ * Retrieves OAuth2.0 tokens by making a request from the 2FAB lambda function.
+ */
+const getTokens = async () => {
+  // Generating AWS4 Signature from locally stored aws tokens.
+  let awsCreds = getAwsCredentials();
+  let opts = {
+    host: process.env.OAUTH_LAMBDA_HOST,
+    path: process.env.OAUTH_LAMBDA_PATH,
+    region: process.env.OAUTH_LAMBDA_REGION,
+    service: process.env.OAUTH_LAMBDA_SERVICE,
+    'Accept': '*/*',
+    'Accept-Encoding': 'gzip, deflate, br'
+  };
+  aws4.sign(opts, {
+    accessKeyId: awsCreds.accessKeyId,
+    secretAccessKey: awsCreds.secretAccessKey,
+    sessionToken: awsCreds.sessionToken
+  });
+
+  // making request to 2FAB with AWS4 Signature included.
+  let res = await fetch(`https://${opts.host}${opts.path}`, opts);
+  const resJson = await res.json();
+  return resJson;
+}
 
 describe("serverless-now", () => {
   // Example values used for ServiceNow testing
@@ -32,17 +84,22 @@ describe("serverless-now", () => {
     expect(resBody.number.value).to.equal(EXAMPLE_TICKET_ID);
   });
 
-  // TODO: commenting out until POST requests are working.
-  // it("responds to POST requests with a valid body", async () => {
-  //   const resBody = await getResBody({
-  //     httpMethod: "POST",
-  //     body: {
-  //       upi: EXAMPLE_UPI,
-  //       comment: "Example ticket comment.",
-  //     },
-  //   });
-  //   expect(resBody.object).deep.to.contain({ upi: EXAMPLE_UPI });
-  // });
+  it("POST request returns a response from service now.", async function () {
+    this.timeout(TIMEOUT_PERIOD);
+    let authTokens = await getTokens();
+    const resBody = await getResBody({
+      httpMethod: "POST",
+      headers: {
+        'Authorization': `Bearer ${authTokens['access_token']}`,
+        'Content-Type': 'application/json'
+      },
+      body: {
+        upi: EXAMPLE_UPI,
+        comment: "Example ticket comment.",
+      },
+    });
+    expect(resBody.status).to.equal('error');
+  });
 
   it("returns a decrypted example secret from AWS parameter store", async () => {
     const resBody = await getResBody({});

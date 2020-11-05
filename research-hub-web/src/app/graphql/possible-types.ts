@@ -18,13 +18,16 @@
         "name": "Entry",
         "possibleTypes": [
           {
+            "name": "Article"
+          },
+          {
             "name": "Equipment"
           },
           {
             "name": "SubHub"
           },
           {
-            "name": "Article"
+            "name": "CaseStudy"
           },
           {
             "name": "Service"
@@ -34,9 +37,6 @@
           },
           {
             "name": "OfficialDocuments"
-          },
-          {
-            "name": "CaseStudy"
           },
           {
             "name": "Testing"
