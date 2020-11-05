@@ -55,10 +55,9 @@ const getTokens = async () => {
     sessionToken: awsCreds.sessionToken
   });
 
-  // making request to 2FAB with AWS4 Signature included.
-  let res = await fetch(`https://${opts.host}${opts.path}`, opts);
-  const resJson = await res.json();
-  return resJson;
+  // making request to 2FAB with AWS4 Signature. Returning response which should contain OAuth tokens.
+  return await fetch(`https://${opts.host}${opts.path}`, opts)
+    .then(res => res.json());
 }
 
 describe("serverless-now", () => {
