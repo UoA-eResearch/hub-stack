@@ -32,7 +32,7 @@ import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemo
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 
-import { environment } from '../environments/environment';
+import { environment } from '@environments/environment';
 import { AppStorageService } from './services/app-storage.service';
 
 
