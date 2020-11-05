@@ -2,12 +2,12 @@ import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular
 import { FormGroup } from '@angular/forms';
 import { Subscription, Observable, forkJoin } from 'rxjs';
 import { Tag } from '../mat-tags/mat-tags.component';
-import { OptionsService, RoleTypeId } from '../../../services/options.service';
-import { ResearchHubApiService, PeopleParams, Params } from '../../../services/research-hub-api.service';
+import { OptionsService, RoleTypeId } from '@services/options.service';
+import { ResearchHubApiService, PeopleParams, Params } from '@services/research-hub-api.service';
 import { SearchResultsComponent } from '../search-results.component';
-import { ListItem } from '../../../model/ListItem';
-import { OrgUnit } from '../../../model/OrgUnit';
-import { AnalyticsService } from '../../../services/analytics.service';
+import { ListItem } from '@model/ListItem';
+import { OrgUnit } from '@model/OrgUnit';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-search-filters',

@@ -103,20 +103,20 @@ export type QueryEquipmentCollectionArgs = {
 };
 
 
-export type QuerySubHubArgs = {
+export type QueryTestingArgs = {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
 
-export type QuerySubHubCollectionArgs = {
+export type QueryTestingCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
-  where: Maybe<SubHubFilter>;
-  order: Maybe<Array<Maybe<SubHubOrder>>>;
+  where: Maybe<TestingFilter>;
+  order: Maybe<Array<Maybe<TestingOrder>>>;
 };
 
 
@@ -345,6 +345,7 @@ export type AssetLinkingCollections = {
   articleCollection: Maybe<ArticleCollection>;
   equipmentCollection: Maybe<EquipmentCollection>;
   subHubCollection: Maybe<SubHubCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
   officialDocumentsCollection: Maybe<OfficialDocumentsCollection>;
   serviceCollection: Maybe<ServiceCollection>;
   caseStudyCollection: Maybe<CaseStudyCollection>;
@@ -1410,8 +1411,8 @@ export type CaseStudyRelatedItemsCollectionArgs = {
 export type CaseStudyLinkingCollections = {
   __typename?: 'CaseStudyLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
-  equipmentCollection: Maybe<EquipmentCollection>;
   subHubCollection: Maybe<SubHubCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
   serviceCollection: Maybe<ServiceCollection>;
 };
 
@@ -1441,6 +1442,161 @@ export type CaseStudyLinkingCollectionsSubHubCollectionArgs = {
 
 
 export type CaseStudyLinkingCollectionsServiceCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+export type EquipmentCollection = {
+  __typename?: 'EquipmentCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Equipment>>;
+};
+
+/**
+ * Hardware, research instruments, or physical equipment used to conduct or support
+ * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
+ */
+export type Equipment = Entry & {
+  __typename?: 'Equipment';
+  sys: Sys;
+  linkedFrom: Maybe<EquipmentLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  summary: Maybe<Scalars['String']>;
+  slug: Maybe<Scalars['String']>;
+  mainImage: Maybe<Asset>;
+  overview: Maybe<EquipmentOverview>;
+  body: Maybe<EquipmentBody>;
+  callToAction: Maybe<Scalars['String']>;
+  userFacingSupportCollection: Maybe<EquipmentUserFacingSupportCollection>;
+  equipmentOwnerCollection: Maybe<EquipmentEquipmentOwnerCollection>;
+  type: Maybe<Array<Maybe<Scalars['String']>>>;
+  manufacturer: Maybe<Scalars['String']>;
+  model: Maybe<Scalars['String']>;
+  eligibility: Maybe<EquipmentEligibility>;
+  costToUse: Maybe<EquipmentCostToUse>;
+  location: Maybe<Scalars['String']>;
+  trainingRequired: Maybe<EquipmentTrainingRequired>;
+  trainingProvided: Maybe<EquipmentTrainingProvided>;
+  yearOfManufacture: Maybe<Scalars['Int']>;
+  access: Maybe<EquipmentAccess>;
+  helpAndSupport: Maybe<EquipmentHelpAndSupport>;
+  features: Maybe<EquipmentFeatures>;
+  limitations: Maybe<EquipmentLimitations>;
+  considerations: Maybe<EquipmentConsiderations>;
+  relatedItemsCollection: Maybe<EquipmentRelatedItemsCollection>;
+  keywords: Maybe<Array<Maybe<Scalars['String']>>>;
+  mediaCollection: Maybe<AssetCollection>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  icon: Maybe<Asset>;
+};
+
+
+/**
+ * Hardware, research instruments, or physical equipment used to conduct or support
+ * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
+ */
+export type EquipmentMainImageArgs = {
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * Hardware, research instruments, or physical equipment used to conduct or support
+ * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
+ */
+export type EquipmentUserFacingSupportCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * Hardware, research instruments, or physical equipment used to conduct or support
+ * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
+ */
+export type EquipmentEquipmentOwnerCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * Hardware, research instruments, or physical equipment used to conduct or support
+ * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
+ */
+export type EquipmentRelatedItemsCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * Hardware, research instruments, or physical equipment used to conduct or support
+ * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
+ */
+export type EquipmentMediaCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * Hardware, research instruments, or physical equipment used to conduct or support
+ * research. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/equipment)
+ */
+export type EquipmentIconArgs = {
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+export type EquipmentLinkingCollections = {
+  __typename?: 'EquipmentLinkingCollections';
+  entryCollection: Maybe<EntryCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
+};
+
+
+export type EquipmentLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type EquipmentLinkingCollectionsSubHubCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type EquipmentLinkingCollectionsEquipmentCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type EquipmentLinkingCollectionsServiceCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1641,8 +1797,8 @@ export type ServiceMediaCollectionArgs = {
 export type ServiceLinkingCollections = {
   __typename?: 'ServiceLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
-  equipmentCollection: Maybe<EquipmentCollection>;
   subHubCollection: Maybe<SubHubCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
   serviceCollection: Maybe<ServiceCollection>;
 };
 
@@ -1655,7 +1811,7 @@ export type ServiceLinkingCollectionsEntryCollectionArgs = {
 };
 
 
-export type ServiceLinkingCollectionsEquipmentCollectionArgs = {
+export type ServiceLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1663,7 +1819,7 @@ export type ServiceLinkingCollectionsEquipmentCollectionArgs = {
 };
 
 
-export type ServiceLinkingCollectionsSubHubCollectionArgs = {
+export type ServiceLinkingCollectionsEquipmentCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1897,6 +2053,7 @@ export type OfficialDocumentsLinkingCollections = {
   __typename?: 'OfficialDocumentsLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   subHubCollection: Maybe<SubHubCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
   serviceCollection: Maybe<ServiceCollection>;
 };
 
@@ -3282,6 +3439,8 @@ type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<st
 type PublicFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
 type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+
+type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
 type PublicFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 

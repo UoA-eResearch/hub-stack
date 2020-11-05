@@ -6,7 +6,33 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "paths": {
+      "@services/*": [
+        "src/app/services/*"
+      ],
+      "@pipes/*": [
+        "src/app/pipes/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@model/*": [
+        "src/app/model/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
+      "@graphql/*": [
+        "src/app/graphql/*"
+      ],
+      "@components/*": [
+        "src/app/components/*"
+      ],
+      "@directives/*": [
+        "src/app/directives/*"
+      ],
+    },
   },
   "files": [
     "src/test.ts",

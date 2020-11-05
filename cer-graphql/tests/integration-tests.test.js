@@ -89,7 +89,6 @@ const getTokens = async () => {
     return resJson;
 }
 
-
 /**
  * Before any of the tests run create the query function and make
  * it available within all tests.
