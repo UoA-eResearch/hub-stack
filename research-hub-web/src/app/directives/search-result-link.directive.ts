@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, AfterViewInit, HostListener, SimpleChanges, OnChanges } from '@angular/core';
-import { ListItem } from '../model/ListItem';
-import { AnalyticsService } from '../services/analytics.service';
+import { ListItem } from '@model/ListItem';
+import { AnalyticsService } from '@services/analytics.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Directive({

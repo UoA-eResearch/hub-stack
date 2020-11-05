@@ -12,7 +12,7 @@ import {
   NG_VALUE_ACCESSOR,
   NG_VALIDATORS
 } from '@angular/forms';
-import { AnalyticsService } from '../../../services/analytics.service';
+import { AnalyticsService } from '@services/analytics.service';
 
 export interface Tag {
   id: number;

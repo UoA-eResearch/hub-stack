@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewSwitcherComponent } from './view-switcher.component';
-import { AnalyticsService } from '../../../services/analytics.service';
+import { AnalyticsService } from '@services/analytics.service';
 
 describe('ViewSwitcherComponent', () => {
   let component: ViewSwitcherComponent;
