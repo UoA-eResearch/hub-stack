@@ -18,6 +18,7 @@ import {
   AllContentItemParentSubHubsGQL,
   SubHubOrder,
 } from "@graphql/schema";
+import { AppComponentService } from '@app/app.component.service';
 
 
 describe('SubhubsComponent', () => {
@@ -394,6 +395,7 @@ describe('SubhubsComponent', () => {
         BrowserAnimationsModule,
         RouterModule.forRoot([])
       ], providers: [
+        AppComponentService,
         AllSubHubChildPagesGQL,
         AllContentItemParentSubHubsGQL
       ]

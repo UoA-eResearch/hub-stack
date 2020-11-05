@@ -104,7 +104,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public selectedCategory = CategoryId.All;
   public searchText = '';
   public showFilterButton = false;
-  public showLoginBtn = true;
   public showProgressBar = false;
   public showBackBtn = false;
   public pageTitle = '';

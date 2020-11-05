@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AppComponentService } from '../../app.component.service';
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute } from '@angular/router';
@@ -14,6 +14,7 @@ import { MatExpansionPanelContent } from '@angular/material/expansion';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
+  let appComponentService: AppComponentService;
   let fixture: ComponentFixture<ArticlesComponent>;
   let controller: ApolloTestingController;
   const mockAllArticles$: Observable<ArticleCollection> = of({
@@ -279,6 +280,7 @@ describe('ArticlesComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
+        AppComponentService,
         AllArticlesGQL,
         {
           provide: ActivatedRoute,
@@ -320,6 +322,7 @@ describe('ArticlesComponent', () => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(ArticlesComponent);
       component = fixture.componentInstance;
+      appComponentService = new AppComponentService;
       TestBed.inject(ActivatedRoute).params = of({
         slug: 'first-article'
       });
@@ -332,7 +335,7 @@ describe('ArticlesComponent', () => {
 
     it('Should get a single article data by Slug', async () => {
       spyOn(component, 'getArticleBySlug').and.returnValue(mockArticle$);
-      component.getArticleBySlug(component.slug).subscribe(res => {
+      component.getArticleBySlug('').subscribe(res => {
         expect(res.slug).toEqual('first-article');
       });
     })
@@ -343,5 +346,11 @@ describe('ArticlesComponent', () => {
         expect(res.sys.id).toEqual('111');
       });
     })
+
+    it('Should set title', async () => {
+      let spy = spyOn(appComponentService, 'setTitle');
+      appComponentService.setTitle('Title');
+      expect(spy).toHaveBeenCalled();
+    });
   });
 });

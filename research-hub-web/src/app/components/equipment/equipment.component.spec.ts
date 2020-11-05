@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AppComponentService } from '../../app.component.service';
 import { EquipmentComponent } from './equipment.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute } from '@angular/router';
@@ -55,6 +55,7 @@ describe('EquipmentComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
+        AppComponentService,
         AllEquipmentGQL
       ]
     })
