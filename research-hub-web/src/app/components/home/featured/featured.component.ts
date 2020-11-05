@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ResearchHubApiService, ContentItemsParams } from '../../../services/research-hub-api.service';
-import { Content } from '../../../model/Content';
-import { AnalyticsService } from '../../../services/analytics.service';
+import { ResearchHubApiService, ContentItemsParams } from '@services/research-hub-api.service';
+import { Content } from '@model/Content';
+import { AnalyticsService } from '@services/analytics.service';
 
 @Component({
   selector: 'app-featured',
