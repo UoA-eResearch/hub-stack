@@ -18,19 +18,10 @@
         "name": "Entry",
         "possibleTypes": [
           {
-            "name": "Article"
-          },
-          {
-            "name": "Equipment"
-          },
-          {
             "name": "SubHub"
           },
           {
-            "name": "CaseStudy"
-          },
-          {
-            "name": "Equipment"
+            "name": "Article"
           },
           {
             "name": "Equipment"
@@ -43,6 +34,9 @@
           },
           {
             "name": "OfficialDocuments"
+          },
+          {
+            "name": "CaseStudy"
           },
           {
             "name": "Testing"
@@ -106,6 +100,27 @@
           },
           {
             "name": "Service"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "SubHubExternalSubHubPage",
+        "possibleTypes": [
+          {
+            "name": "Article"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
+            "name": "Equipment"
+          },
+          {
+            "name": "Service"
+          },
+          {
+            "name": "SubHub"
           }
         ]
       },
