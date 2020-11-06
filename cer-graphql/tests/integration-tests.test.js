@@ -51,10 +51,11 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
  */
 const getTokens = async () => {
     let awsCreds = new aws.SharedIniFileCredentials({
-        profile: process.env.AWS_PROFILE,
+        profile: process.env.awsProfile,
     });
     if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
+        console.log("Couldn't find aws profile matching environment variable awsProfile. Falling back to saml profile for local development.");
         awsCreds = new aws.SharedIniFileCredentials({
             profile: 'saml',
         });
