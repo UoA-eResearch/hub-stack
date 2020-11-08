@@ -54,6 +54,7 @@ pipeline {
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
+                        env.awsRole = 'devops'
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
@@ -91,14 +92,50 @@ pipeline {
                             equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                         }
                     }
-                    steps {
-                        echo 'Building research-hub-web project'
-                        dir("research-hub-web") {
-                            echo 'Installing research-hub-web dependencies'
-                            sh "npm install"
-
-                            echo 'Building for production'
-                            sh "npm run build -- -c ${BRANCH_NAME}"
+                    stages {
+                        stage ('Building and caching new node_modules') {
+                            when {
+                                anyOf {
+                                    changeset "**/research-hub-web/package.json"
+                                    equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                                }
+                            }
+                            steps {
+                                echo 'Installing research-hub-web dependencies.'
+                                dir("research-hub-web") {
+                                    sh "npm install"
+                                    sh "mkdir -p ${HOME}/research-hub-web/"
+                                    sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                    script {
+                                        archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
+                                    }
+                                }
+                            }
+                        }
+                        stage ('Using cached node_modules from archive') {
+                            when {
+                                not {
+                                    anyOf {
+                                        changeset "**/research-hub-web/package.json"
+                                    }
+                                }
+                            }
+                            steps {
+                                echo 'Building research-hub-web project from stored dependencies.'
+                                dir("research-hub-web") {
+                                    copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox' , selector: lastWithArtifacts()
+                                    sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
+                                    sh "npm install"
+                                }
+                            }
+                        }
+                        stage ('Building for production') {
+                            steps {
+                                dir("research-hub-web") {
+                                    echo 'Building for production'
+                                    sh "npm run build -- -c ${BRANCH_NAME}"
+                                }
+                            }
                         }
                     }
                 }
@@ -270,25 +307,6 @@ pipeline {
             }
         }
 
-        stage('BrowserStack e2e Tests') {
-            when { expression { false } } // TODO: Refactor with Cypress
-            steps {
-                echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).\n 📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>")
-                dir("research-hub-web") {
-                    script {
-                        try {
-                            sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
-                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
-                        } catch (e) {
-                            echo 'BrowserStack e2e tests failed'
-                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#f2ae3f", message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
-                            sh "exit 1"
-                        }
-                    }
-                }
-            }
-        }
     }
     
     post {
