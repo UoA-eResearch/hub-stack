@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { GetAllSubHubChildPagesSlugsGQL, GetAllSubHubChildPagesSlugsQuery, GetArticleBySlugQuery, SubHub, SubHubCollection } from '../graphql/schema';
-import { map, pluck } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { Router, Routes } from '@angular/router';
+import { GetAllSubHubChildPagesSlugsGQL } from '@graphql/schema';
+import { map } from 'rxjs/operators';
 
 /**
  * The interface of the breadcrumbsArray object returned by this service's getParentSubHubs()

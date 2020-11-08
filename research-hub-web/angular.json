@@ -227,5 +227,8 @@
       "prefix": "app"
     }
   },
-  "defaultProject": "research-hub-web"
+  "defaultProject": "research-hub-web",
+  "cli": {
+    "analytics": false
+  }
 }
