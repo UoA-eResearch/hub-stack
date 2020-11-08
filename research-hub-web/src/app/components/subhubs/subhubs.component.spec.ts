@@ -4,7 +4,7 @@ import { SubhubsComponent } from './subhubs.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { SubhubsRoutingModule } from './subhubs-routing.module';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -405,10 +405,6 @@ describe('SubhubsComponent', () => {
 
   beforeEach(() => {
     controller = TestBed.inject(ApolloTestingController);
-    subHubSpy = spyOn(SubhubsComponent.prototype, 'getSubHub').and.returnValue(currentSubHubData$);
-    allSubHubsSpy = spyOn(SubhubsComponent.prototype, 'getAllSubHubs').and.returnValue(currentSubHubData$);
-
-    backend = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(SubhubsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -428,4 +424,33 @@ describe('SubhubsComponent', () => {
     expect(de.nativeElement.innerHTML).toBeTruthy();
   });
 
+  describe('When a url slug is present', async () => {
+    beforeEach(() => {
+      controller = TestBed.inject(ApolloTestingController);
+      fixture = TestBed.createComponent(SubhubsComponent);
+      component = fixture.componentInstance;
+      TestBed.inject(ActivatedRoute).params = of({
+        slug: 'first-subhub'
+      });
+      fixture.detectChanges();
+    })
+
+    it('Should evaluate components slug property to be truthy', () => {
+      expect(component.slug).toBeTruthy();
+    });
+
+    it('Should get all SubHubs', async () => {
+      spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);
+      component.getAllSubHubs('').subscribe(res => {
+        expect(res).toBeTruthy();
+      });
+    })
+
+    it('Should get all SubHubs', async () => {
+      spyOn(component, 'getSubHub').and.returnValue(currentSubHubData$);
+      component.getSubHub('').subscribe(res => {
+        expect(res).toBeTruthy();
+      });
+    })
+  });
 });

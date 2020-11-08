@@ -6,7 +6,6 @@ export class AppComponentService {
 
   public url: Subject<string> = new Subject<string>();
   public titleChange: Subject<string> = new Subject<string>();
-  public customCSSClassName: Subject<string> = new Subject<string>();
   public progressBarVisibilityChange: Subject<boolean> = new Subject<boolean>();
 
   private contentSidenavVisibilityChange: Subject<boolean>;
@@ -17,7 +16,6 @@ export class AppComponentService {
 
   constructor() {
     this.contentSidenavVisibilityChange = new Subject<boolean>();
-    this.customCSSClassName = new BehaviorSubject<string>(null);
     this.contentSidenavVisibility$ = this.contentSidenavVisibilityChange.asObservable();
     this.isContentSidenavVisible = false;
   }
@@ -28,14 +26,6 @@ export class AppComponentService {
 
   setTitle(title: string) {
     this.titleChange.next(title);
-  }
-
-  setCustomCSSClassName(customCSSClassName: string) {
-    this.customCSSClassName.next(customCSSClassName);
-  }
-
-  getCustomCSSClassName() {
-    return this.customCSSClassName;
   }
 
   setProgressBarVisibility(isVisible: boolean) {

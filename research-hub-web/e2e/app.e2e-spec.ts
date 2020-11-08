@@ -40,9 +40,9 @@ describe('ResearchHub\'s Basic Functionality', () => {
   /**
    * Visits the home page and checks it contains the heading 'Welcome to the ResearchHub'.
    */
-  it('can display welcome message', async () => {
-    expect(await _$('app-root h1').getText()).toEqual('Welcome to the ResearchHub');
-  });
+  // it('can display welcome message', async () => {
+  //   expect(await _$('app-root h1').getText()).toEqual('Welcome to the ResearchHub');
+  // });
 
   /**
    * Visits the home page -> Clicks one of the 'Category' tiles -> Checks that the search results page has

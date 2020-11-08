@@ -97,7 +97,7 @@
 
 <!-- Multi-page guides, not to be confused with knowledge articles -->
 <ng-container *ngIf="content && isGuide()">
-  <div fxLayout="column" fxLayoutGap="1em" [ngClass]="appComponentService.getCustomCSSClassName() | async">
+  <div fxLayout="column" fxLayoutGap="1em">
     <mat-card class="description">
       <h2>{{content.name}}</h2>
       <div style="display: block;margin-bottom: 1em;">

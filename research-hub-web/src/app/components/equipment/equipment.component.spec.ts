@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
+  let appComponentService: AppComponentService;
   let fixture: ComponentFixture<EquipmentComponent>;
   let controller: ApolloTestingController;
 
@@ -90,11 +91,18 @@ describe('EquipmentComponent', () => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(EquipmentComponent);
       component = fixture.componentInstance;
+      appComponentService = new AppComponentService;
       TestBed.inject(ActivatedRoute).params = of({
         slug: 'death-star'
       });
       fixture.detectChanges();
     })
+
+    it('Should set title', async () => {
+      let spy = spyOn(appComponentService, 'setTitle');
+      appComponentService.setTitle('Title');
+      expect(spy).toHaveBeenCalled();
+    });
 
     it('Should evaluate components slug property to be truthy', () => {
       expect(component.slug).toBeTruthy();

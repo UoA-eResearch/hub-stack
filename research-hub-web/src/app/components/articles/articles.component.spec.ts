@@ -345,12 +345,6 @@ describe('ArticlesComponent', () => {
       component.getArticleByID('').subscribe(res => {
         expect(res.sys.id).toEqual('111');
       });
-    })
-
-    it('Should set title', async () => {
-      let spy = spyOn(appComponentService, 'setTitle');
-      appComponentService.setTitle('Title');
-      expect(spy).toHaveBeenCalled();
-    });
+    }) 
   });
 });
