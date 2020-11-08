@@ -35,7 +35,6 @@ export class CerGraphqlService {
     await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
     this._subHubMap.routes.forEach(route => { routes.push(route); }); // Push the new routes to the application's routes.
     this.router.resetConfig(routes);
-    console.log('Generated these dynamic routes routes: ', routes);
   }
 
   /**

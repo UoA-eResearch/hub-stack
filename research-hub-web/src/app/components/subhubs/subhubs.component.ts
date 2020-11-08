@@ -29,11 +29,11 @@ export class SubhubsComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    /**
+     * Check if there is a slug URL parameter present. If so, this is
+     * passed to the getArticleBySlug() method.
+     */
     this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
-
-    // this.route.params.subscribe((params) => {
-    //   this.slug = params['slug'];
-    // });
 
     if (!!this.slug) {
       this.subhub$ = this.getSubHub(this.slug);
