@@ -107,7 +107,15 @@ div.mat-card-avatar mat-icon {
     font-size: 12px;
 }
 
-// HR
+// Keyword
+.keyword-card {
+    background-color: $color-background;
+    margin: 5px; 
+    padding: 10px; 
+    font-size: 12px;
+}
+
+// <hr> Tag
 hr {
     background-color: #dbdbdb;
     border: none;

@@ -70,10 +70,9 @@
                         
                         <!-- Main Body -->
                         <div #subhubContent fxFlex="65%">
-                            <div *ngFor="let contentItem of subhub.body.json.content as c">
-                                <div *ngIf="contentItem.content[0]">
-                                    {{ contentItem.content[0].value }}
-                                </div>
+                            <div #subhubContent
+                                style="margin-bottom: 200px;" 
+                                [innerHTML]="subhub.body.json | richTextToHTML">
                             </div>
                         </div>
 
@@ -100,9 +99,7 @@
 
                             <!-- Keywords -->
                             <h4>Keywords</h4>
-
-                            <mat-card-subtitle 
-                                fxLayout="row wrap"> 
+                            <mat-card-subtitle fxLayout="row wrap">
                                 <span *ngFor="let keyword of subhub.keywords">
                                     <mat-card 
                                         fxLayout="row" 
@@ -141,12 +138,9 @@
                     <!-- Body Content -->
 
                     <!-- Main Body -->
-                    <div #subhubContent>
-                        <div *ngFor="let contentItem of subhub.body.json.content as c">
-                            <div *ngIf="contentItem.content[0]">
-                                {{ contentItem.content[0].value }}
-                            </div>
-                        </div>
+                    <div #subhubContent
+                        style="margin-bottom: 200px;" 
+                        [innerHTML]="subhub.body.json | richTextToHTML">
                     </div>
             
                     <!-- SubHub Children -->
