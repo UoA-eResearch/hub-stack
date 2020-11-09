@@ -57,8 +57,7 @@ div.mat-card-avatar mat-icon {
 
 // SubHub Summary
 .subhub-summary {
-    color: $color-icon; 
-    font-size: 25px; 
+    font-size: 20px; 
     line-height: 110%;
 }
 
@@ -68,6 +67,11 @@ div.mat-card-avatar mat-icon {
 
 .subhub-summary-xs {
     font-size: 15px; 
+}
+
+// SubHub Children
+.subhub-children {
+    margin-bottom: 20px;
 }
 
 // Banner Styling

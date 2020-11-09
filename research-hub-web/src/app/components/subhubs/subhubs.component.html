@@ -1,63 +1,65 @@
-<!-- Displaying all subhubs -->
+<!-- Displaying all SubHubs -->
 <app-collection-list *ngIf="allSubHubs$ | async as allSubHubs" [collection]="allSubHubs"></app-collection-list>
 
-<!-- Displaying a singular subhub -->
-<div class="results" *ngIf="subhub$ | async as subHubData">
+<!-- Displaying an individual SubHub -->
+<div 
+    class="results" 
+    *ngIf="subhub$ | async as subHubData">
     <div *ngFor="let subhub of subHubData.items; let i = index">
 
         <!-- Dynamic Banner -->
         <div 
             class="banner-container"
-            [style.background]="subhub.bannerImage ? 'url(' + subhub.bannerImage.url + ') no-repeat' : 'url(https://images.unsplash.com/photo-1528197434556-984e7d06ecd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'">
+            [style.background]="subhub.bannerImage ? 'url(' + subhub.bannerImage.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
             <div 
                 class="banner-content" 
                 *ngIf="subhub.viewType == 'View 1'">
 
                 <!-- Title and Summary (View 1) -->
+                <!-- Title -->
                 <h1 
                     class="subhub-title" 
                     ngClass.sm="subhub-title-sm" 
                     ngClass.xs="subhub-title-xs"
-                    style="color: white">
+                    style="color: white;">
                         {{ subhub.title }}
                 </h1>
 
+                <!-- Summary -->
                 <h3 
                     class="subhub-summary" 
                     ngClass.sm="subhub-summary-sm" 
-                    ngClass.xs="subhub-summary-xs" 
-                    style="color: #bdbdbd">
-                        <hr style="width: 60%;background-color: #747474;border: none;height: 1px;"/>
-                        <small>{{ subhub.summary }}</small>
+                    ngClass.xs="subhub-summary-xs"
+                    style="color: white">
+                        {{ subhub.summary }}
                 </h3>
             </div>
         </div>  
 
-
+        <!-- Breadcrumbs -->
         <ng-template #breadcrumbs>
-            <div id="breadcrumbs" class="breadcrumbs" *ngIf="!!parentSubHubs">
-                <span class="breadcrumb-subhub" *ngFor="let parentSubHub of parentSubHubs.slice().reverse()">
-                    <a [routerLink]="'/subhub/' + parentSubHub.slug">{{ parentSubHub.title }}</a>
+            <div 
+                id="breadcrumbs" 
+                class="breadcrumbs" 
+                *ngIf="!!parentSubHubs">
+                <span 
+                    class="breadcrumb-subhub" 
+                    *ngFor="let parentSubHub of parentSubHubs.slice().reverse()">
+                    <a [routerLink]="'/subhub/' + parentSubHub.slug">
+                        {{ parentSubHub.title }}
+                    </a>
                 </span>
-                <span id="breadcrumb-current-page">{{ subhub.title }}</span>
+                <span id="breadcrumb-current-page">
+                    {{ subhub.title }}
+                </span>
             </div>
         </ng-template>
 
-        <!-- <ng-template #jsonData>
-            <mat-card>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> JSON Result </mat-panel-title>
-                        <mat-panel-description>Click to see raw JSON</mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <pre><code>{{ subHubData | json}}</code></pre>
-                </mat-expansion-panel>
-            </mat-card>
-        </ng-template> -->
-
+        <!-- View 1 -->
         <div [ngSwitch]="subhub.viewType">
             <div *ngSwitchCase="'View 1'">
                 <div>
+
                     <!-- Breadcrumbs -->
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
@@ -69,19 +71,20 @@
                         fxLayoutGap="2%">
                         
                         <!-- Main Body -->
-                        <div #subhubContent fxFlex="65%">
-                            <div #subhubContent
-                                style="margin-bottom: 200px;" 
+                        <div fxFlex="65%">
+                            <div style="margin-bottom: 200px;" 
                                 [innerHTML]="subhub.body.json | richTextToHTML">
                             </div>
                         </div>
 
                         <!-- SubHub Children -->
-                        <div #subhubChildPages fxFlex="30%">
-                            <h4>Pages in this SubHub</h4>
-                            <div fxLayout="column wrap">
-                                <div 
-                                    *ngFor="let subHub of subhub.subhubPagesCollection.items">
+                        <div 
+                            fxFlex="30%">
+                            <h4>Pages in this SubHub<hr/></h4>
+                            <div 
+                                fxLayout="column wrap"
+                                class="subhub-children">
+                                <div *ngFor="let subHub of subhub.subhubPagesCollection.items">
                                         <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
                                             <mat-card >
                                                 <span class="card-title">
@@ -95,10 +98,9 @@
                                         </a>
                                 </div>
                             </div>
-                            <hr/>
 
                             <!-- Keywords -->
-                            <h4>Keywords</h4>
+                            <h4>Keywords<hr/></h4>
                             <mat-card-subtitle fxLayout="row wrap">
                                 <span *ngFor="let keyword of subhub.keywords">
                                     <mat-card 
@@ -113,8 +115,10 @@
                 </div>
             </div>
 
+            <!-- View 2 -->
             <div *ngSwitchCase="'View 2'">
                 <div>
+
                     <!-- Breadrcumbs -->
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
@@ -136,17 +140,18 @@
                     </div>
             
                     <!-- Body Content -->
-
                     <!-- Main Body -->
-                    <div #subhubContent
+                    <div 
+                        #subhubContent
                         style="margin-bottom: 200px;" 
                         [innerHTML]="subhub.body.json | richTextToHTML">
                     </div>
             
                     <!-- SubHub Children -->
-                    <div #subhubChildPages>
+                    <div>
                         <h4>Pages in this SubHub</h4>
                         <div 
+                            class="subhub-children"
                             fxLayout="row wrap"
                             fxLayoutGap="1%">
                             <div 
@@ -186,3 +191,16 @@
         </div>
     </div>
 </div>
+
+<!-- Raw JSON -->
+<ng-template #jsonData>
+        <mat-card>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title> JSON Result </mat-panel-title>
+                    <mat-panel-description>Click to see raw JSON</mat-panel-description>
+                </mat-expansion-panel-header>
+                <pre><code>{{ subHubData | json}}</code></pre>
+            </mat-expansion-panel>
+        </mat-card>
+</ng-template>
