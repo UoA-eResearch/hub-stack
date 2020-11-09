@@ -33,6 +33,8 @@ export type Query = {
   __typename?: 'Query';
   asset: Maybe<Asset>;
   assetCollection: Maybe<AssetCollection>;
+  testContentType: Maybe<TestContentType>;
+  testContentTypeCollection: Maybe<TestContentTypeCollection>;
   subHub: Maybe<SubHub>;
   subHubCollection: Maybe<SubHubCollection>;
   article: Maybe<Article>;
@@ -66,6 +68,23 @@ export type QueryAssetCollectionArgs = {
   locale: Maybe<Scalars['String']>;
   where: Maybe<AssetFilter>;
   order: Maybe<Array<Maybe<AssetOrder>>>;
+};
+
+
+export type QueryTestContentTypeArgs = {
+  id: Scalars['String'];
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type QueryTestContentTypeCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<TestContentTypeFilter>;
+  order: Maybe<Array<Maybe<TestContentTypeOrder>>>;
 };
 
 
@@ -2703,6 +2722,89 @@ export enum AssetOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
+/** [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/testContentType) */
+export type TestContentType = Entry & {
+  __typename?: 'TestContentType';
+  sys: Sys;
+  linkedFrom: Maybe<TestContentTypeLinkingCollections>;
+  shortTxt: Maybe<Scalars['String']>;
+  view: Maybe<Scalars['String']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/testContentType) */
+export type TestContentTypeLinkedFromArgs = {
+  allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/testContentType) */
+export type TestContentTypeShortTxtArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/testContentType) */
+export type TestContentTypeViewArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+export type TestContentTypeLinkingCollections = {
+  __typename?: 'TestContentTypeLinkingCollections';
+  entryCollection: Maybe<EntryCollection>;
+};
+
+
+export type TestContentTypeLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+export type TestContentTypeFilter = {
+  sys: Maybe<SysFilter>;
+  shortTxt_exists: Maybe<Scalars['Boolean']>;
+  shortTxt: Maybe<Scalars['String']>;
+  shortTxt_not: Maybe<Scalars['String']>;
+  shortTxt_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  shortTxt_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  shortTxt_contains: Maybe<Scalars['String']>;
+  shortTxt_not_contains: Maybe<Scalars['String']>;
+  view_exists: Maybe<Scalars['Boolean']>;
+  view: Maybe<Scalars['String']>;
+  view_not: Maybe<Scalars['String']>;
+  view_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  view_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  view_contains: Maybe<Scalars['String']>;
+  view_not_contains: Maybe<Scalars['String']>;
+  OR: Maybe<Array<Maybe<TestContentTypeFilter>>>;
+  AND: Maybe<Array<Maybe<TestContentTypeFilter>>>;
+};
+
+export enum TestContentTypeOrder {
+  ShortTxtAsc = 'shortTxt_ASC',
+  ShortTxtDesc = 'shortTxt_DESC',
+  ViewAsc = 'view_ASC',
+  ViewDesc = 'view_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
+export type TestContentTypeCollection = {
+  __typename?: 'TestContentTypeCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<TestContentType>>;
+};
+
 export type SubHubFilter = {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
@@ -3304,9 +3406,11 @@ type PublicFields_OfficialDocuments_Fragment = { __typename: 'OfficialDocuments'
 
 type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
 
+type PublicFields_TestContentType_Fragment = { __typename?: 'TestContentType' };
+
 type PublicFields_Testing_Fragment = { __typename?: 'Testing' };
 
-export type PublicFieldsFragment = PublicFields_SubHub_Fragment | PublicFields_Article_Fragment | PublicFields_Equipment_Fragment | PublicFields_Service_Fragment | PublicFields_Person_Fragment | PublicFields_OfficialDocuments_Fragment | PublicFields_CaseStudy_Fragment | PublicFields_Testing_Fragment;
+export type PublicFieldsFragment = PublicFields_SubHub_Fragment | PublicFields_Article_Fragment | PublicFields_Equipment_Fragment | PublicFields_Service_Fragment | PublicFields_Person_Fragment | PublicFields_OfficialDocuments_Fragment | PublicFields_CaseStudy_Fragment | PublicFields_TestContentType_Fragment | PublicFields_Testing_Fragment;
 
 export type AllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3368,7 +3472,7 @@ export type GetArticleBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleBySlugQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'ArticleBody', json: any }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'SubHub' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'CaseStudy' } | { __typename?: 'Testing' }>> }> }>> }> };
+export type GetArticleBySlugQuery = { __typename?: 'Query', articleCollection: Maybe<{ __typename?: 'ArticleCollection', items: Array<Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'ArticleBody', json: any }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'SubHub' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'CaseStudy' } | { __typename?: 'TestContentType' } | { __typename?: 'Testing' }>> }> }>> }> };
 
 export type GetEquipmentBySlugQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
