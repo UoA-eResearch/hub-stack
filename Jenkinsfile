@@ -309,6 +309,13 @@ pipeline {
 
     }
     
+    stage ('Send build result notifications') {
+        steps {
+            echo 'Deployed to ' + BRANCH_NAME
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).")
+        }
+    }
+
     post {
         failure {
             echo 'Jenkins job failed :('
