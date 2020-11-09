@@ -54,6 +54,7 @@ pipeline {
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
+                        env.awsRole = 'devops'
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
@@ -92,7 +93,11 @@ pipeline {
                         }
                     }
                     stages {
+<<<<<<< HEAD
                         stage ('Caching new node_modules folder') {
+=======
+                        stage ('Building and caching new node_modules') {
+>>>>>>> fa35b6c3497068da0d6f1d4006c201411ccc34c1
                             when {
                                 anyOf {
                                     changeset "**/research-hub-web/package.json"
@@ -111,7 +116,11 @@ pipeline {
                                 }
                             }
                         }
+<<<<<<< HEAD
                         stage ('Unzipping existing cached node_modules.') {
+=======
+                        stage ('Using cached node_modules from archive') {
+>>>>>>> fa35b6c3497068da0d6f1d4006c201411ccc34c1
                             when {
                                 not {
                                     anyOf {
@@ -306,24 +315,6 @@ pipeline {
             }
         }
 
-        stage('BrowserStack e2e Tests') {
-            steps {
-                echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).\n 📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>")
-                dir("research-hub-web") {
-                    script {
-                        try {
-                            sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
-                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
-                        } catch (e) {
-                            echo 'BrowserStack e2e tests failed'
-                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#f2ae3f", message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
-                            sh "exit 1"
-                        }
-                    }
-                }
-            }
-        }
     }
     
     post {
