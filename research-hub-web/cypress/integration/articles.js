@@ -1,7 +1,7 @@
 describe('ResearchHubs Article Pages', () => {
 
     beforeEach(() => {
-        cy.visit('http://localhost:4200/article/first-article');
+        cy.visit('/article/first-article');
     });
 
     it('can visit an article and display its title', () => {
