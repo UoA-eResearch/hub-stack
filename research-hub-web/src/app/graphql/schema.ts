@@ -2728,6 +2728,7 @@ export type TestContentType = Entry & {
   sys: Sys;
   linkedFrom: Maybe<TestContentTypeLinkingCollections>;
   shortTxt: Maybe<Scalars['String']>;
+  test1: Maybe<Scalars['String']>;
 };
 
 
@@ -2739,6 +2740,12 @@ export type TestContentTypeLinkedFromArgs = {
 
 /** [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/testContentType) */
 export type TestContentTypeShortTxtArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/testContentType) */
+export type TestContentTypeTest1Args = {
   locale: Maybe<Scalars['String']>;
 };
 
@@ -2764,6 +2771,13 @@ export type TestContentTypeFilter = {
   shortTxt_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   shortTxt_contains: Maybe<Scalars['String']>;
   shortTxt_not_contains: Maybe<Scalars['String']>;
+  test1_exists: Maybe<Scalars['Boolean']>;
+  test1: Maybe<Scalars['String']>;
+  test1_not: Maybe<Scalars['String']>;
+  test1_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  test1_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  test1_contains: Maybe<Scalars['String']>;
+  test1_not_contains: Maybe<Scalars['String']>;
   OR: Maybe<Array<Maybe<TestContentTypeFilter>>>;
   AND: Maybe<Array<Maybe<TestContentTypeFilter>>>;
 };
@@ -2771,6 +2785,8 @@ export type TestContentTypeFilter = {
 export enum TestContentTypeOrder {
   ShortTxtAsc = 'shortTxt_ASC',
   ShortTxtDesc = 'shortTxt_DESC',
+  Test1Asc = 'test1_ASC',
+  Test1Desc = 'test1_DESC',
   SysIdAsc = 'sys_id_ASC',
   SysIdDesc = 'sys_id_DESC',
   SysPublishedAtAsc = 'sys_publishedAt_ASC',
