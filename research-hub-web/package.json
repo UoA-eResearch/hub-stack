@@ -9,6 +9,7 @@
     "start": "ng serve",
     "prestart": "npm run generate",
     "build": "ng build",
+    "prebuild": "npm run generate",
     "postinstall": "ngcc",
     "test": "ng test",
     "test-ci": "ng test --watch=false",
