@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { ArticleCollection, AllArticlesGQL, Article } from '@graphql/schema';
@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Params } from '@services/research-hub-api.service';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
@@ -17,6 +19,8 @@ describe('ArticlesComponent', () => {
   let controller: ApolloTestingController;
   let spy: any; // Returns mock query data
   let spy2: any; // Returns mock query data
+  let route, router: any;
+
   const mockAllArticles$: Observable<ArticleCollection> = of({
     'items': [
       {
@@ -271,70 +275,73 @@ describe('ArticlesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ArticlesComponent],
       imports: [
-        RouterModule.forRoot([]),
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
         SharedModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        RouterTestingModule.withRoutes([])
       ], providers: [
-        AllArticlesGQL,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({
-              slug: ''
-            })
-          }
-        }
+        AllArticlesGQL
       ]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    controller = TestBed.inject(ApolloTestingController);
-    spy = spyOn(ArticlesComponent.prototype, 'getAllArticles').and.returnValue(mockAllArticles$);
-    spy2 = spyOn(ArticlesComponent.prototype, 'getArticleBySlug').and.returnValue(mockArticle$);
-
-    fixture = TestBed.createComponent(ArticlesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    router = TestBed.inject(Router)
+    route = TestBed.inject(ActivatedRoute)
   });
+
 
   afterEach(() => {
     fixture.destroy();
     controller.verify();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  describe('Should create and display collection list when no slug is present', () => {
 
-  it('should have Article Collection as title', async () => {
-    const de = fixture.debugElement.query(By.css('#title'));
-    expect(de.nativeElement.innerHTML).toEqual('Article Collection');
+    beforeEach(() => {
+      controller = TestBed.inject(ApolloTestingController);
+      spy = spyOn(ArticlesComponent.prototype, 'getAllArticles').and.returnValue(mockAllArticles$);
+      spy2 = spyOn(ArticlesComponent.prototype, 'getArticleBySlug').and.returnValue(mockArticle$);
+
+
+      fixture = TestBed.createComponent(ArticlesComponent);
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('should have Article Collection as title', async () => {
+      const de = fixture.debugElement.query(By.css('#title'));
+      console.log({ de })
+      expect(de.nativeElement.innerHTML).toEqual('Article Collection');
+    });
+
   });
 
   describe('When a url slug is present.', () => {
-    beforeEach(() => {
-      controller = TestBed.get(ApolloTestingController);
+
+    beforeEach(async () => {
+      controller = TestBed.inject(ApolloTestingController);
+      spy = spyOn(ArticlesComponent.prototype, 'getAllArticles').and.returnValue(mockAllArticles$);
+      spy2 = spyOn(ArticlesComponent.prototype, 'getArticleBySlug').and.returnValue(mockArticle$);
+
       fixture = TestBed.createComponent(ArticlesComponent);
       component = fixture.componentInstance;
-      TestBed.get(ActivatedRoute).params = of({
-        slug: 'first-article'
-      });
       fixture.detectChanges();
-    })
-
-    it('Should evaluate components slug property to be truthy', () => {
-      expect(component.slug).toBeTruthy();
     });
 
     it('Should get a single article data', () => {
+      let resArticle;
       component.getArticleBySlug(component.slug).subscribe(res => {
-        expect(res.slug).toEqual('first-article');
+        resArticle = res;
       });
-    })
+      expect(resArticle.slug).toEqual('first-article');
+    });
 
   });
 

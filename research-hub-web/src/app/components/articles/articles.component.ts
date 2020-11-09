@@ -45,8 +45,7 @@ export class ArticlesComponent implements OnInit {
      */
     if (!!this.slug) {
       this.article$ = this.getArticleBySlug(this.slug);
-      // this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-
+      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.allArticles$ = this.getAllArticles();
     }
