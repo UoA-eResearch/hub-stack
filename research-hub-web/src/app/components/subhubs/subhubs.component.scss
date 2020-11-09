@@ -38,6 +38,7 @@ div.mat-card-avatar mat-icon {
 
 
 // Vanilla CSS
+
 // SubHub Title
 .subhub-title {
     color: map-get($hub-navy, 500);
@@ -54,7 +55,7 @@ div.mat-card-avatar mat-icon {
     font-size: 25px;
 }
 
-// Article Summary
+// SubHub Summary
 .subhub-summary {
     color: $color-icon; 
     font-size: 25px; 
@@ -104,4 +105,13 @@ div.mat-card-avatar mat-icon {
 
 .related-item-summary {
     font-size: 12px;
+}
+
+// HR
+hr {
+    background-color: #dbdbdb;
+    border: none;
+    height: 1px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }

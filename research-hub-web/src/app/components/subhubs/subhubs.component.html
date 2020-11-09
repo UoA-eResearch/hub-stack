@@ -12,6 +12,8 @@
             <div 
                 class="banner-content" 
                 *ngIf="subhub.viewType == 'View 1'">
+
+                <!-- Title and Summary (View 1) -->
                 <h1 
                     class="subhub-title" 
                     ngClass.sm="subhub-title-sm" 
@@ -53,83 +55,140 @@
             </mat-card>
         </ng-template> -->
 
-        <ng-template #cardHeader>
-            <h1 
-                class="subhub-title" 
-                ngClass.sm="subhub-title-sm" 
-                ngClass.xs="subhub-title-xs">
-                {{ subhub.title }}
-            </h1>
-            <h3 
-                class="subhub-summary" 
-                ngClass.sm="subhub-summary-sm" 
-                ngClass.xs="subhub-summary-xs">
-                {{ subhub.summary }}
-            </h3>
-
-            <hr style="margin: 25px 0px;"/>
-        </ng-template>
-
-
-        <ng-template #subhubContent>
-            <div 
-                class="content" 
-                *ngFor="let contentItem of subhub.body.json.content as c">
-                <div *ngIf="contentItem.content[0]">
-                    {{ contentItem.content[0].value }}
-                </div>
-            </div>
-        </ng-template>
-
-        <ng-template #subhubChildPages>
-            <h4>Pages in this SubHub<hr/></h4>
-            <div 
-                fxLayout="row wrap"
-                fxLayoutGap="1%">
-                <div 
-                    style="margin-bottom: 20px;" 
-                    *ngFor="let subHub of subhub.subhubPagesCollection.items">
-                        <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
-                            <mat-card >
-                                <span class="card-title">
-                                    {{ subHub.title}}
-                                </span> 
-                                <br/>
-                                <span class="related-item-summary">
-                                    {{ subHub.summary }}
-                                </span>
-                            </mat-card>
-                        </a>
-                </div>
-            </div>
-        </ng-template>
-
         <div [ngSwitch]="subhub.viewType">
             <div *ngSwitchCase="'View 1'">
-                <div class="view1">
+                <div>
+                    <!-- Breadcrumbs -->
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                    <!-- <ng-container *ngTemplateOutlet="jsonData"></ng-container> -->
-                    <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
-                    <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
-                    <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
+
+                    <!-- Body Content -->
+                    <div 
+                        fxLayout="row wrap"
+                        fxLayout.sm="column wrap"
+                        fxLayout.xs="column wrap"  
+                        fxLayoutGap="2%">
+                        
+                        <!-- Main Body -->
+                        <div #subhubContent fxFlex="65%">
+                            <div *ngFor="let contentItem of subhub.body.json.content as c">
+                                <div *ngIf="contentItem.content[0]">
+                                    {{ contentItem.content[0].value }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SubHub Children -->
+                        <div #subhubChildPages fxFlex="30%">
+                            <h4>Pages in this SubHub</h4>
+                            <div fxLayout="column wrap">
+                                <div 
+                                    *ngFor="let subHub of subhub.subhubPagesCollection.items">
+                                        <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                            <mat-card >
+                                                <span class="card-title">
+                                                    {{ subHub.title}}
+                                                </span> 
+                                                <br/>
+                                                <span class="related-item-summary">
+                                                    {{ subHub.summary }}
+                                                </span>
+                                            </mat-card>
+                                        </a>
+                                </div>
+                            </div>
+                            <hr/>
+
+                            <!-- Keywords -->
+                            <h4>Keywords</h4>
+
+                            <mat-card-subtitle 
+                                fxLayout="row wrap"> 
+                                <span *ngFor="let keyword of subhub.keywords">
+                                    <mat-card 
+                                        fxLayout="row" 
+                                        class="keyword-card">
+                                            {{ keyword | humanCase }}
+                                    </mat-card>
+                                </span>
+                            </mat-card-subtitle>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div *ngSwitchCase="'View 2'">
-                <div class="view2">
+                <div>
+                    <!-- Breadrcumbs -->
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                    <!-- <ng-container *ngTemplateOutlet="jsonData"></ng-container> -->
-                    <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
-                    <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
-                    <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
+
+                    <!-- Title and Summary -->
+                    <div>
+                        <h1 
+                            class="subhub-title" 
+                            ngClass.sm="subhub-title-sm" 
+                            ngClass.xs="subhub-title-xs">
+                            {{ subhub.title }}
+                        </h1>
+                        <h3 
+                            class="subhub-summary" 
+                            ngClass.sm="subhub-summary-sm" 
+                            ngClass.xs="subhub-summary-xs">
+                            {{ subhub.summary }}
+                        </h3>
+                        <hr style="margin: 25px 0px;"/>
+                    </div>
+            
+                    <!-- Body Content -->
+
+                    <!-- Main Body -->
+                    <div #subhubContent>
+                        <div *ngFor="let contentItem of subhub.body.json.content as c">
+                            <div *ngIf="contentItem.content[0]">
+                                {{ contentItem.content[0].value }}
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- SubHub Children -->
+                    <div #subhubChildPages>
+                        <h4>Pages in this SubHub</h4>
+                        <div 
+                            fxLayout="row wrap"
+                            fxLayoutGap="1%">
+                            <div 
+                                style="margin-bottom: 20px;" 
+                                *ngFor="let subHub of subhub.subhubPagesCollection.items">
+                                    <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                        <mat-card >
+                                            <span class="card-title">
+                                                {{ subHub.title}}
+                                            </span> 
+                                            <br/>
+                                            <span class="related-item-summary">
+                                                {{ subHub.summary }}
+                                            </span>
+                                        </mat-card>
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <!-- Keywords -->
+                    <h4>Keywords</h4>
+
+                    <mat-card-subtitle 
+                        fxLayout="row wrap"> 
+                        <span *ngFor="let keyword of subhub.keywords">
+                            <mat-card 
+                                fxLayout="row" 
+                                class="keyword-card">
+                                    {{ keyword | humanCase }}
+                            </mat-card>
+                        </span>
+                    </mat-card-subtitle>
                 </div>
             </div>
-            <!-- <div *ngSwitchDefault>
-                <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                <ng-container *ngTemplateOutlet="jsonData"></ng-container>
-                <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
-                <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
-                <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
-            </div> -->
         </div>
     </div>
 </div>
