@@ -1,6 +1,6 @@
 <h2 *ngIf="embedded">Browse categories</h2>
 <mat-grid-list [cols]="numCols" gutterSize="1em">
-  <mat-grid-tile class="browse-tile" *ngFor="let item of categoryOptions;" [colspan]="1" [rowspan]="1"
+  <mat-grid-tile class="browse-tile" *ngFor="let item of optionsService.categoryOptions;" [colspan]="1" [rowspan]="1"
     [routerLink]="['/search']" [queryParams]="{categoryId: item.id}" [matTooltip]="getCategoryDescription(item.id)"
     [matTooltipShowDelay]="500">
     <div fxLayout="column" fxLayoutAlign="center center" class="tile-content">
@@ -19,7 +19,7 @@
 
 <h2 *ngIf="embedded" style="margin-top: 2vh;">NEW - Browse GraphQL Categories</h2>
 <mat-grid-list [cols]="numCols" gutterSize="1em">
-  <mat-grid-tile class="browse-tile-new" *ngFor="let item of categoryOptionsGQL;" [colspan]="1"
+  <mat-grid-tile class="browse-tile-new" *ngFor="let item of optionsService.categoryOptionsGQL;" [colspan]="1"
     [rowspan]="1" [routerLink]="item.url" [matTooltip]="getCategoryDescription(item.id)" [matTooltipShowDelay]="500">
     <div fxLayout="column" fxLayoutAlign="center center" class="tile-content">
       <span class="tile-text">{{item.name}}</span>
