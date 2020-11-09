@@ -39,6 +39,9 @@
             "name": "CaseStudy"
           },
           {
+            "name": "TestContentType"
+          },
+          {
             "name": "Testing"
           }
         ]
