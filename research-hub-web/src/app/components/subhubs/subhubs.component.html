@@ -5,6 +5,33 @@
 <div class="results" *ngIf="subhub$ | async as subHubData">
     <div *ngFor="let subhub of subHubData.items; let i = index">
 
+        <!-- Dynamic Banner -->
+        <div 
+            class="banner-container"
+            [style.background]="subhub.bannerImage ? 'url(' + subhub.bannerImage.url + ') no-repeat' : 'url(https://images.unsplash.com/photo-1528197434556-984e7d06ecd5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)'">
+            <div 
+                class="banner-content" 
+                *ngIf="subhub.viewType == 'View 1'">
+                <h1 
+                    class="subhub-title" 
+                    ngClass.sm="subhub-title-sm" 
+                    ngClass.xs="subhub-title-xs"
+                    style="color: white">
+                        {{ subhub.title }}
+                </h1>
+
+                <h3 
+                    class="subhub-summary" 
+                    ngClass.sm="subhub-summary-sm" 
+                    ngClass.xs="subhub-summary-xs" 
+                    style="color: #bdbdbd">
+                        <hr style="width: 60%;background-color: #747474;border: none;height: 1px;"/>
+                        <small>{{ subhub.summary }}</small>
+                </h3>
+            </div>
+        </div>  
+
+
         <ng-template #breadcrumbs>
             <div id="breadcrumbs" class="breadcrumbs" *ngIf="!!parentSubHubs">
                 <span class="breadcrumb-subhub" *ngFor="let parentSubHub of parentSubHubs.slice().reverse()">
@@ -48,9 +75,8 @@
             <div 
                 class="content" 
                 *ngFor="let contentItem of subhub.body.json.content as c">
-                <div 
-                    *ngIf="contentItem.content[0]">
-                        {{ contentItem.content[0].value }}
+                <div *ngIf="contentItem.content[0]">
+                    {{ contentItem.content[0].value }}
                 </div>
             </div>
         </ng-template>
