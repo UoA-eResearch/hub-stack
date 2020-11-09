@@ -1,24 +1,19 @@
-<!-- If we're displaying a collection of articles-->
-<!-- Static Banner -->
-<div 
-    *ngIf="!article$"
-    class="banner-container"
-    [style.background]="'url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)'">
-</div>
-
+<!-- If we're displaying all articles, not an individual article -->
 <app-collection-list 
     *ngIf="allArticles$ | async as allArticles" 
     [collection]="allArticles">
 </app-collection-list>
 
+
 <!-- If we're displaying an individual article -->
 <div 
     id="article-container" 
     *ngIf="article$ | async as article">
+    
     <!-- Dynamic Banner -->
     <div 
         class="banner-container"
-        [style]="article.displayBanner ? article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : 'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : article.viewType == 'View 2' ? 'display: none;' : ''">
+        [style.background]="article.icon ? 'url(' + article.icon.url + ') no-repeat' : 'url(https://images.unsplash.com/photo-1542810444-515316abdc7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80x)'">
         <div 
             class="banner-content" 
             *ngIf="article.viewType == 'View 1'">
@@ -26,9 +21,17 @@
                 class="article-title" 
                 ngClass.sm="article-title-sm" 
                 ngClass.xs="article-title-xs"
-                [style.color]="article.displayBanner ? 'white' : '#004059'">
+                style="color: white">
                     {{ article.title }}
             </h1>
+
+            <mat-chip-avatar *ngIf="article.ssoProtected">
+                <mat-icon 
+                    color='accent' 
+                    matTooltip="SSO Login Required">
+                        lock
+                </mat-icon>
+            </mat-chip-avatar>
 
             <h3 
                 class="article-summary" 
@@ -231,14 +234,22 @@
                 fxLayout.xs="column wrap"   
                 fxLayoutGap="5%">
 
-                <!-- Article Title and Summary -->
                 <div fxFlex="70%">
+                    <!-- Article Title and Summary -->
                     <h1 
                         class="article-title" 
                         ngClass.sm="article-title-sm" 
                         ngClass.xs="article-title-xs">
                         {{ article.title }}
                     </h1>
+
+                    <mat-chip-avatar *ngIf="article.ssoProtected">
+                        <mat-icon 
+                            color='accent' 
+                            matTooltip="SSO Login Required">
+                            lock
+                        </mat-icon>
+                    </mat-chip-avatar>
 
                     <h3 
                         class="article-summary" 

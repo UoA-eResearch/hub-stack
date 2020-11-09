@@ -14,7 +14,7 @@
             </div>
         </ng-template>
 
-        <ng-template #jsonData>
+        <!-- <ng-template #jsonData>
             <mat-card>
                 <mat-expansion-panel>
                     <mat-expansion-panel-header>
@@ -24,50 +24,65 @@
                     <pre><code>{{ subHubData | json}}</code></pre>
                 </mat-expansion-panel>
             </mat-card>
-        </ng-template>
+        </ng-template> -->
 
         <ng-template #cardHeader>
-            <mat-card>
-                <mat-card-header>
-                    <div mat-card-avatar>
-                        <mat-icon>build</mat-icon>
-                    </div>
-                    <mat-card-title>
-                        {{ subhub.title }}
-                    </mat-card-title>
-                    <mat-card-subtitle>
-                        {{ subhub.summary }}
-                    </mat-card-subtitle>
-                </mat-card-header>
-            </mat-card>
+            <h1 
+                class="subhub-title" 
+                ngClass.sm="subhub-title-sm" 
+                ngClass.xs="subhub-title-xs">
+                {{ subhub.title }}
+            </h1>
+            <h3 
+                class="subhub-summary" 
+                ngClass.sm="subhub-summary-sm" 
+                ngClass.xs="subhub-summary-xs">
+                {{ subhub.summary }}
+            </h3>
+
+            <hr style="margin: 25px 0px;"/>
         </ng-template>
 
 
         <ng-template #subhubContent>
-            <mat-card>
-                <h2>Body</h2>
-                <div class="content" *ngFor="let contentItem of subhub.body.json.content as c">
-                    <mat-card-content *ngIf="contentItem.content[0]">
+            <div 
+                class="content" 
+                *ngFor="let contentItem of subhub.body.json.content as c">
+                <div 
+                    *ngIf="contentItem.content[0]">
                         {{ contentItem.content[0].value }}
-                    </mat-card-content>
                 </div>
-            </mat-card>
+            </div>
         </ng-template>
 
         <ng-template #subhubChildPages>
-            <mat-card>
-                <h2>Pages in this SubHub</h2>
-                <app-collection-list *ngIf="subhub.subhubPagesCollection.items"
-                    [collection]="subhub.subhubPagesCollection"
-                    ></app-collection-list>
-            </mat-card>
+            <h4>Pages in this SubHub<hr/></h4>
+            <div 
+                fxLayout="row wrap"
+                fxLayoutGap="1%">
+                <div 
+                    style="margin-bottom: 20px;" 
+                    *ngFor="let subHub of subhub.subhubPagesCollection.items">
+                        <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                            <mat-card >
+                                <span class="card-title">
+                                    {{ subHub.title}}
+                                </span> 
+                                <br/>
+                                <span class="related-item-summary">
+                                    {{ subHub.summary }}
+                                </span>
+                            </mat-card>
+                        </a>
+                </div>
+            </div>
         </ng-template>
 
         <div [ngSwitch]="subhub.viewType">
             <div *ngSwitchCase="'View 1'">
                 <div class="view1">
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                    <ng-container *ngTemplateOutlet="jsonData"></ng-container>
+                    <!-- <ng-container *ngTemplateOutlet="jsonData"></ng-container> -->
                     <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
                     <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
                     <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
@@ -76,19 +91,19 @@
             <div *ngSwitchCase="'View 2'">
                 <div class="view2">
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                    <ng-container *ngTemplateOutlet="jsonData"></ng-container>
+                    <!-- <ng-container *ngTemplateOutlet="jsonData"></ng-container> -->
                     <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
                     <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
                     <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
                 </div>
             </div>
-            <div *ngSwitchDefault>
+            <!-- <div *ngSwitchDefault>
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
                 <ng-container *ngTemplateOutlet="jsonData"></ng-container>
                 <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
                 <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
                 <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

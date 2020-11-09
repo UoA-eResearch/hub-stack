@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { Observable } from "rxjs";
 import { pluck, flatMap } from "rxjs/operators";
 import {
@@ -24,16 +24,22 @@ export class SubhubsComponent implements OnInit {
   public slug: string;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     public AllSubHubChildPagesGQL: AllSubHubChildPagesGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService
   ) { }
 
+  internalNavigate(path) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.navigate([path]);
+  }
+
   async ngOnInit() {
     this.route.params.subscribe((params) => {
-      // test slug: landing-page-for-a-sub-hub
       this.slug = params['slug'];
+      this.slug ? this.internalNavigate('/subhub/' + this.slug) : this.internalNavigate('/subhubs');
     });
 
     if (!!this.slug) {

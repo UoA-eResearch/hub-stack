@@ -76,10 +76,6 @@ mat-expansion-panel, mat-card  {
     font-size: 12px;
 }
 
-.related-item-summary {
-    font-size: 12px;
-}
-
 .banner-container {
     text-align: center;
     min-width: 100vw; 
@@ -108,7 +104,10 @@ mat-expansion-panel, mat-card  {
     height: 70px;
 }
 
-// Card Title
 .card-title {
     color: map-get($hub-teal, 500);
+}
+
+.related-item-summary {
+    font-size: 12px;
 }

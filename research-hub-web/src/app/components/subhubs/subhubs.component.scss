@@ -10,65 +10,79 @@ div.mat-card-avatar mat-icon {
 }
 
 #breadcrumbs {
-        margin-bottom: 3vh;
+    margin-bottom: 3vh;
 
-        .breadcrumb-subhub {
-            &::after {
-                margin: 0 0.5em 0 0.5em;
-                content: ' >'
-            }
-        }
-
-        #breadcrumb-current-page {
-            color: $color-pink;
+    .breadcrumb-subhub {
+        &::after {
+            color: $color-icon;
+            margin: 0 0.5em 0 0.5em;
+            content: '/'
         }
     }
 
-.view2 {
-    $base-color: #121212;
-    $base-text-high-emphasis: rgba(white, 0.87);
-    $base-text-med-emphasis: rgba(white, 0.60);
-    $base-text-low-emphasis: rgba(white, 0.38);
-
-    color: $base-text-high-emphasis;
-    background-color: $base-color;
-    padding: 1rem;
-    border-radius: 1rem;
-
-    .mat-card-subtitle {
-        color: $base-text-med-emphasis;
+    #breadcrumb-current-page {
+        color: $color-icon;
     }
-    
-    .mat-card {
-        background-color: #202020;
-    }
-
-    .mat-card-content {
-        color: $base-text-high-emphasis;
-    }
-
-    h2, .mat-card-title {
-        color: #80c6ff;
-    }
-
-    div#breadcrumbs-current-page {
-        color: #e3ec60;
-    }
-
-    .mat-expansion-panel, .mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
-        color: #7fd15f;
-        background-color: #292929;
-    }
-    
+}
+.breadcrumbs-mobile {
+    font-size: 8px;
 }
 
-.view1 {
-    background-color: #a4c1ec;
-    border-radius: 5rem;
-    padding: 5rem;
+#keywords {
+    color: $color-primary;
+}
 
-    * {
-        border-radius: 5rem !important;
-        padding: 1rem;
-    };
+.related-item-summary {
+    color: gray;
+}
+
+
+// Vanilla CSS
+// SubHub Title
+.subhub-title {
+    color: map-get($hub-navy, 500);
+    font-size: 50px;
+    font-weight: bold; 
+    line-height: 110%;
+}
+
+.subhub-title-sm {
+    font-size: 35px;
+}
+
+.subhub-title-xs {
+    font-size: 25px;
+}
+
+// Article Summary
+.subhub-summary {
+    color: $color-icon; 
+    font-size: 25px; 
+    line-height: 110%;
+}
+
+.subhub-summary-sm {
+    font-size: 20px; 
+}
+
+.subhub-summary-xs {
+    font-size: 15px; 
+}
+// Related Item Card
+.related-item-card {
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.related-item-card-mobile {
+    height: 70px;
+}
+
+.card-title {
+    color: map-get($hub-teal, 500);
+}
+
+.related-item-summary {
+    font-size: 12px;
 }
