@@ -24,7 +24,7 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "e2e": "cypress run -q --record=false",
-    "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && npm run cypress run -q --record=false\" --kill-others --success first",
+    "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && npm run cy:run -q --record=false\" --kill-others --success first",
     "e2e-gui": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first"
   },
   "private": true,

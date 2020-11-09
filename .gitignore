@@ -17,6 +17,7 @@ research-hub-web/www/
 research-hub-web/dist/
 research-hub-web/documentation/
 research-hub-web/cypress/videos/
+research-hub-web/cypress/screenshots/
 
 research-hub-web/src/app/graphql/possible-types.ts
 research-hub-web/src/app/graphql/schema.ts
