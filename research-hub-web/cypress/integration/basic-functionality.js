@@ -5,7 +5,7 @@
 describe('ResearchHubs Basic Functionality', () => {
 
     beforeEach(() => {
-        cy.visit('http://localhost:4200/');
+        cy.visit('/');
     });
 
     it('has title', () => {
