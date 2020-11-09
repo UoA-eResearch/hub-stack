@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CerGraphqlService } from './cer-graphql.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 describe('CerGraphqlService', () => {
   let service: CerGraphqlService;
@@ -130,7 +131,8 @@ describe('CerGraphqlService', () => {
     TestBed.configureTestingModule({
       imports: [
         ApolloTestingModule,
-        CommonModule
+        CommonModule,
+        RouterModule.forRoot([])
       ]
     });
     service = TestBed.inject(CerGraphqlService);
