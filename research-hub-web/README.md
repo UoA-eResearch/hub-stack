@@ -39,7 +39,7 @@ Unit tests are stored in `.spec.ts` files throughout the project. These can be r
 ### End-to-End Tests
 > TODO: Update. e2e tests now use Cypress.
 
-E2e tests are stored in `.e2e.ts` files throughout the project. These are executed via [Protractor](http://www.protractortest.org/). 
+E2E tests are stored in `.e2e.js` files in `/cypress/integration/`.
 
 * This project is capable of executing these tests either in a locally running [Selenium Instance](https://www.selenium.dev/), or via BrowserStack automation.
 * The tests themselves can be executed against a locally compiled version, or against a remote URL. 
