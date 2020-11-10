@@ -31,11 +31,6 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
         cy.get('#article-container').should('exist')
     });
 
-    it('is redirected to SSO when viewing a protected items dynamic route', () => {
-        cy.visit('/cer/our-services/engagement/top-secret-article');
-        cy.url().should('include', 'iam', 'saml');
-    })
-
     it('will update a content item\'s URL when it is visited from outside the SubHub', () => {
         cy.visit('/articles');
         cy.get('mat-nav-list > mat-card')

@@ -37,12 +37,8 @@ Unit tests are stored in `.spec.ts` files throughout the project. These can be r
 * `./test.sh`: The unit tests can also be executed via the [Interactive Test Runner](#interactive-test-runner)
 
 ### End-to-End Tests
-> TODO: Update. e2e tests now use Cypress. **Note**: BrowserStack tests are currently disabled as we migrate to Cypress.
-
-#### WIP: Cypress Updates
 E2E tests are stored in `.e2e.js` files in `/cypress/integration/`.
 
-* This project is capable of executing these tests either in a locally running [Selenium Instance](https://www.selenium.dev/), or via BrowserStack automation.
 * The tests themselves can be executed against a locally compiled version, or against a remote URL. 
 
 The recommended way to execute these tests is via the [Interactive Test Runner](#interactive-test-runner).
