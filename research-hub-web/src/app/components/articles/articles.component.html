@@ -15,6 +15,7 @@
 <div 
     id="article-container" 
     *ngIf="article$ | async as article">
+
     <!-- Dynamic Banner -->
     <div 
         class="banner-container"
@@ -56,7 +57,6 @@
             {{ article.title }}
         </span>
     </div>
-    <app-asset></app-asset>
 
     <!-- View Switcher -->
     <div [ngSwitch]="article.viewType">
@@ -325,7 +325,6 @@
                                 </a>
                         </mat-nav-list>
                     </div>
-
                 </div>
             </div>
 

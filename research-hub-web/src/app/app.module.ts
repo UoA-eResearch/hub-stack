@@ -48,7 +48,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 @NgModule({
   declarations: [
     AppComponent,
-    SearchBarComponent
+    SearchBarComponent,
   ],
   imports: [
     AuthModule,
