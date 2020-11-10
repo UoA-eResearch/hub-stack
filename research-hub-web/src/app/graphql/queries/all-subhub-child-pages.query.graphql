@@ -5,12 +5,9 @@ query AllSubHubChildPages ($slug: String) {
       title
       viewType
       summary
-      bannerImage
-      externalSubHubPage
       body {
         json
       }
-      keywords
       ssoProtected
       searchable
       subhubPagesCollection {

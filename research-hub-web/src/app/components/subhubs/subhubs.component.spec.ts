@@ -419,7 +419,7 @@ describe('SubhubsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Title for a subhub page collection item should be truthy.', async () => {
+  xit('Title for a subhub page collection item should be truthy.', async () => {
     const de = fixture.debugElement.query(By.css('#title'));
     expect(de.nativeElement.innerHTML).toBeTruthy();
   });

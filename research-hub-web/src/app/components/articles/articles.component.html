@@ -34,8 +34,7 @@
                 class="article-summary" 
                 ngClass.sm="article-summary-sm" 
                 ngClass.xs="article-summary-xs" 
-                style="color: #bdbdbd">
-                    <hr style="width: 60%;background-color: #747474;border: none;height: 1px;"/>
+                [style.color]="article.displayBanner ? 'white' : '#004059'">
                     <small>{{ article.summary }}</small>
             </h3>
         </div>
@@ -57,17 +56,7 @@
             {{ article.title }}
         </span>
     </div>
-
-    <!-- <mat-expansion-panel id="json">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                JSON Result
-            </mat-panel-title>
-            <mat-panel-description>Click to see raw JSON</mat-panel-description>
-        </mat-expansion-panel-header>
-        <pre><code>{{ article | json}}</code></pre>
-    </mat-expansion-panel> -->
-
+    <app-asset></app-asset>
 
     <!-- View Switcher -->
     <div [ngSwitch]="article.viewType">
@@ -382,3 +371,15 @@
     </div>
     <!-- End of View Switcher -->
 </div>
+
+<!-- 
+<mat-expansion-panel id="json">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            JSON Result
+        </mat-panel-title>
+        <mat-panel-description>Click to see raw JSON</mat-panel-description>
+    </mat-expansion-panel-header>
+    <pre><code>{{ article | json}}</code></pre>
+</mat-expansion-panel> 
+-->
