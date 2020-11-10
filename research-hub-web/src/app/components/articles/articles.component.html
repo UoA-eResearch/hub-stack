@@ -4,62 +4,72 @@
 </ng-container>
 
 <!-- If we're displaying an individual article -->
-<ng-container *ngIf="article$ && articleLoading">
+<!-- <ng-container *ngIf="article$ && articleLoading">
     <ngx-skeleton-loader count="5" animation="pulse"></ngx-skeleton-loader>
-</ng-container>
-<div id="article-container" *ngIf="article$ | async as article">
-    <div id="breadcrumbs" *ngIf="!!parentSubHubs">
+</ng-container> -->
+<div id="article-container" *ngIf="isShowingSingleArticle">
+    <ngx-skeleton-loader *ngIf="articleLoading"></ngx-skeleton-loader>
+    <div id="breadcrumbs" *ngIf="!!parentSubHubs && !articleLoading">
         <span class="breadcrumb-subhub" *ngFor="let subHub of parentSubHubs.slice().reverse()">
             <a [routerLink]="'/subhub/' + subHub.slug">{{ subHub.title }}</a>
         </span>
         <span id="breadcrumb-current-page">{{ article.title }}</span>
     </div>
-
     <mat-expansion-panel id="json">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                JSON Result
-            </mat-panel-title>
-            <mat-panel-description>Click to see raw JSON</mat-panel-description>
-        </mat-expansion-panel-header>
-        <pre><code>{{ article | json}}</code></pre>
+        <ng-container>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    JSON Result
+                </mat-panel-title>
+                <mat-panel-description>Click to see raw JSON</mat-panel-description>
+            </mat-expansion-panel-header>
+            <pre><code>{{ article | json}}</code></pre>
+        </ng-container>
+
     </mat-expansion-panel>
 
     <mat-card id="overview">
         <mat-card-header>
             <div mat-card-avatar id="item-avatar">
-                <div *ngIf="article.icon; else avatarIcon">
-                    <img src="{{article?.icon?.url}}" alt="{{article?.icon?.description}}" class="item-avatar"
-                        width="100%" height="100%" />
-                </div>
-                <ng-template #avatarIcon>
-                    <mat-icon id="item-avatar-icon">import_contacts</mat-icon>
-                </ng-template>
+                <ng-container *ngIf="!articleLoading">
+                    <div *ngIf="article?.icon; else avatarIcon">
+                        <img src="{{article?.icon?.url}}" alt="{{article?.icon?.description}}" class="item-avatar"
+                            width="100%" height="100%" />
+                    </div>
+                    <ng-template #avatarIcon>
+                        <mat-icon id="item-avatar-icon">import_contacts</mat-icon>
+                    </ng-template>
+                </ng-container>
+                <ngx-skeleton-loader *ngIf="articleLoading" appearance="circle" [theme]="{width:'100%',height:'100%'}"></ngx-skeleton-loader>
             </div>
             <mat-card-title>
-                <h2>{{ article.title }}</h2>
+                <h2>{{ article?.title }}</h2>
+                <ngx-skeleton-loader *ngIf="articleLoading"></ngx-skeleton-loader>
             </mat-card-title>
             <mat-card-subtitle>
-                <span id="keywords">{{ article.keywords.join(', ') | titlecase }}</span>
+                <span id="keywords">{{ article?.keywords.join(', ') | titlecase }}</span>
+                <ngx-skeleton-loader *ngIf="articleLoading"></ngx-skeleton-loader>
             </mat-card-subtitle>
-            <mat-chip-avatar *ngIf="article.ssoProtected">
+            <mat-chip-avatar *ngIf="article?.ssoProtected">
                 <mat-icon color='accent' matTooltip="SSO Login Required">lock</mat-icon>
             </mat-chip-avatar>
         </mat-card-header>
         <mat-card-content>
-            {{ article.summary }}
+            <ngx-skeleton-loader count="2" *ngIf="articleLoading"></ngx-skeleton-loader>
+            {{ article?.summary }}
         </mat-card-content>
     </mat-card>
 
     <mat-card>
-        <mat-card-content [innerHTML]="article.body.json | richTextToHTML"></mat-card-content>
+        <ngx-skeleton-loader count="5" *ngIf="articleLoading"></ngx-skeleton-loader>
+        <mat-card-content [innerHTML]="article?.body.json | richTextToHTML"></mat-card-content>
     </mat-card>
 
-    <mat-card *ngIf="article.relatedItemsCollection" id="you-might-be-interested-in">
-
+    <mat-card *ngIf="article?.relatedItemsCollection" id="you-might-be-interested-in">
+        <ngx-skeleton-loader count="3" *ngIf="articleLoading"></ngx-skeleton-loader>
         <h3>You might also be interested in</h3>
 
-        <mat-nav-list *ngFor="let relatedItem of article.relatedItemsCollection.items" class="collection">
+        <mat-nav-list *ngFor="let relatedItem of article?.relatedItemsCollection.items" class="collection">
             <mat-list-item>
                 <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
                     {{ relatedItem['title'] + ': ' + relatedItem['summary'] }}</a>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck, map, filter, first, flatMap, reduce } from 'rxjs/operators';
+import { pluck, map, filter, first, flatMap, reduce, shareReplay } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 import {
@@ -20,7 +20,8 @@ export class ArticlesComponent implements OnInit {
 
   public allArticles$: Observable<ArticleCollection>;
   public articleLoading: boolean;
-  public article$: Observable<Article>;
+  public article: Article;
+  public isShowingSingleArticle : boolean;
   public slug: string;
   public parentSubHubs;
 
@@ -46,15 +47,18 @@ export class ArticlesComponent implements OnInit {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
+      this.isShowingSingleArticle = true;
       this.articleLoading = true; 
-      this.article$ = this.getArticleBySlug(this.slug);
-      this.article$.subscribe(article => {
+      let article$ = this.getArticleBySlug(this.slug);
+      article$.subscribe(article => {
         if (!!article) {
+          this.article = article;
           this.articleLoading = false;
         }
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
+      this.isShowingSingleArticle = false;
       this.allArticles$ = this.getAllArticles();
     }
   }
@@ -70,7 +74,7 @@ export class ArticlesComponent implements OnInit {
     try {
       this.allArticlesGQL.fetch().pipe()
       return this.allArticlesGQL.fetch()
-        .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
+        .pipe( pluck('data', 'articleCollection')) as Observable<ArticleCollection>
     } catch (e) { console.error('Error loading all articles:', e) };
   }
 
