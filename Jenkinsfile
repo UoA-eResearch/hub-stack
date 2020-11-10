@@ -93,11 +93,7 @@ pipeline {
                         }
                     }
                     stages {
-<<<<<<< HEAD
-                        stage ('Caching new node_modules folder') {
-=======
                         stage ('Building and caching new node_modules') {
->>>>>>> fa35b6c3497068da0d6f1d4006c201411ccc34c1
                             when {
                                 anyOf {
                                     changeset "**/research-hub-web/package.json"
@@ -116,11 +112,7 @@ pipeline {
                                 }
                             }
                         }
-<<<<<<< HEAD
-                        stage ('Unzipping existing cached node_modules.') {
-=======
                         stage ('Using cached node_modules from archive') {
->>>>>>> fa35b6c3497068da0d6f1d4006c201411ccc34c1
                             when {
                                 not {
                                     anyOf {
