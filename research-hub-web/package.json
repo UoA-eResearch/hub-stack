@@ -24,8 +24,10 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "e2e": "cypress run -q --record=false",
-    "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && npm run cy:run -q --record=false\" --kill-others --success first",
-    "e2e-gui": "concurrently \"npm run start\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first"
+    "e2e-gui": "npm run cy:open",
+    "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
+    "e2e-serve": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
+    "e2e-serve-gui": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first"
   },
   "private": true,
   "dependencies": {
@@ -97,7 +99,6 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "karma-verbose-reporter": "0.0.6",
     "nodemon": "^2.0.4",
-    "protractor": "^7.0.0",
     "sass": "^1.26.9",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
