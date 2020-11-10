@@ -238,9 +238,9 @@
             </div>
 
             <!-- Considerations -->
-            <div *ngIf="equipment.considerations" class="considerations section">
+            <div *ngIf="equipment.considerations.json" class="considerations section">
                 <h4>Considerations<hr/></h4>
-                <div [innerHTML]="equipment.considerations"></div>
+                <div [innerHTML]="equipment.considerations.json | richTextToHTML"></div>
             </div>
 
             <!-- Keywords -->
@@ -412,9 +412,9 @@
                     </div>
                     
                     <!-- Considerations -->
-                    <div *ngIf="equipment.considerations" class="considerations section">
+                    <div *ngIf="equipment.considerations.json" class="considerations section">
                         <h4>Considerations<hr/></h4>
-                        <div [innerHTML]="equipment.considerations"></div>
+                        <div [innerHTML]="equipment.considerations.json | richTextToHTML"></div>
                     </div>
 
                     <!-- Keywords -->

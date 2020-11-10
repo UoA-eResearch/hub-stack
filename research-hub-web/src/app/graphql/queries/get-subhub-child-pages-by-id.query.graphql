@@ -1,0 +1,105 @@
+query SubHubChildPagesById ($id: String!) {
+  subHub(id: $id) {
+    slug
+    title
+    viewType
+    summary
+    body {
+      json
+    }
+    ssoProtected
+    searchable
+    keywords
+    subhubPagesCollection {
+      items {
+        ...on Article {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on CaseStudy {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on Equipment{
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        } 
+        ... on OfficialDocuments {
+          __typename
+            title
+            summary
+        }
+        ...on Service {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on SubHub {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+          bannerImage {
+            url
+          }
+        }
+      }
+    }
+    relatedItemsCollection {
+      items {
+        ...on Article {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on CaseStudy {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on Equipment{
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        } 
+        ... on OfficialDocuments {
+          __typename
+            title
+            summary
+        }
+        ...on Service {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on SubHub {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+      }
+    }
+  }
+}

@@ -3465,7 +3465,7 @@ export type AllSubHubChildPagesQueryVariables = Exact<{
 }>;
 
 
-export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, viewType: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }>> }> };
+export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, viewType: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }>> }> };
 
 export type GetArticleByIdQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3494,6 +3494,13 @@ export type GetEquipmentBySlugQueryVariables = Exact<{
 
 
 export type GetEquipmentBySlugQuery = { __typename?: 'Query', equipmentCollection: Maybe<{ __typename?: 'EquipmentCollection', items: Array<Maybe<{ __typename?: 'Equipment', title: Maybe<string>, ssoProtected: Maybe<boolean>, sys: { __typename?: 'Sys', id: string } }>> }> };
+
+export type SubHubChildPagesByIdQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type SubHubChildPagesByIdQuery = { __typename?: 'Query', subHub: Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, viewType: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> }>> }>, relatedItemsCollection: Maybe<{ __typename?: 'SubHubRelatedItemsCollection', items: Array<Maybe<{ __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }> };
 
 export const PublicFieldsFragmentDoc = gql`
     fragment PublicFields on Entry {
@@ -3692,6 +3699,9 @@ export const AllSubHubChildPagesDocument = gql`
     query AllSubHubChildPages($slug: String) {
   subHubCollection(where: {slug: $slug}) {
     items {
+      sys {
+        id
+      }
       slug
       title
       viewType
@@ -4366,5 +4376,120 @@ export const GetEquipmentBySlugDocument = gql`
   })
   export class GetEquipmentBySlugGQL extends Apollo.Query<GetEquipmentBySlugQuery, GetEquipmentBySlugQueryVariables> {
     document = GetEquipmentBySlugDocument;
+    
+  }
+export const SubHubChildPagesByIdDocument = gql`
+    query SubHubChildPagesById($id: String!) {
+  subHub(id: $id) {
+    slug
+    title
+    viewType
+    summary
+    body {
+      json
+    }
+    ssoProtected
+    searchable
+    keywords
+    subhubPagesCollection {
+      items {
+        ... on Article {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ... on CaseStudy {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ... on Equipment {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ... on OfficialDocuments {
+          __typename
+          title
+          summary
+        }
+        ... on Service {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ... on SubHub {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+          bannerImage {
+            url
+          }
+        }
+      }
+    }
+    relatedItemsCollection {
+      items {
+        ... on Article {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ... on CaseStudy {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ... on Equipment {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ... on OfficialDocuments {
+          __typename
+          title
+          summary
+        }
+        ... on Service {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ... on SubHub {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SubHubChildPagesByIdGQL extends Apollo.Query<SubHubChildPagesByIdQuery, SubHubChildPagesByIdQueryVariables> {
+    document = SubHubChildPagesByIdDocument;
     
   }

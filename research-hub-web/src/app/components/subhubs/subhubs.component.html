@@ -4,8 +4,8 @@
 <!-- Displaying an individual SubHub -->
 <div 
     class="results" 
-    *ngIf="subhub$ | async as subHubData">
-    <div *ngFor="let subhub of subHubData.items; let i = index">
+    *ngIf="currentSubHub$ | async as subhub">
+    <div>
 
         <!-- Dynamic Banner -->
         <div 
@@ -72,21 +72,21 @@
                         
                         <!-- Main Body -->
                         <div fxFlex="65%">
-                            <div style="margin-bottom: 200px;" 
+                            <div style="margin-bottom: 50px;" 
                                 [innerHTML]="subhub.body.json | richTextToHTML">
                             </div>
-                        </div>
-
-                        <!-- SubHub Children -->
-                        <div 
-                            fxFlex="30%">
-                            <h4>Pages in this SubHub<hr/></h4>
-                            <div 
-                                fxLayout="column wrap"
-                                class="subhub-children">
-                                <div *ngFor="let subHub of subhub.subhubPagesCollection.items">
+                            <hr/>
+                                <div 
+                                    fxLayout="row wrap"
+                                    fxLayoutGap="1%"
+                                    fxLayout.sm="column wrap"
+                                    fxLayout.xs="column wrap" >
+                                    <div
+                                        fxFlex="24%"
+                                        *ngFor="let subHub of subhub.subhubPagesCollection.items">
                                         <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
                                             <mat-card >
+                                                <img mat-card-image src="{{subHub.bannerImage.url}}" alt="{{subHub.title}}">
                                                 <span class="card-title">
                                                     {{ subHub.title}}
                                                 </span> 
@@ -96,20 +96,48 @@
                                                 </span>
                                             </mat-card>
                                         </a>
+                                    </div>
+                                </div>
+                        </div>
+
+                        <!-- Realted Items and Keywords -->
+                        <div fxFlex="30%">
+
+                            <!-- Related Items -->
+                            <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
+                                <h4>Related Items<hr/></h4>
+                                <div 
+                                    fxLayout="column wrap"
+                                    class="subhub-children">
+                                    <div *ngFor="let subHub of subhub.relatedItemsCollection.items">
+                                            <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                                <mat-card >
+                                                    <span class="card-title">
+                                                        {{ subHub.title}}
+                                                    </span> 
+                                                    <br/>
+                                                    <span class="related-item-summary">
+                                                        {{ subHub.summary }}
+                                                    </span>
+                                                </mat-card>
+                                            </a>
+                                    </div>
                                 </div>
                             </div>
 
                             <!-- Keywords -->
-                            <h4>Keywords<hr/></h4>
-                            <mat-card-subtitle fxLayout="row wrap">
-                                <span *ngFor="let keyword of subhub.keywords">
-                                    <mat-card 
-                                        fxLayout="row" 
-                                        class="keyword-card">
-                                            {{ keyword | humanCase }}
-                                    </mat-card>
-                                </span>
-                            </mat-card-subtitle>
+                            <div *ngIf="subhub.keywords.length > 0">
+                                <h4>Keywords<hr/></h4>
+                                <mat-card-subtitle fxLayout="row wrap">
+                                    <span *ngFor="let keyword of subhub.keywords">
+                                        <mat-card 
+                                            fxLayout="row" 
+                                            class="keyword-card">
+                                                {{ keyword | humanCase }}
+                                        </mat-card>
+                                    </span>
+                                </mat-card-subtitle>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,14 +177,38 @@
             
                     <!-- SubHub Children -->
                     <div>
-                        <h4>Pages in this SubHub</h4>
+                        <hr/>
                         <div 
-                            class="subhub-children"
                             fxLayout="row wrap"
-                            fxLayoutGap="1%">
-                            <div 
-                                style="margin-bottom: 20px;" 
+                            fxLayoutGap="1%"
+                            fxLayout.sm="column wrap"
+                            fxLayout.xs="column wrap" >
+                            <div
+                                fxFlex="24%"
                                 *ngFor="let subHub of subhub.subhubPagesCollection.items">
+                                <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                    <mat-card >
+                                        <img mat-card-image src="{{subHub.bannerImage.url}}" alt="{{subHub.title}}">
+                                        <span class="card-title">
+                                            {{ subHub.title}}
+                                        </span> 
+                                        <br/>
+                                        <span class="related-item-summary">
+                                            {{ subHub.summary }}
+                                        </span>
+                                    </mat-card>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Items -->
+                    <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
+                        <h4>Related Items<hr/></h4>
+                        <div 
+                            fxLayout="column wrap"
+                            class="subhub-children">
+                            <div *ngFor="let subHub of subhub.relatedItemsCollection.items">
                                     <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
                                         <mat-card >
                                             <span class="card-title">
@@ -171,21 +223,20 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
 
                     <!-- Keywords -->
-                    <h4>Keywords</h4>
-
-                    <mat-card-subtitle 
-                        fxLayout="row wrap"> 
-                        <span *ngFor="let keyword of subhub.keywords">
-                            <mat-card 
-                                fxLayout="row" 
-                                class="keyword-card">
-                                    {{ keyword | humanCase }}
-                            </mat-card>
-                        </span>
-                    </mat-card-subtitle>
+                    <div *ngIf="subhub.keywords.length > 0">
+                        <h4>Keywords<hr/></h4>
+                        <mat-card-subtitle fxLayout="row wrap">
+                            <span *ngFor="let keyword of subhub.keywords">
+                                <mat-card 
+                                    fxLayout="row" 
+                                    class="keyword-card">
+                                        {{ keyword | humanCase }}
+                                </mat-card>
+                            </span>
+                        </mat-card-subtitle>
+                    </div>
                 </div>
             </div>
         </div>

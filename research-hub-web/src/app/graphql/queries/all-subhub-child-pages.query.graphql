@@ -1,6 +1,9 @@
 query AllSubHubChildPages ($slug: String) {
   subHubCollection (where:{slug: $slug}) {
     items {
+      sys {
+        id
+      }
       slug
       title
       viewType
