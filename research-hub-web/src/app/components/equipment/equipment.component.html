@@ -86,14 +86,6 @@
                         {{ equipment.title }}
                     </h1>
 
-                    <mat-chip-avatar *ngIf="equipment.ssoProtected">
-                        <mat-icon 
-                            color='accent' 
-                            matTooltip="SSO Login Required">
-                            lock
-                        </mat-icon>
-                    </mat-chip-avatar>
-
                     <h3 class="equipment-summary" 
                         ngClass.sm="equipment-summary-sm" 
                         ngClass.xs="equipment-summary-xs">
@@ -332,14 +324,6 @@
                                 ngClass.xs="equipment-title-xs">
                                 {{ equipment.title }}
                             </h1>
-
-                            <mat-chip-avatar *ngIf="equipment.ssoProtected">
-                                <mat-icon 
-                                    color='accent' 
-                                    matTooltip="SSO Login Required">
-                                    lock
-                                </mat-icon>
-                            </mat-chip-avatar>
 
                             <h3 class="equipment-summary" 
                                 ngClass.sm="equipment-summary-sm" 
