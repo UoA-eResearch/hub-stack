@@ -90,5 +90,4 @@ export class SubhubsComponent implements OnInit {
       console.error('Error loading subhub body info and children')
     }
   }
-
 }
