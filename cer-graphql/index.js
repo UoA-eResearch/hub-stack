@@ -273,6 +273,9 @@ if (require.main === module) {
                 "or try running the server without --config-from-file.");
             process.exit(1);
         }
+        if (config.IS_PREVIEW_ENV) {
+            console.log("Running in preview environment, will request draft content from Contentful.");
+        }
         // Check if access token and space ID are supplied.
         if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
             !config.COGNITO_REGION || !config.COGNITO_USER_POOL) {
