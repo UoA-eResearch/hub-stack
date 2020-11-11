@@ -1,5 +1,6 @@
 @import "../../../../styles";
 
+// Tile Icon
 .tile-icon {
     height: 7vh;
     font-size: 6vh;
@@ -23,4 +24,9 @@
 .tile-icon-xs {
     height: 2vh;
     font-size: 3vh;
+}
+
+// Tile Text
+.tile-text {
+    font-size: 1.5em;
 }
