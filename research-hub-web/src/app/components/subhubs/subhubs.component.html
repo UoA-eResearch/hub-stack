@@ -87,7 +87,9 @@
                                     <div
                                         fxFlex="24%"
                                         *ngFor="let subHub of subhub.subhubPagesCollection.items">
-                                        <mat-card class="subhub-card">
+                                        <mat-card 
+                                            *ngIf="subHub.__typename == 'SubHub'"
+                                            class="subhub-card">
                                             <img mat-card-image src="{{ subHub.bannerImage.url }}" alt="{{subHub.title}}">
                                             <mat-card-title class="card-title">
                                                 {{ subHub.title}}
@@ -102,6 +104,45 @@
                                             </mat-card-actions>
                                         </mat-card>
                                     </div>
+                                </div>
+                            </div>
+
+                            <!-- Media Collection -->
+                            <div 
+                                style="margin-bottom: 50px;" 
+                                *ngFor="let media of subhub.mediaCollection.items; let i = index">
+                                <div 
+                                    *ngIf="i % 2 == 0"
+                                    class="media-panel"
+                                    fxLayout="row wrap"
+                                    fxLayoutGap="5%">
+                                    <img 
+                                        fxFlex="45%"
+                                        src="{{ media.url }}"/>
+                                    <span
+                                        fxFlex="45%"
+                                        fxLayout="column"
+                                        fxLayoutAlign="center">
+                                            <h4>{{ media.title }}</h4>
+                                            <p>{{ media.description }}</p>
+                                    </span>
+                                </div>
+
+                                <div 
+                                    *ngIf="i % 2 != 0"
+                                    class="media-panel"
+                                    fxLayout="row wrap"
+                                    fxLayoutGap="5%">
+                                    <span
+                                        fxFlex="45%"
+                                        fxLayout="column"
+                                        fxLayoutAlign="center">
+                                            <h4>{{ media.title }}</h4>
+                                            <p>{{ media.description }}</p>
+                                    </span>
+                                    <img 
+                                        fxFlex="45%"
+                                        src="{{ media.url }}"/>
                                 </div>
                             </div>
                         </div>
@@ -191,8 +232,10 @@
                             <div
                                 fxFlex="24%"
                                 *ngFor="let subHub of subhub.subhubPagesCollection.items">
-                                <mat-card class="subhub-card">
-                                    <img mat-card-image src="{{ subHub.bannerImage.url }}" alt="{{subHub.title}}">
+                                <mat-card
+                                    *ngIf="subHub.__typename == 'SubHub'"
+                                    class="subhub-card">
+                                    <img mat-card-image src="{{ subHub.bannerImage.url }}" alt="{{ subHub.title }}">
                                     <mat-card-title class="card-title">
                                         {{ subHub.title}}
                                     </mat-card-title>
@@ -206,6 +249,45 @@
                                     </mat-card-actions>
                                 </mat-card>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Media Collection -->
+                    <div 
+                        style="margin-bottom: 50px;" 
+                        *ngFor="let media of subhub.mediaCollection.items; let i = index">
+                        <div 
+                            *ngIf="i % 2 == 0"
+                            class="media-panel"
+                            fxLayout="row wrap"
+                            fxLayoutGap="5%">
+                            <img 
+                                fxFlex="45%"
+                                src="{{ media.url }}"/>
+                            <span
+                                fxFlex="45%"
+                                fxLayout="column"
+                                fxLayoutAlign="center">
+                                    <h4>{{ media.title }}</h4>
+                                    <p>{{ media.description }}</p>
+                            </span>
+                        </div>
+
+                        <div 
+                            *ngIf="i % 2 != 0"
+                            class="media-panel"
+                            fxLayout="row wrap"
+                            fxLayoutGap="5%">
+                            <span
+                                fxFlex="45%"
+                                fxLayout="column"
+                                fxLayoutAlign="center">
+                                    <h4>{{ media.title }}</h4>
+                                    <p>{{ media.description }}</p>
+                            </span>
+                            <img 
+                                fxFlex="45%"
+                                src="{{ media.url }}"/>
                         </div>
                     </div>
 
