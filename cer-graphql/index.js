@@ -20,7 +20,7 @@ const getCredentials = (isFromFile) => {
     }
     let isPreviewEnv = false;
     if (process.env.IS_PREVIEW_ENV !== undefined) {
-        isPreviewEnv = process.env.IS_PREVIEW_ENV;
+        isPreviewEnv = process.env.IS_PREVIEW_ENV === "true";
     }
     return {
         CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
