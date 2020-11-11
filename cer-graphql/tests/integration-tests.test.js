@@ -61,11 +61,6 @@ const getTokens = async () => {
         });
     }
 
-    console.log(process.env.OAUTH_LAMBDA_HOST);
-    console.log(process.env.OAUTH_LAMBDA_PATH);
-    console.log(process.env.OAUTH_LAMBDA_REGION);
-    console.log(process.env.OAUTH_LAMBDA_SERVICE);
-
     // Adding the AWS4 Signature to our request parameters
     let opts = {
         host: process.env.OAUTH_LAMBDA_HOST,
@@ -86,7 +81,7 @@ const getTokens = async () => {
     const resJson = await res.json();
     try {
         if (!resJson['access_token']) {
-            throw 'Fetching response for OAuth2.0 tokens does not contain access token. You may need to renew locally stored AWS credentials.';
+            throw 'Fetching response for OAuth2.0 tokens does not contain access token. You may need to renew locally stored AWS credentials or copy values from .env.example to .env';
         }
     }
     catch (error) {
