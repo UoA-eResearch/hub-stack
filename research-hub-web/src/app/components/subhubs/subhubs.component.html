@@ -222,33 +222,33 @@
                     </div>
             
                     <!-- SubHub Children -->
-                    <div>
-                        <div 
-                            class="subhub-children"
-                            fxLayout="row wrap"
-                            fxLayoutGap="1%"
-                            fxLayout.sm="column wrap"
-                            fxLayout.xs="column wrap" >
-                            <div
-                                fxFlex="24%"
-                                *ngFor="let subHub of subhub.subhubPagesCollection.items">
-                                <mat-card
-                                    *ngIf="subHub.__typename == 'SubHub'"
-                                    class="subhub-card">
-                                    <img mat-card-image src="{{ subHub.bannerImage.url }}" alt="{{ subHub.title }}">
-                                    <mat-card-title class="card-title">
-                                        {{ subHub.title}}
-                                    </mat-card-title>
-                                    <mat-card-content class="related-item-summary">
-                                        {{ subHub.summary }}
-                                    </mat-card-content>
-                                    <mat-card-actions>
-                                        <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
-                                            <button mat-stroked-button>READ MORE</button>
-                                        </a>
-                                    </mat-card-actions>
-                                </mat-card>
-                            </div>
+                    <div 
+                        class="subhub-children"
+                        fxLayout="row wrap"
+                        fxLayoutGap="1%"
+                        fxLayout.sm="column wrap"
+                        fxLayout.xs="column wrap">
+                        <div
+                            fxFlex="24%"
+                            *ngFor="let subHub of subhub.subhubPagesCollection.items">
+                            <mat-card
+                                *ngIf="subHub.__typename == 'SubHub'"
+                                class="subhub-card">
+                                <img 
+                                    mat-card-image src="{{ subHub.bannerImage.url }}" 
+                                    alt="{{ subHub.title }}">
+                                <mat-card-title class="card-title">
+                                    {{ subHub.title}}
+                                </mat-card-title>
+                                <mat-card-content class="related-item-summary">
+                                    {{ subHub.summary }}
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                        <button mat-stroked-button>READ MORE</button>
+                                    </a>
+                                </mat-card-actions>
+                            </mat-card>
                         </div>
                     </div>
 
