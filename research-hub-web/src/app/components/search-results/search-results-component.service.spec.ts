@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { SearchResultsComponentService } from './search-results-component.service';
-import { ResearchHubApiService } from '../../services/research-hub-api.service';
+import { ResearchHubApiService } from '@services/research-hub-api.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 
 describe('SearchResultsComponentService', () => {
