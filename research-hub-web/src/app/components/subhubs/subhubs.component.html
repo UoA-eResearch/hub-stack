@@ -6,7 +6,6 @@
     class="results" 
     *ngIf="currentSubHub$ | async as subhub">
     <div>
-
         <!-- Dynamic Banner -->
         <div 
             class="banner-container"
@@ -72,11 +71,15 @@
                         
                         <!-- Main Body -->
                         <div fxFlex="65%">
-                            <div style="margin-bottom: 50px;" 
+                            <div 
+                                class="main-body"
                                 [innerHTML]="subhub.body.json | richTextToHTML">
                             </div>
-                            <hr/>
+
+                            <!-- SubHub Children -->
+                            <div>
                                 <div 
+                                    class="subhub-children"
                                     fxLayout="row wrap"
                                     fxLayoutGap="1%"
                                     fxLayout.sm="column wrap"
@@ -84,40 +87,43 @@
                                     <div
                                         fxFlex="24%"
                                         *ngFor="let subHub of subhub.subhubPagesCollection.items">
-                                        <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
-                                            <mat-card >
-                                                <img mat-card-image src="{{subHub.bannerImage.url}}" alt="{{subHub.title}}">
-                                                <span class="card-title">
-                                                    {{ subHub.title}}
-                                                </span> 
-                                                <br/>
-                                                <span class="related-item-summary">
-                                                    {{ subHub.summary }}
-                                                </span>
-                                            </mat-card>
-                                        </a>
+                                        <mat-card class="subhub-card">
+                                            <img mat-card-image src="{{ subHub.bannerImage.url }}" alt="{{subHub.title}}">
+                                            <mat-card-title class="card-title">
+                                                {{ subHub.title}}
+                                            </mat-card-title>
+                                            <mat-card-content class="related-item-summary">
+                                                {{ subHub.summary }}
+                                            </mat-card-content>
+                                            <mat-card-actions>
+                                                <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                                    <button mat-stroked-button>READ MORE</button>
+                                                </a>
+                                            </mat-card-actions>
+                                        </mat-card>
                                     </div>
                                 </div>
+                            </div>
                         </div>
 
-                        <!-- Realted Items and Keywords -->
+                        <!-- Related Items and Keywords -->
                         <div fxFlex="30%">
 
                             <!-- Related Items -->
-                            <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
+                            <div 
+                                style="margin-bottom: 20px;"
+                                *ngIf="subhub.relatedItemsCollection.items.length > 0">
                                 <h4>Related Items<hr/></h4>
-                                <div 
-                                    fxLayout="column wrap"
-                                    class="subhub-children">
-                                    <div *ngFor="let subHub of subhub.relatedItemsCollection.items">
-                                            <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                <div fxLayout="column wrap">
+                                    <div *ngFor="let relatedItem of subhub.relatedItemsCollection.items">
+                                            <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
                                                 <mat-card >
                                                     <span class="card-title">
-                                                        {{ subHub.title}}
+                                                        {{ relatedItem.title}}
                                                     </span> 
                                                     <br/>
                                                     <span class="related-item-summary">
-                                                        {{ subHub.summary }}
+                                                        {{ relatedItem.summary }}
                                                     </span>
                                                 </mat-card>
                                             </a>
@@ -170,15 +176,14 @@
                     <!-- Body Content -->
                     <!-- Main Body -->
                     <div 
-                        #subhubContent
-                        style="margin-bottom: 200px;" 
+                        class="main-body"
                         [innerHTML]="subhub.body.json | richTextToHTML">
                     </div>
             
                     <!-- SubHub Children -->
                     <div>
-                        <hr/>
                         <div 
+                            class="subhub-children"
                             fxLayout="row wrap"
                             fxLayoutGap="1%"
                             fxLayout.sm="column wrap"
@@ -186,18 +191,20 @@
                             <div
                                 fxFlex="24%"
                                 *ngFor="let subHub of subhub.subhubPagesCollection.items">
-                                <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
-                                    <mat-card >
-                                        <img mat-card-image src="{{subHub.bannerImage.url}}" alt="{{subHub.title}}">
-                                        <span class="card-title">
-                                            {{ subHub.title}}
-                                        </span> 
-                                        <br/>
-                                        <span class="related-item-summary">
-                                            {{ subHub.summary }}
-                                        </span>
-                                    </mat-card>
-                                </a>
+                                <mat-card class="subhub-card">
+                                    <img mat-card-image src="{{ subHub.bannerImage.url }}" alt="{{subHub.title}}">
+                                    <mat-card-title class="card-title">
+                                        {{ subHub.title}}
+                                    </mat-card-title>
+                                    <mat-card-content class="related-item-summary">
+                                        {{ subHub.summary }}
+                                    </mat-card-content>
+                                    <mat-card-actions>
+                                        <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                            <button mat-stroked-button>READ MORE</button>
+                                        </a>
+                                    </mat-card-actions>
+                                </mat-card>
                             </div>
                         </div>
                     </div>
@@ -206,17 +213,16 @@
                     <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
                         <h4>Related Items<hr/></h4>
                         <div 
-                            fxLayout="column wrap"
-                            class="subhub-children">
-                            <div *ngFor="let subHub of subhub.relatedItemsCollection.items">
-                                    <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                            fxLayout="column wrap">
+                            <div *ngFor="let relatedItem of subhub.relatedItemsCollection.items">
+                                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
                                         <mat-card >
                                             <span class="card-title">
-                                                {{ subHub.title}}
+                                                {{ relatedItem.title}}
                                             </span> 
                                             <br/>
                                             <span class="related-item-summary">
-                                                {{ subHub.summary }}
+                                                {{ relatedItem.summary }}
                                             </span>
                                         </mat-card>
                                     </a>

@@ -4,6 +4,9 @@ query SubHubChildPagesById ($id: String!) {
     title
     viewType
     summary
+    bannerImage {
+      url
+    }
     body {
       json
     }

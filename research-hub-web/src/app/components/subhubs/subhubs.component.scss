@@ -55,6 +55,11 @@ div.mat-card-avatar mat-icon {
     font-size: 25px;
 }
 
+// SubHub Body
+.main-body {
+    margin-bottom: 80px;
+}
+
 // SubHub Summary
 .subhub-summary {
     font-size: 20px; 
@@ -72,7 +77,7 @@ div.mat-card-avatar mat-icon {
 
 // SubHub Children
 .subhub-children {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 // Banner Styling
@@ -114,17 +119,49 @@ div.mat-card-avatar mat-icon {
 
 // Keyword
 .keyword-card {
-    background-color: $color-background;
+    color: #828282;
+    background: #F0F0F0;
     margin: 5px; 
-    padding: 10px; 
-    font-size: 12px;
+    padding: 5px 10px;
+    font-size: 12px; 
+    border-radius: 25px;
+    box-shadow: none !important;
 }
 
-// <hr> Tag
+// <hr />
 hr {
     background-color: #dbdbdb;
     border: none;
     height: 1px;
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+// SubHub Card
+.subhub-card .card-title {
+    font-size: 1rem;
+    color: black;
+    padding-top: 5px;
+}
+
+.subhub-card img {
+    object-fit: cover;
+    height: 19vh;
+}
+
+.subhub-card .related-item-summary {
+    white-space: nowrap;
+    color: gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subhub-card button {
+    color: map-get($hub-teal, 500);
+    border-color: map-get($hub-teal, 500);
+    margin-bottom: 10px;
+}
+
+.mat-card-actions {
+    text-align: center;
 }

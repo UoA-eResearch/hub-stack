@@ -125,12 +125,15 @@ hr {
     margin: 0 auto;
 }
 
-// Keyword Card
+// Keyword
 .keyword-card {
-    background-color: $color-background; 
+    color: #828282;
+    background: #F0F0F0;
     margin: 5px; 
-    padding: 10px; 
-    font-size: 12px;
+    padding: 5px 10px;
+    font-size: 12px; 
+    border-radius: 25px;
+    box-shadow: none !important;
 }
 
 // Related Item
