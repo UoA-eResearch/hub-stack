@@ -18,11 +18,16 @@ const getCredentials = (isFromFile) => {
             throw configResult.error;
         }
     }
+    let isPreviewEnv = false;
+    if (process.env.IS_PREVIEW_ENV !== undefined) {
+        isPreviewEnv = process.env.IS_PREVIEW_ENV;
+    }
     return {
         CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
         CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
         COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
-        COGNITO_REGION: process.env.COGNITO_REGION
+        COGNITO_REGION: process.env.COGNITO_REGION,
+        IS_PREVIEW_ENV: isPreviewEnv
     };
 };
 
@@ -74,7 +79,12 @@ const verifyJwt = (token, jwk) => {
 // Set up the schemas and initialize the server
 async function createServer(config) {
 
-    const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION, COGNITO_USER_POOL } = config;
+    const { CONTENTFUL_ACCESS_TOKEN,
+            CONTENTFUL_SPACE_ID,
+            COGNITO_REGION,
+            COGNITO_USER_POOL,
+            IS_PREVIEW_ENV
+        } = config;
 
     // Load remote schemas here
     contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
@@ -97,6 +107,11 @@ async function createServer(config) {
     // Loop over the protected types and create custom resolvers for them
     protectedTypes.forEach(type => {
         customQueryResolvers[type] = (root, args, context, info) => {
+            if (IS_PREVIEW_ENV) {
+                // Add preview as a query argument if we are in a preview
+                // environment.
+                args.preview = true;
+            }
             if (context.user) { // If the user is signed in, simply forward request
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
@@ -202,7 +217,6 @@ async function createServer(config) {
             context,
             info
         });
-
     // Merge all schemas (remote and local) here
     const schema = mergeSchemas({
         schemas: [
