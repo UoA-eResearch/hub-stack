@@ -16,53 +16,198 @@
     id="article-container" 
     *ngIf="article$ | async as article">
 
-    <!-- Dynamic Banner -->
-    <div 
-        class="banner-container"
-        [style]="article.displayBanner ? article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : 'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : article.viewType == 'View 2' ? 'display: none;' : ''">
+    <!-- Templates -->
+    <ng-template #dynamicBanner>
         <div 
-            class="banner-content" 
-            *ngIf="article.viewType == 'View 1'">
-            <h1 
-                class="article-title" 
-                ngClass.sm="article-title-sm" 
-                ngClass.xs="article-title-xs"
-                [style.color]="article.displayBanner ? 'white' : '#004059'">
-                    {{ article.title }}
-            </h1>
+            class="banner-container"
+            [style]="article.displayBanner ? article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : 'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : article.viewType == 'View 2' ? 'display: none;' : ''">
+        </div>  
+    </ng-template>
 
-            <h3 
-                class="article-summary" 
-                ngClass.sm="article-summary-sm" 
-                ngClass.xs="article-summary-xs" 
-                [style.color]="article.displayBanner ? 'white' : '#004059'">
-                    <small>{{ article.summary }}</small>
-            </h3>
+    <ng-template #breadcrumbs>
+        <div 
+            id="breadcrumbs" 
+            *ngIf="!!parentSubHubs" 
+            ngClass.xs="breadcrumbs-mobile">
+            <span 
+                class="breadcrumb-subhub" 
+                *ngFor="let subHub of parentSubHubs.slice().reverse()">
+                <a [routerLink]="'/subhub/' + subHub.slug">
+                    {{ subHub.title }}
+                </a>
+            </span>
+            <span id="breadcrumb-current-page">
+                {{ article.title }}
+            </span>
         </div>
-    </div>  
+    </ng-template>
 
-    <!-- Breadcrumbs -->
-    <div 
-        id="breadcrumbs" 
-        *ngIf="!!parentSubHubs" 
-        ngClass.xs="breadcrumbs-mobile">
-        <span 
-            class="breadcrumb-subhub" 
-            *ngFor="let subHub of parentSubHubs.slice().reverse()">
-            <a [routerLink]="'/subhub/' + subHub.slug">
-                {{ subHub.title }}
-            </a>
-        </span>
-        <span id="breadcrumb-current-page">
+    <ng-template #titleSummary>
+        <h1 
+            class="article-title" 
+            ngClass.sm="article-title-sm" 
+            ngClass.xs="article-title-xs">
             {{ article.title }}
-        </span>
-    </div>
+        </h1>
 
+        <h3 
+            class="article-summary" 
+            ngClass.sm="article-summary-sm" 
+            ngClass.xs="article-summary-xs">
+            {{ article.summary }}
+        </h3>
+    </ng-template>
+
+    <ng-template #articleBody>
+        <mat-card-content 
+            style="margin-bottom: 50px;" 
+            [innerHTML]="article.body.json | richTextToHTML">
+        </mat-card-content>
+    </ng-template>
+
+    <ng-template #keywords>
+        <h4>Keywords<hr/></h4>
+        <mat-card-subtitle 
+            fxLayout="row wrap"> 
+            <span *ngFor="let keyword of article.keywords">
+                <mat-card 
+                    fxLayout="row" 
+                    class="keyword-card">
+                        {{ keyword | humanCase }}
+                </mat-card>
+            </span>
+        </mat-card-subtitle>
+    </ng-template>
+
+    <ng-template #relatedOrganisations>
+        <div 
+            *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Organizations</h4>
+            <hr/>
+            <mat-nav-list 
+                style="margin-bottom: 20px;" 
+                *ngFor="let organisation of article.relatedOrganisationsCollection.items" 
+                class="collection">
+                
+                    <a [routerLink]="">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ organisation['title'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ organisation['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #relatedContacts>
+        <div 
+            *ngIf="article.relatedContactsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Contacts</h4>
+            <hr/>
+            <mat-nav-list 
+                style="margin-bottom: 20px;" 
+                *ngFor="let contact of article.relatedContactsCollection.items" 
+                class="collection">
+                
+                    <a [routerLink]="">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ contact['name'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ contact['jobTitle'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #relatedItems>
+        <div 
+            *ngIf="article.relatedItemsCollection.items.length > 0" 
+            id="you-might-be-interested-in">
+            <h4>You might also be interested in<hr/></h4>
+
+            <!-- Related Items List -->
+            <mat-nav-list 
+                style="margin-bottom: 20px;" 
+                *ngFor="let relatedItem of article.relatedItemsCollection.items" 
+                class="collection">
+                
+                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ relatedItem['title'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ relatedItem['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #officialDocuments>
+        <div 
+            *ngIf="article.officialDocumentsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Official Documents</h4>
+            <hr/>
+
+            <mat-nav-list 
+                style="margin-bottom: 20px;" 
+                *ngFor="let document of article.officialDocumentsCollection.items" 
+                class="collection">
+                
+                    <a href={{document.url}} target="_blank">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ document['title'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ document['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+    
+    
+    
+    
     <!-- View Switcher -->
-    <div [ngSwitch]="article.viewType">
+    <div [ngSwitch]="article.viewType"> 
 
         <!-- View 1 -->
         <div *ngSwitchCase="'View 1'">
+
+            <!-- Dynamic Banner -->
+            <div 
+                class="banner-container"
+                [style]="article.displayBanner ? article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : 'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : article.viewType == 'View 2' ? 'display: none;' : ''">
+                <div 
+                    class="banner-content" 
+                    *ngIf="article.viewType == 'View 1'">
+                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
+                </div>
+            </div> 
+
+            <!-- Breadcrumbs -->
+            <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+
             <div 
                 fxLayout="row wrap" 
                 fxLayout.sm="column wrap"
@@ -75,24 +220,11 @@
                     fxFlexOrder="2">
 
                     <!-- Article Body -->
-                    <mat-card-content 
-                        style="margin-bottom: 50px;" 
-                        [innerHTML]="article.body.json | richTextToHTML">
-                    </mat-card-content>
+                    <ng-container *ngTemplateOutlet="articleBody"></ng-container>
 
                     <!-- Keywords -->
-                    <h4>Keywords<hr/></h4>
+                    <ng-container *ngTemplateOutlet="keywords"></ng-container>
 
-                    <mat-card-subtitle 
-                        fxLayout="row wrap"> 
-                        <span *ngFor="let keyword of article.keywords">
-                            <mat-card 
-                                fxLayout="row" 
-                                class="keyword-card">
-                                    {{ keyword | humanCase }}
-                            </mat-card>
-                        </span>
-                    </mat-card-subtitle>
                 </div>
 
                 <!-- Extra Links -->
@@ -102,80 +234,14 @@
                     fxFlexOrder="1">
 
                     <!-- Official Documents -->
-                    <div 
-                        *ngIf="article.officialDocumentsCollection.items.length > 0" 
-                        class="column-header">
-                        <h4>Official Documents</h4>
-                        <hr/>
-
-                        <mat-nav-list 
-                            style="margin-bottom: 20px;" 
-                            *ngFor="let document of article.officialDocumentsCollection.items" 
-                            class="collection">
-                            
-                                <a href={{document.url}} target="_blank">
-                                    <mat-card>
-                                        <span class="card-title">
-                                            {{ document['title'] }}
-                                        </span> 
-                                        <br/>
-                                        <span class="related-item-summary">
-                                            {{ (document['summary']) }}
-                                        </span>
-                                    </mat-card>
-                                </a>
-                        </mat-nav-list>
-                    </div>
+                    <ng-container *ngTemplateOutlet="officialDocuments"></ng-container>
 
                     <!-- Contacts -->
-                    <div 
-                        *ngIf="article.relatedContactsCollection.items.length > 0" 
-                        class="column-header">
-                        <h4>Contacts</h4>
-                        <hr/>
-                        <mat-nav-list 
-                            style="margin-bottom: 20px;" 
-                            *ngFor="let contact of article.relatedContactsCollection.items" 
-                            class="collection">
-                            
-                                <a [routerLink]="">
-                                    <mat-card>
-                                        <span class="card-title">
-                                            {{ contact['name'] }}
-                                        </span> 
-                                        <br/>
-                                        <span class="related-item-summary">
-                                            {{ (contact['jobTitle']) }}
-                                        </span>
-                                    </mat-card>
-                                </a>
-                        </mat-nav-list>
-                    </div>
+                    <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
 
                     <!-- Organizations -->
-                    <div 
-                        *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
-                        class="column-header">
-                        <h4>Organizations</h4>
-                        <hr/>
-                        <mat-nav-list 
-                            style="margin-bottom: 20px;" 
-                            *ngFor="let organisation of article.relatedOrganisationsCollection.items" 
-                            class="collection">
-                            
-                                <a [routerLink]="">
-                                    <mat-card>
-                                        <span class="card-title">
-                                            {{ organisation['title'] }}
-                                        </span> 
-                                        <br/>
-                                        <span class="related-item-summary">
-                                            {{ (organisation['summary']) }}
-                                        </span>
-                                    </mat-card>
-                                </a>
-                        </mat-nav-list>
-                    </div>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
+
                 </div>
 
                 <!-- Related items -->
@@ -183,37 +249,20 @@
                     fxLayout="column" 
                     fxFlex="20%"
                     fxFlexOrder="3">
-
-                    <div 
-                        *ngIf="article.relatedItemsCollection.items.length > 0" 
-                        id="you-might-be-interested-in">
-                        <h4>You might also be interested in<hr/></h4>
-
-                        <!-- Related Items List -->
-                        <mat-nav-list 
-                            style="margin-bottom: 20px;" 
-                            *ngFor="let relatedItem of article.relatedItemsCollection.items" 
-                            class="collection">
-                            
-                                <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                                    <mat-card>
-                                        <span class="card-title">
-                                            {{ relatedItem['title'] }}
-                                        </span> 
-                                        <br/>
-                                        <span class="related-item-summary">
-                                            {{ (relatedItem['summary']) }}
-                                        </span>
-                                    </mat-card>
-                                </a>
-                        </mat-nav-list>
-                    </div>
+                    <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
                 </div>
             </div>
         </div>
 
         <!-- View 2 -->
         <div *ngSwitchCase="'View 2'">
+
+            <!-- Dynamic Banner -->
+            <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
+
+            <!-- Breadcrumbs -->
+            <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+
             <div 
                 fxLayout="row wrap" 
                 fxLayout.sm="column wrap"
@@ -222,27 +271,13 @@
 
                 <!-- Article Title and Summary -->
                 <div fxFlex="70%">
-                    <h1 
-                        class="article-title" 
-                        ngClass.sm="article-title-sm" 
-                        ngClass.xs="article-title-xs">
-                        {{ article.title }}
-                    </h1>
-
-                    <h3 
-                        class="article-summary" 
-                        ngClass.sm="article-summary-sm" 
-                        ngClass.xs="article-summary-xs">
-                        {{ article.summary }}
-                    </h3>
+                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
 
                     <hr style="margin: 25px 0px;"/>
 
                     <!-- Article Body -->
-                    <mat-card-content 
-                        style="margin-bottom: 50px;" 
-                        [innerHTML]="article.body.json | richTextToHTML">
-                    </mat-card-content>
+                    <ng-container *ngTemplateOutlet="articleBody"></ng-container>
+
                 </div>
 
                 <!-- Extra Links -->
@@ -251,134 +286,27 @@
                     fxFlex="25%">
 
                     <!-- Official Documents -->
-                    <div 
-                        *ngIf="article.officialDocumentsCollection.items.length > 0" 
-                        class="column-header">
-                        <h4>Official Documents</h4>
-                        <hr/>
-
-                        <mat-nav-list 
-                            style="margin-bottom: 20px;" 
-                            *ngFor="let document of article.officialDocumentsCollection.items" 
-                            class="collection">
-                            
-                                <a href={{document.url}} target="_blank">
-                                    <mat-card>
-                                        <span class="card-title">
-                                            {{ document['title'] }}
-                                        </span> 
-                                        <br/>
-                                        <span class="related-item-summary">
-                                            {{ (document['summary']) }}
-                                        </span>
-                                    </mat-card>
-                                </a>
-                        </mat-nav-list>
-                    </div>
+                    <ng-container *ngTemplateOutlet="officialDocuments"></ng-container>
 
                     <!-- Contacts -->
-                    <div 
-                        *ngIf="article.relatedContactsCollection.items.length > 0" 
-                        class="column-header">
-                        <h4>Contacts</h4>
-                        <hr/>
-                        <mat-nav-list 
-                            style="margin-bottom: 20px;" 
-                            *ngFor="let contact of article.relatedContactsCollection.items" 
-                            class="collection">
-                            
-                                <a [routerLink]="">
-                                    <mat-card>
-                                        <span class="card-title">
-                                            {{ contact['name'] }}
-                                        </span> 
-                                        <br/>
-                                        <span class="related-item-summary">
-                                            {{ (contact['jobTitle']) }}
-                                        </span>
-                                    </mat-card>
-                                </a>
-                        </mat-nav-list>
-                    </div>
+                    <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
 
                     <!-- Organizations -->
-                    <div 
-                        *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
-                        class="column-header">
-                        <h4>Organizations</h4>
-                        <hr/>
-                        <mat-nav-list 
-                            style="margin-bottom: 20px;" 
-                            *ngFor="let organisation of article.relatedOrganisationsCollection.items" 
-                            class="collection">
-                            
-                                <a [routerLink]="">
-                                    <mat-card>
-                                        <span class="card-title">
-                                            {{ organisation['title'] }}
-                                        </span> 
-                                        <br/>
-                                        <span class="related-item-summary">
-                                            {{ (organisation['summary']) }}
-                                        </span>
-                                    </mat-card>
-                                </a>
-                        </mat-nav-list>
-                    </div>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
+
                 </div>
             </div>
 
             <!-- Keywords -->
-            <h4>Keywords<hr/></h4>
+            <ng-container *ngTemplateOutlet="keywords"></ng-container>
 
-            <mat-card-subtitle 
-                fxLayout="row wrap"> 
-                <span   
-                    *ngFor="let keyword of article.keywords">
-                    <mat-card 
-                        fxLayout="row" 
-                        class="keyword-card">
-                        {{ keyword | humanCase }}
-                    </mat-card>
-                </span>
-            </mat-card-subtitle>
             <br/>
 
             <!-- Related Items -->
-            <div
-                *ngIf="article.relatedItemsCollection.items.length > 0" 
-                id="you-might-be-interested-in">
-                <h4>You might also be interested in<hr/></h4>
-        
-                <mat-nav-list 
-                    *ngFor="let relatedItem of article.relatedItemsCollection.items" 
-                    class="collection">
-                        <mat-card 
-                            class=related-item-card 
-                            ngClass.xs="related-item-card-mobile">
-                            <span class="card-title">
-                                {{ relatedItem['title'] }}
-                            </span> 
-                            <br/>
-                            <span class="related-item-summary">
-                                {{ relatedItem['summary'] }}
-                            </span>
-                        </mat-card>
-                </mat-nav-list>
-            </div>
+            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+
         </div>
     </div>
+
     <!-- End of View Switcher -->
 </div>
-
-<!-- 
-<mat-expansion-panel id="json">
-    <mat-expansion-panel-header>
-        <mat-panel-title>
-            JSON Result
-        </mat-panel-title>
-        <mat-panel-description>Click to see raw JSON</mat-panel-description>
-    </mat-expansion-panel-header>
-    <pre><code>{{ article | json}}</code></pre>
-</mat-expansion-panel> 
--->
