@@ -134,6 +134,8 @@ pipeline {
                                 dir("research-hub-web") {
                                     echo 'Building for production'
                                     sh "npm run build -- -c ${BRANCH_NAME}"
+                                    echo 'Building preview for production'
+                                    sh "npm run build -- -c ${BRANCH_NAME}-preview --output-path www-preview"
                                 }
                             }
                         }
@@ -240,10 +242,13 @@ pipeline {
                                 script {
                                     echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
                                     def s3BucketName = 'research-hub-web'
+                                    def previewS3BucketName = 'research-hub-web-preview'
 
                                     dir("research-hub-web") {
                                         sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
                                         echo "Sync complete"
+                                        sh "aws s3 sync www-preview s3://${previewS3BucketName} --delete --profile ${awsProfile}"
+                                        echo "Preview sync complete"
                                     }
                                 }
                             }
@@ -260,9 +265,16 @@ pipeline {
                                         'E20R95KPAKSWTG'
                                     )
 
+                                    def previewAwsCloudFrontDistroId = (
+                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'nonprod' ? '' :
+                                        'E2GBENCKM7YT9Q'                                    )
+
                                     echo "Cloudfront distro id: ${awsCloudFrontDistroId}"
                                     sh "aws cloudfront create-invalidation --distribution-id ${awsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
                                     echo "Invalidation started"
+                                    sh "aws cloudfront create-invalidation --distribution-id ${previewAwsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
+                                    echo "Preview invalidation started"
                                 }
                             }
                         }

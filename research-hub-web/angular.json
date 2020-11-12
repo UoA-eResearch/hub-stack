@@ -107,6 +107,29 @@
                   "with": "src/environments/environment.sandbox.ts"
                 }
               ]
+            },
+            "sandbox-preview": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.sandbox-preview.ts"
+                }
+              ]
             }
           }
         },
@@ -121,6 +144,9 @@
             },
             "sandbox": {
               "browserTarget": "research-hub-web:build:sandbox"
+            },
+            "sandbox-preview": {
+              "browserTarget": "research-hub-web:build:sandbox-preview"
             },
             "nonprod": {
               "browserTarget": "research-hub-web:build:nonprod"
