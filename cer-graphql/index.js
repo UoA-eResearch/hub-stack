@@ -116,6 +116,9 @@ async function createServer(config) {
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
 
+                if (IS_PREVIEW_ENV) {
+                    throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
+                }
                 // GraphQL introspection fields, these are used by GraphQL to query metadata
                 const GRAPHQL_INTROSPECTION_FIELDS = [
                     '__Schema',
