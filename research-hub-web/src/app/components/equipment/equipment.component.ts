@@ -29,9 +29,7 @@ export class EquipmentComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.route.params.subscribe(params => {
-      this.slug = params['slug'];
-    });
+    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
     /**
      * If this.slug is defined, we're loading an individual article,
@@ -43,8 +41,6 @@ export class EquipmentComponent implements OnInit {
     } else {
       this.allEquipment$ = this.getAllEquipment();
     }
-
-
   }
 
   /**

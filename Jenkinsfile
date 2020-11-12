@@ -30,11 +30,13 @@ pipeline {
                     env.awsRegion = "ap-southeast-2"
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
+                        env.BRANCH_NAME = 'sandbox'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
                         env.awsRole = 'devops'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
@@ -50,11 +52,13 @@ pipeline {
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
+                        env.BRANCH_NAME = 'sandbox'
                         env.awsAccountId = '416527880812'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsRole = 'devops'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
@@ -188,8 +192,7 @@ pipeline {
                             sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh "npx webdriver-manager update --versions.chrome=\$(google-chrome --version | grep -ioE \"[0-9.]{10,20}\")"
-                            sh "npm run e2e-ci -- -c ${BRANCH_NAME}"
+                            sh "npm run e2e-ci"
                         }
                     }
                 }

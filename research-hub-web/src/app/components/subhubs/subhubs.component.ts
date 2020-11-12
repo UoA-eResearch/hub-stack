@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from "rxjs";
-import { pluck, flatMap } from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { pluck, flatMap } from 'rxjs/operators';
 import {
   AllSubHubChildPagesGQL,
   SubHubCollection,
   SubHub
-} from "@graphql/schema";
-import { CerGraphqlService } from "@services/cer-graphql.service";
+} from '@graphql/schema';
+import { CerGraphqlService } from '@services/cer-graphql.service';
 
 
 @Component({
@@ -29,10 +29,11 @@ export class SubhubsComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.route.params.subscribe((params) => {
-      // test slug: landing-page-for-a-sub-hub
-      this.slug = params['slug'];
-    });
+    /**
+     * Check if there is a slug URL parameter present. If so, this is
+     * passed to the getArticleBySlug() method.
+     */
+    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
     if (!!this.slug) {
       this.subhub$ = this.getSubHub(this.slug);
@@ -50,7 +51,7 @@ export class SubhubsComponent implements OnInit {
     try {
       return this.AllSubHubChildPagesGQL
         .fetch()
-        .pipe(pluck("data", "subHubCollection")) as Observable<SubHubCollection>;
+        .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>;
     } catch (e) {
       console.error('Error loading subhub body info and children')
     }

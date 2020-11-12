@@ -2,7 +2,7 @@
 # Query services are also generated from the files located in src/app/graphql/queries/*.graphql
 # A new file can be generated at any time by running: npm run generate
 overwrite: true
-schema: http://localhost:4000 # URL to fetch the schema from
+schema: ${SCHEMA_PATH:'http://localhost:4000'} # URL to fetch the schema from
 documents: src/app/graphql/**/*.graphql # Our predefined queries, used to generate services
 documentMode: documentNode
 config: 
