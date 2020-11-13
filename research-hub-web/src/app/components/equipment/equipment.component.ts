@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { EquipmentCollection, AllEquipmentGQL, AllEquipmentQuery, AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery, GetEquipmentBySlugGQL, Equipment } from '@graphql/schema';
 import { Observable } from 'rxjs';
-import { pluck, tap, flatMap } from 'rxjs/operators';
+import { pluck, tap, flatMap, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { CerGraphqlService } from '@services/cer-graphql.service';
+import { 
+    EquipmentCollection, 
+    AllEquipmentGQL, 
+    AllEquipmentQuery, 
+    AllSearchableContentPublicFieldsGQL, 
+    AllSearchableContentPublicFieldsQuery, 
+    GetEquipmentBySlugGQL,
+    GetEquipmentByIdGQL,
+    Equipment 
+} from '../../graphql/schema';
+import { CerGraphqlService } from '../../services/cer-graphql.service';
+
 
 @Component({
   selector: 'app-equipment',
@@ -15,12 +25,17 @@ export class EquipmentComponent implements OnInit {
   public allEquipment$: Observable<EquipmentCollection>;
   public equipment$: Observable<Equipment>;
   public slug: string;
+  // public assets: Array<any>;
+  // public inlineEntry: Array<any>;
+  // public blockEntry: Array<any>;
+  // public hyperlinkEntry: Array<any>;
   public parentSubHubs;
 
   constructor(
     public route: ActivatedRoute,
     public allEquipmentGQL: AllEquipmentGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
+    public getEquipmentByIDGQL: GetEquipmentByIdGQL,
     public cerGraphQLService: CerGraphqlService
   ) { }
 
@@ -29,22 +44,26 @@ export class EquipmentComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.route.params.subscribe(params => {
-      this.slug = params['slug'];
-    });
+    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
     /**
      * If this.slug is defined, we're loading an individual article,
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
-      this.equipment$ = this.getEquipmentBySlug(this.slug);
+      this.getEquipmentBySlug(this.slug).subscribe(data => {
+        this.equipment$ = this.getEquipmentByID(data.sys.id);
+        // this.equipment$.subscribe(data => {
+        //   this.assets = data.body.links.assets.block;
+        //   this.inlineEntry = data.body.links.entries.inline;
+        //   this.blockEntry = data.body.links.entries.block;
+        //   this.hyperlinkEntry = data.body.links.entries.hyperlink;
+        // });
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.allEquipment$ = this.getAllEquipment();
     }
-
-
   }
 
   /**
@@ -77,5 +96,15 @@ export class EquipmentComponent implements OnInit {
     } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
   }
 
-
+  /**
+   * Function that returns an individual article from the ArticleCollection by it's ID
+   * as an observable of type Article. This is then unwrapped with the async pipe.
+   * ID is retrieved by subscribing to 'getArticleBySlug'.
+   */
+  public getEquipmentByID(id: string): Observable<Equipment> {
+    try {
+      return this.getEquipmentByIDGQL.fetch({id: id})
+        .pipe(map(x => x.data.equipment)) as unknown as Observable<Equipment>;
+    } catch (e) { console.error(`Error loading article ${id}:`, e); }
+  }
 }
