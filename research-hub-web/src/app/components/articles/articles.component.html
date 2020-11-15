@@ -39,14 +39,16 @@
         <h1 
             class="article-title" 
             ngClass.sm="article-title-sm" 
-            ngClass.xs="article-title-xs">
+            ngClass.xs="article-title-xs"
+            [style.color]="article.displayBanner ? 'white' : ''">
             {{ article.title }}
         </h1>
 
         <h3 
             class="article-summary" 
             ngClass.sm="article-summary-sm" 
-            ngClass.xs="article-summary-xs">
+            ngClass.xs="article-summary-xs"
+            [style.color]="article.displayBanner ? 'white' : ''">
             {{ article.summary }}
         </h3>
     </ng-template>

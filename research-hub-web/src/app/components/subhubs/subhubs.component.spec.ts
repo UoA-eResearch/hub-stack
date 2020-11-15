@@ -395,8 +395,8 @@ describe('SubhubsComponent', () => {
         BrowserAnimationsModule,
         RouterModule.forRoot([])
       ], providers: [
-        AppComponentService,
         AllSubHubChildPagesGQL,
+        AppComponentService,
         AllContentItemParentSubHubsGQL
       ]
     })
@@ -411,11 +411,11 @@ describe('SubhubsComponent', () => {
   });
 
   afterEach(() => {
-    controller.verify();
     fixture.destroy();
+    controller.verify();
   });
 
-  it('should create', () => {
+  it('Should create', () => {
     expect(component).toBeTruthy();
   });
 
@@ -437,14 +437,14 @@ describe('SubhubsComponent', () => {
 
     it('Should get all SubHubs', async () => {
       spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);
-      component.getAllSubHubs('').subscribe(res => {
+      component.getAllSubHubs(component.slug).subscribe(res => {
         expect(res).toBeTruthy();
       });
     })
 
-    it('Should get all SubHubs', async () => {
+    it('Should get a single SubHub', async () => {
       spyOn(component, 'getSubHub').and.returnValue(currentSubHubData$);
-      component.getSubHub('').subscribe(res => {
+      component.getSubHub(component.slug).subscribe(res => {
         expect(res).toBeTruthy();
       });
     })

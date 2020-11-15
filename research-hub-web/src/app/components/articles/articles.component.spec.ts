@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppComponentService } from '../../app.component.service';
+
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Params } from '@services/research-hub-api.service';
 import { MatExpansionPanelContent } from '@angular/material/expansion';
+import { AppComponentService } from '@app/app.component.service';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
