@@ -5,22 +5,29 @@
   "scripts": {
     "ng": "ng",
     "dev": "concurrently \"npm run graphql-server-watch\" \"sleep 3 && npm run generate-watch\" \"sleep 3 && npm start\" \"sleep 3 && npm run test-watch\"",
+    "qdev": "concurrently \"npm run graphql-server-watch\" \"sleep 3 && npm run generate-watch\" \"sleep 3 && npm start\"",
     "start": "ng serve",
     "prestart": "npm run generate",
     "build": "ng build",
+    "prebuild": "npm run generate",
     "postinstall": "ngcc",
     "test": "ng test",
     "test-ci": "ng test --watch=false",
     "test-watch": "ng test --watch=true",
     "lint": "ng lint",
-    "e2e": "ng e2e",
     "bundle-report": "ng build --stats-json && webpack-bundle-analyzer www/stats.json",
-    "e2e-ci": "ng e2e --webdriverUpdate=false",
     "testrunner": "./test.sh",
     "generate": "graphql-codegen",
     "generate-watch": "graphql-codegen --watch './src/app/graphql/queries/*.graphql'",
     "graphql-server": "nodemon ../cer-graphql/index.js",
-    "graphql-server-watch": "npm run dev --prefix ../cer-graphql"
+    "graphql-server-watch": "npm run dev --prefix ../cer-graphql",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "e2e": "cypress run -q --record=false",
+    "e2e-gui": "npm run cy:open",
+    "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
+    "e2e-serve": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
+    "e2e-serve-gui": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first"
   },
   "private": true,
   "dependencies": {
@@ -81,6 +88,7 @@
     "change-case": "^4.1.1",
     "codelyzer": "^6.0.0",
     "concurrently": "^5.2.0",
+    "cypress": "^5.5.0",
     "fibers": "^5.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -91,14 +99,15 @@
     "karma-jasmine-html-reporter": "^1.5.0",
     "karma-verbose-reporter": "0.0.6",
     "nodemon": "^2.0.4",
-    "protractor": "^7.0.0",
     "sass": "^1.26.9",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.9.7",
+    "wait-on": "^5.2.0",
     "webdriver-manager": "^12.1.7"
   },
   "browser": {
     "crypto": false
   }
+  
 }

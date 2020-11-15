@@ -22,12 +22,10 @@ export class ArticlesComponent implements OnInit {
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
   public slug: string;
-
   // public assets: Array<any>;
   // public inlineEntry: Array<any>;
   // public blockEntry: Array<any>;
   // public hyperlinkEntry: Array<any>;
-
   public parentSubHubs;
 
   constructor(
@@ -44,9 +42,8 @@ export class ArticlesComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.route.params.subscribe(params => {
-      this.slug = params['slug'];
-    });
+    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
+
 
     /**
      * If this.slug is defined, we're loading an individual article,
@@ -55,15 +52,12 @@ export class ArticlesComponent implements OnInit {
     if (!!this.slug) {
       this.getArticleBySlug(this.slug).subscribe(data => {
         this.article$ = this.getArticleByID(data.sys.id);
-        this.article$.subscribe(data => {
-          this.appComponentService.setTitle(data.title);
-
-          // this.assets = data.body.links.assets.block;
-          // this.inlineEntry = data.body.links.entries.inline;
-          // this.blockEntry = data.body.links.entries.block;
-          // this.hyperlinkEntry = data.body.links.entries.hyperlink;
-          
-        });
+        // this.article$.subscribe(data => {
+        //   this.assets = data.body.links.assets.block;
+        //   this.inlineEntry = data.body.links.entries.inline;
+        //   this.blockEntry = data.body.links.entries.block;
+        //   this.hyperlinkEntry = data.body.links.entries.hyperlink;
+        // });
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {

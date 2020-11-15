@@ -1,11 +1,4 @@
 <!-- If we're displaying a collection of articles-->
-<!-- Static Banner -->
-<div 
-    *ngIf="!article$"
-    class="banner-container"
-    [style.background]="'url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)'">
-</div>
-
 <app-collection-list 
     *ngIf="allArticles$ | async as allArticles" 
     [collection]="allArticles">
@@ -66,7 +59,7 @@
     </ng-template>
 
     <ng-template #keywords>
-        <h4>Keywords<hr/></h4>
+        <h4 id="keywords">Keywords<hr/></h4>
         <mat-card-subtitle 
             fxLayout="row wrap"> 
             <span *ngFor="let keyword of article.keywords">

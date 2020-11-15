@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router} from '@angular/router';
-import { Observable } from "rxjs";
-import { pluck, map, flatMap } from "rxjs/operators";
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { pluck, flatMap } from 'rxjs/operators';
 import {
   AllSubHubChildPagesGQL,
   SubHubChildPagesByIdGQL,
@@ -26,7 +26,6 @@ export class SubhubsComponent implements OnInit {
   public slug: string;
 
   constructor(
-    private router: Router,
     private route: ActivatedRoute,
     public AllSubHubChildPagesGQL: AllSubHubChildPagesGQL,
     public SubHubChildPagesByIdGQL: SubHubChildPagesByIdGQL,
@@ -34,16 +33,17 @@ export class SubhubsComponent implements OnInit {
     public appComponentService: AppComponentService
   ) { }
 
-  internalNavigate(path) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.navigate([path]);
-  }
+  // internalNavigate(path) {
+  //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  //   this.router.navigate([path]);
+  // }
 
   async ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.slug = params['slug'];
-      this.slug ? this.internalNavigate('/subhub/' + this.slug) : this.internalNavigate('/subhubs');
-    });
+    /**
+     * Check if there is a slug URL parameter present. If so, this is
+     * passed to the getArticleBySlug() method.
+     */
+    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
     if (!!this.slug) {
       this.subhub$ = this.getSubHub(this.slug);
@@ -65,7 +65,7 @@ export class SubhubsComponent implements OnInit {
     try {
       return this.AllSubHubChildPagesGQL
         .fetch()
-        .pipe(pluck("data", "subHubCollection")) as Observable<SubHubCollection>;
+        .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>;
     } catch (e) {
       console.error('Error loading subhub body info and children')
     }
