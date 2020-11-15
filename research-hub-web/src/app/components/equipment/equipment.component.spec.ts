@@ -12,7 +12,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
-  let appComponentService: AppComponentService;
   let fixture: ComponentFixture<EquipmentComponent>;
   let controller: ApolloTestingController;
 

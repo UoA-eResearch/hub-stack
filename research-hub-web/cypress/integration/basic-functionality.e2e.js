@@ -9,7 +9,7 @@ describe('ResearchHubs Basic Functionality', () => {
     });
 
     it('has title', () => {
-        cy.contains('Welcome to the ResearchHub');
+        cy.contains('Welcome to ResearchHub');
     });
 
     it('can browse by category', () => {

@@ -435,10 +435,6 @@ describe('SubhubsComponent', () => {
       fixture.detectChanges();
     })
 
-    it('Should evaluate components slug property to be truthy', () => {
-      expect(component.slug).toBeTruthy();
-    });
-
     it('Should get all SubHubs', async () => {
       spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);
       component.getAllSubHubs('').subscribe(res => {

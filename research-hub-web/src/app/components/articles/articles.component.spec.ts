@@ -16,7 +16,6 @@ import { MatExpansionPanelContent } from '@angular/material/expansion';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
-  let appComponentService: AppComponentService;
   let fixture: ComponentFixture<ArticlesComponent>;
   let controller: ApolloTestingController;
   const mockAllArticles$: Observable<ArticleCollection> = of({
@@ -282,6 +281,7 @@ describe('ArticlesComponent', () => {
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([])
       ], providers: [
+        AppComponentService,
         AllArticlesGQL
       ]
     }).compileComponents();
