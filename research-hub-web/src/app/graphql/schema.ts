@@ -33,10 +33,10 @@ export type Query = {
   __typename?: 'Query';
   asset: Maybe<Asset>;
   assetCollection: Maybe<AssetCollection>;
-  testContentType: Maybe<TestContentType>;
-  testContentTypeCollection: Maybe<TestContentTypeCollection>;
   subHub: Maybe<SubHub>;
   subHubCollection: Maybe<SubHubCollection>;
+  testContentType: Maybe<TestContentType>;
+  testContentTypeCollection: Maybe<TestContentTypeCollection>;
   article: Maybe<Article>;
   articleCollection: Maybe<ArticleCollection>;
   equipment: Maybe<Equipment>;
@@ -71,23 +71,6 @@ export type QueryAssetCollectionArgs = {
 };
 
 
-export type QueryTestContentTypeArgs = {
-  id: Scalars['String'];
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-
-export type QueryTestContentTypeCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-  where: Maybe<TestContentTypeFilter>;
-  order: Maybe<Array<Maybe<TestContentTypeOrder>>>;
-};
-
-
 export type QuerySubHubArgs = {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
@@ -102,6 +85,23 @@ export type QuerySubHubCollectionArgs = {
   locale: Maybe<Scalars['String']>;
   where: Maybe<SubHubFilter>;
   order: Maybe<Array<Maybe<SubHubOrder>>>;
+};
+
+
+export type QueryTestContentTypeArgs = {
+  id: Scalars['String'];
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type QueryTestContentTypeCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<TestContentTypeFilter>;
+  order: Maybe<Array<Maybe<TestContentTypeOrder>>>;
 };
 
 
@@ -471,11 +471,11 @@ export type SubHub = Entry & {
   bannerImage: Maybe<Asset>;
   subhubPagesCollection: Maybe<SubHubSubhubPagesCollection>;
   externalSubHubPage: Maybe<SubHubExternalSubHubPage>;
+  relatedItemsCollection: Maybe<SubHubRelatedItemsCollection>;
   keywords: Maybe<Array<Maybe<Scalars['String']>>>;
   mediaCollection: Maybe<AssetCollection>;
   ssoProtected: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
-  relatedItemsCollection: Maybe<SubHubRelatedItemsCollection>;
   viewType: Maybe<Scalars['String']>;
 };
 
@@ -579,6 +579,20 @@ export type SubHubExternalSubHubPageArgs = {
  * guidance.  [See type
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
+export type SubHubRelatedItemsCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
 export type SubHubKeywordsArgs = {
   locale: Maybe<Scalars['String']>;
 };
@@ -616,20 +630,6 @@ export type SubHubSsoProtectedArgs = {
  * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
  */
 export type SubHubSearchableArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubRelatedItemsCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
@@ -2722,6 +2722,78 @@ export enum AssetOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
+export type SubHubFilter = {
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  bannerImage_exists: Maybe<Scalars['Boolean']>;
+  subhubPagesCollection_exists: Maybe<Scalars['Boolean']>;
+  externalSubHubPage_exists: Maybe<Scalars['Boolean']>;
+  relatedItemsCollection_exists: Maybe<Scalars['Boolean']>;
+  keywords_exists: Maybe<Scalars['Boolean']>;
+  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  mediaCollection_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  viewType_exists: Maybe<Scalars['Boolean']>;
+  viewType: Maybe<Scalars['String']>;
+  viewType_not: Maybe<Scalars['String']>;
+  viewType_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  viewType_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  viewType_contains: Maybe<Scalars['String']>;
+  viewType_not_contains: Maybe<Scalars['String']>;
+  OR: Maybe<Array<Maybe<SubHubFilter>>>;
+  AND: Maybe<Array<Maybe<SubHubFilter>>>;
+};
+
+export enum SubHubOrder {
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+  SummaryAsc = 'summary_ASC',
+  SummaryDesc = 'summary_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SsoProtectedAsc = 'ssoProtected_ASC',
+  SsoProtectedDesc = 'ssoProtected_DESC',
+  SearchableAsc = 'searchable_ASC',
+  SearchableDesc = 'searchable_DESC',
+  ViewTypeAsc = 'viewType_ASC',
+  ViewTypeDesc = 'viewType_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
 /** [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/testContentType) */
 export type TestContentType = Entry & {
   __typename?: 'TestContentType';
@@ -2805,72 +2877,6 @@ export type TestContentTypeCollection = {
   items: Array<Maybe<TestContentType>>;
 };
 
-export type SubHubFilter = {
-  sys: Maybe<SysFilter>;
-  title_exists: Maybe<Scalars['Boolean']>;
-  title: Maybe<Scalars['String']>;
-  title_not: Maybe<Scalars['String']>;
-  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains: Maybe<Scalars['String']>;
-  title_not_contains: Maybe<Scalars['String']>;
-  summary_exists: Maybe<Scalars['Boolean']>;
-  summary: Maybe<Scalars['String']>;
-  summary_not: Maybe<Scalars['String']>;
-  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains: Maybe<Scalars['String']>;
-  summary_not_contains: Maybe<Scalars['String']>;
-  slug_exists: Maybe<Scalars['Boolean']>;
-  slug: Maybe<Scalars['String']>;
-  slug_not: Maybe<Scalars['String']>;
-  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains: Maybe<Scalars['String']>;
-  slug_not_contains: Maybe<Scalars['String']>;
-  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
-  ssoProtected_exists: Maybe<Scalars['Boolean']>;
-  ssoProtected: Maybe<Scalars['Boolean']>;
-  ssoProtected_not: Maybe<Scalars['Boolean']>;
-  searchable_exists: Maybe<Scalars['Boolean']>;
-  searchable: Maybe<Scalars['Boolean']>;
-  searchable_not: Maybe<Scalars['Boolean']>;
-  viewType_exists: Maybe<Scalars['Boolean']>;
-  viewType: Maybe<Scalars['String']>;
-  viewType_not: Maybe<Scalars['String']>;
-  viewType_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  viewType_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  viewType_contains: Maybe<Scalars['String']>;
-  viewType_not_contains: Maybe<Scalars['String']>;
-  OR: Maybe<Array<Maybe<SubHubFilter>>>;
-  AND: Maybe<Array<Maybe<SubHubFilter>>>;
-};
-
-export enum SubHubOrder {
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-  SummaryAsc = 'summary_ASC',
-  SummaryDesc = 'summary_DESC',
-  SlugAsc = 'slug_ASC',
-  SlugDesc = 'slug_DESC',
-  SsoProtectedAsc = 'ssoProtected_ASC',
-  SsoProtectedDesc = 'ssoProtected_DESC',
-  SearchableAsc = 'searchable_ASC',
-  SearchableDesc = 'searchable_DESC',
-  ViewTypeAsc = 'viewType_ASC',
-  ViewTypeDesc = 'viewType_DESC',
-  SysIdAsc = 'sys_id_ASC',
-  SysIdDesc = 'sys_id_DESC',
-  SysPublishedAtAsc = 'sys_publishedAt_ASC',
-  SysPublishedAtDesc = 'sys_publishedAt_DESC',
-  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
-  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
-  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
-  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
-}
-
 export type ArticleFilter = {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
@@ -2887,9 +2893,17 @@ export type ArticleFilter = {
   summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   summary_contains: Maybe<Scalars['String']>;
   summary_not_contains: Maybe<Scalars['String']>;
+  banner_exists: Maybe<Scalars['Boolean']>;
   displayBanner_exists: Maybe<Scalars['Boolean']>;
   displayBanner: Maybe<Scalars['Boolean']>;
   displayBanner_not: Maybe<Scalars['Boolean']>;
+  icon_exists: Maybe<Scalars['Boolean']>;
+  mediaCollection_exists: Maybe<Scalars['Boolean']>;
+  relatedItemsCollection_exists: Maybe<Scalars['Boolean']>;
+  officialDocumentsCollection_exists: Maybe<Scalars['Boolean']>;
+  relatedContactsCollection_exists: Maybe<Scalars['Boolean']>;
+  relatedOrganisationsCollection_exists: Maybe<Scalars['Boolean']>;
+  keywords_exists: Maybe<Scalars['Boolean']>;
   keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
   keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
   keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -2965,6 +2979,7 @@ export type EquipmentFilter = {
   slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   slug_contains: Maybe<Scalars['String']>;
   slug_not_contains: Maybe<Scalars['String']>;
+  mainImage_exists: Maybe<Scalars['Boolean']>;
   callToAction_exists: Maybe<Scalars['Boolean']>;
   callToAction: Maybe<Scalars['String']>;
   callToAction_not: Maybe<Scalars['String']>;
@@ -2972,6 +2987,9 @@ export type EquipmentFilter = {
   callToAction_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   callToAction_contains: Maybe<Scalars['String']>;
   callToAction_not_contains: Maybe<Scalars['String']>;
+  userFacingSupportCollection_exists: Maybe<Scalars['Boolean']>;
+  equipmentOwnerCollection_exists: Maybe<Scalars['Boolean']>;
+  type_exists: Maybe<Scalars['Boolean']>;
   type_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
   type_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
   type_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -3005,15 +3023,19 @@ export type EquipmentFilter = {
   yearOfManufacture_gte: Maybe<Scalars['Int']>;
   yearOfManufacture_lt: Maybe<Scalars['Int']>;
   yearOfManufacture_lte: Maybe<Scalars['Int']>;
+  relatedItemsCollection_exists: Maybe<Scalars['Boolean']>;
+  keywords_exists: Maybe<Scalars['Boolean']>;
   keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
   keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
   keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  mediaCollection_exists: Maybe<Scalars['Boolean']>;
   ssoProtected_exists: Maybe<Scalars['Boolean']>;
   ssoProtected: Maybe<Scalars['Boolean']>;
   ssoProtected_not: Maybe<Scalars['Boolean']>;
   searchable_exists: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
   searchable_not: Maybe<Scalars['Boolean']>;
+  icon_exists: Maybe<Scalars['Boolean']>;
   viewType_exists: Maybe<Scalars['Boolean']>;
   viewType: Maybe<Scalars['String']>;
   viewType_not: Maybe<Scalars['String']>;
@@ -3132,6 +3154,8 @@ export type OfficialDocumentsFilter = {
   url_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   url_contains: Maybe<Scalars['String']>;
   url_not_contains: Maybe<Scalars['String']>;
+  document_exists: Maybe<Scalars['Boolean']>;
+  contactCollection_exists: Maybe<Scalars['Boolean']>;
   OR: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
   AND: Maybe<Array<Maybe<OfficialDocumentsFilter>>>;
 };
@@ -3182,6 +3206,9 @@ export type ServiceFilter = {
   searchable_exists: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
   searchable_not: Maybe<Scalars['Boolean']>;
+  icon_exists: Maybe<Scalars['Boolean']>;
+  serviceOwnerCollection_exists: Maybe<Scalars['Boolean']>;
+  userFacingSupportCollection_exists: Maybe<Scalars['Boolean']>;
   callToAction_exists: Maybe<Scalars['Boolean']>;
   callToAction: Maybe<Scalars['String']>;
   callToAction_not: Maybe<Scalars['String']>;
@@ -3217,9 +3244,13 @@ export type ServiceFilter = {
   access_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   access_contains: Maybe<Scalars['String']>;
   access_not_contains: Maybe<Scalars['String']>;
+  officialDocumentsCollection_exists: Maybe<Scalars['Boolean']>;
+  keywords_exists: Maybe<Scalars['Boolean']>;
   keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
   keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
   keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  relatedItemsCollection_exists: Maybe<Scalars['Boolean']>;
+  mediaCollection_exists: Maybe<Scalars['Boolean']>;
   OR: Maybe<Array<Maybe<ServiceFilter>>>;
   AND: Maybe<Array<Maybe<ServiceFilter>>>;
 };
@@ -3270,6 +3301,7 @@ export type CaseStudyFilter = {
   slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   slug_contains: Maybe<Scalars['String']>;
   slug_not_contains: Maybe<Scalars['String']>;
+  keywords_exists: Maybe<Scalars['Boolean']>;
   keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
   keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
   keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
@@ -3279,6 +3311,8 @@ export type CaseStudyFilter = {
   searchable_exists: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
   searchable_not: Maybe<Scalars['Boolean']>;
+  mainImage_exists: Maybe<Scalars['Boolean']>;
+  peopleCollection_exists: Maybe<Scalars['Boolean']>;
   callToActionButtonText_exists: Maybe<Scalars['Boolean']>;
   callToActionButtonText: Maybe<Scalars['String']>;
   callToActionButtonText_not: Maybe<Scalars['String']>;
@@ -3293,6 +3327,7 @@ export type CaseStudyFilter = {
   callToActionButtonLink_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   callToActionButtonLink_contains: Maybe<Scalars['String']>;
   callToActionButtonLink_not_contains: Maybe<Scalars['String']>;
+  relatedItemsCollection_exists: Maybe<Scalars['Boolean']>;
   OR: Maybe<Array<Maybe<CaseStudyFilter>>>;
   AND: Maybe<Array<Maybe<CaseStudyFilter>>>;
 };
@@ -3350,6 +3385,7 @@ export type PersonFilter = {
   jobTitle_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   jobTitle_contains: Maybe<Scalars['String']>;
   jobTitle_not_contains: Maybe<Scalars['String']>;
+  image_exists: Maybe<Scalars['Boolean']>;
   slug_exists: Maybe<Scalars['Boolean']>;
   slug: Maybe<Scalars['String']>;
   slug_not: Maybe<Scalars['String']>;

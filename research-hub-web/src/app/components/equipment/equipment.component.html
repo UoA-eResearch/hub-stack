@@ -239,7 +239,7 @@
 
         <!-- View 1 -->
         <div *ngSwitchCase="'View 1'">
-            <div class="header section" 
+            <div class="section" 
                 fxLayout="row wrap" 
                 fxLayout.sm="column wrap"
                 fxLayout.xs="column wrap"
@@ -390,10 +390,10 @@
                     <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
                     
                 </div>
-
-                <!-- Specifications Table -->
-                <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-
+                <div fxFlex="20%">
+                    <!-- Specifications Table -->
+                    <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+                </div>
             </div>
         </div>   
     </div>
