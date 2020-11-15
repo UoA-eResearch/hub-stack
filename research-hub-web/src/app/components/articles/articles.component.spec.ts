@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponentService } from '../../app.component.service';
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { ArticleCollection, AllArticlesGQL, Article } from '@graphql/schema';
@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Params } from '@services/research-hub-api.service';
 import { MatExpansionPanelContent } from '@angular/material/expansion';
 
 describe('ArticlesComponent', () => {
@@ -273,23 +275,14 @@ describe('ArticlesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ArticlesComponent],
       imports: [
-        RouterModule.forRoot([]),
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
         SharedModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        RouterTestingModule.withRoutes([])
       ], providers: [
-        AppComponentService,
-        AllArticlesGQL,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({
-              slug: ''
-            })
-          }
-        }
+        AllArticlesGQL
       ]
     }).compileComponents();
   }));
@@ -300,6 +293,7 @@ describe('ArticlesComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
 
   afterEach(() => {
     fixture.destroy();
@@ -322,23 +316,18 @@ describe('ArticlesComponent', () => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(ArticlesComponent);
       component = fixture.componentInstance;
-      appComponentService = new AppComponentService;
       TestBed.inject(ActivatedRoute).params = of({
         slug: 'first-article'
       });
       fixture.detectChanges();
-    })
-
-    it('Should evaluate components slug property to be truthy', () => {
-      expect(component.slug).toBeTruthy();
     });
 
-    it('Should get a single article data by Slug', async () => {
+    it('Should get a single article data', () => {
       spyOn(component, 'getArticleBySlug').and.returnValue(mockArticle$);
-      component.getArticleBySlug('').subscribe(res => {
+      component.getArticleBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('first-article');
       });
-    })
+    });
 
     it('Should get a single article data by ID', async () => {
       spyOn(component, 'getArticleByID').and.returnValue(mockArticle$);
@@ -346,11 +335,5 @@ describe('ArticlesComponent', () => {
         expect(res.sys.id).toEqual('111');
       });
     })
-
-    it('Should set title', async () => {
-      let spy = spyOn(appComponentService, 'setTitle');
-      appComponentService.setTitle('Title');
-      expect(spy).toHaveBeenCalled();
-    });
   });
 });

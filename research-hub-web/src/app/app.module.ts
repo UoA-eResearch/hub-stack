@@ -31,6 +31,9 @@ import { onError } from 'apollo-link-error';
 import { environment } from '@environments/environment';
 import { AppStorageService } from './services/app-storage.service';
 
+// Dynamic Routing
+import { APP_INITIALIZER } from '@angular/core';
+import { CerGraphqlService } from './services/cer-graphql.service';
 
 /**
  * Generated from Fragment matcher graphql-code-generator plugi
@@ -45,6 +48,14 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     __schema: result.__schema
   }
 });
+
+export function initializeApp(cerGraphqlService: CerGraphqlService) {
+  return (): Promise<any> => {
+    return cerGraphqlService.pushSubHubRoutes();
+  }
+}
+
+
 @NgModule({
   declarations: [
     AppComponent,

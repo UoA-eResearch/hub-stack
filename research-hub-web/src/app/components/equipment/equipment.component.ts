@@ -16,6 +16,7 @@ import { CerGraphqlService } from '../../services/cer-graphql.service';
 import { AppComponentService } from '../../app.component.service';
 
 
+
 @Component({
   selector: 'app-equipment',
   templateUrl: './equipment.component.html',
@@ -26,12 +27,10 @@ export class EquipmentComponent implements OnInit {
   public allEquipment$: Observable<EquipmentCollection>;
   public equipment$: Observable<Equipment>;
   public slug: string;
-
   // public assets: Array<any>;
   // public inlineEntry: Array<any>;
   // public blockEntry: Array<any>;
   // public hyperlinkEntry: Array<any>;
-
   public parentSubHubs;
 
   constructor(
@@ -48,9 +47,7 @@ export class EquipmentComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.route.params.subscribe(params => {
-      this.slug = params['slug'];
-    });
+    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
     /**
      * If this.slug is defined, we're loading an individual article,
@@ -59,15 +56,12 @@ export class EquipmentComponent implements OnInit {
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
         this.equipment$ = this.getEquipmentByID(data.sys.id);
-        this.equipment$.subscribe(data => {
-          this.appComponentService.setTitle(data.title);
-
-          // this.assets = data.body.links.assets.block;
-          // this.inlineEntry = data.body.links.entries.inline;
-          // this.blockEntry = data.body.links.entries.block;
-          // this.hyperlinkEntry = data.body.links.entries.hyperlink;
-          
-        });
+        // this.equipment$.subscribe(data => {
+        //   this.assets = data.body.links.assets.block;
+        //   this.inlineEntry = data.body.links.entries.inline;
+        //   this.blockEntry = data.body.links.entries.block;
+        //   this.hyperlinkEntry = data.body.links.entries.hyperlink;
+        // });
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {

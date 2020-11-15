@@ -4,8 +4,19 @@ const expect = mochaPlugin.chai.expect;
 let wrapped = mochaPlugin.getWrapper("main", "/handler.js", "main");
 const fetch = require('node-fetch');
 const aws = require('aws-sdk');
+<<<<<<< HEAD
 const crypto = require('crypto');
 const aws4 = require('aws4');
+=======
+const aws4 = require('aws4');
+
+const TIMEOUT_PERIOD = 20000;
+
+const configResult = require('dotenv').config({ path: '../.env' });
+if (configResult.error) {
+  throw configResult.error;
+}
+>>>>>>> b42ce07a3b018e535df98a4ede7838165c12193d
 
 // Function to return the JSON parsed response body
 let getResBody = async (req) =>
@@ -19,6 +30,7 @@ const getAwsCredentials = () => {
   let credentials = new aws.SharedIniFileCredentials({
     profile: process.env.awsProfile,
   });
+<<<<<<< HEAD
   credentials = credentials;
   return credentials;
 }
@@ -30,6 +42,29 @@ const getTokens = async () => {
     path: '/sandbox/',
     region: 'ap-southeast-2',
     service: 'execute-api',
+=======
+  if (credentials.sessionToken === undefined) {
+    // falling back to local def profile.
+    console.log("Couldn't find aws profile matching environment variable awsProfile. Falling back to saml profile for local development.");
+    credentials = new aws.SharedIniFileCredentials({
+      profile: 'saml',
+    });
+  }
+  return credentials;
+}
+
+/**
+ * Retrieves OAuth2.0 tokens by making a request from the 2FAB lambda function.
+ */
+const getTokens = async () => {
+  // Generating AWS4 Signature from locally stored aws tokens.
+  let awsCreds = getAwsCredentials();
+  let opts = {
+    host: process.env.OAUTH_LAMBDA_HOST,
+    path: process.env.OAUTH_LAMBDA_PATH,
+    region: process.env.OAUTH_LAMBDA_REGION,
+    service: process.env.OAUTH_LAMBDA_SERVICE,
+>>>>>>> b42ce07a3b018e535df98a4ede7838165c12193d
     'Accept': '*/*',
     'Accept-Encoding': 'gzip, deflate, br'
   };
@@ -38,9 +73,16 @@ const getTokens = async () => {
     secretAccessKey: awsCreds.secretAccessKey,
     sessionToken: awsCreds.sessionToken
   });
+<<<<<<< HEAD
   let res = await fetch('https://ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com/sandbox/', opts);
   const resJson = await res.json();
   return resJson;
+=======
+
+  // making request to 2FAB with AWS4 Signature. Returning response which should contain OAuth tokens.
+  return await fetch(`https://${opts.host}${opts.path}`, opts)
+    .then(res => res.json());
+>>>>>>> b42ce07a3b018e535df98a4ede7838165c12193d
 }
 
 describe("serverless-now", () => {
@@ -68,7 +110,11 @@ describe("serverless-now", () => {
   });
 
   it("POST request returns a response from service now.", async function () {
+<<<<<<< HEAD
     this.timeout(20000);
+=======
+    this.timeout(TIMEOUT_PERIOD);
+>>>>>>> b42ce07a3b018e535df98a4ede7838165c12193d
     let authTokens = await getTokens();
     const resBody = await getResBody({
       httpMethod: "POST",
@@ -82,7 +128,10 @@ describe("serverless-now", () => {
       },
     });
     expect(resBody.status).to.equal('error');
+<<<<<<< HEAD
     return;
+=======
+>>>>>>> b42ce07a3b018e535df98a4ede7838165c12193d
   });
 
   it("returns a decrypted example secret from AWS parameter store", async () => {

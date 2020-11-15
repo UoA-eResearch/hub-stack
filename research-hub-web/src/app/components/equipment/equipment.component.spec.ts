@@ -96,11 +96,7 @@ describe('EquipmentComponent', () => {
       fixture.detectChanges();
     })
 
-    it('Should evaluate components slug property to be truthy', () => {
-      expect(component.slug).toBeTruthy();
-    });
-
-    it('Should get a single equipment data by Slug', async () => {
+    it('Should get a single equipment data by Slug', () => {
       spyOn(component, 'getEquipmentBySlug').and.returnValue(mockEquipment$);
       component.getEquipmentBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('death-star');

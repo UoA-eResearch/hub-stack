@@ -38,6 +38,27 @@
   right: 8px;
 }
 
+/*
+ * Banner Styling
+ */
+ .banner-container {
+  text-align: center;
+  min-width: 100vw; 
+  margin: -3em 0PX 20PX -7.5vw;
+  min-height: 40vh;
+  max-height: auto;
+  overflow: hidden;
+  background-size: cover!important;
+  background: url(../assets/images/483_Pacific_28Sep10_1680x220_BW.jpg);
+}
+
+.banner-content {
+  width: 50%;
+  margin: 10em auto;
+  background-color: white;
+  padding: 30px;
+  display: inline-block;
+}
 
 
 /*

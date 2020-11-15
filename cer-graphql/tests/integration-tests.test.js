@@ -7,6 +7,13 @@ const aws = require('aws-sdk');
 const aws4 = require('aws4');
 const fetch = require('node-fetch');
 
+const TIMEOUT_PERIOD = 20000;
+
+const configResult = require('dotenv').config({ path: '../.env' });
+if (configResult.error) {
+    throw configResult.error;
+}
+
 /**
  * This function creates both the ApolloServer and test client
  * used to make queries against it.
@@ -19,10 +26,14 @@ async function createServerAndTestClient() {
 /**
  * Creates as testing server using the real server's configuration 
  * with an injected context so we can add an authorization header to our query requests.
+ * If passed false, will create a query with an valid authorization header.
  */
-async function createServerAndTestClientWithAuth() {
+async function createServerAndTestClientWithAuth(useValidToken = true) {
     let server = await createServer(getCredentials(true));
     let tokens = await getTokens();
+    if (!useValidToken) {
+        tokens['access_token'] = 'Bearer fake token value';
+    }
     return createTestClient(new ApolloServer({
         ...server.config,
         context: () => server.config.context({
@@ -39,20 +50,23 @@ async function createServerAndTestClientWithAuth() {
  * Gets OAuth tokens
  */
 const getTokens = async () => {
-    let awsCreds;
-    try {
+    let awsCreds = new aws.SharedIniFileCredentials({
+        profile: process.env.awsProfile,
+    });
+    if (awsCreds.sessionToken === undefined) {
+        // falling back to local def profile.
+        console.log("Couldn't find aws profile matching environment variable awsProfile. Falling back to saml profile for local development.");
         awsCreds = new aws.SharedIniFileCredentials({
-            profile: process.env.awsProfile,
+            profile: 'saml',
         });
-    } catch (error) {
-        console.error("Could not retrieve AWS credentials. Try re-running the credential python script.");
     }
 
+    // Adding the AWS4 Signature to our request parameters
     let opts = {
-        host: 'ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com',
-        path: '/sandbox/',
-        region: 'ap-southeast-2',
-        service: 'execute-api',
+        host: process.env.OAUTH_LAMBDA_HOST,
+        path: process.env.OAUTH_LAMBDA_PATH,
+        region: process.env.OAUTH_LAMBDA_REGION,
+        service: process.env.OAUTH_LAMBDA_SERVICE,
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br'
     };
@@ -61,11 +75,13 @@ const getTokens = async () => {
         secretAccessKey: awsCreds.secretAccessKey,
         sessionToken: awsCreds.sessionToken
     });
-    let res = await fetch('https://ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com/sandbox/', opts);
+
+    // Making request to 2FAB Lambda using 
+    let res = await fetch(`https://${opts.host}${opts.path}`, opts);
     const resJson = await res.json();
     try {
         if (!resJson['access_token']) {
-            throw 'Fetching response for OAuth2.0 tokens does not contain access token.';
+            throw 'Fetching response for OAuth2.0 tokens does not contain access token. You may need to renew locally stored AWS credentials.';
         }
     }
     catch (error) {
@@ -96,9 +112,9 @@ describe('Basic collection queries', () => {
         expect(returned_fields).toEqual(TQ.SEARCHABLE_FIELDS)
     });
 
-    test('Querying the equipment collection returns the correct first item', async function () {
+    test('Querying the equipment collection returns an item with a title', async function () {
         let res = await query({ query: TQ.GET_EQUIPMENT_COLLECTION });
-        expect(res.data.equipmentCollection.items[0].title).toEqual('Starkiller Base')
+        expect(res.data.equipmentCollection.items[0].title.length).toBeGreaterThan(0)
     });
 });
 
@@ -130,18 +146,29 @@ describe('Contentful filters (conditionals)', () => {
 
 });
 
-describe('Authorisation resolvers', () => {
+describe('Authorization resolvers', () => {
+
+    test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
+        let { query } = await createServerAndTestClientWithAuth(false);
+        let message = false;
+        try {
+            await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+        } catch (err) {
+            message = err.message;
+        }
+        expect(message).toBeTruthy();
+    }, TIMEOUT_PERIOD);
 
     test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 
-    test('Requesting an articleCollection non-public field with a valid Authorization header returns an response', async function () {
-        // let { query } = await createServerAndTestClientWithAuth();
+    test('Requesting an articleCollection non-public field with a valid Authorization header returns data', async function () {
+        let { query } = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
         expect(res.data.articleCollection).toBeTruthy();
-    }, 20000);
+    }, TIMEOUT_PERIOD);
 
     test('Requesting a article single resource non-public field returns an error', async function () {
         let res = await query({

@@ -56,8 +56,8 @@ mat-expansion-panel, mat-card  {
 
 // Article Summary
 .article-summary {
-    color: $color-icon; 
-    font-size: 25px; 
+    font-size: 20px; 
+    color: $color-icon;
     line-height: 110%;
 }
 
@@ -69,17 +69,18 @@ mat-expansion-panel, mat-card  {
     font-size: 15px; 
 }
 
+// Keyword
 .keyword-card {
-    background-color: $color-background;
+    color: #828282;
+    background: #F0F0F0;
     margin: 5px; 
-    padding: 10px; 
-    font-size: 12px;
+    padding: 5px 10px;
+    font-size: 12px; 
+    border-radius: 25px;
+    box-shadow: none !important;
 }
 
-.related-item-summary {
-    font-size: 12px;
-}
-
+// Banner Styling
 .banner-container {
     text-align: center;
     min-width: 100vw; 
@@ -108,7 +109,17 @@ mat-expansion-panel, mat-card  {
     height: 70px;
 }
 
-// Card Title
 .card-title {
     color: map-get($hub-teal, 500);
+}
+
+.related-item-summary {
+    font-size: 12px;
+}
+
+// HR 
+hr {
+    background-color: #dbdbdb;
+    border: none;
+    height: 1px;
 }

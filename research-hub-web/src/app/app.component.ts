@@ -92,6 +92,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
 
   public url: Subscription;
+  public showBanner: Boolean;
+  public title: String;
+  public summary: String;
   private mediaChangeSub: Subscription;
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
@@ -228,10 +231,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngOnInit() {  
+    this.title = "Welcome to ResearchHub!"
+    this.summary = "The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research."
 
     // Methods dependent on URL
     this.url = this.appComponentService.url.subscribe(url => {
-      if (url == 'home') this.titleService.setTitle('ResearchHub | Home');
+      if (url == 'home') {
+        this.titleService.setTitle('ResearchHub | Home');
+        this.showBanner = true;
+      }
+      else {
+        this.titleService.setTitle('ResearchHub | Home');
+        this.showBanner = false;
+      }
       this.searchBarService.setVisibility(url == 'home' || url.substring(0, 6) == 'search' ? true : false);
     });
 
@@ -393,3 +405,4 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     return format(new Date(), 'yyyy');
   }
 }
+

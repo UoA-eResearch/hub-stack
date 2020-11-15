@@ -30,11 +30,13 @@ pipeline {
                     env.awsRegion = "ap-southeast-2"
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
+                        env.BRANCH_NAME = 'sandbox'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
                         env.awsRole = 'devops'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
@@ -50,10 +52,13 @@ pipeline {
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
+                        env.BRANCH_NAME = 'sandbox'
                         env.awsAccountId = '416527880812'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
+                        env.awsRole = 'devops'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
@@ -92,7 +97,7 @@ pipeline {
                         }
                     }
                     stages {
-                        stage ('Caching new node_modules folder') {
+                        stage ('Building and caching new node_modules') {
                             when {
                                 anyOf {
                                     changeset "**/research-hub-web/package.json"
@@ -111,7 +116,7 @@ pipeline {
                                 }
                             }
                         }
-                        stage ('Unzipping existing cached node_modules.') {
+                        stage ('Using cached node_modules from archive') {
                             when {
                                 not {
                                     anyOf {
@@ -187,8 +192,7 @@ pipeline {
                             sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
-                            sh "npx webdriver-manager update --versions.chrome=\$(google-chrome --version | grep -ioE \"[0-9.]{10,20}\")"
-                            sh "npm run e2e-ci -- -c ${BRANCH_NAME}"
+                            sh "npm run e2e-ci"
                         }
                     }
                 }
@@ -306,24 +310,6 @@ pipeline {
             }
         }
 
-        stage('BrowserStack e2e Tests') {
-            steps {
-                echo 'Deployed to ' + BRANCH_NAME + ' launching BrowserStack e2e Tests'
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).\n 📹 Launching BrowserStack e2e tests. <https://automate.browserstack.com/dashboard|Watch Videos>")
-                dir("research-hub-web") {
-                    script {
-                        try {
-                            sh "./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl='https://research-hub.sandbox.amazon.auckland.ac.nz/'" // TODO: Replace hardcoded URL
-                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🙆‍♀️🙆🙆‍♂️ All BrowserStack e2e tests passed")
-                        } catch (e) {
-                            echo 'BrowserStack e2e tests failed'
-                            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#f2ae3f", message: "🙅‍♀️🙅🙅‍♂️ One or more BrowserStack e2e tests failed. Consider reverting to an earlier deploy")
-                            sh "exit 1"
-                        }
-                    }
-                }
-            }
-        }
     }
     
     post {
