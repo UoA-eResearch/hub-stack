@@ -5,7 +5,14 @@
     [matTooltipShowDelay]="500">
     <div fxLayout="column" fxLayoutAlign="center center" class="tile-content">
       <span class="tile-text">{{item.name}}</span>
-      <mat-icon class="tile-icon">{{item.icon}}</mat-icon>
+      <mat-icon 
+        class="tile-icon"
+        ngClass.lg="tile-icon-lg"
+        ngClass.md="tile-icon-md"
+        ngClass.sm="tile-icon-sm"
+        ngClass.xs="tile-icon-xs">
+          {{item.icon}}
+        </mat-icon>
     </div>
   </mat-grid-tile>
 </mat-grid-list>
@@ -16,7 +23,14 @@
     [rowspan]="1" [routerLink]="item.url" [matTooltip]="getCategoryDescription(item.id)" [matTooltipShowDelay]="500">
     <div fxLayout="column" fxLayoutAlign="center center" class="tile-content">
       <span class="tile-text">{{item.name}}</span>
-      <mat-icon class="tile-icon">{{item.icon}}</mat-icon>
+      <mat-icon 
+        class="tile-icon"
+        ngClass.lg="tile-icon-lg"
+        ngClass.md="tile-icon-md"
+        ngClass.sm="tile-icon-sm"
+        ngClass.xs="tile-icon-xs">
+          {{item.icon}}
+      </mat-icon>
     </div>
   </mat-grid-tile>
 </mat-grid-list>
