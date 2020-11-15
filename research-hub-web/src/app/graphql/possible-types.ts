@@ -18,16 +18,13 @@
         "name": "Entry",
         "possibleTypes": [
           {
+            "name": "SubHub"
+          },
+          {
             "name": "Article"
           },
           {
             "name": "Equipment"
-          },
-          {
-            "name": "SubHub"
-          },
-          {
-            "name": "CaseStudy"
           },
           {
             "name": "Service"
@@ -37,6 +34,12 @@
           },
           {
             "name": "OfficialDocuments"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
+            "name": "TestContentType"
           },
           {
             "name": "Testing"
@@ -87,6 +90,45 @@
       },
       {
         "kind": "UNION",
+        "name": "EquipmentRelatedItemsItem",
+        "possibleTypes": [
+          {
+            "name": "Article"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
+            "name": "Equipment"
+          },
+          {
+            "name": "Service"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "SubHubExternalSubHubPage",
+        "possibleTypes": [
+          {
+            "name": "Article"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
+            "name": "Equipment"
+          },
+          {
+            "name": "Service"
+          },
+          {
+            "name": "SubHub"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
         "name": "SubHubRelatedItemsItem",
         "possibleTypes": [
           {
@@ -106,24 +148,6 @@
           },
           {
             "name": "SubHub"
-          }
-        ]
-      },
-      {
-        "kind": "UNION",
-        "name": "EquipmentRelatedItemsItem",
-        "possibleTypes": [
-          {
-            "name": "Article"
-          },
-          {
-            "name": "CaseStudy"
-          },
-          {
-            "name": "Equipment"
-          },
-          {
-            "name": "Service"
           }
         ]
       }
