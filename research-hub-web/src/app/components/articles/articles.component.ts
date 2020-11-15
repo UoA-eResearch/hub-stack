@@ -22,10 +22,6 @@ export class ArticlesComponent implements OnInit {
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
   public slug: string;
-  // public assets: Array<any>;
-  // public inlineEntry: Array<any>;
-  // public blockEntry: Array<any>;
-  // public hyperlinkEntry: Array<any>;
   public parentSubHubs;
 
   constructor(
@@ -52,12 +48,6 @@ export class ArticlesComponent implements OnInit {
     if (!!this.slug) {
       this.getArticleBySlug(this.slug).subscribe(data => {
         this.article$ = this.getArticleByID(data.sys.id);
-        // this.article$.subscribe(data => {
-        //   this.assets = data.body.links.assets.block;
-        //   this.inlineEntry = data.body.links.entries.inline;
-        //   this.blockEntry = data.body.links.entries.block;
-        //   this.hyperlinkEntry = data.body.links.entries.hyperlink;
-        // });
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {

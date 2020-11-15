@@ -48,7 +48,7 @@
             class="article-summary" 
             ngClass.sm="article-summary-sm" 
             ngClass.xs="article-summary-xs"
-            [style.color]="article.displayBanner== 'View 1' ? 'white' : ''">
+            [style.color]="article.displayBanner ? 'white' : ''">
             {{ article.summary }}
         </h3>
     </ng-template>

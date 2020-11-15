@@ -79,6 +79,13 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
     ErrorPagesModule
   ],
   providers: [
+    CerGraphqlService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      multi: true,
+      deps: [CerGraphqlService]
+    },
     SearchBarService,
     AppComponentService,
     SearchFiltersService,

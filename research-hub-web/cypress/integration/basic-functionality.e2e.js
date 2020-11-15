@@ -9,12 +9,12 @@ describe('ResearchHubs Basic Functionality', () => {
     });
 
     it('has title', () => {
-        cy.contains('Welcome to the ResearchHub');
+        cy.contains('Welcome to ResearchHub');
     });
 
-    xit('can browse by category', () => {
+    it('can browse by category', () => {
         cy.contains('All Content').click();
-        cy.contains('Browse all content available to you on the ResearchHub.');
+        cy.contains('Browse All Content');
     });
 });
 

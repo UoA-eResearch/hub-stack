@@ -78,7 +78,7 @@ describe('EquipmentComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all equipment', async () => {
+  it('Should get all equipment', () => {
     spyOn(component, 'getAllEquipment').and.returnValue(mockAllEquipment$);
     component.getAllEquipment().subscribe(res => {
       expect(res).toBeTruthy();
@@ -103,7 +103,7 @@ describe('EquipmentComponent', () => {
       });
     })
 
-    it('Should get a single equipment data by ID', async () => {
+    it('Should get a single equipment data by ID', () => {
       spyOn(component, 'getEquipmentByID').and.returnValue(mockEquipment$);
       component.getEquipmentByID('').subscribe(res => {
         expect(res.sys.id).toEqual('111');

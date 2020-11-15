@@ -282,6 +282,7 @@ describe('ArticlesComponent', () => {
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([])
       ], providers: [
+        AppComponentService,
         AllArticlesGQL
       ]
     }).compileComponents();
@@ -304,7 +305,7 @@ describe('ArticlesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all articles', async () => {
+  it('Should get all articles', () => {
     spyOn(component, 'getAllArticles').and.returnValue(mockAllArticles$);
     component.getAllArticles().subscribe(res => {
       expect(res).toBeTruthy();
@@ -329,7 +330,7 @@ describe('ArticlesComponent', () => {
       });
     });
 
-    it('Should get a single article data by ID', async () => {
+    it('Should get a single article data by ID', () => {
       spyOn(component, 'getArticleByID').and.returnValue(mockArticle$);
       component.getArticleByID('').subscribe(res => {
         expect(res.sys.id).toEqual('111');

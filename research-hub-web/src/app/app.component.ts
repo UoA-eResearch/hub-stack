@@ -231,7 +231,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async ngOnInit() {  
-    this.title = "Welcome to ResearchHub!"
+    this.title = "Welcome to ResearchHub"
     this.summary = "The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research."
 
     // Methods dependent on URL
