@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AllComponent } from './all.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
@@ -105,7 +105,7 @@ describe('AllComponent', () => {
     }
   } as AllSearchableContentPublicFieldsQuery)
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [AllComponent],
       imports: [ApolloTestingModule]
