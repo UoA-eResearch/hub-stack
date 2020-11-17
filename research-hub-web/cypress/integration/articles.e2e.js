@@ -5,7 +5,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('can visit an article and display its title', () => {
-        cy.contains('First article');
+        cy.get('.article-title').contains('First article');
     });
 
     it('can display a list of its keywords', () => {
