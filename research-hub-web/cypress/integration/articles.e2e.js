@@ -5,6 +5,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('can visit an article and display its title', () => {
+        cy.wait(5000);
         cy.get('#article-container').contains('First article');
     });
 
