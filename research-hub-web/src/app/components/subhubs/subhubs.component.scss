@@ -55,11 +55,6 @@ div.mat-card-avatar mat-icon {
     font-size: 25px;
 }
 
-// SubHub Body
-.main-body {
-    margin-bottom: 80px;
-}
-
 // SubHub Summary
 .subhub-summary {
     font-size: 20px; 
@@ -78,8 +73,8 @@ div.mat-card-avatar mat-icon {
 // Banner Styling
 .banner-container {
     text-align: center;
-    width: 100vw; 
-    max-height: auto;
+    width: 99vw; 
+    min-height: 40vh;
     background-size: cover!important;
 }
 
@@ -158,10 +153,18 @@ hr {
 }
 
 // Media Collection
+.media-panel {
+    @extend .margin-bottom;
+}
+
 .media-panel img{
     width: 10vw;
 }
 
+// SubHub Children
 #subhub-children {
+    @extend .margin-bottom;
     background: #F2F2F2;
+    padding-top: $padding-site-top * 2;
+    padding-bottom: $padding-site-top * 2;
 }

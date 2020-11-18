@@ -131,7 +131,7 @@ mat-chip.mat-chip {
 }
 
 .top-padding {
-  padding-top: 3vh;
+  padding-top: $padding-site-top;
 }
 
 .margin-bottom {
@@ -156,8 +156,8 @@ mat-chip.mat-chip {
  */
 .site-padding-xs {
   @extend .site-content;
-    padding-left: $offset-xs;
-    padding-right: $offset-xs;
+    padding-left: $padding-site;
+    padding-right: $padding-site;
 }
 
 .margin-bottom-xs {

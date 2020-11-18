@@ -157,11 +157,11 @@ $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn
 
 // Site wide measurements
 $width-page-max: 100vw;
-$offset-xs: 1em;
 $offset-gt-xs: 2em;
 $height-footer: 12em;
 $height-footer-xs: 16em;
 $padding-site: 7vw;
+$padding-site-top: 3vh;
 
 // Site wide colors
 $color-primary: map-get($hub-app-primary, 500);

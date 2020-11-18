@@ -1,19 +1,31 @@
 <!-- Displaying all SubHubs -->
-<app-collection-list *ngIf="allSubHubs$ | async as allSubHubs" [collection]="allSubHubs"></app-collection-list>
+<div
+    *ngIf="allSubHubs$ | async as allSubHubs" 
+    class="site-padding margin-bottom top-padding" 
+    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
+    <app-collection-list [collection]="allSubHubs"></app-collection-list>
+</div>
+
+
 
 <!-- Displaying an individual SubHub -->
 <div 
+    style="overflow-x: hidden"
     class="results" 
     *ngIf="currentSubHub$ | async as subhub">
     <div>
         
         <!-- Templates -->
         <ng-template #subHubChildren>
-            <div id="subhub-children">
+            <div 
+                id="subhub-children"
+                class="site-padding top-padding"
+                ngClass.sm="site-padding-sm top-padding"
+                ngClass.xs="site-padding-xs top-padding">
                 <div
                     fxLayout="row wrap"
                     fxLayoutGap="1%"
-                    fxLayoutAlign="space-between stretch"
                     fxLayout.sm="column wrap"
                     fxLayout.xs="column wrap">
                     <div
@@ -41,12 +53,15 @@
 
         <ng-template #mediaCollection>
             <div 
-                style="margin-bottom: 50px;" 
+                class="site-padding top-padding"
+                ngClass.sm="site-padding-sm top-padding"
+                ngClass.xs="site-padding-xs top-padding"
                 *ngFor="let media of subhub.mediaCollection.items; let i = index">
                 <div 
                     *ngIf="i % 2 == 0"
                     class="media-panel"
                     fxLayout="row wrap"
+                    fxLayoutAlign="space-between"
                     fxLayoutGap="5%">
                     <img 
                         fxFlex="45%"
@@ -64,6 +79,7 @@
                     *ngIf="i % 2 != 0"
                     class="media-panel"
                     fxLayout="row wrap"
+                    fxLayoutAlign="space-between"
                     fxLayoutGap="5%">
                     <span
                         fxFlex="45%"
@@ -124,7 +140,9 @@
         <ng-template #breadcrumbs>
             <div 
                 id="breadcrumbs" 
-                class="breadcrumbs" 
+                class="breadcrumbs site-padding top-padding"
+                ngClass.sm="top-padding site-padding-sm"
+                ngClass.xs="top-padding site-padding-xs"
                 *ngIf="!!parentSubHubs">
                 <span 
                     class="breadcrumb-subhub" 
@@ -176,7 +194,10 @@
                         </h3>
                     </div>
                 </div>
-                <div>
+                <div
+                    class="site-padding top-padding"
+                    ngClass.sm="site-padding-sm top-padding"
+                    ngClass.xs="site-padding-xs top-padding">
 
                     <!-- Breadcrumbs -->
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
@@ -185,41 +206,41 @@
                     <div 
                         fxLayout="row wrap"
                         fxLayout.sm="column wrap"
-                        fxLayout.xs="column wrap"  >
+                        fxLayout.xs="column wrap"
+                        fxLayoutGap="2%"
+                        fxLayoutAlign="space-between">
                         
                         <!-- Main Body -->
-                        <div fxLayoutGap="2%">
-                            <div fxFlex="65%">
-                                <div 
-                                    class="main-body"
-                                    [innerHTML]="subhub.body.json | richTextToHTML">
-                                </div>
-                            </div>
-
-                            <!-- Related Items and Keywords -->
-                            <div fxFlex="30%">
-
-                                <!-- Related Items -->
-                                <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-    
-                                <!-- Keywords -->
-                                <ng-container *ngTemplateOutlet="keywords"></ng-container>
+                        <div fxFlex="65%">
+                            <div 
+                                class="main-body"
+                                [innerHTML]="subhub.body.json | richTextToHTML">
                             </div>
                         </div>
 
-                        <!-- SubHub Children -->
-                        <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
+                        <!-- Related Items and Keywords -->
+                        <div fxFlex="30%">
 
-                        <!-- Media Collection -->
-                        <ng-container *ngTemplateOutlet="mediaCollection"></ng-container>
+                            <!-- Related Items -->
+                            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
 
+                            <!-- Keywords -->
+                            <ng-container *ngTemplateOutlet="keywords"></ng-container>
+                        </div>
                     </div>
                 </div>
+
+                <!-- SubHub Children -->
+                <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
+
+                <!-- Media Collection -->
+                <ng-container *ngTemplateOutlet="mediaCollection"></ng-container>
             </div>
 
             <!-- View 2 -->
             <div *ngSwitchCase="'View 2'">
                 <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
+
                 <div>
 
                     <!-- Breadcrumbs -->
@@ -227,25 +248,27 @@
 
                     <!-- Title and Summary -->
                     <div>
-                        <h1 
-                            class="subhub-title" 
-                            ngClass.sm="subhub-title-sm" 
-                            ngClass.xs="subhub-title-xs">
+                        <h1
+                            class="subhub-title site-padding" 
+                            ngClass.sm="subhub-title-sm site-padding-sm" 
+                            ngClass.xs="subhub-title-xs site-padding-xs">
                             {{ subhub.title }}
                         </h1>
                         <h3 
-                            class="subhub-summary" 
-                            ngClass.sm="subhub-summary-sm" 
-                            ngClass.xs="subhub-summary-xs">
+                            class="subhub-summary site-padding" 
+                            ngClass.sm="subhub-summary-sm site-padding-sm" 
+                            ngClass.xs="subhub-summary-xs site-padding-xs">
                             {{ subhub.summary }}
+                            <hr style="margin: 25px 0px;"/>
                         </h3>
-                        <hr style="margin: 25px 0px;"/>
                     </div>
             
                     <!-- Body Content -->
                     <!-- Main Body -->
                     <div 
-                        class="main-body"
+                        class="main-body site-padding"
+                        ngClass.sm="site-padding-sm"
+                        ngClass.xs="site-padding-xs"
                         [innerHTML]="subhub.body.json | richTextToHTML">
                     </div>
             
@@ -256,11 +279,20 @@
                     <ng-container *ngTemplateOutlet="mediaCollection"></ng-container>
 
                     <!-- Related Items -->
-                    <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                    <div 
+                        class="site-padding"
+                        ngClass.sm="site-padding-sm"
+                        ngClass.xs="site-padding-xs">
+                        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                    </div>
 
                     <!-- Keywords -->
-                    <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
+                    <div
+                        class="site-padding"
+                        ngClass.sm="site-padding-sm"
+                        ngClass.xs="site-padding-xs">
+                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
+                    </div>
                 </div>
             </div>
         </div>
