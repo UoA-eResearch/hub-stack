@@ -35,6 +35,7 @@ h4 {
 }
 
 p {
+  color: $dark-grey;
   margin-top: 0;
   font-family: $font-family;
 }
@@ -117,41 +118,57 @@ mat-chip.mat-chip {
 .site-content {
   @extend .flex-hack;
   margin: 0 auto;
-  max-width: $width-page-max !important; // If not important then gets overidden by some fxLayout styles
+  //max-width: $width-page-max !important; If not important then gets overidden by some fxLayout styles
 }
 
+/**
+ * Browser Settings
+ */
 .site-padding {
   @extend .site-content;
-  // margin-top: $offset-gt-xs / 2.0;
+    padding-left: $padding-site;
+    padding-right: $padding-site;
+}
+
+.top-padding {
+  padding-top: $padding-site-top;
+}
+
+.margin-bottom {
   margin-bottom: 5em;
-  padding-top: $padding-site;
-  padding-left: $padding-site;
-  padding-right: $padding-site;
 }
 
-.site-padding-xs {
-  @extend .site-content;
-  // margin-top: $offset-xs / 2.0;
-  margin-bottom: $offset-xs;
-  padding-top: $offset-xs;
-  padding-left: $offset-xs;
-  padding-right: $offset-xs;
-}
-
+/**
+ * Small Mobile Settings
+ */
 .site-padding-sm {
   @extend .site-content;
-  // margin-top: $offset-xs / 2.0;
+    padding-left: $padding-site;
+    padding-right: $padding-site;
+}
+
+.margin-bottom-sm {
   margin-bottom: 5em;
-  padding-top: $padding-site / 2.0;
-  padding-left: $padding-site;
-  padding-right: $padding-site;
+}
+
+/**
+ * Extra Small Mobile Settings
+ */
+.site-padding-xs {
+  @extend .site-content;
+    padding-left: $padding-site;
+    padding-right: $padding-site;
+}
+
+.margin-bottom-xs {
+  margin-bottom: 5em;
 }
 
 .back-button-padding-xs {
   @extend .site-content;
-  margin-top: $offset-xs / 2.0;
-  padding-left: $offset-xs;
-  padding-right: $offset-xs;
+  margin-top: $padding-site / 2.0;
+  padding-left: $padding-site;
+  padding-right: $padding-site;
 }
 
 .site-content-padded {
@@ -186,7 +203,7 @@ mat-chip.mat-chip {
 
 .component-xs {
   @extend .component;
-  margin: $offset-xs;
+  margin: $padding-site;
 }
 
 /*

@@ -29,7 +29,7 @@ div.mat-card-avatar mat-icon {
 }
 
 #keywords {
-    color: $color-primary;
+    color: map-get($hub-navy, 500);
 }
 
 .related-item-summary {
@@ -55,11 +55,6 @@ div.mat-card-avatar mat-icon {
     font-size: 25px;
 }
 
-// SubHub Body
-.main-body {
-    margin-bottom: 80px;
-}
-
 // SubHub Summary
 .subhub-summary {
     font-size: 20px; 
@@ -75,19 +70,11 @@ div.mat-card-avatar mat-icon {
     font-size: 15px; 
 }
 
-// SubHub Children
-.subhub-children {
-    margin-bottom: 40px;
-}
-
 // Banner Styling
 .banner-container {
     text-align: center;
-    min-width: 100vw; 
-    margin: -3em 0PX 20PX -7.5vw;
+    width: 99vw; 
     min-height: 40vh;
-    max-height: auto;
-    overflow: hidden;
     background-size: cover!important;
 }
 
@@ -166,6 +153,18 @@ hr {
 }
 
 // Media Collection
+.media-panel {
+    @extend .margin-bottom;
+}
+
 .media-panel img{
     width: 10vw;
+}
+
+// SubHub Children
+#subhub-children {
+    @extend .margin-bottom;
+    background: #F2F2F2;
+    padding-top: $padding-site-top * 2;
+    padding-bottom: $padding-site-top * 2;
 }

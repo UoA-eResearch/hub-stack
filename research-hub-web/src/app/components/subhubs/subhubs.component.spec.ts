@@ -144,7 +144,7 @@ describe('SubhubsComponent', () => {
       }
     ],
     "__typename": "SubHubCollection"
-  } as SubHubCollection);
+  } as unknown as SubHubCollection);
 
   // All the data required for the current subhub. 
   const currentSubHubData$: Observable<SubHubCollection> = of({
@@ -207,7 +207,7 @@ describe('SubhubsComponent', () => {
       }
     ],
     "__typename": "SubHubCollection"
-  } as SubHubCollection);
+  } as unknown as SubHubCollection);
 
   // need to evaluate that its eliminating wrong parents. the all items in the linkedFromResponse (maybe do two, a right and a wrong one.)
 
@@ -382,7 +382,7 @@ describe('SubhubsComponent', () => {
       }
     ],
     "__typename": "SubHubCollection"
-  } as SubHubCollection);
+  } as unknown as SubHubCollection);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
