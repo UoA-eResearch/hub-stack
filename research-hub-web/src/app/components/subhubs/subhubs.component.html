@@ -7,8 +7,6 @@
     <app-collection-list [collection]="allSubHubs"></app-collection-list>
 </div>
 
-
-
 <!-- Displaying an individual SubHub -->
 <div 
     style="overflow-x: hidden"
@@ -140,9 +138,9 @@
         <ng-template #breadcrumbs>
             <div 
                 id="breadcrumbs" 
-                class="breadcrumbs site-padding top-padding"
-                ngClass.sm="top-padding site-padding-sm"
-                ngClass.xs="top-padding site-padding-xs"
+                class="breadcrumbs top-padding"
+                ngClass.sm="top-padding"
+                ngClass.xs="top-padding"
                 *ngIf="!!parentSubHubs">
                 <span 
                     class="breadcrumb-subhub" 
@@ -198,7 +196,7 @@
                     class="site-padding top-padding"
                     ngClass.sm="site-padding-sm top-padding"
                     ngClass.xs="site-padding-xs top-padding">
-
+                    
                     <!-- Breadcrumbs -->
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
@@ -244,7 +242,12 @@
                 <div>
 
                     <!-- Breadcrumbs -->
-                    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+                    <div 
+                        class="site-padding"
+                        ngClass.sm="site-padding-sm"
+                        ngClass.xs="site-padding-xs">
+                        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+                    </div>
 
                     <!-- Title and Summary -->
                     <div>

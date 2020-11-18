@@ -106,8 +106,8 @@
 }
 
 .app-toolbar-xs {
-  padding-left: $offset-xs;
-  padding-right: $offset-xs;
+  padding-left: $padding-site;
+  padding-right: $padding-site;
 }
 
 .app-toolbar .app-toolbar-row {
@@ -205,8 +205,8 @@ footer {
 
 footer.footer-xs {
   height: $height-footer-xs;
-  padding-left: $offset-xs;
-  padding-right: $offset-xs;
+  padding-left: $padding-site;
+  padding-right: $padding-site;
 }
 
 .footer-content {
