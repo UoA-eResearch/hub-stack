@@ -137,7 +137,7 @@
             </mat-sidenav>
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
-              <div class="site-padding" #content ngClass.xs="site-padding-xs" ngClass.sm="site-padding-sm"> 
+              <div #content> 
                  <!-- Banner -->
                  <div 
                   class="banner-container-home"
@@ -145,10 +145,13 @@
                   <div class="banner-content-home">
                     <h1>{{ title }}</h1>
                     <h4>{{ summary }}</h4>
-                  </div>
+                </div>
                 </div>  
-                <app-search-bar [categories]="categoryOptions" [category]="selectedCategory"
-                  [searchText]="searchText"></app-search-bar>
+                <app-search-bar 
+                      [categories]="categoryOptions" 
+                      [category]="selectedCategory"
+                      [searchText]="searchText">
+                </app-search-bar>
                 <!-- Page content -->
                 <router-outlet></router-outlet>
               </div>

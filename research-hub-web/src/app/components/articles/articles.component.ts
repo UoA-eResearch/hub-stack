@@ -48,6 +48,7 @@ export class ArticlesComponent implements OnInit {
     if (!!this.slug) {
       this.getArticleBySlug(this.slug).subscribe(data => {
         this.article$ = this.getArticleByID(data.sys.id);
+        this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
