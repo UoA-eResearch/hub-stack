@@ -18,10 +18,16 @@
         "name": "Entry",
         "possibleTypes": [
           {
-            "name": "SubHub"
+            "name": "LinkCard"
           },
           {
             "name": "Article"
+          },
+          {
+            "name": "SubHub"
+          },
+          {
+            "name": "CaseStudy"
           },
           {
             "name": "Equipment"
@@ -36,19 +42,25 @@
             "name": "OfficialDocuments"
           },
           {
-            "name": "CaseStudy"
+            "name": "GenericContact"
           },
           {
-            "name": "TestContentType"
+            "name": "Event"
+          },
+          {
+            "name": "Software"
           },
           {
             "name": "Testing"
+          },
+          {
+            "name": "TestContentType"
           }
         ]
       },
       {
         "kind": "UNION",
-        "name": "SubHubSubhubPagesItem",
+        "name": "SubHubExternalSubHubPage",
         "possibleTypes": [
           {
             "name": "Article"
@@ -58,9 +70,6 @@
           },
           {
             "name": "Equipment"
-          },
-          {
-            "name": "OfficialDocuments"
           },
           {
             "name": "Service"
@@ -103,27 +112,6 @@
           },
           {
             "name": "Service"
-          }
-        ]
-      },
-      {
-        "kind": "UNION",
-        "name": "SubHubExternalSubHubPage",
-        "possibleTypes": [
-          {
-            "name": "Article"
-          },
-          {
-            "name": "CaseStudy"
-          },
-          {
-            "name": "Equipment"
-          },
-          {
-            "name": "Service"
-          },
-          {
-            "name": "SubHub"
           }
         ]
       },
