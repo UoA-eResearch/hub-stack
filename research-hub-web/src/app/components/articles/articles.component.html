@@ -28,11 +28,11 @@
 
     <ng-template #breadcrumbs>
         <div 
+            id="breadcrumbs" 
+            *ngIf="!!parentSubHubs" 
             class="site-padding top-padding"
             ngClass.sm="site-padding-sm top-padding"
             ngClass.xs="site-padding-xs top-padding"
-            id="breadcrumbs" 
-            *ngIf="!!parentSubHubs" 
             ngClass.xs="breadcrumbs-mobile site-padding-xs">
             <span 
                 class="breadcrumb-subhub" 
