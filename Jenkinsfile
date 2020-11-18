@@ -309,10 +309,13 @@ pipeline {
                 }
             }
         }
-
     }
     
     post {
+        success {
+            echo 'Deployed to ' + BRANCH_NAME
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).")
+        }
         failure {
             echo 'Jenkins job failed :('
             slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#FF9FA1", message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
