@@ -4241,7 +4241,7 @@ type PublicFields_GenericContact_Fragment = { __typename?: 'GenericContact' };
 
 type PublicFields_Event_Fragment = { __typename?: 'Event' };
 
-type PublicFields_Software_Fragment = { __typename?: 'Software' };
+type PublicFields_Software_Fragment = { __typename?: 'Software', name: Maybe<string>, description: Maybe<string>, url: Maybe<string> };
 
 type PublicFields_Testing_Fragment = { __typename?: 'Testing' };
 
@@ -4397,6 +4397,11 @@ export const PublicFieldsFragmentDoc = gql`
     __typename
     title
     summary
+  }
+  ... on Software {
+    name
+    description
+    url
   }
 }
     `;

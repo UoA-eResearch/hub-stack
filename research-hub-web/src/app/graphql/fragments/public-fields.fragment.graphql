@@ -56,4 +56,9 @@ fragment PublicFields on Entry {
         title
         summary
     }
+    ... on Software {
+        name
+        description
+        url
+    }
 }
