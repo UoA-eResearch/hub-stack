@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SubhubsComponent } from './subhubs.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
@@ -384,7 +384,7 @@ describe('SubhubsComponent', () => {
     "__typename": "SubHubCollection"
   } as unknown as SubHubCollection);
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SubhubsComponent],
       imports: [
@@ -393,7 +393,7 @@ describe('SubhubsComponent', () => {
         MaterialModule,
         SharedModule,
         BrowserAnimationsModule,
-        RouterModule.forRoot([])
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
       ], providers: [
         AllSubHubChildPagesGQL,
         AppComponentService,

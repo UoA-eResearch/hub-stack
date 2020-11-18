@@ -1,5 +1,5 @@
 
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
@@ -14,14 +14,14 @@ xdescribe('Header Component', () => {
     let component: ErrorDialogComponent;
     let fixture: ComponentFixture<ErrorDialogComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [ErrorDialogComponent],
             imports: [
                 CommonModule,
                 SharedModule,
                 BrowserAnimationsModule,
-                RouterModule.forRoot([]),
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
             ],
             providers: [
                 HttpClientModule,
