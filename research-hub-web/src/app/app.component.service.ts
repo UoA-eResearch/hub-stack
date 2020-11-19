@@ -5,7 +5,7 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 export class AppComponentService {
 
   public url: Subject<string> = new Subject<string>();
-  public titleChange: Subject<string> = new Subject<string>();
+  public titleChange: BehaviorSubject<string> = new BehaviorSubject<string>('Home');
   public progressBarVisibilityChange: Subject<boolean> = new Subject<boolean>();
 
   private contentSidenavVisibilityChange: Subject<boolean>;

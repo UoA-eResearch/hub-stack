@@ -11,9 +11,9 @@ import {
     GetEquipmentBySlugGQL,
     GetEquipmentByIdGQL,
     Equipment 
-} from '../../graphql/schema';
-import { CerGraphqlService } from '../../services/cer-graphql.service';
-import { AppComponentService } from '../../app.component.service';
+} from '@graphql/schema';
+import { CerGraphqlService } from '@services/cer-graphql.service';
+import { AppComponentService } from '@app/app.component.service';
 
 
 
@@ -51,7 +51,8 @@ export class EquipmentComponent implements OnInit {
      */
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
-        this.equipment$ = this.getEquipmentByID(data.sys.id);
+        this.equipment$ = this.getEquipmentByID(data.sys.id)
+        .pipe(tap(res => this.appComponentService.setTitle(res.title)));
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {

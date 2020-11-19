@@ -1,7 +1,7 @@
 // import {Component} from '@angular/core';
 import { AnalyticsService } from '@services/analytics.service';
 import { Location } from '@angular/common';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { LoginService } from '@uoa/auth';

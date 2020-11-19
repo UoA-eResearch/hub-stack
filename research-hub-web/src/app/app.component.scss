@@ -43,29 +43,23 @@
  */
  .banner-container-home {
   text-align: center;
-  min-width: 100vw; 
-  margin: -3em 0PX 20PX -7.5vw;
-  min-height: 40vh;
+  max-width: 100vw; 
+  min-height: 35vh;
   max-height: auto;
-  overflow: hidden;
   background-size: cover!important;
-  background: url(../assets/images/483_Pacific_28Sep10_1680x220_BW.jpg);
 }
 
 .banner-content-home {
   width: 50%;
-  margin: 10em auto;
-  background-color: white;
   padding: 50px;
+  margin: 10em auto;
   display: inline-block;
+  background-color: white;
 }
-
 
 /*
  * Navigation list
  */
-
-
 .sidenav-container mat-sidenav mat-list-item mat-icon {
   color: $color-icon;
   font-size: mat-font-size($app-sidenav-list-typography, body-2) !important;
@@ -106,8 +100,8 @@
 }
 
 .app-toolbar-xs {
-  padding-left: $offset-xs;
-  padding-right: $offset-xs;
+  padding-left: $padding-site;
+  padding-right: $padding-site;
 }
 
 .app-toolbar .app-toolbar-row {
@@ -205,8 +199,8 @@ footer {
 
 footer.footer-xs {
   height: $height-footer-xs;
-  padding-left: $offset-xs;
-  padding-right: $offset-xs;
+  padding-left: $padding-site;
+  padding-right: $padding-site;
 }
 
 .footer-content {
@@ -336,6 +330,18 @@ app-search-bar {
   width:400px;
   box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
   background-color: $color-background;
+}
+
+// User Detail Dropdown
+.user-detail-dropdown {
+  margin-right: 8px; 
+  margin-left: 8px;
+}
+
+// Sign Out Button
+.sign-out-button {
+  color: black; 
+  background-color: white;
 }
 
 // HACK

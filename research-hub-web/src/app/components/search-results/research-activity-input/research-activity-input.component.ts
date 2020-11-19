@@ -1,19 +1,11 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AnalyticsService } from '@services/analytics.service';
+import { 
+  ResearchActivityId,
+  OptionType,
+} from '@app/global/global-variables';
 
-enum ResearchActivityId {
-  PlanDesign = 1,
-  CreateCollectCapture,
-  AnalyzeInterpret,
-  PublishReport,
-  DiscoverReuse
-}
-enum OptionType {
-  ResearchActivity = 1,
-  Category,
-  Menu
-}
 
 @Component({
   selector: 'app-research-activity-input',

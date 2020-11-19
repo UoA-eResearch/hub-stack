@@ -22,53 +22,16 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 import { SearchFiltersService } from './search-filters/search-filters.service';
 import { SearchResultsComponentService } from './search-results-component.service';
+import { 
+  RoleTypeId,
+  OptionType,
+  CategoryId,
+  ContentTypeId,
+  ResearchActivityId
+} from '@app/global/global-variables';
 
 // The screen size at which we should switch to opening filters in dialog or sidenav.
 const FILTER_VIEW_BREAKPOINT = 'md';
-
-enum RoleTypeId {
-  ServiceOwner = 1,
-  CopyOwner,
-  UserSupport
-}
-
-enum OptionType {
-  ResearchActivity = 1,
-  Category,
-  Menu
-}
-
-enum CategoryId {
-  All = 1,
-  Support,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  Guide,
-  Person,
-  Policies,
-  Articles,
-  SubHubs
-}
-
-enum ContentTypeId {
-  Support = 1,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  KnowledgeArticle,
-  Guide
-}
-
-enum ResearchActivityId {
-  PlanDesign = 1,
-  CreateCollectCapture,
-  AnalyzeInterpret,
-  PublishReport,
-  DiscoverReuse
-}
 
 @Component({
   selector: 'app-search-results',

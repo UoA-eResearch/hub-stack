@@ -1,5 +1,12 @@
 <!-- Displaying all subhubs -->
-<app-collection-list *ngIf="allSubHubs$ | async as allSubHubs" [collection]="allSubHubs"></app-collection-list>
+<div
+    *ngIf="allSubHubs$ | async as allSubHubs"
+    class="site-padding margin-bottom top-padding" 
+    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
+    <app-collection-list [collection]="allSubHubs"></app-collection-list>
+</div>
+
 
 <!-- Displaying a singular subhub -->
 <div class="results" *ngIf="subhub$ | async as subHubData">
@@ -64,7 +71,11 @@
         </ng-template>
 
         <div [ngSwitch]="subhub.viewType">
-            <div *ngSwitchCase="'View 1'">
+            <div 
+                *ngSwitchCase="'View 1'"
+                class="site-padding margin-bottom top-padding" 
+                ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+                ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
                 <div class="view1">
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
                     <ng-container *ngTemplateOutlet="jsonData"></ng-container>
@@ -73,7 +84,11 @@
                     <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
                 </div>
             </div>
-            <div *ngSwitchCase="'View 2'">
+            <div 
+                *ngSwitchCase="'View 2'"
+                class="site-padding margin-bottom top-padding" 
+                ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+                ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
                 <div class="view2">
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
                     <ng-container *ngTemplateOutlet="jsonData"></ng-container>

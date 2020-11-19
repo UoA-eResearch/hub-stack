@@ -7,42 +7,13 @@ import { SearchResultsComponent } from '../search-results.component';
 import { ListItem } from '@model/ListItem';
 import { OrgUnit } from '@model/OrgUnit';
 import { AnalyticsService } from '@services/analytics.service';
+import {
+  RoleTypeId,
+  OptionType,
+  CategoryId,
+  ContentTypeId
+} from '@app/global/global-variables';
 
-enum RoleTypeId {
-  ServiceOwner = 1,
-  CopyOwner,
-  UserSupport
-}
-
-enum OptionType {
-  ResearchActivity = 1,
-  Category,
-  Menu
-}
-
-enum CategoryId {
-  All = 1,
-  Support,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  Guide,
-  Person,
-  Policies,
-  Articles,
-  SubHubs
-}
-
-enum ContentTypeId {
-  Support = 1,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  KnowledgeArticle,
-  Guide
-}
 
 @Component({
   selector: 'app-search-filters',

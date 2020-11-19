@@ -2,6 +2,10 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { LayoutService } from '@services/layout.service';
+import { 
+  categoryOptions,
+  categoryOptionsGQL 
+} from '@app/global/global-variables';
 
 @Component({
   selector: 'app-browse',
@@ -9,8 +13,8 @@ import { LayoutService } from '@services/layout.service';
   styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit, OnDestroy {
-  public categoryOptions: any[];
-  public categoryOptionsGQL: any[];
+  public categoryOptions = categoryOptions;
+  public categoryOptionsGQL = categoryOptionsGQL;
 
   private mediaSub: Subscription;
 
@@ -33,45 +37,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
     this.mediaSub = this.media.media$.subscribe((change: MediaChange) => {
       this.updateCols(change.mqAlias);
     });
-
-    enum OptionType {
-      ResearchActivity = 1,
-      Category,
-      Menu
-    }
-
-    enum CategoryId {
-      All = 1,
-      Support,
-      Equipment,
-      Training,
-      Software,
-      Facilities,
-      Guide,
-      Person,
-      Policies,
-      Articles,
-      SubHubs
-    }
-
-    this.categoryOptions = [
-      { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
-      { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
-      { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
-      { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
-      { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
-      { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
-      { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
-      { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
-      { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
-    ];
-
-    this.categoryOptionsGQL = [
-      { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
-      { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
-      { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
-      { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }
-    ];
   }
 
   updateCols(mqAlias: string) {

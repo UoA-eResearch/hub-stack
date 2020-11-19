@@ -3,19 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { SearchFiltersService, DEFAULT_FILTERS_VALUE } from '../search-filters/search-filters.service';
 import { AnalyticsService } from '@services/analytics.service';
 
-enum CategoryId {
-  All = 1,
-  Support,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  Guide,
-  Person,
-  Policies,
-  Articles,
-  SubHubs
-}
 
 @Component({
   selector: 'app-filter-dialog',

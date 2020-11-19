@@ -1,18 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AnalyticsService } from '@services/analytics.service';
-
-enum ResearchActivityId {
-  PlanDesign = 1,
-  CreateCollectCapture,
-  AnalyzeInterpret,
-  PublishReport,
-  DiscoverReuse
-}
-enum OptionType {
-  ResearchActivity = 1,
-  Category,
-  Menu
-}
+import { 
+  ResearchActivityId, 
+  OptionType
+} from '@app/global/global-variables';
 
 @Component({
   selector: 'app-research-activity',

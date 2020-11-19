@@ -34,34 +34,16 @@ import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
 import { AllEquipmentGQL } from './graphql/schema';
 import { environment } from '@environments/environment';
+import {
+  OptionType,
+  CategoryId,
+  menuOptions,
+  categoryOptions,
+  categoryOptionsGQL,
+  researchActivityOptions,
+  CoverImageURL
+} from '@app/global/global-variables';
 
-enum OptionType {
-  ResearchActivity = 1,
-  Category,
-  Menu
-}
-
-enum ResearchActivityId {
-  PlanDesign = 1,
-  CreateCollectCapture,
-  AnalyzeInterpret,
-  PublishReport,
-  DiscoverReuse
-}
-
-enum CategoryId {
-  All = 1,
-  Support,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  Guide,
-  Person,
-  Policies,
-  Articles,
-  SubHubs
-}
 
 @Component({
   selector: 'app-root',
@@ -82,10 +64,11 @@ enum CategoryId {
   ]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
-  public menuOptions: any[];
-  public categoryOptions: any[];
-  public categoryOptionsGQL: any[];
-  public researchActivityOptions: any[];
+  public coverImageUrl = CoverImageURL
+  public menuOptions = menuOptions;
+  public categoryOptions = categoryOptions;
+  public categoryOptionsGQL = categoryOptionsGQL;
+  public researchActivityOptions = researchActivityOptions;
 
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
@@ -142,71 +125,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public loginService: LoginService,
     public apollo: Apollo,
     public allEquipmentGQL: AllEquipmentGQL,
-    private _bypass: BypassErrorService) {
-
-      this.researchActivityOptions = [
-        {
-          id: ResearchActivityId.PlanDesign,
-          name: 'Plan & Design',
-          className: 'plan',
-          type: OptionType.ResearchActivity
-        },
-        {
-          id: ResearchActivityId.CreateCollectCapture,
-          name: 'Create, Collect & Capture',
-          className: 'create',
-          type: OptionType.ResearchActivity
-        },
-        {
-          id: ResearchActivityId.AnalyzeInterpret,
-          name: 'Analyze & Interpret',
-          className: 'analyze',
-          type: OptionType.ResearchActivity
-        },
-        {
-          id: ResearchActivityId.PublishReport,
-          name: 'Publish & Report',
-          className: 'publish',
-          type: OptionType.ResearchActivity
-        },
-        {
-          id: ResearchActivityId.DiscoverReuse,
-          name: 'Discover & Reuse',
-          className: 'discover',
-          type: OptionType.ResearchActivity
-        }
-      ];
-
-      this.categoryOptions = [
-        { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
-        { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
-        { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
-        { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
-        { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
-        { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
-        { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
-        { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
-        { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
-      ];
-    
-      this.categoryOptionsGQL = [
-        { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
-        { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
-        { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
-        { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }
-      ];
-  
-      this.menuOptions = [
-        { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
-        { name: 'Browse', icon: 'view_list', routerLink: '', sublist: this.categoryOptions, type: OptionType.Menu },
-        { name: 'Research Activities', icon: 'school', routerLink: '', sublist: this.researchActivityOptions, type: OptionType.Menu },
-        { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
-        { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },
-        { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
-        { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
-      ];
-    this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
-  }
+    private _bypass: BypassErrorService) {this._bypass.bypassError(environment.cerGraphQLUrl, [500]);}
 
   getSearchQueryParams(item: any) {
     return item['type'] === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
@@ -230,22 +149,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.appComponentService.setContentSidenavHasContent(hasContent);
   }
 
-  async ngOnInit() {  
-    this.title = "Welcome to ResearchHub"
+  async ngOnInit() {
+    this.title = "Welcome to the ResearchHub"
     this.summary = "The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research."
-
-    // Methods dependent on URL
-    this.url = this.appComponentService.url.subscribe(url => {
-      if (url == 'home') {
-        this.titleService.setTitle('ResearchHub | Home');
-        this.showBanner = true;
-      }
-      else {
-        this.titleService.setTitle('ResearchHub | Home');
-        this.showBanner = false;
-      }
-      this.searchBarService.setVisibility(url == 'home' || url.substring(0, 6) == 'search' ? true : false);
-    });
 
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
@@ -283,6 +189,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
+            if (['home', 'search'].includes(routeName)) {
+              this.showBanner = true;
+              this.appComponentService.setTitle('Home');
+              this.searchBarService.setVisibility(true);
+            }
+            else {
+              this.showBanner = false;
+              this.searchBarService.setVisibility(false);
+            }
             // Update previous and current routes
             if (this.currentRoute) {
               this.previousRoute = this.currentRoute;
@@ -405,4 +320,3 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     return format(new Date(), 'yyyy');
   }
 }
-
