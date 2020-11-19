@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck, map, flatMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +11,9 @@ import {
   Article,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { NodeRenderer } from 'ngx-contentful-rich-text';
+import { BodyMediaComponent } from '../shared/body-media/body-media.component';
 
 @Component({
   selector: 'app-articles',
@@ -18,6 +21,13 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
   styleUrls: ['./articles.component.scss']
 })
 export class ArticlesComponent implements OnInit {
+  nodeRenderers: Record<string, Type<NodeRenderer>> = {
+    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
+    [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent
+  };
 
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;

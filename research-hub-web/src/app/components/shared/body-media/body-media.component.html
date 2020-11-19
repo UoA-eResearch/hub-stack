@@ -1,10 +1,8 @@
-<!-- <div>{{ data.nodeType }}</div> -->
-
 <!-- Switch Case depending on media type -->
 <div [ngSwitch]="data.nodeType">
-    <div *ngSwitchCase="'embedded-asset-block'">This is an embedded Asset block</div>
-    <div *ngSwitchCase="'embedded-entry-block'">This is an embedded entry block</div>
-    <div *ngSwitchCase="'embedded-entry-inline'">This is an embedded entry inline</div>
-    <div *ngSwitchCase="'entry-hyperlink'">This is an entry hyperlink</div>
-    <div *ngSwitchCase="'asset-hyperlink'">This is an asset hyperlink</div>
+    <div *ngSwitchCase="'embedded-asset-block'">ASSET BLOCK</div>
+    <div *ngSwitchCase="'embedded-entry-block'">ENTRY BLOCK</div>
+    <div *ngSwitchCase="'embedded-entry-inline'">ENTRY INLINE</div>
+    <div *ngSwitchCase="'entry-hyperlink'">ENTRY HYPERLINK</div>
+    <div *ngSwitchCase="'asset-hyperlink'">ASSET HYPERLINK</div>
 </div>

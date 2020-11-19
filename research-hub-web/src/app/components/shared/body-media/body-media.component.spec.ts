@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BodyMediaComponent } from './body-media.component';
 
-describe('BodyMediaComponent', () => {
+xdescribe('BodyMediaComponent', () => {
   let component: BodyMediaComponent;
   let fixture: ComponentFixture<BodyMediaComponent>;
 

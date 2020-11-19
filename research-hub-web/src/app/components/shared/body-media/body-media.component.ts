@@ -17,6 +17,7 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
 
   ngOnInit(): void {
     this.data = this.node;
+    console.log(this.data);
   }
 
 }

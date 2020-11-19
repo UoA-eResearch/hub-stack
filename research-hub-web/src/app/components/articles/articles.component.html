@@ -66,10 +66,10 @@
     </ng-template>
 
     <ng-template #articleBody>
-        <mat-card-content 
-            style="margin-bottom: 50px;" 
-            [innerHTML]="article.body.json | richTextToHTML">
-        </mat-card-content>
+        <ngx-contentful-rich-text
+            [document]="article.body.json"
+            [nodeRenderers]="nodeRenderers">
+      </ngx-contentful-rich-text>
     </ng-template>
 
     <ng-template #keywords>
