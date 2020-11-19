@@ -129,6 +129,11 @@ mat-chip.mat-chip {
     padding-left: $padding-site;
     padding-right: $padding-site;
 }
+.site-padding-2 {
+  @extend .site-content;
+    padding-left: $padding-site * 2.0;
+    padding-right: $padding-site * 2.0;
+}
 
 .top-padding {
   padding-top: $padding-site-top;

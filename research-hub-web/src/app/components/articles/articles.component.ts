@@ -31,6 +31,7 @@ export class ArticlesComponent implements OnInit {
 
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
+  public bodyMedia;
   public slug: string;
   public parentSubHubs;
 
@@ -58,6 +59,10 @@ export class ArticlesComponent implements OnInit {
     if (!!this.slug) {
       this.getArticleBySlug(this.slug).subscribe(data => {
         this.article$ = this.getArticleByID(data.sys.id);
+        this.article$.subscribe(res => {
+          this.bodyMedia = res.body.links;
+          console.log(this.bodyMedia);
+        });
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

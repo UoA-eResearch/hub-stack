@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-
 
 @Component({
   selector: 'app-body-media',
@@ -8,16 +7,11 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
   styleUrls: ['./body-media.component.scss']
 })
 export class BodyMediaComponent extends NodeRenderer implements OnInit {
-
   public data: any;
 
-  constructor() { 
-    super();
-  }
+  constructor() { super(); }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.data = this.node;
-    console.log(this.data);
   }
-
 }

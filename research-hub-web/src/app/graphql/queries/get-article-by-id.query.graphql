@@ -12,6 +12,153 @@ query GetArticleByID($id: String!) {
         displayBanner
         body {
           json
+          links {
+            assets {
+              block {
+                title
+                description
+                url
+              }
+              hyperlink {
+                title
+                description
+                url
+              }
+              hyperlink {
+                title
+                description
+                url
+              }
+            }
+            entries {
+              block {
+                ...on Article {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on CaseStudy {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on Equipment{
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                } 
+                ... on OfficialDocuments {
+                  __typename
+                    title
+                    summary
+                }
+                ...on Service {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on SubHub {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+              }
+              inline {
+                ...on Article {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on CaseStudy {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on Equipment{
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                } 
+                ... on OfficialDocuments {
+                  __typename
+                    title
+                    summary
+                }
+                ...on Service {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on SubHub {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+              }
+              hyperlink {
+                ...on Article {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on CaseStudy {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on Equipment{
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                } 
+                ... on OfficialDocuments {
+                  __typename
+                    title
+                    summary
+                }
+                ...on Service {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+                ...on SubHub {
+                  __typename
+                  slug
+                  title
+                  ssoProtected
+                  summary
+                }
+              }
+            }
+          }
         }
         keywords
         slug
