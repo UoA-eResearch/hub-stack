@@ -2,7 +2,7 @@
   <h2>{{ featuredContentIndex ? 'Featured content' : 'Have you seen...?' }}</h2>
   <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-lg="column">
     <div ngClass.gt-xs="card-gt-xs">
-      <mat-card>
+      <mat-card id="have-you-seen-card">
         <a [routerLink]="['/content', content.id]"
           (click)="analyticsService.trackUserExperience('Have you seen', 'click')">
           <div style="margin: 2em;">
