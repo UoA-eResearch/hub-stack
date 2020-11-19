@@ -1,7 +1,17 @@
+<!-- Banner -->
 <div 
-  class="site-padding margin-bottom"
-  ngClass.sm="site-padding-sm margin-bottom"
-  ngClass.xs="site-padding-xs margin-bottom"
+  class="banner-container-home"
+  [ngStyle]="{ 'background-image': coverImageUrl }">
+  <div class="banner-content-home">
+    <h1>{{ title }}</h1>
+    <h4>{{ summary }}</h4>
+  </div>
+</div> 
+
+<div 
+  class="site-padding margin-bottom top-padding"
+  ngClass.sm="site-padding-sm margin-bottom top-padding"
+  ngClass.xs="site-padding-xs margin-bottom top-padding"
   style="margin-bottom: 2em;">
   <h2>Thank you!</h2>
   <p>We are developing the ResearchHub further and would be grateful for your feedback.

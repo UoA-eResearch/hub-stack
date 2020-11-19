@@ -13,6 +13,10 @@ import { LoginService } from '@uoa/auth';
   styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit {
+  public title: String = "Feedback";
+  public summary: String = "We appreciate your visit to the beta-version of the ResearchHub, our platform for research support.";
+  public coverImageUrl: String = 'url(../../../assets/images/banner19.jpg)';
+
   public userInfo;
   public authenticated;
   public helloWorld;

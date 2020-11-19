@@ -1,8 +1,17 @@
+<!-- Banner -->
 <div 
-  class="site-padding margin-bottom"
-  ngClass.sm="site-padding-sm margin-bottom"
-  ngClass.xs="site-padding-xs margin-bottom"
-  style="margin-bottom: 2em;">
+  class="banner-container-home"
+  [ngStyle]="{ 'background-image': coverImageUrl }">
+  <div class="banner-content-home">
+    <h1>{{ title }}</h1>
+    <h4>{{ summary }}</h4>
+  </div>
+</div> 
+
+<div 
+  class="site-padding margin-bottom top-padding"
+  ngClass.sm="site-padding-sm margin-bottom top-padding"
+  ngClass.xs="site-padding-xs margin-bottom top-padding">
   <h2>Thank you!</h2>
   <p>
     You can register your interest in helping our User Experience Specialist running through a usability study.

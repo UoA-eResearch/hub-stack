@@ -1,7 +1,7 @@
 <div
-  [ngClass]="isFilterBtnVisible ? 'site-padding top-padding' : isVisible ? 'site-padding-2 top-padding' : 'site-padding-2'"
-  [ngClass.xs]="isFilterBtnVisible ? 'site-padding-xs top-padding' : isVisible ? 'site-padding-xs top-padding' : 'site-padding-xs'" 
-  [ngClass.sm]="isFilterBtnVisible ? 'site-padding-sm top-padding' : isVisible ? 'site-padding-sm top-padding' : 'site-padding-sm'">
+  [ngClass]="isVisible ? isFilterBtnVisible ? 'site-padding top-padding' : 'site-padding-2 top-padding' : 'site-padding'"
+  [ngClass.xs]="isVisible ? isFilterBtnVisible ? 'site-padding-xs top-padding' : 'site-padding-xs top-padding' : 'site-padding-xs'" 
+  [ngClass.sm]="isVisible ? isFilterBtnVisible ? 'site-padding-sm top-padding' : 'site-padding-sm top-padding' : 'site-padding-sm'">
   <div class="search-bar-outer" ngClass.lt-md="search-bar-outer-xs" *ngIf="isVisible">
     <div class="search-bar-inner" fxFlex="100" fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="space-between center">
       <mat-form-field fxFlex floatLabel="never">
