@@ -189,15 +189,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
-            if (['home', 'search'].includes(routeName)) {
-              this.showBanner = true;
-              this.appComponentService.setTitle('Home');
-              this.searchBarService.setVisibility(true);
-            }
-            else {
-              this.showBanner = false;
-              this.searchBarService.setVisibility(false);
-            }
+            this.showBanner = ['home'].includes(routeName);
+            this.searchBarService.setVisibility(['home', 'search'].includes(routeName));
+            if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Home');
+
             // Update previous and current routes
             if (this.currentRoute) {
               this.previousRoute = this.currentRoute;

@@ -1,11 +1,8 @@
 <!-- Displaying all subhubs -->
-<div
+<app-collection-list 
     *ngIf="allSubHubs$ | async as allSubHubs"
-    class="site-padding margin-bottom top-padding" 
-    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
-    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
-    <app-collection-list [collection]="allSubHubs"></app-collection-list>
-</div>
+    [collection]="allSubHubs">
+</app-collection-list>
 
 
 <!-- Displaying a singular subhub -->

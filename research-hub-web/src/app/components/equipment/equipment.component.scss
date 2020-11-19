@@ -77,18 +77,6 @@ hr {
     margin: 40px 0px;
 }
 
-// Default Banner
-.banner-container {
-    text-align: center;
-    min-width: 100vw; 
-    margin: -3em 0PX 20PX -7.5vw;
-    min-height: 40vh;
-    max-height: auto;
-    overflow: hidden;
-    background-size: cover!important;
-    background-image: url('../../../assets/images/banner2.jpg'); // Default banner image if none supplied
-}
-
 // Equipment Titles
 .equipment-title {
     color: black; 

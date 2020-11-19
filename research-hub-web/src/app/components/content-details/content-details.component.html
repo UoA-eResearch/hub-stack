@@ -1,103 +1,113 @@
 <ng-container *ngIf="content && !isGuide()">
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
-    <div class="flex-hack" fxFlex="60" fxLayout="column" fxLayoutGap="1em" [ngStyle.lt-lg]="{'margin-top': '1em'}">
-      <mat-card>
-        <mat-card-header>
-          <img fxHide.xs style="width: 64px; height: 64px; margin-right: 1em;" *ngIf="content" mat-card-avatar
-            [src]="apiService.getAssetUrl(content.image)">
-          <mat-card-title>
-            <h2>{{content.name}}</h2>
-          </mat-card-title>
-          <mat-card-subtitle>
-            <ng-container *ngFor="let item of content.contentTypes; let i=index;">
-              <a style="display: inline;" [routerLink]="['/search']" [queryParams]="{categoryId: item.idUi}">
-                {{item.nameUi}}<ng-container *ngIf="i + 1 < content.contentTypes.length">, </ng-container>
-              </a>
-            </ng-container>
-          </mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content style="margin-top: 1em;">
-          <div fxLayout="row" fxLayoutGap="2em">
-            <div fxFlex="100" fxFlex.lt-sm="100" fxLayout="column" fxLayoutGap="1em">
-              <p>{{content.summary}}</p>
-
-              <div fxFlex="36px" fxFlexAlign="end">
-                <a *ngIf="!isKnowledgeArticle() && !isIntegratedService()" mat-raised-button color="accent"
-                  (click)="trackAction()" [href]="content.action" target="_blank">
-                  {{content.actionLabel}}
+  <div 
+    class="site-padding top-padding margin-bottom"
+    ngClass.sm="site-padding-sm top-padding margin-bottom"
+    ngClass.xs="site-padding-xs top-padding margin-bottom">
+    <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
+      <div class="flex-hack" fxFlex="60" fxLayout="column" fxLayoutGap="1em" [ngStyle.lt-lg]="{'margin-top': '1em'}">
+        <mat-card>
+          <mat-card-header>
+            <img fxHide.xs style="width: 64px; height: 64px; margin-right: 1em;" *ngIf="content" mat-card-avatar
+              [src]="apiService.getAssetUrl(content.image)">
+            <mat-card-title>
+              <h2>{{content.name}}</h2>
+            </mat-card-title>
+            <mat-card-subtitle>
+              <ng-container *ngFor="let item of content.contentTypes; let i=index;">
+                <a style="display: inline;" [routerLink]="['/search']" [queryParams]="{categoryId: item.idUi}">
+                  {{item.nameUi}}<ng-container *ngIf="i + 1 < content.contentTypes.length">, </ng-container>
                 </a>
-                <button *ngIf="!isKnowledgeArticle() && isIntegratedService()" mat-raised-button color="accent"
-                  [routerLink]="['/'+ content.action]">
-                  {{content.actionLabel}}
-                </button>
+              </ng-container>
+            </mat-card-subtitle>
+          </mat-card-header>
+  
+          <mat-card-content style="margin-top: 1em;">
+            <div fxLayout="row" fxLayoutGap="2em">
+              <div fxFlex="100" fxFlex.lt-sm="100" fxLayout="column" fxLayoutGap="1em">
+                <p>{{content.summary}}</p>
+  
+                <div fxFlex="36px" fxFlexAlign="end">
+                  <a *ngIf="!isKnowledgeArticle() && !isIntegratedService()" mat-raised-button color="accent"
+                    (click)="trackAction()" [href]="content.action" target="_blank">
+                    {{content.actionLabel}}
+                  </a>
+                  <button *ngIf="!isKnowledgeArticle() && isIntegratedService()" mat-raised-button color="accent"
+                    [routerLink]="['/'+ content.action]">
+                    {{content.actionLabel}}
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-
-      <mat-card [ngClass]="{'description': !isKnowledgeArticle()}" class="description">
-        <h3>Overview</h3>
-        <app-markdown [data]="content.description"></app-markdown>
-      </mat-card>
-
-      <mat-card *ngIf="content.additionalInfo">
-        <app-markdown [data]="content.additionalInfo"></app-markdown>
-      </mat-card>
-
-      <mat-card *ngIf="content.actionableInfo">
-        <app-markdown [data]="content.actionableInfo"></app-markdown>
-      </mat-card>
-    </div>
-
-    <div class="flex-hack" fxFlex="40" fxLayout="column" fxLayoutGap="1em">
-      <mat-card *ngIf="similarContentItems && similarContentItems.length">
-        <h3>You might also be interested in</h3>
-        <mat-nav-list>
-          <mat-list-item class="tooltip" *ngFor="let item of similarContentItems" [routerLink]="['/content', item.id]"
-            matTooltip="{{item.name}}" matTooltipShowDelay="300">
-            <img mat-list-avatar [src]="apiService.getAssetUrl(item.image)">
-            <h4 style="font-size: 16px;" mat-line> {{item.name}} </h4>
-          </mat-list-item>
-        </mat-nav-list>
-      </mat-card>
-
-      <mat-card *ngIf="userSupport && userSupport.length">
-        <h3>For support contact</h3>
-        <mat-chip-list [selectable]="true">
-          <mat-chip class="contact-chip" *ngFor="let item of userSupport" [routerLink]="item | listItemToRouterLink">
-            <img class="chip-avatar" [src]="apiService.getAssetUrl(item.image)" height="25" />
-            {{item.title}}
-          </mat-chip>
-        </mat-chip-list>
-      </mat-card>
-
-      <mat-card>
-        <h3>Organisation units</h3>
-        <mat-chip-list>
-          <mat-chip class="org-unit-chip" *ngFor="let orgUnit of content.orgUnits"
-            [routerLink]="['/orgUnit', orgUnit.id]">
-            <img class="chip-avatar" [src]="apiService.getAssetUrl(orgUnit.image)" height="25" />
-            {{orgUnit.name}}
-          </mat-chip>
-        </mat-chip-list>
-      </mat-card>
-
-      <mat-card *ngIf="content.policies.length">
-        <h3>Policies</h3>
-        <a class="policy-url" *ngFor="let policy of content.policies" [href]="policy.url" target="_blank"
-          (click)="analyticsService.trackPolicy(policy.name, policy.url);">
-          {{policy.name}}
-        </a>
-      </mat-card>
+          </mat-card-content>
+        </mat-card>
+  
+        <mat-card [ngClass]="{'description': !isKnowledgeArticle()}" class="description">
+          <h3>Overview</h3>
+          <app-markdown [data]="content.description"></app-markdown>
+        </mat-card>
+  
+        <mat-card *ngIf="content.additionalInfo">
+          <app-markdown [data]="content.additionalInfo"></app-markdown>
+        </mat-card>
+  
+        <mat-card *ngIf="content.actionableInfo">
+          <app-markdown [data]="content.actionableInfo"></app-markdown>
+        </mat-card>
+      </div>
+  
+      <div class="flex-hack" fxFlex="40" fxLayout="column" fxLayoutGap="1em">
+        <mat-card *ngIf="similarContentItems && similarContentItems.length">
+          <h3>You might also be interested in</h3>
+          <mat-nav-list>
+            <mat-list-item class="tooltip" *ngFor="let item of similarContentItems" [routerLink]="['/content', item.id]"
+              matTooltip="{{item.name}}" matTooltipShowDelay="300">
+              <img mat-list-avatar [src]="apiService.getAssetUrl(item.image)">
+              <h4 style="font-size: 16px;" mat-line> {{item.name}} </h4>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-card>
+  
+        <mat-card *ngIf="userSupport && userSupport.length">
+          <h3>For support contact</h3>
+          <mat-chip-list [selectable]="true">
+            <mat-chip class="contact-chip" *ngFor="let item of userSupport" [routerLink]="item | listItemToRouterLink">
+              <img class="chip-avatar" [src]="apiService.getAssetUrl(item.image)" height="25" />
+              {{item.title}}
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card>
+  
+        <mat-card>
+          <h3>Organisation units</h3>
+          <mat-chip-list>
+            <mat-chip class="org-unit-chip" *ngFor="let orgUnit of content.orgUnits"
+              [routerLink]="['/orgUnit', orgUnit.id]">
+              <img class="chip-avatar" [src]="apiService.getAssetUrl(orgUnit.image)" height="25" />
+              {{orgUnit.name}}
+            </mat-chip>
+          </mat-chip-list>
+        </mat-card>
+  
+        <mat-card *ngIf="content.policies.length">
+          <h3>Policies</h3>
+          <a class="policy-url" *ngFor="let policy of content.policies" [href]="policy.url" target="_blank"
+            (click)="analyticsService.trackPolicy(policy.name, policy.url);">
+            {{policy.name}}
+          </a>
+        </mat-card>
+      </div>
     </div>
   </div>
 </ng-container>
 
 <!-- Multi-page guides, not to be confused with knowledge articles -->
 <ng-container *ngIf="content && isGuide()">
-  <div fxLayout="column" fxLayoutGap="1em">
+  <div 
+    class="site-padding top-padding margin-bottom"
+    ngClass.sm="site-padding-sm top-padding margin-bottom"
+    ngClass.xs="site-padding-xs top-padding margin-bottom" 
+    fxLayout="column" 
+    fxLayoutGap="1em">
     <mat-card class="description">
       <h2>{{content.name}}</h2>
       <div style="display: block;margin-bottom: 1em;">

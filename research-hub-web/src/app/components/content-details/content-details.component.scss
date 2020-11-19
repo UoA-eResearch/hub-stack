@@ -2,7 +2,7 @@
 
 .flex-hack {
   flex: 1 1 auto !important;
-  width: 100%; // For IE 11
+  max-width: 100vw; // For IE 11
 }
 
 .component {
