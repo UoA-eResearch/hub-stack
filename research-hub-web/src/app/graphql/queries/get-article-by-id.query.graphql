@@ -1,160 +1,199 @@
+  
 query GetArticleByID($id: String!) {
       article(id: $id) {
         title
         summary
         ssoProtected
         viewType
-        banner {
-          title
-          url
-          description
-        }
-        displayBanner
         body {
           json
           links {
-            assets {
-              block {
-                title
-                description
-                url
-              }
-              hyperlink {
-                title
-                description
-                url
-              }
-              hyperlink {
-                title
-                description
-                url
-              }
-            }
             entries {
               block {
-                ...on Article {
-                  __typename
-                  slug
+                ... on Article {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  slug
                 }
-                ...on CaseStudy {
-                  __typename
-                  slug
+                ... on Service {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  slug
                 }
-                ...on Equipment{
-                  __typename
-                  slug
+                ... on Equipment {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
-                } 
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
                 ... on OfficialDocuments {
-                  __typename
-                    title
-                    summary
-                }
-                ...on Service {
-                  __typename
-                  slug
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  url
                 }
-                ...on SubHub {
-                  __typename
-                  slug
-                  title
-                  ssoProtected
-                  summary
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
                 }
               }
               inline {
-                ...on Article {
-                  __typename
-                  slug
+                ... on Article {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  slug
                 }
-                ...on CaseStudy {
-                  __typename
-                  slug
+                ... on Service {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  slug
                 }
-                ...on Equipment{
-                  __typename
-                  slug
+                ... on Equipment {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
-                } 
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
                 ... on OfficialDocuments {
-                  __typename
-                    title
-                    summary
-                }
-                ...on Service {
-                  __typename
-                  slug
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  url
                 }
-                ...on SubHub {
-                  __typename
-                  slug
-                  title
-                  ssoProtected
-                  summary
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
                 }
               }
               hyperlink {
-                ...on Article {
-                  __typename
-                  slug
+                ... on Article {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  slug
                 }
-                ...on CaseStudy {
-                  __typename
-                  slug
+                ... on Service {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  slug
                 }
-                ...on Equipment{
-                  __typename
-                  slug
+                ... on Equipment {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
-                } 
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
                 ... on OfficialDocuments {
-                  __typename
-                    title
-                    summary
-                }
-                ...on Service {
-                  __typename
-                  slug
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  url
                 }
-                ...on SubHub {
-                  __typename
-                  slug
-                  title
-                  ssoProtected
-                  summary
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+              }
+            }
+            assets {
+              hyperlink {
+                title
+                description
+                sys {
+                  id
+                }
+              }
+              block {
+                title
+                description
+                sys {
+                  id
                 }
               }
             }
@@ -183,48 +222,20 @@ query GetArticleByID($id: String!) {
         }
         relatedItemsCollection {
           items {
-            ...on Article {
-              __typename
-              slug
+            ... on Article {
               title
-              ssoProtected
               summary
+              slug
             }
-            ...on CaseStudy {
-              __typename
-              slug
+            ... on Service {
               title
-              ssoProtected
               summary
+              slug
             }
-            ...on Equipment{
-              __typename
-              slug
+            ... on Equipment {
               title
-              ssoProtected
               summary
-            } 
-            ... on OfficialDocuments {
-              __typename
-                title
-                summary
-            }
-            ...on Service {
-              __typename
               slug
-              title
-              ssoProtected
-              summary
-            }
-            ...on SubHub {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-              bannerImage {
-                url
-              }
             }
           }
         }
@@ -239,48 +250,20 @@ query GetArticleByID($id: String!) {
         }
         relatedOrganisationsCollection {
           items {
-            ...on Article {
-              __typename
-              slug
+            ... on Article {
               title
-              ssoProtected
               summary
+              slug
             }
-            ...on CaseStudy {
-              __typename
-              slug
+            ... on Service {
               title
-              ssoProtected
               summary
+              slug
             }
-            ...on Equipment{
-              __typename
-              slug
+            ... on Equipment {
               title
-              ssoProtected
               summary
-            } 
-            ... on OfficialDocuments {
-              __typename
-                title
-                summary
-            }
-            ...on Service {
-              __typename
               slug
-              title
-              ssoProtected
-              summary
-            }
-            ...on SubHub {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-              bannerImage {
-                url
-              }
             }
           }
         }

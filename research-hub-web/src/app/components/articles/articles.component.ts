@@ -2,7 +2,8 @@ import { Component, OnInit, Type } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck, map, flatMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
+import { BodyMediaService } from '@components/shared/body-media/body-media.service';
 import {
   AllArticlesGQL,
   GetArticleBySlugGQL,
@@ -13,7 +14,7 @@ import {
 import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { BodyMediaComponent } from '../shared/body-media/body-media.component';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
   selector: 'app-articles',
@@ -22,7 +23,6 @@ import { BodyMediaComponent } from '../shared/body-media/body-media.component';
 })
 export class ArticlesComponent implements OnInit {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
-    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
     [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
@@ -31,7 +31,8 @@ export class ArticlesComponent implements OnInit {
 
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
-  public bodyMedia;
+  public assets;
+  public entries;
   public slug: string;
   public parentSubHubs;
 
@@ -41,7 +42,8 @@ export class ArticlesComponent implements OnInit {
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public getArticleByIDGQL: GetArticleByIdGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService
+    public appComponentService: AppComponentService,
+    public bodyMediaService: BodyMediaService,
   ) { }
 
   async ngOnInit() {
@@ -60,8 +62,7 @@ export class ArticlesComponent implements OnInit {
       this.getArticleBySlug(this.slug).subscribe(data => {
         this.article$ = this.getArticleByID(data.sys.id);
         this.article$.subscribe(res => {
-          this.bodyMedia = res.body.links;
-          console.log(this.bodyMedia);
+          this.bodyMediaService.loadEntries(res.body.links.assets);
         });
         this.appComponentService.setTitle(data.title);
       });
@@ -110,7 +111,7 @@ export class ArticlesComponent implements OnInit {
   public getArticleByID(id: string): Observable<Article> {
     try {
       return this.getArticleByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.article)) as unknown as Observable<Article>;
+        .pipe(map(x => x.data.article)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${id}:`, e); }
   }
 }

@@ -4223,25 +4223,25 @@ export enum PersonOrder {
 
 type PublicFields_LinkCard_Fragment = { __typename?: 'LinkCard' };
 
-type PublicFields_Article_Fragment = { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }> };
+type PublicFields_Article_Fragment = { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }> };
 
-type PublicFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
-type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
-type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
-type PublicFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean> };
+type PublicFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
-type PublicFields_Person_Fragment = { __typename: 'Person', slug: Maybe<string>, name: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean> };
+type PublicFields_Person_Fragment = { __typename?: 'Person' };
 
-type PublicFields_OfficialDocuments_Fragment = { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> };
+type PublicFields_OfficialDocuments_Fragment = { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
 type PublicFields_GenericContact_Fragment = { __typename?: 'GenericContact' };
 
 type PublicFields_Event_Fragment = { __typename?: 'Event' };
 
-type PublicFields_Software_Fragment = { __typename?: 'Software', name: Maybe<string>, description: Maybe<string>, url: Maybe<string> };
+type PublicFields_Software_Fragment = { __typename?: 'Software' };
 
 type PublicFields_Testing_Fragment = { __typename?: 'Testing' };
 
@@ -4309,7 +4309,7 @@ export type GetArticleByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleByIdQuery = { __typename?: 'Query', article: Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, viewType: Maybe<string>, displayBanner: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, banner: Maybe<{ __typename?: 'Asset', title: Maybe<string>, url: Maybe<string>, description: Maybe<string> }>, body: Maybe<{ __typename?: 'ArticleBody', json: any, links: { __typename?: 'ArticleBodyLinks', assets: { __typename?: 'ArticleBodyAssets', block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>>, hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>> }, entries: { __typename?: 'ArticleBodyEntries', block: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, inline: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, hyperlink: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> } } }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedContactsCollection: Maybe<{ __typename?: 'ArticleRelatedContactsCollection', items: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article' } | { __typename?: 'SubHub' } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment' } | { __typename?: 'Service' } | { __typename?: 'Person', name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, officialDocumentsCollection: Maybe<{ __typename?: 'ArticleOfficialDocumentsCollection', items: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article' } | { __typename?: 'SubHub' } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment' } | { __typename?: 'Service' } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, relatedOrganisationsCollection: Maybe<{ __typename?: 'ArticleRelatedOrganisationsCollection', items: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }> };
+export type GetArticleByIdQuery = { __typename?: 'Query', article: Maybe<{ __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, viewType: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, body: Maybe<{ __typename?: 'ArticleBody', json: any, links: { __typename?: 'ArticleBodyLinks', entries: { __typename?: 'ArticleBodyEntries', block: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'CaseStudy', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', name: Maybe<string>, jobTitle: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, inline: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'CaseStudy', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', name: Maybe<string>, jobTitle: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, hyperlink: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'CaseStudy', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', name: Maybe<string>, jobTitle: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }, assets: { __typename?: 'ArticleBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> } } }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedContactsCollection: Maybe<{ __typename?: 'ArticleRelatedContactsCollection', items: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article' } | { __typename?: 'SubHub' } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment' } | { __typename?: 'Service' } | { __typename?: 'Person', name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'SubHub' } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, officialDocumentsCollection: Maybe<{ __typename?: 'ArticleOfficialDocumentsCollection', items: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article' } | { __typename?: 'SubHub' } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment' } | { __typename?: 'Service' } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, relatedOrganisationsCollection: Maybe<{ __typename?: 'ArticleRelatedOrganisationsCollection', items: Array<Maybe<{ __typename?: 'LinkCard' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'SubHub' } | { __typename?: 'CaseStudy' } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'GenericContact' } | { __typename?: 'Event' } | { __typename?: 'Software' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }> };
 
 export type GetArticleBySlugQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
@@ -4342,66 +4342,72 @@ export type SubHubChildPagesByIdQuery = { __typename?: 'Query', subHub: Maybe<{ 
 export const PublicFieldsFragmentDoc = gql`
     fragment PublicFields on Entry {
   ... on Article {
+    sys {
+      id
+    }
     __typename
     slug
     title
-    summary
-    ssoProtected
     searchable
+    ssoProtected
+    summary
     icon {
       title
       description
       url
     }
   }
-  ... on Equipment {
-    __typename
-    slug
-    title
-    summary
-    ssoProtected
-    searchable
-  }
-  ... on Service {
-    __typename
-    slug
-    title
-    summary
-    ssoProtected
-    searchable
-  }
-  ... on SubHub {
-    __typename
-    slug
-    title
-    summary
-    ssoProtected
-    searchable
-  }
   ... on CaseStudy {
+    sys {
+      id
+    }
     __typename
     slug
     title
-    summary
-    ssoProtected
     searchable
+    ssoProtected
+    summary
   }
-  ... on Person {
+  ... on Equipment {
+    sys {
+      id
+    }
     __typename
     slug
-    name
+    title
     searchable
     ssoProtected
+    summary
   }
   ... on OfficialDocuments {
+    sys {
+      id
+    }
     __typename
     title
     summary
   }
-  ... on Software {
-    name
-    description
-    url
+  ... on Service {
+    sys {
+      id
+    }
+    __typename
+    slug
+    title
+    searchable
+    ssoProtected
+    summary
+  }
+  ... on SubHub {
+    sys {
+      id
+    }
+    __typename
+    slug
+    title
+    searchable
+    ssoProtected
+    summary
   }
 }
     `;
@@ -4616,157 +4622,195 @@ export const GetArticleByIdDocument = gql`
     summary
     ssoProtected
     viewType
-    banner {
-      title
-      url
-      description
-    }
-    displayBanner
     body {
       json
       links {
-        assets {
-          block {
-            title
-            description
-            url
-          }
-          hyperlink {
-            title
-            description
-            url
-          }
-          hyperlink {
-            title
-            description
-            url
-          }
-        }
         entries {
           block {
             ... on Article {
-              __typename
+              sys {
+                id
+              }
+              title
+              summary
               slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on CaseStudy {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on Equipment {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on OfficialDocuments {
-              __typename
-              title
-              summary
             }
             ... on Service {
-              __typename
-              slug
+              sys {
+                id
+              }
               title
-              ssoProtected
               summary
+              slug
+            }
+            ... on Equipment {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
             }
             ... on SubHub {
-              __typename
-              slug
+              sys {
+                id
+              }
               title
-              ssoProtected
               summary
+              slug
+            }
+            ... on CaseStudy {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
+            }
+            ... on OfficialDocuments {
+              sys {
+                id
+              }
+              title
+              summary
+              url
+            }
+            ... on Person {
+              sys {
+                id
+              }
+              name
+              jobTitle
             }
           }
           inline {
             ... on Article {
-              __typename
+              sys {
+                id
+              }
+              title
+              summary
               slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on CaseStudy {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on Equipment {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on OfficialDocuments {
-              __typename
-              title
-              summary
             }
             ... on Service {
-              __typename
-              slug
+              sys {
+                id
+              }
               title
-              ssoProtected
               summary
+              slug
+            }
+            ... on Equipment {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
             }
             ... on SubHub {
-              __typename
-              slug
+              sys {
+                id
+              }
               title
-              ssoProtected
               summary
+              slug
+            }
+            ... on CaseStudy {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
+            }
+            ... on OfficialDocuments {
+              sys {
+                id
+              }
+              title
+              summary
+              url
+            }
+            ... on Person {
+              sys {
+                id
+              }
+              name
+              jobTitle
             }
           }
           hyperlink {
             ... on Article {
-              __typename
+              sys {
+                id
+              }
+              title
+              summary
               slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on CaseStudy {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on Equipment {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ... on OfficialDocuments {
-              __typename
-              title
-              summary
             }
             ... on Service {
-              __typename
-              slug
+              sys {
+                id
+              }
               title
-              ssoProtected
               summary
+              slug
+            }
+            ... on Equipment {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
             }
             ... on SubHub {
-              __typename
-              slug
+              sys {
+                id
+              }
               title
-              ssoProtected
               summary
+              slug
+            }
+            ... on CaseStudy {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
+            }
+            ... on OfficialDocuments {
+              sys {
+                id
+              }
+              title
+              summary
+              url
+            }
+            ... on Person {
+              sys {
+                id
+              }
+              name
+              jobTitle
+            }
+          }
+        }
+        assets {
+          hyperlink {
+            title
+            description
+            sys {
+              id
+            }
+          }
+          block {
+            title
+            description
+            sys {
+              id
             }
           }
         }
@@ -4796,47 +4840,19 @@ export const GetArticleByIdDocument = gql`
     relatedItemsCollection {
       items {
         ... on Article {
-          __typename
+          title
+          summary
           slug
-          title
-          ssoProtected
-          summary
-        }
-        ... on CaseStudy {
-          __typename
-          slug
-          title
-          ssoProtected
-          summary
-        }
-        ... on Equipment {
-          __typename
-          slug
-          title
-          ssoProtected
-          summary
-        }
-        ... on OfficialDocuments {
-          __typename
-          title
-          summary
         }
         ... on Service {
-          __typename
-          slug
           title
-          ssoProtected
           summary
+          slug
         }
-        ... on SubHub {
-          __typename
-          slug
+        ... on Equipment {
           title
-          ssoProtected
           summary
-          bannerImage {
-            url
-          }
+          slug
         }
       }
     }
@@ -4852,47 +4868,19 @@ export const GetArticleByIdDocument = gql`
     relatedOrganisationsCollection {
       items {
         ... on Article {
-          __typename
+          title
+          summary
           slug
-          title
-          ssoProtected
-          summary
-        }
-        ... on CaseStudy {
-          __typename
-          slug
-          title
-          ssoProtected
-          summary
-        }
-        ... on Equipment {
-          __typename
-          slug
-          title
-          ssoProtected
-          summary
-        }
-        ... on OfficialDocuments {
-          __typename
-          title
-          summary
         }
         ... on Service {
-          __typename
-          slug
           title
-          ssoProtected
           summary
+          slug
         }
-        ... on SubHub {
-          __typename
-          slug
+        ... on Equipment {
           title
-          ssoProtected
           summary
-          bannerImage {
-            url
-          }
+          slug
         }
       }
     }
