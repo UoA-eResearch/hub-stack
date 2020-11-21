@@ -1,9 +1,9 @@
-import { Component, OnInit, Type } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy, Type } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { pluck, map, flatMap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
-import { BodyMediaService } from '@components/shared/body-media/body-media.service';
+import { BodyMediaService } from '@services/body-media.service';
 import {
   AllArticlesGQL,
   GetArticleBySlugGQL,
@@ -31,8 +31,8 @@ export class ArticlesComponent implements OnInit {
 
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
-  public assets;
-  public entries;
+  public boduyMedia;
+  public bodyMediaSub: Subscription;
   public slug: string;
   public parentSubHubs;
 
@@ -62,7 +62,7 @@ export class ArticlesComponent implements OnInit {
       this.getArticleBySlug(this.slug).subscribe(data => {
         this.article$ = this.getArticleByID(data.sys.id);
         this.article$.subscribe(res => {
-          this.bodyMediaService.loadEntries(res.body.links.assets);
+          this.bodyMediaService.setBodyMedia(res.body.links);
         });
         this.appComponentService.setTitle(data.title);
       });

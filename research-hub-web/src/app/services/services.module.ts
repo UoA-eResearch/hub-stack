@@ -5,6 +5,7 @@ import { AnalyticsService } from './analytics.service';
 import { ResearchHubApiService } from './research-hub-api.service';
 import { LayoutService } from './layout.service';
 import { CerApiService } from './cer-api.service';
+import { BodyMediaService } from './body-media.service';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { CerApiService } from './cer-api.service';
     AnalyticsService,
     CerApiService,
     ResearchHubApiService,
-    LayoutService
+    LayoutService,
+    BodyMediaService
   ],
   exports: []
 })

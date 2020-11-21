@@ -7,149 +7,231 @@ query GetEquipmentByID($id: String!) {
         body {
           json
           links {
-            assets {
-              block {
-                title
-                description
-                url
-              }
-              hyperlink {
-                title
-                description
-                url
-              }
-              hyperlink {
-                title
-                description
-                url
-              }
-            }
             entries {
               block {
-                ...on Article {
-                  __typename
-                  slug
+                ... on Article {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  slug
+                  url
                 }
-                ...on CaseStudy {
-                  __typename
-                  slug
+                ... on Service {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  slug
+                  url
                 }
-                ...on Equipment{
-                  __typename
-                  slug
+                ... on Equipment {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
-                } 
+                  description
+                  slug
+                  url
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  description
+                  slug
+                  url
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  description
+                  slug
+                  url
+                }
                 ... on OfficialDocuments {
-                  __typename
-                    title
-                    summary
-                }
-                ...on Service {
-                  __typename
-                  slug
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  url
                 }
-                ...on SubHub {
-                  __typename
-                  slug
-                  title
-                  ssoProtected
-                  summary
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                  url
                 }
               }
               inline {
-                ...on Article {
-                  __typename
-                  slug
+                ... on Article {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  slug
+                  url
                 }
-                ...on CaseStudy {
-                  __typename
-                  slug
+                ... on Service {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  slug
+                  url
                 }
-                ...on Equipment{
-                  __typename
-                  slug
+                ... on Equipment {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
-                } 
+                  description
+                  slug
+                  url
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  description
+                  slug
+                  url
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  description
+                  slug
+                  url
+                }
                 ... on OfficialDocuments {
-                  __typename
-                    title
-                    summary
-                }
-                ...on Service {
-                  __typename
-                  slug
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  url
                 }
-                ...on SubHub {
-                  __typename
-                  slug
-                  title
-                  ssoProtected
-                  summary
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                  url
                 }
               }
               hyperlink {
-                ...on Article {
-                  __typename
-                  slug
+                ... on Article {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  slug
+                  url
                 }
-                ...on CaseStudy {
-                  __typename
-                  slug
+                ... on Service {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  slug
+                  url
                 }
-                ...on Equipment{
-                  __typename
-                  slug
+                ... on Equipment {
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
-                } 
+                  description
+                  slug
+                  url
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  description
+                  slug
+                  url
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  description
+                  slug
+                  url
+                }
                 ... on OfficialDocuments {
-                  __typename
-                    title
-                    summary
-                }
-                ...on Service {
-                  __typename
-                  slug
+                  sys {
+                    id
+                  }
                   title
-                  ssoProtected
                   summary
+                  description
+                  url
                 }
-                ...on SubHub {
-                  __typename
-                  slug
-                  title
-                  ssoProtected
-                  summary
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                  url
                 }
+              }
+            }
+            assets {
+              hyperlink {
+                title
+                description
+                sys {
+                  id
+                }
+                url
+              }
+              block {
+                title
+                description
+                sys {
+                  id
+                }
+                url
               }
             }
           }

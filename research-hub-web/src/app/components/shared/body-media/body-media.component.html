@@ -1,7 +1,7 @@
 <div [ngSwitch]="data.nodeType">
-    <div *ngSwitchCase="'embedded-asset-block'">ASSET BLOCK</div>
-    <div *ngSwitchCase="'embedded-entry-block'">ENTRY BLOCK</div>
-    <div *ngSwitchCase="'embedded-entry-inline'">ENTRY INLINE</div>
-    <div *ngSwitchCase="'entry-hyperlink'">ENTRY HYPERLINK</div>
-    <div *ngSwitchCase="'asset-hyperlink'">ASSET HYPERLINK</div>
+    <div *ngSwitchCase="'embedded-asset-block'">{{ assets | json }} : ASSET BLOCK</div>
+    <div *ngSwitchCase="'embedded-entry-block'">{{ entries | json }}ENTRY BLOCK</div>
+    <div *ngSwitchCase="'embedded-entry-inline'">{{ entries | json }} : ENTRY INLINE</div>
+    <div *ngSwitchCase="'entry-hyperlink'">{{ entries | json }} : ENTRY HYPERLINK</div>
+    <div *ngSwitchCase="'asset-hyperlink'">{{ assets | json }} : ASSET HYPERLINK</div>
 </div>
