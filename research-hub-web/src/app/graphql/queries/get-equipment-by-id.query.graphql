@@ -15,9 +15,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on Service {
                   sys {
@@ -25,9 +23,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on Equipment {
                   sys {
@@ -35,9 +31,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on SubHub {
                   sys {
@@ -45,9 +39,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on CaseStudy {
                   sys {
@@ -55,9 +47,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on OfficialDocuments {
                   sys {
@@ -65,8 +55,6 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
-                  url
                 }
                 ... on Person {
                   sys {
@@ -74,7 +62,6 @@ query GetEquipmentByID($id: String!) {
                   }
                   name
                   jobTitle
-                  url
                 }
               }
               inline {
@@ -84,9 +71,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on Service {
                   sys {
@@ -94,9 +79,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on Equipment {
                   sys {
@@ -104,9 +87,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on SubHub {
                   sys {
@@ -114,9 +95,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on CaseStudy {
                   sys {
@@ -124,9 +103,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on OfficialDocuments {
                   sys {
@@ -134,8 +111,6 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
-                  url
                 }
                 ... on Person {
                   sys {
@@ -143,7 +118,6 @@ query GetEquipmentByID($id: String!) {
                   }
                   name
                   jobTitle
-                  url
                 }
               }
               hyperlink {
@@ -153,9 +127,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on Service {
                   sys {
@@ -163,9 +135,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on Equipment {
                   sys {
@@ -173,9 +143,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on SubHub {
                   sys {
@@ -183,9 +151,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on CaseStudy {
                   sys {
@@ -193,9 +159,7 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
                   slug
-                  url
                 }
                 ... on OfficialDocuments {
                   sys {
@@ -203,8 +167,6 @@ query GetEquipmentByID($id: String!) {
                   }
                   title
                   summary
-                  description
-                  url
                 }
                 ... on Person {
                   sys {
@@ -212,7 +174,6 @@ query GetEquipmentByID($id: String!) {
                   }
                   name
                   jobTitle
-                  url
                 }
               }
             }
@@ -235,15 +196,6 @@ query GetEquipmentByID($id: String!) {
               }
             }
           }
-        }
-        keywords
-        slug
-        ssoProtected
-        searchable
-        icon {
-          title
-          description
-          url
         }
         keywords
         slug

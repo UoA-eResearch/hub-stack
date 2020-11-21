@@ -289,7 +289,11 @@
                     fxLayoutGap="5%">
                     <div fxFlex="47.5%">
                         <h4>Overview</h4>
-                        <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
+                        <ngx-contentful-rich-text
+                            [document]="equipment.overview.json"
+                            [nodeRenderers]="nodeRenderers">
+                        </ngx-contentful-rich-text>
+                        <!-- <div [innerHTML]="equipment.overview.json | richTextToHTML"></div> -->
                     </div>
 
                     <!-- Features and Limitations -->
@@ -367,7 +371,11 @@
                         <!-- Overview -->
                         <div>
                             <h4>Overview</h4>
-                            <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
+                            <ngx-contentful-rich-text
+                                [document]="equipment.overview.json"
+                                [nodeRenderers]="nodeRenderers">
+                            </ngx-contentful-rich-text>
+                            <!-- <div [innerHTML]="equipment.overview.json | richTextToHTML"></div> -->
                         </div>
 
                         <hr class="section"/>
