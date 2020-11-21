@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaService} from '@services/body-media.service';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-body-media',
@@ -26,18 +28,22 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestro
      * Get BodyMedia for current content from BodyMedia service
      */
     this.mediaSub = this.bodyMediaService.bodyMedia.subscribe(x => {
+      console.log(this.data.nodeType);
       switch(this.data.nodeType) {
         case 'embedded-asset-block':
-          this.contentItem = 'embedded-asset-block';
+          this.contentItem = JSON.stringify(x.assets['block'].find(x => x.sys.id == this.data.data.target.sys.id));
           break;
         case 'embedded-entry-block':
-          this.contentItem = 'embedded-entry-block'
+          this.contentItem = JSON.stringify(x.entries['block'].find(x => x.sys.id == this.data.data.target.sys.id));
           break;
         case 'embedded-entry-inline':
-          this.contentItem = 'embedded-entry-inline';
+          this.contentItem = JSON.stringify(x.entries['inline'].find(x => x.sys.id == this.data.data.target.sys.id));
           break;
-        case 'hyperlink':
-          this.contentItem = 'hyperlink';
+        case 'entry-hyperlink':
+          this.contentItem = x.entries['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id).title;
+          break;
+        case 'asset-hyperlink':
+          this.contentItem = x.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id).title;
           break;
       }
       /**

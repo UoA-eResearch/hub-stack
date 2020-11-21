@@ -23,6 +23,7 @@ import { BodyMediaComponent } from '@components/shared/body-media/body-media.com
 })
 export class ArticlesComponent implements OnInit {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
+    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
     [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
