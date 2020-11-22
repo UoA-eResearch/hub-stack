@@ -37,17 +37,15 @@
     <ng-template #specificationsTable>
         <div 
             class="specifications section">
-            <h4>
-                Specifications
-            </h4>
+            <h4>Specifications</h4>
             <table class="specifications-table">
                 <tr>
                 <th>Name</th>
                 <th>Description</th>
                 </tr>
                 <tr *ngIf="equipment.type">
-                <td>Type</td>
-                <td>{{ equipment.type }}</td>
+                    <td>Type</td>
+                    <td>{{ equipment.type }}</td>
                 </tr>
                 <tr *ngIf="equipment.manufacturer">
                     <td>Manufacturer</td>
@@ -172,7 +170,6 @@
                     style="margin-bottom: 20px;" 
                     *ngFor="let support of equipment.userFacingSupportCollection.items" 
                     class="collection">
-                    
                         <a [routerLink]="">
                             <mat-card>
                                 <span class="card-title">
@@ -195,7 +192,6 @@
                 style="margin-bottom: 20px;" 
                 *ngFor="let owner of equipment.equipmentOwnerCollection.items" 
                 class="collection">
-                
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">

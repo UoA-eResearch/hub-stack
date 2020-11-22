@@ -12,8 +12,8 @@ import {
   Article,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
-import { NodeRenderer, MarkRenderer } from 'ngx-contentful-rich-text';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
@@ -23,20 +23,19 @@ import { BodyMediaComponent } from '@components/shared/body-media/body-media.com
 })
 export class ArticlesComponent implements OnInit {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
+    [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
-    [BLOCKS.QUOTE]: BodyMediaComponent,
     [INLINES.HYPERLINK]: BodyMediaComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
     [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
   };
 
-  public allArticles$: Observable<ArticleCollection>;
-  public article$: Observable<Article>;
-  public boduyMedia;
-  public bodyMediaSub: Subscription;
   public slug: string;
+  public article$: Observable<Article>;
+  public allArticles$: Observable<ArticleCollection>;
+  public bodyMediaSub: Subscription;
   public parentSubHubs;
 
   constructor(

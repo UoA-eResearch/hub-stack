@@ -1,10 +1,17 @@
 @import '~@angular/material/theming';
 @import 'research-activity';
 
-// Include the common styles for Angular Material. Be sure that you only ever include this mixin once!
+
+/**
+ * Include the common styles for Angular Material. 
+ * Be sure that you only ever include this mixin once!
+ */
 @include mat-core();
 
-// University of Auckland colors from Web Style Guide 
+
+/**
+ * University of Auckland colors from Web Style Guide 
+ */ 
 $dark-blue: #00467F;
 $light-blue: #009AC7;
 $silver: #8D9091;
@@ -15,7 +22,10 @@ $silver-lining: #BEC3C4;
 $input-grey: #D9D9D9;
 $light-grey: #F2F2F2;
 
-// Material design colors generated with: http://mcg.mbitson.com/
+
+/**
+ * Material design colors generated with: http://mcg.mbitson.com/
+ */
 $hub-teal: (
   50 : #e1f2f4,
   100 : #b3dfe4,
@@ -148,14 +158,20 @@ $hub-navy: (
   )
 );
 
-// Create the hub app theme
+
+/**
+ * Create the hub app theme
+ */
 $hub-app-primary: mat-palette($hub-teal);
 $hub-app-accent: mat-palette($hub-orange);
 $hub-app-warn: mat-palette($hub-pink);
 $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
 @include angular-material-theme($hub-app-theme);
 
-// Site wide measurements
+
+/**
+ * Site wide measurements
+ */
 $width-page-max: 100vw;
 $offset-gt-xs: 2em;
 $height-footer: 12em;
@@ -163,7 +179,10 @@ $height-footer-xs: 16em;
 $padding-site: 7vw;
 $padding-site-top: 3vh;
 
-// Site wide colors
+
+/**
+ * Site wide colors
+ */
 $color-primary: map-get($hub-app-primary, 500);
 $color-accent: map-get($hub-app-accent, A200);
 $color-pink: map-get($hub-pink, 500);
@@ -175,7 +194,8 @@ $color-content-summary-bg: auto;
 $color-browse-tile-bg: $color-pink;
 $color-guide-tile-bg: #0294a5;
 
-/* Research activity custom material themes:
+/* 
+ * Research activity custom material themes:
  * These are used apply custom themes to Angular components (buttons, sliders etc)
  * The research activity colour palettes are defined in research-activity.scss
  */

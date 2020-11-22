@@ -210,10 +210,11 @@
                         
                         <!-- Main Body -->
                         <div fxFlex="65%">
-                            <div 
-                                class="main-body"
-                                [innerHTML]="subhub.body.json | richTextToHTML">
-                            </div>
+                            <ngx-contentful-rich-text
+                                style="word-break:break-word;" 
+                                [document]="subhub.body.json"
+                                [nodeRenderers]="nodeRenderers">
+                            </ngx-contentful-rich-text>
                         </div>
 
                         <!-- Related Items and Keywords -->
@@ -268,12 +269,17 @@
             
                     <!-- Body Content -->
                     <!-- Main Body -->
-                    <div 
+                    <!-- <div 
                         class="main-body site-padding"
                         ngClass.sm="site-padding-sm"
                         ngClass.xs="site-padding-xs"
                         [innerHTML]="subhub.body.json | richTextToHTML">
-                    </div>
+                    </div> -->
+                    <ngx-contentful-rich-text
+                        style="word-break:break-word;" 
+                        [document]="subhub.body.json"
+                        [nodeRenderers]="nodeRenderers">
+                    </ngx-contentful-rich-text>
             
                     <!-- SubHub Children -->
                     <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>

@@ -70,7 +70,7 @@
             style="word-break:break-word;" 
             [document]="article.body.json"
             [nodeRenderers]="nodeRenderers">
-      </ngx-contentful-rich-text>
+        </ngx-contentful-rich-text>
     </ng-template>
 
     <ng-template #keywords>
@@ -97,7 +97,6 @@
                 style="margin-bottom: 20px;" 
                 *ngFor="let organisation of article.relatedOrganisationsCollection.items" 
                 class="collection">
-                
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
@@ -123,7 +122,6 @@
                 style="margin-bottom: 20px;" 
                 *ngFor="let contact of article.relatedContactsCollection.items" 
                 class="collection">
-                
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
@@ -150,7 +148,6 @@
                 style="margin-bottom: 20px;" 
                 *ngFor="let relatedItem of article.relatedItemsCollection.items" 
                 class="collection">
-                
                     <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
                         <mat-card>
                             <span class="card-title">
@@ -172,7 +169,6 @@
             class="column-header">
             <h4>Official Documents</h4>
             <hr/>
-
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
                 *ngFor="let document of article.officialDocumentsCollection.items" 
@@ -320,6 +316,5 @@
             </div>
         </div>
     </div>
-
     <!-- End of View Switcher -->
 </div>

@@ -1,11 +1,14 @@
 @import '../../../themes.scss';
 @import '../search-results/search-results.component.scss';
 
-mat-expansion-panel, mat-card  {
+mat-expansion-panel,
+mat-card  {
     margin: 1vh 0;
 }
 
-// The container for an individual article
+/**
+ * Container for an individual article
+ */
 #article-container {
 
     #breadcrumbs {
@@ -36,47 +39,40 @@ mat-expansion-panel, mat-card  {
     }
 }
 
-/* Vanilla CSS Styling */
-// Article Titles
 
+/**
+ * Article Titles
+ */
 .article-title {
     color: map-get($hub-navy, 500);
     font-size: 50px;
     font-weight: bold; 
     line-height: 110%;
 }
-
-.article-title-sm {
-    color: map-get($hub-navy, 500);
-    font-size: 35px;
-}
-
 .article-title-xs {
-    color: map-get($hub-navy, 500);
-    font-size: 25px;
+    font-size: 30px;
 }
 
-// Article Summary
+
+/**
+ * Article Summary
+ */
 .article-summary {
     color: $color-icon;
     font-size: 20px; 
     line-height: 110%;
 }
-
-.article-summary-sm {
-    color: $color-icon;
-    font-size: 20px; 
-}
-
 .article-summary-xs {
-    color: $color-icon;
     font-size: 15px; 
 }
 
-// Keyword
+
+/**
+ * Keyword
+ */
 .keyword-card {
-    color: #828282;
-    background: #F0F0F0;
+    color: $silver;
+    background: $light-grey;
     margin: 5px; 
     padding: 5px 10px;
     font-size: 12px; 
@@ -84,14 +80,16 @@ mat-expansion-panel, mat-card  {
     box-shadow: none !important;
 }
 
-// Banner Styling
+
+/**
+ * Banner
+ */
 .banner-container {
     text-align: center;
     min-width: 98vw; 
     min-height: 40vh;
     background-size: cover!important;
 }
-
 .banner-content {
     width: 50%;
     margin: 10em auto;
@@ -99,28 +97,36 @@ mat-expansion-panel, mat-card  {
     display: inline-block;
 }
 
-// Related Item Card
+
+/**
+ * Related Item Card
+ */
 .related-item-card {
     max-height: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 .related-item-card-mobile {
     height: 70px;
 }
-
-.card-title {
-    color: map-get($hub-teal, 500);
-}
-
 .related-item-summary {
     font-size: 12px;
 }
 
-// HR 
+
+/**
+ * HR
+ */
 hr {
     background-color: #dbdbdb;
     border: none;
     height: 1px;
+}
+
+
+/**
+ * Card Title
+ */
+ .card-title {
+    color: map-get($hub-teal, 500);
 }
