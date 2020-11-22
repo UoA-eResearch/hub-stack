@@ -1,19 +1,73 @@
 <span [ngSwitch]="data.nodeType">
     <span *ngSwitchCase="'embedded-asset-block'">
-        Asset Block: 
+        <div 
+            class="embedded-asset-block"
+            ngClass.xs="embedded-asset-block-mobile">
+            <img src="{{ contentItem.url }}"/>
+            <p>{{ contentItem.title }}
+                <small 
+                    *ngIf="contentItem.description"> 
+                    &nbsp;—&nbsp;{{ contentItem.description }}
+                </small>
+            </p>
+        </div>
     </span>
     <span *ngSwitchCase="'embedded-entry-block'">
-        Entry Block: 
+        <div 
+            class="embedded-entry-block"
+            ngClass.xs="embedded-entry-block-mobile">
+                <mat-card>
+                    <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
+                    <mat-card-title>
+                        <p>{{ contentItem.title }}</p>
+                    </mat-card-title>              
+                    <mat-card-content>
+                        <small>{{ contentItem.summary }}</small>
+                    </mat-card-content>   
+                    <mat-card-actions>
+                        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                            <button mat-stroked-button>READ MORE</button>
+                        </a>
+                    </mat-card-actions>   
+                </mat-card>
+        </div>
     </span>
     <span *ngSwitchCase="'embedded-entry-inline'">
-        Entry Inline: 
+        <a class="embedded-entry-inline" href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
+            <mat-card>
+                <b>&nbsp;{{ contentItem.title }}&nbsp;⟶&nbsp;</b>
+            </mat-card>
+        </a>
     </span>
     <span *ngSwitchCase="'entry-hyperlink'">
-        Entry Hyperlink: 
+        <span>
+            <a href="contentItem.url">
+                <b>{{ contentItem.title }}</b>
+            </a>
+        </span>
     </span>
     <span *ngSwitchCase="'asset-hyperlink'">
-        Asset Hyperlink: 
+        <span>
+            <a href="contentItem.url">
+                <b>{{ contentItem.title }}</b>            
+            </a>
+        </span>
+    </span>
+    <span *ngSwitchCase="'hyperlink'">
+        <span *ngIf="youtube; else nonYoutube">
+            <div class="hyperlink-youtube-container">
+                <iframe 
+                    class="hyperlink-youtube"
+                    [src]="contentItem.url" 
+                    frameborder="0" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </span>
+        <ng-template #nonYoutube>
+            <a href="contentItem.url">
+                <b>{{ contentItem.title }}</b>            
+            </a>
+        </ng-template>
     </span>
 </span>
-
-<b><i>{{ contentItem }}</i></b>

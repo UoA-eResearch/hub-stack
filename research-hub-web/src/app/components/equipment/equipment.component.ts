@@ -29,6 +29,8 @@ export class EquipmentComponent implements OnInit {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [BLOCKS.QUOTE]: BodyMediaComponent,
+    [INLINES.HYPERLINK]: BodyMediaComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
     [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent

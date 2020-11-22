@@ -15,6 +15,9 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
+                  banner {
+                    url
+                  }
                   summary
                   slug
                 }
@@ -23,12 +26,18 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
+                  icon {
+                    url
+                  }
                   summary
                   slug
                 }
                 ... on Equipment {
                   sys {
                     id
+                  }
+                  mainImage {
+                    url
                   }
                   title
                   summary
@@ -39,6 +48,9 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
+                  banner {
+                    url
+                  }
                   summary
                   slug
                 }
@@ -55,6 +67,7 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
+                  url
                   summary
                 }
                 ... on Person {
@@ -62,6 +75,10 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   name
+                  image {
+                    url
+                  }
+                  username
                   jobTitle
                 }
               }
@@ -111,6 +128,7 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
+                  url
                   summary
                 }
                 ... on Person {
@@ -118,6 +136,10 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   name
+                  image {
+                    url
+                  }
+                  username
                   jobTitle
                 }
               }
@@ -127,7 +149,6 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on Service {
@@ -135,7 +156,6 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on Equipment {
@@ -143,7 +163,6 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on SubHub {
@@ -151,7 +170,6 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on CaseStudy {
@@ -159,7 +177,6 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on OfficialDocuments {
@@ -167,14 +184,14 @@ query GetArticleByID($id: String!) {
                     id
                   }
                   title
-                  summary
+                  url
                 }
                 ... on Person {
                   sys {
                     id
                   }
                   name
-                  jobTitle
+                  username
                 }
               }
             }

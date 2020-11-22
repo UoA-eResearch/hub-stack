@@ -4,7 +4,7 @@ query SubHubChildPagesById ($id: String!) {
     title
     viewType
     summary
-    bannerImage {
+    banner {
       url
     }
     body {
@@ -63,7 +63,7 @@ query SubHubChildPagesById ($id: String!) {
           title
           ssoProtected
           summary
-          bannerImage {
+          banner {
             url
           }
         }

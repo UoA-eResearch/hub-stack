@@ -14,6 +14,9 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
+                  banner {
+                    url
+                  }
                   summary
                   slug
                 }
@@ -22,12 +25,18 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
+                  icon {
+                    url
+                  }
                   summary
                   slug
                 }
                 ... on Equipment {
                   sys {
                     id
+                  }
+                  mainImage {
+                    url
                   }
                   title
                   summary
@@ -38,6 +47,9 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
+                  banner {
+                    url
+                  }
                   summary
                   slug
                 }
@@ -54,6 +66,7 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
+                  url
                   summary
                 }
                 ... on Person {
@@ -61,6 +74,10 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   name
+                  image {
+                    url
+                  }
+                  username
                   jobTitle
                 }
               }
@@ -110,6 +127,7 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
+                  url
                   summary
                 }
                 ... on Person {
@@ -117,6 +135,10 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   name
+                  image {
+                    url
+                  }
+                  username
                   jobTitle
                 }
               }
@@ -126,7 +148,6 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on Service {
@@ -134,7 +155,6 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on Equipment {
@@ -142,7 +162,6 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on SubHub {
@@ -150,7 +169,6 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on CaseStudy {
@@ -158,7 +176,6 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
-                  summary
                   slug
                 }
                 ... on OfficialDocuments {
@@ -166,14 +183,14 @@ query GetEquipmentByID($id: String!) {
                     id
                   }
                   title
-                  summary
+                  url
                 }
                 ... on Person {
                   sys {
                     id
                   }
                   name
-                  jobTitle
+                  username
                 }
               }
             }
@@ -229,11 +246,6 @@ query GetEquipmentByID($id: String!) {
           }
         }
         mainImage {
-          url
-        }
-        icon {
-          title
-          description
           url
         }
         features {
