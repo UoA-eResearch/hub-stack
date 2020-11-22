@@ -28,12 +28,17 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestro
      * Get BodyMedia for current content from BodyMedia service
      */
     this.mediaSub = this.bodyMediaService.bodyMedia.subscribe(x => {
-      console.log(this.data.nodeType);
+      /**
+       * Switch case based on response nodeType
+       * filter response data by piping e.g. x.assets.(nodeType).filter((id) => id == this.data.data.target.sys.id)
+       */
       switch(this.data.nodeType) {
         case 'embedded-asset-block':
+          console.log(x.assets['block']);
           this.contentItem = JSON.stringify(x.assets['block'].find(x => x.sys.id == this.data.data.target.sys.id));
           break;
         case 'embedded-entry-block':
+          console.log(x.entries['block']);
           this.contentItem = JSON.stringify(x.entries['block'].find(x => x.sys.id == this.data.data.target.sys.id));
           break;
         case 'embedded-entry-inline':
@@ -46,10 +51,6 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestro
           this.contentItem = x.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id).title;
           break;
       }
-      /**
-       * Switch case this.data.nodeType
-       * filter response data by deconstruction e.g. x.assets.(nodeType).filter((id) => id == this.data.data.target.sys.id)
-       */
       this.assets = x.assets;
       this.entries = x.entries;
     });

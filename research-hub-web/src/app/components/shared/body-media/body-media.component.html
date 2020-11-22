@@ -1,1 +1,19 @@
+<span [ngSwitch]="data.nodeType">
+    <span *ngSwitchCase="'embedded-asset-block'">
+        Asset Block: 
+    </span>
+    <span *ngSwitchCase="'embedded-entry-block'">
+        Entry Block: 
+    </span>
+    <span *ngSwitchCase="'embedded-entry-inline'">
+        Entry Inline: 
+    </span>
+    <span *ngSwitchCase="'entry-hyperlink'">
+        Entry Hyperlink: 
+    </span>
+    <span *ngSwitchCase="'asset-hyperlink'">
+        Asset Hyperlink: 
+    </span>
+</span>
+
 <b><i>{{ contentItem }}</i></b>

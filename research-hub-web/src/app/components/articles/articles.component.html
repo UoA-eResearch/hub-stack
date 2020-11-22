@@ -67,6 +67,7 @@
 
     <ng-template #articleBody>
         <ngx-contentful-rich-text
+            style="word-break:break-word;" 
             [document]="article.body.json"
             [nodeRenderers]="nodeRenderers">
       </ngx-contentful-rich-text>

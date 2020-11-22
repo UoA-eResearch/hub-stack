@@ -289,11 +289,7 @@
                     fxLayoutGap="5%">
                     <div fxFlex="47.5%">
                         <h4>Overview</h4>
-                        <ngx-contentful-rich-text
-                            [document]="equipment.overview.json"
-                            [nodeRenderers]="nodeRenderers">
-                        </ngx-contentful-rich-text>
-                        <!-- <div [innerHTML]="equipment.overview.json | richTextToHTML"></div> -->
+                        <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
                     </div>
 
                     <!-- Features and Limitations -->
@@ -305,6 +301,16 @@
                         </div>
                     </div>
                 </div>
+
+                <hr class="section"/>
+                
+                <!-- Equipment Body -->
+                <h4>Description</h4>
+                <ngx-contentful-rich-text
+                    style="word-break:break-word;" 
+                    [document]="equipment.body.json"
+                    [nodeRenderers]="nodeRenderers">
+                </ngx-contentful-rich-text>
 
                 <hr class="section"/>
 
@@ -371,11 +377,7 @@
                         <!-- Overview -->
                         <div>
                             <h4>Overview</h4>
-                            <ngx-contentful-rich-text
-                                [document]="equipment.overview.json"
-                                [nodeRenderers]="nodeRenderers">
-                            </ngx-contentful-rich-text>
-                            <!-- <div [innerHTML]="equipment.overview.json | richTextToHTML"></div> -->
+                            <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
                         </div>
 
                         <hr class="section"/>
@@ -389,6 +391,21 @@
                                 <ng-container *ngTemplateOutlet="featuresLimitations"></ng-container>
                             </div>
                         </div>
+
+                        <hr class="section"/>
+
+                        <!-- Equipment Description -->
+                        <h4>Description</h4>
+                        <ngx-contentful-rich-text
+                            style="word-break: break-word;"
+                            [document]="equipment.body.json"
+                            [nodeRenderers]="nodeRenderers">
+                        </ngx-contentful-rich-text>
+                        
+                    </div>
+                    <div fxFlex="20%">
+                        <!-- Specifications Table -->
+                        <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
                         
                         <!-- Considerations -->
                         <ng-container *ngTemplateOutlet="considerations"></ng-container>
@@ -398,11 +415,6 @@
 
                         <!-- Related Items -->
                         <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-                        
-                    </div>
-                    <div fxFlex="20%">
-                        <!-- Specifications Table -->
-                        <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
                     </div>
                 </div>
             </div>   
