@@ -41,9 +41,14 @@
                 class="calendar-container"
                 ngClass.xs="calendar-container-xs"
                 fxFlex="20%">
-                <span class="icon">
-                    Calendar here
-                </span>
+                <div>
+                    <div 
+                        fxShow.xs="false"
+                        class="calendar-icon-container">
+                        <div class="calendar-icon-header">{{ event.date | date:'MMM' }}</div>
+                        <div class="calendar-icon-body">{{ event.date | date:'dd' }}</div>
+                </div>
+                </div>
             </span>
             <span>
                 <div 
@@ -56,7 +61,14 @@
                     ngClass.xs="event-summary-xs">
                     {{ event.summary }}
                 </div>
-                <a href="{{ event.url }}">Event Details ></a>
+                <a 
+                    class="event-details-button" 
+                    href="{{ event.url }}">
+                    <button 
+                        mat-stroked-button>
+                        <b>Event Details &nbsp;>></b>
+                    </button>
+                </a>
             </span>
         </div>
     </ng-template>
@@ -105,7 +117,20 @@
     </ng-template>
 
     <ng-template #googleMap></ng-template>
-    <ng-template #keywords></ng-template>
+
+    <ng-template #keywords>
+        <h4 id="keywords">Keywords<hr/></h4>
+        <mat-card-subtitle 
+            fxLayout="row wrap"> 
+            <span *ngFor="let keyword of event.keywords">
+                <mat-card 
+                    fxLayout="row" 
+                    class="keyword-card">
+                        {{ keyword | humanCase }}
+                </mat-card>
+            </span>
+        </mat-card-subtitle>
+    </ng-template>
 
     <!-- Event Content -->
     <div>
@@ -113,7 +138,6 @@
         <ng-container *ngTemplateOutlet="title"></ng-container>
         <ng-container *ngTemplateOutlet="details"></ng-container>
         <ng-container *ngTemplateOutlet="description"></ng-container>
+        <ng-container *ngTemplateOutlet="keywords"></ng-container>
     </div>
-    <!-- Date.parse event type and render it accordingly -->
-    <!-- Use the date to create a calendar icon  -->
 </div>

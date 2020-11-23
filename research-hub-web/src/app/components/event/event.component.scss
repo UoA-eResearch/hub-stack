@@ -36,7 +36,8 @@ mat-expansion-panel, mat-card  {
     }
 
     #keywords {
-        color: $color-primary;
+        font-size: 14px;
+        color: map-get($hub-navy, 500);
     }
 
     .related-item-summary {
@@ -52,7 +53,7 @@ mat-expansion-panel, mat-card  {
  * Event Title
  */
 .event-title {
-    font-size: 38px;
+    font-size: 36px;
     font-weight: bold; 
     line-height: 110%;
     margin-bottom: 5px;
@@ -67,13 +68,18 @@ mat-expansion-panel, mat-card  {
  * Event Summary
  */ 
 .event-summary {
-    font-size: 18px; 
-    margin-bottom: 5px;
+    font-size: 16px; 
+    margin-bottom: 10px;
     color: $color-icon;
     line-height: 110%;
 }
 .article-summary-xs {
     font-size: 15px; 
+}
+
+.event-details-button,
+.event-details-button button{
+    border-color: #0294a5;
 }
 
 /**
@@ -85,8 +91,22 @@ mat-expansion-panel, mat-card  {
     justify-content: center;
     align-items: center;
 }
-.calendar-container-xs .icon {
-    display: none;
+.calendar-icon-container { 
+    padding-bottom: 5px; 
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+.calendar-icon-header {
+    color:white;
+    background-color:#943030; 
+    border-bottom: 1px solid grey; 
+}
+.calendar-icon-body {
+    font-size: 3em; 
+    text-align: center; 
+    min-height: fit-content;
+    min-width: fit-content;
+    padding: 20px;
 }
 
 
@@ -96,13 +116,29 @@ mat-expansion-panel, mat-card  {
  .event-details {
      padding: 10px;
      font-size: 12px;
-     background: #f0f0f0;
+     color: #757575;
+     background: #f5f5f5;
      border-top: 1px solid #e0e0e0;
      border-bottom: 1px solid #e0e0e0;
  }
  .event-details mat-icon {
-     font-size: 14px;
-     height: 14px;
-     width: 14px;
-     color: #b0b0b0;
+    height: 14px;
+    width: 14px;
+    font-size: 14px;
+    margin-right: 5px;
+    color: #b0b0b0;
  }
+
+
+/**
+ * Keyword Card
+ */ 
+.keyword-card {
+    margin: 5px; 
+    padding: 5px 10px;
+    font-size: 12px; 
+    border-radius: 25px;
+    color: #828282;
+    background: #F0F0F0;
+    box-shadow: none !important;
+}
