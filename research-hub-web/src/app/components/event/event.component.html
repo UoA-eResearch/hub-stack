@@ -1,0 +1,18 @@
+<!-- If we're displaying a collection of events  -->
+<app-collection-list 
+    *ngIf="allEvents$ | async as allEvents" 
+    [collection]="allEvents">
+</app-collection-list>
+
+<!-- If we're displaying an individual event -->
+<div 
+    id="event-container"
+    *ngIf="event$ | async as event">
+
+    <!-- Templates -->
+    <ng-template #banner></ng-template>
+    <ng-template #details></ng-template>
+    <ng-template #description></ng-template>
+    <ng-template #googleMap></ng-template>
+    <ng-template #keywords></ng-template>
+</div>

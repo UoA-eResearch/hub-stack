@@ -65,6 +65,14 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {
+    path: 'events',
+    loadChildren: () => import('@components/event/event.module').then(m => m.EventModule)
+  },
+  {
+    path: 'event/:slug',
+    loadChildren: () => import('@components/event/event.module').then(m => m.EventModule)
+  },
+  {
     path: 'subhubs',
     loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },

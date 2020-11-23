@@ -1,6 +1,9 @@
 fragment PublicFields on Entry {
     ... on Article {
         __typename
+        sys {
+            id
+        }
         slug
         title
         summary
@@ -14,6 +17,9 @@ fragment PublicFields on Entry {
     } 
     ... on Equipment {
         __typename
+        sys {
+            id
+        }
         slug
         title
         summary
@@ -22,6 +28,9 @@ fragment PublicFields on Entry {
     }
     ... on Service {
         __typename
+        sys {
+            id
+        }
         slug
         title
         summary
@@ -30,6 +39,9 @@ fragment PublicFields on Entry {
     }
     ... on SubHub {
         __typename
+        sys {
+            id
+        }
         slug
         title
         summary
@@ -38,6 +50,9 @@ fragment PublicFields on Entry {
     }
     ... on CaseStudy {
         __typename
+        sys {
+            id
+        }
         slug
         title
         summary
@@ -46,6 +61,9 @@ fragment PublicFields on Entry {
     }
     ... on Person {
         __typename
+        sys {
+            id
+        }
         slug
         name
         searchable
@@ -53,7 +71,37 @@ fragment PublicFields on Entry {
     }
     ... on OfficialDocuments {
         __typename
+        sys {
+            id
+        }
         title
         summary
+    }
+    ... on Event {
+        ssoProtected
+        sys {
+            id
+        }
+        slug
+        title
+        summary
+        description {
+            json
+        }
+        banner {
+            url
+        }
+        date
+        location {
+            lat
+            lon
+        }
+        url
+        price
+        limit
+        requirements
+        restrictions
+        organizer
+        keywords
     }
 }

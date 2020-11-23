@@ -216,6 +216,20 @@ export class OptionsService {
         isHeaderVisible: false,
         isSearchBarVisible: false
       },
+      events: {
+        title: 'Events',
+        description: 'Upcoming events',
+        imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: true,
+        isSearchBarVisible: false
+      },
+      event: {
+        title: 'Event',
+        description: 'Upcoming event',
+        imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
+        isHeaderVisible: false,
+        isSearchBarVisible: false
+      },
       subhub: {
         title: 'SubHubs',
         description: 'A collection of pages',
