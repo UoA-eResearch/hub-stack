@@ -227,7 +227,7 @@ export class OptionsService {
         title: 'Event',
         description: 'Upcoming event',
         imageUrl: 'page-elements/AU_Gen_Detail2010_073_1680x220_BW.jpg',
-        isHeaderVisible: false,
+        isHeaderVisible: true,
         isSearchBarVisible: false
       },
       subhub: {

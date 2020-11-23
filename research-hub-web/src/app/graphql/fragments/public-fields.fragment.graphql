@@ -92,7 +92,8 @@ fragment PublicFields on Entry {
             url
         }
         date
-        location {
+        location
+        address {
             lat
             lon
         }

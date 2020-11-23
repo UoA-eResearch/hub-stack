@@ -227,6 +227,11 @@ query GetArticleByID($id: String!) {
               summary
               slug
             }
+            ... on SubHub {
+              title
+              summary
+              slug
+            }
           }
         }
         officialDocumentsCollection {

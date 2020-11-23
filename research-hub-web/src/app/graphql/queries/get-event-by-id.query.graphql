@@ -195,7 +195,8 @@ query GetEventByID($id: String!) {
             }
         }
         date
-        location {
+        location
+        address {
             lat
             lon
         }

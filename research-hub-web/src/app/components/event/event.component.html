@@ -7,12 +7,113 @@
 <!-- If we're displaying an individual event -->
 <div 
     id="event-container"
+    ngClass.xs="mobile"
     *ngIf="event$ | async as event">
 
     <!-- Templates -->
-    <ng-template #banner></ng-template>
-    <ng-template #details></ng-template>
-    <ng-template #description></ng-template>
+    <ng-template #breadcrumbs>
+        <div 
+            id="breadcrumbs" 
+            *ngIf="!!parentSubHubs" 
+            ngClass.xs="breadcrumbs-mobile">
+            <span 
+                class="breadcrumb-subhub" 
+                *ngFor="let subHub of parentSubHubs.slice().reverse()">
+                <a [routerLink]="'/subhub/' + subHub.slug">
+                    {{ subHub.title }}
+                </a>
+            </span>
+            <span id="breadcrumb-current-page">
+                {{ event.title }}
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template #banner></ng-template> 
+
+    <ng-template #title>
+        <div  
+            class="section"
+            fxLayout="row"
+            fxLayout.xs="row wrap"
+            fxLayoutGap="5%">
+            <span 
+                class="calendar-container"
+                ngClass.xs="calendar-container-xs"
+                fxFlex="20%">
+                <span class="icon">
+                    Calendar here
+                </span>
+            </span>
+            <span>
+                <div 
+                    class="event-title"
+                    ngClass.xs="event-title-xs">
+                    {{ event.title }}
+                </div>
+                <div 
+                    class="event-summary"
+                    ngClass.xs="event-summary-xs">
+                    {{ event.summary }}
+                </div>
+                <a href="{{ event.url }}">Event Details ></a>
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template #details>
+        <div 
+            fxLayout="row wrap"
+            fxLayout.xs="column wrap" 
+            class="event-details section">
+            <div fxFlex="50%">
+                <span style="display:flex;align-items: center;">
+                    <mat-icon>access_time</mat-icon>
+                    <span>&nbsp;{{ event.date | date }}</span>
+                </span>
+                <span style="display:flex;align-items: center;">
+                    <mat-icon>location_on</mat-icon>
+                    <span>&nbsp;{{ event.location }}</span>
+                </span>
+                <span style="display:flex;align-items: center;">
+                    <mat-icon>attach_money</mat-icon>
+                    <span>&nbsp;${{ event.price }}</span>
+                </span>
+            </div>
+            <div fxFlex="50%">
+                <span style="display:flex;align-items: center;">
+                    <mat-icon>fact_check</mat-icon>
+                    <span>&nbsp;{{ event.requirements }}</span>
+                </span>
+                <span style="display:flex;align-items: center;">
+                    <mat-icon>block</mat-icon>
+                    <span>&nbsp;{{ event.restrictions }}</span>
+                </span>
+                <span style="display:flex;align-items: center;">
+                    <mat-icon>person_outline</mat-icon>
+                    <span>&nbsp;{{ event.organizer }}</span>
+                </span>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #description>
+        <div 
+            class="section"
+            [innerHTML]="event.description.json | richTextToHTML">
+        </div>
+    </ng-template>
+
     <ng-template #googleMap></ng-template>
     <ng-template #keywords></ng-template>
+
+    <!-- Event Content -->
+    <div>
+        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+        <ng-container *ngTemplateOutlet="title"></ng-container>
+        <ng-container *ngTemplateOutlet="details"></ng-container>
+        <ng-container *ngTemplateOutlet="description"></ng-container>
+    </div>
+    <!-- Date.parse event type and render it accordingly -->
+    <!-- Use the date to create a calendar icon  -->
 </div>
