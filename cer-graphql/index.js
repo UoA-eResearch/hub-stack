@@ -88,6 +88,7 @@ async function createServer(config) {
     // Get a list of the types that have the ssoProtected field
     let protectedTypes = Object.keys(contentfulSchema._typeMap)
         .filter(x => x.includes('Filter')) // Get all the filters
+        .filter(x => !x.startsWith('cf')) // Filter out Contentful's special cf* filters
         .filter(y => contentfulSchema._typeMap[y]._fields.ssoProtected) // Filter by those with an ssoProtected field
         .flatMap(z => [z.replace('Filter', ''), z.replace('Filter', 'Collection')]) // Replace 'xfilter' with 'x' and 'xCollection'
         .map(a => a[0].toLowerCase() + a.substring(1)); // Make first char lower case
@@ -267,12 +268,14 @@ if (require.main === module) {
             process.exit(1);
         }
 
-        let server = await createServer(config);
+        try {
+            let server = await createServer(config);
 
-        // The 'listen' method launches a web server.
-        server.listen().then(({ url }) => {
-            console.log(`🚀  Content API server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
-        });
+            // The 'listen' method launches a web server.
+            server.listen().then(({ url }) => {
+                console.log(`🚀  Content API server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
+            });
+        } catch(error) { console.log('Error creating server object and getting it to listen: ', error) }
     })();
 }
 
