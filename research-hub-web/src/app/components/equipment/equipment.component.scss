@@ -74,7 +74,7 @@ hr {
 
 // Section
 .section {
-    margin: 20px 0px;
+    margin: 40px 0px;
 }
 
 // Default Banner
@@ -85,8 +85,8 @@ hr {
     min-height: 40vh;
     max-height: auto;
     overflow: hidden;
-    background-size: 100%;
-    background-image: url('https://images.unsplash.com/photo-1518152006812-edab29b069ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80'); // Default banner image if none supplied
+    background-size: cover!important;
+    background-image: url('../../../assets/images/20151008_Engineering\ Detail_005_1680x220_BW.jpg'); // Default banner image if none supplied
 }
 
 // Equipment Titles
@@ -125,12 +125,15 @@ hr {
     margin: 0 auto;
 }
 
-// Keyword Card
+// Keyword
 .keyword-card {
-    background-color: $color-background; 
+    color: #828282;
+    background: #F0F0F0;
     margin: 5px; 
-    padding: 10px; 
-    font-size: 12px;
+    padding: 5px 10px;
+    font-size: 12px; 
+    border-radius: 25px;
+    box-shadow: none !important;
 }
 
 // Related Item
@@ -140,7 +143,7 @@ hr {
 
 // Specifications Table
 .specifications-table {
-    border-collapse: collapse;
+    border-collapse: collapse; 
     width: 100%;
   }
   

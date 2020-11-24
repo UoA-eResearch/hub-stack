@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Params } from '@services/research-hub-api.service';
 import { MatExpansionPanelContent } from '@angular/material/expansion';
 
 describe('ArticlesComponent', () => {
@@ -322,7 +324,6 @@ describe('ArticlesComponent', () => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(ArticlesComponent);
       component = fixture.componentInstance;
-      appComponentService = new AppComponentService;
       TestBed.inject(ActivatedRoute).params = of({
         slug: 'first-article'
       });
@@ -333,18 +334,18 @@ describe('ArticlesComponent', () => {
       expect(component.slug).toBeTruthy();
     });
 
-    it('Should get a single article data by Slug', async () => {
+    it('Should get a single article data', () => {
       spyOn(component, 'getArticleBySlug').and.returnValue(mockArticle$);
-      component.getArticleBySlug('').subscribe(res => {
+      component.getArticleBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('first-article');
       });
-    })
+    });
 
     it('Should get a single article data by ID', async () => {
       spyOn(component, 'getArticleByID').and.returnValue(mockArticle$);
       component.getArticleByID('').subscribe(res => {
         expect(res.sys.id).toEqual('111');
       });
-    }) 
+    })
   });
 });

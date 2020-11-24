@@ -91,24 +91,13 @@ describe('EquipmentComponent', () => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(EquipmentComponent);
       component = fixture.componentInstance;
-      appComponentService = new AppComponentService;
       TestBed.inject(ActivatedRoute).params = of({
         slug: 'death-star'
       });
       fixture.detectChanges();
     })
 
-    it('Should set title', async () => {
-      let spy = spyOn(appComponentService, 'setTitle');
-      appComponentService.setTitle('Title');
-      expect(spy).toHaveBeenCalled();
-    });
-
-    xit('Should evaluate components slug property to be truthy', () => {
-      expect(component.slug).toBeTruthy();
-    });
-
-    it('Should get a single equipment data by Slug', async () => {
+    it('Should get a single equipment data by Slug', () => {
       spyOn(component, 'getEquipmentBySlug').and.returnValue(mockEquipment$);
       component.getEquipmentBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('death-star');
