@@ -13,7 +13,7 @@ mat-expansion-panel, mat-card  {
  * The container for an individual event
  */ 
 #event-container {
-    width: 70%;
+    width: 65%;
     margin: 0 auto;
 
     #breadcrumbs {
@@ -44,10 +44,10 @@ mat-expansion-panel, mat-card  {
         color: gray;
     }
 }
-
 .mobile {
     width: 100%!important;
 }
+
 
 /**
  * Event Title
@@ -77,10 +77,6 @@ mat-expansion-panel, mat-card  {
     font-size: 15px; 
 }
 
-.event-details-button,
-.event-details-button button{
-    border-color: #0294a5;
-}
 
 /**
  * Calendar Container
@@ -128,6 +124,10 @@ mat-expansion-panel, mat-card  {
     margin-right: 5px;
     color: #b0b0b0;
  }
+.event-details-button,
+.event-details-button button {
+    border-color: #0294a5;
+}
 
 
 /**

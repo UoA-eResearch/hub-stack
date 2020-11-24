@@ -61,7 +61,14 @@
                     ngClass.xs="event-summary-xs">
                     {{ event.summary }}
                 </div>
-                <a 
+                <div 
+                    class="section" 
+                    fxShow.xs="true"
+                    fxHide>
+                </div>
+                <div 
+                    fxLayoutAlign.xs="center center">
+                    <a 
                     class="event-details-button" 
                     href="{{ event.url }}">
                     <button 
@@ -69,6 +76,7 @@
                         <b>Event Details &nbsp;>></b>
                     </button>
                 </a>
+                </div>
             </span>
         </div>
     </ng-template>
