@@ -70,6 +70,11 @@ query GetArticleByID($id: String!) {
                   name
                   jobTitle
                 }
+                ... on Software {
+                  name
+                  description
+                  url
+                }
               }
               inline {
                 ... on Article {
@@ -126,6 +131,11 @@ query GetArticleByID($id: String!) {
                   }
                   name
                   jobTitle
+                }
+                ... on Software {
+                  name
+                  description
+                  url
                 }
               }
               hyperlink {
@@ -184,6 +194,11 @@ query GetArticleByID($id: String!) {
                   name
                   jobTitle
                 }
+                ... on Software {
+                  name
+                  description
+                  url
+                }
               }
             }
             assets {
@@ -219,17 +234,50 @@ query GetArticleByID($id: String!) {
         relatedItemsCollection {
           items {
             ... on Article {
+              sys {
+                id
+              }
               title
               summary
               slug
             }
             ... on Service {
+              sys {
+                id
+              }
               title
               summary
               slug
             }
             ... on Equipment {
+              sys {
+                id
+              }
               title
+              summary
+              slug
+            }
+            ... on CaseStudy {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
+            }
+            ... on Software {
+              name
+              description
+              url
+            }
+            ... on SubHub {
+              sys {
+                id
+              }
+              title
+              banner {
+                url
+              }
               summary
               slug
             }
@@ -246,20 +294,13 @@ query GetArticleByID($id: String!) {
         }
         relatedOrganisationsCollection {
           items {
-            ... on Article {
-              title
+            ... on OrganisationalUnit {
+              unitName
+              description {
+                json
+              }
+              url
               summary
-              slug
-            }
-            ... on Service {
-              title
-              summary
-              slug
-            }
-            ... on Equipment {
-              title
-              summary
-              slug
             }
           }
         }

@@ -18,7 +18,8 @@
         </mat-expansion-panel>
     
         <mat-nav-list>
-            <mat-card *ngFor="let content of collection.items"
+            <mat-card *ngFor="let content of collection.items">
+                <a
                 [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" class="result-item"
                 [ngClass]="{'ssoProtected': content.ssoProtected }">
                 <mat-card-header>
@@ -41,6 +42,7 @@
                         <mat-icon color='accent' matTooltip="SSO Login Required">lock</mat-icon>
                     </mat-chip-avatar>
                 </mat-card-header>
+                </a>
             </mat-card>
         </mat-nav-list>
     </div>
