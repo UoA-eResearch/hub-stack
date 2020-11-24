@@ -213,7 +213,6 @@ async function createServer(config) {
         resolvers: [{ Query: customQueryResolvers }],
     });
 
-
     return new ApolloServer({
         schema,
         context: ({ req }) => {
@@ -271,6 +270,7 @@ if (require.main === module) {
 
         try {
             let server = await createServer(config);
+
             // The 'listen' method launches a web server.
             server.listen().then(({ url }) => {
                 console.log(`🚀  Content API server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
