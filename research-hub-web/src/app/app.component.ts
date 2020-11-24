@@ -153,6 +153,17 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
       this.setTitleSearchBarHeaderCustomCSS(this.optionsService.getPageInfo(this.currentRoute, this.pageTitle));
+
+        window.dataLayer.push({
+          'user': {
+            'upi': 'skav012',
+            'information': {
+              'id': 1593493,
+              'groups': 'Wizards'
+            }
+          }
+        });
+      
     });
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
@@ -184,6 +195,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           // Check if the user is logged in now (Cognito redirect)
           this.authenticated = await this.loginService.isAuthenticated();
           this.userInfo = await this.loginService.getUserInfo();
+
+          // console.log(this.userInfo);
+          
+          // create groups 
+
+          window.dataLayer.push({
+            'user': JSON.stringify(this.userInfo),
+            ...this.userInfo,
+          });
 
           if (routeName) {
             // Update previous and current routes
