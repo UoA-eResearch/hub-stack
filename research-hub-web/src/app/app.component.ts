@@ -196,14 +196,23 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this.authenticated = await this.loginService.isAuthenticated();
           this.userInfo = await this.loginService.getUserInfo();
 
-          // console.log(this.userInfo);
-          
           // create groups 
 
           window.dataLayer.push({
             'user': JSON.stringify(this.userInfo),
             ...this.userInfo,
           });
+
+          // pushing an individual
+          if (this.userInfo.groups) {
+            this.userInfo.groups.map(group => {
+              window.dataLayer.push({
+                group
+              });
+            })
+          }
+          console.log(window.dataLayer);
+          
 
           if (routeName) {
             // Update previous and current routes
