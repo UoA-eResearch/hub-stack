@@ -203,12 +203,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             ...this.userInfo,
           });
 
-          // pushing an individual
+          // console.log(this.userInfo.groups.trim().replace('\"', '').replace(']', '').replace('[', '').split(','));
+          // pushing an individual groups
           if (this.userInfo.groups) {
-            this.userInfo.groups.map(group => {
-              window.dataLayer.push({
-                group
-              });
+            this.userInfo.groups.trim().replace('\"', '').replace(']', '').replace('[', '').split(',').map(group => {
+              let groupObj = {};
+              group = group.trim().split('.')[0];
+              groupObj[group] = group;
+              console.log(groupObj);
+              window.dataLayer.push(groupObj);
             })
           }
           console.log(window.dataLayer);
