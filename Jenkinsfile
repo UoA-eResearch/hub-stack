@@ -158,20 +158,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Build serverless-now') {
-                    when {
-                        anyOf {
-                            changeset "**/serverless-now/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
-                        }
-                    }
-                    steps {
-                        dir("serverless-now") {
-                            echo 'Installing serverless-now dependencies...'
-                            sh "npm install"
-                        }
-                    }
-                }
             }
         }
 
@@ -208,20 +194,6 @@ pipeline {
                         dir('cer-graphql') {
                             sh "npm install"
                             sh "npm run test"
-                        }
-                    }
-                }
-                stage('Run serverless-now tests') {
-                    when {
-                        anyOf {
-                            changeset "**/serverless-now/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
-                        }
-                    }
-                    steps {
-                        echo "Invoking serverless-now tests..."
-                        dir('serverless-now') {
-                            sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
                         }
                     }
                 }
@@ -291,20 +263,6 @@ pipeline {
 
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
                         sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
-                    }
-                }
-                stage('Deploy serverless-now') {
-                    when {
-                        anyOf {
-                            changeset "**/serverless-now/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
-                        }
-                    }
-                    steps {
-                        echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
-                        dir("serverless-now") {
-                            sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
-                        }
                     }
                 }
             }
