@@ -85,12 +85,12 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
   ],
   providers: [
     CerGraphqlService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      multi: true,
-      deps: [CerGraphqlService]
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: initializeApp,
+    //   multi: true,
+    //   deps: [CerGraphqlService]
+    // },
     HeaderService,
     SearchBarService,
     AppComponentService,
@@ -111,6 +111,14 @@ export class AppModule {
       if (networkError) {
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
           this.loginService.doLogin(this.router.url);
+        }
+      }
+      if (graphQLErrors && graphQLErrors.length > 0) {
+        for (let idx in graphQLErrors) {
+          if (graphQLErrors[idx].extensions.code === "UNAUTHENTICATED") {
+            this.loginService.doLogin(this.router.url);
+            break;
+          }  
         }
       }
     });
