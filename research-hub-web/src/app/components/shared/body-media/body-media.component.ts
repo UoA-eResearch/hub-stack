@@ -51,12 +51,14 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestro
         case 'asset-hyperlink':
           this.contentItem = x.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
+        /**
+         * 
         case 'hyperlink':
           /**
            * Check if the link is a YouTube link
            * Sanitize the YouTube link
            * Convert standard YouTube link to an embed link for iframe
-           */
+           * 
           this.youtube = this.validateYoutube();
           this.iframeLink = `//www.youtube.com/embed/${this.getYoutubeId(this.data.data.uri)}`;
           this.contentItem = { 
@@ -64,6 +66,7 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestro
             "url": this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink)
           }
           break;
+          */
       }
     });
   }

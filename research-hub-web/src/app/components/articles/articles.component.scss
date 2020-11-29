@@ -123,10 +123,6 @@ hr {
     height: 1px;
 }
 
-
-/**
- * Card Title
- */
- .card-title {
-    color: map-get($hub-teal, 500);
+.mat-card-actions {
+    padding: 10px 5px 0px 5px;
 }

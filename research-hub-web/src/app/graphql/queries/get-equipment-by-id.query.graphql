@@ -7,193 +7,6 @@ query GetEquipmentByID($id: String!) {
         body {
           json
           links {
-            entries {
-              block {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  banner {
-                    url
-                  }
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  icon {
-                    url
-                  }
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  mainImage {
-                    url
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  banner {
-                    url
-                  }
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  url
-                  summary
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  image {
-                    url
-                  }
-                  username
-                  jobTitle
-                }
-              }
-              inline {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  url
-                  summary
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  image {
-                    url
-                  }
-                  username
-                  jobTitle
-                }
-              }
-              hyperlink {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  username
-                }
-              }
-            }
             assets {
               hyperlink {
                 title
@@ -210,6 +23,201 @@ query GetEquipmentByID($id: String!) {
                   id
                 }
                 url
+              }
+            }
+            entries {
+              block {
+                ... on Article {
+                    sys {
+                        id
+                    }
+                    banner {
+                      url
+                    }
+                    slug
+                    title
+                    summary
+                } 
+                ... on Equipment {
+                    sys {
+                        id
+                    }
+                    slug
+                    mainImage {
+                      url
+                    }
+                    title
+                    summary
+                }
+                ... on Service {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                    summary
+                }
+                ... on SubHub {
+                    sys {
+                        id
+                    }
+                    bannerImage {
+                      url
+                    }
+                    slug
+                    title
+                    summary
+                }
+                ... on CaseStudy {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                    summary
+                }
+                ... on Person {
+                    sys {
+                        id
+                    }
+                    slug
+                    name
+                }
+                ... on OfficialDocuments {
+                    sys {
+                        id
+                    }
+                    title
+                    summary
+                }
+                ... on Event {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                    summary
+                    banner {
+                        url
+                    }
+                    date
+                    location
+                    price
+                }
+              }
+              inline {
+                ... on Article {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                } 
+                ... on Equipment {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+                ... on Service {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+                ... on SubHub {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+                ... on CaseStudy {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+                ... on Person {
+                    sys {
+                        id
+                    }
+                    slug
+                    name
+                }
+                ... on OfficialDocuments {
+                    sys {
+                        id
+                    }
+                    title
+                }
+                ... on Event {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+              }
+              hyperlink {
+                ... on Article {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                } 
+                ... on Equipment {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+                ... on Service {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+                ... on SubHub {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+                ... on CaseStudy {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
+                ... on Person {
+                    sys {
+                        id
+                    }
+                    slug
+                    name
+                }
+                ... on OfficialDocuments {
+                    sys {
+                        id
+                    }
+                    title
+                }
+                ... on Event {
+                    sys {
+                        id
+                    }
+                    slug
+                    title
+                }
               }
             }
           }

@@ -1,0 +1,10 @@
+query GetEventBySlug($slug: String) {
+    eventCollection(where: {slug: $slug}) {
+        items {
+            ssoProtected
+            sys {
+                id
+            }
+        }
+    }
+}

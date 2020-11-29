@@ -30,8 +30,9 @@
                         fxFlex="24%"
                         *ngFor="let subHub of subhub.subhubPagesCollection.items">
                         <mat-card class="subhub-card">
-                            <img *ngIf="subHub.__typename == 'SubHub'" mat-card-image src="{{ subHub.banner.url }}" alt="{{subHub.title}}">
-                            <img *ngIf="subHub.__typename != 'SubHub'" mat-card-image src="../../../assets/images/uoa-logo.svg" alt="{{subHub.title}}">
+                                <img *ngIf="subHub.__typename == 'SubHub'" mat-card-image src="{{ subHub.bannerImage?.url }}" alt="{{ subHub.title }}">
+                                <img *ngIf="subHub.__typename != 'SubHub'" mat-card-image src="{{ subHub.banner?.url }}" alt="../../../assets/images/uoa-logo.svg">
+                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename }}</span>
                             <mat-card-title class="card-title">
                                 {{ subHub.title}}
                             </mat-card-title>
@@ -40,7 +41,7 @@
                             </mat-card-content>
                             <mat-card-actions>
                                 <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
-                                    <button mat-stroked-button>READ MORE</button>
+                                    Read More ...
                                 </a>
                             </mat-card-actions>
                         </mat-card>
@@ -95,28 +96,31 @@
 
         <ng-template #relatedItems>
             <div 
-                style="margin-bottom: 20px;"
-                *ngIf="subhub.relatedItemsCollection.items.length > 0">
-                <h4>Related Items<hr/></h4>
-                <div 
-                    [fxLayout]="subhub.viewType == 'View 1' ? 'column wrap' : 'row wrap'"
-                    fxLayoutGap="1%"
-                    fxLayout.sm="column wrap"
-                    fxLayout.xs="column wrap">
-                    <div *ngFor="let relatedItem of subhub.relatedItemsCollection.items">
-                        <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                            <mat-card >
+                *ngIf="subhub.relatedItemsCollection.items.length > 0" 
+                id="you-might-be-interested-in">
+                <h4>You might also be interested in<hr/></h4>
+    
+                <!-- Related Items List -->
+                <mat-nav-list 
+                    style="margin-bottom: 20px;" 
+                    *ngFor="let relatedItem of subhub.relatedItemsCollection.items" 
+                    class="collection">
+                            <mat-card style="padding-top: 30px;">
+                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename }}</span>
                                 <span class="card-title">
-                                    {{ relatedItem.title}}
+                                    {{ relatedItem['title'] }}
                                 </span> 
                                 <br/>
                                 <span class="related-item-summary">
-                                    {{ relatedItem.summary }}
+                                    {{ relatedItem['summary'] }}
                                 </span>
+                                <mat-card-actions>
+                                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                                        Read More ...
+                                    </a>
+                                </mat-card-actions>
                             </mat-card>
-                        </a>
-                    </div>
-                </div>
+                </mat-nav-list>
             </div>
         </ng-template>
 
@@ -158,7 +162,7 @@
         <ng-template #dynamicBanner>
             <div 
                 class="banner-container"
-                [style.background]="subhub.banner ? 'url(' + subhub.banner.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
+                [style.background]="subhub.bannerImage ? 'url(' + subhub.bannerImage.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
             </div>
         </ng-template>
 
@@ -167,7 +171,7 @@
             <div *ngSwitchCase="'View 1'">
                 <div 
                 class="banner-container"
-                [style.background]="subhub.banner ? 'url(' + subhub.banner.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
+                [style.background]="subhub.bannerImage ? 'url(' + subhub.bannerImage.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
                     <div
                         class="banner-content" 
                         *ngIf="subhub.viewType == 'View 1'">
@@ -209,7 +213,7 @@
                         fxLayoutAlign="space-between">
                         
                         <!-- Main Body -->
-                        <div fxFlex="65%">
+                        <div fxFlex="65%" class="section">
                             <ngx-contentful-rich-text
                                 style="word-break:break-word;" 
                                 [document]="subhub.body.json"

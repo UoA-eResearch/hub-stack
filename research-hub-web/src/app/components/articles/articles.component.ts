@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, map, flatMap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
@@ -26,7 +26,6 @@ export class ArticlesComponent implements OnInit {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
-    [INLINES.HYPERLINK]: BodyMediaComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
     [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
@@ -46,6 +45,7 @@ export class ArticlesComponent implements OnInit {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
+    public router: Router
   ) { }
 
   async ngOnInit() {

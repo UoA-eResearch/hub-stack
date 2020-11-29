@@ -32,8 +32,7 @@
             *ngIf="!!parentSubHubs" 
             class="site-padding top-padding"
             ngClass.sm="site-padding-sm top-padding"
-            ngClass.xs="site-padding-xs top-padding"
-            ngClass.xs="breadcrumbs-mobile site-padding-xs">
+            ngClass.xs="site-padding-xs top-padding breadcrumbs-mobile">
             <span 
                 class="breadcrumb-subhub" 
                 *ngFor="let subHub of parentSubHubs.slice().reverse()">
@@ -100,7 +99,7 @@
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
-                                {{ organisation['title'] }}
+                                {{ organisation['unitName'] }}
                             </span> 
                             <br/>
                             <span class="related-item-summary">
@@ -145,11 +144,10 @@
 
             <!-- Related Items List -->
             <mat-nav-list 
-                style="margin-bottom: 20px;" 
                 *ngFor="let relatedItem of article.relatedItemsCollection.items" 
                 class="collection">
-                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                        <mat-card>
+                        <mat-card style="padding-top: 30px;">
+                            <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename }}</span>
                             <span class="card-title">
                                 {{ relatedItem['title'] }}
                             </span> 
@@ -157,8 +155,12 @@
                             <span class="related-item-summary">
                                 {{ relatedItem['summary'] }}
                             </span>
+                            <mat-card-actions>
+                                <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                                    Read More ...
+                                </a>
+                            </mat-card-actions>
                         </mat-card>
-                    </a>
             </mat-nav-list>
         </div>
     </ng-template>
@@ -173,9 +175,8 @@
                 style="margin-bottom: 20px;" 
                 *ngFor="let document of article.officialDocumentsCollection.items" 
                 class="collection">
-                
-                    <a href={{document.url}} target="_blank">
-                        <mat-card>
+                        <mat-card style="padding-top: 30px;">
+                            <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">Document</span>
                             <span class="card-title">
                                 {{ document['title'] }}
                             </span> 
@@ -183,8 +184,12 @@
                             <span class="related-item-summary">
                                 {{ document['summary'] }}
                             </span>
+                            <mat-card-actions>
+                                <a href={{document.url}} target="_blank">
+                                    View Document ...
+                                </a>
+                            </mat-card-actions>
                         </mat-card>
-                    </a>
             </mat-nav-list>
         </div>
     </ng-template>
@@ -203,7 +208,7 @@
                 class="banner-container"
                 [style]="article.displayBanner ? 
                             article.banner ? 
-                                'background: url(' + article.banner.url + ') no-repeat' :
+                                'background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + article.banner.url + ') no-repeat' :
                                 'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : ''">
                 <div 
                     class="banner-content" 
@@ -233,6 +238,7 @@
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
 
                     <!-- Keywords -->
+                    <div class="section"></div>
                     <ng-container *ngTemplateOutlet="keywords"></ng-container>
 
                 </div>
@@ -317,4 +323,5 @@
         </div>
     </div>
     <!-- End of View Switcher -->
+    <div class="section"></div>
 </div>

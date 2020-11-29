@@ -1,0 +1,29 @@
+query GetEventByID($id: String!) {
+    event(id: $id) {
+        ssoProtected
+        sys {
+            id
+        }
+        title
+        summary
+        banner {
+            url
+        }
+        description {
+            json
+        }
+        date
+        location
+        address {
+            lat
+            lon
+        }
+        url
+        price
+        limit
+        requirements
+        restrictions
+        organizer
+        keywords
+    }
+}
