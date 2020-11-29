@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Type } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { pluck, flatMap } from 'rxjs/operators';
 import {
@@ -10,6 +10,8 @@ import {
 } from "@graphql/schema";
 import { CerGraphqlService } from "@services/cer-graphql.service";
 import { AppComponentService } from '../../app.component.service';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { NodeRenderer } from 'ngx-contentful-rich-text';
 
 
 @Component({
@@ -18,7 +20,6 @@ import { AppComponentService } from '../../app.component.service';
   styleUrls: ['./subhubs.component.scss'],
 })
 export class SubhubsComponent implements OnInit {
-
   public subhub$: Observable<SubHubCollection>;
   public currentSubHub$: Observable<SubHub>;
   public parentSubHubs;
@@ -30,15 +31,17 @@ export class SubhubsComponent implements OnInit {
     public AllSubHubChildPagesGQL: AllSubHubChildPagesGQL,
     public SubHubChildPagesByIdGQL: SubHubChildPagesByIdGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService
+    public appComponentService: AppComponentService,
+    public router: Router
   ) { }
 
-  // internalNavigate(path) {
-  //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  //   this.router.navigate([path]);
-  // }
+  internalNavigate(path) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.navigate([path]);
+  }
 
   async ngOnInit() {
+
     /**
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
@@ -56,6 +59,7 @@ export class SubhubsComponent implements OnInit {
       this.allSubHubs$ = this.getAllSubHubs(this.slug);
     }
   }
+
   /**
    * Runs the query for the main body of a subhub item as including it's child pages but excluding it's ancestor/parent data.
    * @param slug Page slug
@@ -70,6 +74,10 @@ export class SubhubsComponent implements OnInit {
     }
   }
 
+  /**
+   * Get Subhub by passing the slug into the SubhubCollection query
+   * @param slug 
+   */
   public getSubHub(slug: string): Observable<SubHubCollection> {
     try {
       return this.AllSubHubChildPagesGQL
@@ -80,11 +88,15 @@ export class SubhubsComponent implements OnInit {
     }
   }
 
+  /**
+   * Get Subhub by passing id into the Subhub query
+   * @param id 
+   */
   public getSubHubById(id: string): Observable<SubHub> {
     try {
       return this.SubHubChildPagesByIdGQL
         .fetch({id: id})
-        .pipe(pluck('data', 'subHub')) as Observable<SubHub>;
+        .pipe(pluck('data', 'subHub')) as unknown as Observable<SubHub>;
     } catch (e) {
       console.error('Error loading subhub body info and children')
     }

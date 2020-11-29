@@ -26,6 +26,9 @@ query SubHubChildPagesById ($id: String!) {
       items {
         ...on Article {
           __typename
+          banner {
+            url
+          }
           slug
           title
           ssoProtected
@@ -47,8 +50,8 @@ query SubHubChildPagesById ($id: String!) {
         } 
         ... on OfficialDocuments {
           __typename
-            title
-            summary
+          title
+          summary
         }
         ...on Service {
           __typename

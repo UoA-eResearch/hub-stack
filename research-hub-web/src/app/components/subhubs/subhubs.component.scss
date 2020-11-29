@@ -96,10 +96,6 @@ div.mat-card-avatar mat-icon {
     height: 70px;
 }
 
-.card-title {
-    color: map-get($hub-teal, 500);
-}
-
 .related-item-summary {
     font-size: 12px;
 }
@@ -128,7 +124,6 @@ hr {
 .subhub-card .card-title {
     font-size: 1rem;
     color: black;
-    padding-top: 5px;
 }
 
 .subhub-card img {
@@ -149,7 +144,7 @@ hr {
 }
 
 .mat-card-actions {
-    text-align: center;
+    padding: 10px 5px 0px 5px;
 }
 
 // Media Collection
@@ -165,6 +160,6 @@ hr {
 #subhub-children {
     @extend .margin-bottom;
     background: #F2F2F2;
-    padding-top: $padding-site-top * 2;
-    padding-bottom: $padding-site-top * 2;
+    padding-top: $padding-site-top * 2.5;
+    padding-bottom: $padding-site-top * 2.5;
 }
