@@ -9,13 +9,191 @@ query GetEquipmentByID($id: String!) {
           links {
             entries {
               block {
-                ...PublicFields
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+                ... on Software {
+                  name
+                  description
+                  url
+                }
               }
               inline {
-                ...PublicFields
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+                ... on Software {
+                  name
+                  description
+                  url
+                }
               }
               hyperlink {
-                ...PublicFields
+                ... on Article {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Service {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on Equipment {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on SubHub {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on CaseStudy {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  slug
+                }
+                ... on OfficialDocuments {
+                  sys {
+                    id
+                  }
+                  title
+                  summary
+                  url
+                }
+                ... on Person {
+                  sys {
+                    id
+                  }
+                  name
+                  jobTitle
+                }
+                ... on Software {
+                  name
+                  description
+                  url
+                }
+              }
             }
             assets {
               block {
@@ -23,13 +201,9 @@ query GetEquipmentByID($id: String!) {
                 description
                 url
               }
-              hyperlink {
-                title
-                description
-                url
-              }
             }
           }
+        }
         keywords
         slug
         ssoProtected

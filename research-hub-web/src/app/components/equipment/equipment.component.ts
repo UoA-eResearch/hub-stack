@@ -99,7 +99,7 @@ export class EquipmentComponent implements OnInit {
   public getEquipmentByID(id: string): Observable<Equipment> {
     try {
       return this.getEquipmentByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.equipment)) as unknown as Observable<Equipment>;
+        .pipe(map(x => x.data.equipment)) as Observable<Equipment>;
     } catch (e) { console.error(`Error loading article ${id}:`, e); }
   }
 }

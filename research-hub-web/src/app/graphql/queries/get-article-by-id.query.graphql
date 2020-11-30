@@ -275,7 +275,7 @@ query GetArticleByID($id: String!) {
                 id
               }
               title
-              banner {
+              bannerImage {
                 url
               }
               summary

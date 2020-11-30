@@ -94,7 +94,7 @@ export class ArticlesComponent implements OnInit {
   public getArticleByID(id: string): Observable<Article> {
     try {
       return this.getArticleByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.article)) as unknown as Observable<Article>;
+        .pipe(map(x => x.data.article)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${id}:`, e); }
   }
 }
