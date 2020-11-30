@@ -1,5 +1,6 @@
 <span [ngSwitch]="data.nodeType">
     <span *ngSwitchCase="'embedded-asset-block'">
+        <app-asset-block></app-asset-block>
         <div 
             class="embedded-asset-block"
             ngClass.xs="embedded-asset-block-mobile">
@@ -13,6 +14,7 @@
         </div>
     </span>
     <span *ngSwitchCase="'embedded-entry-block'">
+        <app-entry-block></app-entry-block>
         <div 
             class="embedded-entry-block"
             ngClass.xs="embedded-entry-block-mobile">
@@ -33,9 +35,10 @@
         </div>
     </span>
     <span *ngSwitchCase="'embedded-entry-inline'">
+        <app-entry-inline></app-entry-inline>
         <a class="embedded-entry-inline" href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
             <mat-card>
-                <b>&nbsp;{{ contentItem.title }}&nbsp;⟶&nbsp;</b>
+                <b>&nbsp;{{ contentItem.title }}&nbsp;>>&nbsp;</b>
             </mat-card>
         </a>
     </span>
