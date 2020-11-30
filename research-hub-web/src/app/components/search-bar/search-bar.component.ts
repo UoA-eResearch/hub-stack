@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } 
 import { SearchBarService } from './search-bar.service';
 import { Subscription } from 'rxjs';
 import { MatInput } from '@angular/material/input';
-import { NavigationEnd, Router } from "@angular/router";
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AnalyticsService } from '@services/analytics.service';
 

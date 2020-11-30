@@ -1,4 +1,4 @@
-@import '../../../styles';
+@import "../../../styles";
 
 .search-results-text {
   color: $color-pink !important;
@@ -36,7 +36,8 @@ mat-chip-list {
     line-height: 26px;
     height: 18px;
 
-    &.mat-standard-chip { // Fixes predefined material CSS causing oversized chips
+    &.mat-standard-chip {
+      // Fixes predefined material CSS causing oversized chips
       min-height: 100%;
     }
   }
@@ -49,7 +50,9 @@ mat-chip-list {
 }
 
 //Paginator items per page selector/popup font size
-::ng-deep .search-paginator .mat-select, ::ng-deep .mat-option-text, ::ng-deep .search-paginator .mat-select-value {
+::ng-deep .search-paginator .mat-select,
+::ng-deep .mat-option-text,
+::ng-deep .search-paginator .mat-select-value {
   font-size: 16px;
 }
 
@@ -113,27 +116,28 @@ mat-chip-list {
 
 // Used in a div surrounding the category list that is displayed when the filter-panel is hidden
 .inline-category-list {
-  margin-top:1.25em;
+  margin-top: 1.25em;
   margin-bottom: 0.25em;
 }
 
 .search-results-title {
-  margin-top:2.5em;
+  margin-top: 2.5em;
 }
 
 .refine-search {
-  margin-top:0em;
+  margin-top: 0em;
 
   &.small {
-    margin-top:1em;
+    margin-top: 1em;
   }
 }
 
 .refine-search-text {
-  margin-bottom:0px;
+  margin-bottom: 0px;
 }
 
-.results-list,.resultsCards {
+.results-list,
+.resultsCards {
   transition: opacity 200ms ease-in-out;
 
   .loading {
@@ -148,4 +152,49 @@ mat-chip-list {
 
 .resultsCards.loading {
   opacity: 0.5;
+}
+
+mat-expansion-panel,
+mat-card {
+  margin: 1vh 0;
+}
+
+div.mat-card-avatar mat-icon {
+  color: map-get($hub-teal, 800);
+}
+
+div.collection {
+  margin: 3vh 0 3vh 0;
+}
+
+.result-item {
+  cursor: pointer;
+
+  &.ssoProtected {
+    // Any optional styling to add to ssoProtected items
+  }
+
+  &:hover {
+    border: 1px solid map-get($hub-teal, 50);
+  }
+
+  // Used to set the height/width of both avatar images and icons.
+  $avatar-size: 55px;
+
+  #item-avatar {
+    width: $avatar-size;
+    height: $avatar-size;
+
+    margin-right: $avatar-size * 0.1;
+    margin-bottom: $avatar-size * 0.25;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  #item-avatar-icon {
+    font-size: $avatar-size;
+    color: $color-primary;
+  }
 }
