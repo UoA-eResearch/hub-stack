@@ -1,1 +1,7 @@
-<p>entry-inline works!</p>
+<a 
+    class="embedded-entry-inline" 
+    href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
+    <mat-card>
+        <b>&nbsp;{{ contentItem.title }}&nbsp;>>&nbsp;</b>
+    </mat-card>
+</a>

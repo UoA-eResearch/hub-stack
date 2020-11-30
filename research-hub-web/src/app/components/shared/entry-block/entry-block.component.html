@@ -1,1 +1,118 @@
-<p>entry-block works!</p>
+<span [ngSwitch]="contentItem.__typename">
+
+    <!-- Video -->
+    <span *ngSwitchCase="'Video'">
+        <app-video-card [contentItem]="contentItem"></app-video-card>
+    </span>
+
+    <!-- Link Card -->
+    <span *ngSwitchCase="'LinkCard'">
+        <div 
+            class="embedded-entry-block"
+            ngClass.xs="embedded-entry-block-mobile">
+                <mat-card>
+                    <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
+                    <mat-card-title>
+                        <p>{{ contentItem.title }}</p>
+                    </mat-card-title>              
+                    <mat-card-content>
+                        <small>{{ contentItem.summary }}</small>
+                    </mat-card-content>   
+                    <mat-card-actions>
+                        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                            <button mat-stroked-button>READ MORE</button>
+                        </a>
+                    </mat-card-actions>   
+                </mat-card>
+        </div>
+    </span>
+
+    <!-- Generic Contact -->
+    <span *ngSwitchCase="'GenericContact'">
+        <div 
+            class="embedded-entry-block"
+            ngClass.xs="embedded-entry-block-mobile">
+                <mat-card>
+                    <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
+                    <mat-card-title>
+                        <p>{{ contentItem.title }}</p>
+                    </mat-card-title>              
+                    <mat-card-content>
+                        <small>{{ contentItem.summary }}</small>
+                    </mat-card-content>   
+                    <mat-card-actions>
+                        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                            <button mat-stroked-button>READ MORE</button>
+                        </a>
+                    </mat-card-actions>   
+                </mat-card>
+        </div>
+    </span>
+
+    <!-- Case Study -->
+    <span *ngSwitchCase="'CaseStudy'">
+        <div 
+            class="embedded-entry-block"
+            ngClass.xs="embedded-entry-block-mobile">
+                <mat-card>
+                    <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
+                    <mat-card-title>
+                        <p>{{ contentItem.title }}</p>
+                    </mat-card-title>              
+                    <mat-card-content>
+                        <small>{{ contentItem.summary }}</small>
+                    </mat-card-content>   
+                    <mat-card-actions>
+                        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                            <button mat-stroked-button>READ MORE</button>
+                        </a>
+                    </mat-card-actions>   
+                </mat-card>
+        </div>
+    </span>
+
+    <!-- Official Document -->
+    <span *ngSwitchCase="'OfficialDocument'">
+        <div 
+            class="embedded-entry-block"
+            ngClass.xs="embedded-entry-block-mobile">
+                <mat-card>
+                    <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
+                    <mat-card-title>
+                        <p>{{ contentItem.title }}</p>
+                    </mat-card-title>              
+                    <mat-card-content>
+                        <small>{{ contentItem.summary }}</small>
+                    </mat-card-content>   
+                    <mat-card-actions>
+                        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                            <button mat-stroked-button>READ MORE</button>
+                        </a>
+                    </mat-card-actions>   
+                </mat-card>
+        </div>
+    </span>
+
+    <!-- Equipment -->
+    <span *ngSwitchCase="'Equipment'">
+        <div 
+            class="embedded-entry-block"
+            ngClass.xs="embedded-entry-block-mobile">
+                <mat-card>
+                    <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
+                    <mat-card-title>
+                        <p>{{ contentItem.title }}</p>
+                    </mat-card-title>              
+                    <mat-card-content>
+                        <small>{{ contentItem.summary }}</small>
+                    </mat-card-content>   
+                    <mat-card-actions>
+                        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                            <button mat-stroked-button>READ MORE</button>
+                        </a>
+                    </mat-card-actions>   
+                </mat-card>
+        </div>
+    </span>
+
+</span>

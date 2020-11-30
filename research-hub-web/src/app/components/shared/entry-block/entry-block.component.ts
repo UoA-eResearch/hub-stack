@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-entry-block',
@@ -6,10 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entry-block.component.scss']
 })
 export class EntryBlockComponent implements OnInit {
+  @Input() contentItem;
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit() {
 
+  }
 }

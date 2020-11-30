@@ -1,0 +1,21 @@
+/**
+ * Asset Block
+ */
+ .embedded-asset-block {
+    max-width: 100%; 
+    text-align: center; 
+}
+.embedded-asset-block img {
+    width: 70%; 
+    object-fit: cover
+}
+
+
+/**
+ * If viewed on a mobile device
+ */
+ .embedded-entry-block-mobile, 
+ .hyperlink-youtube-container-mobile,
+ .embedded-asset-block-mobile img {
+     width: 100%; 
+ }

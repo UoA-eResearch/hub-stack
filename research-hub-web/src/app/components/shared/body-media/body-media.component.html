@@ -1,47 +1,21 @@
 <span [ngSwitch]="data.nodeType">
+
+    <!-- Asset Block -->
     <span *ngSwitchCase="'embedded-asset-block'">
-        <app-asset-block></app-asset-block>
-        <div 
-            class="embedded-asset-block"
-            ngClass.xs="embedded-asset-block-mobile">
-            <img src="{{ contentItem.url }}"/>
-            <p>{{ contentItem.title }}
-                <small 
-                    *ngIf="contentItem.description"> 
-                    &nbsp;—&nbsp;{{ contentItem.description }}
-                </small>
-            </p>
-        </div>
+        <app-asset-block [contentItem]="contentItem"></app-asset-block>
     </span>
+
+    <!-- Entry Block -->
     <span *ngSwitchCase="'embedded-entry-block'">
-        <app-entry-block></app-entry-block>
-        <div 
-            class="embedded-entry-block"
-            ngClass.xs="embedded-entry-block-mobile">
-                <mat-card>
-                    <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
-                    <mat-card-title>
-                        <p>{{ contentItem.title }}</p>
-                    </mat-card-title>              
-                    <mat-card-content>
-                        <small>{{ contentItem.summary }}</small>
-                    </mat-card-content>   
-                    <mat-card-actions>
-                        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
-                            <button mat-stroked-button>READ MORE</button>
-                        </a>
-                    </mat-card-actions>   
-                </mat-card>
-        </div>
+        <app-entry-block [contentItem]="contentItem"></app-entry-block>
     </span>
+
+    <!-- Entry Inline -->
     <span *ngSwitchCase="'embedded-entry-inline'">
-        <app-entry-inline></app-entry-inline>
-        <a class="embedded-entry-inline" href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
-            <mat-card>
-                <b>&nbsp;{{ contentItem.title }}&nbsp;>>&nbsp;</b>
-            </mat-card>
-        </a>
+        <app-entry-inline [contentItem]="contentItem"></app-entry-inline>
     </span>
+
+    <!-- Entry Hyperlink -->
     <span *ngSwitchCase="'entry-hyperlink'">
         <span>
             <a href="contentItem.url">
@@ -49,6 +23,8 @@
             </a>
         </span>
     </span>
+
+    <!-- Asset Hyperlink -->
     <span *ngSwitchCase="'asset-hyperlink'">
         <span>
             <a href="contentItem.url">
@@ -57,22 +33,14 @@
         </span>
     </span>
 
-    <!-- <span *ngSwitchCase="'hyperlink'">
-        <span *ngIf="youtube; else nonYoutube">
-            <div class="hyperlink-youtube-container">
-                <iframe 
-                    class="hyperlink-youtube"
-                    [src]="contentItem.url" 
-                    frameborder="0" 
-                    allowfullscreen>
-                </iframe>
-            </div>
-        </span>
-        <ng-template #nonYoutube>
-            <a href="contentItem.url">
-                <b>{{ contentItem.title }}</b>            
-            </a>
-        </ng-template>
-    </span> -->
+    <!-- Blockquote -->
+    <span *ngSwitchCase="'blockquote'">
+        <div class="blockquote-container"
+            ngClass.xs="blockquote-mobile">
+            <span class="blockquote">
+                {{ contentItem.content[0].value }}
+            </span>
+        </div>
+    </span>
 
 </span>

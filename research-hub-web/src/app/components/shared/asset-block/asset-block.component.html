@@ -1,1 +1,11 @@
-<p>asset-block works!</p>
+<div 
+    class="embedded-asset-block"
+    ngClass.xs="embedded-asset-block-mobile">
+    <img src="{{ contentItem.url }}"/>
+    <p>{{ contentItem.title }}
+        <small 
+            *ngIf="contentItem.description"> 
+            &nbsp;—&nbsp;{{ contentItem.description }}
+        </small>
+    </p>
+</div>

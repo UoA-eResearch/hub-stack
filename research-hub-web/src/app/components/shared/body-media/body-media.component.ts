@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaService} from '@services/body-media.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,15 +11,10 @@ import { Subscription } from 'rxjs';
 export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestroy {
   public data;
   public contentItem;
-  public youtube;
-  public iframeLink;
-  public youtubRegexp = /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$/;
-  public youtubeRegexpID = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
   public mediaSub: Subscription;
 
   constructor(
-    private bodyMediaService: BodyMediaService,
-    private sanitizer: DomSanitizer) 
+    private bodyMediaService: BodyMediaService)
   { super(); }
 
   async ngOnInit() {
@@ -50,43 +44,10 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestro
         case 'asset-hyperlink':
           this.contentItem = x.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
-        /**
-         * 
-        case 'hyperlink':
-          /**
-           * Check if the link is a YouTube link
-           * Sanitize the YouTube link
-           * Convert standard YouTube link to an embed link for iframe
-           * 
-          this.youtube = this.validateYoutube();
-          this.iframeLink = `//www.youtube.com/embed/${this.getYoutubeId(this.data.data.uri)}`;
-          this.contentItem = { 
-            "title": this.data.content[0].value, 
-            "url": this.sanitizer.bypassSecurityTrustResourceUrl(this.iframeLink)
-          }
-          break;
-          */
+        case 'blockquote':
+          this.contentItem = this.data.content[0];
       }
     });
-  }
-
-  /**
-   * Validates the url to determine if it is a valid YouTube url
-   */
-  validateYoutube() {
-    return (this.data.data.uri.match(this.youtubRegexp)) ? true : false;
-  }
-
-  /**
-   * Get the YouTube URL ID to create an embed link for the video iframe
-   * @param url 
-   */
-  getYoutubeId(url) {
-    const match = url.match(this.youtubeRegexpID);
-
-    return (match && match[2].length === 11)
-      ? match[2]
-      : null;
   }
 
   async ngOnDestroy() {

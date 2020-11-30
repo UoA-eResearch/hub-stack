@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-entry-inline',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entry-inline.component.scss']
 })
 export class EntryInlineComponent implements OnInit {
-
+  @Input() contentItem;
   constructor() { }
 
   ngOnInit(): void {
