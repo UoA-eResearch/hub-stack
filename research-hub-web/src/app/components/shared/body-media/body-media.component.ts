@@ -30,7 +30,7 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestro
      * Get BodyMedia for current content from BodyMedia service
      */
     this.mediaSub = this.bodyMediaService.bodyMedia.subscribe(x => {
-
+      console.log(x);
       /**
        * Switch case based on response nodeType
        * filter response data by piping e.g. x.assets.(nodeType).filter((id) => id == this.data.data.target.sys.id)
