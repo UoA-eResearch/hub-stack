@@ -257,7 +257,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
 
         if ((this.previousSearchText !== searchText || this.previousFiltersFormValues !== filtersFormValues) && this.previousPageEvent === pageEvent) {
           pageEvent.pageIndex = 0;
-          this.paginator.pageIndex = 0;
+          // this.paginator.pageIndex = 0;
         }
 
         this.onSearchChange(filtersFormValues.categoryId, searchText, filtersFormValues.personTags,

@@ -27,6 +27,7 @@ export class SearchResultsComponentService {
     const resultsSub = this.updateSearchResults(params)
       .pipe(delay(250)) // Add delay to make result changes obvious.
       .subscribe(page => {
+        console.log({page})
         this.resultsSubject.next(page);
         this.resultsLoadingSubject.next(false);
         resultsSub.unsubscribe();

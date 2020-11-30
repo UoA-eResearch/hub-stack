@@ -1,5 +1,6 @@
+import { SearchResultsParams } from './research-hub-api.service';
 
-import { retry } from 'rxjs/operators';
+import { map, pluck, retry, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
@@ -258,12 +259,32 @@ export class ResearchHubApiService {
   }
 
   getSearchResults(params: SearchResultsParams) {
-    return this.http
-      .get<Page<ListItem>>(ResearchHubApiService.hostname + ResearchHubApiService.searchResultsUrl, {
-        params: params.getParams(),
-        headers: ResearchHubApiService.headers
-      }).pipe(
-        retry(ResearchHubApiService.numRetries));
+
+    /*** NEW ****/
+    const searchText = params['searchText'];
+    const query = {
+      query: `${searchText}`
+    }
+
+    const res = this.http
+      .post('https://apigw.sandbox.amazon.auckland.ac.nz/hub-search-proxy', query)
+      .pipe(
+        tap(console.log),
+        map(x => x['result']),
+        map(x => x.map(y => y['_source']['fields']))
+      );
+
+    return res;
+
+    /**** NEW ***/
+
+    // return this.http
+    //   .get<Page<ListItem>>(ResearchHubApiService.hostname + ResearchHubApiService.searchResultsUrl, {
+    //     params: params.getParams(),
+    //     headers: ResearchHubApiService.headers
+    //   }).pipe(
+    //     tap(console.log),
+    //     retry(ResearchHubApiService.numRetries));
   }
 
   // Same query as above, but returns total number of results from each category
