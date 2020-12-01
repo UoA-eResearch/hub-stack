@@ -1,119 +1,117 @@
-  
 query GetArticleByID($id: String!) {
-      article(id: $id) {
-        banner {
-          url
-        }
-        displayBanner
-        title
-        summary
-        ssoProtected
-        viewType
-        body {
-          json
-          links {
-            assets {
-              hyperlink {
-                sys {
-                  id
-                }
-                title
-                description
-                url
-                contentType
-              }
-              block {
-                sys {
-                  id
-                }
-                title
-                description
-                url
-                contentType
-              }
+  article(id: $id) {
+    title
+    slug
+    summary
+    viewType
+    keywords
+    searchable
+    ssoProtected
+    displayBanner
+    banner {
+      url
+    }
+    icon {
+      title
+      description
+      url
+    }
+    body {
+      json
+      links {
+        assets {
+          hyperlink {
+            sys {
+              id
             }
-            entries {
-              block {
-                ... AllFields
-              }
-              inline {
-                ... AllFields
-              }
-              hyperlink {
-                ... AllFields
-              }
+            title
+            description
+            url
+            contentType
+          }
+          block {
+            sys {
+              id
             }
+            title
+            description
+            url
+            contentType
           }
         }
-        keywords
-        slug
-        ssoProtected
-        searchable
-        icon {
-          title
-          description
-          url
-        }
-        relatedContactsCollection {
-          items {
-            ... on Person {
-              name
-              title
-              jobTitle
-              image {
-                url
-              }
-            }
+        entries {
+          block {
+            ... AllFields
           }
-        }
-        relatedItemsCollection {
-          items {
-            ... on Article {
-              title
-              summary
-              slug
-            }
-            ... on Service {
-              title
-              summary
-              slug
-            }
-            ... on Equipment {
-              title
-              summary
-              slug
-            }
-            ... on SubHub {
-              title
-              summary
-              slug
-            }
-            ... on Software {
-              name
-              description
-              url
-            }
+          inline {
+            ... AllFields
           }
-        }
-        officialDocumentsCollection {
-          items {
-            ... on OfficialDocuments {
-              title
-              summary
-              url
-            }
-          }
-        }
-        relatedOrganisationsCollection {
-          items {
-            ... on OrganisationalUnit {
-              unitName
-              summary
-              description {
-                json
-              }
-            }
+          hyperlink {
+            ... AllFields
           }
         }
       }
     }
+    relatedContactsCollection {
+      items {
+        ... on Person {
+          name
+          title
+          jobTitle
+          image {
+            url
+          }
+        }
+      }
+    }
+    relatedItemsCollection {
+      items {
+        ... on Article {
+          title
+          summary
+          slug
+        }
+        ... on Service {
+          title
+          summary
+          slug
+        }
+        ... on Equipment {
+          title
+          summary
+          slug
+        }
+        ... on SubHub {
+          title
+          summary
+          slug
+        }
+        ... on Software {
+          name
+          description
+          url
+        }
+      }
+    }
+    officialDocumentsCollection {
+      items {
+        ... on OfficialDocuments {
+          title
+          summary
+          url
+        }
+      }
+    }
+    relatedOrganisationsCollection {
+      items {
+        ... on OrganisationalUnit {
+          unitName
+          summary
+          description {
+            json
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,9 +1,12 @@
 query SubHubChildPagesById ($id: String!) {
   subHub(id: $id) {
-    slug
     title
-    viewType
+    slug
     summary
+    viewType
+    keywords
+    searchable
+    ssoProtected
     bannerImage {
       url
     }
@@ -41,18 +44,6 @@ query SubHubChildPagesById ($id: String!) {
         }
       }
     }
-    mediaCollection {
-      items {
-        ... on Asset {
-          title
-          description
-          url
-        }
-      }
-    }
-    ssoProtected
-    searchable
-    keywords
     subhubPagesCollection {
       items {
         ...on Article {
@@ -147,6 +138,15 @@ query SubHubChildPagesById ($id: String!) {
           title
           ssoProtected
           summary
+        }
+      }
+    }
+    officialDocumentsCollection {
+      items {
+        ... on OfficialDocuments {
+          title
+          summary
+          url
         }
       }
     }

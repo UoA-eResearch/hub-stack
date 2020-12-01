@@ -13,7 +13,7 @@
     class="results" 
     *ngIf="currentSubHub$ | async as subhub">
     <div>
-        
+
         <!-- Templates -->
         <ng-template #subHubChildren>
             <div 
@@ -30,9 +30,9 @@
                         fxFlex="24%"
                         *ngFor="let subHub of subhub.subhubPagesCollection.items">
                         <mat-card class="subhub-card">
-                                <img *ngIf="subHub.__typename == 'SubHub'" mat-card-image src="{{ subHub.bannerImage?.url }}" alt="{{ subHub.title }}">
-                                <img *ngIf="subHub.__typename != 'SubHub'" mat-card-image src="{{ subHub.banner?.url }}" alt="../../../assets/images/uoa-logo.svg">
-                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename }}</span>
+                                <img *ngIf="subHub.__typename == 'SubHub'" mat-card-image src="{{ subHub.bannerImage?.url }}" onerror="this.src='../../../assets/images/uoa-logo.svg'">
+                                <img *ngIf="subHub.__typename != 'SubHub'" mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='../../../assets/images/uoa-logo.svg'">
+                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
                             <mat-card-title class="card-title">
                                 {{ subHub.title}}
                             </mat-card-title>
@@ -50,50 +50,6 @@
             </div>
         </ng-template>
 
-        <ng-template #mediaCollection>
-            <div 
-                class="site-padding top-padding"
-                ngClass.sm="site-padding-sm top-padding"
-                ngClass.xs="site-padding-xs top-padding"
-                *ngFor="let media of subhub.mediaCollection.items; let i = index">
-                <div 
-                    *ngIf="i % 2 == 0"
-                    class="media-panel"
-                    fxLayout="row wrap"
-                    fxLayoutAlign="space-between"
-                    fxLayoutGap="5%">
-                    <img 
-                        fxFlex="45%"
-                        src="{{ media.url }}"/>
-                    <span
-                        fxFlex="45%"
-                        fxLayout="column"
-                        fxLayoutAlign="center">
-                            <h4>{{ media.title }}</h4>
-                            <p>{{ media.description }}</p>
-                    </span>
-                </div>
-
-                <div 
-                    *ngIf="i % 2 != 0"
-                    class="media-panel"
-                    fxLayout="row wrap"
-                    fxLayoutAlign="space-between"
-                    fxLayoutGap="5%">
-                    <span
-                        fxFlex="45%"
-                        fxLayout="column"
-                        fxLayoutAlign="center">
-                            <h4>{{ media.title }}</h4>
-                            <p>{{ media.description }}</p>
-                    </span>
-                    <img 
-                        fxFlex="45%"
-                        src="{{ media.url }}"/>
-                </div>
-            </div>
-        </ng-template>
-
         <ng-template #relatedItems>
             <div 
                 *ngIf="subhub.relatedItemsCollection.items.length > 0" 
@@ -106,7 +62,7 @@
                     *ngFor="let relatedItem of subhub.relatedItemsCollection.items" 
                     class="collection">
                             <mat-card style="padding-top: 30px;">
-                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename }}</span>
+                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename | humanCase }}</span>
                                 <span class="card-title">
                                     {{ relatedItem['title'] }}
                                 </span> 
@@ -122,7 +78,7 @@
                             </mat-card>
                 </mat-nav-list>
             </div>
-        </ng-template>
+        </ng-template>    
 
         <ng-template #keywords>
             <div *ngIf="subhub.keywords.length > 0">
@@ -236,8 +192,6 @@
                 <!-- SubHub Children -->
                 <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
 
-                <!-- Media Collection -->
-                <ng-container *ngTemplateOutlet="mediaCollection"></ng-container>
             </div>
 
             <!-- View 2 -->
@@ -273,23 +227,19 @@
             
                     <!-- Body Content -->
                     <!-- Main Body -->
-                    <!-- <div 
+                    <div 
                         class="main-body site-padding"
                         ngClass.sm="site-padding-sm"
-                        ngClass.xs="site-padding-xs"
-                        [innerHTML]="subhub.body.json | richTextToHTML">
-                    </div> -->
-                    <ngx-contentful-rich-text
-                        style="word-break:break-word;" 
-                        [document]="subhub.body.json"
-                        [nodeRenderers]="nodeRenderers">
-                    </ngx-contentful-rich-text>
+                        ngClass.xs="site-padding-xs">
+                        <ngx-contentful-rich-text
+                            style="word-break:break-word;" 
+                            [document]="subhub.body.json"
+                            [nodeRenderers]="nodeRenderers">
+                        </ngx-contentful-rich-text>
+                    </div>
             
                     <!-- SubHub Children -->
                     <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
-
-                    <!-- Media Collection -->
-                    <ng-container *ngTemplateOutlet="mediaCollection"></ng-container>
 
                     <!-- Related Items -->
                     <div 

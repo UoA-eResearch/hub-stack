@@ -1,127 +1,126 @@
 query GetEquipmentByID($id: String!) {
-      equipment(id: $id) {
-        title
-        summary
-        ssoProtected
-        viewType
-        body {
-          json
-          links {
-            assets {
-              hyperlink {
-                title
-                description
-                sys {
-                  id
-                }
-                url
-              }
-              block {
-                title
-                description
-                sys {
-                  id
-                }
-                url
-              }
+  equipment(id: $id) {
+    title
+    slug
+    summary
+    type
+    model
+    location
+    manufacturer
+    yearOfManufacture
+    viewType
+    keywords
+    searchable
+    ssoProtected
+    mainImage {
+      url
+    }
+    overview {
+      json
+    }
+    body {
+      json
+      links {
+        assets {
+          hyperlink {
+            title
+            description
+            sys {
+              id
             }
-            entries {
-              block {
-                ... AllFields
-              }
-              inline {
-                ... AllFields
-              }
-              hyperlink {
-                ... AllFields
-              }
+            url
+          }
+          block {
+            title
+            description
+            sys {
+              id
             }
+            url
           }
         }
-        keywords
-        slug
-        ssoProtected
-        searchable
-        overview {
-          json
-        }
-        userFacingSupportCollection {
-          items {
-            ... on Person {
-              name
-              title
-              jobTitle
-              image {
-                url
-              }
-            }
+        entries {
+          block {
+            ... AllFields
           }
-        }
-        equipmentOwnerCollection {
-          items {
-            ... on Person {
-              name
-              title
-              jobTitle
-              image {
-                url
-              }
-            }
+          inline {
+            ... AllFields
           }
-        }
-        mainImage {
-          url
-        }
-        features {
-          json
-        }
-        limitations {
-          json
-        }
-        type
-        manufacturer
-        model
-        eligibility {
-          json
-        }
-        costToUse {
-          json
-        }
-        location
-        trainingRequired {
-          json
-        }
-        trainingProvided {
-          json
-        }
-        yearOfManufacture
-        access {
-          json
-        }
-        helpAndSupport {
-          json
-        }
-        considerations {
-          json
-        }
-        relatedItemsCollection {
-          items {
-            ... on Article {
-              title
-              summary
-              slug
-            }
-            ... on Service {
-              title
-              summary
-              slug
-            }
-            ... on Equipment {
-              title
-              summary
-              slug
-            }
+          hyperlink {
+            ... AllFields
           }
         }
       }
     }
+    userFacingSupportCollection {
+      items {
+        ... on Person {
+          name
+          title
+          jobTitle
+          image {
+            url
+          }
+        }
+      }
+    }
+    equipmentOwnerCollection {
+      items {
+        ... on Person {
+          name
+          title
+          jobTitle
+          image {
+            url
+          }
+        }
+      }
+    }
+    features {
+      json
+    }
+    limitations {
+      json
+    }
+    eligibility {
+      json
+    }
+    costToUse {
+      json
+    }
+    trainingRequired {
+      json
+    }
+    trainingProvided {
+      json
+    }
+    access {
+      json
+    }
+    helpAndSupport {
+      json
+    }
+    considerations {
+      json
+    }
+    relatedItemsCollection {
+      items {
+        ... on Article {
+          title
+          summary
+          slug
+        }
+        ... on Service {
+          title
+          summary
+          slug
+        }
+        ... on Equipment {
+          title
+          summary
+          slug
+        }
+      }
+    }
+  }
+}
