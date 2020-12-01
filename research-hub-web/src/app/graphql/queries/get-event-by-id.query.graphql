@@ -9,9 +9,7 @@ query GetEventByID($id: String!) {
         banner {
             url
         }
-        description {
-            json
-        }
+        description 
         date
         location
         address {

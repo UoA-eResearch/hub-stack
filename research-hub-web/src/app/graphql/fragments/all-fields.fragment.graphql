@@ -1,8 +1,11 @@
-fragment PublicFields on Entry {
+fragment AllFields on Entry {
     ... on Article {
         __typename
         sys {
             id
+        }
+        banner {
+            url
         }
         slug
         title
@@ -158,5 +161,14 @@ fragment PublicFields on Entry {
         name
         description
         url
+    }
+    ... on OrganisationalUnit {
+        __typename
+        sys {
+            id
+        }
+        unitName
+        url
+        summary
     }
 }

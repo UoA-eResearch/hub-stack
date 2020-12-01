@@ -37,20 +37,20 @@ export type Query = {
   __typename?: 'Query';
   asset: Maybe<Asset>;
   assetCollection: Maybe<AssetCollection>;
-  subHub: Maybe<SubHub>;
-  subHubCollection: Maybe<SubHubCollection>;
   eventSeries: Maybe<EventSeries>;
   eventSeriesCollection: Maybe<EventSeriesCollection>;
+  video: Maybe<Video>;
+  videoCollection: Maybe<VideoCollection>;
+  event: Maybe<Event>;
+  eventCollection: Maybe<EventCollection>;
+  subHub: Maybe<SubHub>;
+  subHubCollection: Maybe<SubHubCollection>;
   article: Maybe<Article>;
   articleCollection: Maybe<ArticleCollection>;
   organisationalUnit: Maybe<OrganisationalUnit>;
   organisationalUnitCollection: Maybe<OrganisationalUnitCollection>;
   equipment: Maybe<Equipment>;
   equipmentCollection: Maybe<EquipmentCollection>;
-  event: Maybe<Event>;
-  eventCollection: Maybe<EventCollection>;
-  video: Maybe<Video>;
-  videoCollection: Maybe<VideoCollection>;
   linkCard: Maybe<LinkCard>;
   linkCardCollection: Maybe<LinkCardCollection>;
   genericContact: Maybe<GenericContact>;
@@ -89,23 +89,6 @@ export type QueryAssetCollectionArgs = {
 };
 
 
-export type QuerySubHubArgs = {
-  id: Scalars['String'];
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-
-export type QuerySubHubCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-  where: Maybe<SubHubFilter>;
-  order: Maybe<Array<Maybe<SubHubOrder>>>;
-};
-
-
 export type QueryEventSeriesArgs = {
   id: Scalars['String'];
   preview: Maybe<Scalars['Boolean']>;
@@ -120,6 +103,57 @@ export type QueryEventSeriesCollectionArgs = {
   locale: Maybe<Scalars['String']>;
   where: Maybe<EventSeriesFilter>;
   order: Maybe<Array<Maybe<EventSeriesOrder>>>;
+};
+
+
+export type QueryVideoArgs = {
+  id: Scalars['String'];
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type QueryVideoCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<VideoFilter>;
+  order: Maybe<Array<Maybe<VideoOrder>>>;
+};
+
+
+export type QueryEventArgs = {
+  id: Scalars['String'];
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type QueryEventCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<EventFilter>;
+  order: Maybe<Array<Maybe<EventOrder>>>;
+};
+
+
+export type QuerySubHubArgs = {
+  id: Scalars['String'];
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type QuerySubHubCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+  where: Maybe<SubHubFilter>;
+  order: Maybe<Array<Maybe<SubHubOrder>>>;
 };
 
 
@@ -171,40 +205,6 @@ export type QueryEquipmentCollectionArgs = {
   locale: Maybe<Scalars['String']>;
   where: Maybe<EquipmentFilter>;
   order: Maybe<Array<Maybe<EquipmentOrder>>>;
-};
-
-
-export type QueryEventArgs = {
-  id: Scalars['String'];
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-
-export type QueryEventCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-  where: Maybe<EventFilter>;
-  order: Maybe<Array<Maybe<EventOrder>>>;
-};
-
-
-export type QueryVideoArgs = {
-  id: Scalars['String'];
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-
-export type QueryVideoCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-  where: Maybe<VideoFilter>;
-  order: Maybe<Array<Maybe<VideoOrder>>>;
 };
 
 
@@ -498,10 +498,10 @@ export enum ImageFormat {
 export type AssetLinkingCollections = {
   __typename?: 'AssetLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
+  eventCollection: Maybe<EventCollection>;
   subHubCollection: Maybe<SubHubCollection>;
   articleCollection: Maybe<ArticleCollection>;
   equipmentCollection: Maybe<EquipmentCollection>;
-  eventCollection: Maybe<EventCollection>;
   linkCardCollection: Maybe<LinkCardCollection>;
   genericContactCollection: Maybe<GenericContactCollection>;
   officialDocumentsCollection: Maybe<OfficialDocumentsCollection>;
@@ -512,6 +512,14 @@ export type AssetLinkingCollections = {
 
 
 export type AssetLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type AssetLinkingCollectionsEventCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -536,14 +544,6 @@ export type AssetLinkingCollectionsArticleCollectionArgs = {
 
 
 export type AssetLinkingCollectionsEquipmentCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-
-export type AssetLinkingCollectionsEventCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -610,228 +610,163 @@ export type Entry = {
   sys: Sys;
 };
 
-export type SubHubCollection = {
-  __typename?: 'SubHubCollection';
+export type EventCollection = {
+  __typename?: 'EventCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
-  items: Array<Maybe<SubHub>>;
+  items: Array<Maybe<Event>>;
 };
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHub = Entry & {
-  __typename?: 'SubHub';
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type Event = Entry & {
+  __typename?: 'Event';
   sys: Sys;
-  linkedFrom: Maybe<SubHubLinkingCollections>;
+  linkedFrom: Maybe<EventLinkingCollections>;
   title: Maybe<Scalars['String']>;
-  summary: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
-  body: Maybe<SubHubBody>;
-  bannerImage: Maybe<Asset>;
-  subhubPagesCollection: Maybe<SubHubSubhubPagesCollection>;
-  externalSubHubPage: Maybe<SubHubExternalSubHubPage>;
-  relatedItemsCollection: Maybe<SubHubRelatedItemsCollection>;
-  officalDocumentsCollection: Maybe<SubHubOfficalDocumentsCollection>;
+  summary: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
+  url: Maybe<Scalars['String']>;
+  banner: Maybe<Asset>;
+  date: Maybe<Scalars['DateTime']>;
+  location: Maybe<Scalars['String']>;
+  address: Maybe<Location>;
+  requirements: Maybe<Array<Maybe<Scalars['String']>>>;
+  restrictions: Maybe<Array<Maybe<Scalars['String']>>>;
+  price: Maybe<Scalars['Float']>;
+  limit: Maybe<Scalars['Int']>;
   keywords: Maybe<Array<Maybe<Scalars['String']>>>;
-  mediaCollection: Maybe<AssetCollection>;
+  organizer: Maybe<Scalars['String']>;
+  support: Maybe<Scalars['String']>;
   ssoProtected: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
-  viewType: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubLinkedFromArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventLinkedFromArgs = {
   allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubTitleArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventTitleArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubSummaryArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventSlugArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubSlugArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventSummaryArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubBodyArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventDescriptionArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubBannerImageArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventUrlArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventBannerArgs = {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubSubhubPagesCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventDateArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubExternalSubHubPageArgs = {
-  preview: Maybe<Scalars['Boolean']>;
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventLocationArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubRelatedItemsCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventAddressArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubOfficalDocumentsCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventRequirementsArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubKeywordsArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventRestrictionsArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubMediaCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventPriceArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubSsoProtectedArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventLimitArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubSearchableArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventKeywordsArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/**
- * A 'mini site' within the hub - this is both the landing page, or sub-pages for
- * nested hierarchal content composed of other hub entries. See Hub handbook for
- * guidance.  [See type
- * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
- */
-export type SubHubViewTypeArgs = {
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventOrganizerArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
-export type SubHubLinkingCollections = {
-  __typename?: 'SubHubLinkingCollections';
+
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventSupportArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventSsoProtectedArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
+export type EventSearchableArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+export type EventLinkingCollections = {
+  __typename?: 'EventLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
-  subHubCollection: Maybe<SubHubCollection>;
+  eventSeriesCollection: Maybe<EventSeriesCollection>;
   organisationalUnitCollection: Maybe<OrganisationalUnitCollection>;
 };
 
 
-export type SubHubLinkingCollectionsEntryCollectionArgs = {
+export type EventLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -839,7 +774,7 @@ export type SubHubLinkingCollectionsEntryCollectionArgs = {
 };
 
 
-export type SubHubLinkingCollectionsSubHubCollectionArgs = {
+export type EventLinkingCollectionsEventSeriesCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -847,11 +782,110 @@ export type SubHubLinkingCollectionsSubHubCollectionArgs = {
 };
 
 
-export type SubHubLinkingCollectionsOrganisationalUnitCollectionArgs = {
+export type EventLinkingCollectionsOrganisationalUnitCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
+};
+
+export type EventSeriesCollection = {
+  __typename?: 'EventSeriesCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<EventSeries>>;
+};
+
+/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
+export type EventSeries = Entry & {
+  __typename?: 'EventSeries';
+  sys: Sys;
+  linkedFrom: Maybe<EventSeriesLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  summary: Maybe<Scalars['String']>;
+  description: Maybe<EventSeriesDescription>;
+  eventsCollection: Maybe<EventSeriesEventsCollection>;
+};
+
+
+/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
+export type EventSeriesLinkedFromArgs = {
+  allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
+export type EventSeriesTitleArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
+export type EventSeriesSummaryArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
+export type EventSeriesDescriptionArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
+export type EventSeriesEventsCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+export type EventSeriesLinkingCollections = {
+  __typename?: 'EventSeriesLinkingCollections';
+  entryCollection: Maybe<EntryCollection>;
+};
+
+
+export type EventSeriesLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+export type EventSeriesDescription = {
+  __typename?: 'EventSeriesDescription';
+  json: Scalars['JSON'];
+  links: EventSeriesDescriptionLinks;
+};
+
+
+export type EventSeriesDescriptionLinks = {
+  __typename?: 'EventSeriesDescriptionLinks';
+  entries: EventSeriesDescriptionEntries;
+  assets: EventSeriesDescriptionAssets;
+};
+
+export type EventSeriesDescriptionEntries = {
+  __typename?: 'EventSeriesDescriptionEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
+};
+
+export type EventSeriesDescriptionAssets = {
+  __typename?: 'EventSeriesDescriptionAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
+};
+
+export type EventSeriesEventsCollection = {
+  __typename?: 'EventSeriesEventsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Event>>;
 };
 
 export type OrganisationalUnitCollection = {
@@ -999,7 +1033,6 @@ export type OrganisationalUnitDescription = {
   json: Scalars['JSON'];
   links: OrganisationalUnitDescriptionLinks;
 };
-
 
 export type OrganisationalUnitDescriptionLinks = {
   __typename?: 'OrganisationalUnitDescriptionLinks';
@@ -1257,105 +1290,228 @@ export type ServiceLinkingCollectionsServiceCollectionArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
-export type ServiceCollection = {
-  __typename?: 'ServiceCollection';
+export type SubHubCollection = {
+  __typename?: 'SubHubCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
-  items: Array<Maybe<Service>>;
+  items: Array<Maybe<SubHub>>;
 };
 
-export type ServiceServiceOwnerCollection = {
-  __typename?: 'ServiceServiceOwnerCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<Person>>;
-};
-
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type Person = Entry & {
-  __typename?: 'Person';
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHub = Entry & {
+  __typename?: 'SubHub';
   sys: Sys;
-  linkedFrom: Maybe<PersonLinkingCollections>;
-  username: Maybe<Scalars['String']>;
-  name: Maybe<Scalars['String']>;
+  linkedFrom: Maybe<SubHubLinkingCollections>;
   title: Maybe<Scalars['String']>;
-  jobTitle: Maybe<Scalars['String']>;
-  image: Maybe<Asset>;
+  summary: Maybe<Scalars['String']>;
   slug: Maybe<Scalars['String']>;
+  body: Maybe<SubHubBody>;
+  bannerImage: Maybe<Asset>;
+  subhubPagesCollection: Maybe<SubHubSubhubPagesCollection>;
+  externalSubHubPage: Maybe<SubHubExternalSubHubPage>;
+  relatedItemsCollection: Maybe<SubHubRelatedItemsCollection>;
+  officalDocumentsCollection: Maybe<SubHubOfficalDocumentsCollection>;
+  keywords: Maybe<Array<Maybe<Scalars['String']>>>;
+  mediaCollection: Maybe<AssetCollection>;
   ssoProtected: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
+  viewType: Maybe<Scalars['String']>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonLinkedFromArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubLinkedFromArgs = {
   allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonUsernameArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubTitleArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonNameArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubSummaryArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonTitleArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubSlugArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonJobTitleArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubBodyArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonImageArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubBannerImageArgs = {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonSlugArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubSubhubPagesCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonSsoProtectedArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubExternalSubHubPageArgs = {
+  preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
-export type PersonSearchableArgs = {
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubRelatedItemsCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
-export type PersonLinkingCollections = {
-  __typename?: 'PersonLinkingCollections';
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubOfficalDocumentsCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubKeywordsArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubMediaCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubSsoProtectedArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubSearchableArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/**
+ * A 'mini site' within the hub - this is both the landing page, or sub-pages for
+ * nested hierarchal content composed of other hub entries. See Hub handbook for
+ * guidance.  [See type
+ * definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/subHub)
+ */
+export type SubHubViewTypeArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+export type SubHubLinkingCollections = {
+  __typename?: 'SubHubLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
-  articleCollection: Maybe<ArticleCollection>;
+  subHubCollection: Maybe<SubHubCollection>;
   organisationalUnitCollection: Maybe<OrganisationalUnitCollection>;
-  equipmentCollection: Maybe<EquipmentCollection>;
-  officialDocumentsCollection: Maybe<OfficialDocumentsCollection>;
-  serviceCollection: Maybe<ServiceCollection>;
-  caseStudyCollection: Maybe<CaseStudyCollection>;
 };
 
 
-export type PersonLinkingCollectionsEntryCollectionArgs = {
+export type SubHubLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1363,7 +1519,7 @@ export type PersonLinkingCollectionsEntryCollectionArgs = {
 };
 
 
-export type PersonLinkingCollectionsArticleCollectionArgs = {
+export type SubHubLinkingCollectionsSubHubCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1371,52 +1527,47 @@ export type PersonLinkingCollectionsArticleCollectionArgs = {
 };
 
 
-export type PersonLinkingCollectionsOrganisationalUnitCollectionArgs = {
+export type SubHubLinkingCollectionsOrganisationalUnitCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
-
-export type PersonLinkingCollectionsEquipmentCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
+export type SubHubBody = {
+  __typename?: 'SubHubBody';
+  json: Scalars['JSON'];
+  links: SubHubBodyLinks;
 };
 
-
-export type PersonLinkingCollectionsOfficialDocumentsCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
+export type SubHubBodyLinks = {
+  __typename?: 'SubHubBodyLinks';
+  entries: SubHubBodyEntries;
+  assets: SubHubBodyAssets;
 };
 
-
-export type PersonLinkingCollectionsServiceCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
+export type SubHubBodyEntries = {
+  __typename?: 'SubHubBodyEntries';
+  inline: Array<Maybe<Entry>>;
+  hyperlink: Array<Maybe<Entry>>;
+  block: Array<Maybe<Entry>>;
 };
 
-
-export type PersonLinkingCollectionsCaseStudyCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
+export type SubHubBodyAssets = {
+  __typename?: 'SubHubBodyAssets';
+  hyperlink: Array<Maybe<Asset>>;
+  block: Array<Maybe<Asset>>;
 };
 
-export type ArticleCollection = {
-  __typename?: 'ArticleCollection';
+export type SubHubSubhubPagesCollection = {
+  __typename?: 'SubHubSubhubPagesCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
-  items: Array<Maybe<Article>>;
+  items: Array<Maybe<Entry>>;
 };
+
+export type SubHubExternalSubHubPage = Article | CaseStudy | Equipment | Service | SubHub;
 
 /** A general information page. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/article) */
 export type Article = Entry & {
@@ -1600,6 +1751,14 @@ export type ArticleLinkingCollectionsServiceCollectionArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
+export type ServiceCollection = {
+  __typename?: 'ServiceCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Service>>;
+};
+
 export type ArticleBody = {
   __typename?: 'ArticleBody';
   json: Scalars['JSON'];
@@ -1769,6 +1928,14 @@ export type OfficialDocumentsLinkingCollectionsServiceCollectionArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
+export type ArticleCollection = {
+  __typename?: 'ArticleCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Article>>;
+};
+
 export type OfficialDocumentsContactCollection = {
   __typename?: 'OfficialDocumentsContactCollection';
   total: Scalars['Int'];
@@ -1777,24 +1944,15 @@ export type OfficialDocumentsContactCollection = {
   items: Array<Maybe<Person>>;
 };
 
-export type ArticleRelatedContactsCollection = {
-  __typename?: 'ArticleRelatedContactsCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<ArticleRelatedContactsItem>>;
-};
-
-export type ArticleRelatedContactsItem = GenericContact | Person;
-
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContact = Entry & {
-  __typename?: 'GenericContact';
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type Person = Entry & {
+  __typename?: 'Person';
   sys: Sys;
-  linkedFrom: Maybe<GenericContactLinkingCollections>;
+  linkedFrom: Maybe<PersonLinkingCollections>;
+  username: Maybe<Scalars['String']>;
   name: Maybe<Scalars['String']>;
-  roleDescription: Maybe<Scalars['String']>;
-  email: Maybe<Scalars['String']>;
+  title: Maybe<Scalars['String']>;
+  jobTitle: Maybe<Scalars['String']>;
   image: Maybe<Asset>;
   slug: Maybe<Scalars['String']>;
   ssoProtected: Maybe<Scalars['Boolean']>;
@@ -1802,64 +1960,73 @@ export type GenericContact = Entry & {
 };
 
 
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContactLinkedFromArgs = {
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonLinkedFromArgs = {
   allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
 };
 
 
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContactNameArgs = {
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonUsernameArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContactRoleDescriptionArgs = {
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonNameArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContactEmailArgs = {
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonTitleArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContactImageArgs = {
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonJobTitleArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonImageArgs = {
   preview: Maybe<Scalars['Boolean']>;
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContactSlugArgs = {
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonSlugArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContactSsoProtectedArgs = {
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonSsoProtectedArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
 
-/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
-export type GenericContactSearchableArgs = {
+/** A human being [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/person) */
+export type PersonSearchableArgs = {
   locale: Maybe<Scalars['String']>;
 };
 
-export type GenericContactLinkingCollections = {
-  __typename?: 'GenericContactLinkingCollections';
+export type PersonLinkingCollections = {
+  __typename?: 'PersonLinkingCollections';
   entryCollection: Maybe<EntryCollection>;
   articleCollection: Maybe<ArticleCollection>;
   organisationalUnitCollection: Maybe<OrganisationalUnitCollection>;
   equipmentCollection: Maybe<EquipmentCollection>;
+  officialDocumentsCollection: Maybe<OfficialDocumentsCollection>;
+  serviceCollection: Maybe<ServiceCollection>;
+  caseStudyCollection: Maybe<CaseStudyCollection>;
 };
 
 
-export type GenericContactLinkingCollectionsEntryCollectionArgs = {
+export type PersonLinkingCollectionsEntryCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1867,7 +2034,7 @@ export type GenericContactLinkingCollectionsEntryCollectionArgs = {
 };
 
 
-export type GenericContactLinkingCollectionsArticleCollectionArgs = {
+export type PersonLinkingCollectionsArticleCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1875,7 +2042,7 @@ export type GenericContactLinkingCollectionsArticleCollectionArgs = {
 };
 
 
-export type GenericContactLinkingCollectionsOrganisationalUnitCollectionArgs = {
+export type PersonLinkingCollectionsOrganisationalUnitCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -1883,7 +2050,31 @@ export type GenericContactLinkingCollectionsOrganisationalUnitCollectionArgs = {
 };
 
 
-export type GenericContactLinkingCollectionsEquipmentCollectionArgs = {
+export type PersonLinkingCollectionsEquipmentCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type PersonLinkingCollectionsOfficialDocumentsCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type PersonLinkingCollectionsServiceCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type PersonLinkingCollectionsCaseStudyCollectionArgs = {
   skip?: Maybe<Scalars['Int']>;
   limit?: Maybe<Scalars['Int']>;
   preview: Maybe<Scalars['Boolean']>;
@@ -2331,6 +2522,109 @@ export type EquipmentUserFacingSupportCollection = {
 
 export type EquipmentUserFacingSupportItem = GenericContact | Person;
 
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContact = Entry & {
+  __typename?: 'GenericContact';
+  sys: Sys;
+  linkedFrom: Maybe<GenericContactLinkingCollections>;
+  name: Maybe<Scalars['String']>;
+  roleDescription: Maybe<Scalars['String']>;
+  email: Maybe<Scalars['String']>;
+  image: Maybe<Asset>;
+  slug: Maybe<Scalars['String']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+};
+
+
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContactLinkedFromArgs = {
+  allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContactNameArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContactRoleDescriptionArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContactEmailArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContactImageArgs = {
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContactSlugArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContactSsoProtectedArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Contact details for a team of people rather than an individual person. [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/genericContact) */
+export type GenericContactSearchableArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+export type GenericContactLinkingCollections = {
+  __typename?: 'GenericContactLinkingCollections';
+  entryCollection: Maybe<EntryCollection>;
+  articleCollection: Maybe<ArticleCollection>;
+  organisationalUnitCollection: Maybe<OrganisationalUnitCollection>;
+  equipmentCollection: Maybe<EquipmentCollection>;
+};
+
+
+export type GenericContactLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type GenericContactLinkingCollectionsArticleCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type GenericContactLinkingCollectionsOrganisationalUnitCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+
+export type GenericContactLinkingCollectionsEquipmentCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
 export type EquipmentEquipmentOwnerCollection = {
   __typename?: 'EquipmentEquipmentOwnerCollection';
   total: Scalars['Int'];
@@ -2568,14 +2862,6 @@ export type EquipmentConsiderationsAssets = {
 
 export type EquipmentRelatedItemsCollection = {
   __typename?: 'EquipmentRelatedItemsCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<Entry>>;
-};
-
-export type ArticleRelatedOrganisationsCollection = {
-  __typename?: 'ArticleRelatedOrganisationsCollection';
   total: Scalars['Int'];
   skip: Scalars['Int'];
   limit: Scalars['Int'];
@@ -2886,6 +3172,50 @@ export type CaseStudyRelatedItemsCollection = {
   items: Array<Maybe<Entry>>;
 };
 
+export type ArticleRelatedContactsCollection = {
+  __typename?: 'ArticleRelatedContactsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<ArticleRelatedContactsItem>>;
+};
+
+export type ArticleRelatedContactsItem = GenericContact | Person;
+
+export type ArticleRelatedOrganisationsCollection = {
+  __typename?: 'ArticleRelatedOrganisationsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Entry>>;
+};
+
+export type SubHubRelatedItemsCollection = {
+  __typename?: 'SubHubRelatedItemsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<SubHubRelatedItemsItem>>;
+};
+
+export type SubHubRelatedItemsItem = Article | CaseStudy | Equipment | OfficialDocuments | Service | SubHub;
+
+export type SubHubOfficalDocumentsCollection = {
+  __typename?: 'SubHubOfficalDocumentsCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<OfficialDocuments>>;
+};
+
+export type ServiceServiceOwnerCollection = {
+  __typename?: 'ServiceServiceOwnerCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Person>>;
+};
+
 export type ServiceUserFacingSupportCollection = {
   __typename?: 'ServiceUserFacingSupportCollection';
   total: Scalars['Int'];
@@ -3047,290 +3377,6 @@ export type OrganisationalUnitContactsCollection = {
 
 export type OrganisationalUnitContactsItem = GenericContact | Person;
 
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type Event = Entry & {
-  __typename?: 'Event';
-  sys: Sys;
-  linkedFrom: Maybe<EventLinkingCollections>;
-  title: Maybe<Scalars['String']>;
-  slug: Maybe<Scalars['String']>;
-  summary: Maybe<Scalars['String']>;
-  description: Maybe<EventDescription>;
-  url: Maybe<Scalars['String']>;
-  banner: Maybe<Asset>;
-  date: Maybe<Scalars['DateTime']>;
-  location: Maybe<Scalars['String']>;
-  address: Maybe<Location>;
-  requirements: Maybe<Array<Maybe<Scalars['String']>>>;
-  restrictions: Maybe<Array<Maybe<Scalars['String']>>>;
-  price: Maybe<Scalars['Float']>;
-  limit: Maybe<Scalars['Int']>;
-  keywords: Maybe<Array<Maybe<Scalars['String']>>>;
-  organizer: Maybe<Scalars['String']>;
-  support: Maybe<Scalars['String']>;
-  ssoProtected: Maybe<Scalars['Boolean']>;
-  searchable: Maybe<Scalars['Boolean']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventLinkedFromArgs = {
-  allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventTitleArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventSlugArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventSummaryArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventDescriptionArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventUrlArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventBannerArgs = {
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventDateArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventLocationArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventAddressArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventRequirementsArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventRestrictionsArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventPriceArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventLimitArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventKeywordsArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventOrganizerArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventSupportArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventSsoProtectedArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Event Model [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/event) */
-export type EventSearchableArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-export type EventLinkingCollections = {
-  __typename?: 'EventLinkingCollections';
-  entryCollection: Maybe<EntryCollection>;
-  eventSeriesCollection: Maybe<EventSeriesCollection>;
-  organisationalUnitCollection: Maybe<OrganisationalUnitCollection>;
-};
-
-
-export type EventLinkingCollectionsEntryCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-
-export type EventLinkingCollectionsEventSeriesCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-
-export type EventLinkingCollectionsOrganisationalUnitCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-export type EventSeriesCollection = {
-  __typename?: 'EventSeriesCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<EventSeries>>;
-};
-
-/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
-export type EventSeries = Entry & {
-  __typename?: 'EventSeries';
-  sys: Sys;
-  linkedFrom: Maybe<EventSeriesLinkingCollections>;
-  title: Maybe<Scalars['String']>;
-  summary: Maybe<Scalars['String']>;
-  description: Maybe<EventSeriesDescription>;
-  events: Maybe<Event>;
-};
-
-
-/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
-export type EventSeriesLinkedFromArgs = {
-  allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-
-/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
-export type EventSeriesTitleArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
-export type EventSeriesSummaryArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
-export type EventSeriesDescriptionArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** A collection of related events that may belong to a course, workshop or series [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/eventSeries) */
-export type EventSeriesEventsArgs = {
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-export type EventSeriesLinkingCollections = {
-  __typename?: 'EventSeriesLinkingCollections';
-  entryCollection: Maybe<EntryCollection>;
-};
-
-
-export type EventSeriesLinkingCollectionsEntryCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-export type EventSeriesDescription = {
-  __typename?: 'EventSeriesDescription';
-  json: Scalars['JSON'];
-  links: EventSeriesDescriptionLinks;
-};
-
-export type EventSeriesDescriptionLinks = {
-  __typename?: 'EventSeriesDescriptionLinks';
-  entries: EventSeriesDescriptionEntries;
-  assets: EventSeriesDescriptionAssets;
-};
-
-export type EventSeriesDescriptionEntries = {
-  __typename?: 'EventSeriesDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type EventSeriesDescriptionAssets = {
-  __typename?: 'EventSeriesDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type EventDescription = {
-  __typename?: 'EventDescription';
-  json: Scalars['JSON'];
-  links: EventDescriptionLinks;
-};
-
-export type EventDescriptionLinks = {
-  __typename?: 'EventDescriptionLinks';
-  entries: EventDescriptionEntries;
-  assets: EventDescriptionAssets;
-};
-
-export type EventDescriptionEntries = {
-  __typename?: 'EventDescriptionEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type EventDescriptionAssets = {
-  __typename?: 'EventDescriptionAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
 export type OrganisationalUnitRelatedItemsCollection = {
   __typename?: 'OrganisationalUnitRelatedItemsCollection';
   total: Scalars['Int'];
@@ -3431,67 +3477,6 @@ export type SoftwareRelatedItemsCollection = {
   skip: Scalars['Int'];
   limit: Scalars['Int'];
   items: Array<Maybe<Entry>>;
-};
-
-export type SubHubBody = {
-  __typename?: 'SubHubBody';
-  json: Scalars['JSON'];
-  links: SubHubBodyLinks;
-};
-
-export type SubHubBodyLinks = {
-  __typename?: 'SubHubBodyLinks';
-  entries: SubHubBodyEntries;
-  assets: SubHubBodyAssets;
-};
-
-export type SubHubBodyEntries = {
-  __typename?: 'SubHubBodyEntries';
-  inline: Array<Maybe<Entry>>;
-  hyperlink: Array<Maybe<Entry>>;
-  block: Array<Maybe<Entry>>;
-};
-
-export type SubHubBodyAssets = {
-  __typename?: 'SubHubBodyAssets';
-  hyperlink: Array<Maybe<Asset>>;
-  block: Array<Maybe<Asset>>;
-};
-
-export type SubHubSubhubPagesCollection = {
-  __typename?: 'SubHubSubhubPagesCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<Entry>>;
-};
-
-export type SubHubExternalSubHubPage = Article | CaseStudy | Equipment | Service | SubHub;
-
-export type SubHubRelatedItemsCollection = {
-  __typename?: 'SubHubRelatedItemsCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<SubHubRelatedItemsItem>>;
-};
-
-export type SubHubRelatedItemsItem = Article | CaseStudy | Equipment | OfficialDocuments | Service | SubHub;
-
-export type SubHubOfficalDocumentsCollection = {
-  __typename?: 'SubHubOfficalDocumentsCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<OfficialDocuments>>;
-};
-
-export type EventCollection = {
-  __typename?: 'EventCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<Event>>;
 };
 
 export type LinkCardCollection = {
@@ -3695,7 +3680,7 @@ export enum AssetOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type SubHubFilter = {
+export type EventSeriesFilter = {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -3711,53 +3696,16 @@ export type SubHubFilter = {
   summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   summary_contains: Maybe<Scalars['String']>;
   summary_not_contains: Maybe<Scalars['String']>;
-  slug_exists: Maybe<Scalars['Boolean']>;
-  slug: Maybe<Scalars['String']>;
-  slug_not: Maybe<Scalars['String']>;
-  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains: Maybe<Scalars['String']>;
-  slug_not_contains: Maybe<Scalars['String']>;
-  bannerImage_exists: Maybe<Scalars['Boolean']>;
-  subhubPagesCollection_exists: Maybe<Scalars['Boolean']>;
-  externalSubHubPage_exists: Maybe<Scalars['Boolean']>;
-  relatedItemsCollection_exists: Maybe<Scalars['Boolean']>;
-  officalDocumentsCollection_exists: Maybe<Scalars['Boolean']>;
-  keywords_exists: Maybe<Scalars['Boolean']>;
-  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
-  mediaCollection_exists: Maybe<Scalars['Boolean']>;
-  ssoProtected_exists: Maybe<Scalars['Boolean']>;
-  ssoProtected: Maybe<Scalars['Boolean']>;
-  ssoProtected_not: Maybe<Scalars['Boolean']>;
-  searchable_exists: Maybe<Scalars['Boolean']>;
-  searchable: Maybe<Scalars['Boolean']>;
-  searchable_not: Maybe<Scalars['Boolean']>;
-  viewType_exists: Maybe<Scalars['Boolean']>;
-  viewType: Maybe<Scalars['String']>;
-  viewType_not: Maybe<Scalars['String']>;
-  viewType_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  viewType_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  viewType_contains: Maybe<Scalars['String']>;
-  viewType_not_contains: Maybe<Scalars['String']>;
-  OR: Maybe<Array<Maybe<SubHubFilter>>>;
-  AND: Maybe<Array<Maybe<SubHubFilter>>>;
+  eventsCollection_exists: Maybe<Scalars['Boolean']>;
+  OR: Maybe<Array<Maybe<EventSeriesFilter>>>;
+  AND: Maybe<Array<Maybe<EventSeriesFilter>>>;
 };
 
-export enum SubHubOrder {
+export enum EventSeriesOrder {
   TitleAsc = 'title_ASC',
   TitleDesc = 'title_DESC',
   SummaryAsc = 'summary_ASC',
   SummaryDesc = 'summary_DESC',
-  SlugAsc = 'slug_ASC',
-  SlugDesc = 'slug_DESC',
-  SsoProtectedAsc = 'ssoProtected_ASC',
-  SsoProtectedDesc = 'ssoProtected_DESC',
-  SearchableAsc = 'searchable_ASC',
-  SearchableDesc = 'searchable_DESC',
-  ViewTypeAsc = 'viewType_ASC',
-  ViewTypeDesc = 'viewType_DESC',
   SysIdAsc = 'sys_id_ASC',
   SysIdDesc = 'sys_id_DESC',
   SysPublishedAtAsc = 'sys_publishedAt_ASC',
@@ -3768,8 +3716,54 @@ export enum SubHubOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-export type EventSeriesFilter = {
-  events: Maybe<CfEventNestedFilter>;
+/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
+export type Video = Entry & {
+  __typename?: 'Video';
+  sys: Sys;
+  linkedFrom: Maybe<VideoLinkingCollections>;
+  title: Maybe<Scalars['String']>;
+  description: Maybe<Scalars['String']>;
+  url: Maybe<Scalars['String']>;
+};
+
+
+/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
+export type VideoLinkedFromArgs = {
+  allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
+};
+
+
+/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
+export type VideoTitleArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
+export type VideoDescriptionArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+
+/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
+export type VideoUrlArgs = {
+  locale: Maybe<Scalars['String']>;
+};
+
+export type VideoLinkingCollections = {
+  __typename?: 'VideoLinkingCollections';
+  entryCollection: Maybe<EntryCollection>;
+};
+
+
+export type VideoLinkingCollectionsEntryCollectionArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  limit?: Maybe<Scalars['Int']>;
+  preview: Maybe<Scalars['Boolean']>;
+  locale: Maybe<Scalars['String']>;
+};
+
+export type VideoFilter = {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -3778,19 +3772,50 @@ export type EventSeriesFilter = {
   title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   title_contains: Maybe<Scalars['String']>;
   title_not_contains: Maybe<Scalars['String']>;
-  summary_exists: Maybe<Scalars['Boolean']>;
-  summary: Maybe<Scalars['String']>;
-  summary_not: Maybe<Scalars['String']>;
-  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains: Maybe<Scalars['String']>;
-  summary_not_contains: Maybe<Scalars['String']>;
-  events_exists: Maybe<Scalars['Boolean']>;
-  OR: Maybe<Array<Maybe<EventSeriesFilter>>>;
-  AND: Maybe<Array<Maybe<EventSeriesFilter>>>;
+  description_exists: Maybe<Scalars['Boolean']>;
+  description: Maybe<Scalars['String']>;
+  description_not: Maybe<Scalars['String']>;
+  description_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  description_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  description_contains: Maybe<Scalars['String']>;
+  description_not_contains: Maybe<Scalars['String']>;
+  url_exists: Maybe<Scalars['Boolean']>;
+  url: Maybe<Scalars['String']>;
+  url_not: Maybe<Scalars['String']>;
+  url_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  url_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  url_contains: Maybe<Scalars['String']>;
+  url_not_contains: Maybe<Scalars['String']>;
+  OR: Maybe<Array<Maybe<VideoFilter>>>;
+  AND: Maybe<Array<Maybe<VideoFilter>>>;
 };
 
-export type CfEventNestedFilter = {
+export enum VideoOrder {
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+  DescriptionAsc = 'description_ASC',
+  DescriptionDesc = 'description_DESC',
+  UrlAsc = 'url_ASC',
+  UrlDesc = 'url_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
+export type VideoCollection = {
+  __typename?: 'VideoCollection';
+  total: Scalars['Int'];
+  skip: Scalars['Int'];
+  limit: Scalars['Int'];
+  items: Array<Maybe<Video>>;
+};
+
+export type EventFilter = {
   sys: Maybe<SysFilter>;
   title_exists: Maybe<Scalars['Boolean']>;
   title: Maybe<Scalars['String']>;
@@ -3813,6 +3838,13 @@ export type CfEventNestedFilter = {
   summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
   summary_contains: Maybe<Scalars['String']>;
   summary_not_contains: Maybe<Scalars['String']>;
+  description_exists: Maybe<Scalars['Boolean']>;
+  description: Maybe<Scalars['String']>;
+  description_not: Maybe<Scalars['String']>;
+  description_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  description_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  description_contains: Maybe<Scalars['String']>;
+  description_not_contains: Maybe<Scalars['String']>;
   url_exists: Maybe<Scalars['Boolean']>;
   url: Maybe<Scalars['String']>;
   url_not: Maybe<Scalars['String']>;
@@ -3890,17 +3922,110 @@ export type CfEventNestedFilter = {
   searchable_exists: Maybe<Scalars['Boolean']>;
   searchable: Maybe<Scalars['Boolean']>;
   searchable_not: Maybe<Scalars['Boolean']>;
-  OR: Maybe<Array<Maybe<CfEventNestedFilter>>>;
-  AND: Maybe<Array<Maybe<CfEventNestedFilter>>>;
+  OR: Maybe<Array<Maybe<EventFilter>>>;
+  AND: Maybe<Array<Maybe<EventFilter>>>;
 };
 
 
 
-export enum EventSeriesOrder {
+export enum EventOrder {
+  TitleAsc = 'title_ASC',
+  TitleDesc = 'title_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SummaryAsc = 'summary_ASC',
+  SummaryDesc = 'summary_DESC',
+  UrlAsc = 'url_ASC',
+  UrlDesc = 'url_DESC',
+  DateAsc = 'date_ASC',
+  DateDesc = 'date_DESC',
+  LocationAsc = 'location_ASC',
+  LocationDesc = 'location_DESC',
+  PriceAsc = 'price_ASC',
+  PriceDesc = 'price_DESC',
+  LimitAsc = 'limit_ASC',
+  LimitDesc = 'limit_DESC',
+  OrganizerAsc = 'organizer_ASC',
+  OrganizerDesc = 'organizer_DESC',
+  SupportAsc = 'support_ASC',
+  SupportDesc = 'support_DESC',
+  SsoProtectedAsc = 'ssoProtected_ASC',
+  SsoProtectedDesc = 'ssoProtected_DESC',
+  SearchableAsc = 'searchable_ASC',
+  SearchableDesc = 'searchable_DESC',
+  SysIdAsc = 'sys_id_ASC',
+  SysIdDesc = 'sys_id_DESC',
+  SysPublishedAtAsc = 'sys_publishedAt_ASC',
+  SysPublishedAtDesc = 'sys_publishedAt_DESC',
+  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
+  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
+  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
+  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
+}
+
+export type SubHubFilter = {
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  bannerImage_exists: Maybe<Scalars['Boolean']>;
+  subhubPagesCollection_exists: Maybe<Scalars['Boolean']>;
+  externalSubHubPage_exists: Maybe<Scalars['Boolean']>;
+  relatedItemsCollection_exists: Maybe<Scalars['Boolean']>;
+  officalDocumentsCollection_exists: Maybe<Scalars['Boolean']>;
+  keywords_exists: Maybe<Scalars['Boolean']>;
+  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  mediaCollection_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  viewType_exists: Maybe<Scalars['Boolean']>;
+  viewType: Maybe<Scalars['String']>;
+  viewType_not: Maybe<Scalars['String']>;
+  viewType_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  viewType_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  viewType_contains: Maybe<Scalars['String']>;
+  viewType_not_contains: Maybe<Scalars['String']>;
+  OR: Maybe<Array<Maybe<SubHubFilter>>>;
+  AND: Maybe<Array<Maybe<SubHubFilter>>>;
+};
+
+export enum SubHubOrder {
   TitleAsc = 'title_ASC',
   TitleDesc = 'title_DESC',
   SummaryAsc = 'summary_ASC',
   SummaryDesc = 'summary_DESC',
+  SlugAsc = 'slug_ASC',
+  SlugDesc = 'slug_DESC',
+  SsoProtectedAsc = 'ssoProtected_ASC',
+  SsoProtectedDesc = 'ssoProtected_DESC',
+  SearchableAsc = 'searchable_ASC',
+  SearchableDesc = 'searchable_DESC',
+  ViewTypeAsc = 'viewType_ASC',
+  ViewTypeDesc = 'viewType_DESC',
   SysIdAsc = 'sys_id_ASC',
   SysIdDesc = 'sys_id_DESC',
   SysPublishedAtAsc = 'sys_publishedAt_ASC',
@@ -4023,6 +4148,117 @@ export type OrganisationalUnitFilter = {
   relatedItemsCollection_exists: Maybe<Scalars['Boolean']>;
   OR: Maybe<Array<Maybe<OrganisationalUnitFilter>>>;
   AND: Maybe<Array<Maybe<OrganisationalUnitFilter>>>;
+};
+
+export type CfEventNestedFilter = {
+  sys: Maybe<SysFilter>;
+  title_exists: Maybe<Scalars['Boolean']>;
+  title: Maybe<Scalars['String']>;
+  title_not: Maybe<Scalars['String']>;
+  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  title_contains: Maybe<Scalars['String']>;
+  title_not_contains: Maybe<Scalars['String']>;
+  slug_exists: Maybe<Scalars['Boolean']>;
+  slug: Maybe<Scalars['String']>;
+  slug_not: Maybe<Scalars['String']>;
+  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  slug_contains: Maybe<Scalars['String']>;
+  slug_not_contains: Maybe<Scalars['String']>;
+  summary_exists: Maybe<Scalars['Boolean']>;
+  summary: Maybe<Scalars['String']>;
+  summary_not: Maybe<Scalars['String']>;
+  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  summary_contains: Maybe<Scalars['String']>;
+  summary_not_contains: Maybe<Scalars['String']>;
+  description_exists: Maybe<Scalars['Boolean']>;
+  description: Maybe<Scalars['String']>;
+  description_not: Maybe<Scalars['String']>;
+  description_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  description_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  description_contains: Maybe<Scalars['String']>;
+  description_not_contains: Maybe<Scalars['String']>;
+  url_exists: Maybe<Scalars['Boolean']>;
+  url: Maybe<Scalars['String']>;
+  url_not: Maybe<Scalars['String']>;
+  url_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  url_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  url_contains: Maybe<Scalars['String']>;
+  url_not_contains: Maybe<Scalars['String']>;
+  banner_exists: Maybe<Scalars['Boolean']>;
+  date_exists: Maybe<Scalars['Boolean']>;
+  date: Maybe<Scalars['DateTime']>;
+  date_not: Maybe<Scalars['DateTime']>;
+  date_in: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  date_not_in: Maybe<Array<Maybe<Scalars['DateTime']>>>;
+  date_gt: Maybe<Scalars['DateTime']>;
+  date_gte: Maybe<Scalars['DateTime']>;
+  date_lt: Maybe<Scalars['DateTime']>;
+  date_lte: Maybe<Scalars['DateTime']>;
+  location_exists: Maybe<Scalars['Boolean']>;
+  location: Maybe<Scalars['String']>;
+  location_not: Maybe<Scalars['String']>;
+  location_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  location_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  location_contains: Maybe<Scalars['String']>;
+  location_not_contains: Maybe<Scalars['String']>;
+  address_exists: Maybe<Scalars['Boolean']>;
+  address_within_circle: Maybe<Scalars['Circle']>;
+  address_within_rectangle: Maybe<Scalars['Rectangle']>;
+  requirements_exists: Maybe<Scalars['Boolean']>;
+  requirements_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  requirements_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  requirements_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  restrictions_exists: Maybe<Scalars['Boolean']>;
+  restrictions_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  restrictions_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  restrictions_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  price_exists: Maybe<Scalars['Boolean']>;
+  price: Maybe<Scalars['Float']>;
+  price_not: Maybe<Scalars['Float']>;
+  price_in: Maybe<Array<Maybe<Scalars['Float']>>>;
+  price_not_in: Maybe<Array<Maybe<Scalars['Float']>>>;
+  price_gt: Maybe<Scalars['Float']>;
+  price_gte: Maybe<Scalars['Float']>;
+  price_lt: Maybe<Scalars['Float']>;
+  price_lte: Maybe<Scalars['Float']>;
+  limit_exists: Maybe<Scalars['Boolean']>;
+  limit: Maybe<Scalars['Int']>;
+  limit_not: Maybe<Scalars['Int']>;
+  limit_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  limit_not_in: Maybe<Array<Maybe<Scalars['Int']>>>;
+  limit_gt: Maybe<Scalars['Int']>;
+  limit_gte: Maybe<Scalars['Int']>;
+  limit_lt: Maybe<Scalars['Int']>;
+  limit_lte: Maybe<Scalars['Int']>;
+  keywords_exists: Maybe<Scalars['Boolean']>;
+  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
+  organizer_exists: Maybe<Scalars['Boolean']>;
+  organizer: Maybe<Scalars['String']>;
+  organizer_not: Maybe<Scalars['String']>;
+  organizer_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  organizer_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  organizer_contains: Maybe<Scalars['String']>;
+  organizer_not_contains: Maybe<Scalars['String']>;
+  support_exists: Maybe<Scalars['Boolean']>;
+  support: Maybe<Scalars['String']>;
+  support_not: Maybe<Scalars['String']>;
+  support_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  support_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
+  support_contains: Maybe<Scalars['String']>;
+  support_not_contains: Maybe<Scalars['String']>;
+  ssoProtected_exists: Maybe<Scalars['Boolean']>;
+  ssoProtected: Maybe<Scalars['Boolean']>;
+  ssoProtected_not: Maybe<Scalars['Boolean']>;
+  searchable_exists: Maybe<Scalars['Boolean']>;
+  searchable: Maybe<Scalars['Boolean']>;
+  searchable_not: Maybe<Scalars['Boolean']>;
+  OR: Maybe<Array<Maybe<CfEventNestedFilter>>>;
+  AND: Maybe<Array<Maybe<CfEventNestedFilter>>>;
 };
 
 export enum OrganisationalUnitOrder {
@@ -4165,244 +4401,6 @@ export enum EquipmentOrder {
   SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
-
-export type EventFilter = {
-  sys: Maybe<SysFilter>;
-  title_exists: Maybe<Scalars['Boolean']>;
-  title: Maybe<Scalars['String']>;
-  title_not: Maybe<Scalars['String']>;
-  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains: Maybe<Scalars['String']>;
-  title_not_contains: Maybe<Scalars['String']>;
-  slug_exists: Maybe<Scalars['Boolean']>;
-  slug: Maybe<Scalars['String']>;
-  slug_not: Maybe<Scalars['String']>;
-  slug_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  slug_contains: Maybe<Scalars['String']>;
-  slug_not_contains: Maybe<Scalars['String']>;
-  summary_exists: Maybe<Scalars['Boolean']>;
-  summary: Maybe<Scalars['String']>;
-  summary_not: Maybe<Scalars['String']>;
-  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains: Maybe<Scalars['String']>;
-  summary_not_contains: Maybe<Scalars['String']>;
-  url_exists: Maybe<Scalars['Boolean']>;
-  url: Maybe<Scalars['String']>;
-  url_not: Maybe<Scalars['String']>;
-  url_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_contains: Maybe<Scalars['String']>;
-  url_not_contains: Maybe<Scalars['String']>;
-  banner_exists: Maybe<Scalars['Boolean']>;
-  date_exists: Maybe<Scalars['Boolean']>;
-  date: Maybe<Scalars['DateTime']>;
-  date_not: Maybe<Scalars['DateTime']>;
-  date_in: Maybe<Array<Maybe<Scalars['DateTime']>>>;
-  date_not_in: Maybe<Array<Maybe<Scalars['DateTime']>>>;
-  date_gt: Maybe<Scalars['DateTime']>;
-  date_gte: Maybe<Scalars['DateTime']>;
-  date_lt: Maybe<Scalars['DateTime']>;
-  date_lte: Maybe<Scalars['DateTime']>;
-  location_exists: Maybe<Scalars['Boolean']>;
-  location: Maybe<Scalars['String']>;
-  location_not: Maybe<Scalars['String']>;
-  location_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  location_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  location_contains: Maybe<Scalars['String']>;
-  location_not_contains: Maybe<Scalars['String']>;
-  address_exists: Maybe<Scalars['Boolean']>;
-  address_within_circle: Maybe<Scalars['Circle']>;
-  address_within_rectangle: Maybe<Scalars['Rectangle']>;
-  requirements_exists: Maybe<Scalars['Boolean']>;
-  requirements_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
-  requirements_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
-  requirements_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
-  restrictions_exists: Maybe<Scalars['Boolean']>;
-  restrictions_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
-  restrictions_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
-  restrictions_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
-  price_exists: Maybe<Scalars['Boolean']>;
-  price: Maybe<Scalars['Float']>;
-  price_not: Maybe<Scalars['Float']>;
-  price_in: Maybe<Array<Maybe<Scalars['Float']>>>;
-  price_not_in: Maybe<Array<Maybe<Scalars['Float']>>>;
-  price_gt: Maybe<Scalars['Float']>;
-  price_gte: Maybe<Scalars['Float']>;
-  price_lt: Maybe<Scalars['Float']>;
-  price_lte: Maybe<Scalars['Float']>;
-  limit_exists: Maybe<Scalars['Boolean']>;
-  limit: Maybe<Scalars['Int']>;
-  limit_not: Maybe<Scalars['Int']>;
-  limit_in: Maybe<Array<Maybe<Scalars['Int']>>>;
-  limit_not_in: Maybe<Array<Maybe<Scalars['Int']>>>;
-  limit_gt: Maybe<Scalars['Int']>;
-  limit_gte: Maybe<Scalars['Int']>;
-  limit_lt: Maybe<Scalars['Int']>;
-  limit_lte: Maybe<Scalars['Int']>;
-  keywords_exists: Maybe<Scalars['Boolean']>;
-  keywords_contains_all: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_some: Maybe<Array<Maybe<Scalars['String']>>>;
-  keywords_contains_none: Maybe<Array<Maybe<Scalars['String']>>>;
-  organizer_exists: Maybe<Scalars['Boolean']>;
-  organizer: Maybe<Scalars['String']>;
-  organizer_not: Maybe<Scalars['String']>;
-  organizer_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  organizer_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  organizer_contains: Maybe<Scalars['String']>;
-  organizer_not_contains: Maybe<Scalars['String']>;
-  support_exists: Maybe<Scalars['Boolean']>;
-  support: Maybe<Scalars['String']>;
-  support_not: Maybe<Scalars['String']>;
-  support_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  support_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  support_contains: Maybe<Scalars['String']>;
-  support_not_contains: Maybe<Scalars['String']>;
-  ssoProtected_exists: Maybe<Scalars['Boolean']>;
-  ssoProtected: Maybe<Scalars['Boolean']>;
-  ssoProtected_not: Maybe<Scalars['Boolean']>;
-  searchable_exists: Maybe<Scalars['Boolean']>;
-  searchable: Maybe<Scalars['Boolean']>;
-  searchable_not: Maybe<Scalars['Boolean']>;
-  OR: Maybe<Array<Maybe<EventFilter>>>;
-  AND: Maybe<Array<Maybe<EventFilter>>>;
-};
-
-export enum EventOrder {
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-  SlugAsc = 'slug_ASC',
-  SlugDesc = 'slug_DESC',
-  SummaryAsc = 'summary_ASC',
-  SummaryDesc = 'summary_DESC',
-  UrlAsc = 'url_ASC',
-  UrlDesc = 'url_DESC',
-  DateAsc = 'date_ASC',
-  DateDesc = 'date_DESC',
-  LocationAsc = 'location_ASC',
-  LocationDesc = 'location_DESC',
-  PriceAsc = 'price_ASC',
-  PriceDesc = 'price_DESC',
-  LimitAsc = 'limit_ASC',
-  LimitDesc = 'limit_DESC',
-  OrganizerAsc = 'organizer_ASC',
-  OrganizerDesc = 'organizer_DESC',
-  SupportAsc = 'support_ASC',
-  SupportDesc = 'support_DESC',
-  SsoProtectedAsc = 'ssoProtected_ASC',
-  SsoProtectedDesc = 'ssoProtected_DESC',
-  SearchableAsc = 'searchable_ASC',
-  SearchableDesc = 'searchable_DESC',
-  SysIdAsc = 'sys_id_ASC',
-  SysIdDesc = 'sys_id_DESC',
-  SysPublishedAtAsc = 'sys_publishedAt_ASC',
-  SysPublishedAtDesc = 'sys_publishedAt_DESC',
-  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
-  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
-  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
-  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
-}
-
-/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
-export type Video = Entry & {
-  __typename?: 'Video';
-  sys: Sys;
-  linkedFrom: Maybe<VideoLinkingCollections>;
-  title: Maybe<Scalars['String']>;
-  summary: Maybe<Scalars['String']>;
-  url: Maybe<Scalars['String']>;
-};
-
-
-/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
-export type VideoLinkedFromArgs = {
-  allowedLocales: Maybe<Array<Maybe<Scalars['String']>>>;
-};
-
-
-/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
-export type VideoTitleArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
-export type VideoSummaryArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-
-/** Link to a YouTube video [See type definition](https://app.contentful.com/spaces/vbuxn5csp0ik/content_types/video) */
-export type VideoUrlArgs = {
-  locale: Maybe<Scalars['String']>;
-};
-
-export type VideoLinkingCollections = {
-  __typename?: 'VideoLinkingCollections';
-  entryCollection: Maybe<EntryCollection>;
-};
-
-
-export type VideoLinkingCollectionsEntryCollectionArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  limit?: Maybe<Scalars['Int']>;
-  preview: Maybe<Scalars['Boolean']>;
-  locale: Maybe<Scalars['String']>;
-};
-
-export type VideoFilter = {
-  sys: Maybe<SysFilter>;
-  title_exists: Maybe<Scalars['Boolean']>;
-  title: Maybe<Scalars['String']>;
-  title_not: Maybe<Scalars['String']>;
-  title_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  title_contains: Maybe<Scalars['String']>;
-  title_not_contains: Maybe<Scalars['String']>;
-  summary_exists: Maybe<Scalars['Boolean']>;
-  summary: Maybe<Scalars['String']>;
-  summary_not: Maybe<Scalars['String']>;
-  summary_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  summary_contains: Maybe<Scalars['String']>;
-  summary_not_contains: Maybe<Scalars['String']>;
-  url_exists: Maybe<Scalars['Boolean']>;
-  url: Maybe<Scalars['String']>;
-  url_not: Maybe<Scalars['String']>;
-  url_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_not_in: Maybe<Array<Maybe<Scalars['String']>>>;
-  url_contains: Maybe<Scalars['String']>;
-  url_not_contains: Maybe<Scalars['String']>;
-  OR: Maybe<Array<Maybe<VideoFilter>>>;
-  AND: Maybe<Array<Maybe<VideoFilter>>>;
-};
-
-export enum VideoOrder {
-  TitleAsc = 'title_ASC',
-  TitleDesc = 'title_DESC',
-  SummaryAsc = 'summary_ASC',
-  SummaryDesc = 'summary_DESC',
-  UrlAsc = 'url_ASC',
-  UrlDesc = 'url_DESC',
-  SysIdAsc = 'sys_id_ASC',
-  SysIdDesc = 'sys_id_DESC',
-  SysPublishedAtAsc = 'sys_publishedAt_ASC',
-  SysPublishedAtDesc = 'sys_publishedAt_DESC',
-  SysFirstPublishedAtAsc = 'sys_firstPublishedAt_ASC',
-  SysFirstPublishedAtDesc = 'sys_firstPublishedAt_DESC',
-  SysPublishedVersionAsc = 'sys_publishedVersion_ASC',
-  SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
-}
-
-export type VideoCollection = {
-  __typename?: 'VideoCollection';
-  total: Scalars['Int'];
-  skip: Scalars['Int'];
-  limit: Scalars['Int'];
-  items: Array<Maybe<Video>>;
-};
 
 export type LinkCardFilter = {
   sys: Maybe<SysFilter>;
@@ -4995,39 +4993,73 @@ export enum PersonOrder {
   SysPublishedVersionDesc = 'sys_publishedVersion_DESC'
 }
 
-type PublicFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+type AllFields_Event_Fragment = { __typename: 'Event', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, description: Maybe<string>, date: Maybe<any>, location: Maybe<string>, url: Maybe<string>, price: Maybe<number>, limit: Maybe<number>, requirements: Maybe<Array<Maybe<string>>>, restrictions: Maybe<Array<Maybe<string>>>, organizer: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, address: Maybe<{ __typename?: 'Location', lat: Maybe<number>, lon: Maybe<number> }> };
+
+type AllFields_EventSeries_Fragment = { __typename?: 'EventSeries' };
+
+type AllFields_OrganisationalUnit_Fragment = { __typename: 'OrganisationalUnit', unitName: Maybe<string>, url: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+
+type AllFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+
+type AllFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+
+type AllFields_Article_Fragment = { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }> };
+
+type AllFields_OfficialDocuments_Fragment = { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+
+type AllFields_Person_Fragment = { __typename: 'Person', username: Maybe<string>, name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, slug: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> };
+
+type AllFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, mainImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> };
+
+type AllFields_GenericContact_Fragment = { __typename: 'GenericContact', slug: Maybe<string>, name: Maybe<string>, email: Maybe<string>, roleDescription: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> };
+
+type AllFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+
+type AllFields_Software_Fragment = { __typename: 'Software', name: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+
+type AllFields_LinkCard_Fragment = { __typename: 'LinkCard', url: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, document: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> };
+
+type AllFields_Video_Fragment = { __typename: 'Video', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+
+type AllFields_Testing_Fragment = { __typename?: 'Testing' };
+
+type AllFields_TestContentType_Fragment = { __typename?: 'TestContentType' };
+
+export type AllFieldsFragment = AllFields_Event_Fragment | AllFields_EventSeries_Fragment | AllFields_OrganisationalUnit_Fragment | AllFields_Service_Fragment | AllFields_SubHub_Fragment | AllFields_Article_Fragment | AllFields_OfficialDocuments_Fragment | AllFields_Person_Fragment | AllFields_Equipment_Fragment | AllFields_GenericContact_Fragment | AllFields_CaseStudy_Fragment | AllFields_Software_Fragment | AllFields_LinkCard_Fragment | AllFields_Video_Fragment | AllFields_Testing_Fragment | AllFields_TestContentType_Fragment;
+
+type PublicFields_Event_Fragment = { __typename: 'Event', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, description: Maybe<string>, date: Maybe<any>, location: Maybe<string>, url: Maybe<string>, price: Maybe<number>, limit: Maybe<number>, requirements: Maybe<Array<Maybe<string>>>, restrictions: Maybe<Array<Maybe<string>>>, organizer: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, address: Maybe<{ __typename?: 'Location', lat: Maybe<number>, lon: Maybe<number> }> };
+
+type PublicFields_EventSeries_Fragment = { __typename?: 'EventSeries' };
 
 type PublicFields_OrganisationalUnit_Fragment = { __typename?: 'OrganisationalUnit' };
 
 type PublicFields_Service_Fragment = { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
-type PublicFields_Person_Fragment = { __typename?: 'Person' };
+type PublicFields_SubHub_Fragment = { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
 type PublicFields_Article_Fragment = { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }> };
 
 type PublicFields_OfficialDocuments_Fragment = { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
-type PublicFields_GenericContact_Fragment = { __typename?: 'GenericContact' };
+type PublicFields_Person_Fragment = { __typename: 'Person', username: Maybe<string>, name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, slug: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> };
 
-type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
+type PublicFields_Equipment_Fragment = { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, mainImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> };
+
+type PublicFields_GenericContact_Fragment = { __typename: 'GenericContact', slug: Maybe<string>, name: Maybe<string>, email: Maybe<string>, roleDescription: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> };
 
 type PublicFields_CaseStudy_Fragment = { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, searchable: Maybe<boolean>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
-type PublicFields_Event_Fragment = { __typename?: 'Event', ssoProtected: Maybe<boolean>, slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, date: Maybe<any>, location: Maybe<string>, url: Maybe<string>, price: Maybe<number>, limit: Maybe<number>, requirements: Maybe<Array<Maybe<string>>>, restrictions: Maybe<Array<Maybe<string>>>, organizer: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, sys: { __typename?: 'Sys', id: string }, description: Maybe<{ __typename?: 'EventDescription', json: any }>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, address: Maybe<{ __typename?: 'Location', lat: Maybe<number>, lon: Maybe<number> }> };
+type PublicFields_Software_Fragment = { __typename: 'Software', name: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
-type PublicFields_EventSeries_Fragment = { __typename?: 'EventSeries' };
+type PublicFields_LinkCard_Fragment = { __typename: 'LinkCard', url: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, document: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> };
 
-type PublicFields_Software_Fragment = { __typename?: 'Software' };
-
-type PublicFields_LinkCard_Fragment = { __typename?: 'LinkCard' };
-
-type PublicFields_Video_Fragment = { __typename?: 'Video' };
+type PublicFields_Video_Fragment = { __typename: 'Video', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } };
 
 type PublicFields_Testing_Fragment = { __typename?: 'Testing' };
 
 type PublicFields_TestContentType_Fragment = { __typename?: 'TestContentType' };
 
-export type PublicFieldsFragment = PublicFields_SubHub_Fragment | PublicFields_OrganisationalUnit_Fragment | PublicFields_Service_Fragment | PublicFields_Person_Fragment | PublicFields_Article_Fragment | PublicFields_OfficialDocuments_Fragment | PublicFields_GenericContact_Fragment | PublicFields_Equipment_Fragment | PublicFields_CaseStudy_Fragment | PublicFields_Event_Fragment | PublicFields_EventSeries_Fragment | PublicFields_Software_Fragment | PublicFields_LinkCard_Fragment | PublicFields_Video_Fragment | PublicFields_Testing_Fragment | PublicFields_TestContentType_Fragment;
+export type PublicFieldsFragment = PublicFields_Event_Fragment | PublicFields_EventSeries_Fragment | PublicFields_OrganisationalUnit_Fragment | PublicFields_Service_Fragment | PublicFields_SubHub_Fragment | PublicFields_Article_Fragment | PublicFields_OfficialDocuments_Fragment | PublicFields_Person_Fragment | PublicFields_Equipment_Fragment | PublicFields_GenericContact_Fragment | PublicFields_CaseStudy_Fragment | PublicFields_Software_Fragment | PublicFields_LinkCard_Fragment | PublicFields_Video_Fragment | PublicFields_Testing_Fragment | PublicFields_TestContentType_Fragment;
 
 export type AllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5083,21 +5115,165 @@ export type AllSearchableContentPublicFieldsQuery = { __typename?: 'Query', arti
 export type GetAllSubHubChildPagesSlugsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllSubHubChildPagesSlugsQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string> } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'Article', slug: Maybe<string> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', slug: Maybe<string> } | { __typename?: 'CaseStudy' } | { __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }>> }> };
+export type GetAllSubHubChildPagesSlugsQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', slug: Maybe<string> } | { __typename?: 'SubHub', slug: Maybe<string> } | { __typename?: 'Article', slug: Maybe<string> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'Person' } | { __typename?: 'Equipment', slug: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'CaseStudy' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }>> }> };
 
 export type AllSubHubChildPagesQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
 }>;
 
 
-export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, viewType: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'OrganisationalUnit' } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }>> }> };
+export type AllSubHubChildPagesQuery = { __typename?: 'Query', subHubCollection: Maybe<{ __typename?: 'SubHubCollection', items: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, viewType: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, sys: { __typename?: 'Sys', id: string }, body: Maybe<{ __typename?: 'SubHubBody', json: any }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'OrganisationalUnit' } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }>> }> };
 
 export type GetArticleByIdQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetArticleByIdQuery = { __typename?: 'Query', article: Maybe<{ __typename?: 'Article', displayBanner: Maybe<boolean>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, viewType: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, body: Maybe<{ __typename?: 'ArticleBody', json: any, links: { __typename?: 'ArticleBodyLinks', assets: { __typename?: 'ArticleBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> }, entries: { __typename?: 'ArticleBodyEntries', block: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', slug: Maybe<string>, name: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Article', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, mainImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Event', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, date: Maybe<any>, location: Maybe<string>, price: Maybe<number>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, inline: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', slug: Maybe<string>, name: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Article', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OfficialDocuments', title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Event', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, hyperlink: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', slug: Maybe<string>, name: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Article', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OfficialDocuments', title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Event', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> } } }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedContactsCollection: Maybe<{ __typename?: 'ArticleRelatedContactsCollection', items: Array<Maybe<{ __typename?: 'GenericContact' } | { __typename?: 'Person', name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> }>> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'CaseStudy' } | { __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'Software', name: Maybe<string>, description: Maybe<string>, url: Maybe<string> } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, officialDocumentsCollection: Maybe<{ __typename?: 'ArticleOfficialDocumentsCollection', items: Array<Maybe<{ __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string> }>> }>, relatedOrganisationsCollection: Maybe<{ __typename?: 'ArticleRelatedOrganisationsCollection', items: Array<Maybe<{ __typename?: 'SubHub' } | { __typename?: 'OrganisationalUnit', unitName: Maybe<string>, summary: Maybe<string>, description: Maybe<{ __typename?: 'OrganisationalUnitDescription', json: any }> } | { __typename?: 'Service' } | { __typename?: 'Person' } | { __typename?: 'Article' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment' } | { __typename?: 'CaseStudy' } | { __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }> };
+export type GetArticleByIdQuery = { __typename?: 'Query', article: Maybe<{ __typename?: 'Article', displayBanner: Maybe<boolean>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, viewType: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, body: Maybe<{ __typename?: 'ArticleBody', json: any, links: { __typename?: 'ArticleBodyLinks', assets: { __typename?: 'ArticleBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> }, entries: { __typename?: 'ArticleBodyEntries', block: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>>, inline: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>>, hyperlink: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>> } } }>, icon: Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>, relatedContactsCollection: Maybe<{ __typename?: 'ArticleRelatedContactsCollection', items: Array<Maybe<{ __typename?: 'GenericContact' } | { __typename?: 'Person', name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> }>> }>, relatedItemsCollection: Maybe<{ __typename?: 'ArticleRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'Person' } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'CaseStudy' } | { __typename?: 'Software', name: Maybe<string>, description: Maybe<string>, url: Maybe<string> } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, officialDocumentsCollection: Maybe<{ __typename?: 'ArticleOfficialDocumentsCollection', items: Array<Maybe<{ __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string> }>> }>, relatedOrganisationsCollection: Maybe<{ __typename?: 'ArticleRelatedOrganisationsCollection', items: Array<Maybe<{ __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'OrganisationalUnit', unitName: Maybe<string>, summary: Maybe<string>, description: Maybe<{ __typename?: 'OrganisationalUnitDescription', json: any }> } | { __typename?: 'Service' } | { __typename?: 'SubHub' } | { __typename?: 'Article' } | { __typename?: 'OfficialDocuments' } | { __typename?: 'Person' } | { __typename?: 'Equipment' } | { __typename?: 'GenericContact' } | { __typename?: 'CaseStudy' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }> };
 
 export type GetArticleBySlugQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
@@ -5111,7 +5287,151 @@ export type GetEquipmentByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetEquipmentByIdQuery = { __typename?: 'Query', equipment: Maybe<{ __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, viewType: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, type: Maybe<Array<Maybe<string>>>, manufacturer: Maybe<string>, model: Maybe<string>, location: Maybe<string>, yearOfManufacture: Maybe<number>, body: Maybe<{ __typename?: 'EquipmentBody', json: any, links: { __typename?: 'EquipmentBodyLinks', assets: { __typename?: 'EquipmentBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> }, entries: { __typename?: 'EquipmentBodyEntries', block: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', slug: Maybe<string>, name: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Article', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string }, mainImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Event', slug: Maybe<string>, title: Maybe<string>, summary: Maybe<string>, date: Maybe<any>, location: Maybe<string>, price: Maybe<number>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, inline: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', slug: Maybe<string>, name: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Article', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OfficialDocuments', title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Event', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, hyperlink: Array<Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Person', slug: Maybe<string>, name: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Article', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'OfficialDocuments', title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Event', slug: Maybe<string>, title: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> } } }>, overview: Maybe<{ __typename?: 'EquipmentOverview', json: any }>, userFacingSupportCollection: Maybe<{ __typename?: 'EquipmentUserFacingSupportCollection', items: Array<Maybe<{ __typename?: 'GenericContact' } | { __typename?: 'Person', name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> }>> }>, equipmentOwnerCollection: Maybe<{ __typename?: 'EquipmentEquipmentOwnerCollection', items: Array<Maybe<{ __typename?: 'GenericContact' } | { __typename?: 'Person', name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> }>> }>, mainImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, features: Maybe<{ __typename?: 'EquipmentFeatures', json: any }>, limitations: Maybe<{ __typename?: 'EquipmentLimitations', json: any }>, eligibility: Maybe<{ __typename?: 'EquipmentEligibility', json: any }>, costToUse: Maybe<{ __typename?: 'EquipmentCostToUse', json: any }>, trainingRequired: Maybe<{ __typename?: 'EquipmentTrainingRequired', json: any }>, trainingProvided: Maybe<{ __typename?: 'EquipmentTrainingProvided', json: any }>, access: Maybe<{ __typename?: 'EquipmentAccess', json: any }>, helpAndSupport: Maybe<{ __typename?: 'EquipmentHelpAndSupport', json: any }>, considerations: Maybe<{ __typename?: 'EquipmentConsiderations', json: any }>, relatedItemsCollection: Maybe<{ __typename?: 'EquipmentRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'SubHub' } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'Person' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'CaseStudy' } | { __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }> };
+export type GetEquipmentByIdQuery = { __typename?: 'Query', equipment: Maybe<{ __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, viewType: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, type: Maybe<Array<Maybe<string>>>, manufacturer: Maybe<string>, model: Maybe<string>, location: Maybe<string>, yearOfManufacture: Maybe<number>, body: Maybe<{ __typename?: 'EquipmentBody', json: any, links: { __typename?: 'EquipmentBodyLinks', assets: { __typename?: 'EquipmentBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> }, entries: { __typename?: 'EquipmentBodyEntries', block: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>>, inline: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>>, hyperlink: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>> } } }>, overview: Maybe<{ __typename?: 'EquipmentOverview', json: any }>, userFacingSupportCollection: Maybe<{ __typename?: 'EquipmentUserFacingSupportCollection', items: Array<Maybe<{ __typename?: 'GenericContact' } | { __typename?: 'Person', name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> }>> }>, equipmentOwnerCollection: Maybe<{ __typename?: 'EquipmentEquipmentOwnerCollection', items: Array<Maybe<{ __typename?: 'GenericContact' } | { __typename?: 'Person', name: Maybe<string>, title: Maybe<string>, jobTitle: Maybe<string>, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> }>> }>, mainImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, features: Maybe<{ __typename?: 'EquipmentFeatures', json: any }>, limitations: Maybe<{ __typename?: 'EquipmentLimitations', json: any }>, eligibility: Maybe<{ __typename?: 'EquipmentEligibility', json: any }>, costToUse: Maybe<{ __typename?: 'EquipmentCostToUse', json: any }>, trainingRequired: Maybe<{ __typename?: 'EquipmentTrainingRequired', json: any }>, trainingProvided: Maybe<{ __typename?: 'EquipmentTrainingProvided', json: any }>, access: Maybe<{ __typename?: 'EquipmentAccess', json: any }>, helpAndSupport: Maybe<{ __typename?: 'EquipmentHelpAndSupport', json: any }>, considerations: Maybe<{ __typename?: 'EquipmentConsiderations', json: any }>, relatedItemsCollection: Maybe<{ __typename?: 'EquipmentRelatedItemsCollection', items: Array<Maybe<{ __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'SubHub' } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'OfficialDocuments' } | { __typename?: 'Person' } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename?: 'CaseStudy' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }> }> };
 
 export type GetEquipmentBySlugQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
@@ -5125,7 +5445,7 @@ export type GetEventByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetEventByIdQuery = { __typename?: 'Query', event: Maybe<{ __typename?: 'Event', ssoProtected: Maybe<boolean>, title: Maybe<string>, summary: Maybe<string>, date: Maybe<any>, location: Maybe<string>, url: Maybe<string>, price: Maybe<number>, limit: Maybe<number>, requirements: Maybe<Array<Maybe<string>>>, restrictions: Maybe<Array<Maybe<string>>>, organizer: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, description: Maybe<{ __typename?: 'EventDescription', json: any }>, address: Maybe<{ __typename?: 'Location', lat: Maybe<number>, lon: Maybe<number> }> }> };
+export type GetEventByIdQuery = { __typename?: 'Query', event: Maybe<{ __typename?: 'Event', ssoProtected: Maybe<boolean>, title: Maybe<string>, summary: Maybe<string>, description: Maybe<string>, date: Maybe<any>, location: Maybe<string>, url: Maybe<string>, price: Maybe<number>, limit: Maybe<number>, requirements: Maybe<Array<Maybe<string>>>, restrictions: Maybe<Array<Maybe<string>>>, organizer: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, address: Maybe<{ __typename?: 'Location', lat: Maybe<number>, lon: Maybe<number> }> }> };
 
 export type GetEventBySlugQueryVariables = Exact<{
   slug: Maybe<Scalars['String']>;
@@ -5139,17 +5459,161 @@ export type SubHubChildPagesByIdQueryVariables = Exact<{
 }>;
 
 
-export type SubHubChildPagesByIdQuery = { __typename?: 'Query', subHub: Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, viewType: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, body: Maybe<{ __typename?: 'SubHubBody', json: any, links: { __typename?: 'SubHubBodyLinks', entries: { __typename?: 'SubHubBodyEntries', block: Array<Maybe<{ __typename?: 'SubHub', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string }, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OrganisationalUnit' } | { __typename?: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string }, icon: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'Person', name: Maybe<string>, username: Maybe<string>, jobTitle: Maybe<string>, sys: { __typename?: 'Sys', id: string }, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string }, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OfficialDocuments', title: Maybe<string>, url: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'GenericContact' } | { __typename?: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string }, mainImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'CaseStudy', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>>, inline: Array<Maybe<{ __typename: 'SubHub', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename: 'OrganisationalUnit' } | { __typename: 'Service', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename: 'Person', name: Maybe<string>, username: Maybe<string>, jobTitle: Maybe<string>, sys: { __typename?: 'Sys', id: string }, image: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename: 'Article', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename: 'OfficialDocuments', title: Maybe<string>, url: Maybe<string>, summary: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename: 'GenericContact' } | { __typename: 'Equipment', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename: 'CaseStudy', title: Maybe<string>, summary: Maybe<string>, slug: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename: 'Event' } | { __typename: 'EventSeries' } | { __typename: 'Software' } | { __typename: 'LinkCard', title: Maybe<string>, summary: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } } | { __typename: 'Video' } | { __typename: 'Testing' } | { __typename: 'TestContentType' }>> }, assets: { __typename?: 'SubHubBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> } } }>, mediaCollection: Maybe<{ __typename?: 'AssetCollection', items: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>> }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename?: 'OrganisationalUnit' } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, relatedItemsCollection: Maybe<{ __typename?: 'SubHubRelatedItemsCollection', items: Array<Maybe<{ __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }> };
+export type SubHubChildPagesByIdQuery = { __typename?: 'Query', subHub: Maybe<{ __typename?: 'SubHub', slug: Maybe<string>, title: Maybe<string>, viewType: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, searchable: Maybe<boolean>, keywords: Maybe<Array<Maybe<string>>>, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, body: Maybe<{ __typename?: 'SubHubBody', json: any, links: { __typename?: 'SubHubBodyLinks', entries: { __typename?: 'SubHubBodyEntries', block: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>>, inline: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>>, hyperlink: Array<Maybe<(
+            { __typename?: 'Event' }
+            & AllFields_Event_Fragment
+          ) | (
+            { __typename?: 'EventSeries' }
+            & AllFields_EventSeries_Fragment
+          ) | (
+            { __typename?: 'OrganisationalUnit' }
+            & AllFields_OrganisationalUnit_Fragment
+          ) | (
+            { __typename?: 'Service' }
+            & AllFields_Service_Fragment
+          ) | (
+            { __typename?: 'SubHub' }
+            & AllFields_SubHub_Fragment
+          ) | (
+            { __typename?: 'Article' }
+            & AllFields_Article_Fragment
+          ) | (
+            { __typename?: 'OfficialDocuments' }
+            & AllFields_OfficialDocuments_Fragment
+          ) | (
+            { __typename?: 'Person' }
+            & AllFields_Person_Fragment
+          ) | (
+            { __typename?: 'Equipment' }
+            & AllFields_Equipment_Fragment
+          ) | (
+            { __typename?: 'GenericContact' }
+            & AllFields_GenericContact_Fragment
+          ) | (
+            { __typename?: 'CaseStudy' }
+            & AllFields_CaseStudy_Fragment
+          ) | (
+            { __typename?: 'Software' }
+            & AllFields_Software_Fragment
+          ) | (
+            { __typename?: 'LinkCard' }
+            & AllFields_LinkCard_Fragment
+          ) | (
+            { __typename?: 'Video' }
+            & AllFields_Video_Fragment
+          ) | (
+            { __typename?: 'Testing' }
+            & AllFields_Testing_Fragment
+          ) | (
+            { __typename?: 'TestContentType' }
+            & AllFields_TestContentType_Fragment
+          )>> }, assets: { __typename?: 'SubHubBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> } } }>, mediaCollection: Maybe<{ __typename?: 'AssetCollection', items: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string> }>> }>, subhubPagesCollection: Maybe<{ __typename?: 'SubHubSubhubPagesCollection', items: Array<Maybe<{ __typename?: 'Event' } | { __typename?: 'EventSeries' } | { __typename?: 'OrganisationalUnit' } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, bannerImage: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename?: 'Person' } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'GenericContact' } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename?: 'Software' } | { __typename?: 'LinkCard' } | { __typename?: 'Video' } | { __typename?: 'Testing' } | { __typename?: 'TestContentType' }>> }>, relatedItemsCollection: Maybe<{ __typename?: 'SubHubRelatedItemsCollection', items: Array<Maybe<{ __typename: 'Article', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }> } | { __typename: 'CaseStudy', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'Equipment', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'OfficialDocuments', title: Maybe<string>, summary: Maybe<string> } | { __typename: 'Service', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> } | { __typename: 'SubHub', slug: Maybe<string>, title: Maybe<string>, ssoProtected: Maybe<boolean>, summary: Maybe<string> }>> }> }> };
 
-export const PublicFieldsFragmentDoc = gql`
-    fragment PublicFields on Entry {
+export const AllFieldsFragmentDoc = gql`
+    fragment AllFields on Entry {
   ... on Article {
-    sys {
-      id
-    }
     __typename
     sys {
       id
+    }
+    banner {
+      url
     }
     slug
     title
@@ -5163,9 +5627,6 @@ export const PublicFieldsFragmentDoc = gql`
     }
   }
   ... on CaseStudy {
-    sys {
-      id
-    }
     __typename
     sys {
       id
@@ -5177,12 +5638,12 @@ export const PublicFieldsFragmentDoc = gql`
     summary
   }
   ... on Equipment {
-    sys {
-      id
-    }
     __typename
     sys {
       id
+    }
+    mainImage {
+      url
     }
     slug
     title
@@ -5191,17 +5652,14 @@ export const PublicFieldsFragmentDoc = gql`
     summary
   }
   ... on OfficialDocuments {
+    __typename
     sys {
       id
     }
-    __typename
     title
     summary
   }
   ... on Service {
-    sys {
-      id
-    }
     __typename
     sys {
       id
@@ -5213,9 +5671,6 @@ export const PublicFieldsFragmentDoc = gql`
     summary
   }
   ... on SubHub {
-    sys {
-      id
-    }
     __typename
     sys {
       id
@@ -5227,16 +5682,14 @@ export const PublicFieldsFragmentDoc = gql`
     summary
   }
   ... on Event {
-    ssoProtected
+    __typename
     sys {
       id
     }
     slug
     title
     summary
-    description {
-      json
-    }
+    description
     banner {
       url
     }
@@ -5253,6 +5706,242 @@ export const PublicFieldsFragmentDoc = gql`
     restrictions
     organizer
     keywords
+    ssoProtected
+    searchable
+  }
+  ... on Video {
+    __typename
+    sys {
+      id
+    }
+    title
+    description
+    url
+  }
+  ... on GenericContact {
+    __typename
+    sys {
+      id
+    }
+    image {
+      url
+    }
+    slug
+    name
+    email
+    roleDescription
+    ssoProtected
+    searchable
+  }
+  ... on LinkCard {
+    __typename
+    sys {
+      id
+    }
+    document {
+      url
+    }
+    url
+    title
+    summary
+  }
+  ... on Person {
+    __typename
+    sys {
+      id
+    }
+    username
+    name
+    title
+    jobTitle
+    image {
+      url
+    }
+    slug
+    ssoProtected
+    searchable
+  }
+  ... on Software {
+    __typename
+    sys {
+      id
+    }
+    name
+    description
+    url
+  }
+  ... on OrganisationalUnit {
+    __typename
+    sys {
+      id
+    }
+    unitName
+    url
+    summary
+  }
+}
+    `;
+export const PublicFieldsFragmentDoc = gql`
+    fragment PublicFields on Entry {
+  ... on Article {
+    __typename
+    sys {
+      id
+    }
+    slug
+    title
+    searchable
+    ssoProtected
+    summary
+    icon {
+      title
+      description
+      url
+    }
+  }
+  ... on CaseStudy {
+    __typename
+    sys {
+      id
+    }
+    slug
+    title
+    searchable
+    ssoProtected
+    summary
+  }
+  ... on Equipment {
+    __typename
+    sys {
+      id
+    }
+    mainImage {
+      url
+    }
+    slug
+    title
+    searchable
+    ssoProtected
+    summary
+  }
+  ... on OfficialDocuments {
+    __typename
+    sys {
+      id
+    }
+    title
+    summary
+  }
+  ... on Service {
+    __typename
+    sys {
+      id
+    }
+    slug
+    title
+    searchable
+    ssoProtected
+    summary
+  }
+  ... on SubHub {
+    __typename
+    sys {
+      id
+    }
+    slug
+    title
+    searchable
+    ssoProtected
+    summary
+  }
+  ... on Event {
+    __typename
+    sys {
+      id
+    }
+    slug
+    title
+    summary
+    description
+    banner {
+      url
+    }
+    date
+    location
+    address {
+      lat
+      lon
+    }
+    url
+    price
+    limit
+    requirements
+    restrictions
+    organizer
+    keywords
+    ssoProtected
+    searchable
+  }
+  ... on Video {
+    __typename
+    sys {
+      id
+    }
+    title
+    description
+    url
+  }
+  ... on GenericContact {
+    __typename
+    sys {
+      id
+    }
+    image {
+      url
+    }
+    slug
+    name
+    email
+    roleDescription
+    ssoProtected
+    searchable
+  }
+  ... on LinkCard {
+    __typename
+    sys {
+      id
+    }
+    document {
+      url
+    }
+    url
+    title
+    summary
+  }
+  ... on Person {
+    __typename
+    sys {
+      id
+    }
+    username
+    name
+    title
+    jobTitle
+    image {
+      url
+    }
+    slug
+    ssoProtected
+    searchable
+  }
+  ... on Software {
+    __typename
+    sys {
+      id
+    }
+    name
+    description
+    url
   }
 }
     `;
@@ -5511,197 +6200,13 @@ export const GetArticleByIdDocument = gql`
         }
         entries {
           block {
-            ... on Article {
-              sys {
-                id
-              }
-              banner {
-                url
-              }
-              slug
-              title
-              summary
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              slug
-              mainImage {
-                url
-              }
-              title
-              summary
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              slug
-              title
-              summary
-            }
-            ... on SubHub {
-              sys {
-                id
-              }
-              bannerImage {
-                url
-              }
-              slug
-              title
-              summary
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              slug
-              title
-              summary
-            }
-            ... on Person {
-              sys {
-                id
-              }
-              slug
-              name
-            }
-            ... on OfficialDocuments {
-              sys {
-                id
-              }
-              title
-              summary
-            }
-            ... on Event {
-              sys {
-                id
-              }
-              slug
-              title
-              summary
-              banner {
-                url
-              }
-              date
-              location
-              price
-            }
+            ...AllFields
           }
           inline {
-            ... on Article {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on SubHub {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Person {
-              sys {
-                id
-              }
-              slug
-              name
-            }
-            ... on OfficialDocuments {
-              sys {
-                id
-              }
-              title
-            }
-            ... on Event {
-              sys {
-                id
-              }
-              slug
-              title
-            }
+            ...AllFields
           }
           hyperlink {
-            ... on Article {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on SubHub {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Person {
-              sys {
-                id
-              }
-              slug
-              name
-            }
-            ... on OfficialDocuments {
-              sys {
-                id
-              }
-              title
-            }
-            ... on Event {
-              sys {
-                id
-              }
-              slug
-              title
-            }
+            ...AllFields
           }
         }
       }
@@ -5778,7 +6283,7 @@ export const GetArticleByIdDocument = gql`
     }
   }
 }
-    `;
+    ${AllFieldsFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -5838,197 +6343,13 @@ export const GetEquipmentByIdDocument = gql`
         }
         entries {
           block {
-            ... on Article {
-              sys {
-                id
-              }
-              banner {
-                url
-              }
-              slug
-              title
-              summary
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              slug
-              mainImage {
-                url
-              }
-              title
-              summary
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              slug
-              title
-              summary
-            }
-            ... on SubHub {
-              sys {
-                id
-              }
-              bannerImage {
-                url
-              }
-              slug
-              title
-              summary
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              slug
-              title
-              summary
-            }
-            ... on Person {
-              sys {
-                id
-              }
-              slug
-              name
-            }
-            ... on OfficialDocuments {
-              sys {
-                id
-              }
-              title
-              summary
-            }
-            ... on Event {
-              sys {
-                id
-              }
-              slug
-              title
-              summary
-              banner {
-                url
-              }
-              date
-              location
-              price
-            }
+            ...AllFields
           }
           inline {
-            ... on Article {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on SubHub {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Person {
-              sys {
-                id
-              }
-              slug
-              name
-            }
-            ... on OfficialDocuments {
-              sys {
-                id
-              }
-              title
-            }
-            ... on Event {
-              sys {
-                id
-              }
-              slug
-              title
-            }
+            ...AllFields
           }
           hyperlink {
-            ... on Article {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on SubHub {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              slug
-              title
-            }
-            ... on Person {
-              sys {
-                id
-              }
-              slug
-              name
-            }
-            ... on OfficialDocuments {
-              sys {
-                id
-              }
-              title
-            }
-            ... on Event {
-              sys {
-                id
-              }
-              slug
-              title
-            }
+            ...AllFields
           }
         }
       }
@@ -6120,7 +6441,7 @@ export const GetEquipmentByIdDocument = gql`
     }
   }
 }
-    `;
+    ${AllFieldsFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'
@@ -6162,9 +6483,7 @@ export const GetEventByIdDocument = gql`
     banner {
       url
     }
-    description {
-      json
-    }
+    description
     date
     location
     address {
@@ -6224,157 +6543,13 @@ export const SubHubChildPagesByIdDocument = gql`
       links {
         entries {
           block {
-            ... on Article {
-              sys {
-                id
-              }
-              title
-              banner {
-                url
-              }
-              summary
-              slug
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              title
-              icon {
-                url
-              }
-              summary
-              slug
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              mainImage {
-                url
-              }
-              title
-              summary
-              slug
-            }
-            ... on SubHub {
-              sys {
-                id
-              }
-              title
-              bannerImage {
-                url
-              }
-              summary
-              slug
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on OfficialDocuments {
-              sys {
-                id
-              }
-              title
-              url
-              summary
-            }
-            ... on Person {
-              sys {
-                id
-              }
-              name
-              image {
-                url
-              }
-              username
-              jobTitle
-            }
-            ... on LinkCard {
-              sys {
-                id
-              }
-              title
-              summary
-              url
-            }
+            ...AllFields
           }
           inline {
-            ... on Article {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on SubHub {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            __typename
-            ... on OfficialDocuments {
-              sys {
-                id
-              }
-              title
-              url
-              summary
-            }
-            __typename
-            ... on Person {
-              sys {
-                id
-              }
-              name
-              image {
-                url
-              }
-              username
-              jobTitle
-            }
-            __typename
-            ... on LinkCard {
-              sys {
-                id
-              }
-              title
-              summary
-              url
-            }
+            ...AllFields
+          }
+          hyperlink {
+            ...AllFields
           }
         }
         assets {
@@ -6508,7 +6683,7 @@ export const SubHubChildPagesByIdDocument = gql`
     }
   }
 }
-    `;
+    ${AllFieldsFragmentDoc}`;
 
   @Injectable({
     providedIn: 'root'

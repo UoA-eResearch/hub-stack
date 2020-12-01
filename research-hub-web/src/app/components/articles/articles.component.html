@@ -90,7 +90,7 @@
         <div 
             *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
             class="column-header">
-            <h4>Organizations</h4>
+            <h4>Organisations</h4>
             <hr/>
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
@@ -105,6 +105,11 @@
                             <span class="related-item-summary">
                                 {{ organisation['summary'] }}
                             </span>
+                            <mat-card-actions>
+                                <a [routerLink]="'/' + organisation['__typename'].toLowerCase() + '/' + organisation['slug']">
+                                    Details ...
+                                </a>
+                            </mat-card-actions>
                         </mat-card>
                     </a>
             </mat-nav-list>
@@ -147,7 +152,7 @@
                 *ngFor="let relatedItem of article.relatedItemsCollection.items" 
                 class="collection">
                         <mat-card style="padding-top: 30px;">
-                            <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename }}</span>
+                            <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename | humanCase }}</span>
                             <span class="card-title">
                                 {{ relatedItem['title'] }}
                             </span> 
@@ -157,7 +162,7 @@
                             </span>
                             <mat-card-actions>
                                 <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                                    Read More ...
+                                    See More ...
                                 </a>
                             </mat-card-actions>
                         </mat-card>
