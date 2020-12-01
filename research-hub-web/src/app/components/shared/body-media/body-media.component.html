@@ -35,10 +35,13 @@
 
     <!-- Blockquote -->
     <span *ngSwitchCase="'blockquote'">
-        <div class="blockquote-container"
+        <div
+            class="blockquote-container"
             ngClass.xs="blockquote-mobile">
-            <span class="blockquote">
-                {{ contentItem.content[0].value }}
+            <span>
+                <span class="blockquote">
+                    {{ contentItem.content[0].value }}
+                </span>
             </span>
         </div>
     </span>

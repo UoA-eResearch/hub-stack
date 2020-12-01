@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-generic-contact',
@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GenericContactComponent implements OnInit {
 
+  @Input() contentItem;
+  
   constructor() { }
 
   ngOnInit(): void {

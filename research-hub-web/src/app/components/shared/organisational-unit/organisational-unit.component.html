@@ -4,7 +4,7 @@
         <mat-card>
             <img mat-card-image src="{{ contentItem.mainImage?.url }}">
             <mat-card-title>
-                <p>{{ contentItem.title }}</p>
+                <p>{{ contentItem.unitName }}</p>
             </mat-card-title>              
             <mat-card-content>
                 <small>{{ contentItem.summary }}</small>
@@ -13,6 +13,6 @@
                 <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
                     Read More ...
                 </a>
-            </mat-card-actions>  
+            </mat-card-actions>   
         </mat-card>
 </div>

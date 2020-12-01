@@ -1,1 +1,18 @@
-<p>generic-contact works!</p>
+<div 
+            class="embedded-entry-block"
+            ngClass.xs="embedded-entry-block-mobile">
+                <mat-card>
+                    <img mat-card-image src="{{ contentItem.image?.url }}">
+                    <mat-card-title>
+                        <p>{{ contentItem.name }}</p>
+                    </mat-card-title>              
+                    <mat-card-content>
+                        <small>{{ contentItem.roleDescription }}</small>
+                    </mat-card-content>   
+                    <mat-card-actions>
+                        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                            Read More ...
+                        </a>
+                    </mat-card-actions>   
+                </mat-card>
+        </div>

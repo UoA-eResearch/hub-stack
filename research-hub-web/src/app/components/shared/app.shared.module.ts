@@ -22,6 +22,11 @@ import { OfficialDocumentComponent } from './official-document/official-document
 import { AssetBlockComponent } from './asset-block/asset-block.component';
 import { EntryBlockComponent } from './entry-block/entry-block.component';
 import { EntryInlineComponent } from './entry-inline/entry-inline.component';
+import { EquipmentEntryComponent } from './equipment-entry/equipment-entry.component';
+import { ArticleEntryComponent } from './article-entry/article-entry.component';
+import { EventEntryComponent } from './event-entry/event-entry.component';
+import { OrganisationalUnitComponent } from './organisational-unit/organisational-unit.component';
+import { ServiceComponent } from './service/service.component';
 
 
 @NgModule({
@@ -50,7 +55,12 @@ import { EntryInlineComponent } from './entry-inline/entry-inline.component';
     OfficialDocumentComponent,
     AssetBlockComponent,
     EntryBlockComponent,
-    EntryInlineComponent
+    EntryInlineComponent,
+    EquipmentEntryComponent,
+    ArticleEntryComponent,
+    EventEntryComponent,
+    OrganisationalUnitComponent,
+    ServiceComponent
   ],
   exports: [
     FlexLayoutModule,

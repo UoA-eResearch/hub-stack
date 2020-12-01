@@ -10,7 +10,5 @@ export class EntryBlockComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 }

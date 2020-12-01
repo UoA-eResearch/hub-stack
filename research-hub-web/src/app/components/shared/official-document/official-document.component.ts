@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-official-document',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./official-document.component.scss']
 })
 export class OfficialDocumentComponent implements OnInit {
+
+  @Input() contentItem
 
   constructor() { }
 
