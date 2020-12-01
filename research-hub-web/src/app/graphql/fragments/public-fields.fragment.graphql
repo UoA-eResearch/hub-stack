@@ -85,9 +85,7 @@ fragment PublicFields on Entry {
         slug
         title
         summary
-        description {
-            json
-        }
+        description
         banner {
             url
         }

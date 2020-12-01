@@ -32,12 +32,8 @@
     <ng-template #banner></ng-template> 
 
     <ng-template #title>
-        <div  
-            class="section"
-            fxLayout="row"
-            fxLayout.xs="row wrap"
-            fxLayoutGap="5%">
-            <span 
+        <div>
+            <!-- <span 
                 class="calendar-container"
                 ngClass.xs="calendar-container-xs"
                 fxFlex="20%">
@@ -49,7 +45,7 @@
                         <div class="calendar-icon-body">{{ event.date | date:'dd' }}</div>
                 </div>
                 </div>
-            </span>
+            </span> -->
             <span>
                 <div 
                     class="event-title"
@@ -78,6 +74,9 @@
                 </a>
                 </div>
             </span>
+            <div class="section">
+                <hr/>
+            </div>
         </div>
     </ng-template>
 
@@ -118,34 +117,35 @@
     </ng-template>
 
     <ng-template #description>
-        <div 
-            class="section"
-            [innerHTML]="event.description.json | richTextToHTML">
+        <div class="description">
+            {{ event.description }}
         </div>
     </ng-template>
 
     <ng-template #googleMap></ng-template>
 
     <ng-template #keywords>
-        <h4 id="keywords">Keywords<hr/></h4>
-        <mat-card-subtitle 
-            fxLayout="row wrap"> 
-            <span *ngFor="let keyword of event.keywords">
-                <mat-card 
-                    fxLayout="row" 
-                    class="keyword-card">
-                        {{ keyword | humanCase }}
-                </mat-card>
-            </span>
-        </mat-card-subtitle>
+        <div id="keywords">
+            <h4>Keywords<hr/></h4>
+            <mat-card-subtitle 
+                fxLayout="row wrap"> 
+                <span *ngFor="let keyword of event.keywords">
+                    <mat-card 
+                        fxLayout="row" 
+                        class="keyword-card">
+                            {{ keyword | humanCase }}
+                    </mat-card>
+                </span>
+            </mat-card-subtitle>
+        </div>
     </ng-template>
 
     <!-- Event Content -->
     <div>
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
         <ng-container *ngTemplateOutlet="title"></ng-container>
-        <ng-container *ngTemplateOutlet="details"></ng-container>
         <ng-container *ngTemplateOutlet="description"></ng-container>
+        <!-- <ng-container *ngTemplateOutlet="details"></ng-container> -->
         <ng-container *ngTemplateOutlet="keywords"></ng-container>
     </div>
 </div>
