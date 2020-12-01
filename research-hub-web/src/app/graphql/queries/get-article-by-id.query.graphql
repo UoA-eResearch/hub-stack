@@ -14,20 +14,22 @@ query GetArticleByID($id: String!) {
           links {
             assets {
               hyperlink {
-                title
-                description
                 sys {
                   id
                 }
+                title
+                description
                 url
+                contentType
               }
               block {
-                title
-                description
                 sys {
                   id
                 }
+                title
+                description
                 url
+                contentType
               }
             }
             entries {

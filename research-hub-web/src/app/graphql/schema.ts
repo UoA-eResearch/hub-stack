@@ -5129,7 +5129,7 @@ export type GetArticleByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleByIdQuery = { __typename?: 'Query', article: Maybe<{ __typename?: 'Article', displayBanner: Maybe<boolean>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, viewType: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, body: Maybe<{ __typename?: 'ArticleBody', json: any, links: { __typename?: 'ArticleBodyLinks', assets: { __typename?: 'ArticleBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> }, entries: { __typename?: 'ArticleBodyEntries', block: Array<Maybe<(
+export type GetArticleByIdQuery = { __typename?: 'Query', article: Maybe<{ __typename?: 'Article', displayBanner: Maybe<boolean>, title: Maybe<string>, summary: Maybe<string>, ssoProtected: Maybe<boolean>, viewType: Maybe<string>, keywords: Maybe<Array<Maybe<string>>>, slug: Maybe<string>, searchable: Maybe<boolean>, banner: Maybe<{ __typename?: 'Asset', url: Maybe<string> }>, body: Maybe<{ __typename?: 'ArticleBody', json: any, links: { __typename?: 'ArticleBodyLinks', assets: { __typename?: 'ArticleBodyAssets', hyperlink: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, contentType: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>>, block: Array<Maybe<{ __typename?: 'Asset', title: Maybe<string>, description: Maybe<string>, url: Maybe<string>, contentType: Maybe<string>, sys: { __typename?: 'Sys', id: string } }>> }, entries: { __typename?: 'ArticleBodyEntries', block: Array<Maybe<(
             { __typename?: 'Event' }
             & AllFields_Event_Fragment
           ) | (
@@ -6182,20 +6182,22 @@ export const GetArticleByIdDocument = gql`
       links {
         assets {
           hyperlink {
-            title
-            description
             sys {
               id
             }
+            title
+            description
             url
+            contentType
           }
           block {
-            title
-            description
             sys {
               id
             }
+            title
+            description
             url
+            contentType
           }
         }
         entries {
