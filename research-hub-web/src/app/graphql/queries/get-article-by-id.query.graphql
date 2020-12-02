@@ -10,7 +10,7 @@ query GetArticleByID($id: String!) {
           description
         }
         displayBanner
-        bpdy {
+        body {
           json
         }
         keywords
