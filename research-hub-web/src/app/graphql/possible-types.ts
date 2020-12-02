@@ -18,19 +18,10 @@
         "name": "Entry",
         "possibleTypes": [
           {
-            "name": "LinkCard"
-          },
-          {
-            "name": "Article"
-          },
-          {
             "name": "SubHub"
           },
           {
-            "name": "CaseStudy"
-          },
-          {
-            "name": "Equipment"
+            "name": "OrganisationalUnit"
           },
           {
             "name": "Service"
@@ -39,16 +30,31 @@
             "name": "Person"
           },
           {
+            "name": "Article"
+          },
+          {
             "name": "OfficialDocuments"
           },
           {
             "name": "GenericContact"
           },
           {
+            "name": "Equipment"
+          },
+          {
+            "name": "CaseStudy"
+          },
+          {
             "name": "Event"
           },
           {
             "name": "Software"
+          },
+          {
+            "name": "LinkCard"
+          },
+          {
+            "name": "Video"
           },
           {
             "name": "Testing"
@@ -60,22 +66,37 @@
       },
       {
         "kind": "UNION",
-        "name": "SubHubExternalSubHubPage",
+        "name": "ArticleRelatedContactsItem",
         "possibleTypes": [
           {
-            "name": "Article"
+            "name": "GenericContact"
           },
           {
-            "name": "CaseStudy"
+            "name": "Person"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "EquipmentUserFacingSupportItem",
+        "possibleTypes": [
+          {
+            "name": "GenericContact"
           },
           {
-            "name": "Equipment"
+            "name": "Person"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "EquipmentEquipmentOwnerItem",
+        "possibleTypes": [
+          {
+            "name": "GenericContact"
           },
           {
-            "name": "Service"
-          },
-          {
-            "name": "SubHub"
+            "name": "Person"
           }
         ]
       },
@@ -99,7 +120,37 @@
       },
       {
         "kind": "UNION",
-        "name": "EquipmentRelatedItemsItem",
+        "name": "OrganisationalUnitContactsItem",
+        "possibleTypes": [
+          {
+            "name": "GenericContact"
+          },
+          {
+            "name": "Person"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "OrganisationalUnitRelatedItemsItem",
+        "possibleTypes": [
+          {
+            "name": "Article"
+          },
+          {
+            "name": "Equipment"
+          },
+          {
+            "name": "Software"
+          },
+          {
+            "name": "SubHub"
+          }
+        ]
+      },
+      {
+        "kind": "UNION",
+        "name": "SubHubExternalSubHubPage",
         "possibleTypes": [
           {
             "name": "Article"
@@ -112,6 +163,9 @@
           },
           {
             "name": "Service"
+          },
+          {
+            "name": "SubHub"
           }
         ]
       },

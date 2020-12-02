@@ -2,22 +2,14 @@
 import { of, combineLatest, Subscription, Observable, Subject, forkJoin } from 'rxjs';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SearchBarService } from '@components/search-bar/search-bar.service';
-import { CategoryId, OptionsService, RoleTypeId } from '@services/options.service';
-import {
-  ResearchHubApiService, OrderBy,
-  SearchResultsParams
-} from '@services/research-hub-api.service';
+import { ResearchHubApiService, OrderBy, SearchResultsParams } from '@services/research-hub-api.service';
 import { Page } from '@model/Page';
 import { AnalyticsService } from '@services/analytics.service';
-
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-
-
-
 import { map, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Tag } from './mat-tags/mat-tags.component';
 import { ListItem } from '@model/ListItem';
@@ -30,6 +22,13 @@ import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 import { SearchFiltersService } from './search-filters/search-filters.service';
 import { SearchResultsComponentService } from './search-results-component.service';
+import { 
+  RoleTypeId,
+  OptionType,
+  CategoryId,
+  ContentTypeId,
+  ResearchActivityId
+} from '@app/global/global-variables';
 
 // The screen size at which we should switch to opening filters in dialog or sidenav.
 const FILTER_VIEW_BREAKPOINT = 'md';
@@ -44,6 +43,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   @ViewChild('paginator', { static: true }) paginator: MatPaginator;
   @ViewChild('resultsDummyHeader', { static: true }) private resultsDummyHeader: ElementRef;
 
+  public researchActivityOptions: any[];
+  public contentTypeMap: any;
+  public categoryOptions: any[];
   public filtersForm: FormGroup;
   public resultsPage: Page<ListItem>;
 
@@ -147,12 +149,70 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   constructor(private searchBarService: SearchBarService,
-    public optionsService: OptionsService, public apiService: ResearchHubApiService,
-    public analyticsService: AnalyticsService, private route: ActivatedRoute,
-    private location: Location, public dialog: MatDialog, private appComponentService: AppComponentService,
+    public apiService: ResearchHubApiService,
+    public analyticsService: AnalyticsService, 
+    private route: ActivatedRoute,
+    private location: Location, 
+    public dialog: MatDialog, 
+    private appComponentService: AppComponentService,
     private componentService: SearchResultsComponentService,
-    private layoutService: LayoutService, private media: MediaObserver,
+    private layoutService: LayoutService, 
+    private media: MediaObserver,
     public searchFiltersService: SearchFiltersService) {
+      
+      this.researchActivityOptions = [
+        {
+          id: ResearchActivityId.PlanDesign,
+          name: 'Plan & Design',
+          className: 'plan',
+          type: OptionType.ResearchActivity
+        },
+        {
+          id: ResearchActivityId.CreateCollectCapture,
+          name: 'Create, Collect & Capture',
+          className: 'create',
+          type: OptionType.ResearchActivity
+        },
+        {
+          id: ResearchActivityId.AnalyzeInterpret,
+          name: 'Analyze & Interpret',
+          className: 'analyze',
+          type: OptionType.ResearchActivity
+        },
+        {
+          id: ResearchActivityId.PublishReport,
+          name: 'Publish & Report',
+          className: 'publish',
+          type: OptionType.ResearchActivity
+        },
+        {
+          id: ResearchActivityId.DiscoverReuse,
+          name: 'Discover & Reuse',
+          className: 'discover',
+          type: OptionType.ResearchActivity
+        }
+      ];
+    
+      this.contentTypeMap = {};
+        this.contentTypeMap[CategoryId.Support] = [ContentTypeId.Support];
+        this.contentTypeMap[CategoryId.Equipment] = [ContentTypeId.Equipment];
+        this.contentTypeMap[CategoryId.Training] = [ContentTypeId.Training];
+        this.contentTypeMap[CategoryId.Software] = [ContentTypeId.Software];
+        this.contentTypeMap[CategoryId.Facilities] = [ContentTypeId.Facilities];
+        this.contentTypeMap[CategoryId.Guide] = [ContentTypeId.Guide, ContentTypeId.KnowledgeArticle];
+
+      this.categoryOptions = [
+        { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
+        { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
+        { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
+        { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
+        { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
+        { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
+        { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
+        { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
+        { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
+      ];
+
     this.filtersForm = searchFiltersService.filtersForm;
   }
 
@@ -196,7 +256,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         const researchActivityIds = filtersFormValue.researchActivityIds;
         this.setFiltersTextIfUndefined(personTags, orgUnitTags).subscribe(res => {
           const [personTagsRes, orgUnitTagsRes] = res;
-          this.updateResultsSummary(page, categoryId, searchText, personTagsRes, orgUnitTagsRes, researchActivityIds);
+          this.updateResultsSummary(page, categoryId, searchText, personTagsRes as Tag[], orgUnitTagsRes as Tag[], researchActivityIds);
         });
         this.appComponentService.setProgressBarVisibility(false);
       }
@@ -218,6 +278,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.appComponentService.setTitle('Search');
     this.initFilter();
     this.initResultSubs();
     // Results cards
@@ -394,7 +455,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   }
 
   onSearchChange(categoryId: number, searchText: string, personTags: Tag[], orgUnitTags: Tag[], researchActivityIds: number[], pageEvent: any, orderBy: OrderBy) {
-    const friendlyCategoryId = this.optionsService.categoryOptions.filter((obj) => {
+    const friendlyCategoryId = this.categoryOptions.filter((obj) => {
       return obj.id === categoryId;
     })[0].name;
 
@@ -420,7 +481,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         params.setOrgUnits(orgUnitIds);
         params.setRoleTypes([RoleTypeId.UserSupport]);
       } else {
-        const contentTypeIds = this.optionsService.contentTypeMap[categoryId];
+        const contentTypeIds = this.contentTypeMap[categoryId];
         params.setObjectType('content');
         params.setContentTypes(contentTypeIds);
         params.setResearchPhases(researchActivityIds);
@@ -486,8 +547,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     const visibilities = SearchResultsComponent.getFilterVisibility(categoryId);
 
     if (categoryId) {
-      this.currentCategoryString = this.optionsService.categoryOptions[categoryId - 1]['name'];
-      statements.push('in <span class="search-results-text">' + this.optionsService.categoryOptions[categoryId - 1]['name'] + '</span>');
+      this.currentCategoryString = this.categoryOptions[categoryId - 1]['name'];
+      statements.push('in <span class="search-results-text">' + this.categoryOptions[categoryId - 1]['name'] + '</span>');
     }
 
     if (personTags && personTags.length && visibilities['person']) {
@@ -514,7 +575,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
       const activities = [];
 
       for (const researchActivityId of researchActivityIds) {
-        activities.push('<span class="search-results-text">' + this.optionsService.researchActivityOptions[researchActivityId - 1]['name'] + '</span>');
+        activities.push('<span class="search-results-text">' + this.researchActivityOptions[researchActivityId - 1]['name'] + '</span>');
       }
 
       let researchPhaseText = 'applicable to the ' + activities.join(', ') + ' research activity';
