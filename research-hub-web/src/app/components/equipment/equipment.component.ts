@@ -11,9 +11,10 @@ import {
     GetEquipmentBySlugGQL,
     GetEquipmentByIdGQL,
     Equipment 
-} from '../../graphql/schema';
-import { CerGraphqlService } from '../../services/cer-graphql.service';
-import { AppComponentService } from '../../app.component.service';
+} from '@graphql/schema';
+import { CerGraphqlService } from '@services/cer-graphql.service';
+import { AppComponentService } from '@app/app.component.service';
+
 
 
 @Component({
@@ -50,7 +51,8 @@ export class EquipmentComponent implements OnInit {
      */
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
-        this.equipment$ = this.getEquipmentByID(data.sys.id);
+        this.equipment$ = this.getEquipmentByID(data.sys.id)
+        .pipe(tap(res => this.appComponentService.setTitle(res.title)));
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -97,7 +99,7 @@ export class EquipmentComponent implements OnInit {
   public getEquipmentByID(id: string): Observable<Equipment> {
     try {
       return this.getEquipmentByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.equipment)) as unknown as Observable<Equipment>;
+        .pipe(map(x => x.data.equipment)) as Observable<Equipment>;
     } catch (e) { console.error(`Error loading article ${id}:`, e); }
   }
 }

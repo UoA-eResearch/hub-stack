@@ -55,11 +55,6 @@ mat-expansion-panel, mat-card  {
 }
 
 
-// Main Content
-.main-content {
-    padding: 0px 200px;
-}
-
 // HR Tag
 hr {
     background-color: #dbdbdb;
@@ -74,7 +69,7 @@ hr {
 
 // Equipment Titles
 .equipment-title {
-    color: black; 
+    color: map-get($hub-navy, 500);
     font-size: 50px;
     font-weight: bold; 
     line-height: 110%;

@@ -9,28 +9,13 @@ import { Subscription } from 'rxjs';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { LayoutService } from '@services/layout.service';
 import { AppComponentService } from '@app/app.component.service';
+import { 
+  ActionTypeId, 
+  RoleTypeId, 
+  ContentTypeId
+} from '@app/global/global-variables';
 
-enum ActionTypeId {
-  Integrated = 1,
-  ExternalUrl,
-  ExternalMailTo
-}
 
-enum RoleTypeId {
-  ServiceOwner = 1,
-  CopyOwner,
-  UserSupport
-}
-
-enum ContentTypeId {
-  Support = 1,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  KnowledgeArticle,
-  Guide
-}
 
 @Component({
   selector: 'app-content-details',

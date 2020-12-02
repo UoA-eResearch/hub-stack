@@ -2,6 +2,10 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { LayoutService } from '@services/layout.service';
+import { 
+  categoryOptions,
+  categoryOptionsGQL 
+} from '@app/global/global-variables';
 
 @Component({
   selector: 'app-browse',
@@ -9,8 +13,8 @@ import { LayoutService } from '@services/layout.service';
   styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit, OnDestroy {
-  public categoryOptions: any[];
-  public categoryOptionsGQL: any[];
+  public categoryOptions = categoryOptions;
+  public categoryOptionsGQL = categoryOptionsGQL;
 
   private mediaSub: Subscription;
 

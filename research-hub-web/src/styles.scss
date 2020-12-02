@@ -51,9 +51,7 @@ span {
 }
 
 /* app-markdown related styles
-
   (they don't take effect in the component scss)
-
  */
 
 @mixin headings {
@@ -129,6 +127,11 @@ mat-chip.mat-chip {
     padding-left: $padding-site;
     padding-right: $padding-site;
 }
+.site-padding-2 {
+  @extend .site-content;
+    padding-left: $padding-site * 3;
+    padding-right: $padding-site * 3;
+}
 
 .top-padding {
   padding-top: $padding-site-top;
@@ -143,8 +146,8 @@ mat-chip.mat-chip {
  */
 .site-padding-sm {
   @extend .site-content;
-    padding-left: $padding-site;
-    padding-right: $padding-site;
+    padding-left: $padding-site / 2;
+    padding-right: $padding-site / 2;
 }
 
 .margin-bottom-sm {
@@ -156,8 +159,8 @@ mat-chip.mat-chip {
  */
 .site-padding-xs {
   @extend .site-content;
-    padding-left: $padding-site;
-    padding-right: $padding-site;
+    padding-left: $padding-site / 4;
+    padding-right: $padding-site / 4;
 }
 
 .margin-bottom-xs {

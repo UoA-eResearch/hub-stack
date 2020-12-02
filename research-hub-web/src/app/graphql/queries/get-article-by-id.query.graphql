@@ -36,16 +36,18 @@ query GetArticleByID($id: String!) {
         }
         relatedItemsCollection {
           items {
-            ...on Article {
-              __typename
-              slug
+            ... on Article {
+              sys {
+                id
+              }
               title
               ssoProtected
               summary
             }
-            ...on CaseStudy {
-              __typename
-              slug
+            ... on Service {
+              sys {
+                id
+              }
               title
               ssoProtected
               summary
@@ -62,12 +64,26 @@ query GetArticleByID($id: String!) {
                 title
                 summary
             }
-            ...on Service {
-              __typename
-              slug
+            ... on Equipment {
+              sys {
+                id
+              }
               title
-              ssoProtected
               summary
+              slug
+            }
+            ... on CaseStudy {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
+            }
+            ... on Software {
+              name
+              description
+              url
             }
             ...on SubHub {
               __typename
@@ -92,48 +108,13 @@ query GetArticleByID($id: String!) {
         }
         relatedOrganisationsCollection {
           items {
-            ...on Article {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ...on CaseStudy {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ...on Equipment{
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            } 
-            ... on OfficialDocuments {
-              __typename
-                title
-                summary
-            }
-            ...on Service {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-            }
-            ...on SubHub {
-              __typename
-              slug
-              title
-              ssoProtected
-              summary
-              bannerImage {
-                url
+            ... on OrganisationalUnit {
+              unitName
+              description {
+                json
               }
+              url
+              summary
             }
           }
         }

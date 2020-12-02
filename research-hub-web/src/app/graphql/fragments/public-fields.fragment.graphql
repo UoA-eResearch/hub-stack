@@ -56,6 +56,9 @@ fragment PublicFields on Entry {
         title
         summary
     }
+    ... on GenericContact {
+        name
+    }
     ... on Software {
         name
         description

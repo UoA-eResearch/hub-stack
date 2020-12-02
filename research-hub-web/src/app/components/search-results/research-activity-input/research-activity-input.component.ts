@@ -1,19 +1,12 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AnalyticsService } from '@services/analytics.service';
+import { 
+  ResearchActivityId,
+  researchActivityOptions,
+  OptionType,
+} from '@app/global/global-variables';
 
-enum ResearchActivityId {
-  PlanDesign = 1,
-  CreateCollectCapture,
-  AnalyzeInterpret,
-  PublishReport,
-  DiscoverReuse
-}
-enum OptionType {
-  ResearchActivity = 1,
-  Category,
-  Menu
-}
 
 @Component({
   selector: 'app-research-activity-input',
@@ -28,40 +21,7 @@ enum OptionType {
   ]
 })
 export class ResearchActivityInputComponent implements OnInit, ControlValueAccessor {
-
-  researchActivityOptions = [
-    {
-      id: ResearchActivityId.PlanDesign,
-      name: 'Plan & Design',
-      className: 'plan',
-      type: OptionType.ResearchActivity
-    },
-    {
-      id: ResearchActivityId.CreateCollectCapture,
-      name: 'Create, Collect & Capture',
-      className: 'create',
-      type: OptionType.ResearchActivity
-    },
-    {
-      id: ResearchActivityId.AnalyzeInterpret,
-      name: 'Analyze & Interpret',
-      className: 'analyze',
-      type: OptionType.ResearchActivity
-    },
-    {
-      id: ResearchActivityId.PublishReport,
-      name: 'Publish & Report',
-      className: 'publish',
-      type: OptionType.ResearchActivity
-    },
-    {
-      id: ResearchActivityId.DiscoverReuse,
-      name: 'Discover & Reuse',
-      className: 'discover',
-      type: OptionType.ResearchActivity
-    }
-  ];
-  
+  public researchActivityOptions = researchActivityOptions;
 
   public model = {};
 
@@ -90,7 +50,7 @@ export class ResearchActivityInputComponent implements OnInit, ControlValueAcces
   }
 
   constructor(public analyticsService: AnalyticsService) {
-    for (const activity of this.researchActivityOptions) {
+    for (const activity of researchActivityOptions) {
       this.model[activity.id] = { selected: false };
     }
   }

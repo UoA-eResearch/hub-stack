@@ -8,6 +8,7 @@
 </div>
 
 
+
 <!-- If we're displaying an individual equipment -->
 <div 
     id="equipment-container"
@@ -103,7 +104,8 @@
                 style="margin-bottom: 20px;" 
                 *ngFor="let relatedItem of equipment.relatedItemsCollection.items" 
                 class="collection">
-                <mat-card>
+                <mat-card style="padding-top: 30px;">
+                    <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename | humanCase }}</span>
                     <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
                         {{ relatedItem['title'] }}<br/>
                     </a>
@@ -384,12 +386,6 @@
                         
                         <!-- Considerations -->
                         <ng-container *ngTemplateOutlet="considerations"></ng-container>
-
-                        <!-- Keywords -->
-                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
-                        <!-- Related Items -->
-                        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
                         
                     </div>
                     <div fxFlex="20%">
@@ -397,8 +393,12 @@
                         <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
                     </div>
                 </div>
+                <!-- Keywords -->
+                <ng-container *ngTemplateOutlet="keywords"></ng-container>
+
+                <!-- Related Items -->
+                <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
             </div>   
         </div>
     </div>
 </div>
-    

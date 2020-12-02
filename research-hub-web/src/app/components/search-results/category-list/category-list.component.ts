@@ -3,20 +3,8 @@ import { SearchResultsComponentService } from '../search-results-component.servi
 import { Observable } from 'rxjs';
 import { Page } from '@model/Page';
 import { ListItem } from '@model/ListItem';
+import { CategoryId } from '@app/global/global-variables';
 
-enum CategoryId {
-  All = 1,
-  Support,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  Guide,
-  Person,
-  Policies,
-  Articles,
-  SubHubs
-}
 
 const CategoryDisplayNames = {
   'Policies': 'Policy',

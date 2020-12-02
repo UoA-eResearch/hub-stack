@@ -41,11 +41,6 @@ query GetEquipmentByID($id: String!) {
         mainImage {
           url
         }
-        icon {
-          title
-          description
-          url
-        }
         features {
           json
         }
@@ -81,19 +76,41 @@ query GetEquipmentByID($id: String!) {
         relatedItemsCollection {
           items {
             ... on Article {
+              sys {
+                id
+              }
               title
               summary
               slug
             }
             ... on Service {
+              sys {
+                id
+              }
               title
               summary
               slug
             }
             ... on Equipment {
+              sys {
+                id
+              }
               title
               summary
               slug
+            }
+            ... on CaseStudy {
+              sys {
+                id
+              }
+              title
+              summary
+              slug
+            }
+            ... on Software {
+              name
+              description
+              url
             }
           }
         }

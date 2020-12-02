@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck, map, flatMap } from 'rxjs/operators';
+import { pluck, map, flatMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
 import {
   AllArticlesGQL,
   GetArticleBySlugGQL,
@@ -40,15 +40,14 @@ export class ArticlesComponent implements OnInit {
      */
     this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
-
     /**
      * If this.slug is defined, we're loading an individual article,
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
       this.getArticleBySlug(this.slug).subscribe(data => {
-        this.article$ = this.getArticleByID(data.sys.id);
-        this.appComponentService.setTitle(data.title);
+        this.article$ = this.getArticleByID(data.sys.id)
+          .pipe(tap(res => this.appComponentService.setTitle(res.title)))
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -95,7 +94,7 @@ export class ArticlesComponent implements OnInit {
   public getArticleByID(id: string): Observable<Article> {
     try {
       return this.getArticleByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.article)) as unknown as Observable<Article>;
+        .pipe(map(x => x.data.article)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${id}:`, e); }
   }
 }

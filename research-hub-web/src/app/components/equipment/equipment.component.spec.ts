@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AppComponentService } from '@app/app.component.service';
 import { EquipmentComponent } from './equipment.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute } from '@angular/router';
@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { AppComponentService } from '@app/app.component.service';
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
@@ -79,7 +78,7 @@ describe('EquipmentComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all equipment', async () => {
+  it('Should get all equipment', () => {
     spyOn(component, 'getAllEquipment').and.returnValue(mockAllEquipment$);
     component.getAllEquipment().subscribe(res => {
       expect(res).toBeTruthy();
@@ -104,7 +103,7 @@ describe('EquipmentComponent', () => {
       });
     })
 
-    it('Should get a single equipment data by ID', async () => {
+    it('Should get a single equipment data by ID', () => {
       spyOn(component, 'getEquipmentByID').and.returnValue(mockEquipment$);
       component.getEquipmentByID('').subscribe(res => {
         expect(res.sys.id).toEqual('111');

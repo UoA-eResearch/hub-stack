@@ -7,6 +7,7 @@
     <app-collection-list [collection]="allArticles"></app-collection-list>
 </div>
 
+
 <!-- If we're displaying an individual article -->
 <div 
     id="article-container" 
@@ -19,7 +20,7 @@
             [style]="article.displayBanner ? 
                         article.banner ? 
                             'background: url(' + article.banner.url + ') no-repeat' :
-                            'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' :
+                            'background: url(assets/images/banner3.jpg)' :
                         article.viewType == 'View 2' ? 
                             'display: none' : 
                             ''">
@@ -51,7 +52,7 @@
         <h1 
             class="article-title" 
             ngClass.sm="article-title-sm" 
-            ngClass.xs="article-title-xs"
+            ngClass.xs="article-title-xs" 
             [style.color]="article.displayBanner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.title }}
         </h1>
@@ -67,7 +68,6 @@
 
     <ng-template #articleBody>
         <mat-card-content 
-            style="margin-bottom: 50px;" 
             [innerHTML]="article.body.json | richTextToHTML">
         </mat-card-content>
     </ng-template>
@@ -90,7 +90,7 @@
         <div 
             *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
             class="column-header">
-            <h4>Organizations</h4>
+            <h4>Organisations</h4>
             <hr/>
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
@@ -100,11 +100,11 @@
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
-                                {{ organisation['title'] }}
+                                {{ organisation.unitName }}
                             </span> 
                             <br/>
                             <span class="related-item-summary">
-                                {{ organisation['summary'] }}
+                                {{ organisation.summary }}
                             </span>
                         </mat-card>
                     </a>
@@ -146,12 +146,10 @@
 
             <!-- Related Items List -->
             <mat-nav-list 
-                style="margin-bottom: 20px;" 
                 *ngFor="let relatedItem of article.relatedItemsCollection.items" 
                 class="collection">
-                
-                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                        <mat-card>
+                        <mat-card style="padding-top: 30px;">
+                            <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename | humanCase }}</span>
                             <span class="card-title">
                                 {{ relatedItem['title'] }}
                             </span> 
@@ -159,8 +157,12 @@
                             <span class="related-item-summary">
                                 {{ relatedItem['summary'] }}
                             </span>
+                            <mat-card-actions>
+                                <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                                    See More ...
+                                </a>
+                            </mat-card-actions>
                         </mat-card>
-                    </a>
             </mat-nav-list>
         </div>
     </ng-template>
@@ -193,8 +195,6 @@
     </ng-template>
     
     
-    
-    
     <!-- View Switcher -->
     <div [ngSwitch]="article.viewType"> 
 
@@ -207,7 +207,7 @@
                 [style]="article.displayBanner ? 
                             article.banner ? 
                                 'background: url(' + article.banner.url + ') no-repeat' :
-                                'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : ''">
+                                'background: url(assets/images/banner3.jpg)' : ''">
                 <div 
                     class="banner-content" 
                     *ngIf="article.viewType == 'View 1'">
@@ -230,7 +230,8 @@
                 <!-- Call to Actions -->
                  <div 
                     fxFlex="50%"
-                    fxFlexOrder="2">
+                    fxFlexOrder="2"
+                    fxFlexOrder.xs="1">
 
                     <!-- Article Body -->
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
@@ -244,7 +245,8 @@
                 <div 
                     fxLayout="column" 
                     fxFlex="20%"
-                    fxFlexOrder="1">
+                    fxFlexOrder="1"
+                    fxFlexOrder.lt-sm="2">
 
                     <!-- Official Documents -->
                     <ng-container *ngTemplateOutlet="officialDocuments"></ng-container>
