@@ -1,15 +1,23 @@
 <h2>Explore research activities</h2>
 
 <mat-chip-list>
-  <div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutAlign.lt-lg="flex-start"
-    style="width: 100%">
-    <div *ngFor="let activity of optionsService.researchActivityOptions" [ngClass]="activity.className">
+  <div 
+    fxLayout="row wrap" 
+    fxLayout.lt-sm="column" 
+    fxLayoutAlign="space-between"
+    style="width: 98%;">
+    <div 
+      *ngFor="let activity of researchActivityOptions" 
+      [ngClass]="activity.className">
       <!-- Need to specify class for containing div also in order to use custom themes on material components -->
-      <mat-chip selected [routerLink]="['/search']" [queryParams]="getQueryParams(activity)"
-        [ngClass]="[activity.className, 'ra-chip']" [ngClass.lt-md]="[activity.className, 'ra-chip', 'tablet-view']"
+      <mat-chip 
+        selected [routerLink]="['/search']" 
+        [queryParams]="getQueryParams(activity)"
+        [ngClass]="[activity.className, 'ra-chip']" 
+        [ngClass.lt-md]="[activity.className, 'ra-chip', 'tablet-view']"
         [ngClass.lt-sm]="[activity.className, 'ra-chip', 'mobile-view']"
         (click)="analyticsService.trackUserExperience('Home page research activities', 'click')">
-        {{activity.name}}
+          {{activity.name}}
       </mat-chip>
     </div>
   </div>
