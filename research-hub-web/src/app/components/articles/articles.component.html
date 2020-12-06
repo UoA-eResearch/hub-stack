@@ -13,7 +13,7 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="article.displayBanner ? article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : 'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : article.viewType == 'View 2' ? 'display: none;' : ''">
+            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
         </div>  
     </ng-template>
 
@@ -54,7 +54,7 @@
     <ng-template #articleBody>
         <mat-card-content 
             style="margin-bottom: 50px;" 
-            [innerHTML]="article.body.json | richTextToHTML">
+            [innerHTML]="article.bodyText.json | richTextToHTML">
         </mat-card-content>
     </ng-template>
 
@@ -74,13 +74,13 @@
 
     <ng-template #relatedOrganisations>
         <div 
-            *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
+            *ngIf="article.relatedOrgsCollection.items.length > 0" 
             class="column-header">
             <h4>Organizations</h4>
             <hr/>
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
-                *ngFor="let organisation of article.relatedOrganisationsCollection.items" 
+                *ngFor="let organisation of article.relatedOrgsCollection.items" 
                 class="collection">
                 
                     <a [routerLink]="">
@@ -153,14 +153,14 @@
 
     <ng-template #officialDocuments>
         <div 
-            *ngIf="article.officialDocumentsCollection.items.length > 0" 
+            *ngIf="article.relatedDocsCollection.items.length > 0" 
             class="column-header">
             <h4>Official Documents</h4>
             <hr/>
 
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
-                *ngFor="let document of article.officialDocumentsCollection.items" 
+                *ngFor="let document of article.relatedDocsCollection.items" 
                 class="collection">
                 
                     <a href={{document.url}} target="_blank">
@@ -190,7 +190,7 @@
             <!-- Dynamic Banner -->
             <div 
                 class="banner-container"
-                [style]="article.displayBanner ? article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : 'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : article.viewType == 'View 2' ? 'display: none;' : ''">
+                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
                 <div 
                     class="banner-content" 
                     *ngIf="article.viewType == 'View 1'">

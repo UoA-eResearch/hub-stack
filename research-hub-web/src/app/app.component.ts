@@ -32,11 +32,6 @@ import gql from 'graphql-tag';
 
 import {
   AllEquipmentGQL,
-  EquipmentCollection,
-  Equipment,
-  ArticleCollection,
-  AllEquipmentQuery,
-  EquipmentUserFacingSupportCollectionArgs
 } from './graphql/schema';
 import { env } from 'process';
 import { environment } from '@environments/environment';
