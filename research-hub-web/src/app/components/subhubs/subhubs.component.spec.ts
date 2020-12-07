@@ -143,7 +143,7 @@ describe('SubhubsComponent', () => {
       }
     ],
     "__typename": "SubHubCollection"
-  } as SubHubCollection);
+  } as unknown as SubHubCollection);
 
   // All the data required for the current subhub. 
   const currentSubHubData$: Observable<SubHubCollection> = of({
