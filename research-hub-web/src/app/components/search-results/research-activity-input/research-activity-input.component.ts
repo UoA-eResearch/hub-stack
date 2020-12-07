@@ -4,6 +4,7 @@ import { AnalyticsService } from '@services/analytics.service';
 import { 
   ResearchActivityId,
   OptionType,
+  researchActivityOptions
 } from '@app/global/global-variables';
 
 
@@ -20,41 +21,7 @@ import {
   ]
 })
 export class ResearchActivityInputComponent implements OnInit, ControlValueAccessor {
-
-  researchActivityOptions = [
-    {
-      id: ResearchActivityId.PlanDesign,
-      name: 'Plan & Design',
-      className: 'plan',
-      type: OptionType.ResearchActivity
-    },
-    {
-      id: ResearchActivityId.CreateCollectCapture,
-      name: 'Create, Collect & Capture',
-      className: 'create',
-      type: OptionType.ResearchActivity
-    },
-    {
-      id: ResearchActivityId.AnalyzeInterpret,
-      name: 'Analyze & Interpret',
-      className: 'analyze',
-      type: OptionType.ResearchActivity
-    },
-    {
-      id: ResearchActivityId.PublishReport,
-      name: 'Publish & Report',
-      className: 'publish',
-      type: OptionType.ResearchActivity
-    },
-    {
-      id: ResearchActivityId.DiscoverReuse,
-      name: 'Discover & Reuse',
-      className: 'discover',
-      type: OptionType.ResearchActivity
-    }
-  ];
-  
-
+  public researchActivityOptions = researchActivityOptions;
   public model = {};
 
   @Input() _value: number[] = [];

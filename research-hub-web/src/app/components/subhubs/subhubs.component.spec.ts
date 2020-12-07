@@ -206,7 +206,7 @@ describe('SubhubsComponent', () => {
       }
     ],
     "__typename": "SubHubCollection"
-  } as unknown as SubHubCollection);
+  } as SubHubCollection);
 
   // need to evaluate that its eliminating wrong parents. the all items in the linkedFromResponse (maybe do two, a right and a wrong one.)
 
@@ -381,7 +381,7 @@ describe('SubhubsComponent', () => {
       }
     ],
     "__typename": "SubHubCollection"
-  } as unknown as SubHubCollection);
+  } as SubHubCollection);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -27,7 +27,9 @@ import {
   OptionType,
   CategoryId,
   ContentTypeId,
-  ResearchActivityId
+  ResearchActivityId,
+  categoryOptions,
+  researchActivityOptions
 } from '@app/global/global-variables';
 
 // The screen size at which we should switch to opening filters in dialog or sidenav.
@@ -43,9 +45,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
   @ViewChild('paginator', { static: true }) paginator: MatPaginator;
   @ViewChild('resultsDummyHeader', { static: true }) private resultsDummyHeader: ElementRef;
 
-  public researchActivityOptions: any[];
+  public researchActivityOptions = researchActivityOptions;
+  public categoryOptions = categoryOptions;
   public contentTypeMap: any;
-  public categoryOptions: any[];
   public filtersForm: FormGroup;
   public resultsPage: Page<ListItem>;
 
@@ -159,40 +161,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService, 
     private media: MediaObserver,
     public searchFiltersService: SearchFiltersService) {
-      
-      this.researchActivityOptions = [
-        {
-          id: ResearchActivityId.PlanDesign,
-          name: 'Plan & Design',
-          className: 'plan',
-          type: OptionType.ResearchActivity
-        },
-        {
-          id: ResearchActivityId.CreateCollectCapture,
-          name: 'Create, Collect & Capture',
-          className: 'create',
-          type: OptionType.ResearchActivity
-        },
-        {
-          id: ResearchActivityId.AnalyzeInterpret,
-          name: 'Analyze & Interpret',
-          className: 'analyze',
-          type: OptionType.ResearchActivity
-        },
-        {
-          id: ResearchActivityId.PublishReport,
-          name: 'Publish & Report',
-          className: 'publish',
-          type: OptionType.ResearchActivity
-        },
-        {
-          id: ResearchActivityId.DiscoverReuse,
-          name: 'Discover & Reuse',
-          className: 'discover',
-          type: OptionType.ResearchActivity
-        }
-      ];
-    
       this.contentTypeMap = {};
         this.contentTypeMap[CategoryId.Support] = [ContentTypeId.Support];
         this.contentTypeMap[CategoryId.Equipment] = [ContentTypeId.Equipment];
@@ -200,21 +168,8 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
         this.contentTypeMap[CategoryId.Software] = [ContentTypeId.Software];
         this.contentTypeMap[CategoryId.Facilities] = [ContentTypeId.Facilities];
         this.contentTypeMap[CategoryId.Guide] = [ContentTypeId.Guide, ContentTypeId.KnowledgeArticle];
-
-      this.categoryOptions = [
-        { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
-        { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
-        { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
-        { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
-        { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
-        { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
-        { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
-        { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
-        { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
-      ];
-
-    this.filtersForm = searchFiltersService.filtersForm;
-  }
+      this.filtersForm = searchFiltersService.filtersForm;
+    }
 
   // Results cards
   updateCols(mqAlias: string) {
