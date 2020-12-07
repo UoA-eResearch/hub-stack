@@ -1,308 +1,59 @@
 query GetArticleByID($id: String!) {
-      article(id: $id) {
+  article(id: $id) {
+    __typename
+      sys {
+        id
+      }
+      title
+      slug
+      ssoProtected
+      searchable
+      banner {
         title
-        summary
-        ssoProtected
-        viewType
-        banner {
-          title
-          url
-          description
-        }
-        displayBanner
-        body {
-          json
-          links {
-            entries {
-              block {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-                ... on Software {
-                  name
-                  description
-                  url
-                }
-              }
-              inline {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-                ... on Software {
-                  name
-                  description
-                  url
-                }
-              }
-              hyperlink {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-                ... on Software {
-                  name
-                  description
-                  url
-                }
-              }
-            }
-            assets {
-              block {
-                title
-                description
-                url
-              }
-            }
+        description
+        url
+      }
+      icon {
+        title
+        description
+        url
+      }
+      summary
+      bodyText {
+        json 
+        links {
+          entries {
+            block { ...PublicFields }
+            inline { ...PublicFields }
+            hyperlink { ...PublicFields }
           }
-        }
-        keywords
-        slug
-        ssoProtected
-        searchable
-        icon {
-          title
-          description
-          url
-        }
-        relatedContactsCollection {
-          items {
-            ... on Person {
-              name
+          assets {
+            block {
               title
-              jobTitle
-              image {
-                url
-              }
-            }
-          }
-        }
-        relatedItemsCollection {
-          items {
-            ... on Article {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on Service {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on Equipment {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on CaseStudy {
-              sys {
-                id
-              }
-              title
-              summary
-              slug
-            }
-            ... on Software {
-              name
               description
               url
             }
-            ... on SubHub {
-              sys {
-                id
-              }
+            hyperlink {
               title
-              bannerImage {
-                url
-              }
-              summary
-              slug
-            }
-          }
-        }
-        officialDocumentsCollection {
-          items {
-            ... on OfficialDocuments {
-              title
-              summary
+              description
               url
-            }
-          }
-        }
-        relatedOrganisationsCollection {
-          items {
-            ... on OrganisationalUnit {
-              unitName
-              description {
-                json
-              }
-              url
-              summary
             }
           }
         }
       }
-    }
+      keywords
+      relatedItemsCollection {
+        items { ...PublicFields }
+      }
+      relatedContactsCollection {
+        items { ...PublicFields }
+      }
+      relatedOrgsCollection {
+        items { ...PublicFields }
+      }
+      relatedDocsCollection {
+        items { ...PublicFields }
+      }
+      viewType
+  }
+}

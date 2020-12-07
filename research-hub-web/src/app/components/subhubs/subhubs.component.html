@@ -50,7 +50,7 @@
         <ng-template #subhubContent>
             <mat-card>
                 <h2>Body</h2>
-                <div class="content" *ngFor="let contentItem of subhub.body.json.content as c">
+                <div class="content" *ngFor="let contentItem of subhub.bodyText.json.content as c">
                     <mat-card-content *ngIf="contentItem.content[0]">
                         {{ contentItem.content[0].value }}
                     </mat-card-content>
@@ -61,8 +61,8 @@
         <ng-template #subhubChildPages>
             <mat-card>
                 <h2>Pages in this SubHub</h2>
-                <app-collection-list *ngIf="subhub.subhubPagesCollection.items"
-                    [collection]="subhub.subhubPagesCollection"
+                <app-collection-list *ngIf="subhub.internalPagesCollection.items"
+                    [collection]="subhub.internalPagesCollection"
                     ></app-collection-list>
             </mat-card>
         </ng-template>

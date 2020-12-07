@@ -96,7 +96,7 @@ export class CerGraphqlService {
    */
   private _getBreadCrumbsArray(entrySlug: string, breadcrumbsArray) {
     for (const item of this._subHubCollectionWithChildPagesSlugs) {
-      item.subhubPagesCollection.items.forEach(subPage => {
+      item.internalPagesCollection.items.forEach(subPage => {
         if (subPage.slug === entrySlug) { // The SubHub's childPages contains the current entry we're searching for
           for (const subHub of breadcrumbsArray) { // Check it's not already known
             if (subHub.slug === item.slug) {
@@ -120,7 +120,7 @@ export class CerGraphqlService {
    */
   public getContentType(subHubSlug: string, contentItemSlug: string) {
     return this._subHubCollectionWithChildPagesSlugs
-      .filter(x => x.slug === subHubSlug)[0].subhubPagesCollection.items
+      .filter(x => x.slug === subHubSlug)[0].internalPagesCollection.items
       .filter(y => y.slug === contentItemSlug)[0].__typename;
   }
 }
@@ -138,7 +138,7 @@ export interface SubHubFromQuery {
   slug: string,
   title: string,
   __typename,
-  subhubPagesCollection: {
+  internalPagesCollection: {
     items: [{
       slug: string,
       __typename: string
@@ -212,7 +212,7 @@ class SubHubMap {
       this.findParentSubHub(subHub.slug, this.map) || this.map; // Parent SubHub (or root SubHubMap)
     parentSubHub[subHub.slug] = new Content(subHub.slug, subHub.__typename); // Add to the right parent subhub
 
-    for (const subHubChildPage of subHub.subhubPagesCollection.items) { // Then loop through its child pages
+    for (const subHubChildPage of subHub.internalPagesCollection.items) { // Then loop through its child pages
       if (subHubChildPage.__typename === 'SubHub') { // If the child page is a SubHub, check if its known
         const subHubChildPageExistingParentSubHub = this.findParentSubHub(subHubChildPage.slug, this.map);
         if (subHubChildPageExistingParentSubHub) { // The child SubHub is known, so move it here
