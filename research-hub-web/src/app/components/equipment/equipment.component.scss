@@ -70,7 +70,7 @@ hr {
 
 // Equipment Titles
 .equipment-title {
-    color: black; 
+    color: map-get($hub-navy, 500); 
     font-size: 50px;
     font-weight: bold; 
     line-height: 110%;
