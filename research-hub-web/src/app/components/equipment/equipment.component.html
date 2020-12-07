@@ -194,18 +194,16 @@
             {{ equipment.summary }}
         </h3>
     </ng-template>
-    
-    
-    
-    
-    <!-- Breadcrumbs -->
-    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
         <!-- View 1 -->
         <div
             class="site-padding"
             ngClass.sm="site-padding-sm"
             ngClass.xs="site-padding-xs">
+
+            <!-- Breadcrumbs -->
+            <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+
             <div class="section" 
                 fxLayout="row wrap" 
                 fxLayoutAlign="space-between center"
@@ -232,13 +230,14 @@
                 fxLayout="row wrap"
                 fxLayout.xs="column wrap">
                 <div>
-                    <h4>Overview</h4>
+                    <h4>Overview<hr/></h4>
                     <div [innerHTML]="equipment.bodyText.json | richTextToHTML"></div>
                 </div>
             </div>
 
             <!-- Owners and User Facing Support -->
             <div 
+                *ngIf="equipment.relatedContactsCollection.items.length || equipment.relatedOrgsCollection.items.length > 0"
                 class="equipment-owners"
                 fxLayout="row wrap"
                 fxLayout.xs="column wrap"
@@ -250,8 +249,6 @@
                     <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
                 </div>
             </div>
-
-            <hr class="section"/>
 
             <!-- Specifications Table -->
             <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
