@@ -4,6 +4,7 @@
     [collection]="allArticles">
 </app-collection-list>
 
+
 <!-- If we're displaying an individual article -->
 <div 
     id="article-container" 
@@ -13,7 +14,17 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
+<<<<<<< HEAD
             [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
+=======
+            [style]="article.displayBanner ? 
+                        article.banner ? 
+                            'background: url(' + article.banner.url + ') no-repeat' :
+                            'background: url(assets/images/banner3.jpg)' :
+                        article.viewType == 'View 2' ? 
+                            'display: none' : 
+                            ''">
+>>>>>>> 9bde0007544c1996bdea8c11203583dd2fde96c5
         </div>  
     </ng-template>
 
@@ -21,7 +32,10 @@
         <div 
             id="breadcrumbs" 
             *ngIf="!!parentSubHubs" 
-            ngClass.xs="breadcrumbs-mobile">
+            class="site-padding top-padding"
+            ngClass.sm="site-padding-sm top-padding"
+            ngClass.xs="site-padding-xs top-padding"
+            ngClass.xs="breadcrumbs-mobile site-padding-xs">
             <span 
                 class="breadcrumb-subhub" 
                 *ngFor="let subHub of parentSubHubs.slice().reverse()">
@@ -39,22 +53,28 @@
         <h1 
             class="article-title" 
             ngClass.sm="article-title-sm" 
-            ngClass.xs="article-title-xs">
+            ngClass.xs="article-title-xs" 
+            [style.color]="article.displayBanner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.title }}
         </h1>
 
         <h3 
             class="article-summary" 
             ngClass.sm="article-summary-sm" 
-            ngClass.xs="article-summary-xs">
+            ngClass.xs="article-summary-xs"
+            [style.color]="article.displayBanner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.summary }}
         </h3>
     </ng-template>
 
     <ng-template #articleBody>
         <mat-card-content 
+<<<<<<< HEAD
             style="margin-bottom: 50px;" 
             [innerHTML]="article.bodyText.json | richTextToHTML">
+=======
+            [innerHTML]="article.body.json | richTextToHTML">
+>>>>>>> 9bde0007544c1996bdea8c11203583dd2fde96c5
         </mat-card-content>
     </ng-template>
 
@@ -76,7 +96,7 @@
         <div 
             *ngIf="article.relatedOrgsCollection.items.length > 0" 
             class="column-header">
-            <h4>Organizations</h4>
+            <h4>Organisations</h4>
             <hr/>
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
@@ -86,11 +106,11 @@
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
-                                {{ organisation['title'] }}
+                                {{ organisation.unitName }}
                             </span> 
                             <br/>
                             <span class="related-item-summary">
-                                {{ organisation['summary'] }}
+                                {{ organisation.summary }}
                             </span>
                         </mat-card>
                     </a>
@@ -179,8 +199,6 @@
     </ng-template>
     
     
-    
-    
     <!-- View Switcher -->
     <div [ngSwitch]="article.viewType"> 
 
@@ -202,6 +220,9 @@
             <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
             <div 
+                class="site-padding top-padding" 
+                ngClass.xs="site-padding-xs top-padding" 
+                ngClass.sm="site-padding-sm top-padding"
                 fxLayout="row wrap" 
                 fxLayout.sm="column wrap"
                 fxLayout.xs="column wrap"   
@@ -210,7 +231,8 @@
                 <!-- Call to Actions -->
                  <div 
                     fxFlex="50%"
-                    fxFlexOrder="2">
+                    fxFlexOrder="2"
+                    fxFlexOrder.xs="1">
 
                     <!-- Article Body -->
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
@@ -224,7 +246,8 @@
                 <div 
                     fxLayout="column" 
                     fxFlex="20%"
-                    fxFlexOrder="1">
+                    fxFlexOrder="1"
+                    fxFlexOrder.lt-sm="2">
 
                     <!-- Official Documents -->
                     <ng-container *ngTemplateOutlet="officialDocuments"></ng-container>
@@ -257,47 +280,46 @@
             <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
             <div 
+                class="site-padding"
                 fxLayout="row wrap" 
                 fxLayout.sm="column wrap"
                 fxLayout.xs="column wrap"   
+                fxLayoutAlign="space-between"
                 fxLayoutGap="5%">
 
                 <!-- Article Title and Summary -->
-                <div fxFlex="70%">
-                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
+                    <div fxFlex="70%">
+                        <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
 
-                    <hr style="margin: 25px 0px;"/>
+                        <hr style="margin: 25px 0px;"/>
 
-                    <!-- Article Body -->
-                    <ng-container *ngTemplateOutlet="articleBody"></ng-container>
+                        <!-- Article Body -->
+                        <ng-container *ngTemplateOutlet="articleBody"></ng-container>
 
-                </div>
+                    </div>
 
-                <!-- Extra Links -->
-                <div 
-                    fxLayout="column" 
-                    fxFlex="25%">
+                    <!-- Extra Links -->
+                    <div 
+                        fxLayout="column" 
+                        fxFlex="25%">
 
-                    <!-- Official Documents -->
-                    <ng-container *ngTemplateOutlet="officialDocuments"></ng-container>
+                        <!-- Official Documents -->
+                        <ng-container *ngTemplateOutlet="officialDocuments"></ng-container><div><br/></div>
 
-                    <!-- Contacts -->
-                    <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
+                        <!-- Contacts -->
+                        <ng-container *ngTemplateOutlet="relatedContacts"></ng-container><div><br/></div>
 
-                    <!-- Organizations -->
-                    <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
+                        <!-- Organizations -->
+                        <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container><div><br/></div>
 
-                </div>
+                        <!-- Related Items -->
+                        <ng-container *ngTemplateOutlet="relatedItems"></ng-container><div><br/></div>
+
+                        <!-- Keywords -->
+                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
+
+                    </div>
             </div>
-
-            <!-- Keywords -->
-            <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
-            <br/>
-
-            <!-- Related Items -->
-            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-
         </div>
     </div>
 
