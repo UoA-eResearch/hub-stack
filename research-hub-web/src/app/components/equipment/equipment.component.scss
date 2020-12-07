@@ -56,15 +56,6 @@ mat-expansion-panel, mat-card  {
 
 /* Vanilla CSS Styling */
 
-// Main Content
-.main-content {
-    padding: 0px 150px;
-}
-
-.main-content-mobile {
-    padding: 0px;
-}
-
 // HR Tag
 hr {
     background-color: #dbdbdb;
@@ -75,18 +66,6 @@ hr {
 // Section
 .section {
     margin: 40px 0px;
-}
-
-// Default Banner
-.banner-container {
-    text-align: center;
-    min-width: 100vw; 
-    margin: -3em 0PX 20PX -7.5vw;
-    min-height: 40vh;
-    max-height: auto;
-    overflow: hidden;
-    background-size: cover!important;
-    background-image: url('../../../assets/images/20151008_Engineering\ Detail_005_1680x220_BW.jpg'); // Default banner image if none supplied
 }
 
 // Equipment Titles

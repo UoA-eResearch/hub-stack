@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck, map, filter, first, flatMap, reduce } from 'rxjs/operators';
+import { pluck, map, flatMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
-
+import { AppComponentService } from '@app/app.component.service';
 import {
   AllArticlesGQL,
   GetArticleBySlugGQL,
@@ -22,10 +22,6 @@ export class ArticlesComponent implements OnInit {
   public allArticles$: Observable<ArticleCollection>;
   public article$: Observable<Article>;
   public slug: string;
-  // public assets: Array<any>;
-  // public inlineEntry: Array<any>;
-  // public blockEntry: Array<any>;
-  // public hyperlinkEntry: Array<any>;
   public parentSubHubs;
 
   constructor(
@@ -33,17 +29,16 @@ export class ArticlesComponent implements OnInit {
     public allArticlesGQL: AllArticlesGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public getArticleByIDGQL: GetArticleByIdGQL,
-    public cerGraphQLService: CerGraphqlService
+    public cerGraphQLService: CerGraphqlService,
+    public appComponentService: AppComponentService
   ) { }
 
   async ngOnInit() {
-
     /**
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
     this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
-
 
     /**
      * If this.slug is defined, we're loading an individual article,
@@ -51,16 +46,12 @@ export class ArticlesComponent implements OnInit {
      */
     if (!!this.slug) {
       this.getArticleBySlug(this.slug).subscribe(data => {
-        this.article$ = this.getArticleByID(data.sys.id);
-        // this.article$.subscribe(data => {
-        //   this.assets = data.body.links.assets.block;
-        //   this.inlineEntry = data.body.links.entries.inline;
-        //   this.blockEntry = data.body.links.entries.block;
-        //   this.hyperlinkEntry = data.body.links.entries.hyperlink;
-        // });
+        this.article$ = this.getArticleByID(data.sys.id)
+          .pipe(tap(res => this.appComponentService.setTitle(res.title)))
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
+      this.appComponentService.setTitle('Articles');
       this.allArticles$ = this.getAllArticles();
     }
   }
@@ -103,7 +94,7 @@ export class ArticlesComponent implements OnInit {
   public getArticleByID(id: string): Observable<Article> {
     try {
       return this.getArticleByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.article)) as unknown as Observable<Article>;
+        .pipe(map(x => x.data.article)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${id}:`, e); }
   }
 }

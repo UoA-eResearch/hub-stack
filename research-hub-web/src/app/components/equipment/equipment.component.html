@@ -4,17 +4,18 @@
     [collection]="allEquipment">
 </app-collection-list>
 
+
 <!-- If we're displaying an individual equipment -->
 <div 
-    class="main-content" 
-    ngClass.sm="main-content-mobile" 
-    ngClass.xs="main-content-mobile" 
-    id="equipment-container" 
+    id="equipment-container"
     *ngIf="equipment$ | async as equipment">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
         <div    
+            class="top-padding"
+            ngClass.sm="top-padding"
+            ngClass.xs="top-padding"
             id="breadcrumbs"   
             *ngIf="!!parentSubHubs">
             <span 
@@ -224,127 +225,46 @@
     
     
     
-    
-    <!-- Breadcrumbs -->
-    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+    <div
+        class="site-padding margin-bottom" 
+        ngClass.sm="site-padding-sm margin-bottom" 
+        ngClass.xs="site-padding-xs margin-bottom">
 
-    <!-- View Switcher -->
-    <div [ngSwitch]="equipment.viewType">
+        <!-- Breadcrumbs -->
+        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
-        <!-- View 1 -->
-        <div *ngSwitchCase="'View 1'">
-            <div class="section" 
-                fxLayout="row wrap" 
-                fxLayout.sm="column wrap"
-                fxLayout.xs="column wrap"
-                fxLayoutGap="5%">
+        <!-- View Switcher -->
+        <div [ngSwitch]="equipment.viewType">
 
-                <!-- Equipment Image -->
-                <div 
-                    fxFlex="47.5%" 
-                    class="equipment-image">
-                    <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
-                </div>
+            <!-- View 1 -->
+            <div *ngSwitchCase="'View 1'">
+                <div class="section" 
+                    fxLayout="row wrap" 
+                    fxLayout.sm="column wrap"
+                    fxLayout.xs="column wrap"
+                    fxLayoutGap="5%">
 
-                <!-- Title and Summary -->
-                <div 
-                    fxFlex="47.5%" 
-                    class="equipment-info">
-                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-
-                    <hr class="section"/>
-
-                    <!-- Owners and User Facing Support -->
+                    <!-- Equipment Image -->
                     <div 
-                        class="equipment-owners"
-                        fxLayout="row wrap"
-                        fxLayout.xs="column wrap"
-                        fxLayoutGap="5%">
-                        <div fxFlex="47.5%">
-                            <ng-container *ngTemplateOutlet="ownerCard"></ng-container>
-                        </div>
-                        <div fxFlex="47.5%">
-                            <ng-container *ngTemplateOutlet="supportCard"></ng-container>
-                        </div>
+                        fxFlex="47.5%" 
+                        class="equipment-image">
+                        <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
                     </div>
-                </div>
-            </div>
 
-            <hr class="section"/>
-
-            <!-- Overview -->
-            <div
-                class="equipment-overview section"
-                fxLayout="row wrap"
-                fxLayout="row wrap"
-                fxLayout.xs="column wrap"
-                fxLayoutGap="5%">
-                <div fxFlex="47.5%">
-                    <h4>Overview</h4>
-                    <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
-                </div>
-
-                <!-- Features and Limitations -->
-                <div fxFlex="47.5%">
+                    <!-- Title and Summary -->
                     <div 
-                        fxLayout="column"
-                        fxLayoutGap="2%">
-                        <ng-container *ngTemplateOutlet="featuresLimitations"></ng-container>
-                    </div>
-                </div>
-            </div>
+                        fxFlex="47.5%" 
+                        class="equipment-info">
+                        <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
 
-            <hr class="section"/>
+                        <hr class="section"/>
 
-            <!-- Specifications Table -->
-            <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-
-            <!-- Considerations -->
-            <ng-container *ngTemplateOutlet="considerations"></ng-container>
-
-            <!-- Keywords -->
-            <ng-container *ngTemplateOutlet="keywords"></ng-container>
- 
-            <!-- Related Items -->
-            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-
-        </div>
-
-        <!-- View 2 -->
-        <div *ngSwitchCase="'View 2'">
-
-            <!-- Equipment Image -->
-            <div class="equipment-image section">
-                <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
-            </div>
-
-            <!-- Title and Summary -->
-            <div
-                fxLayout="row wrap"
-                fxLayout.md="column wrap"
-                fxLayout.sm="column wrap"
-                fxLayout.xs="column wrap"
-                fxLayoutGap="5%">
-                <div
-                    fxFlex="75%">
-                    <div class="header section" 
-                        fxLayout="row wrap" 
-                        fxLayout.sm="column wrap"
-                        fxLayout.xs="column wrap"
-                        fxLayoutGap="5%">
-                        <div 
-                            fxFlex="47.5%" 
-                            class="equipment-info">
-                            <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-                        </div>
-
-                        <!-- Owners and user Facing Support -->
+                        <!-- Owners and User Facing Support -->
                         <div 
                             class="equipment-owners"
                             fxLayout="row wrap"
                             fxLayout.xs="column wrap"
-                            fxLayoutGap="5% grid"
-                            fxFlex="47.5%">
+                            fxLayoutGap="5%">
                             <div fxFlex="47.5%">
                                 <ng-container *ngTemplateOutlet="ownerCard"></ng-container>
                             </div>
@@ -353,42 +273,127 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <hr class="section"/>
+                <hr class="section"/>
 
-                    <!-- Overview -->
-                    <div>
+                <!-- Overview -->
+                <div
+                    class="equipment-overview section"
+                    fxLayout="row wrap"
+                    fxLayout="row wrap"
+                    fxLayout.xs="column wrap"
+                    fxLayoutGap="5%">
+                    <div fxFlex="47.5%">
                         <h4>Overview</h4>
                         <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
                     </div>
 
-                    <hr class="section"/>
-                    
                     <!-- Features and Limitations -->
-                    <div >
+                    <div fxFlex="47.5%">
                         <div 
-                            fxLayout="row wrap"
-                            fxLayout.sm="column wrap"
-                            fxLayoutGap="5%">
+                            fxLayout="column"
+                            fxLayoutGap="2%">
                             <ng-container *ngTemplateOutlet="featuresLimitations"></ng-container>
                         </div>
                     </div>
-                    
-                    <!-- Considerations -->
-                    <ng-container *ngTemplateOutlet="considerations"></ng-container>
-
-                    <!-- Keywords -->
-                    <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
-                    <!-- Related Items -->
-                    <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-                    
                 </div>
-                <div fxFlex="20%">
-                    <!-- Specifications Table -->
-                    <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-                </div>
+
+                <hr class="section"/>
+
+                <!-- Specifications Table -->
+                <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+
+                <!-- Considerations -->
+                <ng-container *ngTemplateOutlet="considerations"></ng-container>
+
+                <!-- Keywords -->
+                <ng-container *ngTemplateOutlet="keywords"></ng-container>
+    
+                <!-- Related Items -->
+                <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+
             </div>
-        </div>   
+
+            <!-- View 2 -->
+            <div *ngSwitchCase="'View 2'">
+
+                <!-- Equipment Image -->
+                <div class="equipment-image section">
+                    <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
+                </div>
+
+                <!-- Title and Summary -->
+                <div
+                    fxLayout="row wrap"
+                    fxLayout.md="column wrap"
+                    fxLayout.sm="column wrap"
+                    fxLayout.xs="column wrap"
+                    fxLayoutGap="5%">
+                    <div
+                        fxFlex="75%">
+                        <div class="header section" 
+                            fxLayout="row wrap" 
+                            fxLayout.sm="column wrap"
+                            fxLayout.xs="column wrap"
+                            fxLayoutGap="5%">
+                            <div 
+                                fxFlex="47.5%" 
+                                class="equipment-info">
+                                <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
+                            </div>
+
+                            <!-- Owners and user Facing Support -->
+                            <div 
+                                class="equipment-owners"
+                                fxLayout="row wrap"
+                                fxLayout.xs="column wrap"
+                                fxLayoutGap="5% grid"
+                                fxFlex="47.5%">
+                                <div fxFlex="47.5%">
+                                    <ng-container *ngTemplateOutlet="ownerCard"></ng-container>
+                                </div>
+                                <div fxFlex="47.5%">
+                                    <ng-container *ngTemplateOutlet="supportCard"></ng-container>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="section"/>
+
+                        <!-- Overview -->
+                        <div>
+                            <h4>Overview</h4>
+                            <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
+                        </div>
+
+                        <hr class="section"/>
+                        
+                        <!-- Features and Limitations -->
+                        <div >
+                            <div 
+                                fxLayout="row wrap"
+                                fxLayout.sm="column wrap"
+                                fxLayoutGap="5%">
+                                <ng-container *ngTemplateOutlet="featuresLimitations"></ng-container>
+                            </div>
+                        </div>
+                        
+                        <!-- Considerations -->
+                        <ng-container *ngTemplateOutlet="considerations"></ng-container>
+                        
+                    </div>
+                    <div fxFlex="20%">
+                        <!-- Specifications Table -->
+                        <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+                    </div>
+                </div>
+                <!-- Keywords -->
+                <ng-container *ngTemplateOutlet="keywords"></ng-container>
+
+                <!-- Related Items -->
+                <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+            </div>   
+        </div>
     </div>
 </div>

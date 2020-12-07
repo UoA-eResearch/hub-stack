@@ -4,13 +4,13 @@
       <div class="app-toolbar" ngClass.xs="app-toolbar-xs" style="background-color: #0294a5;padding-left: 24px;">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
           <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
-            <img [src]="'assets/hub-logo.svg'">
+            <img [src]="'assets/images/hub-logo.svg'">
           </a>
         </div>
       </div>
 
       <mat-nav-list>
-        <ng-container *ngFor="let menuOption of optionsService.menuOptions;">
+        <ng-container *ngFor="let menuOption of menuOptions;">
           <ng-container *ngIf="menuOption.sublist === undefined">
             <mat-list-item [routerLink]="menuOption.routerLink" (click)="sidenav.close()">
               <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
@@ -47,9 +47,8 @@
                   <mat-icon>menu</mat-icon>
                 </button>
                 <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
-                  <img [src]="'assets/hub-logo.svg'">
+                  <img [src]="'assets/images/hub-logo.svg'">
                 </a>
-
                 <span style="flex: 1 1 auto;"></span>
 
                 <button mat-icon-button fxHide.gt-sm routerLink="/search" matTooltip="Search">
@@ -66,7 +65,7 @@
                 </button>
 
                 <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
-                  <button mat-menu-item *ngFor="let item of optionsService.categoryOptions" [routerLink]="['/search']"
+                  <button mat-menu-item *ngFor="let item of categoryOptions" [routerLink]="['/search']"
                     [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
                 </mat-menu>
 
@@ -76,7 +75,7 @@
                 </button>
 
                 <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
-                  <button mat-menu-item *ngFor="let item of optionsService.researchActivityOptions"
+                  <button mat-menu-item *ngFor="let item of researchActivityOptions"
                     [routerLink]="['/search']" [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
                 </mat-menu>
 
@@ -98,8 +97,8 @@
                 </button>
 
                 <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-                  <div *ngIf="!showLoginBtn" style="margin-right: 8px; margin-left: 8px;">
-                    <img src="/assets/images/uoa-logo-blue.svg">
+                  <div class="user-detail-dropdown">
+                    <img src="assets/images/uoa-logo-blue.svg">
 
                     <mat-list class="user-menu-list">
                       <mat-list-item>
@@ -113,21 +112,25 @@
                     </mat-list>
 
                     <div fxLayout="row" fxLayoutAlign="end">
-                      <button mat-raised-button style="color: black; background-color: white;"
-                        href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">Sign
-                        Out</button>
+                      <button 
+                        mat-raised-button 
+                        class="sign-out-button"
+                        href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">
+                        Sign Out
+                      </button>
                     </div>
                   </div>
                 </mat-menu>
+
               </div>
             </div>
             <mat-progress-bar class="app-progress-bar" mode="indeterminate" color="accent"
               [style.visibility]="showProgressBar ? 'visible' : 'hidden'"></mat-progress-bar>
           </div>
 
-          <app-header></app-header>
           <!-- <mat-drawer-container> -->
           <mat-sidenav-container fxFlex="noshrink">
+
             <!-- Content sidenav -->
             <mat-sidenav class="content-sidenav" mode="side" disableClose
               [opened]="appComponentService.isContentSidenavVisible" [fixedInViewport]="isContentSidenavFixed"
@@ -135,11 +138,24 @@
               <router-outlet name="contentSidenav" (activate)="setContentSidenavHasContent(true)"
                 (deactivate)="setContentSidenavHasContent(false)"></router-outlet>
             </mat-sidenav>
+
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
-              <div class="site-padding" #content ngClass.xs="site-padding-xs" ngClass.sm="site-padding-sm"> 
-                <app-search-bar [categories]="optionsService.categoryOptions" [category]="selectedCategory"
+              <div #content> 
+
+                 <!-- Banner -->
+                 <div 
+                  class="banner-container-home"
+                  [ngStyle]="{ 'background-image': coverImageUrl }"
+                  *ngIf="showBanner">
+                  <div class="banner-content-home">
+                    <h1>{{ title }}</h1>
+                    <h4>{{ summary }}</h4>
+                  </div>
+                </div>  
+                <app-search-bar [categories]="categoryOptions" [category]="selectedCategory"
                   [searchText]="searchText"></app-search-bar>
+
                 <!-- Page content -->
                 <router-outlet></router-outlet>
               </div>

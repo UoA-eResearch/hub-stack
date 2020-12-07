@@ -6,8 +6,7 @@ import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
 import { ListItem } from '@model/ListItem';
 import { AppComponentService } from '@app/app.component.service';
-import { RoleTypeId } from '@services/options.service';
-
+import { RoleTypeId } from '@app/global/global-variables';
 
 @Component({
   selector: 'app-org-unit-details',

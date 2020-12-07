@@ -17,7 +17,7 @@
     <div *ngIf="compact" style="margin-bottom: 1em;">
       <mat-form-field fxFlex="100" style="margin-top: 1em !important;">
         <mat-select formControlName="categoryId" placeholder="Category">
-          <mat-option *ngFor="let category of optionsService.categoryOptions" [value]="category.id" (click)="analyticsService.trackUserExperience('Filter panel', 'filter by category')">
+          <mat-option *ngFor="let category of categoryOptions" [value]="category.id" (click)="analyticsService.trackUserExperience('Filter panel', 'filter by category')">
             {{category.name}}
           </mat-option>
         </mat-select>

@@ -44,6 +44,9 @@
       "@directives/*": [
         "src/app/directives/*"
       ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
     },
   },
   "files": [
