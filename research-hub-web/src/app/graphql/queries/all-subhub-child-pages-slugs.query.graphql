@@ -3,37 +3,6 @@ query GetAllSubHubChildPagesSlugs {
         items {
             slug
             title
-            internalPagesCollection {
-                items {
-                    ...on Article {
-                        slug
-                    }
-                    ...on CaseStudy {
-                        slug
-                    }
-                    ...on Equipment {
-                        slug
-                    }
-                    ...on Event {
-                        slug
-                    }
-                    ...on Facility{
-                        slug
-                    }
-                    ...on OrganisationalUnit {
-                        slug
-                    }
-                    ...on Service {
-                        slug
-                    }
-                    ...on Software {
-                        slug
-                    }
-                    ...on SubHub {
-                        slug
-                    }
-                }
-            }
         }
     }
 }

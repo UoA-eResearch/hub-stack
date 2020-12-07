@@ -126,7 +126,7 @@ describe('Basic single resource queries', () => {
             variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
         });
 
-        expect(res.data.article.title).toEqual('Top Secret Article')
+        expect(res.data.article.title).toEqual('Test - Top Secret Article')
     });
 
 });
