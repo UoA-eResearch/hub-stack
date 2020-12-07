@@ -134,7 +134,7 @@ describe('Basic single resource queries', () => {
 describe('Contentful filters (conditionals)', () => {
 
     test('Can return an article from the articleCollection with a where clause', async function () {
-        const ARTICLE_TITLE = 'First article';
+        const ARTICLE_TITLE = 'Test - First article';
 
         let res = await query({
             query: TQ.GET_ARTICLE_BY_WHERE,
