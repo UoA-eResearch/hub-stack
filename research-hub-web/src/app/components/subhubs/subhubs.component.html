@@ -28,10 +28,9 @@
                     fxLayout.xs="column wrap">
                     <div
                         fxFlex="24%"
-                        *ngFor="let subHub of subhub.subhubPagesCollection.items">
+                        *ngFor="let subHub of subhub.internalPagesCollection.items">
                         <mat-card class="subhub-card">
-                                <img *ngIf="subHub.__typename == 'SubHub'" mat-card-image src="{{ subHub.bannerImage?.url }}" onerror="this.src='../../../assets/images/uoa-logo.svg'">
-                                <img *ngIf="subHub.__typename != 'SubHub'" mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='../../../assets/images/uoa-logo.svg'">
+                                <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='../../../assets/images/uoa-logo.svg'">
                                 <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
                             <mat-card-title class="card-title">
                                 {{ subHub.title}}
@@ -118,7 +117,7 @@
         <ng-template #dynamicBanner>
             <div 
                 class="banner-container"
-                [style.background]="subhub.bannerImage ? 'url(' + subhub.bannerImage.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
+                [style.background]="subhub.banner? 'url(' + subhub.banner.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
             </div>
         </ng-template>
 
@@ -127,7 +126,7 @@
             <div *ngSwitchCase="'View 1'">
                 <div 
                 class="banner-container"
-                [style.background]="subhub.bannerImage ? 'url(' + subhub.bannerImage.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
+                [style.background]="subhub.banner? 'url(' + subhub.banner.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
                     <div
                         class="banner-content" 
                         *ngIf="subhub.viewType == 'View 1'">
@@ -172,7 +171,7 @@
                         <div fxFlex="65%" class="section">
                             <ngx-contentful-rich-text
                                 style="word-break:break-word;" 
-                                [document]="subhub.body.json"
+                                [document]="subhub.bodyText.json"
                                 [nodeRenderers]="nodeRenderers">
                             </ngx-contentful-rich-text>
                         </div>
@@ -233,7 +232,7 @@
                         ngClass.xs="site-padding-xs">
                         <ngx-contentful-rich-text
                             style="word-break:break-word;" 
-                            [document]="subhub.body.json"
+                            [document]="subhub.bodyText.json"
                             [nodeRenderers]="nodeRenderers">
                         </ngx-contentful-rich-text>
                     </div>

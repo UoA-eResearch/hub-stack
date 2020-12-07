@@ -16,13 +16,7 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="article.displayBanner ? 
-                        article.banner ? 
-                            'background: url(' + article.banner.url + ') no-repeat' :
-                            'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' :
-                        article.viewType == 'View 2' ? 
-                            'display: none' : 
-                            ''">
+            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none' : ''">
         </div>  
     </ng-template>
 
@@ -67,7 +61,7 @@
     <ng-template #articleBody>
         <ngx-contentful-rich-text
             style="word-break:break-word;" 
-            [document]="article.body.json"
+            [document]="article.bodyText.json"
             [nodeRenderers]="nodeRenderers">
         </ngx-contentful-rich-text>
     </ng-template>
@@ -88,13 +82,13 @@
 
     <ng-template #relatedOrganisations>
         <div 
-            *ngIf="article.relatedOrganisationsCollection.items.length > 0" 
+            *ngIf="article.relatedOrgsCollection.items.length > 0" 
             class="column-header">
             <h4>Organisations</h4>
             <hr/>
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
-                *ngFor="let organisation of article.relatedOrganisationsCollection.items" 
+                *ngFor="let organisation of article.relatedOrgsCollection.items" 
                 class="collection">
                     <a [routerLink]="">
                         <mat-card>
@@ -172,13 +166,13 @@
 
     <ng-template #officialDocuments>
         <div 
-            *ngIf="article.officialDocumentsCollection.items.length > 0" 
+            *ngIf="article.relatedDocsCollection.items.length > 0" 
             class="column-header">
             <h4>Official Documents</h4>
             <hr/>
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
-                *ngFor="let document of article.officialDocumentsCollection.items" 
+                *ngFor="let document of article.relatedDocsCollection.items" 
                 class="collection">
                         <mat-card style="padding-top: 30px;">
                             <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">Document</span>
@@ -211,10 +205,7 @@
             <!-- Dynamic Banner -->
             <div 
                 class="banner-container"
-                [style]="article.displayBanner ? 
-                            article.banner ? 
-                                'background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(' + article.banner.url + ') no-repeat' :
-                                'background: url(../../../assets/images/1483_UoA_13Oct09_1680x220_BW.jpg)' : ''">
+                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none' : ''">
                 <div 
                     class="banner-content" 
                     *ngIf="article.viewType == 'View 1'">

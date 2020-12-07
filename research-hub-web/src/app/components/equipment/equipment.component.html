@@ -43,13 +43,13 @@
                 <th>Name</th>
                 <th>Description</th>
                 </tr>
-                <tr *ngIf="equipment.type">
-                    <td>Type</td>
-                    <td>{{ equipment.type }}</td>
-                </tr>
                 <tr *ngIf="equipment.manufacturer">
                     <td>Manufacturer</td>
                     <td [innerHTML]="equipment.manufacturer"></td>
+                </tr>
+                <tr *ngIf="equipment.year">
+                    <td>Year</td>
+                    <td [innerHTML]="equipment.year"></td>
                 </tr>
                 <tr *ngIf="equipment.model">
                     <td>Model</td>
@@ -67,25 +67,9 @@
                     <td>Location</td>
                     <td [innerHTML]="equipment.location"></td>
                 </tr>
-                <tr *ngIf="equipment.trainingRequired">
-                    <td>Training <small><i>(required)</i></small></td>
-                    <td [innerHTML]="equipment.trainingRequired.json| richTextToHTML"></td>
-                </tr>
-                <tr *ngIf="equipment.trainingProvided">
-                    <td>Training <small><i>(provided)</i></small></td>
-                    <td [innerHTML]="equipment.trainingProvided.json | richTextToHTML"></td>
-                </tr>
-                <tr *ngIf="equipment.year">
-                    <td>Year</td>
-                    <td [innerHTML]="equipment.year"></td>
-                </tr>
                 <tr *ngIf="equipment.access">
                     <td>Access</td>
                     <td [innerHTML]="equipment.access.json | richTextToHTML"></td>
-                </tr>
-                <tr *ngIf="equipment.helpAndSupport">
-                    <td>Help and Support</td>
-                    <td [innerHTML]="equipment.helpAndSupport.json | richTextToHTML"></td>
                 </tr>
             </table>
         </div>
@@ -113,6 +97,61 @@
         </div>
     </ng-template>
 
+    <ng-template #relatedOrganisations>
+        <div 
+            *ngIf="equipment.relatedOrgsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Organisations</h4>
+            <hr/>
+            <mat-nav-list 
+                style="margin-bottom: 20px;" 
+                *ngFor="let organisation of equipment.relatedOrgsCollection.items" 
+                class="collection">
+                    <a [routerLink]="">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ organisation['title'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ organisation['summary'] }}
+                            </span>
+                            <mat-card-actions>
+                                <a [routerLink]="'/' + organisation['__typename'].toLowerCase() + '/' + organisation['slug']">
+                                    Organisation Details ...
+                                </a>
+                            </mat-card-actions>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #relatedContacts>
+        <div 
+            *ngIf="equipment.relatedContactsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Contacts</h4>
+            <hr/>
+            <mat-nav-list 
+                style="margin-bottom: 20px;" 
+                *ngFor="let contact of equipment.relatedContactsCollection.items" 
+                class="collection">
+                    <a [routerLink]="">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ contact['name'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ contact['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
     <ng-template #keywords>
         <div 
             *ngIf="equipment.keywords.length > 0" 
@@ -132,81 +171,6 @@
         </div>
     </ng-template>
 
-    <ng-template #considerations>
-        <div *ngIf="equipment.considerations" class="considerations section">
-            <h4>Considerations<hr/></h4>
-            <div [innerHTML]="equipment.considerations.json | richTextToHTML"></div>
-        </div>
-    </ng-template>
-
-    <ng-template #equipmentImage>
-        <div>
-            <div *ngIf="equipment.mainImage;">
-                <img 
-                    src="{{ equipment?.mainImage?.url }}" 
-                    alt="{{ equipment?.mainImage?.description }}" 
-                    width="100%" 
-                    height="100%"/>
-            </div>
-        </div>
-    </ng-template>
-
-    <ng-template #featuresLimitations>
-        <div>
-            <h4>Features</h4>
-            <div [innerHTML]="equipment.features.json | richTextToHTML"></div>
-        </div>
-        <div><hr/></div>
-        <div>
-            <h4>Limitations</h4>
-            <div [innerHTML]="equipment.limitations.json | richTextToHTML"></div>
-        </div>
-    </ng-template>
-
-    <ng-template #supportCard>
-        <h4>User Support</h4>
-            <div *ngIf="equipment.userFacingSupportCollection.items.length > 0">
-                <mat-nav-list 
-                    style="margin-bottom: 20px;" 
-                    *ngFor="let support of equipment.userFacingSupportCollection.items" 
-                    class="collection">
-                        <a [routerLink]="">
-                            <mat-card>
-                                <span class="card-title">
-                                    {{ support['name'] }}
-                                </span> 
-                                <br/>
-                                <span class="related-item-summary">
-                                    {{ support['jobTitle'] }}
-                                </span>
-                            </mat-card>
-                        </a>
-                </mat-nav-list>
-            </div>
-    </ng-template>
-
-    <ng-template #ownerCard>
-        <div *ngIf="equipment.equipmentOwnerCollection.items.length > 0">
-            <h4>Owners</h4>
-            <mat-nav-list 
-                style="margin-bottom: 20px;" 
-                *ngFor="let owner of equipment.equipmentOwnerCollection.items" 
-                class="collection">
-                    <a [routerLink]="">
-                        <mat-card>
-                            <span class="card-title">
-                                {{ owner['name'] }}
-                            </span> 
-                            <br/>
-                            <span class="related-item-summary">
-                                {{ owner['jobTitle'] }}
-                            </span>
-                        </mat-card>
-                    </a>
-            </mat-nav-list>
-        </div>
-    </ng-template>
-
     <ng-template #titleSummary>
         <h1 
             class="equipment-title" 
@@ -222,198 +186,83 @@
         </h3>
     </ng-template>
     
-    
-    
+    <ng-template #equipmentImage>
+        <div>
+            <div *ngIf="equipment.mainImage;">
+                <img 
+                    src="{{ equipment?.mainImage?.url }}" 
+                    alt="{{ equipment?.mainImage?.description }}" 
+                    width="100%" 
+                    height="100%"/>
+            </div>
+        </div>
+    </ng-template>
+
     <div
-        class="main-content site-padding margin-bottom" 
-        ngClass.sm="main-content-mobile site-padding-sm margin-bottom" 
-        ngClass.xs="main-content-mobile site-padding-xs margin-bottom">
+        class="site-padding margin-bottom" 
+        ngClass.sm="site-padding-sm margin-bottom" 
+        ngClass.xs="site-padding-xs margin-bottom">
 
         <!-- Breadcrumbs -->
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
-        <!-- View Switcher -->
-        <div [ngSwitch]="equipment.viewType">
+        <div>
+            <div class="section" 
+                fxLayout="row wrap"
+                fxLayoutAlign="space-between center"  
+                fxLayout.sm="column wrap"
+                fxLayout.xs="column wrap">
 
-            <!-- View 1 -->
-            <div *ngSwitchCase="'View 1'">
-                <div class="section" 
-                    fxLayout="row wrap" 
-                    fxLayout.sm="column wrap"
-                    fxLayout.xs="column wrap"
-                    fxLayoutGap="5%">
-
-                    <!-- Equipment Image -->
-                    <div 
-                        fxFlex="47.5%" 
-                        class="equipment-image">
-                        <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
-                    </div>
-
-                    <!-- Title and Summary -->
-                    <div 
-                        fxFlex="47.5%" 
-                        class="equipment-info">
-                        <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-
-                        <hr class="section"/>
-
-                        <!-- Owners and User Facing Support -->
-                        <div 
-                            class="equipment-owners"
-                            fxLayout="row wrap"
-                            fxLayout.xs="column wrap"
-                            fxLayoutGap="5%">
-                            <div fxFlex="47.5%">
-                                <ng-container *ngTemplateOutlet="ownerCard"></ng-container>
-                            </div>
-                            <div fxFlex="47.5%">
-                                <ng-container *ngTemplateOutlet="supportCard"></ng-container>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Title and Summary -->
+                <div 
+                    class="equipment-info section">
+                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
-
-                <hr class="section"/>
-
-                <!-- Overview -->
-                <div
-                    class="equipment-overview section"
-                    fxLayout="row wrap"
-                    fxLayout="row wrap"
-                    fxLayout.xs="column wrap"
-                    fxLayoutGap="5%">
-                    <div fxFlex="47.5%">
-                        <h4>Overview</h4>
-                        <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
-                    </div>
-
-                    <!-- Features and Limitations -->
-                    <div fxFlex="47.5%">
-                        <div 
-                            fxLayout="column"
-                            fxLayoutGap="2%">
-                            <ng-container *ngTemplateOutlet="featuresLimitations"></ng-container>
-                        </div>
-                    </div>
-                </div>
-
-                <hr class="section"/>
-                
-                <!-- Equipment Body -->
-                <h4>Description</h4>
-                <ngx-contentful-rich-text
-                    style="word-break:break-word;" 
-                    [document]="equipment.body.json"
-                    [nodeRenderers]="nodeRenderers">
-                </ngx-contentful-rich-text>
-
-                <hr class="section"/>
-
-                <!-- Specifications Table -->
-                <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-
-                <!-- Considerations -->
-                <ng-container *ngTemplateOutlet="considerations"></ng-container>
-
-                <!-- Keywords -->
-                <ng-container *ngTemplateOutlet="keywords"></ng-container>
-    
-                <!-- Related Items -->
-                <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-
-            </div>
-
-            <!-- View 2 -->
-            <div *ngSwitchCase="'View 2'">
 
                 <!-- Equipment Image -->
-                <div class="equipment-image section">
+                <div 
+                    *ngIf="equipment.mainImage"
+                    class="equipment-image section">
                     <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
                 </div>
 
-                <!-- Title and Summary -->
-                <div
-                    fxLayout="row wrap"
-                    fxLayout.md="column wrap"
-                    fxLayout.sm="column wrap"
-                    fxLayout.xs="column wrap"
-                    fxLayoutGap="5%">
-                    <div
-                        fxFlex="75%">
-                        <div class="header section" 
-                            fxLayout="row wrap" 
-                            fxLayout.sm="column wrap"
-                            fxLayout.xs="column wrap"
-                            fxLayoutGap="5%">
-                            <div 
-                                fxFlex="47.5%" 
-                                class="equipment-info">
-                                <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-                            </div>
+            </div>
 
-                            <!-- Owners and user Facing Support -->
-                            <div 
-                                class="equipment-owners"
-                                fxLayout="row wrap"
-                                fxLayout.xs="column wrap"
-                                fxLayoutGap="5% grid"
-                                fxFlex="47.5%">
-                                <div fxFlex="47.5%">
-                                    <ng-container *ngTemplateOutlet="ownerCard"></ng-container>
-                                </div>
-                                <div fxFlex="47.5%">
-                                    <ng-container *ngTemplateOutlet="supportCard"></ng-container>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Equipment Body -->
+            <div class="section">
+                <h4>Description<hr/></h4>
+                <ngx-contentful-rich-text
+                    style="word-break:break-word;" 
+                    [document]="equipment.bodyText.json"
+                    [nodeRenderers]="nodeRenderers">
+                </ngx-contentful-rich-text>
+            </div>
 
-                        <hr class="section"/>
-
-                        <!-- Overview -->
-                        <div>
-                            <h4>Overview</h4>
-                            <div [innerHTML]="equipment.overview.json | richTextToHTML"></div>
-                        </div>
-
-                        <hr class="section"/>
-                        
-                        <!-- Features and Limitations -->
-                        <div >
-                            <div 
-                                fxLayout="row wrap"
-                                fxLayout.sm="column wrap"
-                                fxLayoutGap="5%">
-                                <ng-container *ngTemplateOutlet="featuresLimitations"></ng-container>
-                            </div>
-                        </div>
-
-                        <hr class="section"/>
-
-                        <!-- Equipment Description -->
-                        <h4>Description</h4>
-                        <ngx-contentful-rich-text
-                            style="word-break: break-word;"
-                            [document]="equipment.body.json"
-                            [nodeRenderers]="nodeRenderers">
-                        </ngx-contentful-rich-text>
-                        
-                    </div>
-                    <div fxFlex="20%">
-                        <!-- Specifications Table -->
-                        <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-                        
-                        <!-- Considerations -->
-                        <ng-container *ngTemplateOutlet="considerations"></ng-container>
-
-                        <!-- Keywords -->
-                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
-                        <!-- Related Items -->
-                        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-                    </div>
+            <!-- Owners and User Facing Support -->
+            <div 
+                class="equipment-owners"
+                fxLayout="row wrap"
+                fxLayout.xs="column wrap"
+                fxLayoutGap="5%">
+                <div fxFlex="47.5%">
+                    <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
                 </div>
-            </div>   
+                <div fxFlex="47.5%">
+                    <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
+                </div>
+            </div>
+
+            <hr class="section"/>
+
+            <!-- Specifications Table -->
+            <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+
+            <!-- Keywords -->
+            <ng-container *ngTemplateOutlet="keywords"></ng-container>
+
+            <!-- Related Items -->
+            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+
         </div>
     </div>
 </div>

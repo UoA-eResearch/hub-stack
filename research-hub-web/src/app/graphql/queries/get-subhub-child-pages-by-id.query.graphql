@@ -7,21 +7,30 @@ query SubHubChildPagesById ($id: String!) {
     keywords
     searchable
     ssoProtected
-    bannerImage {
+    banner {
       url
     }
-    body {
+    bodyText {
       json
       links {
         entries {
           block {
-            ... AllFields
+            ... PublicFields
+            sys {
+              id
+            }
           }
           inline {
-            ... AllFields
+            ... PublicFields
+            sys {
+              id
+            }
           }
           hyperlink {
-            ... AllFields
+            ... PublicFields
+            sys {
+              id
+            }
           }
         }
         assets {
@@ -44,7 +53,7 @@ query SubHubChildPagesById ($id: String!) {
         }
       }
     }
-    subhubPagesCollection {
+    internalPagesCollection {
       items {
         ...on Article {
           __typename
@@ -69,11 +78,6 @@ query SubHubChildPagesById ($id: String!) {
           title
           ssoProtected
           summary
-        } 
-        ... on OfficialDocuments {
-          __typename
-            title
-            summary
         }
         ...on Service {
           __typename
@@ -88,9 +92,62 @@ query SubHubChildPagesById ($id: String!) {
           title
           ssoProtected
           summary
-          bannerImage {
+        }
+        ...on Event {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on OrganisationalUnit {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on Facility {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on Software {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+      }
+    }
+    externalPagesCollection {
+      items {
+        ...on Article {
+          __typename
+          slug
+          title
+          banner {
             url
           }
+          ssoProtected
+          summary
+        }
+        ...on CaseStudy {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on SubHub {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
         }
       }
     }
@@ -119,11 +176,6 @@ query SubHubChildPagesById ($id: String!) {
           title
           ssoProtected
           summary
-        } 
-        ... on OfficialDocuments {
-          __typename
-            title
-            summary
         }
         ...on Service {
           __typename
@@ -139,14 +191,26 @@ query SubHubChildPagesById ($id: String!) {
           ssoProtected
           summary
         }
-      }
-    }
-    officialDocumentsCollection {
-      items {
-        ... on OfficialDocuments {
+        ...on Event {
+          __typename
+          slug
           title
+          ssoProtected
           summary
-          url
+        }
+        ...on Facility {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
+        }
+        ...on Software {
+          __typename
+          slug
+          title
+          ssoProtected
+          summary
         }
       }
     }

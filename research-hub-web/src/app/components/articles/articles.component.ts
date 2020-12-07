@@ -64,7 +64,7 @@ export class ArticlesComponent implements OnInit {
       this.getArticleBySlug(this.slug).subscribe(data => {
         this.article$ = this.getArticleByID(data.sys.id);
         this.article$.subscribe(res => {
-          this.bodyMediaService.setBodyMedia(res.body.links);
+          this.bodyMediaService.setBodyMedia(res.bodyText.links);
         });
         this.appComponentService.setTitle(data.title);
       });

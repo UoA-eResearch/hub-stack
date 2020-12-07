@@ -1,124 +1,124 @@
 query GetEquipmentByID($id: String!) {
   equipment(id: $id) {
+    __typename
+    sys {
+      id
+    }
     title
     slug
-    summary
-    type
-    model
-    location
-    manufacturer
-    yearOfManufacture
-    viewType
-    keywords
-    searchable
     ssoProtected
+    searchable
     mainImage {
+      title
+      description
       url
     }
-    overview {
-      json
+    icon {
+      title
+      description
+      url
     }
-    body {
-      json
+    summary
+    bodyText {
+      json 
       links {
-        assets {
-          hyperlink {
-            title
-            description
-            sys {
-              id
-            }
-            url
-          }
-          block {
-            title
-            description
-            sys {
-              id
-            }
-            url
-          }
-        }
         entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
+        assets {
           block {
-            ... AllFields
-          }
-          inline {
-            ... AllFields
+            title
+            description
+            url
           }
           hyperlink {
-            ... AllFields
-          }
-        }
-      }
-    }
-    userFacingSupportCollection {
-      items {
-        ... on Person {
-          name
-          title
-          jobTitle
-          image {
+            title
+            description
             url
           }
         }
       }
     }
-    equipmentOwnerCollection {
-      items {
-        ... on Person {
-          name
-          title
-          jobTitle
-          image {
-            url
-          }
-        }
-      }
+    keywords
+    manufacturer
+    model
+    yearOfManufacture
+    link
+    relatedItemsCollection {
+      items { ...PublicFields }
     }
-    features {
-      json
+    relatedContactsCollection {
+      items { ...PublicFields }
     }
-    limitations {
-      json
+    relatedOrgsCollection {
+      items { ...PublicFields }
     }
     eligibility {
-      json
+      json 
+      links {
+        entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
+        assets {
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
+        }
+      }
     }
     costToUse {
-      json
+      json 
+      links {
+        entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
+        assets {
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
+        }
+      }
     }
-    trainingRequired {
-      json
-    }
-    trainingProvided {
-      json
-    }
+    location
     access {
-      json
-    }
-    helpAndSupport {
-      json
-    }
-    considerations {
-      json
-    }
-    relatedItemsCollection {
-      items {
-        ... on Article {
-          title
-          summary
-          slug
+      json 
+      links {
+        entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
         }
-        ... on Service {
-          title
-          summary
-          slug
-        }
-        ... on Equipment {
-          title
-          summary
-          slug
+        assets {
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
         }
       }
     }

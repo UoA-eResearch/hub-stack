@@ -66,7 +66,7 @@ export class SubhubsComponent implements OnInit {
         this.currentSubHub$ = this.getSubHubById(data.items[0].sys.id);
         this.appComponentService.setTitle(data.items[0].title);
         this.currentSubHub$.subscribe(res => {
-          this.bodyMediaService.setBodyMedia(res.body.links);}
+          this.bodyMediaService.setBodyMedia(res.bodyText.links);}
           );
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

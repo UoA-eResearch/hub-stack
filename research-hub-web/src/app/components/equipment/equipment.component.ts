@@ -65,7 +65,7 @@ export class EquipmentComponent implements OnInit {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
         this.equipment$ = this.getEquipmentByID(data.sys.id);
         this.equipment$.subscribe(res => {
-          this.bodyMediaService.setBodyMedia(res.body.links);
+          this.bodyMediaService.setBodyMedia(res.bodyText.links);
         });
         this.appComponentService.setTitle(data.title);
       });
