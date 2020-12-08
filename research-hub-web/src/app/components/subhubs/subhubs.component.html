@@ -4,7 +4,6 @@
     [collection]="allSubHubs">
 </app-collection-list>
 
-
 <!-- Displaying a singular subhub -->
 <div class="results" *ngIf="subhub$ | async as subHubData">
     <div *ngFor="let subhub of subHubData.items; let i = index">
