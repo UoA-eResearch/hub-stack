@@ -1,4 +1,4 @@
-query SubHubChildPagesById ($id: String!) {
+query GetSubHubByID($id: String!) {
   subHub(id: $id) {
     slug
     title
