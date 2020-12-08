@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck, map, filter, first, flatMap, reduce } from 'rxjs/operators';
+import { pluck, map, flatMap, tap } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 import {
@@ -11,6 +11,7 @@ import {
   Event,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
+import { AppComponentService } from '@app/app.component.service';
 
 @Component({
   selector: 'app-event',
@@ -28,7 +29,8 @@ export class EventComponent implements OnInit {
     public allEventsGQL: AllEventsGQL,
     public getEventBySlugGQL: GetEventBySlugGQL,
     public getEventByIDGQL: GetEventByIdGQL,
-    public cerGraphQLService: CerGraphqlService
+    public cerGraphQLService: CerGraphqlService,
+    public appComponentService: AppComponentService
   ) { }
 
   async ngOnInit() {
@@ -45,7 +47,8 @@ export class EventComponent implements OnInit {
     */
    if (!!this.slug) {
      this.getEventBySlug(this.slug).subscribe(data => {
-       this.event$ = this.getEventByID(data.sys.id);
+       this.event$ = this.getEventByID(data.sys.id)
+       .pipe(tap(res => this.appComponentService.setTitle(res.title)));
      });
      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
    } else {
