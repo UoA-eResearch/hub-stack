@@ -92,7 +92,9 @@ mat-expansion-panel, mat-card  {
     box-shadow: none !important;
 }
 
-// Specifications Table
+/**
+ * Specifications Table
+ */ 
 .details-table {
     border-collapse: collapse; 
     width: 100%;
@@ -117,3 +119,16 @@ mat-expansion-panel, mat-card  {
     background-color: map-get($hub-teal, 500);
     color: $color-background;
   }
+
+/**
+* Event Details Button
+*/ 
+.event-details-button {
+    margin: 50px 0px;
+}
+
+.event-details-button .mat-raised-button {
+    color: white;
+    background-color: map-get($hub-teal, 500);
+    border-radius: 50px;
+}

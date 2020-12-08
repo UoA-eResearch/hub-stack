@@ -49,17 +49,6 @@
                     fxShow.xs="true"
                     fxHide>
                 </div>
-                <div 
-                    fxLayoutAlign.xs="center center">
-                    <a 
-                    class="event-details-button" 
-                    href="{{ event.link }}">
-                    <button 
-                        mat-stroked-button>
-                        <b>Event Details &nbsp;>></b>
-                    </button>
-                </a>
-                </div>
             </span>
             <div class="section">
                 <hr/>
@@ -70,9 +59,6 @@
     <ng-template #details>
         <div 
             class="specifications section">
-            <h4>
-                Event Details
-            </h4>
             <table class="details-table">
                 <tr>
                 <th>Name</th>
@@ -111,10 +97,19 @@
     </ng-template>
 
     <ng-template #description>
-        <mat-card-content 
-            style="margin-bottom: 50px;" 
-            [innerHTML]="event.bodyText.json | richTextToHTML">
-        </mat-card-content>
+        <div>
+            <mat-card-content [innerHTML]="event.bodyText.json | richTextToHTML">
+            </mat-card-content>
+            <div 
+                class="event-details-button" 
+                fxLayoutAlign.xs="center center">
+                <a href="{{ event.link }}">
+                    <button mat-raised-button>
+                        <b>Event Details</b>
+                    </button>
+                </a>
+            </div>
+        </div>
     </ng-template>
 
     <ng-template #googleMap></ng-template>
@@ -138,8 +133,10 @@
     <!-- Event Content -->
     <div
         class="site-padding top-padding margin-bottom"
-        ngClass.xs="site-padding-xs top-padding margin-bottom"
-        ngClass.sm="site-padding-sm top-padding margin-bottom">
+        ngClass.xs="site-padding-sm top-padding margin-bottom"
+        ngClass.sm="site-padding-sm top-padding margin-bottom"
+        ngClass.md="site-padding-sm top-padding margin-bottom"
+        ngClass.lg="site-padding-sm top-padding margin-bottom">
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
         <ng-container *ngTemplateOutlet="title"></ng-container>
         <ng-container *ngTemplateOutlet="description"></ng-container>
