@@ -1,0 +1,45 @@
+query SubHubChildPagesById ($id: String!) {
+  subHub(id: $id) {
+    slug
+    title
+    summary
+    ssoProtected
+    searchable
+    banner {
+      url
+    }
+    bodyText {
+      json
+      links {
+        entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
+        assets {
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
+        }
+      }
+    }
+    keywords
+    internalPagesCollection {
+      items { ...PublicFields }
+    }
+    externalPagesCollection {
+      items { ...PublicFields }
+    }
+    relatedItemsCollection {
+      items { ...PublicFields }
+    }
+    viewType
+  }
+}

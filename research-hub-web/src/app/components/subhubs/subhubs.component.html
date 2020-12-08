@@ -1,104 +1,263 @@
-<!-- Displaying all subhubs -->
-<app-collection-list 
-    *ngIf="allSubHubs$ | async as allSubHubs"
-    [collection]="allSubHubs">
-</app-collection-list>
+<!-- Displaying all SubHubs -->
+<div
+    *ngIf="allSubHubs$ | async as allSubHubs" 
+    class="site-padding margin-bottom top-padding" 
+    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
+    <app-collection-list [collection]="allSubHubs"></app-collection-list>
+</div>
 
-<!-- Displaying a singular subhub -->
-<div class="results" *ngIf="subhub$ | async as subHubData">
-    <div *ngFor="let subhub of subHubData.items; let i = index">
+<!-- Displaying an individual SubHub -->
+<div 
+    style="overflow-x: hidden"
+    class="results" 
+    *ngIf="currentSubHub$ | async as subhub">
+    <div>
+        
+        <!-- Templates -->
+        <ng-template #subHubChildren>
+            <div 
+                id="subhub-children"
+                class="site-padding top-padding"
+                ngClass.sm="site-padding-sm top-padding"
+                ngClass.xs="site-padding-xs top-padding">
+                <div
+                    fxLayout="row wrap"
+                    fxLayoutGap="1%"
+                    fxLayout.sm="column wrap"
+                    fxLayout.xs="column wrap">
+                    <div
+                        fxFlex="24%"
+                        *ngFor="let subHub of subhub.internalPagesCollection.items">
+                        <mat-card class="subhub-card">
+                                <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='assets/images/uoa-logo-blue.svg'">
+                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
+                            <mat-card-title class="card-title">
+                                {{ subHub.title}}
+                            </mat-card-title>
+                            <mat-card-content class="related-item-summary">
+                                {{ subHub.summary }}
+                            </mat-card-content>
+                            <mat-card-actions>
+                                <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                                    Read More ...
+                                </a>
+                            </mat-card-actions>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+        <ng-template #relatedItems>
+            <div 
+                *ngIf="subhub.relatedItemsCollection.items.length > 0" 
+                id="you-might-be-interested-in">
+                <h4>You might also be interested in<hr/></h4>
+    
+                <!-- Related Items List -->
+                <mat-nav-list 
+                    style="margin-bottom: 20px;" 
+                    *ngFor="let relatedItem of subhub.relatedItemsCollection.items" 
+                    class="collection">
+                            <mat-card style="padding-top: 30px;">
+                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename | humanCase }}</span>
+                                <span class="card-title">
+                                    {{ relatedItem['title'] }}
+                                </span> 
+                                <br/>
+                                <span class="related-item-summary">
+                                    {{ relatedItem['summary'] }}
+                                </span>
+                                <mat-card-actions>
+                                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                                        Read More ...
+                                    </a>
+                                </mat-card-actions>
+                            </mat-card>
+                </mat-nav-list>
+            </div>
+        </ng-template>
+
+        <ng-template #keywords>
+            <div 
+                id="keywords" 
+                *ngIf="subhub.keywords.length > 0">
+                <h4>Keywords<hr/></h4>
+                <mat-card-subtitle fxLayout="row wrap">
+                    <span *ngFor="let keyword of subhub.keywords">
+                        <mat-card 
+                            fxLayout="row" 
+                            class="keyword-card">
+                                {{ keyword | humanCase }}
+                        </mat-card>
+                    </span>
+                </mat-card-subtitle>
+            </div>
+        </ng-template>
 
         <ng-template #breadcrumbs>
-            <div id="breadcrumbs" class="breadcrumbs" *ngIf="!!parentSubHubs">
-                <span class="breadcrumb-subhub" *ngFor="let parentSubHub of parentSubHubs.slice().reverse()">
-                    <a [routerLink]="'/subhub/' + parentSubHub.slug">{{ parentSubHub.title }}</a>
+            <div 
+                id="breadcrumbs" 
+                class="breadcrumbs top-padding"
+                ngClass.sm="top-padding"
+                ngClass.xs="top-padding"
+                *ngIf="!!parentSubHubs">
+                <span 
+                    class="breadcrumb-subhub" 
+                    *ngFor="let parentSubHub of parentSubHubs.slice().reverse()">
+                    <a [routerLink]="'/subhub/' + parentSubHub.slug">
+                        {{ parentSubHub.title }}
+                    </a>
                 </span>
-                <span id="breadcrumb-current-page">{{ subhub.title }}</span>
+                <span id="breadcrumb-current-page">
+                    {{ subhub.title }}
+                </span>
             </div>
         </ng-template>
 
-        <ng-template #jsonData>
-            <mat-card>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title> JSON Result </mat-panel-title>
-                        <mat-panel-description>Click to see raw JSON</mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <pre><code>{{ subHubData | json}}</code></pre>
-                </mat-expansion-panel>
-            </mat-card>
+        <ng-template #dynamicBanner>
+            <div 
+                class="banner-container"
+                [style.background]="subhub.banner ? 'url(' + subhub.banner.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
+            </div>
         </ng-template>
 
-        <ng-template #cardHeader>
-            <mat-card>
-                <mat-card-header>
-                    <div mat-card-avatar>
-                        <mat-icon>build</mat-icon>
-                    </div>
-                    <mat-card-title>
-                        {{ subhub.title }}
-                    </mat-card-title>
-                    <mat-card-subtitle>
-                        {{ subhub.summary }}
-                    </mat-card-subtitle>
-                </mat-card-header>
-            </mat-card>
-        </ng-template>
-
-
-        <ng-template #subhubContent>
-            <mat-card>
-                <h2>Body</h2>
-                <div class="content" *ngFor="let contentItem of subhub.bodyText.json.content as c">
-                    <mat-card-content *ngIf="contentItem.content[0]">
-                        {{ contentItem.content[0].value }}
-                    </mat-card-content>
-                </div>
-            </mat-card>
-        </ng-template>
-
-        <ng-template #subhubChildPages>
-            <mat-card>
-                <h2>Pages in this SubHub</h2>
-                <app-collection-list *ngIf="subhub.internalPagesCollection.items"
-                    [collection]="subhub.internalPagesCollection"
-                    ></app-collection-list>
-            </mat-card>
-        </ng-template>
-
+        <!-- View 1 -->
         <div [ngSwitch]="subhub.viewType">
-            <div 
-                *ngSwitchCase="'View 1'"
-                class="site-padding margin-bottom top-padding" 
-                ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
-                ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
-                <div class="view1">
-                    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                    <ng-container *ngTemplateOutlet="jsonData"></ng-container>
-                    <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
-                    <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
-                    <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
+            <div *ngSwitchCase="'View 1'">
+                <div 
+                class="banner-container"
+                [style.background]="subhub.banner ? 'url(' + subhub.banner.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
+                    <div
+                        class="banner-content" 
+                        *ngIf="subhub.viewType == 'View 1'">
+
+                        <!-- Title and Summary for View 1 -->
+                        <!-- Title -->
+                        <h1 
+                            class="subhub-title" 
+                            ngClass.sm="subhub-title-sm" 
+                            ngClass.xs="subhub-title-xs"
+                            style="color: white;">
+                                {{ subhub.title }}
+                        </h1>
+
+                        <!-- Summary -->
+                        <h3 
+                            class="subhub-summary" 
+                            ngClass.sm="subhub-summary-sm" 
+                            ngClass.xs="subhub-summary-xs"
+                            style="color: white">
+                                <small>{{ subhub.summary }}</small>
+                        </h3>
+                    </div>
                 </div>
-            </div>
-            <div 
-                *ngSwitchCase="'View 2'"
-                class="site-padding margin-bottom top-padding" 
-                ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
-                ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
-                <div class="view2">
+                <div
+                    class="site-padding top-padding"
+                    ngClass.sm="site-padding-sm top-padding"
+                    ngClass.xs="site-padding-xs top-padding">
+                    
+                    <!-- Breadcrumbs -->
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                    <ng-container *ngTemplateOutlet="jsonData"></ng-container>
-                    <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
-                    <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
-                    <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
+
+                    <!-- Body Content -->
+                    <div 
+                        fxLayout="row wrap"
+                        fxLayout.sm="column wrap"
+                        fxLayout.xs="column wrap"
+                        fxLayoutGap="2%"
+                        fxLayoutAlign="space-between">
+                        
+                        <!-- Main Body -->
+                        <div fxFlex="65%" class="section">
+                            <mat-card-content 
+                                style="margin-bottom: 50px;" 
+                                [innerHTML]="subhub.bodyText.json | richTextToHTML">
+                            </mat-card-content>
+                        </div>
+
+                        <!-- Related Items and Keywords -->
+                        <div fxFlex="30%">
+
+                            <!-- Related Items -->
+                            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+
+                            <!-- Keywords -->
+                            <ng-container *ngTemplateOutlet="keywords"></ng-container>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- SubHub Children -->
+                <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
+
+                <!-- Media Collection -->
+                <ng-container *ngTemplateOutlet="mediaCollection"></ng-container>
             </div>
-            <div *ngSwitchDefault>
-                <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                <ng-container *ngTemplateOutlet="jsonData"></ng-container>
-                <ng-container *ngTemplateOutlet="cardHeader"></ng-container>
-                <ng-container *ngTemplateOutlet="subhubContent"></ng-container>
-                <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
+
+            <!-- View 2 -->
+            <div *ngSwitchCase="'View 2'">
+                <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
+
+                <div>
+
+                    <!-- Breadcrumbs -->
+                    <div 
+                        class="site-padding"
+                        ngClass.sm="site-padding-sm"
+                        ngClass.xs="site-padding-xs">
+                        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+                    </div>
+
+                    <!-- Title and Summary -->
+                    <div>
+                        <h1
+                            class="subhub-title site-padding" 
+                            ngClass.sm="subhub-title-sm site-padding-sm" 
+                            ngClass.xs="subhub-title-xs site-padding-xs">
+                            {{ subhub.title }}
+                        </h1>
+                        <h3 
+                            class="subhub-summary site-padding" 
+                            ngClass.sm="subhub-summary-sm site-padding-sm" 
+                            ngClass.xs="subhub-summary-xs site-padding-xs">
+                            {{ subhub.summary }}
+                            <hr style="margin: 25px 0px;"/>
+                        </h3>
+                    </div>
+            
+                    <!-- Body Content -->
+                    <!-- Main Body -->
+                    <div 
+                        class="main-body site-padding"
+                        ngClass.sm="site-padding-sm"
+                        ngClass.xs="site-padding-xs"
+                        [innerHTML]="subhub.bodyText.json | richTextToHTML">
+                    </div>
+            
+                    <!-- SubHub Children -->
+                    <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
+
+                    <!-- Media Collection -->
+                    <ng-container *ngTemplateOutlet="mediaCollection"></ng-container>
+
+                    <!-- Related Items -->
+                    <div 
+                        class="site-padding"
+                        ngClass.sm="site-padding-sm"
+                        ngClass.xs="site-padding-xs">
+                        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                    </div>
+
+                    <!-- Keywords -->
+                    <div
+                        class="site-padding"
+                        ngClass.sm="site-padding-sm"
+                        ngClass.xs="site-padding-xs">
+                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
