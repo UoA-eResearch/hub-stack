@@ -30,7 +30,7 @@
                         fxFlex="24%"
                         *ngFor="let subHub of subhub.internalPagesCollection.items">
                         <mat-card class="subhub-card">
-                                <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='assets/images/uoa-logo-blue.svg'">
+                                <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='assets/images/uoa-logo.svg'">
                                 <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
                             <mat-card-title class="card-title">
                                 {{ subHub.title}}
