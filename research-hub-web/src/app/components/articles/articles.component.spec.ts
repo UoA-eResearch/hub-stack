@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponentService } from '../../app.component.service';
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { ArticleCollection, AllArticlesGQL, Article } from '@graphql/schema';
@@ -275,23 +275,15 @@ describe('ArticlesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ArticlesComponent],
       imports: [
-        RouterModule.forRoot([]),
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
         SharedModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        RouterTestingModule.withRoutes([])
       ], providers: [
         AppComponentService,
-        AllArticlesGQL,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({
-              slug: ''
-            })
-          }
-        }
+        AllArticlesGQL
       ]
     }).compileComponents();
   }));
@@ -303,6 +295,7 @@ describe('ArticlesComponent', () => {
     fixture.detectChanges();
   });
 
+
   afterEach(() => {
     fixture.destroy();
     controller.verify();
@@ -312,7 +305,7 @@ describe('ArticlesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all articles', async () => {
+  it('Should get all articles', () => {
     spyOn(component, 'getAllArticles').and.returnValue(mockAllArticles$);
     component.getAllArticles().subscribe(res => {
       expect(res).toBeTruthy();
@@ -328,10 +321,6 @@ describe('ArticlesComponent', () => {
         slug: 'first-article'
       });
       fixture.detectChanges();
-    })
-
-    xit('Should evaluate components slug property to be truthy', () => {
-      expect(component.slug).toBeTruthy();
     });
 
     it('Should get a single article data', () => {
@@ -341,7 +330,7 @@ describe('ArticlesComponent', () => {
       });
     });
 
-    it('Should get a single article data by ID', async () => {
+    it('Should get a single article data by ID', () => {
       spyOn(component, 'getArticleByID').and.returnValue(mockArticle$);
       component.getArticleByID('').subscribe(res => {
         expect(res.sys.id).toEqual('111');
