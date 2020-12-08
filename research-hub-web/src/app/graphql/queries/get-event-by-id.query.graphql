@@ -1,27 +1,67 @@
 query GetEventByID($id: String!) {
     event(id: $id) {
-        ssoProtected
+        __typename
         sys {
             id
         }
         title
-        summary
+        slug
+        ssoProtected
+        searchable
         banner {
             url
         }
-        description
-        date
-        location
-        address {
-            lat
-            lon
+        icon {
+            url
         }
-        url
-        price
-        limit
-        requirements
-        restrictions
-        organizer
-        keywords
+        summary
+        bodyText {
+        json 
+        links {
+          entries {
+            block { ...PublicFields }
+            inline { ...PublicFields }
+            hyperlink { ...PublicFields }
+          }
+          assets {
+            block {
+              title
+              description
+              url
+            }
+            hyperlink {
+              title
+              description
+              url
+            }
+          }
+        }
+      }
+      keywords
+      relatedContactsCollection {
+        items { ...PublicFields }
+      }
+      relatedOrgsCollection {
+        items { ...PublicFields }
+      }
+      link
+      audience
+      mode
+      availability
+      date
+      capabilities
+      mediaCollection {
+        items {
+          title
+          description
+          size
+          url
+        }
+      }
+      location
+      address {
+          lat 
+          lon 
+      }
     }
 }

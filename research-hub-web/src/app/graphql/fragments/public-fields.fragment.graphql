@@ -1,106 +1,109 @@
 fragment PublicFields on Entry {
     ... on Article {
-        __typename
-        sys {
-            id
-        }
-        slug
-        title
-        summary
-        ssoProtected
-        searchable
-        icon {
-            title
-            description
-            url
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+      icon {
+          title
+          description
+          url
+      }
+      banner {
+          title
+          description
+          url
         }
     } 
+    ... on CaseStudy {
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+    }
     ... on Equipment {
-        __typename
-        sys {
-            id
-        }
-        slug
-        title
-        summary
-        ssoProtected
-        searchable
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+    }
+  ... on Event {
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+    }
+  ... on Facility {
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+  }
+  ... on OrganisationalUnit {
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
     }
     ... on Service {
-        __typename
-        sys {
-            id
-        }
-        slug
-        title
-        summary
-        ssoProtected
-        searchable
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+    }
+  ... on Software {
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
     }
     ... on SubHub {
-        __typename
-        sys {
-            id
-        }
-        slug
-        title
-        summary
-        ssoProtected
-        searchable
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
     }
-    ... on CaseStudy {
-        __typename
-        sys {
-            id
-        }
-        slug
-        title
-        summary
-        ssoProtected
-        searchable
+  ... on OfficialDocuments {
+      __typename
+      title
+      summary
     }
-    ... on Person {
-        __typename
-        sys {
-            id
-        }
-        slug
-        name
-        searchable
-        ssoProtected
-    }
-    ... on OfficialDocuments {
-        __typename
-        sys {
-            id
-        }
-        title
-        summary
-    }
-    ... on Event {
-        ssoProtected
-        sys {
-            id
-        }
-        slug
-        title
-        summary
-        description
-        banner {
-            url
-        }
-        date
-        location
-        address {
-            lat
-            lon
-        }
-        url
-        price
-        limit
-        requirements
-        restrictions
-        organizer
-        keywords
+  ... on GenericContact {
+      __typename 
+      name
+      email
+  }
+  ... on LinkCard {
+      title
+      summary
+      url
+  }
+  ... on Person {
+      __typename
+      name
+      username
+  }
+  ... on Video {
+      title
+      description
+      url
     }
 }

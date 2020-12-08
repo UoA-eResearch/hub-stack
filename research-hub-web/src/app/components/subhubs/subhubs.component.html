@@ -1,5 +1,9 @@
 <!-- Displaying all subhubs -->
-<app-collection-list *ngIf="allSubHubs$ | async as allSubHubs" [collection]="allSubHubs"></app-collection-list>
+<app-collection-list 
+    *ngIf="allSubHubs$ | async as allSubHubs"
+    [collection]="allSubHubs">
+</app-collection-list>
+
 
 <!-- Displaying a singular subhub -->
 <div class="results" *ngIf="subhub$ | async as subHubData">
@@ -46,7 +50,7 @@
         <ng-template #subhubContent>
             <mat-card>
                 <h2>Body</h2>
-                <div class="content" *ngFor="let contentItem of subhub.body.json.content as c">
+                <div class="content" *ngFor="let contentItem of subhub.bodyText.json.content as c">
                     <mat-card-content *ngIf="contentItem.content[0]">
                         {{ contentItem.content[0].value }}
                     </mat-card-content>
@@ -57,14 +61,18 @@
         <ng-template #subhubChildPages>
             <mat-card>
                 <h2>Pages in this SubHub</h2>
-                <app-collection-list *ngIf="subhub.subhubPagesCollection.items"
-                    [collection]="subhub.subhubPagesCollection"
+                <app-collection-list *ngIf="subhub.internalPagesCollection.items"
+                    [collection]="subhub.internalPagesCollection"
                     ></app-collection-list>
             </mat-card>
         </ng-template>
 
         <div [ngSwitch]="subhub.viewType">
-            <div *ngSwitchCase="'View 1'">
+            <div 
+                *ngSwitchCase="'View 1'"
+                class="site-padding margin-bottom top-padding" 
+                ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+                ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
                 <div class="view1">
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
                     <ng-container *ngTemplateOutlet="jsonData"></ng-container>
@@ -73,7 +81,11 @@
                     <ng-container *ngTemplateOutlet="subhubChildPages"></ng-container>
                 </div>
             </div>
-            <div *ngSwitchCase="'View 2'">
+            <div 
+                *ngSwitchCase="'View 2'"
+                class="site-padding margin-bottom top-padding" 
+                ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+                ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
                 <div class="view2">
                     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
                     <ng-container *ngTemplateOutlet="jsonData"></ng-container>
