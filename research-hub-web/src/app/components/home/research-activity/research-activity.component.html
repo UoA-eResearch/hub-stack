@@ -4,8 +4,7 @@
   <div 
     fxLayout="row wrap" 
     fxLayout.lt-sm="column" 
-    fxLayoutAlign="space-evenly;" 
-    fxLayoutAlign.lt-lg="flex-start"
+    fxLayoutAlign="space-between stretch"
     style="width: 98%;">
     <div *ngFor="let activity of researchActivityOptions" [ngClass]="activity.className">
       <!-- Need to specify class for containing div also in order to use custom themes on material components -->
