@@ -1,0 +1,17 @@
+<div 
+    class="embedded-entry-block"
+    ngClass.xs="embedded-entry-block-mobile">
+        <mat-card>
+            <mat-card-title>
+                <p>{{ contentItem.title }}</p>
+            </mat-card-title>              
+            <mat-card-content>
+                <small>{{ contentItem.summary }}</small>
+            </mat-card-content>   
+            <mat-card-actions>
+                <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                    Read More ...
+                </a>
+            </mat-card-actions>
+        </mat-card>
+</div>

@@ -55,7 +55,6 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
   }
 }
 
-
 @NgModule({
   declarations: [
     AppComponent,

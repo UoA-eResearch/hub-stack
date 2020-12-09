@@ -1,7 +1,8 @@
 @import '../../../themes.scss';
 @import '../search-results/search-results.component.scss';
 
-mat-expansion-panel, mat-card  {
+mat-expansion-panel,
+mat-card  {
     margin: 1vh 0;
 }
 
@@ -9,7 +10,9 @@ mat-expansion-panel, mat-card  {
     color: map-get($hub-teal, 800);
 }
 
-// The container for an individual equipment
+/**
+ * Container for an individual article
+ */
 #equipment-container {
 
     #breadcrumbs {
@@ -54,11 +57,10 @@ mat-expansion-panel, mat-card  {
     }
 }
 
-/* Vanilla CSS Styling */
 
 // HR Tag
 hr {
-    background-color: #dbdbdb;
+    background-color: $input-grey;
     border: none;
     height: 1px;
 }
@@ -75,39 +77,38 @@ hr {
     font-weight: bold; 
     line-height: 110%;
 }
-
-.equipment-title-sm {
-    font-size: 35px;
-}
-
 .equipment-title-xs {
-    font-size: 25px;
+    font-size: 30px;
 }
 
-// Equipment Summary
+
+/**
+ * Equipment Summary
+ */
 .equipment-summary {
     color: $color-icon; 
     font-size: 25px; 
     line-height: 110%;
 }
-
-.equipment-summary-sm {
-    font-size: 20px; 
-}
-
 .equipment-summary-xs {
     font-size: 15px; 
 }
 
-// Equipment Image
+
+/**
+ * Equipment Image
+ */
 .equipment-image {
     margin: 0 auto;
 }
 
-// Keyword
+
+/**
+ * Keywords
+ */
 .keyword-card {
-    color: #828282;
-    background: #F0F0F0;
+    color: $silver;
+    background: $light-grey;
     margin: 5px; 
     padding: 5px 10px;
     font-size: 12px; 
@@ -115,38 +116,51 @@ hr {
     box-shadow: none !important;
 }
 
-// Related Item
+/**
+ * Related Item Card
+ */
+.related-item-card {
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.related-item-card-mobile {
+    height: 70px;
+}
 .related-item-summary {
     font-size: 12px;
 }
 
-// Specifications Table
+
+/**
+ * Specifications Table
+ */
 .specifications-table {
     border-collapse: collapse; 
     width: 100%;
-  }
-  
-  .specifications-table td, .specifications-table th {
+}
+.specifications-table td, 
+.specifications-table th {
     border: 1px solid #ddd;
     padding: 8px;
-  }
-  
-  .specifications-table tr:nth-child(even){
-      background-color: #f2f2f2;
-    }
-  .specifications-table td:nth-child(odd){
-      font-weight: bold;
-      width: 25%}
-  
-  .specifications-table th {
+}
+.specifications-table tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+.specifications-table td:nth-child(odd){
+    font-weight: bold;
+    width: 25%}
+.specifications-table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
     background-color: map-get($hub-teal, 500);
     color: $color-background;
-  }
+}
 
-  // Card Title
+/**
+ * Card Title
+ */
 .card-title {
     color: map-get($hub-teal, 500);
 }

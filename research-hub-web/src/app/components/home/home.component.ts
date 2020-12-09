@@ -16,6 +16,19 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    enum CategoryId {
+      All = 1,
+      Support,
+      Equipment,
+      Training,
+      Software,
+      Facilities,
+      Guide,
+      Person,
+      Policies,
+      Articles,
+      SubHubs
+    }
     this.searchBarService.setSearchText('');
     this.searchBarService.setCategory(CategoryId.All);
   }

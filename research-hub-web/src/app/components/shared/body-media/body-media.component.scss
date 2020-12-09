@@ -1,0 +1,24 @@
+/**
+ * Blockquote
+ */
+ .blockquote-container {
+     width: 100%;
+     margin: 30px auto;
+     text-align: center;
+ }
+ .blockquote {
+    padding-left: 10px;
+    border-left: solid 4px #3a3a3a;
+    font-family: 'Times New Roman';
+    font-style: italic;
+    font-size: 24px;
+    line-height: 1.2;
+ }
+
+
+/**
+ * If viewed on a mobile device
+ */
+.blockquote-mobile {
+    width: 100%; 
+}

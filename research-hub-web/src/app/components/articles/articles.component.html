@@ -1,8 +1,11 @@
 <!-- If we're displaying a collection of articles-->
-<app-collection-list 
+<div
     *ngIf="allArticles$ | async as allArticles" 
-    [collection]="allArticles">
-</app-collection-list>
+    class="site-padding margin-bottom top-padding" 
+    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
+    <app-collection-list [collection]="allArticles"></app-collection-list>
+</div>
 
 
 <!-- If we're displaying an individual article -->
@@ -11,12 +14,6 @@
     *ngIf="article$ | async as article">
 
     <!-- Templates -->
-    <ng-template #dynamicBanner>
-        <div 
-            class="banner-container"
-            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
-        </div>  
-    </ng-template>
 
     <ng-template #breadcrumbs>
         <div 
@@ -39,6 +36,13 @@
         </div>
     </ng-template>
 
+    <ng-template #dynamicBanner>
+        <div 
+            class="banner-container"
+            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
+        </div>  
+    </ng-template>
+
     <ng-template #titleSummary>
         <h1 
             class="article-title" 
@@ -58,10 +62,11 @@
     </ng-template>
 
     <ng-template #articleBody>
-        <mat-card-content 
-            style="margin-bottom: 50px;" 
-            [innerHTML]="article.bodyText.json | richTextToHTML">
-        </mat-card-content>
+        <ngx-contentful-rich-text
+            style="word-break:break-word;" 
+            [document]="article.bodyText.json"
+            [nodeRenderers]="nodeRenderers">
+        </ngx-contentful-rich-text>
     </ng-template>
 
     <ng-template #keywords>
@@ -88,16 +93,20 @@
                 style="margin-bottom: 20px;" 
                 *ngFor="let organisation of article.relatedOrgsCollection.items" 
                 class="collection">
-                
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
-                                {{ organisation.unitName }}
+                                {{ organisation.title }}
                             </span> 
                             <br/>
                             <span class="related-item-summary">
                                 {{ organisation.summary }}
                             </span>
+                            <mat-card-actions>
+                                <a [routerLink]="'/' + organisation['__typename'].toLowerCase() + '/' + organisation['slug']">
+                                    Organisation Details ...
+                                </a>
+                            </mat-card-actions>
                         </mat-card>
                     </a>
             </mat-nav-list>
@@ -114,7 +123,6 @@
                 style="margin-bottom: 20px;" 
                 *ngFor="let contact of article.relatedContactsCollection.items" 
                 class="collection">
-                
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
@@ -138,12 +146,10 @@
 
             <!-- Related Items List -->
             <mat-nav-list 
-                style="margin-bottom: 20px;" 
                 *ngFor="let relatedItem of article.relatedItemsCollection.items" 
                 class="collection">
-                
-                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                        <mat-card>
+                        <mat-card style="padding-top: 30px;">
+                            <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename | humanCase }}</span>
                             <span class="card-title">
                                 {{ relatedItem['title'] }}
                             </span> 
@@ -151,8 +157,12 @@
                             <span class="related-item-summary">
                                 {{ relatedItem['summary'] }}
                             </span>
+                            <mat-card-actions>
+                                <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                                    See More ...
+                                </a>
+                            </mat-card-actions>
                         </mat-card>
-                    </a>
             </mat-nav-list>
         </div>
     </ng-template>
@@ -163,14 +173,12 @@
             class="column-header">
             <h4>Official Documents</h4>
             <hr/>
-
             <mat-nav-list 
                 style="margin-bottom: 20px;" 
                 *ngFor="let document of article.relatedDocsCollection.items" 
                 class="collection">
-                
-                    <a href={{document.url}} target="_blank">
-                        <mat-card>
+                        <mat-card style="padding-top: 30px;">
+                            <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">Document</span>
                             <span class="card-title">
                                 {{ document['title'] }}
                             </span> 
@@ -178,8 +186,12 @@
                             <span class="related-item-summary">
                                 {{ document['summary'] }}
                             </span>
+                            <mat-card-actions>
+                                <a href={{document.url}} target="_blank">
+                                    View Document ...
+                                </a>
+                            </mat-card-actions>
                         </mat-card>
-                    </a>
             </mat-nav-list>
         </div>
     </ng-template>
@@ -225,6 +237,7 @@
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
 
                     <!-- Keywords -->
+                    <div class="section"></div>
                     <ng-container *ngTemplateOutlet="keywords"></ng-container>
 
                 </div>
@@ -309,6 +322,6 @@
             </div>
         </div>
     </div>
-
     <!-- End of View Switcher -->
+    <div class="section"></div>
 </div>

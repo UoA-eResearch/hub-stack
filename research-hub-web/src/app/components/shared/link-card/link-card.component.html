@@ -1,0 +1,18 @@
+<div 
+    class="embedded-entry-block"
+    ngClass.xs="embedded-entry-block-mobile">
+        <mat-card>
+            <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
+            <mat-card-title>
+                <p>{{ contentItem.title }}</p>
+            </mat-card-title>              
+            <mat-card-content>
+                <small>{{ contentItem.summary }}</small>
+            </mat-card-content>   
+            <mat-card-actions>
+                <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                    Read More ...
+                </a>
+            </mat-card-actions>   
+        </mat-card>
+</div>

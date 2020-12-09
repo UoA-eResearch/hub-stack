@@ -1,0 +1,68 @@
+<!-- Default Entry Block Template -->
+<ng-template #default>
+    <mat-card-title>
+        <p>{{ contentItem.title }}</p>
+    </mat-card-title>              
+    <mat-card-content>
+        <small>{{ contentItem.summary }}</small>
+    </mat-card-content>   
+    <mat-card-actions>
+        <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+            Read More ...
+        </a>
+    </mat-card-actions>   
+</ng-template>
+
+<span [ngSwitch]="contentItem.__typename">
+
+    <!-- Article -->
+    <span *ngSwitchCase="'Article'">
+        <app-article-entry [contentItem]="contentItem"></app-article-entry>
+    </span>
+
+    <!-- Case Study -->
+    <span *ngSwitchCase="'CaseStudy'">
+        <app-case-study [contentItem]="contentItem"></app-case-study>
+    </span>
+
+    <!-- Equipment -->
+    <span *ngSwitchCase="'Equipment'">
+        <app-equipment-entry [contentItem]="contentItem"></app-equipment-entry>
+    </span>
+
+    <!-- Event -->
+    <span *ngSwitchCase="'Event'">
+        <app-event-entry [contentItem]="contentItem"></app-event-entry>
+    </span>
+
+    <!-- Link Card -->
+    <span *ngSwitchCase="'LinkCard'">
+        <app-link-card [contentItem]="contentItem"></app-link-card>
+    </span>
+
+    <!-- Official Document -->
+    <span *ngSwitchCase="'OfficialDocuments'">
+        <app-official-document [contentItem]="contentItem"></app-official-document>
+    </span>
+
+    <!-- Organisational Unit -->
+    <span *ngSwitchCase="'OrganisationalUnit'">
+        <app-organisational-unit [contentItem]="contentItem"></app-organisational-unit>
+    </span>
+
+    <!-- Service -->
+    <span *ngSwitchCase="'Service'">
+        <app-service [contentItem]="contentItem"></app-service>
+    </span>
+
+    <!-- Software -->
+    <span *ngSwitchCase="'Software'">
+        <app-software [contentItem]="contentItem"></app-software>
+    </span>
+
+    <!-- Video -->
+    <span *ngSwitchCase="'Video'">
+        <app-video-card [contentItem]="contentItem"></app-video-card>
+    </span>
+
+</span>

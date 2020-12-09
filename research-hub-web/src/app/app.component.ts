@@ -315,3 +315,4 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     return format(new Date(), 'yyyy');
   }
 }
+

@@ -121,4 +121,11 @@ export enum ResearchActivityId {
     { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
     { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
   ];
+
+  export const CategoryDisplayNames = {
+    'Policies': 'Policy',
+    'Support': 'Service',
+    'Facilities': 'Facility',
+    'Person': 'People'
+  };
   

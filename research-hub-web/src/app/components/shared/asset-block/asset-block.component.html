@@ -1,0 +1,26 @@
+<span [ngSwitch]="contentItem.contentType">
+
+    <!-- Asset Image -->
+    <span *ngSwitchCase="'image/jpeg'">
+        <div 
+            class="embedded-asset-block"
+            ngClass.xs="embedded-asset-block-mobile">
+            <a href="{{ contentItem.url }}">
+                <img src="{{ contentItem.url }}" onerror="this.src='../../../../assets/images/uoa-logo-blue.svg'"/>
+            </a>
+            <br>{{ contentItem.title }}
+            <small *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
+        </div>
+    </span>
+
+    <!-- Asset File -->
+    <span *ngSwitchDefault>
+        <div 
+            class="embedded-asset-block"
+            ngClass.xs="embedded-asset-block-mobile">
+            <a href="{{ contentItem.url }}">
+                {{ contentItem.title }}<small *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
+            </a>
+        </div>
+    </span>
+</span>

@@ -1,0 +1,18 @@
+/**
+ * YoutTube Hyperlink
+ */
+ .youtube-container {
+    position: relative;
+    align-items: center;
+    padding-top: 56.25%;
+    margin: 50px 0px;
+}
+  
+.youtube {
+    position: absolute;
+    margin: 0 auto;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}

@@ -12,46 +12,42 @@ html, body {
   padding: 0;
   color: $body-light-bg-font-color;
 }
+.section {
+  margin: 20px 0px;
+}
 
 /*
  * Text styles
- https://material.angular.io/guide/typography
+ * https://material.angular.io/guide/typography
  */
-
 h1 {
   margin-top: 0;
   color: $heading-1-font-color;
   font-family: $font-family;
 }
-
 h2 {
   color: $heading-2-font-color;
   font-family: $font-family;
 }
-
 h3 {
   color: $heading-3-font-color;
   font-family: $font-family;
 }
-
 h4 {
   color: $heading-4-font-color;
   font-family: $font-family;
   font-size: 20px;
 }
-
 p {
   color: $dark-grey;
   margin-top: 0;
   font-family: $font-family;
 }
-
 a {
   text-decoration: none;
   color: $link-light-bg-color;
   font-family: $font-family;
 }
-
 span {
   font-family: $font-family;
 }
@@ -59,66 +55,55 @@ span {
 /* app-markdown related styles
   (they don't take effect in the component scss)
  */
-
 @mixin headings {
   h1, h2, h3, h4, h5, h5 {
     @content;
   }
 }
-
 @mixin links {
   a {
     @content;
   }
 }
-
 .description {
   background-color: $color-content-summary-bg;
 }
-
 .description app-markdown {
   color: $body-light-bg-font-color;
 }
-
 .input-full-width {
   width: 100% !important;
 }
-
 .search-results-text {
   color: $color-pink !important;
   font-weight: 500;
   font-style: italic;
 }
-
 .chip-avatar {
   margin-right: 12px;
   border-radius: 50%;
 }
 
-/*
-Gloabl mat-chip style
- */
 
+/**
+ * Gloabl mat-chip style
+ */
 mat-chip.mat-chip {
   font-size: mat-font-size($app-chips-typography, button);
   font-weight: mat-font-weight($app-chips-typography, button);
 }
-
 .avatar-btn > span.mat-button-wrapper {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
-
 .avatar-btn > span.mat-button-wrapper > img {
   width: 56px;
   height: 56px;
 }
-
 .flex-hack {
   flex: 1 1 auto !important; // For Safari
   //width: 100%; // For IE 11
 }
-
 .site-content {
   @extend .flex-hack;
   margin: 0 auto;
@@ -176,52 +161,58 @@ mat-chip.mat-chip {
   margin-bottom: 5em;
 }
 
+
+/**
+ * Extra Small Mobile Settings
+ */
+.site-padding-xs {
+  @extend .site-content;
+    padding-left: $padding-site;
+    padding-right: $padding-site;
+}
+.margin-bottom-xs {
+  margin-bottom: 5em;
+}
 .back-button-padding-xs {
   @extend .site-content;
   margin-top: $padding-site / 2.0;
   padding-left: $padding-site;
   padding-right: $padding-site;
 }
-
 .site-content-padded {
   @extend .site-content;
   padding-top: 3em;
   padding-bottom: 3em;
 }
-
 .back-button {
   padding-left: 0 !important;
   min-width: 0 !important;
   padding-right: 10px !important;
 }
-
 .card-fab {
   position: absolute;
   z-index: 100;
   bottom: -28px;
   right: 28px;
 }
-
 .div-background-image {
   background-size: cover;
   background-position: center;
   width: 100%;
 }
-
 .component {
   margin: $offset-gt-xs;
   max-width: $width-page-max;
 }
-
 .component-xs {
   @extend .component;
   margin: $padding-site;
 }
 
+
 /*
  * Make app-filter-dialog take up whole page
  */
-
 app-filter-dialog {
   display: block;
   margin: -24px;
@@ -231,7 +222,6 @@ app-filter-dialog {
 /*
  * Browse and guide tiles
  */
-
 .browse-tile {
   cursor: pointer;
   background-color: $color-browse-tile-bg;
@@ -242,17 +232,14 @@ app-filter-dialog {
   background-color: $color-guide-tile-bg;
   text-decoration: none;
 }
-
 .tile-content {
   text-align: center;
 }
-
 .tile-text {
   color: $browse-tile-font-color;
   transform: translate(0%, -50%);
   @include mat-typography-level-to-styles($app-browse-grid-typography, body-1);
 }
-
 .tile-icon {
   color: $browse-tile-font-color;
   font-size: mat-font-size($app-browse-grid-typography, body-2);
@@ -263,6 +250,7 @@ app-filter-dialog {
   left: 0; // For IE11, so that the icon will be centred, despite absolute positioning being used
 }
 
+
 /*
  * Override site-wide material design tooltip style
  */
@@ -272,14 +260,17 @@ app-filter-dialog {
   background-color: #004059;
 }
 
+
 /*
  * Top menu drop-down style
  */
-.mat-menu-content, .mat-menu-item {
+.mat-menu-content, 
+.mat-menu-item {
   background-color: #0294A5;
   color: #ffffff;
   font-size: mat-font-size($app-base-typography, body-1);
 }
+
 
 /*
  * Guide breadcrumb

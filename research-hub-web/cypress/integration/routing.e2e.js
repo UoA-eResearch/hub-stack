@@ -21,7 +21,7 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
 
     it('can visit /cer and load a SubHub', () => {
         cy.visit('/cer');
-        cy.contains('Pages in this SubHub');
+        cy.contains('Centre for eResearch');
         cy.contains('CeR. A root level SubHub.');
     });
 

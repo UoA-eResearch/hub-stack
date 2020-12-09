@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { pluck, map, flatMap, tap } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, Type } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { pluck, map, flatMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
+import { BodyMediaService } from '@services/body-media.service';
 import {
   AllArticlesGQL,
   GetArticleBySlugGQL,
@@ -11,6 +12,9 @@ import {
   Article,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { NodeRenderer } from 'ngx-contentful-rich-text';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
   selector: 'app-articles',
@@ -18,10 +22,19 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
   styleUrls: ['./articles.component.scss']
 })
 export class ArticlesComponent implements OnInit {
+  nodeRenderers: Record<string, Type<NodeRenderer>> = {
+    [BLOCKS.QUOTE]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
+    [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
+  };
 
-  public allArticles$: Observable<ArticleCollection>;
-  public article$: Observable<Article>;
   public slug: string;
+  public article$: Observable<Article>;
+  public allArticles$: Observable<ArticleCollection>;
+  public bodyMediaSub: Subscription;
   public parentSubHubs;
 
   constructor(
@@ -30,7 +43,9 @@ export class ArticlesComponent implements OnInit {
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public getArticleByIDGQL: GetArticleByIdGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService
+    public appComponentService: AppComponentService,
+    public bodyMediaService: BodyMediaService,
+    public router: Router
   ) { }
 
   async ngOnInit() {
@@ -46,8 +61,11 @@ export class ArticlesComponent implements OnInit {
      */
     if (!!this.slug) {
       this.getArticleBySlug(this.slug).subscribe(data => {
-        this.article$ = this.getArticleByID(data.sys.id)
-          .pipe(tap(res => this.appComponentService.setTitle(res.title)))
+        this.article$ = this.getArticleByID(data.sys.id);
+        this.article$.subscribe(res => {
+          this.bodyMediaService.setBodyMedia(res.bodyText.links);
+        });
+        this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {

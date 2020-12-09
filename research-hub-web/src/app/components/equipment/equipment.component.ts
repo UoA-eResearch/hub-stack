@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck, tap, flatMap, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
@@ -11,10 +11,13 @@ import {
     GetEquipmentBySlugGQL,
     GetEquipmentByIdGQL,
     Equipment 
-} from '@graphql/schema';
+} from '../../graphql/schema';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { CerGraphqlService } from '@services/cer-graphql.service';
 import { AppComponentService } from '@app/app.component.service';
-
+import { BodyMediaService } from '@services/body-media.service';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 
 @Component({
@@ -23,6 +26,14 @@ import { AppComponentService } from '@app/app.component.service';
   styleUrls: ['./equipment.component.scss']
 })
 export class EquipmentComponent implements OnInit {
+  nodeRenderers: Record<string, Type<NodeRenderer>> = {
+    [BLOCKS.QUOTE]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
+    [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent
+  };
 
   public allEquipment$: Observable<EquipmentCollection>;
   public equipment$: Observable<Equipment>;
@@ -36,6 +47,7 @@ export class EquipmentComponent implements OnInit {
     public getEquipmentByIDGQL: GetEquipmentByIdGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
+    private bodyMediaService: BodyMediaService
   ) { }
 
   async ngOnInit() {
@@ -51,8 +63,12 @@ export class EquipmentComponent implements OnInit {
      */
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
-        this.equipment$ = this.getEquipmentByID(data.sys.id)
-        .pipe(tap(res => this.appComponentService.setTitle(res.title)));
+        this.equipment$ = this.getEquipmentByID(data.sys.id);
+        this.equipment$.subscribe(res => {
+          this.bodyMediaService.setBodyMedia(res.bodyText.links);
+          this.appComponentService.setTitle(res.title);
+        });
+        this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
