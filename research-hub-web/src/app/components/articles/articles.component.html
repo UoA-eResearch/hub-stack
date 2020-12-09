@@ -68,7 +68,7 @@
         <h4 id="keywords">Keywords<hr/></h4>
         <mat-card-subtitle 
             fxLayout="row wrap"> 
-            <span *ngFor="let keyword of article.keywords">
+            <span *ngFor="let keyword of article?.keywords">
                 <mat-card 
                     fxLayout="row" 
                     class="keyword-card">

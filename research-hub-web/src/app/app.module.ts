@@ -102,8 +102,16 @@ export class AppModule {
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
     const error = onError(({ networkError, graphQLErrors }) => {
+      this.loginService.isAuthenticated().then( data => {
+        console.log("Logged in?"+data);
+      });
       if (networkError) {
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
+          this.loginService.doLogin(this.router.url);
+        }
+      }
+      if (graphQLErrors) {
+        if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
           this.loginService.doLogin(this.router.url);
         }
       }
