@@ -1,4 +1,18 @@
-<div style="margin-bottom: 2em;">
+<!-- Banner -->
+<div 
+  class="banner-container-home"
+  [ngStyle]="{ 'background-image': coverImageUrl }">
+  <div class="banner-content-home">
+    <h1>{{ title }}</h1>
+    <h4>{{ summary }}</h4>
+  </div>
+</div> 
+
+<div 
+  class="site-padding margin-bottom top-padding"
+  ngClass.sm="site-padding-sm margin-bottom top-padding"
+  ngClass.xs="site-padding-xs margin-bottom top-padding"
+  style="margin-bottom: 2em;">
   <h2>Thank you!</h2>
   <p>We are developing the ResearchHub further and would be grateful for your feedback.
     This will give us pointers for user-led refinement and further development of the interface content displayed
@@ -8,8 +22,8 @@
     Thank you,<br/>
     The Development Team
   </p>
-</div>
 
-<div fxLayout="row" fxLayoutGap="1em">
-  <a mat-raised-button color="accent" href="https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform" target="_blank" (click)="analyticsService.trackFeedback(location.path())">Provide Feedback</a>
+  <div fxLayout="row" fxLayoutGap="1em">
+    <a mat-raised-button color="accent" href="https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform" target="_blank" (click)="analyticsService.trackFeedback(location.path())">Provide Feedback</a>
+  </div>
 </div>

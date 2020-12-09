@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { OptionsService } from '@services/options.service';
 import { AnalyticsService } from '@services/analytics.service';
+import { 
+  ResearchActivityId, 
+  researchActivityOptions,
+  OptionType
+} from '@app/global/global-variables';
 
 @Component({
   selector: 'app-research-activity',
@@ -8,13 +12,12 @@ import { AnalyticsService } from '@services/analytics.service';
   styleUrls: ['./research-activity.component.scss']
 })
 export class ResearchActivityComponent implements OnInit {
-
-  constructor(public optionsService: OptionsService, public analyticsService: AnalyticsService) {
-
-  }
+  public researchActivityOptions = researchActivityOptions;
+  
+  constructor(public analyticsService: AnalyticsService) {}
 
   getQueryParams(activity) {
-    return { researchActivityIds: [activity.id] };
+    return { researchActivityId: [activity.id] };
   }
 
   ngOnInit() {

@@ -1,261 +1,59 @@
 query GetArticleByID($id: String!) {
-      article(id: $id) {
+  article(id: $id) {
+    __typename
+      sys {
+        id
+      }
+      title
+      slug
+      ssoProtected
+      searchable
+      banner {
         title
-        summary
-        ssoProtected
-        viewType
-        body {
-          json
-          links {
-            entries {
-              block {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-              }
-              inline {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-              }
-              hyperlink {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-              }
-            }
-            assets {
-              block {
-                title
-                description
-                url
-              }
-            }
+        description
+        url
+      }
+      icon {
+        title
+        description
+        url
+      }
+      summary
+      bodyText {
+        json 
+        links {
+          entries {
+            block { ...PublicFields }
+            inline { ...PublicFields }
+            hyperlink { ...PublicFields }
           }
-        }
-        keywords
-        slug
-        ssoProtected
-        searchable
-        icon {
-          title
-          description
-          url
-        }
-        relatedContactsCollection {
-          items {
-            ... on Person {
-              name
+          assets {
+            block {
               title
-              jobTitle
-              image {
-                url
-              }
+              description
+              url
             }
-          }
-        }
-        relatedItemsCollection {
-          items {
-            ... on Article {
+            hyperlink {
               title
-              summary
-              slug
-            }
-            ... on Service {
-              title
-              summary
-              slug
-            }
-            ... on Equipment {
-              title
-              summary
-              slug
-            }
-          }
-        }
-        officialDocumentsCollection {
-          items {
-            ... on OfficialDocuments {
-              title
-              summary
+              description
               url
             }
           }
         }
-        relatedOrganisationsCollection {
-          items {
-            ... on Article {
-              title
-              summary
-              slug
-            }
-            ... on Service {
-              title
-              summary
-              slug
-            }
-            ... on Equipment {
-              title
-              summary
-              slug
-            }
-          }
-        }
       }
-    }
+      keywords
+      relatedItemsCollection {
+        items { ...PublicFields }
+      }
+      relatedContactsCollection {
+        items { ...PublicFields }
+      }
+      relatedOrgsCollection {
+        items { ...PublicFields }
+      }
+      relatedDocsCollection {
+        items { ...PublicFields }
+      }
+      viewType
+  }
+}

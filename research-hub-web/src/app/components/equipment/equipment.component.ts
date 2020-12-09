@@ -11,8 +11,10 @@ import {
     GetEquipmentBySlugGQL,
     GetEquipmentByIdGQL,
     Equipment 
-} from '../../graphql/schema';
-import { CerGraphqlService } from '../../services/cer-graphql.service';
+} from '@graphql/schema';
+import { CerGraphqlService } from '@services/cer-graphql.service';
+import { AppComponentService } from '@app/app.component.service';
+
 
 
 @Component({
@@ -25,10 +27,6 @@ export class EquipmentComponent implements OnInit {
   public allEquipment$: Observable<EquipmentCollection>;
   public equipment$: Observable<Equipment>;
   public slug: string;
-  // public assets: Array<any>;
-  // public inlineEntry: Array<any>;
-  // public blockEntry: Array<any>;
-  // public hyperlinkEntry: Array<any>;
   public parentSubHubs;
 
   constructor(
@@ -36,7 +34,8 @@ export class EquipmentComponent implements OnInit {
     public allEquipmentGQL: AllEquipmentGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public getEquipmentByIDGQL: GetEquipmentByIdGQL,
-    public cerGraphQLService: CerGraphqlService
+    public cerGraphQLService: CerGraphqlService,
+    public appComponentService: AppComponentService,
   ) { }
 
   async ngOnInit() {
@@ -52,16 +51,12 @@ export class EquipmentComponent implements OnInit {
      */
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
-        this.equipment$ = this.getEquipmentByID(data.sys.id);
-        // this.equipment$.subscribe(data => {
-        //   this.assets = data.body.links.assets.block;
-        //   this.inlineEntry = data.body.links.entries.inline;
-        //   this.blockEntry = data.body.links.entries.block;
-        //   this.hyperlinkEntry = data.body.links.entries.hyperlink;
-        // });
+        this.equipment$ = this.getEquipmentByID(data.sys.id)
+        .pipe(tap(res => this.appComponentService.setTitle(res.title)));
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
+      this.appComponentService.setTitle('Equipment');
       this.allEquipment$ = this.getAllEquipment();
     }
   }
@@ -104,7 +99,7 @@ export class EquipmentComponent implements OnInit {
   public getEquipmentByID(id: string): Observable<Equipment> {
     try {
       return this.getEquipmentByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.equipment)) as unknown as Observable<Equipment>;
+        .pipe(map(x => x.data.equipment)) as Observable<Equipment>;
     } catch (e) { console.error(`Error loading article ${id}:`, e); }
   }
 }

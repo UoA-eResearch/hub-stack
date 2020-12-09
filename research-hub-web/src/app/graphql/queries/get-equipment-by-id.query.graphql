@@ -1,283 +1,126 @@
 query GetEquipmentByID($id: String!) {
-      equipment(id: $id) {
-        title
-        summary
-        ssoProtected
-        viewType
-        body {
-          json
-          links {
-            entries {
-              block {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-              }
-              inline {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-              }
-              hyperlink {
-                ... on Article {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Service {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on Equipment {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on SubHub {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on CaseStudy {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  slug
-                }
-                ... on OfficialDocuments {
-                  sys {
-                    id
-                  }
-                  title
-                  summary
-                  url
-                }
-                ... on Person {
-                  sys {
-                    id
-                  }
-                  name
-                  jobTitle
-                }
-              }
-            }
-            assets {
-              block {
-                title
-                description
-                url
-              }
-            }
+  equipment(id: $id) {
+    __typename
+    sys {
+      id
+    }
+    title
+    slug
+    ssoProtected
+    searchable
+    mainImage {
+      title
+      description
+      url
+    }
+    icon {
+      title
+      description
+      url
+    }
+    summary
+    bodyText {
+      json 
+      links {
+        entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
+        assets {
+          block {
+            title
+            description
+            url
           }
-        }
-        keywords
-        slug
-        ssoProtected
-        searchable
-        overview {
-          json
-        }
-        userFacingSupportCollection {
-          items {
-            ... on Person {
-              name
-              title
-              jobTitle
-              image {
-                url
-              }
-            }
-          }
-        }
-        equipmentOwnerCollection {
-          items {
-            ... on Person {
-              name
-              title
-              jobTitle
-              image {
-                url
-              }
-            }
-          }
-        }
-        mainImage {
-          url
-        }
-        icon {
-          title
-          description
-          url
-        }
-        features {
-          json
-        }
-        limitations {
-          json
-        }
-        type
-        manufacturer
-        model
-        eligibility {
-          json
-        }
-        costToUse {
-          json
-        }
-        location
-        trainingRequired {
-          json
-        }
-        trainingProvided {
-          json
-        }
-        yearOfManufacture
-        access {
-          json
-        }
-        helpAndSupport {
-          json
-        }
-        considerations {
-          json
-        }
-        relatedItemsCollection {
-          items {
-            ... on Article {
-              title
-              summary
-              slug
-            }
-            ... on Service {
-              title
-              summary
-              slug
-            }
-            ... on Equipment {
-              title
-              summary
-              slug
-            }
+          hyperlink {
+            title
+            description
+            url
           }
         }
       }
     }
+    keywords
+    manufacturer
+    model
+    yearOfManufacture
+    link
+    relatedItemsCollection {
+      items { ...PublicFields }
+    }
+    relatedContactsCollection {
+      items { ...PublicFields }
+    }
+    relatedOrgsCollection {
+      items { ...PublicFields }
+    }
+    eligibility {
+      json 
+      links {
+        entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
+        assets {
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
+        }
+      }
+    }
+    costToUse {
+      json 
+      links {
+        entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
+        assets {
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
+        }
+      }
+    }
+    location
+    access {
+      json 
+      links {
+        entries {
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
+        assets {
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
+        }
+      }
+    }
+  }
+}

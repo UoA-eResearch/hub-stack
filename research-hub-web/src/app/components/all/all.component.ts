@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery } from '@graphql/schema';
 import { Observable } from 'rxjs';
-import { pluck, tap } from 'rxjs/operators';
+import { pluck } from 'rxjs/operators';
+import { AppComponentService } from '../../app.component.service';
 
 @Component({
   selector: 'app-all',
@@ -12,9 +13,12 @@ export class AllComponent implements OnInit {
 
   public allSearchableContent$: Observable<AllSearchableContentPublicFieldsQuery>;
 
-  constructor(public allSearchableContentPublicFieldsGQL: AllSearchableContentPublicFieldsGQL) { }
+  constructor(
+    public allSearchableContentPublicFieldsGQL: AllSearchableContentPublicFieldsGQL,
+    public appComponentService: AppComponentService) { }
 
   ngOnInit(): void {
+    this.appComponentService.setTitle('All');
     try {
       this.allSearchableContent$ = this.getAllSearchableContent();
     } catch (e) { console.error('Error loading all content:', e); }

@@ -1,6 +1,9 @@
 <div #resultsDummyHeader></div>
-
-<h2 class="search-results-title">Results</h2>
+<div
+  class="site-padding"
+  ngClass.sm="site-padding-sm"
+  ngClass.xs="site-padding-xs">
+  <h2 class="search-results-title">Results</h2>
 
 <div class="summary-section" *ngIf="!showEmptyState">
   <div fxLayout="row" fxLayoutAlign="start center">
@@ -20,6 +23,7 @@
     <category-list [selectedCategory]="filtersForm.controls.categoryId.value"
       (selectedCategoryChange)="setCategory($event)" compact="true"></category-list>
   </div>
+
 
   <div fxLayout="row" fxLayoutAlign="start center" class="refine-search" ngClass.xs="small" *ngIf="!filterVisible">
     <div fxFlex>
@@ -109,3 +113,4 @@
   [length]="resultsPage.totalElements" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="pageSizeOptions"
   (page)="onPageChange($event)">
 </mat-paginator>
+</div>

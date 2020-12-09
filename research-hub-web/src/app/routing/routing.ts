@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 import { HomeComponent } from '@components/home/home.component';
-import { SubhubRoutesResolverService } from "../services/subhub-routes-resolver.service";
+// import { SubhubRoutesResolverService } from "../services/subhub-routes-resolver.service";
 
 
 export const appRoutes: Routes = [
@@ -21,6 +21,7 @@ export const appRoutes: Routes = [
     {
       path: 'home',
       canActivate: [LoginSuccessGuard],
+      // resolve: [SubhubRoutesResolverService],
       component: HomeComponent,
       // loadChildren: () => import('@components/home/home.module').then((m) => m.HomeModule),
     },
@@ -112,7 +113,8 @@ export const appRoutes: Routes = [
       loadChildren: () => import('@components/content-details/content-details.module').then(m => m.ContentDetailsModule),
       data: { contentId: 73 }
     },
-    { path: '**', canActivate: [SubhubRoutesResolverService], redirectTo: "home"}
+    // { path: '**', canActivate: [SubhubRoutesResolverService], redirectTo: "home"}
+    { path: '**',  redirectTo: "home"}
   ]}
   
 ];

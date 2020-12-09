@@ -2,6 +2,7 @@ query GetArticleBySlug($slug: String) {
     articleCollection(where: {slug: $slug}) {
         items {
             ssoProtected
+            title
             sys {
                 id
             }
