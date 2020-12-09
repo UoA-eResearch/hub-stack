@@ -28,7 +28,7 @@ mat-expansion-panel, mat-card  {
     }
 
     #keywords {
-        color: $color-primary;
+        color: map-get($hub-navy, 500);
     }
 
     .related-item-summary {
