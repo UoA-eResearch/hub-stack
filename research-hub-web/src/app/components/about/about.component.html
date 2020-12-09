@@ -1,5 +1,8 @@
 <div 
-  class="banner-container-home"
+  class="banner-container-home site-padding"
+  ngClass.xs="site-padding-xs padding-bottom-xs" 
+  ngClass.sm="site-padding-sm padding-bottom-sm"
+  ngClass.md="site-padding-sm padding-bottom-sm"
   [ngStyle]="{ 'background-image': coverImageUrl }">
   <div class="banner-content-home">
     <h1>{{ title }}</h1>
@@ -8,9 +11,9 @@
 </div> 
 
 <div
-  class="site-padding top-padding margin-bottom"
-  ngClass.xs="site-padding-xs top-padding margin-bottom"
-  ngClass.sm="site-padding-sm top-padding margin-bottom">
+  class="site-padding top-padding-2 padding-bottom-2"
+  ngClass.xs="site-padding-xs top-padding padding-bottom"
+  ngClass.sm="site-padding-sm top-padding padding-bottom">
   <h2>Message from the Director</h2>
 
   <div class="the-director div-background-image" ngClass.xs="the-director-xs" [ngStyle]="{'background-image': 'url(' + theDirectorUrl + ')'}"></div>

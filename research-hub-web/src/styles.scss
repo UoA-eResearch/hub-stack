@@ -1,20 +1,33 @@
 @import 'themes';
 @import 'typography';
 
+/**
+ * Default Styles
+ */
+
 * { 
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
    box-sizing: border-box; 
 }
-
 html, body {
   margin: 0;
   padding: 0;
   color: $body-light-bg-font-color;
 }
+hr {
+  border-color: $light-grey;
+}
 .section {
   margin: 20px 0px;
 }
+.section-2 {
+  margin: 40px 0px;
+}
+.mat-card {
+  border-radius: 0px!important;
+}
+
 
 /*
  * Text styles
@@ -131,8 +144,11 @@ mat-chip.mat-chip {
   padding-top: $padding-site-top * 3;
 }
 
-.margin-bottom {
-  margin-bottom: 5em;
+.bottom-padding {
+  padding-bottom: $padding-site-bottom;
+}
+.bottom-padding-2 {
+  padding-bottom: $padding-site-bottom * 3;
 }
 
 /**
@@ -144,8 +160,8 @@ mat-chip.mat-chip {
     padding-right: $padding-site / 2;
 }
 
-.margin-bottom-sm {
-  margin-bottom: 5em;
+.padding-bottom-sm {
+  padding-bottom: $padding-site-bottom / 2;
 }
 
 /**
@@ -157,22 +173,11 @@ mat-chip.mat-chip {
     padding-right: $padding-site / 4;
 }
 
-.margin-bottom-xs {
-  margin-bottom: 5em;
+.padding-bottom-xs {
+  padding-bottom: $padding-site-bottom / 4;
 }
 
 
-/**
- * Extra Small Mobile Settings
- */
-.site-padding-xs {
-  @extend .site-content;
-    padding-left: $padding-site;
-    padding-right: $padding-site;
-}
-.margin-bottom-xs {
-  margin-bottom: 5em;
-}
 .back-button-padding-xs {
   @extend .site-content;
   margin-top: $padding-site / 2.0;
@@ -278,3 +283,62 @@ app-filter-dialog {
   content: ' • ';
   color: map-get($hub-teal, 500);
 }
+
+
+/**
+ * Content Titles
+ */
+ .content-title {
+  color: map-get($hub-navy, 500);
+  font-size: 50px;
+  font-weight: bold; 
+  line-height: 110%;
+}
+.content-title-xs {
+  font-size: 30px;
+}
+
+
+/**
+ * Content Summary
+ */
+.content-summary {
+  color: $color-icon;
+  font-size: 20px; 
+  line-height: 110%;
+}
+.content-summary-xs {
+  font-size: 15px; 
+}
+
+/**
+ * Custom Styles
+ */
+.standard-button {
+  color: white;
+  border: 2px solid map-get($hub-teal, 500);
+  border-radius: 50px!important;
+  background-color: map-get($hub-teal, 500);
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+.standard-button:hover {
+  color: map-get($hub-teal, 500);
+  border-radius: 50px!important;
+  background-color: white;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+.alternate-button {
+  color: map-get($hub-teal, 500);
+  border: 2px solid white;
+  border-radius: 50px!important;
+  background-color: white;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+.alternate-button:hover {
+  color: white;
+  border-radius: 50px!important;
+  background-color: map-get($hub-teal, 500);
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+

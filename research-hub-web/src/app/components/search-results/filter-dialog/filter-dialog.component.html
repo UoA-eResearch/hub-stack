@@ -11,7 +11,7 @@
   <app-search-filters *ngIf="filtersForm" compact="true" [filtersForm]="filtersForm"></app-search-filters>
   <div style="float: right; padding-top: 3em">
     <span style="color: #2f99cc; padding-right: 1em; cursor: pointer" (click)="clear();"> Reset </span>
-    <button mat-raised-button color="accent" (click)="save();close()">
+    <button mat-flat-button class="standard-button" (click)="save();close()">
       Refine Search
     </button>
   </div>

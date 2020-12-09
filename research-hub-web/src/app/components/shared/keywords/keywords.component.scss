@@ -1,0 +1,22 @@
+@import '../../../../themes.scss';
+
+
+/**
+ * Keyword 
+ */
+#keywords {
+    color: map-get($hub-navy, 500);
+}
+
+
+/**
+ * Keyword Card
+ */
+.keyword-card {
+    color: $silver;
+    background: $light-grey;
+    margin: 5px; 
+    padding: 5px 10px;
+    border-radius: 50px!important;
+    box-shadow: none !important;
+}

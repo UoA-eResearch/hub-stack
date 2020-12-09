@@ -49,11 +49,6 @@ export class SubhubsComponent implements OnInit {
     public router: Router
   ) { }
 
-  internalNavigate(path) {
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.navigate([path]);
-  }
-
   async ngOnInit() {
 
     /**

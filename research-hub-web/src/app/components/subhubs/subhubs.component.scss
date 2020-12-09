@@ -28,47 +28,10 @@ div.mat-card-avatar mat-icon {
     font-size: 8px;
 }
 
-#keywords {
-    color: map-get($hub-navy, 500);
-}
-
 .related-item-summary {
     color: gray;
 }
 
-
-// Vanilla CSS
-
-// SubHub Title
-.subhub-title {
-    color: map-get($hub-navy, 500);
-    font-size: 50px;
-    font-weight: bold; 
-    line-height: 110%;
-}
-
-.subhub-title-sm {
-    font-size: 35px;
-}
-
-.subhub-title-xs {
-    font-size: 25px;
-}
-
-// SubHub Summary
-.subhub-summary {
-    font-size: 20px; 
-    color: $color-icon;
-    line-height: 110%;
-}
-
-.subhub-summary-sm {
-    font-size: 20px; 
-}
-
-.subhub-summary-xs {
-    font-size: 15px; 
-}
 
 // Banner Styling
 .banner-container {
@@ -147,18 +110,8 @@ hr {
     padding: 10px 5px 0px 5px;
 }
 
-// Media Collection
-.media-panel {
-    @extend .margin-bottom;
-}
-
-.media-panel img{
-    width: 10vw;
-}
-
 // SubHub Children
 #subhub-children {
-    @extend .margin-bottom;
     background: #F2F2F2;
     padding-top: $padding-site-top * 2;
     padding-bottom: $padding-site-top * 2;

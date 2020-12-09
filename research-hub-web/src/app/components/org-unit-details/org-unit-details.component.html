@@ -1,7 +1,7 @@
 <div
-  class="site-padding top-padding margin-bottom"
-  ngClass.sm="site-padding-sm top-padding margin-bottom"
-  ngClass.xs="site-padding-xs top-padding margin-bottom">
+  class="site-padding top-padding padding-bottom"
+  ngClass.sm="site-padding-sm top-padding padding-bottom-sm"
+  ngClass.xs="site-padding-xs top-padding padding-bottom-xs">
   <div *ngIf="orgUnit" fxLayout="column" fxLayoutGap="1em">
     <mat-card>
       <mat-card-header>
@@ -16,8 +16,10 @@
       <mat-card-content>
         <div fxLayout="column" fxLayoutGap="1em">
           <div fxFlex="36px" fxFlexAlign="end">
-            <a mat-raised-button color="accent" [href]="orgUnit.url" (click)="trackAction()" target="_blank">
-              Explore
+            <a [href]="orgUnit.url" (click)="trackAction()" target="_blank">
+              <button mat-flat-button class="standard-button">
+                Explore
+              </button>
             </a>
           </div>
         </div>

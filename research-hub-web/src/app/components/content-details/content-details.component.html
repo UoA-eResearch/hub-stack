@@ -1,8 +1,8 @@
 <ng-container *ngIf="content && !isGuide()">
   <div 
-    class="site-padding top-padding margin-bottom"
-    ngClass.sm="site-padding-sm top-padding margin-bottom"
-    ngClass.xs="site-padding-xs top-padding margin-bottom">
+    class="site-padding top-padding padding-bottom"
+    ngClass.sm="site-padding-sm top-padding padding-bottom"
+    ngClass.xs="site-padding-xs top-padding padding-bottom">
     <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
       <div class="flex-hack" fxFlex="60" fxLayout="column" fxLayoutGap="1em" [ngStyle.lt-lg]="{'margin-top': '1em'}">
         <mat-card>
@@ -103,14 +103,14 @@
 <!-- Multi-page guides, not to be confused with knowledge articles -->
 <ng-container *ngIf="content && isGuide()">
   <div 
-    class="site-padding top-padding margin-bottom"
-    ngClass.sm="site-padding-sm top-padding margin-bottom"
-    ngClass.xs="site-padding-xs top-padding margin-bottom" 
+    class="site-padding top-padding padding-bottom"
+    ngClass.sm="site-padding-sm top-padding padding-bottom"
+    ngClass.xs="site-padding-xs top-padding padding-bottom" 
     fxLayout="column" 
     fxLayoutGap="1em">
     <mat-card class="description">
       <h2>{{content.name}}</h2>
-      <div style="display: block;margin-bottom: 1em;">
+      <div style="display: block;padding-bottom: 1em;">
         <a [routerLink]="['/search']" [queryParams]="{categoryId: CONTENT_TYPE_ID_GUIDE}">Guides</a><span
           class="breadcrumb-separator"></span>
         <a [routerLink]="['./']">{{content.name}}</a>

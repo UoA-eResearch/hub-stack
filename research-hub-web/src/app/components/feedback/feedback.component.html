@@ -1,7 +1,10 @@
 <!-- Banner -->
 <div 
-  class="banner-container-home"
-  [ngStyle]="{ 'background-image': coverImageUrl }">
+  style="background: url('assets/images/banner19.jpg');"
+  class="banner-container-home site-padding"
+  ngClass.xs="site-padding-xs padding-bottom-xs" 
+  ngClass.sm="site-padding-sm padding-bottom-sm"
+  ngClass.md="site-padding-sm padding-bottom-sm">
   <div class="banner-content-home">
     <h1>{{ title }}</h1>
     <h4>{{ summary }}</h4>
@@ -9,10 +12,9 @@
 </div> 
 
 <div 
-  class="site-padding margin-bottom top-padding"
-  ngClass.sm="site-padding-sm margin-bottom top-padding"
-  ngClass.xs="site-padding-xs margin-bottom top-padding"
-  style="margin-bottom: 2em;">
+  class="site-padding padding-bottom top-padding"
+  ngClass.sm="site-padding-sm padding-bottom-sm top-padding"
+  ngClass.xs="site-padding-xs padding-bottom-xs top-padding">
   <h2>Thank you!</h2>
   <p>We are developing the ResearchHub further and would be grateful for your feedback.
     This will give us pointers for user-led refinement and further development of the interface content displayed
@@ -23,7 +25,18 @@
     The Development Team
   </p>
 
-  <div fxLayout="row" fxLayoutGap="1em">
-    <a mat-raised-button color="accent" href="https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform" target="_blank" (click)="analyticsService.trackFeedback(location.path())">Provide Feedback</a>
+  <div 
+    fxLayout="row" 
+    fxLayoutGap="1em">
+    <a 
+      href="https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform" 
+      target="_blank" 
+      (click)="analyticsService.trackFeedback(location.path())">
+        <button 
+          mat-flat-button 
+          class="standard-button">
+            Provide Feedback
+        </button>
+    </a>
   </div>
 </div>

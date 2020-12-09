@@ -26,6 +26,8 @@ import { ArticleEntryComponent } from './article-entry/article-entry.component';
 import { EventEntryComponent } from './event-entry/event-entry.component';
 import { OrganisationalUnitComponent } from './organisational-unit/organisational-unit.component';
 import { ServiceComponent } from './service/service.component';
+import { KeywordsComponent } from './keywords/keywords.component';
+import { CardsComponent } from './cards/cards.component';
 
 
 @NgModule({
@@ -58,7 +60,9 @@ import { ServiceComponent } from './service/service.component';
     ArticleEntryComponent,
     EventEntryComponent,
     OrganisationalUnitComponent,
-    ServiceComponent
+    ServiceComponent,
+    KeywordsComponent,
+    CardsComponent
   ],
   exports: [
     FlexLayoutModule,
@@ -70,7 +74,22 @@ import { ServiceComponent } from './service/service.component';
     ListItemToRouterLinkPipe,
     HumanCasePipe,
     CollectionListComponent,
-    RichTextToHTML
+    RichTextToHTML,
+    LinkCardComponent,
+    SoftwareComponent,
+    VideoCardComponent,
+    CaseStudyComponent,
+    OfficialDocumentComponent,
+    AssetBlockComponent,
+    EntryBlockComponent,
+    EntryInlineComponent,
+    EquipmentEntryComponent,
+    ArticleEntryComponent,
+    EventEntryComponent,
+    OrganisationalUnitComponent,
+    ServiceComponent,
+    KeywordsComponent,
+    CardsComponent
   ],
   providers: [],
 })

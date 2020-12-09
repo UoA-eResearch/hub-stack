@@ -43,3 +43,26 @@ div.collection {
         color: $color-primary;
     }
 }
+/**
+ * Result title
+ */
+.mat-card-title {
+    color: map-get($hub-navy, 500);
+}
+
+
+/**
+ * Result Summary
+ */
+ .mat-card-subtitle {
+    color: $color-icon;
+}
+
+
+/**
+ * Lock Icon
+ */
+.mat-icon {
+    color: $color-icon;
+    font-size: 18px;
+}

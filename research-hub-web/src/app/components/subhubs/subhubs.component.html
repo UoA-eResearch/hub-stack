@@ -1,9 +1,9 @@
 <!-- Displaying all SubHubs -->
 <div
     *ngIf="allSubHubs$ | async as allSubHubs" 
-    class="site-padding margin-bottom top-padding" 
-    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
-    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
+    class="site-padding padding-bottom top-padding" 
+    ngClass.xs="site-padding-xs padding-bottom-xs top-padding" 
+    ngClass.sm="site-padding-sm padding-bottom-sm top-padding">
     <app-collection-list [collection]="allSubHubs"></app-collection-list>
 </div>
 
@@ -49,51 +49,6 @@
             </div>
         </ng-template>
 
-        <ng-template #relatedItems>
-            <div 
-                *ngIf="subhub.relatedItemsCollection.items.length > 0" 
-                id="you-might-be-interested-in">
-                <h4>You might also be interested in<hr/></h4>
-    
-                <!-- Related Items List -->
-                <mat-nav-list 
-                    style="margin-bottom: 20px;" 
-                    *ngFor="let relatedItem of subhub.relatedItemsCollection.items" 
-                    class="collection">
-                            <mat-card style="padding-top: 30px;">
-                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename | humanCase }}</span>
-                                <span class="card-title">
-                                    {{ relatedItem['title'] }}
-                                </span> 
-                                <br/>
-                                <span class="related-item-summary">
-                                    {{ relatedItem['summary'] }}
-                                </span>
-                                <mat-card-actions>
-                                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                                        Read More ...
-                                    </a>
-                                </mat-card-actions>
-                            </mat-card>
-                </mat-nav-list>
-            </div>
-        </ng-template>    
-
-        <ng-template #keywords>
-            <div *ngIf="subhub.keywords.length > 0">
-                <h4>Keywords<hr/></h4>
-                <mat-card-subtitle fxLayout="row wrap">
-                    <span *ngFor="let keyword of subhub.keywords">
-                        <mat-card 
-                            fxLayout="row" 
-                            class="keyword-card">
-                                {{ keyword | humanCase }}
-                        </mat-card>
-                    </span>
-                </mat-card-subtitle>
-            </div>
-        </ng-template>
-
         <ng-template #breadcrumbs>
             <div 
                 id="breadcrumbs" 
@@ -134,18 +89,18 @@
                         <!-- Title and Summary for View 1 -->
                         <!-- Title -->
                         <h1 
-                            class="subhub-title" 
-                            ngClass.sm="subhub-title-sm" 
-                            ngClass.xs="subhub-title-xs"
+                            class="content-title" 
+                            ngClass.sm="content-title-sm" 
+                            ngClass.xs="content-title-xs"
                             style="color: white;">
                                 {{ subhub.title }}
                         </h1>
 
                         <!-- Summary -->
                         <h3 
-                            class="subhub-summary" 
-                            ngClass.sm="subhub-summary-sm" 
-                            ngClass.xs="subhub-summary-xs"
+                            class="content-summary" 
+                            ngClass.sm="content-summary-sm" 
+                            ngClass.xs="content-summary-xs"
                             style="color: white">
                                 <small>{{ subhub.summary }}</small>
                         </h3>
@@ -180,10 +135,13 @@
                         <div fxFlex="30%">
 
                             <!-- Related Items -->
-                            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                            <app-cards 
+                                [title]="'You might be interested in'" 
+                                [contentItem]="subhub.relatedItemsCollection">
+                            </app-cards>
 
                             <!-- Keywords -->
-                            <ng-container *ngTemplateOutlet="keywords"></ng-container>
+                            <app-keywords [contentItem]="subhub.keywords"></app-keywords>
                         </div>
                     </div>
                 </div>
@@ -210,17 +168,17 @@
                     <!-- Title and Summary -->
                     <div>
                         <h1
-                            class="subhub-title site-padding" 
-                            ngClass.sm="subhub-title-sm site-padding-sm" 
-                            ngClass.xs="subhub-title-xs site-padding-xs">
+                            class="content-title site-padding" 
+                            ngClass.sm="content-title-sm site-padding-sm" 
+                            ngClass.xs="content-title-xs site-padding-xs">
                             {{ subhub.title }}
                         </h1>
                         <h3 
-                            class="subhub-summary site-padding" 
-                            ngClass.sm="subhub-summary-sm site-padding-sm" 
-                            ngClass.xs="subhub-summary-xs site-padding-xs">
+                            class="content-summary site-padding" 
+                            ngClass.sm="content-summary-sm site-padding-sm" 
+                            ngClass.xs="content-summary-xs site-padding-xs">
                             {{ subhub.summary }}
-                            <hr style="margin: 25px 0px;"/>
+                            <hr/>
                         </h3>
                     </div>
             
@@ -245,7 +203,10 @@
                         class="site-padding"
                         ngClass.sm="site-padding-sm"
                         ngClass.xs="site-padding-xs">
-                        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                        <app-cards 
+                            [title]="'You might be interested in'" 
+                            [contentItem]="subhub.relatedItemsCollection">
+                        </app-cards>
                     </div>
 
                     <!-- Keywords -->
@@ -253,7 +214,9 @@
                         class="site-padding"
                         ngClass.sm="site-padding-sm"
                         ngClass.xs="site-padding-xs">
-                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
+                        
+                        <!-- Keywords -->
+                        <app-keywords [contentItem]="subhub.keywords"></app-keywords>
                     </div>
                 </div>
             </div>

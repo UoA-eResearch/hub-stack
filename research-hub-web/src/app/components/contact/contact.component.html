@@ -1,6 +1,9 @@
 <!-- Banner -->
 <div 
-  class="banner-container-home"
+  class="banner-container-home site-padding"
+  ngClass.xs="site-padding-xs padding-bottom-xs" 
+  ngClass.sm="site-padding-sm padding-bottom-sm"
+  ngClass.md="site-padding-sm padding-bottom-sm"
   [ngStyle]="{ 'background-image': coverImageUrl }">
   <div class="banner-content-home">
     <h1>{{ title }}</h1>
@@ -9,9 +12,9 @@
 </div> 
 
 <div
-  class="site-padding top-padding margin-bottom"
-  ngClass.sm="site-padding-sm top-padding margin-bottom"
-  ngClass.xs="site-padding-xs top-padding margin-bottom">
+  class="site-padding top-padding padding-bottom"
+  ngClass.sm="site-padding-sm top-padding padding-bottom"
+  ngClass.xs="site-padding-xs top-padding padding-bottom">
   <h2>Our details</h2>
   <div fxLayout="row" fxLayoutGap="2em" fxLayout.lt-md="column">
     <div fxFlex="50">

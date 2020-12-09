@@ -6,12 +6,8 @@ mat-card  {
     margin: 1vh 0;
 }
 
-#mat-card-avatar mat-icon {
-    color: map-get($hub-teal, 800);
-}
-
 /**
- * Container for an individual article
+ * Container for an individual Equipment
  */
 #equipment-container {
 
@@ -48,10 +44,6 @@ mat-card  {
         color: $color-primary;
     }
 
-    #keywords {
-        color: map-get($hub-navy, 500);
-    }
-
     .related-item-summary {
         color: gray;
     }
@@ -65,70 +57,12 @@ hr {
     height: 1px;
 }
 
-// Section
-.section {
-    margin: 40px 0px;
-}
-
-// Equipment Titles
-.equipment-title {
-    color: map-get($hub-navy, 500); 
-    font-size: 50px;
-    font-weight: bold; 
-    line-height: 110%;
-}
-.equipment-title-xs {
-    font-size: 30px;
-}
-
-
-/**
- * Equipment Summary
- */
-.equipment-summary {
-    color: $color-icon; 
-    font-size: 25px; 
-    line-height: 110%;
-}
-.equipment-summary-xs {
-    font-size: 15px; 
-}
-
 
 /**
  * Equipment Image
  */
 .equipment-image {
     margin: 0 auto;
-}
-
-
-/**
- * Keywords
- */
-.keyword-card {
-    color: $silver;
-    background: $light-grey;
-    margin: 5px; 
-    padding: 5px 10px;
-    font-size: 12px; 
-    border-radius: 25px;
-    box-shadow: none !important;
-}
-
-/**
- * Related Item Card
- */
-.related-item-card {
-    max-height: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.related-item-card-mobile {
-    height: 70px;
-}
-.related-item-summary {
-    font-size: 12px;
 }
 
 
@@ -156,11 +90,4 @@ hr {
     text-align: left;
     background-color: map-get($hub-teal, 500);
     color: $color-background;
-}
-
-/**
- * Card Title
- */
-.card-title {
-    color: map-get($hub-teal, 500);
 }
