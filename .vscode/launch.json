@@ -8,7 +8,7 @@
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",
-            "preLaunchTask": "web - start",
+            "preLaunchTask": "research-hub-web - start",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}/research-hub-web/"
         },
@@ -18,7 +18,7 @@
             "request": "attach",
             "url": "http://localhost:4200/",
             "webRoot": "${workspaceFolder}/research-hub-web/",
-            "preLaunchTask": "web - start"
+            "preLaunchTask": "research-hub-web - start"
         }
     ]
 }
