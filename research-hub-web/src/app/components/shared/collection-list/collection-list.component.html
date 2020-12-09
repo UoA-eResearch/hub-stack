@@ -1,8 +1,8 @@
 <ng-container *ngIf="collection">
     <div
-        class="site-padding top-padding padding-bottom"
-        ngClass.sm="site-padding-sm top-padding padding-bottom-sm"
-        ngClass.xs="site-padding-xs top-padding padding-bottom-xs">
+        class="site-padding top-padding margin-bottom"
+        ngClass.sm="site-padding-sm top-padding margin-bottom-sm"
+        ngClass.xs="site-padding-xs top-padding margin-bottom-xs">
         <h1 id="title">{{ collection.__typename | humanCase }}</h1>
         Found <span class="search-results-text">{{ collection.items.length }}</span> results in <span
             class="search-results-text">{{ collection.__typename | humanCase }}</span>

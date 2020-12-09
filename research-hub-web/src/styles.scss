@@ -107,7 +107,7 @@ mat-chip.mat-chip {
 }
 .avatar-btn > span.mat-button-wrapper {
   padding-top: 0 !important;
-  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 .avatar-btn > span.mat-button-wrapper > img {
   width: 56px;
@@ -144,11 +144,11 @@ mat-chip.mat-chip {
   padding-top: $padding-site-top * 3;
 }
 
-.bottom-padding {
-  padding-bottom: $padding-site-bottom;
+.margin-bottom {
+  margin-bottom: $padding-site-bottom;
 }
-.bottom-padding-2 {
-  padding-bottom: $padding-site-bottom * 3;
+.margin-bottom-2 {
+  margin-bottom: $padding-site-bottom * 3;
 }
 
 /**
@@ -160,8 +160,8 @@ mat-chip.mat-chip {
     padding-right: $padding-site / 2;
 }
 
-.padding-bottom-sm {
-  padding-bottom: $padding-site-bottom / 2;
+.margin-bottom-sm {
+  margin-bottom: $padding-site-bottom / 2;
 }
 
 /**
@@ -173,8 +173,8 @@ mat-chip.mat-chip {
     padding-right: $padding-site / 4;
 }
 
-.padding-bottom-xs {
-  padding-bottom: $padding-site-bottom / 4;
+.margin-bottom-xs {
+  margin-bottom: $padding-site-bottom / 4;
 }
 
 
@@ -187,7 +187,7 @@ mat-chip.mat-chip {
 .site-content-padded {
   @extend .site-content;
   padding-top: 3em;
-  padding-bottom: 3em;
+  margin-bottom: 3em;
 }
 .back-button {
   padding-left: 0 !important;

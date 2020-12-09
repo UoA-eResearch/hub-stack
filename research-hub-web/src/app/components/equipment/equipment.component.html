@@ -1,9 +1,9 @@
 <!-- If we're displaying a collection of equipment -->
 <div
     *ngIf="allEquipment$ | async as allEquipment" 
-    class="site-padding padding-bottom top-padding" 
-    ngClass.xs="site-padding-xs padding-bottom-xs top-padding" 
-    ngClass.sm="site-padding-sm padding-bottom-sm top-padding">
+    class="site-padding margin-bottom top-padding" 
+    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
     <app-collection-list [collection]="allEquipment"></app-collection-list>
 </div>
 
@@ -125,9 +125,9 @@
     </ng-template>
 
     <div
-        class="site-padding padding-bottom" 
-        ngClass.sm="site-padding-sm padding-bottom" 
-        ngClass.xs="site-padding-xs padding-bottom">
+        class="site-padding margin-bottom" 
+        ngClass.sm="site-padding-sm margin-bottom" 
+        ngClass.xs="site-padding-xs margin-bottom">
 
         <!-- Breadcrumbs -->
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>

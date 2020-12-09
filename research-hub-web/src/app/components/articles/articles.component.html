@@ -1,9 +1,9 @@
 <!-- If we're displaying a collection of articles-->
 <div
     *ngIf="allArticles$ | async as allArticles" 
-    class="site-padding padding-bottom top-padding" 
-    ngClass.xs="site-padding-xs padding-bottom-xs top-padding" 
-    ngClass.sm="site-padding-sm padding-bottom-sm top-padding">
+    class="site-padding margin-bottom top-padding" 
+    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
+    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
     <app-collection-list [collection]="allArticles"></app-collection-list>
 </div>
 

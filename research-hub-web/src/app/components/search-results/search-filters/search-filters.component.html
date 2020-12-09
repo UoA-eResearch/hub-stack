@@ -7,7 +7,7 @@
   </div>
 
   <div *ngIf="!compact">
-  <span style="color: rgba(0,0,0,0.54);padding-bottom:0.5em;display: block;">Check out a different category</span>
+  <span style="color: rgba(0,0,0,0.54);margin-bottom:0.5em;display: block;">Check out a different category</span>
   <category-list [selectedCategory]="filtersForm.controls.categoryId.value"
                  (selectedCategoryChange)="setCategory($event)">
   </category-list>
