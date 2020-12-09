@@ -14,12 +14,6 @@
     *ngIf="article$ | async as article">
 
     <!-- Templates -->
-    <ng-template #dynamicBanner>
-        <div 
-            class="banner-container"
-            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
-        </div>  
-    </ng-template>
 
     <ng-template #breadcrumbs>
         <div 
@@ -40,6 +34,13 @@
                 {{ article.title }}
             </span>
         </div>
+    </ng-template>
+
+    <ng-template #dynamicBanner>
+        <div 
+            class="banner-container"
+            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
+        </div>  
     </ng-template>
 
     <ng-template #titleSummary>
