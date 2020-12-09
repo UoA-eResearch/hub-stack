@@ -13,7 +13,6 @@ import { CollectionListComponent } from './collection-list/collection-list.compo
 import { RouterModule } from '@angular/router';
 import { RichTextToHTML } from '@pipes/rich-text.pipe';
 import { BodyMediaComponent } from './body-media/body-media.component';
-import { GenericContactComponent } from './generic-contact/generic-contact.component';
 import { LinkCardComponent } from './link-card/link-card.component';
 import { SoftwareComponent } from './software/software.component';
 import { VideoCardComponent } from './video-card/video-card.component';
@@ -47,7 +46,6 @@ import { ServiceComponent } from './service/service.component';
     CollectionListComponent,
     RichTextToHTML,
     BodyMediaComponent,
-    GenericContactComponent,
     LinkCardComponent,
     SoftwareComponent,
     VideoCardComponent,

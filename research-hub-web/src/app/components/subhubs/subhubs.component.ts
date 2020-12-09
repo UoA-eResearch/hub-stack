@@ -1,10 +1,11 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { pluck, flatMap } from 'rxjs/operators';
+import { pluck, map, flatMap, tap } from 'rxjs/operators';
 import {
-  AllSubHubChildPagesGQL,
-  SubHubChildPagesByIdGQL,
+  AllSubHubGQL,
+  GetSubHubByIdGQL,
+  GetSubHubBySlugGQL,
   SubHubCollection,
   SubHub
 } from "@graphql/schema";
@@ -39,8 +40,9 @@ export class SubhubsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    public AllSubHubChildPagesGQL: AllSubHubChildPagesGQL,
-    public SubHubChildPagesByIdGQL: SubHubChildPagesByIdGQL,
+    public AllSubHubGQL: AllSubHubGQL,
+    public GetSubHubBySlug: GetSubHubBySlugGQL,
+    public GetSubHubById: GetSubHubByIdGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
@@ -61,11 +63,10 @@ export class SubhubsComponent implements OnInit {
     this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
     if (!!this.slug) {
-      this.subhub$ = this.getSubHub(this.slug);
-      this.subhub$.subscribe(data => {
-        this.currentSubHub$ = this.getSubHubById(data.items[0].sys.id);
-        this.appComponentService.setTitle(data.items[0].title);
+      this.getSubHubBySlug(this.slug).subscribe(data => {
+        this.currentSubHub$ = this.getSubHubById(data.sys.id);
         this.currentSubHub$.subscribe(res => {
+          this.appComponentService.setTitle(res.title);
           this.bodyMediaService.setBodyMedia(res.bodyText.links);}
           );
       });
@@ -81,8 +82,7 @@ export class SubhubsComponent implements OnInit {
    */
   public getAllSubHubs(slug: string): Observable<SubHubCollection> {
     try {
-      return this.AllSubHubChildPagesGQL
-        .fetch()
+      return this.AllSubHubGQL.fetch()
         .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>;
     } catch (e) {
       console.error('Error loading subhub body info and children')
@@ -93,11 +93,10 @@ export class SubhubsComponent implements OnInit {
    * Get Subhub by passing the slug into the SubhubCollection query
    * @param slug 
    */
-  public getSubHub(slug: string): Observable<SubHubCollection> {
+  public getSubHubBySlug(slug: string): Observable<SubHub> {
     try {
-      return this.AllSubHubChildPagesGQL
-        .fetch({slug})
-        .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>;
+      return this.GetSubHubBySlug.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.subHubCollection.items)) as Observable<SubHub>;
     } catch (e) {
       console.error('Error loading subhub body info and children')
     }
@@ -109,11 +108,8 @@ export class SubhubsComponent implements OnInit {
    */
   public getSubHubById(id: string): Observable<SubHub> {
     try {
-      return this.SubHubChildPagesByIdGQL
-        .fetch({id: id})
-        .pipe(pluck('data', 'subHub')) as unknown as Observable<SubHub>;
-    } catch (e) {
-      console.error('Error loading subhub body info and children')
-    }
+      return this.GetSubHubById.fetch({id: id})
+      .pipe(map(x => x.data.subHub)) as Observable<SubHub>;
+    } catch (e) { console.error(`Error loading subhub ${id}:`, e); }
   }
 }

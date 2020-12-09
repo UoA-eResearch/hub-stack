@@ -6,11 +6,6 @@ fragment PublicFields on Entry {
       summary
       ssoProtected
       searchable
-      icon {
-          title
-          description
-          url
-      }
       banner {
           title
           description

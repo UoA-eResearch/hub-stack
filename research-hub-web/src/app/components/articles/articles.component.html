@@ -47,7 +47,7 @@
             class="article-title" 
             ngClass.sm="article-title-sm" 
             ngClass.xs="article-title-xs" 
-            [style.color]="article.displayBanner ? article.viewType == 'View 1' ? 'white' : '' : ''">
+            [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.title }}
         </h1>
 
@@ -55,7 +55,7 @@
             class="article-summary" 
             ngClass.sm="article-summary-sm" 
             ngClass.xs="article-summary-xs"
-            [style.color]="article.displayBanner ? article.viewType == 'View 1' ? 'white' : '' : ''">
+            [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.summary }}
         </h3>
     </ng-template>
@@ -95,7 +95,7 @@
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
-                                {{ organisation.unitName }}
+                                {{ organisation.title }}
                             </span> 
                             <br/>
                             <span class="related-item-summary">
@@ -205,7 +205,7 @@
             <!-- Dynamic Banner -->
             <div 
                 class="banner-container"
-                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none' : ''">
+                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat;' : article.viewType == 'View 2' ? 'display: none' : ''">
                 <div 
                     class="banner-content" 
                     *ngIf="article.viewType == 'View 1'">

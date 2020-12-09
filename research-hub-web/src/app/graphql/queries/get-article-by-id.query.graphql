@@ -13,30 +13,57 @@ query GetArticleByID($id: String!) {
         description
         url
       }
-      icon {
-        title
-        description
-        url
-      }
       summary
       bodyText {
         json 
         links {
           entries {
-            block { ...PublicFields }
-            inline { ...PublicFields }
-            hyperlink { ...PublicFields }
+            block { 
+              ...PublicFields
+              sys {
+                id
+              }
+              ... on Software {
+                link
+              }
+            }
+            inline { 
+              ...PublicFields
+              sys {
+                id
+              } 
+              ... on Software {
+                link
+              }
+            }
+            hyperlink { 
+              ...PublicFields 
+              sys {
+                id
+              }
+              ... on Software {
+                link
+              }
+            }
           }
           assets {
             block {
+              sys {
+                id
+              }
               title
               description
               url
+              contentType
             }
             hyperlink {
+              sys {
+                id
+              }
               title
               description
               url
+              contentType
             }
           }
         }

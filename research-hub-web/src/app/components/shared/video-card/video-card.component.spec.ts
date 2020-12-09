@@ -1,10 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { VideoCardComponent } from './video-card.component';
 
 describe('VideoCardComponent', () => {
   let component: VideoCardComponent;
   let fixture: ComponentFixture<VideoCardComponent>;
+
+  const mockVideo = {
+    "url" : "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PLahKLy8pQdCM0SiXNn3EfGIXX19QGzUG3"
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,6 +19,7 @@ describe('VideoCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VideoCardComponent);
     component = fixture.componentInstance;
+    component.contentItem = mockVideo;
     fixture.detectChanges();
   });
 

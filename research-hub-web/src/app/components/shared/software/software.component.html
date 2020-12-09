@@ -4,13 +4,13 @@
         <mat-card>
             <img mat-card-image src="{{ contentItem.mainImage?.url }}">
             <mat-card-title>
-                <p>{{ contentItem.name }}</p>
+                <p>{{ contentItem.title }}</p>
             </mat-card-title>              
             <mat-card-content>
-                <small>{{ contentItem.description }}</small>
+                <small>{{ contentItem.summary }}</small>
             </mat-card-content>   
             <mat-card-actions>
-                <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
+                <a href="{{ contentItem.link }}">
                     Read More ...
                 </a>
             </mat-card-actions>   
