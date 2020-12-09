@@ -86,11 +86,6 @@ fragment PublicFields on Entry {
       title
       summary
     }
-  ... on GenericContact {
-      __typename 
-      name
-      email
-  }
   ... on LinkCard {
       title
       summary
@@ -99,7 +94,6 @@ fragment PublicFields on Entry {
   ... on Person {
       __typename
       name
-      username
   }
   ... on Video {
       title

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FilterSidenavComponent } from './filter-sidenav.component';
 import { SearchResultsModule } from '../search-results.module';
