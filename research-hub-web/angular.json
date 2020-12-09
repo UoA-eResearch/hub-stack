@@ -15,7 +15,7 @@
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "tsconfig.base.json",
+            "tsConfig": "tsconfig.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
               "./src/assets"
@@ -169,7 +169,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.base.json",
+              "tsconfig.json",
               "tsconfig.spec.json"
             ],
             "exclude": []

@@ -58,32 +58,21 @@ mat-card  {
 }
 
 
-/**
- * Main content
- */
-.main-content {
-    padding: 0px 150px;
-}
-.main-content-mobile {
-    padding: 0px;
-}
-
-
-/**
- * HR
- */
+// HR Tag
 hr {
     background-color: $input-grey;
     border: none;
     height: 1px;
 }
 
+// Section
+.section {
+    margin: 40px 0px;
+}
 
-/**
- * Equipment Title
- */
+// Equipment Titles
 .equipment-title {
-    color: black; 
+    color: map-get($hub-navy, 500); 
     font-size: 50px;
     font-weight: bold; 
     line-height: 110%;

@@ -46,10 +46,8 @@ span {
   font-family: $font-family;
 }
 
-
-/** 
- * app-markdown related styles
- * (they don't take effect in the component scss)
+/* app-markdown related styles
+  (they don't take effect in the component scss)
  */
 @mixin headings {
   h1, h2, h3, h4, h5, h5 {
@@ -106,7 +104,6 @@ mat-chip.mat-chip {
   //max-width: $width-page-max !important; If not important then gets overidden by some fxLayout styles
 }
 
-
 /**
  * Browser Settings
  */
@@ -117,26 +114,41 @@ mat-chip.mat-chip {
 }
 .site-padding-2 {
   @extend .site-content;
-    padding-left: $padding-site * 2.0;
-    padding-right: $padding-site * 2.0;
+    padding-left: $padding-site * 3.5;
+    padding-right: $padding-site * 3.5;
 }
+
 .top-padding {
   padding-top: $padding-site-top;
 }
+
 .margin-bottom {
   margin-bottom: 5em;
 }
-
 
 /**
  * Small Mobile Settings
  */
 .site-padding-sm {
   @extend .site-content;
-    padding-left: $padding-site;
-    padding-right: $padding-site;
+    padding-left: $padding-site / 2;
+    padding-right: $padding-site / 2;
 }
+
 .margin-bottom-sm {
+  margin-bottom: 5em;
+}
+
+/**
+ * Extra Small Mobile Settings
+ */
+.site-padding-xs {
+  @extend .site-content;
+    padding-left: $padding-site / 4;
+    padding-right: $padding-site / 4;
+}
+
+.margin-bottom-xs {
   margin-bottom: 5em;
 }
 

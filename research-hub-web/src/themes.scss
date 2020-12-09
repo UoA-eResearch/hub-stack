@@ -8,10 +8,7 @@
  */
 @include mat-core();
 
-
-/**
- * University of Auckland colors from Web Style Guide 
- */ 
+// University of Auckland colors from Web Style Guide 
 $dark-blue: #00467F;
 $light-blue: #009AC7;
 $silver: #8D9091;
@@ -22,10 +19,7 @@ $silver-lining: #BEC3C4;
 $input-grey: #D9D9D9;
 $light-grey: #F2F2F2;
 
-
-/**
- * Material design colors generated with: http://mcg.mbitson.com/
- */
+// Material design colors generated with: http://mcg.mbitson.com/
 $hub-teal: (
   50 : #e1f2f4,
   100 : #b3dfe4,
@@ -168,17 +162,13 @@ $hub-app-warn: mat-palette($hub-pink);
 $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
 @include angular-material-theme($hub-app-theme);
 
-
-/**
- * Site wide measurements
- */
+// Site wide measurements
 $width-page-max: 100vw;
-$offset-gt-xs: 2em;
+$offset-gt-xs: 2vw;
 $height-footer: 12em;
 $height-footer-xs: 16em;
 $padding-site: 7vw;
 $padding-site-top: 3vh;
-
 
 /**
  * Site wide colors

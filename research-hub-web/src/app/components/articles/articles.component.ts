@@ -55,7 +55,6 @@ export class ArticlesComponent implements OnInit {
      */
     this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
-
     /**
      * If this.slug is defined, we're loading an individual article,
      * therefore run the corresponding query. If not, return all articles.

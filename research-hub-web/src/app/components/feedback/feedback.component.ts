@@ -1,7 +1,7 @@
 // import {Component} from '@angular/core';
 import { AnalyticsService } from '@services/analytics.service';
 import { Location } from '@angular/common';
-import { AppComponentService } from '../../app.component.service';
+import { AppComponentService } from '@app/app.component.service';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { LoginService } from '@uoa/auth';
@@ -13,6 +13,10 @@ import { LoginService } from '@uoa/auth';
   styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit {
+  public title: String = "Feedback";
+  public summary: String = "We appreciate your visit to the beta-version of the ResearchHub, our platform for research support.";
+  public coverImageUrl: String = 'url(../../../assets/images/banner19.jpg)';
+
   public userInfo;
   public authenticated;
   public helloWorld;

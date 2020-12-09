@@ -1,5 +1,5 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppComponentService } from '../../app.component.service';
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -13,10 +13,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Params } from '@services/research-hub-api.service';
 import { MatExpansionPanelContent } from '@angular/material/expansion';
-import { AppComponentService } from '@app/app.component.service';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
+  let appComponentService: AppComponentService;
   let fixture: ComponentFixture<ArticlesComponent>;
   let controller: ApolloTestingController;
   const mockAllArticles$: Observable<ArticleCollection> = of({
@@ -305,7 +305,7 @@ describe('ArticlesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all articles', async () => {
+  it('Should get all articles', () => {
     spyOn(component, 'getAllArticles').and.returnValue(mockAllArticles$);
     component.getAllArticles().subscribe(res => {
       expect(res).toBeTruthy();
@@ -330,7 +330,7 @@ describe('ArticlesComponent', () => {
       });
     });
 
-    it('Should get a single article data by ID', async () => {
+    it('Should get a single article data by ID', () => {
       spyOn(component, 'getArticleByID').and.returnValue(mockArticle$);
       component.getArticleByID('').subscribe(res => {
         expect(res.sys.id).toEqual('111');

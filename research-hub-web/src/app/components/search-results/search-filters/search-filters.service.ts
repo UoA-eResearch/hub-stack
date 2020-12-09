@@ -1,20 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
-
-enum CategoryId {
-  All = 1,
-  Support,
-  Equipment,
-  Training,
-  Software,
-  Facilities,
-  Guide,
-  Person,
-  Policies,
-  Articles,
-  SubHubs
-}
+import { CategoryId } from '@app/global/global-variables';
 
 export const DEFAULT_FILTERS_VALUE = {
   categoryId: CategoryId.All,

@@ -42,30 +42,24 @@
  * Banner Styling
  */
  .banner-container-home {
-  text-align: center;
-  min-width: 98vw; 
   min-height: 35vh;
+  text-align: center;
   max-height: auto;
   background-size: cover!important;
-  background: url(../assets/images/UoAB4052-0-2344-0-1652.jpg);
 }
 
 .banner-content-home {
-  width: 50%;
-  padding: 50px;
+  padding: 50px 0px;
+  width: 100%;
   margin: 10em auto;
   display: inline-block;
-  background-color: rgba(177, 52, 98, 0.8);
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  background-color: white;
 }
- .banner-content-home h1, .banner-container-home h4 {
-   color: white!important;
- }
 
 /*
  * Navigation list
  */
-
-
 .sidenav-container mat-sidenav mat-list-item mat-icon {
   color: $color-icon;
   font-size: mat-font-size($app-sidenav-list-typography, body-2) !important;
@@ -336,6 +330,18 @@ app-search-bar {
   width:400px;
   box-shadow: 3px 0 6px rgba(0, 0, 0, .24);
   background-color: $color-background;
+}
+
+// User Detail Dropdown
+.user-detail-dropdown {
+  margin-right: 8px; 
+  margin-left: 8px;
+}
+
+// Sign Out Button
+.sign-out-button {
+  color: black; 
+  background-color: white;
 }
 
 // HACK

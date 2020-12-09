@@ -18,8 +18,7 @@ import { BodyMediaService } from './body-media.service';
     AnalyticsService,
     CerApiService,
     ResearchHubApiService,
-    LayoutService,
-    BodyMediaService
+    LayoutService
   ],
   exports: []
 })

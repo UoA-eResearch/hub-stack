@@ -4,7 +4,7 @@
       <div class="app-toolbar" ngClass.xs="app-toolbar-xs" style="background-color: #0294a5;padding-left: 24px;">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
           <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
-            <img [src]="'assets/hub-logo.svg'">
+            <img [src]="'assets/images/hub-logo.svg'">
           </a>
         </div>
       </div>
@@ -47,9 +47,8 @@
                   <mat-icon>menu</mat-icon>
                 </button>
                 <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
-                  <img [src]="'assets/hub-logo.svg'">
+                  <img [src]="'assets/images/hub-logo.svg'">
                 </a>
-
                 <span style="flex: 1 1 auto;"></span>
 
                 <button mat-icon-button fxHide.gt-sm routerLink="/search" matTooltip="Search">
@@ -98,8 +97,8 @@
                 </button>
 
                 <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-                  <div style="margin-right: 8px; margin-left: 8px;">
-                    <img src="/assets/images/uoa-logo-blue.svg">
+                  <div class="user-detail-dropdown">
+                    <img src="assets/images/uoa-logo-blue.svg">
 
                     <mat-list class="user-menu-list">
                       <mat-list-item>
@@ -113,9 +112,12 @@
                     </mat-list>
 
                     <div fxLayout="row" fxLayoutAlign="end">
-                      <button mat-raised-button style="color: black; background-color: white;"
-                        href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">Sign 
-                        Out</button>
+                      <button 
+                        mat-raised-button 
+                        class="sign-out-button"
+                        href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">
+                        Sign Out
+                      </button>
                     </div>
                   </div>
                 </mat-menu>
@@ -128,6 +130,7 @@
 
           <!-- <mat-drawer-container> -->
           <mat-sidenav-container fxFlex="noshrink">
+
             <!-- Content sidenav -->
             <mat-sidenav class="content-sidenav" mode="side" disableClose
               [opened]="appComponentService.isContentSidenavVisible" [fixedInViewport]="isContentSidenavFixed"
@@ -135,23 +138,28 @@
               <router-outlet name="contentSidenav" (activate)="setContentSidenavHasContent(true)"
                 (deactivate)="setContentSidenavHasContent(false)"></router-outlet>
             </mat-sidenav>
+
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
               <div #content> 
+
                  <!-- Banner -->
                  <div 
-                  class="banner-container-home"
+                  class="banner-container-home site-padding-2 margin-bottom"
+                  ngClass.xs="site-padding-xs margin-bottom-xs" 
+                  ngClass.sm="site-padding-sm margin-bottom-sm"
+                  ngClass.md="site-padding-sm margin-bottom-sm"
+                  ngClass.lg="site-padding-sm margin-bottom-sm"
+                  [ngStyle]="{ 'background-image': coverImageUrl }"
                   *ngIf="showBanner">
                   <div class="banner-content-home">
                     <h1>{{ title }}</h1>
                     <h4>{{ summary }}</h4>
-                </div>
+                  </div>
                 </div>  
-                <app-search-bar 
-                      [categories]="categoryOptions" 
-                      [category]="selectedCategory"
-                      [searchText]="searchText">
-                </app-search-bar>
+                <app-search-bar [categories]="categoryOptions" [category]="selectedCategory"
+                  [searchText]="searchText"></app-search-bar>
+
                 <!-- Page content -->
                 <router-outlet></router-outlet>
               </div>

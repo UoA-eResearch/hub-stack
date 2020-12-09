@@ -13,6 +13,45 @@ query AllSubHubChildPages ($slug: String) {
       }
       ssoProtected
       searchable
+      internalPagesCollection {
+        items {
+        	...on Article {
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+          ...on CaseStudy {
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+          ...on Equipment{
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+          ...on Service {
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+          ...on SubHub {
+            __typename
+            slug
+            title
+            ssoProtected
+            summary
+          }
+        }
+      }
     }
   }
 }

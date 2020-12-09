@@ -7,6 +7,7 @@
     <app-collection-list [collection]="allArticles"></app-collection-list>
 </div>
 
+
 <!-- If we're displaying an individual article -->
 <div 
     id="article-container" 
@@ -16,7 +17,7 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none' : ''">
+            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
         </div>  
     </ng-template>
 
@@ -26,7 +27,8 @@
             *ngIf="!!parentSubHubs" 
             class="site-padding top-padding"
             ngClass.sm="site-padding-sm top-padding"
-            ngClass.xs="site-padding-xs top-padding breadcrumbs-mobile">
+            ngClass.xs="site-padding-xs top-padding"
+            ngClass.xs="breadcrumbs-mobile site-padding-xs">
             <span 
                 class="breadcrumb-subhub" 
                 *ngFor="let subHub of parentSubHubs.slice().reverse()">
@@ -44,7 +46,7 @@
         <h1 
             class="article-title" 
             ngClass.sm="article-title-sm" 
-            ngClass.xs="article-title-xs"
+            ngClass.xs="article-title-xs" 
             [style.color]="article.displayBanner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.title }}
         </h1>
@@ -93,11 +95,11 @@
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
-                                {{ organisation['unitName'] }}
+                                {{ organisation.unitName }}
                             </span> 
                             <br/>
                             <span class="related-item-summary">
-                                {{ organisation['summary'] }}
+                                {{ organisation.summary }}
                             </span>
                             <mat-card-actions>
                                 <a [routerLink]="'/' + organisation['__typename'].toLowerCase() + '/' + organisation['slug']">
@@ -194,8 +196,6 @@
     </ng-template>
     
     
-    
-    
     <!-- View Switcher -->
     <div [ngSwitch]="article.viewType"> 
 
@@ -228,7 +228,8 @@
                 <!-- Call to Actions -->
                  <div 
                     fxFlex="50%"
-                    fxFlexOrder="2">
+                    fxFlexOrder="2"
+                    fxFlexOrder.xs="1">
 
                     <!-- Article Body -->
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
@@ -243,7 +244,8 @@
                 <div 
                     fxLayout="column" 
                     fxFlex="20%"
-                    fxFlexOrder="1">
+                    fxFlexOrder="1"
+                    fxFlexOrder.lt-sm="2">
 
                     <!-- Official Documents -->
                     <ng-container *ngTemplateOutlet="officialDocuments"></ng-container>

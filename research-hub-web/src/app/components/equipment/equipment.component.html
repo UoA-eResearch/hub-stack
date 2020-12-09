@@ -8,6 +8,7 @@
 </div>
 
 
+
 <!-- If we're displaying an individual equipment -->
 <div 
     id="equipment-container"
@@ -96,6 +97,59 @@
             </mat-nav-list>
         </div>
     </ng-template>
+    
+    <ng-template #relatedOrganisations>
+        <div 
+            *ngIf="equipment.relatedOrgsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Organizations</h4>
+            <hr/>
+            <mat-nav-list 
+                style="margin-bottom: 20px;" 
+                *ngFor="let organisation of equipment.relatedOrgsCollection.items" 
+                class="collection">
+                
+                    <a [routerLink]="">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ organisation['title'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ organisation['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #relatedContacts>
+        <div 
+            *ngIf="equipment.relatedContactsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Contacts</h4>
+            <hr/>
+            <mat-nav-list 
+                style="margin-bottom: 20px;" 
+                *ngFor="let contact of equipment.relatedContactsCollection.items" 
+                class="collection">
+                
+                    <a [routerLink]="">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ contact['name'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ contact['jobTitle'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
 
     <ng-template #relatedOrganisations>
         <div 
@@ -168,6 +222,18 @@
                     </mat-card>
                 </span>
             </mat-card-subtitle>
+        </div>
+    </ng-template>
+
+    <ng-template #equipmentImage>
+        <div>
+            <div *ngIf="equipment.mainImage;">
+                <img 
+                    src="{{ equipment?.mainImage?.url }}" 
+                    alt="{{ equipment?.mainImage?.description }}" 
+                    width="100%" 
+                    height="100%"/>
+            </div>
         </div>
     </ng-template>
 
@@ -251,8 +317,6 @@
                     <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
                 </div>
             </div>
-
-            <hr class="section"/>
 
             <!-- Specifications Table -->
             <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
