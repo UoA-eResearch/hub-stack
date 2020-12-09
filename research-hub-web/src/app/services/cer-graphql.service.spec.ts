@@ -132,7 +132,7 @@ describe('CerGraphqlService', () => {
       imports: [
         ApolloTestingModule,
         CommonModule,
-        RouterModule.forRoot([])
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
       ]
     });
     service = TestBed.inject(CerGraphqlService);
