@@ -205,9 +205,10 @@
             <!-- Dynamic Banner -->
             <div 
                 class="banner-container"
-                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat;' : article.viewType == 'View 2' ? 'display: none' : ''">
+                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : 'min-height: 0px'">
                 <div 
                     class="banner-content" 
+                    [style]="article.banner ? '' : 'margin: 2.5em auto;'"
                     *ngIf="article.viewType == 'View 1'">
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
