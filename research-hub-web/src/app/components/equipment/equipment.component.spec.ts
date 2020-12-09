@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { AppComponentService } from '@app/app.component.service';
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;

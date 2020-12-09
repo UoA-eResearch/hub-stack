@@ -2,7 +2,71 @@
 
 // https://material.angular.io/guide/typography
 
-$font-family: 'Noto Sans', sans-serif;
+/**
+ * National Fonts
+ */ 
+
+// Regular
+@font-face {
+  font-family: 'National';
+  src: url(assets/fonts/National/national-test-regular.woff);
+}
+@font-face {
+  font-family: 'National Italic';
+  src: url(assets/fonts/National/national-test-regular-italic.woff);
+}
+
+// Light
+@font-face {
+  font-family: 'National Light';
+  src: url(assets/fonts/National/national-test-light.woff);
+}
+@font-face {
+  font-family: 'National Light Italic';
+  src: url(assets/fonts/National/national-test-light-italic.woff);
+}
+
+// Book
+@font-face {
+  font-family: 'National Book';
+  src: url(assets/fonts/National/national-test-book.woff);
+}
+@font-face {
+  font-family: 'National Book Italic';
+  src: url(assets/fonts/National/national-test-book-italic.woff);
+}
+
+// Medium
+@font-face {
+  font-family: 'National Medium';
+  src: url(assets/fonts/National/national-test-medium.woff);
+}
+@font-face {
+  font-family: 'National Medium Italic';
+  src: url(assets/fonts/National/national-test-medium-italic.woff);
+}
+
+// Semibold
+@font-face {
+  font-family: 'National Semibold';
+  src: url(assets/fonts/National/national-test-semibold.woff);
+}
+@font-face {
+  font-family: 'National Semibold Italix';
+  src: url(assets/fonts/National/national-test-semibold-italic.woff);
+}
+
+// Bold
+@font-face {
+  font-family: 'National Bold';
+  src: url(assets/fonts/National/national-test-bold.woff);
+}
+@font-face {
+  font-family: 'National Bold Italic';
+  src: url(assets/fonts/National/national-test-bold-italic.woff);
+}
+
+$font-family: 'National';
 
 // All typography
 $app-base-typography: mat-typography-config(

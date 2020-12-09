@@ -238,7 +238,6 @@ app-filter-dialog {
 .tile-text {
   color: $browse-tile-font-color;
   transform: translate(0%, -50%);
-  @include mat-typography-level-to-styles($app-browse-grid-typography, body-1);
 }
 .tile-icon {
   color: $browse-tile-font-color;
