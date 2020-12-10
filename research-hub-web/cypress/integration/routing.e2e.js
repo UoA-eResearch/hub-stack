@@ -31,7 +31,7 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
         cy.get('#article-container').should('exist')
     });
 
-    it('will update a content item\'s URL when it is visited from outside the SubHub', () => {
+    xit('will update a content item\'s URL when it is visited from outside the SubHub', () => {
         cy.visit('/articles');
         cy.get('mat-nav-list > mat-card')
             .contains('First article').click();
