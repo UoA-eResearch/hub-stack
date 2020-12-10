@@ -16,7 +16,7 @@ describe('ResearchHubs Article Pages', () => {
         cy.get('#you-might-be-interested-in').should('exist');
     });
 
-    xit('clicking a related item takes you to its page', () => {
+    it('clicking a related item takes you to its page', () => {
         cy.get('#you-might-be-interested-in').contains('Test - Starkiller Base').click();
         cy.contains('Starkiller Base was a military base located on the ice planet of Ilum in the Unknown Regions');
     });

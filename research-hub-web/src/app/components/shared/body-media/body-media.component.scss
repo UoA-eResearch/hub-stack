@@ -3,12 +3,12 @@
  */
  .blockquote-container {
      width: 100%;
+     border-left: solid 4px #3a3a3a;
      margin: 30px auto;
      text-align: center;
  }
  .blockquote {
     padding-left: 10px;
-    border-left: solid 4px #3a3a3a;
     font-family: 'National Light';
     font-style: italic;
     font-size: 24px;
