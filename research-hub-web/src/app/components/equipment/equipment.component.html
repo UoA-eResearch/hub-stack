@@ -64,6 +64,7 @@
     
     <ng-template #relatedItems>
         <app-cards 
+            [hideImage]="true"
             [title]="'You might be interested in'" 
             [contentItem]="equipment.relatedItemsCollection">
         </app-cards>
@@ -71,6 +72,7 @@
 
     <ng-template #relatedOrganisations>
         <app-cards 
+            [hideImage]="true"
             [title]="'Organisations'" 
             [contentItem]="equipment.relatedOrgsCollection">
         </app-cards>
@@ -78,6 +80,7 @@
 
     <ng-template #relatedContacts>
         <app-cards 
+            [hideImage]="true"
             [title]="'Contacts'" 
             [contentItem]="equipment.relatedContactsCollection">
         </app-cards>

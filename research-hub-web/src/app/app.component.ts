@@ -189,8 +189,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
-            this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-            this.router.navigate([routeName + this.currentRoute]);
             
             this.showBanner = ['home'].includes(routeName);
             this.searchBarService.setVisibility(['home', 'search'].includes(routeName));
@@ -199,6 +197,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             // Update previous and current routes
             if (this.currentRoute) {
               this.previousRoute = this.currentRoute;
+            }
+            if (this.currentRoute == routeName) {
+              this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+              this.router.navigate([url]);
             }
             this.currentRoute = routeName;
 

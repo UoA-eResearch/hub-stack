@@ -4,7 +4,9 @@
 /**
  * Card Image
  */ 
- mat-card img {
+ .mat-card-image {
+    height: 19vh;
+    margin-bottom: 5px;
     object-fit: cover;
   }
 

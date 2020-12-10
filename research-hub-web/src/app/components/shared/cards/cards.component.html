@@ -1,14 +1,27 @@
 <div 
     class="section"
     *ngIf="contentItem.items.length > 0">
+
     <h4>{{ title }}<hr/></h4>
 
     <!-- Related Items List -->
     <mat-nav-list 
         *ngFor="let content of contentItem.items" 
         class="collection">
-        <mat-card>
+
+        <!-- Templates -->
+        <ng-template #image>
             <img mat-card-image src="{{ content.banner?.url }}">
+        </ng-template>
+
+        <ng-template #noImage>
+            <div style="margin-top: 10px;"></div>
+        </ng-template>
+
+        <mat-card>
+            <ng-container
+                *ngIf="content.banner; then image; else noImage">
+            </ng-container>
             <span style="background: rgb(2, 149, 165);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 15px;">{{ content.__typename | humanCase }}</span>
             <mat-card-title class="card-title">
                 <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
