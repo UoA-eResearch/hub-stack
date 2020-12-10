@@ -90,7 +90,7 @@
 
 .app-toolbar-container {
   position: relative;
-  background-color: $color-primary;
+  background: linear-gradient(356deg, rgba(4,132,147,1) 0%, rgba(2,148,165,1) 62%);
   color: white;
 }
 
@@ -190,7 +190,7 @@ mat-expansion-panel-header .mat-expanded {
  */
 
 footer {
-  background-color: $color-primary;
+  background: linear-gradient(360deg, rgba(2,148,165,1) 0%,  rgba(4,132,147,1) 62%);
   height: $height-footer;
   padding-left: $padding-site;
   padding-right: $padding-site;
