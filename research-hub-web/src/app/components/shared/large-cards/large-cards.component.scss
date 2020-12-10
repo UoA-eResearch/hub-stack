@@ -1,0 +1,25 @@
+@import '../../../../themes.scss';
+@import '../../../../styles.scss';
+
+// SubHub Card
+.subhub-card {
+    background: map-get($hub-teal, 500);
+}
+.subhub-card .card-title {
+    font-size: 20px;
+    color: white;
+}
+
+.subhub-card .content-item-summary {
+    font-size: 14px;
+    font-family: 'National Book';
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subhub-card img {
+    object-fit: cover;
+    min-width: 100%;
+    height: auto;
+}

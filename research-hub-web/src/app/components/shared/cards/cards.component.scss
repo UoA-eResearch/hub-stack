@@ -1,37 +1,10 @@
 @import '../../../../themes.scss';
-
-
-/**
- * Content Item Summary
- */ 
-.content-item-summary {
-    color: gray;
-}
-
-/**
- * Card Title
- */
- .mat-card-title {
-    margin: 0;
- }
- .card-title a {
-    font-size: 18px;
-    color: map-get($hub-navy, 500);
-}
-
-
-/**
- * Card Summary
- */ 
- .content-item-summary {
-    font-size: 16px;
-    font-family: 'National Book';
-}
+@import '../../../../styles.scss';
 
 /**
  * Card Image
  */ 
- mat-card img{
+ mat-card img {
     object-fit: cover;
   }
 
@@ -43,18 +16,3 @@ a {
     margin: 5px 0px;
     color: map-get($hub-teal, 500);
 }
-
-
-/**
- * Call To Action Arrow
- */
-.call-to-action a {
-    font-size: 18px;
-}
-.arrow {
-    transition: transform 0.2s ease-out
- }
-.call-to-action:hover .arrow {
-    transform: translate(10px);
-    transition: transform 0.2s ease-out
- }

@@ -16,40 +16,7 @@
 
         <!-- Templates -->
         <ng-template #subHubChildren>
-            <div 
-                id="subhub-children"
-                class="site-padding top-padding-2"
-                ngClass.sm="site-padding-sm top-padding"
-                ngClass.xs="site-padding-xs top-padding">
-                <div
-                    fxLayout="row wrap"
-                    fxLayoutGap="1%"
-                    fxLayout.sm="column wrap"
-                    fxLayout.xs="column wrap">
-                    <div
-                        class="margin-bottom-2"
-                        ngClass.sm="margin-bottom"
-                        ngClass.xs="margin-bottom"
-                        fxFlex="24%"
-                        *ngFor="let subHub of subhub.internalPagesCollection.items">
-                        <mat-card class="subhub-card">
-                                <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='../../../assets/images/uoa-logo.svg'">
-                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
-                            <mat-card-title class="card-title">
-                                {{ subHub.title}}
-                            </mat-card-title>
-                            <mat-card-content class="related-item-summary">
-                                {{ subHub.summary }}
-                            </mat-card-content>
-                            <mat-card-actions>
-                                <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
-                                    Read More ...
-                                </a>
-                            </mat-card-actions>
-                        </mat-card>
-                    </div>
-                </div>
-            </div>
+            <app-large-cards [contentItem]="subhub"></app-large-cards>
         </ng-template>
 
         <ng-template #breadcrumbs>
@@ -100,7 +67,7 @@
 
                 <!-- Breadcrumbs -->
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                
+
                 <div
                     class="site-padding top-padding"
                     ngClass.sm="site-padding-sm top-padding"
@@ -139,7 +106,9 @@
                 </div>
 
                 <!-- SubHub Children -->
-                <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
+                <div class="subhub-children">
+                    <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
+                </div>
 
             </div>
 
@@ -183,7 +152,9 @@
                     </div>
             
                     <!-- SubHub Children -->
-                    <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
+                    <div class="subhub-children">
+                        <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
+                    </div>
 
                     <!-- Related Items -->
                     <div 

@@ -75,6 +75,9 @@ fragment PublicFields on Entry {
       summary
       ssoProtected
       searchable
+      banner {
+        url
+      }
     }
   ... on OfficialDocuments {
       __typename

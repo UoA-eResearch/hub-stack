@@ -96,7 +96,9 @@ import { MiniCardsComponent } from './mini-cards/mini-cards.component';
     ServiceComponent,
     KeywordsComponent,
     CardsComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    LargeCardsComponent,
+    MiniCardsComponent
   ],
   providers: [],
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-large-cards',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./large-cards.component.scss']
 })
 export class LargeCardsComponent implements OnInit {
+  @Input() contentItem;
 
   constructor() { }
 

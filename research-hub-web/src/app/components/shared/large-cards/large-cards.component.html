@@ -1,1 +1,36 @@
-<p>large-cards works!</p>
+<div 
+    id="subhub-children"
+    class="site-padding top-padding-2"
+    ngClass.sm="site-padding-sm top-padding"
+    ngClass.xs="site-padding-xs top-padding">
+    <div
+        fxLayout="row wrap"
+        fxLayoutGap="1%"
+        fxLayout.sm="column wrap"
+        fxLayout.xs="column wrap">
+        <div
+            class="margin-bottom-2"
+            ngClass.sm="margin-bottom"
+            ngClass.xs="margin-bottom"
+            fxFlex="24%"
+            *ngFor="let subHub of contentItem.internalPagesCollection.items">
+            <mat-card class="subhub-card">
+                <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='assets/images/uoa-logo.svg'">
+                <span style="color: rgb(2, 149, 165);background: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
+                <mat-card-title class="card-title">
+                    {{ subHub.title }}
+                </mat-card-title>
+                <mat-card-content class="content-item-summary">
+                    {{ subHub.summary }}
+                </mat-card-content>
+                    <a class="section" [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                        <button 
+                            mat-flat-button 
+                            class="alternate-button">
+                            View Page
+                        </button>
+                    </a>
+            </mat-card>
+        </div>
+    </div>
+</div>

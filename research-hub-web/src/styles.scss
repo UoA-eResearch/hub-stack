@@ -311,6 +311,28 @@ app-filter-dialog {
   font-size: 15px; 
 }
 
+
+/**
+* Card Title
+*/
+.mat-card-title {
+  margin: 0;
+}
+.card-title a {
+  font-size: 18px;
+  color: map-get($hub-navy, 500);
+}
+
+
+/**
+* Card Summary
+*/ 
+.card-content-item-summary {
+  font-size: 16px;
+  color: $color-icon;
+  font-family: 'National Book';
+}
+
 /**
  * Custom Button Styles
  */
@@ -340,4 +362,19 @@ app-filter-dialog {
   border-radius: 50px!important;
   background-color: map-get($hub-teal, 500);
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+
+/**
+ * Call To Action Arrow
+ */
+ .call-to-action a {
+  font-size: 18px;
+}
+.arrow {
+  transition: transform 0.2s ease-out
+}
+.call-to-action:hover .arrow {
+  transform: translate(10px);
+  transition: transform 0.2s ease-out
 }

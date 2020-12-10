@@ -29,69 +29,11 @@ div.mat-card-avatar mat-icon {
     display: inline-block;
 }
 
-// Related Item Card
-.related-item-card {
-    max-height: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.related-item-card-mobile {
-    height: 70px;
-}
-
-.related-item-summary {
-    font-size: 12px;
-}
-
-// Keyword
-.keyword-card {
-    color: #828282;
-    background: #F0F0F0;
-    margin: 5px; 
-    padding: 5px 10px;
-    font-size: 12px; 
-    border-radius: 25px;
-    box-shadow: none !important;
-}
-
-// <hr />
-hr {
-    background-color: #dbdbdb;
-    border: none;
-    height: 1px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-// SubHub Card
-.subhub-card .card-title {
-    font-size: 1rem;
-    color: black;
-}
-
-.subhub-card img {
-    object-fit: cover;
-    height: 19vh;
-}
-
-.subhub-card .related-item-summary {
-    color: gray;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.subhub-card button {
-    color: map-get($hub-teal, 500);
-    border-color: map-get($hub-teal, 500);
-    margin-bottom: 10px;
-}
-
 .mat-card-actions {
     padding: 10px 5px 0px 5px;
 }
 
 // SubHub Children
-#subhub-children {
-    background: #F2F2F2;
+.subhub-children {
+    background: $light-grey;
 }
