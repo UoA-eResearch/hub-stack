@@ -1,11 +1,13 @@
-<h4 id="keywords">Keywords<hr/></h4>
-<mat-card-subtitle 
-    fxLayout="row wrap"> 
-    <span *ngFor="let keyword of contentItem">
-        <mat-card 
-            fxLayout="row" 
-            class="keyword-card">
-                {{ keyword | humanCase }}
-        </mat-card>
-    </span>
-</mat-card-subtitle>
+<div class="section">
+    <h4 id="keywords">Keywords<hr/></h4>
+    <mat-card-subtitle 
+        fxLayout="row wrap"> 
+        <span *ngFor="let keyword of contentItem">
+            <mat-card 
+                fxLayout="row" 
+                class="keyword-card">
+                    {{ keyword | humanCase }}
+            </mat-card>
+        </span>
+    </mat-card-subtitle>
+</div>
