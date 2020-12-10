@@ -37,7 +37,7 @@
         <ng-template #dynamicBanner>
             <div 
                 class="banner-container"
-                [style.background]="subhub.banner? 'url(' + subhub.banner.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
+                [style]="subhub.banner? 'background: url(' + subhub.banner.url + ') no-repeat' : subhub.viewType == 'View 2' ? 'display: none;' : 'min-height: 0px'">
             </div>
         </ng-template>
 
@@ -46,9 +46,10 @@
             <div *ngSwitchCase="'View 1'">
                 <div 
                 class="banner-container"
-                [style.background]="subhub.banner? 'url(' + subhub.banner.url + ') no-repeat' : 'url(../../../assets/images/rsz_run-all-tests.jpg)'">
+                [style]="subhub.banner ? 'background: url(' + subhub.banner.url + ') no-repeat' : subhub.viewType == 'View 2' ? 'display: none;' : 'min-height: 0px'">
                     <div
                         class="banner-content" 
+                        [style]="subhub.banner ? '' : 'margin: 3vh 0;'"
                         *ngIf="subhub.viewType == 'View 1'">
 
                         <!-- Title and Summary for View 1 -->
@@ -57,7 +58,7 @@
                             class="content-title" 
                             ngClass.sm="content-title-sm" 
                             ngClass.xs="content-title-xs"
-                            style="color: white;">
+                            [style.color]="subhub.banner ? subhub.viewType == 'View 1' ? 'white' : '' : ''">
                                 {{ subhub.title }}
                         </h1>
 
@@ -66,7 +67,7 @@
                             class="content-summary" 
                             ngClass.sm="content-summary-sm" 
                             ngClass.xs="content-summary-xs"
-                            style="color: white">
+                            [style.color]="subhub.banner ? subhub.viewType == 'View 1' ? 'white' : '' : ''">
                                 <small>{{ subhub.summary }}</small>
                         </h3>
                     </div>
