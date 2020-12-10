@@ -42,7 +42,7 @@ getRemoteSchema = async (remoteUri) => {
     } catch (e) {
         console.error(e);
     }
-}
+} 
  
 const fetchCognitoPublicKeys = async (jwkUrl) => {
     try {
