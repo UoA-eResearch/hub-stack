@@ -312,7 +312,7 @@ app-filter-dialog {
 }
 
 /**
- * Custom Styles
+ * Custom Button Styles
  */
 .standard-button {
   color: white;
@@ -341,4 +341,3 @@ app-filter-dialog {
   background-color: map-get($hub-teal, 500);
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
-

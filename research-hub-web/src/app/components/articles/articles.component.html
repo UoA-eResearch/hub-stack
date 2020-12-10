@@ -15,24 +15,11 @@
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
-        <div 
-            id="breadcrumbs" 
+        <app-breadcrumbs 
             *ngIf="!!parentSubHubs" 
-            class="site-padding top-padding"
-            ngClass.sm="site-padding-sm top-padding"
-            ngClass.xs="site-padding-xs top-padding"
-            ngClass.xs="breadcrumbs-mobile site-padding-xs">
-            <span 
-                class="breadcrumb-subhub" 
-                *ngFor="let subHub of parentSubHubs.slice().reverse()">
-                <a [routerLink]="'/subhub/' + subHub.slug">
-                    {{ subHub.title }}
-                </a>
-            </span>
-            <span id="breadcrumb-current-page">
-                {{ article.title }}
-            </span>
-        </div>
+            [contentItem]="parentSubHubs" 
+            [title]="article.title">
+        </app-breadcrumbs>
     </ng-template>
 
     <ng-template #dynamicBanner>
@@ -82,7 +69,7 @@
             [contentItem]="article.relatedOrgsCollection">
         </app-cards>
     </ng-template>
-
+    
     <ng-template #relatedContacts>
         <app-cards 
             [title]="'Contacts'" 
@@ -128,13 +115,12 @@
                 fxLayout.xs="column wrap"   
                 fxLayoutGap="5%">
 
-                <!-- Call to Actions -->
-                 <div 
-                    fxFlex="50%"
+                <!-- Article Body -->
+                <div 
+                    fxFlex
                     fxFlexOrder="2"
                     fxFlexOrder.xs="1">
 
-                    <!-- Article Body -->
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
 
                     <!-- Keywords -->
@@ -144,6 +130,10 @@
 
                 <!-- Extra Links -->
                 <div 
+                    *ngIf="
+                        article.relatedDocsCollection.items.length > 0 ||
+                        article.relatedContactsCollection.items.length > 0 ||
+                        article.relatedOrgsCollection.items.length > 0 "
                     fxLayout="column" 
                     fxFlex="20%"
                     fxFlexOrder="1"

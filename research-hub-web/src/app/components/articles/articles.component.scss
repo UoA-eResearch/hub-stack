@@ -6,31 +6,6 @@ mat-card  {
     margin: 1vh 0;
 }
 
-/**
- * Container for an individual article
- */
-#article-container {
-
-    #breadcrumbs {
-        margin-bottom: 3vh;
-
-        .breadcrumb-subhub {
-            &::after {
-                color: $color-icon;
-                margin: 0 0.5em 0 0.5em;
-                content: '/'
-            }
-        }
-
-        #breadcrumb-current-page {
-            color: $color-icon;
-        }
-    }
-    .breadcrumbs-mobile {
-        font-size: 8px;
-    }
-}
-
 
 /**
  * Banner

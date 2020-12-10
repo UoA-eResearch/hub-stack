@@ -73,7 +73,12 @@ query GetArticleByID($id: String!) {
         items { ...PublicFields }
       }
       relatedContactsCollection {
-        items { ...PublicFields }
+        items { 
+          ...PublicFields
+          ...on Person {
+            role
+          }
+        }
       }
       relatedOrgsCollection {
         items { ...PublicFields }

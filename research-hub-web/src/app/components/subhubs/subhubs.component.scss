@@ -9,25 +9,6 @@ div.mat-card-avatar mat-icon {
     color: map-get($hub-teal, 800);
 }
 
-#breadcrumbs {
-    margin-bottom: 3vh;
-
-    .breadcrumb-subhub {
-        &::after {
-            color: $color-icon;
-            margin: 0 0.5em 0 0.5em;
-            content: '/'
-        }
-    }
-
-    #breadcrumb-current-page {
-        color: $color-icon;
-    }
-}
-.breadcrumbs-mobile {
-    font-size: 8px;
-}
-
 .related-item-summary {
     color: gray;
 }
@@ -113,6 +94,4 @@ hr {
 // SubHub Children
 #subhub-children {
     background: #F2F2F2;
-    padding-top: $padding-site-top * 2;
-    margin-bottom: $padding-site-top * 2;
 }

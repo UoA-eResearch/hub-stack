@@ -16,23 +16,11 @@
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
-        <div    
-            class="top-padding"
-            ngClass.sm="top-padding"
-            ngClass.xs="top-padding"
-            id="breadcrumbs"   
-            *ngIf="!!parentSubHubs">
-            <span 
-                class="breadcrumb-subhub" 
-                *ngFor="let subHub of parentSubHubs.slice().reverse()">
-                <a [routerLink]="'/subhub/' + subHub.slug">
-                    {{ subHub.title }}
-                </a>
-            </span>
-            <span id="breadcrumb-current-page">
-                {{ equipment.title }}
-            </span>
-        </div>
+        <app-breadcrumbs 
+            *ngIf="!!parentSubHubs" 
+            [contentItem]="parentSubHubs" 
+            [title]="equipment.title">
+        </app-breadcrumbs>
     </ng-template>
 
     <ng-template #specificationsTable>

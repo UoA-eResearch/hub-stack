@@ -18,7 +18,7 @@
         <ng-template #subHubChildren>
             <div 
                 id="subhub-children"
-                class="site-padding top-padding"
+                class="site-padding top-padding-2"
                 ngClass.sm="site-padding-sm top-padding"
                 ngClass.xs="site-padding-xs top-padding">
                 <div
@@ -27,6 +27,9 @@
                     fxLayout.sm="column wrap"
                     fxLayout.xs="column wrap">
                     <div
+                        class="margin-bottom-2"
+                        ngClass.sm="margin-bottom"
+                        ngClass.xs="margin-bottom"
                         fxFlex="24%"
                         *ngFor="let subHub of subhub.internalPagesCollection.items">
                         <mat-card class="subhub-card">
@@ -50,23 +53,11 @@
         </ng-template>
 
         <ng-template #breadcrumbs>
-            <div 
-                id="breadcrumbs" 
-                class="breadcrumbs top-padding"
-                ngClass.sm="top-padding"
-                ngClass.xs="top-padding"
-                *ngIf="!!parentSubHubs">
-                <span 
-                    class="breadcrumb-subhub" 
-                    *ngFor="let parentSubHub of parentSubHubs.slice().reverse()">
-                    <a [routerLink]="'/subhub/' + parentSubHub.slug">
-                        {{ parentSubHub.title }}
-                    </a>
-                </span>
-                <span id="breadcrumb-current-page">
-                    {{ subhub.title }}
-                </span>
-            </div>
+            <app-breadcrumbs 
+                *ngIf="!!parentSubHubs" 
+                [contentItem]="parentSubHubs" 
+                [title]="subhub.title">
+            </app-breadcrumbs>
         </ng-template>
 
         <ng-template #dynamicBanner>
@@ -106,13 +97,14 @@
                         </h3>
                     </div>
                 </div>
+
+                <!-- Breadcrumbs -->
+                <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+                
                 <div
                     class="site-padding top-padding"
                     ngClass.sm="site-padding-sm top-padding"
                     ngClass.xs="site-padding-xs top-padding">
-                    
-                    <!-- Breadcrumbs -->
-                    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
                     <!-- Body Content -->
                     <div 
@@ -158,12 +150,7 @@
                 <div>
 
                     <!-- Breadcrumbs -->
-                    <div 
-                        class="site-padding"
-                        ngClass.sm="site-padding-sm"
-                        ngClass.xs="site-padding-xs">
-                        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-                    </div>
+                    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
                     <!-- Title and Summary -->
                     <div>
