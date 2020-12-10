@@ -1,0 +1,17 @@
+<div 
+    id="breadcrumbs" 
+    class="site-padding top-padding"
+    ngClass.sm="site-padding-sm top-padding"
+    ngClass.xs="site-padding-xs top-padding"
+    ngClass.xs="breadcrumbs-mobile site-padding-xs">
+    <span 
+        class="breadcrumb-subhub" 
+        *ngFor="let subHub of contentItem.slice().reverse()">
+        <a [routerLink]="'/subhub/' + subHub.slug">
+            {{ subHub.title }}
+        </a>
+    </span>
+    <span id="breadcrumb-current-page">
+        {{ title }}
+    </span>
+</div>

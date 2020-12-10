@@ -9,20 +9,26 @@
                 <mat-card class="top-padding-2">
                     <img mat-card-image src="{{ content.banner?.url }}"/>
                     <span style="background: rgb(2, 149, 165);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ content.__typename | humanCase }}</span>
-                    <span class="card-title">
+                    <mat-card-title class="card-title">
                         <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                             {{ content['title'] }}
                         </a>
-                    </span> 
+                    </mat-card-title> 
                     <br/>
                     <mat-card-content>
                         <span class="content-item-summary">
                             {{ content['summary'] }}
                         </span>
                     </mat-card-content>
-                    <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
-                        Read More
-                    </a>
+                    <div 
+                        *ngIf="content['__typename'] != 'Person'"
+                        class="call-to-action" 
+                        style="display: flex; align-items: center;">
+                        <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+                            Read More&nbsp;&nbsp;
+                        </a>
+                        <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
+                    </div>
                 </mat-card>
     </mat-nav-list>
 </div>

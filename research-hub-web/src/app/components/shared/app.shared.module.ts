@@ -28,6 +28,7 @@ import { OrganisationalUnitComponent } from './organisational-unit/organisationa
 import { ServiceComponent } from './service/service.component';
 import { KeywordsComponent } from './keywords/keywords.component';
 import { CardsComponent } from './cards/cards.component';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { CardsComponent } from './cards/cards.component';
     OrganisationalUnitComponent,
     ServiceComponent,
     KeywordsComponent,
-    CardsComponent
+    CardsComponent,
+    BreadcrumbsComponent
   ],
   exports: [
     FlexLayoutModule,
@@ -89,7 +91,8 @@ import { CardsComponent } from './cards/cards.component';
     OrganisationalUnitComponent,
     ServiceComponent,
     KeywordsComponent,
-    CardsComponent
+    CardsComponent,
+    BreadcrumbsComponent
   ],
   providers: [],
 })

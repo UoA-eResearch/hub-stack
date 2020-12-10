@@ -11,8 +11,21 @@
 /**
  * Card Title
  */
+ .mat-card-title {
+    margin: 0;
+ }
  .card-title a {
+    font-size: 18px;
     color: map-get($hub-navy, 500);
+}
+
+
+/**
+ * Card Summary
+ */ 
+ .content-item-summary {
+    font-size: 16px;
+    font-family: 'National Book';
 }
 
 /**
@@ -22,21 +35,6 @@
     object-fit: cover;
   }
 
-/**
- * Related Item Card
- */
-.related-item-card {
-    max-height: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.related-item-card-mobile {
-    height: 70px;
-}
-.related-item-summary {
-    font-size: 12px;
-}
-
 
 /**
  * Call To Action
@@ -45,3 +43,18 @@ a {
     margin: 5px 0px;
     color: map-get($hub-teal, 500);
 }
+
+
+/**
+ * Call To Action Arrow
+ */
+.call-to-action a {
+    font-size: 18px;
+}
+.arrow {
+    transition: transform 0.2s ease-out
+ }
+.call-to-action:hover .arrow {
+    transform: translate(10px);
+    transition: transform 0.2s ease-out
+ }

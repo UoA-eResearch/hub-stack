@@ -11,7 +11,14 @@ export class CardsComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+
+    // If Related Contacts
+    if (this.contentItem.items[0]?.__typename == 'Person') {
+      console.log(this.contentItem.items[0]);
+      this.contentItem.items[0]['title'] = this.contentItem.items[0].name;
+      this.contentItem.items[0]['summary'] = this.contentItem.items[0].role;
+    }
   }
 
 }
