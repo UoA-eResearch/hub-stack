@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryId, OptionsService } from '@services/options.service';
 import { SearchBarService } from '../search-bar/search-bar.service';
 import { FeaturedComponent } from './featured/featured.component';
 import { BrowseComponent } from './browse/browse.component';
+import { CategoryId } from '@app/global/global-variables';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { BrowseComponent } from './browse/browse.component';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public optionsService: OptionsService, private searchBarService: SearchBarService) {
+  constructor(private searchBarService: SearchBarService) {
   }
 
   ngOnInit() {

@@ -28,7 +28,7 @@ mat-expansion-panel, mat-card  {
     }
 
     #keywords {
-        color: $color-primary;
+        color: map-get($hub-navy, 500);
     }
 
     .related-item-summary {
@@ -84,7 +84,6 @@ mat-expansion-panel, mat-card  {
 .banner-container {
     text-align: center;
     min-width: 100vw; 
-    margin: -3em 0PX 20PX -7.5vw;
     min-height: 40vh;
     max-height: auto;
     overflow: hidden;

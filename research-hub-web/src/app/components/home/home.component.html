@@ -1,11 +1,29 @@
-
-<div fxLayout="column" fxLayoutGap="2.8em" style="margin-top: 2.8em;">
+<div 
+  class="site-padding-2 margin-bottom"
+  ngClass.xs="site-padding-xs margin-bottom-xs" 
+  ngClass.sm="site-padding-sm margin-bottom-sm"
+  ngClass.md="site-padding-sm margin-bottom-sm"
+  fxLayout="column" 
+  fxLayoutGap="2.8em" 
+  style="margin-top: 2.8em;">
   <app-research-activity></app-research-activity>
-  <div fxFlex="noshrink" fxLayout="row" fxLayout.xs="column" fxLayoutGap="7%">
-    <div fxFlex="65" fxFlex.xs="noshrink">
-      <app-browse [embedded]="true" [maxCols]="3"></app-browse>
+  <div 
+    fxFlex="noshrink" 
+    fxLayout="row" 
+    fxLayout.xs="column" 
+    fxLayoutGap="7%">
+    <div 
+      fxFlex="65" 
+      fxFlex.xs="noshrink">
+      <app-browse 
+        [embedded]="true" 
+        [maxCols]="3">
+      </app-browse>
     </div>
-    <div fxFlex="35" fxFlex.xs="noshrink" fxLayoutGap="5%">
+    <div 
+      fxFlex="35" 
+      fxFlex.xs="noshrink" 
+      fxLayoutGap="5%">
       <app-featured></app-featured>
     </div>
   </div>

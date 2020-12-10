@@ -4,8 +4,8 @@ import { Subject, Observable, BehaviorSubject } from 'rxjs';
 @Injectable()
 export class AppComponentService {
 
-  public titleChange: Subject<string> = new Subject<string>();
-  public customCSSClassName: Subject<string> = new Subject<string>();
+  public url: Subject<string> = new Subject<string>();
+  public titleChange: BehaviorSubject<string> = new BehaviorSubject<string>('Home');
   public progressBarVisibilityChange: Subject<boolean> = new Subject<boolean>();
 
   private contentSidenavVisibilityChange: Subject<boolean>;
@@ -16,21 +16,16 @@ export class AppComponentService {
 
   constructor() {
     this.contentSidenavVisibilityChange = new Subject<boolean>();
-    this.customCSSClassName = new BehaviorSubject<string>(null);
     this.contentSidenavVisibility$ = this.contentSidenavVisibilityChange.asObservable();
     this.isContentSidenavVisible = false;
   }
 
+  getRouteSlug(url: string) {
+    this.url.next(url.substring(1));
+  }
+
   setTitle(title: string) {
     this.titleChange.next(title);
-  }
-
-  setCustomCSSClassName(customCSSClassName: string) {
-    this.customCSSClassName.next(customCSSClassName);
-  }
-
-  getCustomCSSClassName() {
-    return this.customCSSClassName;
   }
 
   setProgressBarVisibility(isVisible: boolean) {

@@ -7,7 +7,7 @@
 
 .content-header-xs {
   @extend .content-header;
-  padding: $offset-xs $offset-xs 1.2em $offset-xs;
+  padding: $padding-site $padding-site 1.2em $padding-site;
 }
 
 .content-header > div:nth-child(1) > h2 {

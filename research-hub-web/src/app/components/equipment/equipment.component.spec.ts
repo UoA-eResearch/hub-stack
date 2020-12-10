@@ -1,5 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { AppComponentService } from '@app/app.component.service';
 import { EquipmentComponent } from './equipment.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute } from '@angular/router';
@@ -42,19 +42,20 @@ describe('EquipmentComponent', () => {
       'searchable': false
     } as Equipment);
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         EquipmentComponent
       ],
       imports: [
-        RouterModule.forRoot([]),
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
+        AppComponentService,
         AllEquipmentGQL
       ]
     })
@@ -77,7 +78,7 @@ describe('EquipmentComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all equipment', async () => {
+  it('Should get all equipment', () => {
     spyOn(component, 'getAllEquipment').and.returnValue(mockAllEquipment$);
     component.getAllEquipment().subscribe(res => {
       expect(res).toBeTruthy();
@@ -102,7 +103,7 @@ describe('EquipmentComponent', () => {
       });
     })
 
-    it('Should get a single equipment data by ID', async () => {
+    it('Should get a single equipment data by ID', () => {
       spyOn(component, 'getEquipmentByID').and.returnValue(mockEquipment$);
       component.getEquipmentByID('').subscribe(res => {
         expect(res.sys.id).toEqual('111');

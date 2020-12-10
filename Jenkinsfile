@@ -7,7 +7,7 @@ pipeline {
     parameters {
         booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend even if there are no code changes.' )
         booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API even if there are no code changes.')
-        booleanParam(name: "FORCE_REDEPLOY_SN", defaultValue: false, description: 'Force redeploy the serverless-now API even if there are no code changes.')
+        booleanParam(name: "FORCE_REDEPLOY_SP", defaultValue: false, description: 'Force redeploy the search-proxy Lambda  even if there are no code changes.')
     }
 
     agent  {
@@ -158,16 +158,16 @@ pipeline {
                         }
                     }
                 }
-                stage('Build serverless-now') {
+                stage('Build search-proxy') {
                     when {
                         anyOf {
-                            changeset "**/serverless-now/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                            changeset "**/hub-search-proxy/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
                         }
                     }
                     steps {
-                        dir("serverless-now") {
-                            echo 'Installing serverless-now dependencies...'
+                        dir("hub-search-proxy") {
+                            echo 'Installing search-proxy dependencies...'
                             sh "npm install"
                         }
                     }
@@ -211,16 +211,16 @@ pipeline {
                         }
                     }
                 }
-                stage('Run serverless-now tests') {
+                stage('Run search-proxy tests') {
                     when {
                         anyOf {
                             changeset "**/serverless-now/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
                         }
                     }
                     steps {
-                        echo "Invoking serverless-now tests..."
-                        dir('serverless-now') {
+                        echo "Invoking search-proxy tests..."
+                        dir('hub-search-proxy') {
                             sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
                         }
                     }
@@ -293,16 +293,16 @@ pipeline {
                         sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
                     }
                 }
-                stage('Deploy serverless-now') {
+                stage('Deploy search-proxy') {
                     when {
                         anyOf {
-                            changeset "**/serverless-now/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SN
+                            changeset "**/hub-search-proxy/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
                         }
                     }
                     steps {
-                        echo "Deploying serverless-now Lambda function to ${BRANCH_NAME}"
-                        dir("serverless-now") {
+                        echo "Deploying hub-search-now Lambda function to ${BRANCH_NAME}"
+                        dir("hub-search-proxy") {
                             sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
                         }
                     }

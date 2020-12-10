@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SearchResultsComponent } from './search-results.component';
 import { SearchResultsModule } from './search-results.module';
 import { ServicesModule } from '@services/services.module';
@@ -45,7 +45,7 @@ describe('SearchResultsComponent', () => {
     expect(fn.apply(thisArg, nullArgs)).toEqual(expectedValue, 'successful and return expected value.');
   }
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule,
         SearchResultsModule,

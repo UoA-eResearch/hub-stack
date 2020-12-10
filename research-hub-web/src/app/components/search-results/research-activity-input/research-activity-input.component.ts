@@ -1,7 +1,11 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { OptionsService } from '@services/options.service';
 import { AnalyticsService } from '@services/analytics.service';
+import { 
+  ResearchActivityId,
+  OptionType,
+  researchActivityOptions
+} from '@app/global/global-variables';
 
 
 @Component({
@@ -17,7 +21,7 @@ import { AnalyticsService } from '@services/analytics.service';
   ]
 })
 export class ResearchActivityInputComponent implements OnInit, ControlValueAccessor {
-
+  public researchActivityOptions = researchActivityOptions;
   public model = {};
 
   @Input() _value: number[] = [];
@@ -44,14 +48,13 @@ export class ResearchActivityInputComponent implements OnInit, ControlValueAcces
     this.updateState();
   }
 
-  constructor(public optionsService: OptionsService, public analyticsService: AnalyticsService) {
-    for (const activity of optionsService.researchActivityOptions) {
+  constructor(public analyticsService: AnalyticsService) {
+    for (const activity of this.researchActivityOptions) {
       this.model[activity.id] = { selected: false };
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   setDisabledState(isDisabled) {
     this.isDisabled = isDisabled;

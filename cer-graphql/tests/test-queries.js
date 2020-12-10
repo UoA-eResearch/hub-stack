@@ -25,7 +25,7 @@ exports.GET_ARTICLE_COLLECTION_PRIVATE = gql`
 { 
     articleCollection {
         items {
-            body {
+            bodyText {
                 json
             }
         }
@@ -38,7 +38,7 @@ exports.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO = gql`
     articleCollection {
         items {
             ssoProtected
-            body {
+            bodyText {
                 json
             }
         }
@@ -78,7 +78,7 @@ exports.GET_ARTICLE_BY_SYS_ID = gql`
 exports.GET_ARTICLE_BY_SYS_ID_PRIVATE = gql`
     query ($id: String!) { 
         article(id: $id) {
-            body {
+            bodyText {
                 json
             } 
         }

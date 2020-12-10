@@ -1,0 +1,19 @@
+# ======================== General ==================== #
+node_modules/
+tmp/
+.npm
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Ignore config file so secrets are not automatically checked in
+.env
+
+.serverless/
+

@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
 import { AppComponentService } from '@app/app.component.service';
 import { Content } from '@model/Content';
-import { ContentTypeId } from '@services/options.service';
+import { ContentTypeId } from '@app/global/global-variables';
 
 @Component({
   selector: 'app-guide-category',

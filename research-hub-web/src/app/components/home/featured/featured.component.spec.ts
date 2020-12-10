@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { RouterModule } from '@angular/router';
 import { By } from '@angular/platform-browser';
@@ -15,7 +15,7 @@ describe('Feature component', () => {
     let component: FeaturedComponent;
     let fixture: ComponentFixture<FeaturedComponent>;
 
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             declarations: [FeaturedComponent],
             imports: [
@@ -24,7 +24,7 @@ describe('Feature component', () => {
                 SharedModule,
                 BrowserAnimationsModule,
                 HttpClientTestingModule,
-                RouterModule.forRoot([]),
+                RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
             ],
             providers: [
                 AnalyticsService,

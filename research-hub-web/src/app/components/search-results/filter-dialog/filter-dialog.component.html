@@ -1,4 +1,8 @@
-<mat-toolbar color="primary">
+<mat-toolbar 
+  class="site-padding"
+  ngClass.sm="site-padding-sm"
+  ngClass.xs="site-padding-xs"
+  color="primary">
   <span style="font-size: 20px;">Refine your search</span>
   <span class="example-spacer"></span>
   <button mat-icon-button (click)="close(); analyticsService.trackUserExperience('Filter panel', 'close')"><mat-icon>close</mat-icon></button>

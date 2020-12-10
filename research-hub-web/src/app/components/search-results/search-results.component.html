@@ -1,6 +1,9 @@
 <div #resultsDummyHeader></div>
-
-<h2 class="search-results-title">Results</h2>
+<div
+  class="site-padding"
+  ngClass.sm="site-padding-sm"
+  ngClass.xs="site-padding-xs">
+  <h2 class="search-results-title">Results</h2>
 
 <ng-container *ngIf="resultsPage">
   <mat-expansion-panel *ngIf="resultsPage">

@@ -14,7 +14,7 @@ describe('ResearchHubs Basic Functionality', () => {
 
     it('can browse by category', () => {
         cy.contains('All Content').click();
-        cy.contains('Browse all content available to you on the ResearchHub.');
+        cy.contains('Browse All Content');
     });
 });
 
