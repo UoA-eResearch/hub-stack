@@ -1,13 +1,10 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck, tap, flatMap, map } from 'rxjs/operators';
+import { pluck, flatMap, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { 
     EquipmentCollection, 
-    AllEquipmentGQL, 
-    AllEquipmentQuery, 
-    AllSearchableContentPublicFieldsGQL, 
-    AllSearchableContentPublicFieldsQuery, 
+    AllEquipmentGQL,  
     GetEquipmentBySlugGQL,
     GetEquipmentByIdGQL,
     Equipment 
@@ -66,7 +63,6 @@ export class EquipmentComponent implements OnInit {
         this.equipment$ = this.getEquipmentByID(data.sys.id);
         this.equipment$.subscribe(res => {
           this.bodyMediaService.setBodyMedia(res.bodyText.links);
-          this.appComponentService.setTitle(res.title);
         });
         this.appComponentService.setTitle(data.title);
       });

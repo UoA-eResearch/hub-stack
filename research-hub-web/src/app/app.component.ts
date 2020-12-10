@@ -190,7 +190,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
           if (routeName) {
             this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-            this.router.navigate([routeName]);
+            this.router.navigate([routeName + this.currentRoute]);
             
             this.showBanner = ['home'].includes(routeName);
             this.searchBarService.setVisibility(['home', 'search'].includes(routeName));

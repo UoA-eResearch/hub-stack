@@ -2,7 +2,7 @@
 
 const coverImages = [
   'img1.jpg',
-  'img2.jpg',
+  'img22.jpg',
   'img3.jpg',
   'img55.jpg',
   'img9.jpg',

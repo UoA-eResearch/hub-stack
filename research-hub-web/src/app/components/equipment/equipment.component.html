@@ -7,8 +7,6 @@
     <app-collection-list [collection]="allEquipment"></app-collection-list>
 </div>
 
-
-
 <!-- If we're displaying an individual equipment -->
 <div 
     id="equipment-container"
@@ -112,13 +110,13 @@
         </div>
     </ng-template>
 
+    <!-- Breadcrumbs -->
+    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+
     <div
         class="site-padding margin-bottom" 
         ngClass.sm="site-padding-sm margin-bottom" 
         ngClass.xs="site-padding-xs margin-bottom">
-
-        <!-- Breadcrumbs -->
-        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
         <div>
             <div class="section" 
@@ -146,6 +144,7 @@
             <div class="section">
                 <h4>Description<hr/></h4>
                 <ngx-contentful-rich-text
+                    class="section-2"
                     style="word-break:break-word;" 
                     [document]="equipment.bodyText.json"
                     [nodeRenderers]="nodeRenderers">

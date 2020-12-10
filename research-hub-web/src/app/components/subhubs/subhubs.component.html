@@ -92,6 +92,7 @@
                         <!-- Main Body -->
                         <div fxFlex="65%" class="section">
                             <ngx-contentful-rich-text
+                                class="section-2"
                                 style="word-break:break-word;" 
                                 [document]="subhub.bodyText.json"
                                 [nodeRenderers]="nodeRenderers">
@@ -113,7 +114,7 @@
                 </div>
 
                 <!-- SubHub Children -->
-                <div class="subhub-children">
+                <div class="subhub-children section-2">
                     <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
                 </div>
 
@@ -152,6 +153,7 @@
                         ngClass.sm="site-padding-sm"
                         ngClass.xs="site-padding-xs">
                         <ngx-contentful-rich-text
+                            class="section-2"
                             style="word-break:break-word;" 
                             [document]="subhub.bodyText.json"
                             [nodeRenderers]="nodeRenderers">
@@ -159,7 +161,7 @@
                     </div>
             
                     <!-- SubHub Children -->
-                    <div class="subhub-children">
+                    <div class="subhub-children section-2">
                         <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
                     </div>
 
