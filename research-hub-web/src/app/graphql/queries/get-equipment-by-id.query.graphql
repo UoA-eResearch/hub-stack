@@ -13,6 +13,9 @@ query GetEquipmentByID($id: String!) {
       description
       url
     }
+    banner {
+      url
+    }
     summary
     bodyText {
       json 

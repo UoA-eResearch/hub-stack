@@ -62,25 +62,25 @@
         </div>
     </ng-template>
     
-    <ng-template #relatedItems>
+    <ng-template #relatedItems let-hide="hideImage">
         <app-cards 
-            [hideImage]="true"
+            [hideImage]="hide"
             [title]="'You might be interested in'" 
             [contentItem]="equipment.relatedItemsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedOrganisations>
+    <ng-template #relatedOrganisations let-hide="hideImage">
         <app-cards 
-            [hideImage]="true"
+            [hideImage]="hide"
             [title]="'Organisations'" 
             [contentItem]="equipment.relatedOrgsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedContacts>
+    <ng-template #relatedContacts let-hide="hideImage">
         <app-cards 
-            [hideImage]="true"
+            [hideImage]="hide"
             [title]="'Contacts'" 
             [contentItem]="equipment.relatedContactsCollection">
         </app-cards>
@@ -161,22 +161,22 @@
                 fxLayout.xs="column wrap"
                 fxLayoutGap="5%">
                 <div fxFlex="47.5%">
-                    <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
                 </div>
                 <div fxFlex="47.5%">
-                    <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
                 </div>
             </div>
 
             <!-- Specifications Table -->
             <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
 
+            <!-- Related Items -->
+            <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: true }"></ng-container>
+
             <!-- Keywords -->
             <app-keywords [contentItem]="equipment.keywords"></app-keywords>
-
-            <!-- Related Items -->
-            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-
+            
         </div>
     </div>
 </div>

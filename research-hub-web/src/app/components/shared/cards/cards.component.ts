@@ -16,14 +16,17 @@ export class CardsComponent implements OnInit {
 
     // If card is displaying a Person
     if (this.contentItem.items[0]?.__typename == 'Person') {
-      console.log(this.contentItem.items[0]);
-      this.contentItem.items[0]['title'] = this.contentItem.items[0].name;
-      this.contentItem.items[0]['summary'] = this.contentItem.items[0].role;
+      this.contentItem.items.forEach(element => {
+        element['title']= element['name'];
+        element['summary'] = element['role'];
+      });
     }
 
     // If you want to hide image when displayed
     if (this.hideImage) {
-      this.contentItem.items[0]['banner'].url.splice(0, 1)
+      this.contentItem.items.forEach(element => {
+        delete element['banner'].url;
+      });
     };
   }
 }
