@@ -49,6 +49,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.routerSub = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd))
       .subscribe(event => {
+        /**
+         * Padding Class
+         */
         this.isFilterBtnVisible = !event['urlAfterRedirects'].startsWith('/home');
       });
   }

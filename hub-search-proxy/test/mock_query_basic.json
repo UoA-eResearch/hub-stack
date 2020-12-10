@@ -1,0 +1,9 @@
+{
+    "event": {
+        "httpMethod": "POST",
+        "headers": { "Content-Type": "application/json" },
+        "body": {
+            "comment": "Tis better to have tested and lost than never to have tested at all"
+        }
+    }
+}

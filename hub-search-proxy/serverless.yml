@@ -1,0 +1,92 @@
+service: hub-search-proxy
+custom:
+  ResearchHub: ${self:service}
+  BusinessService: Faculty of Science
+  Department: Centre for eResearch
+  ProjectCode: N/A
+  WikiLink: N/A
+  Application: ${self:service}
+  CostCentre: N/A
+  Faculty: Science
+  customDomain:
+    domainName: ${file(env/${self:provider.stage}.json):infra.awsApiGatewayCustomDomainName}
+    basePath: ${self:service}
+    stage: ${self:provider.stage}
+    createRoute53Records: true
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'sandbox'} # Deploy with sls deploy --stage STAGE (default dev)
+  region: ap-southeast-2
+  endpointType: regional
+  role: arn:aws:iam::${file(env/${self:provider.stage}.json):awsAccountId}:${file(env/${self:provider.stage}.json):lambdaRole}
+  tags:
+    ResearchHub: ${self:custom.ResearchHub}
+    BusinessService: ${self:custom.BusinessService}
+    Department: ${self:custom.Department}
+    ProjectCode: ${self:custom.ProjectCode}
+    WikiLink: ${self:custom.WikiLink}
+    Application: ${self:custom.Application}
+    CostCentre: ${self:custom.CostCentre}
+    Faculty: ${self:custom.Faculty}
+  stackTags:
+    ResearchHub: ${self:custom.ResearchHub}
+    BusinessService: ${self:custom.BusinessService}
+    Department: ${self:custom.Department}
+    ProjectCode: ${self:custom.ProjectCode}
+    WikiLink: ${self:custom.WikiLink}
+    Application: ${self:custom.Application}
+    CostCentre: ${self:custom.CostCentre}
+    Faculty: ${self:custom.Faculty}
+  environment:
+    # Environment variables available to all functions in this service
+    LEVEL: INFO
+    EXAMPLE_KEY: ${file(env/${self:provider.stage}.json):EXAMPLE_KEY}
+    ELASTICSEARCH_API_KEY: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_API_KEY}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameter
+        - ssm:GetParameters
+      Resource:
+        - arn:
+          Fn::Join:
+            - ":"
+            - - arn
+              - aws
+              - ssm:${self:provider.region}
+              - ${file(env/${self:provider.stage}.json):awsAccountId}
+              - parameter/${self:provider.stage}/research-hub/*"
+    - Effect: Allow
+      Action:
+        - kms:Decrypt
+      Resource:
+        - arn:
+          Fn::Join:
+            - ":"
+            - - arn
+              - aws
+              - kms
+              - ${self:provider.region}
+              - ${file(env/${self:provider.stage}.json):awsAccountId}
+              - ${file(env/${self:provider.stage}.json):resourceKey}
+package:
+  exclude:
+    - .git/**
+    - .vscode/*
+    - events/*
+    - node_modules/**
+    - "!node_modules/@uoa/**"
+    - "!node_modules/uuid/**"
+functions:
+  hub-search-proxy:
+    handler: handler.main
+    events:
+      - http:
+          path: /
+          method: post
+          cors: true
+plugins:
+  - serverless-offline
+  - serverless-mocha-plugin
+  - serverless-domain-manager

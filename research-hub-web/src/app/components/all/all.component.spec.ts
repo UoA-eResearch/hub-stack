@@ -1,9 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AllComponent } from './all.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { AllSearchableContentPublicFieldsGQL, AllSearchableContentPublicFieldsQuery } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { AppComponentService } from '@app/app.component.service';
 
 describe('AllComponent', () => {
   let component: AllComponent;
@@ -105,9 +106,12 @@ describe('AllComponent', () => {
     }
   } as AllSearchableContentPublicFieldsQuery)
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [AllComponent],
+      providers: [
+        AppComponentService
+      ],
       imports: [ApolloTestingModule]
     })
       .compileComponents();
@@ -116,7 +120,6 @@ describe('AllComponent', () => {
   beforeEach(() => {
     backend = TestBed.inject(ApolloTestingController);
     spy = spyOn(AllComponent.prototype, 'getAllSearchableContent').and.returnValue(mockAllSearchableContent$);
-
     fixture = TestBed.createComponent(AllComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

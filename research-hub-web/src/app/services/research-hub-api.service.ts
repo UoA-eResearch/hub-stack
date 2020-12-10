@@ -1,4 +1,4 @@
-import { SearchResultsParams } from './research-hub-api.service';
+// import { SearchResultsParams } from './research-hub-api.service';
 
 import { map, pluck, retry, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
