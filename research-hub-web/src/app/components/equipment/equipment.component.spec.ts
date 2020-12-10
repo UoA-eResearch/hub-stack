@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponentService } from '@app/app.component.service';
 import { EquipmentComponent } from './equipment.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
@@ -42,13 +42,13 @@ describe('EquipmentComponent', () => {
       'searchable': false
     } as Equipment);
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         EquipmentComponent
       ],
       imports: [
-        RouterModule.forRoot([]),
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
         MaterialModule,

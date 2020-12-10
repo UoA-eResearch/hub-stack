@@ -1,6 +1,12 @@
 @import 'themes';
 @import 'typography';
 
+* { 
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+   box-sizing: border-box; 
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -129,12 +135,15 @@ mat-chip.mat-chip {
 }
 .site-padding-2 {
   @extend .site-content;
-    padding-left: $padding-site * 3.5;
-    padding-right: $padding-site * 3.5;
+    padding-left: $padding-site * 2.2;
+    padding-right: $padding-site * 2.2;
 }
 
 .top-padding {
   padding-top: $padding-site-top;
+}
+.top-padding-2 {
+  padding-top: $padding-site-top * 3;
 }
 
 .margin-bottom {
