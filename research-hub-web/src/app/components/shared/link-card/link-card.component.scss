@@ -1,34 +1,31 @@
+@import '../../../../styles.scss';
+@import '../../../../themes.scss';
+@import '../../../../typography.scss';
+
 /**
  * Entry Block
  */
- .embedded-entry-block {
-    width: 50%; 
+ .embedded-entry-block a {
     display: flex;
-    margin: 30px auto;
     align-items: center;
-    text-align: center;
 }
-.embedded-entry-block mat-card {
-    padding: 20px; 
-    border: 1px solid #e0e0e0; 
-    border-radius: 5px; 
-    background: #f8f8f8
-}
-.embedded-entry-block mat-card-img {
-    max-height: 19vh; 
-    object-fit: cover
-}
-.embedded-entry-block mat-card-title {
-    font-size: 24px; 
-    color: #333333;
+.embedded-entry-block .mat-card {
+    width: 80%;
+    margin: 0 auto;
+    padding-right: 30px;
 }
 
 
 /**
- * HTML Elements
+ * Card Title
  */
- small {
-    color: #757575;
+.embedded-entry-block .mat-card-title span {
+    font-size: 18px; 
+    color: map-get($hub-navy, 500);
+}
+
+.mat-card-content {
+    margin: 0px;
 }
 
 

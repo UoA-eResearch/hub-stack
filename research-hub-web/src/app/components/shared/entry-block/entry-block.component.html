@@ -1,6 +1,6 @@
 <!-- Default Entry Block Template -->
 <ng-template #default>
-    <mat-card class="embedded-entry-block">
+    <mat-card class="embedded-entry-block section">
         <mat-card-title>
             <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
                 {{ contentItem['title'] }}
@@ -12,15 +12,15 @@
                 {{ contentItem['summary'] }}
             </span>
         </mat-card-content>
-        <div 
+        <span
             *ngIf="contentItem['__typename'] != 'Person'"
             class="call-to-action" 
-            style="display: flex; align-items: center;">
+            style="display: flex; align-items: center;max-width: fit-content">
             <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
                 View {{ contentItem['__typename'] | humanCase }}&nbsp;&nbsp;
             </a>
             <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
-        </div>
+        </span>
     </mat-card>
 </ng-template>
 

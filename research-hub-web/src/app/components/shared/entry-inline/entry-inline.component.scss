@@ -1,11 +1,7 @@
 /**
  *  Entry Inline
  */
- .embedded-entry-inline mat-card {
-    padding: 5px;
-    box-shadow: none;
+ .embedded-entry-inline {
     color: #0294a5;
-    width: fit-content;
     display: inline-block !important;
-    background-color: rgba(255, 255, 255, 0);
 }

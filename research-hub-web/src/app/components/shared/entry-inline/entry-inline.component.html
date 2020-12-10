@@ -1,7 +1,7 @@
-<a 
-    class="embedded-entry-inline call-to-action" 
-    style="display: flex; align-items: center;"
-    href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
-    <b>&nbsp;{{ contentItem.title }}&nbsp;&nbsp;</b>
-    <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
-</a>
+<span>
+    <a 
+        class="embedded-entry-inline" 
+        href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
+        <b>&nbsp;{{ contentItem.title }}&nbsp;&nbsp;</b>
+    </a>
+</span>

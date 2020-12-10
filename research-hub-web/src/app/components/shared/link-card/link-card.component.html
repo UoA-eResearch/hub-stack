@@ -1,18 +1,22 @@
 <div 
-    class="embedded-entry-block"
+    class="embedded-entry-block section"
     ngClass.xs="embedded-entry-block-mobile">
-        <mat-card>
-            <img mat-card-image src="{{ contentItem.__typename == 'Equipment' ? contentItem.mainImage?.url : contentItem.banner?.url }}">
-            <mat-card-title>
-                <p>{{ contentItem.title }}</p>
-            </mat-card-title>              
-            <mat-card-content>
-                <small>{{ contentItem.summary }}</small>
-            </mat-card-content>   
-            <mat-card-actions>
-                <a [routerLink]="'/' + contentItem.__typename.toLowerCase() + '/' + contentItem.slug">
-                    Read More ...
-                </a>
-            </mat-card-actions>   
+
+    <a href="{{contentItem.url}}">
+        <mat-card 
+            class="call-to-action"
+            style="display: flex; align-items: center;justify-content: space-between">
+            <span>
+                <mat-card-title>
+                    <span>{{ contentItem.title }}</span>
+                </mat-card-title>              
+                <mat-card-content>
+                    <span class="card-content-item-summary">
+                        {{ contentItem.summary }}
+                    </span>
+                </mat-card-content> 
+            </span>
+            <img class="arrow" style="height: 30px; width: auto" src="assets/components/icon-arrow.png">
         </mat-card>
+    </a>
 </div>

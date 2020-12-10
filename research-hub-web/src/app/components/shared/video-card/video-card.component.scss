@@ -2,15 +2,15 @@
  * YoutTube Hyperlink
  */
  .youtube-container {
-    position: relative;
+    display: flex;
     align-items: center;
+    justify-content: center!important;
+    position: relative;
     padding-top: 56.25%;
-    margin: 50px 0px;
 }
   
 .youtube {
     position: absolute;
-    margin: 0 auto;
     top: 0;
     bottom: 0;
     width: 100%;

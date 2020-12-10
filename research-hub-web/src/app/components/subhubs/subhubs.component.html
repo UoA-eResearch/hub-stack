@@ -27,6 +27,13 @@
             </app-breadcrumbs>
         </ng-template>
 
+        <ng-template #relatedItems>
+            <app-cards 
+                [title]="'You might be interested in'" 
+                [contentItem]="subhub.relatedItemsCollection">
+            </app-cards>
+        </ng-template>
+
         <ng-template #dynamicBanner>
             <div 
                 class="banner-container"
@@ -94,10 +101,9 @@
                         <div fxFlex="30%">
 
                             <!-- Related Items -->
-                            <app-cards 
-                                [title]="'You might be interested in'" 
-                                [contentItem]="subhub.relatedItemsCollection">
-                            </app-cards>
+                            <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
+                                <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                            </div>
 
                             <!-- Keywords -->
                             <app-keywords [contentItem]="subhub.keywords"></app-keywords>
@@ -161,10 +167,9 @@
                         class="site-padding"
                         ngClass.sm="site-padding-sm"
                         ngClass.xs="site-padding-xs">
-                        <app-cards 
-                            [title]="'You might be interested in'" 
-                            [contentItem]="subhub.relatedItemsCollection">
-                        </app-cards>
+                        <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
+                            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                        </div>
                     </div>
 
                     <!-- Keywords -->

@@ -34,9 +34,7 @@
                     </div>
                     <mat-card-title>
                         {{ content.title }}
-                        <mat-chip-avatar *ngIf="content.ssoProtected">
-                            <mat-icon matTooltip="SSO Login Required">lock</mat-icon>
-                        </mat-chip-avatar>
+                        <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
                     </mat-card-title>
                     <mat-card-subtitle>
                         {{ content.summary }}

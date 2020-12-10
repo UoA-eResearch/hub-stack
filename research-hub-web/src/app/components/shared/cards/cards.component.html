@@ -21,15 +21,15 @@
                     {{ content['summary'] }}
                 </span>
             </mat-card-content>
-            <div 
+            <span
                 *ngIf="content['__typename'] != 'Person'"
                 class="call-to-action" 
-                style="display: flex; align-items: center;">
+                style="display: flex; align-items: center;max-width: fit-content">
                 <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                     Read More&nbsp;&nbsp;
                 </a>
                 <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
-            </div>
+            </span>
         </mat-card>
         <br/>
     </mat-nav-list>
