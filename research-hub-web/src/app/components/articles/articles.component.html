@@ -87,6 +87,13 @@
             [contentItem]="article.relatedDocsCollection">
         </app-cards>
     </ng-template>
+
+    <ng-template #keywords>
+        <app-keywords 
+            id="keywords" 
+            [contentItem]="article.keywords">
+        </app-keywords>
+    </ng-template>
     
     
     <!-- View Switcher -->
@@ -128,7 +135,7 @@
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
 
                     <!-- Keywords -->
-                    <app-keywords [contentItem]="article.keywords"></app-keywords>
+                    <ng-container *ngTemplateOutlet="keywords"></ng-container>
 
                 </div>
 
@@ -212,8 +219,7 @@
                         <ng-container *ngTemplateOutlet="relatedItems"></ng-container><div><br/></div>
 
                         <!-- Keywords -->
-                        <app-keywords [contentItem]="article.keywords"></app-keywords>
-
+                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
                     </div>
             </div>
         </div>
