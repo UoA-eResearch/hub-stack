@@ -5,13 +5,13 @@
 .subhub-card {
     background: map-get($hub-teal, 500);
 }
-.subhub-card .card-title p {
+.subhub-card .card-title a {
     display: inline;
     font-size: 20px;
     color: white;
     border-bottom: hidden 2px transparent;
 }
-.subhub-card .card-title p:hover {
+.subhub-card .card-title a:hover {
     border-bottom: solid 2px white;
     cursor: pointer;
 }

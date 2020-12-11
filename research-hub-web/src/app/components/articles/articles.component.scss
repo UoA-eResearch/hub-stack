@@ -5,20 +5,3 @@ mat-expansion-panel,
 mat-card  {
     margin: 1vh 0;
 }
-
-
-/**
- * Banner
- */
-.banner-container {
-    text-align: center;
-    min-width: 100vw; 
-    min-height: 50vh;
-    background-size: cover!important;
-}
-.banner-content {
-    width: 50%;
-    margin: 10em auto;
-    color: white;
-    display: inline-block;
-}

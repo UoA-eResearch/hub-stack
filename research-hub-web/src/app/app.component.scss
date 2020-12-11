@@ -42,10 +42,11 @@
  * Banner Styling
  */
  .banner-container-home {
-  min-height: 35vh;
-  text-align: center;
-  max-height: auto;
-  background-size: cover!important;
+    overflow-x: hidden;
+    min-height: 35vh;
+    text-align: center;
+    max-height: auto;
+    background-size: cover!important;
 }
 
 .banner-content-home {

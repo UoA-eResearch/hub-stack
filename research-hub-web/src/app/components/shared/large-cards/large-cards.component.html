@@ -30,7 +30,7 @@
                 </ng-container>
                 <span style="color: rgb(2, 149, 165);background: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
                 <mat-card-title class="card-title">
-                    <p>{{ subHub.title }}</p>
+                    <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">{{ subHub.title }}</a>
                 </mat-card-title>
                 <br/>
                 <mat-card-content class="content-item-summary">
