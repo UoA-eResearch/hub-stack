@@ -14,7 +14,6 @@ describe('ResearchHubs Static Routing', () => {
         cy.visit('/article/first-article');
         cy.contains('Have a good day.');
     });
-
 });
 
 describe('ResearchHubs Dynamic SubHub Routing', () => {
