@@ -19,6 +19,12 @@
     <span *ngSwitchCase="'image/png'">
         <ng-container *ngTemplateOutlet="image"></ng-container>
     </span>
+    <span *ngSwitchCase="'image/gif'">
+        <ng-container *ngTemplateOutlet="image"></ng-container>
+    </span>
+    <span *ngSwitchCase="'image/webp'">
+        <ng-container *ngTemplateOutlet="image"></ng-container>
+    </span>
 
     <!-- Asset File -->
     <span *ngSwitchDefault>
