@@ -14,6 +14,7 @@ describe('ResearchHubs Static Routing', () => {
         cy.visit('/article/first-article');
         cy.contains('Have a good day.');
     });
+
 });
 
 describe('ResearchHubs Dynamic SubHub Routing', () => {
@@ -33,7 +34,7 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
     it('will update a content item\'s URL when it is visited from outside the SubHub', () => {
         cy.visit('/articles');
         cy.get('mat-nav-list > mat-card')
-            .contains('Test - First article').click();
+            .contains('First article').click();
         cy.url().should('include', '/cer/');
     })
 

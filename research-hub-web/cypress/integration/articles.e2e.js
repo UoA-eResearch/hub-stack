@@ -1,11 +1,11 @@
 describe('ResearchHubs Article Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/article/the-battle-of-geonosis');
+        cy.visit('/article/first-article');
     });
 
     it('can visit an article and display its title', () => {
-        cy.contains('The Battle of Geonosis');
+        cy.contains('First article');
     });
 
     it('can display a list of its keywords', () => {
@@ -14,7 +14,7 @@ describe('ResearchHubs Article Pages', () => {
 
     it('displays a list of related items', () => {
         cy.get('#you-might-be-interested-in').should('exist');
-    });
+    }); 
 
     it('clicking a related item takes you to its page', () => {
         cy.get('#you-might-be-interested-in').contains('Jedi').click();
