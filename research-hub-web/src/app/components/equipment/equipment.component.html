@@ -86,6 +86,14 @@
         </app-cards>
     </ng-template>
 
+    <!-- <ng-template #relatedFacilities let-hide="hideImage">
+        <app-cards 
+            [hideImage]="hide"
+            [title]="'Facilities'" 
+            [contentItem]="equipment.relatedFacilityCollection">
+        </app-cards>
+    </ng-template> -->
+
     <ng-template #titleSummary>
         <h1 
             class="content-title" 
@@ -173,6 +181,15 @@
 
             <!-- Related Items -->
             <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: true }"></ng-container>
+
+            <!-- Related Facilities -->
+            <!-- <ng-container *ngTemplateOutlet="relatedFacilities; context: { hideImage: true }"></ng-container> -->
+
+            <!-- Related Organisations -->
+            <!-- <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container> -->
+
+            <!-- Related Contacts -->
+            <!-- <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container> -->
 
             <!-- Keywords -->
             <app-keywords [contentItem]="equipment.keywords"></app-keywords>
