@@ -278,6 +278,27 @@ app-filter-dialog {
 }
 
 
+
+
+/**
+ * Banner
+ */
+ .banner-container {
+  overflow-x: hidden;
+  text-align: center;
+  min-width: 100vw; 
+  min-height: 50vh;
+  background-size: cover!important;
+}
+.banner-content {
+  overflow-x: hidden;
+  width: 50%;
+  margin: 10em auto;
+  color: white;
+  display: inline-block;
+}
+
+
 /*
  * Guide breadcrumb
  */
