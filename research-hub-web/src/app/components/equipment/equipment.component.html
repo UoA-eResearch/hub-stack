@@ -15,6 +15,7 @@
     <!-- Templates -->
     <ng-template #breadcrumbs>
         <app-breadcrumbs 
+            *ngIf="!!parentSubHubs" 
             [contentItem]="parentSubHubs" 
             [title]="equipment.title">
         </app-breadcrumbs>
@@ -69,17 +70,22 @@
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedOrganisations let-hide="hideImage">
+    <ng-template #relatedOrganisations>
         <app-cards 
-            [hideImage]="hide"
             [title]="'Organisations'" 
             [contentItem]="equipment.relatedOrgsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedContacts let-hide="hideImage">
+    <ng-template #relatedFacilities>
         <app-cards 
-            [hideImage]="hide"
+            [title]="'Organisations'" 
+            [contentItem]="equipment.relatedFacilityCollection">
+        </app-cards>
+    </ng-template>
+
+    <ng-template #relatedContacts>
+        <app-cards 
             [title]="'Contacts'" 
             [contentItem]="equipment.relatedContactsCollection">
         </app-cards>
@@ -122,8 +128,7 @@
 
         <div>
             <div class="section" 
-                fxLayout="row wrap"
-                fxLayoutAlign="space-between center"  
+                fxLayout="column wrap"  
                 fxLayout.sm="column wrap"
                 fxLayout.xs="column wrap">
 
@@ -139,7 +144,6 @@
                     class="equipment-image section">
                     <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
                 </div>
-
             </div>
 
             <!-- Equipment Body -->
@@ -159,23 +163,27 @@
                 fxLayout="row wrap"
                 fxLayout.xs="column wrap"
                 fxLayoutGap="5%">
-                <div fxFlex="47.5%">
+                <div *ngIf="equipment.relatedContactsCollection" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
                 </div>
-                <div fxFlex="47.5%">
+                <div *ngIf="equipment.relatedOrgsCollection" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
+                </div>
+                <div  *ngIf="equipment.relatedFacilityCollection" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedFacilities; context: { hideImage: true }"></ng-container>
                 </div>
             </div>
 
             <!-- Specifications Table -->
             <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
 
+            <!-- Keywords -->
+            <app-keywords [contentItem]="equipment.keywords"></app-keywords>
+
             <!-- Related Items -->
             <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: true }"></ng-container>
 
-            <!-- Keywords -->
-            <app-keywords [contentItem]="equipment.keywords"></app-keywords>
-            
         </div>
     </div>
 </div>
+    

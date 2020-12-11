@@ -16,7 +16,9 @@ html, body {
   color: $body-light-bg-font-color;
 }
 hr {
-  border-color: $light-grey;
+  background-color: $input-grey;
+  border: none;
+  height: 1px;
 }
 .section {
   margin: 20px 0px;
