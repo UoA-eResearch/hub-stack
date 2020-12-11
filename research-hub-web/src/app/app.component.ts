@@ -184,6 +184,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
 
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.navigate([url]);
+
           // Check if the user is logged in now (Cognito redirect)
           this.authenticated = await this.loginService.isAuthenticated();
           this.userInfo = await this.loginService.getUserInfo();
@@ -198,10 +201,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             if (this.currentRoute) {
               this.previousRoute = this.currentRoute;
             }
-            if (this.currentRoute == routeName) {
-              this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-              this.router.navigate([url]);
-            }
+            // if (this.currentRoute == routeName) {
+            //   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+            //   this.router.navigate([url]);
+            // }
             this.currentRoute = routeName;
 
             this.showBackBtn = routeName !== 'home';
