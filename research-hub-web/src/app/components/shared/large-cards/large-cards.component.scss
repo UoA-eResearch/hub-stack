@@ -13,10 +13,7 @@
 }
 .subhub-card .card-title p:hover {
     border-bottom: solid 2px white;
-}
-.subhub-card .card-title:hover {
-    border-bottom: solid 2px white;
-
+    cursor: pointer;
 }
 
 .subhub-card .content-item-summary {
@@ -32,3 +29,4 @@
     min-width: 100%;
     max-height: 30vh;
 }
+ 
