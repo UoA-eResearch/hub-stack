@@ -10,6 +10,12 @@
     object-fit: cover;
   }
 
+/**
+  * Mat-Card Title
+  */
+.mat-card-title a:hover {
+  border-bottom: solid 2px map-get($hub-navy, 500);
+}
 
 /**
  * Call To Action

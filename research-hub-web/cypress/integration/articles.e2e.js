@@ -1,11 +1,11 @@
 describe('ResearchHubs Article Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/article/first-article');
+        cy.visit('/article/the-battle-of-geonosis');
     });
 
     it('can visit an article and display its title', () => {
-        cy.contains('First article');
+        cy.contains('The Battle of Geonosis');
     });
 
     it('can display a list of its keywords', () => {

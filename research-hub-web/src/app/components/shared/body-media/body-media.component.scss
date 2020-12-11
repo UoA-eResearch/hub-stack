@@ -5,10 +5,9 @@
  * Blockquote
  */
  .blockquote-container {
-     width: 100%;
+     width: fit-content;
      border-left: solid 4px $input-grey;
      margin: 30px auto;
-     text-align: center;
  }
  .blockquote {
     word-break: break-word;
@@ -17,6 +16,8 @@
  }
  .blockquote p {
     margin: 10px 5px 10px 15px;
+    width: fit-content;
+    text-align: center;
     font-family: 'National Light';
  }
 
