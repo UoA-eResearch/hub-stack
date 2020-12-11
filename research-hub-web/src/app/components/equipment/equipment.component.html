@@ -163,13 +163,13 @@
                 fxLayout="row wrap"
                 fxLayout.xs="column wrap"
                 fxLayoutGap="5%">
-                <div *ngIf="equipment.relatedContactsCollection" fxFlex>
+                <div *ngIf="equipment.relatedContactsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
                 </div>
-                <div *ngIf="equipment.relatedOrgsCollection" fxFlex>
+                <div *ngIf="equipment.relatedOrgsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
                 </div>
-                <div  *ngIf="equipment.relatedFacilityCollection" fxFlex>
+                <div  *ngIf="equipment.relatedFacilityCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedFacilities; context: { hideImage: true }"></ng-container>
                 </div>
             </div>

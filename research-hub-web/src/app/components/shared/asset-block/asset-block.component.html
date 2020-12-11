@@ -1,7 +1,6 @@
 <span [ngSwitch]="contentItem.contentType">
 
-    <!-- Asset Image -->
-    <span *ngSwitchCase="'image/jpeg'">
+    <ng-template #image>
         <div 
             class="embedded-asset-block section-2"
             ngClass.xs="embedded-asset-block-mobile">
@@ -11,6 +10,14 @@
             <br>{{ contentItem.title }}
             <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
         </div>
+    </ng-template>
+
+    <!-- Asset Image -->
+    <span *ngSwitchCase="'image/jpeg'">
+        <ng-container *ngTemplateOutlet="image"></ng-container>
+    </span>
+    <span *ngSwitchCase="'image/png'">
+        <ng-container *ngTemplateOutlet="image"></ng-container>
     </span>
 
     <!-- Asset File -->
