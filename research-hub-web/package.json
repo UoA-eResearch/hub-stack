@@ -23,7 +23,7 @@
     "graphql-server-watch": "npm run dev --prefix ../cer-graphql",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "e2e": "cypress run -q --config record=false,pageLoadTimeout=10000,defaultCommandTimeout=10000",
+    "e2e": "cypress run -q --config record=false,pageLoadTimeout=100000,defaultCommandTimeout=10000",
     "e2e-gui": "npm run cy:open",
     "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
     "e2e-serve": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
