@@ -2,18 +2,18 @@ import { Component, OnInit, Type } from '@angular/core';
 import { Observable } from 'rxjs';
 import { pluck, flatMap, map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
+import { AppComponentService } from '@app/app.component.service';
+import { BodyMediaService } from '@services/body-media.service';
 import { 
     EquipmentCollection, 
     AllEquipmentGQL,  
     GetEquipmentBySlugGQL,
     GetEquipmentByIdGQL,
     Equipment 
-} from '../../graphql/schema';
+} from '@graphql/schema';
+import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { CerGraphqlService } from '@services/cer-graphql.service';
-import { AppComponentService } from '@app/app.component.service';
-import { BodyMediaService } from '@services/body-media.service';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 
@@ -112,6 +112,6 @@ export class EquipmentComponent implements OnInit {
     try {
       return this.getEquipmentByIDGQL.fetch({id: id})
         .pipe(map(x => x.data.equipment)) as Observable<Equipment>;
-    } catch (e) { console.error(`Error loading article ${id}:`, e); }
+    } catch (e) { console.error(`Error loading equipment ${id}:`, e); }
   }
 }
