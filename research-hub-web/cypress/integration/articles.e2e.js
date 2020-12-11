@@ -1,11 +1,11 @@
 describe('ResearchHubs Article Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/article/first-article');
+        cy.visit('/article/the-battle-of-geonosis');
     });
 
     it('can visit an article and display its title', () => {
-        cy.contains('First article');
+        cy.contains('The Battle of Geonosis');
     });
 
     it('can display a list of its keywords', () => {
@@ -17,7 +17,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Test - Starkiller Base').click();
-        cy.contains('Starkiller Base was a military base located on the ice planet of Ilum in the Unknown Regions');
+        cy.get('#you-might-be-interested-in').contains('Jedi').click();
+        cy.contains('A Jedi was a devotee to the ways of the Jedi Order, an ancient order of protectors united by their ability to harness the power of the Force.');
     });
 });
