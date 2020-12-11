@@ -16,7 +16,7 @@ describe('ResearchHubs Static Routing', () => {
     });
 });
 
-describe('ResearchHubs Dynamic SubHub Routing', () => {
+xdescribe('ResearchHubs Dynamic SubHub Routing', () => {
 
     it('can visit /cer and load a SubHub', () => {
         cy.visit('/cer');
