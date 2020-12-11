@@ -3,13 +3,13 @@
     <!-- Asset Image -->
     <span *ngSwitchCase="'image/jpeg'">
         <div 
-            class="embedded-asset-block"
+            class="embedded-asset-block section-2"
             ngClass.xs="embedded-asset-block-mobile">
             <a href="{{ contentItem.url }}">
-                <img src="{{ contentItem.url }}" onerror="this.src='../../../../assets/images/uoa-logo-blue.svg'"/>
+                <img *ngIf="contentItem.url" src="{{ contentItem.url }}"/>
             </a>
             <br>{{ contentItem.title }}
-            <small *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
+            <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
         </div>
     </span>
 

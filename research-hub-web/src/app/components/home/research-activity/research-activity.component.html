@@ -5,7 +5,7 @@
     fxLayout="row wrap" 
     fxLayout.lt-sm="column" 
     fxLayoutAlign="space-between"
-    style="width: 98%;">
+    style="width: 98%;font-family: 'National Italic'">
     <div *ngFor="let activity of researchActivityOptions" [ngClass]="activity.className">
       <!-- Need to specify class for containing div also in order to use custom themes on material components -->
       <mat-chip selected [routerLink]="['/search']" [queryParams]="getQueryParams(activity)"

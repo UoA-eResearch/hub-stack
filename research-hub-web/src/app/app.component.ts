@@ -200,7 +200,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             }
             if (this.currentRoute == routeName) {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-              this.router.navigate([routeName]);
+              this.router.navigate([url]);
             }
             this.currentRoute = routeName;
 

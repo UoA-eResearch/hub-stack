@@ -7,10 +7,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LargeCardsComponent implements OnInit {
   @Input() contentItem;
+  @Input() hideImage? : Boolean;
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    // If you want to hide image when displayed
+    if (this.hideImage) {
+      this.contentItem.items.forEach(element => {
+        delete element['banner'].url;
+      });
+    };
   }
 
 }

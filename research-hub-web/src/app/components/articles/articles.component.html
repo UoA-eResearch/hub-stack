@@ -55,30 +55,34 @@
         </ngx-contentful-rich-text>
     </ng-template>
 
-    <ng-template #relatedItems>
+    <ng-template #relatedItems let-hide="hideImage">
         <app-cards 
             id="you-might-be-interested-in"
+            [hideImage]="hide"
             [title]="'You might also be interested in'" 
             [contentItem]="article.relatedItemsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedOrganisations>
+    <ng-template #relatedOrganisations let-hide="hideImage">
         <app-cards 
+            [hideImage]="hide"
             [title]="'Organisations'" 
             [contentItem]="article.relatedOrgsCollection">
         </app-cards>
     </ng-template>
     
-    <ng-template #relatedContacts>
+    <ng-template #relatedContacts let-hide="hideImage">
         <app-cards 
+            [hideImage]="hide"
             [title]="'Contacts'" 
             [contentItem]="article.relatedContactsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #officialDocuments>
+    <ng-template #officialDocuments let-hide="hideImage">
         <app-cards 
+            [hideImage]="hide"
             [title]="'Documents'" 
             [contentItem]="article.relatedDocsCollection">
         </app-cards>
@@ -170,7 +174,9 @@
             <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
             <div 
-                class="site-padding"
+                class="site-padding top-padding" 
+                ngClass.xs="site-padding-xs top-padding" 
+                ngClass.sm="site-padding-sm top-padding"
                 fxLayout="row wrap" 
                 fxLayout.sm="column wrap"
                 fxLayout.xs="column wrap"   

@@ -8,17 +8,25 @@ import { Component, OnInit, Input } from '@angular/core';
 export class CardsComponent implements OnInit {
   @Input() title;
   @Input() contentItem;
+  @Input() hideImage?: boolean;
 
   constructor() { }
 
   async ngOnInit() {
 
-    // If Related Contacts
+    // If card is displaying a Person
     if (this.contentItem.items[0]?.__typename == 'Person') {
-      console.log(this.contentItem.items[0]);
-      this.contentItem.items[0]['title'] = this.contentItem.items[0].name;
-      this.contentItem.items[0]['summary'] = this.contentItem.items[0].role;
+      this.contentItem.items.forEach(element => {
+        element['title']= element['name'];
+        element['summary'] = element['role'];
+      });
     }
-  }
 
+    // If you want to hide image when displayed
+    if (this.hideImage) {
+      this.contentItem.items.forEach(element => {
+        delete element['banner'].url;
+      });
+    };
+  }
 }

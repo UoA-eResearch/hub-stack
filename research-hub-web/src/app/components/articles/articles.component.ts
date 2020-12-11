@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, Type } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit, Type } from '@angular/core';
+import { Observable } from 'rxjs';
 import { pluck, map, flatMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
@@ -34,7 +34,6 @@ export class ArticlesComponent implements OnInit {
   public slug: string;
   public article$: Observable<Article>;
   public allArticles$: Observable<ArticleCollection>;
-  public bodyMediaSub: Subscription;
   public parentSubHubs;
 
   constructor(

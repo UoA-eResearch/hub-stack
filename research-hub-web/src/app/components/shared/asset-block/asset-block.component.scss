@@ -1,3 +1,5 @@
+@import '../../../../styles.scss';
+
 /**
  * Asset Block
  */
@@ -8,6 +10,10 @@
 .embedded-asset-block img {
     width: 70%; 
     object-fit: cover
+}
+.asset-summary {
+    @extend .card-content-item-summary;
+    font-size: 12px;
 }
 
 
