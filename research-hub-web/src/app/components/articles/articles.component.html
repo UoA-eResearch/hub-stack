@@ -57,7 +57,6 @@
 
     <ng-template #relatedItems let-hide="hideImage">
         <app-cards 
-            id="you-might-be-interested-in"
             [hideImage]="hide"
             [title]="'You might also be interested in'" 
             [contentItem]="article.relatedItemsCollection">
@@ -163,6 +162,7 @@
 
                 <!-- Related items -->
                 <div 
+                    id="you-might-be-interested-in"
                     fxLayout="column" 
                     fxFlex="20%"
                     fxFlexOrder="3">
@@ -216,7 +216,9 @@
                         <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container><div><br/></div>
 
                         <!-- Related Items -->
-                        <ng-container *ngTemplateOutlet="relatedItems"></ng-container><div><br/></div>
+                        <div id="you-might-be-interested-in">
+                            <ng-container *ngTemplateOutlet="relatedItems"></ng-container><div><br/></div>
+                        </div>
 
                         <!-- Keywords -->
                         <ng-container *ngTemplateOutlet="keywords"></ng-container>
