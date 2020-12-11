@@ -127,7 +127,7 @@ async function createServer(config) {
                     'icon',
                     'viewType',
                     ...GRAPHQL_INTROSPECTION_FIELDS
-                ];
+                ]; 
 
                 var requestedFields = []; // List of fields requested, populated in the recursive function below
 
