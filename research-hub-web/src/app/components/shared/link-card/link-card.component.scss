@@ -15,6 +15,13 @@
     background: #fafafa;
 }
 
+/**
+ * Hover
+ */
+ .embedded-entry-block .mat-card:hover .mat-card-title span {
+    border-bottom: solid 2px map-get($hub-navy, 500);
+}
+
 
 /**
  * Card Title

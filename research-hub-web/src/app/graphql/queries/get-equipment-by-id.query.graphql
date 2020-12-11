@@ -195,10 +195,6 @@ query GetEquipmentByID($id: String!) {
         }
       }
     }
-    location {
-      lat 
-      lon
-    }
     access {
       json 
       links {
