@@ -8,10 +8,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class LargeCardsComponent implements OnInit {
   @Input() contentItem;
   @Input() hideImage? : Boolean;
+  public contentArray;
 
   constructor() { }
 
   ngOnInit() {
+    this.contentArray = [... this.contentItem.internalPagesCollection.items, ... this.contentItem.externalPagesCollection.items];
     // If you want to hide image when displayed
     if (this.hideImage) {
       this.contentItem.items.forEach(element => {
