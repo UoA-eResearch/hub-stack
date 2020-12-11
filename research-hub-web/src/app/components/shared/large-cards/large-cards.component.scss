@@ -5,9 +5,14 @@
 .subhub-card {
     background: map-get($hub-teal, 500);
 }
-.subhub-card .card-title {
+.subhub-card .card-title p {
+    display: inline;
     font-size: 20px;
     color: white;
+    border-bottom: hidden 2px transparent;
+}
+.subhub-card .card-title p:hover {
+    border-bottom: solid 2px white;
 }
 .subhub-card .card-title:hover {
     border-bottom: solid 2px white;
