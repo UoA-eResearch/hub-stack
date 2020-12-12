@@ -19,6 +19,9 @@
     font-size: 18px; 
     color: map-get($hub-navy, 500);
 }
+.embedded-entry-block .mat-card-title a:hover {
+    border-bottom: solid 2px map-get($hub-navy, 500);
+}
 
 
 /**

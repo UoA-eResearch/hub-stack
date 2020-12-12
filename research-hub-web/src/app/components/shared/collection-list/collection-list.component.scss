@@ -46,11 +46,15 @@ div.collection {
 /**
  * Result title
  */
-.mat-card-title {
+.mat-card-title p {
+    width: fit-content;
     color: map-get($hub-navy, 500);
+    border-bottom: solid 2px transparent;
 }
-
-
+.mat-card-title p:hover {
+    border-bottom: solid 2px map-get($hub-navy, 500);
+    cursor: pointer;
+}
 /**
  * Result Summary
  */
