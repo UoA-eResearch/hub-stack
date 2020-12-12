@@ -52,6 +52,9 @@ fragment PublicFields on Entry {
       slug
       title
       summary
+      banner {
+        url
+      }
       ssoProtected
       searchable
     }
