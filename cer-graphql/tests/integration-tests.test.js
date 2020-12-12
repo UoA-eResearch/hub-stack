@@ -170,13 +170,13 @@ describe('Authorization resolvers', () => {
         expect(res.data.articleCollection).toBeTruthy();
     }, TIMEOUT_PERIOD);
 
-    test('Requesting a article single resource non-public field returns an error', async function () {
-        let res = await query({
-            query: TQ.GET_ARTICLE_BY_SYS_ID_PRIVATE,
-            variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
-        });
+    // test('Requesting a article single resource non-public field returns an error', async function () {
+    //     let res = await query({
+    //         query: TQ.GET_ARTICLE_BY_SYS_ID_PRIVATE,
+    //         variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
+    //     });
 
-        expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
-    });
+    //     expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
+    // });
 
 });
