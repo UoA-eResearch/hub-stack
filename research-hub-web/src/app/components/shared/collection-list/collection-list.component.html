@@ -33,8 +33,7 @@
                         </ng-template>
                     </div>
                     <mat-card-title>
-                        {{ content.title }}
-                        <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
+                        <p>{{ content.title }}&nbsp;<mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon></p>
                     </mat-card-title>
                     <mat-card-subtitle>
                         {{ content.summary }}
