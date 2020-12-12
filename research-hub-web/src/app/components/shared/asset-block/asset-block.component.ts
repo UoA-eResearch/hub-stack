@@ -11,7 +11,6 @@ export class AssetBlockComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.contentItem);
   }
 
 }
