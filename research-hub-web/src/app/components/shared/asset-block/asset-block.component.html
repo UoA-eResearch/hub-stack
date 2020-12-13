@@ -29,10 +29,31 @@
     <!-- Asset File -->
     <span *ngSwitchDefault>
         <div 
-            class="embedded-asset-block"
+            class="embedded-asset-block file"
             ngClass.xs="embedded-asset-block-mobile">
             <a href="{{ contentItem.url }}">
-                {{ contentItem.title }}<small *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
+                <mat-card>
+                    <mat-card-title class="card-title">
+                        <a href="{{ contentItem.url }}">
+                            {{ contentItem.title }}
+                        </a>
+                    </mat-card-title>
+                    <mat-card-content class="card-content-item-summary">
+                        <div>
+                            {{ contentItem.description }}
+                        </div>
+                        <div class="download">
+                            <a href="{{ contentItem.url }}">
+                                <img class="download-arrow" style="height: 10px; width: auto" src="assets/components/navy-download.png">
+                                Download File
+                            </a>
+                            &nbsp;
+                            <span class="file-size">
+                                {{ contentItem.size }}&nbsp;kB
+                            </span>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
             </a>
         </div>
     </span>

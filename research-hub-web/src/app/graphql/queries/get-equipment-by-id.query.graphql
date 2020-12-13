@@ -47,24 +47,8 @@ query GetEquipmentByID($id: String!) {
             }
           }
         assets {
-          block {
-            sys {
-                id
-              }
-            title
-            description
-            url
-            contentType
-          }
-          hyperlink {
-            sys {
-                id
-              }
-            title
-            description
-            url
-            contentType
-          }
+          block { ...AssetFields }
+          hyperlink { ...AssetFields }
         }
       }
     }
@@ -87,167 +71,17 @@ query GetEquipmentByID($id: String!) {
     relatedOrgsCollection {
       items { ...PublicFields }
     }
+    location {
+      json
+    }
     eligibility {
       json 
-      links {
-        entries {
-            block { 
-              ...PublicFields
-              sys {
-                id
-              }
-              ... on Software {
-                link
-              }
-            }
-            inline { 
-              ...PublicFields
-              sys {
-                id
-              } 
-              ... on Software {
-                link
-              }
-            }
-            hyperlink { 
-              ...PublicFields 
-              sys {
-                id
-              }
-              ... on Software {
-                link
-              }
-            }
-          }
-        assets {
-          block {
-            sys {
-                id
-              }
-            title
-            description
-            url
-            contentType
-          }
-          hyperlink {
-            sys {
-                id
-              }
-            title
-            description
-            url
-            contentType
-          }
-        }
-      }
     }
     costToUse {
       json 
-      links {
-        entries {
-            block { 
-              ...PublicFields
-              sys {
-                id
-              }
-              ... on Software {
-                link
-              }
-            }
-            inline { 
-              ...PublicFields
-              sys {
-                id
-              } 
-              ... on Software {
-                link
-              }
-            }
-            hyperlink { 
-              ...PublicFields 
-              sys {
-                id
-              }
-              ... on Software {
-                link
-              }
-            }
-          }
-        assets {
-          block {
-            sys {
-                id
-              }
-            title
-            description
-            url
-            contentType
-          }
-          hyperlink {
-            sys {
-                id
-              }
-            title
-            description
-            url
-            contentType
-          }
-        }
-      }
     }
     access {
       json 
-      links {
-        entries {
-            block { 
-              ...PublicFields
-              sys {
-                id
-              }
-              ... on Software {
-                link
-              }
-            }
-            inline { 
-              ...PublicFields
-              sys {
-                id
-              } 
-              ... on Software {
-                link
-              }
-            }
-            hyperlink { 
-              ...PublicFields 
-              sys {
-                id
-              }
-              ... on Software {
-                link
-              }
-            }
-          }
-        assets {
-          block {
-            sys {
-                id
-              }
-            title
-            description
-            url
-            contentType
-          }
-          hyperlink {
-            sys {
-                id
-              }
-            title
-            description
-            url
-            contentType
-          }
-        }
-      }
     }
   }
 }
