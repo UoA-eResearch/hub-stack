@@ -51,7 +51,7 @@
                 </tr>
                 <tr *ngIf="equipment.location">
                     <td>Location</td>
-                    <td [innerHTML]="equipment.location"></td>
+                    <td [innerHTML]="equipment.location.json | richTextToHTML"></td>
                 </tr>
                 <tr *ngIf="equipment.access">
                     <td>Access</td>
@@ -176,11 +176,11 @@
             <!-- Specifications Table -->
             <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
 
-            <!-- Keywords -->
-            <app-keywords [contentItem]="equipment.keywords"></app-keywords>
-
             <!-- Related Items -->
             <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: true }"></ng-container>
+
+            <!-- Keywords -->
+            <app-keywords [contentItem]="equipment.keywords"></app-keywords>
 
         </div>
     </div>

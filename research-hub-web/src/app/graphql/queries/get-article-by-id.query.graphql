@@ -47,24 +47,8 @@ query GetArticleByID($id: String!) {
             }
           }
           assets {
-            block {
-              sys {
-                id
-              }
-              title
-              description
-              url
-              contentType
-            }
-            hyperlink {
-              sys {
-                id
-              }
-              title
-              description
-              url
-              contentType
-            }
+            block { ...AssetFields }
+            hyperlink { ...AssetFields }
           }
         }
       }
