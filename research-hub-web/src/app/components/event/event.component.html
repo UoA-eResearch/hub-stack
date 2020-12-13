@@ -6,14 +6,22 @@
 
 <!-- If we're displaying an individual event -->
 <div 
-    id="event-container"
     ngClass.xs="mobile"
+    ngClass.sm="mobile"
     *ngIf="event$ | async as event">
 
     <!-- Templates -->
+    <ng-template #dynamicBanner>
+        <div 
+            class="banner-container"
+            [style]="event.banner ? 'background: url(' + event.banner.url + ') no-repeat' : ''">
+        </div>  
+    </ng-template>
+
     <ng-template #breadcrumbs>
         <div 
             id="breadcrumbs" 
+            class="section"
             *ngIf="!!parentSubHubs" 
             ngClass.xs="breadcrumbs-mobile">
             <span 
@@ -29,8 +37,6 @@
         </div>
     </ng-template>
 
-    <ng-template #banner></ng-template> 
-
     <ng-template #title>
         <div>
             <span>
@@ -43,11 +49,6 @@
                     class="event-summary"
                     ngClass.xs="event-summary-xs">
                     {{ event.summary }}
-                </div>
-                <div 
-                    class="section" 
-                    fxShow.xs="true"
-                    fxHide>
                 </div>
             </span>
             <div class="section">
@@ -66,16 +67,12 @@
                 </tr>
                 <tr *ngIf="event.date">
                     <td>Date</td>
-                    <td>{{ event.date }}</td>
+                    <td> {{ event.date | date:'longDate'}} {{ event.date | date:'shortTime'}}</td>
                 </tr>
                 <tr *ngIf="event.location">
                     <td>Location</td>
-                    <td>{{ event.location }}</td>
+                    <td [innerHTML]="event.location.json | richTextToHTML"></td>
                 </tr>
-                <!-- <tr *ngIf="event.address">
-                    <td>Address</td>
-                    <td>{{ event.address | json }}</td>
-                </tr> -->
                 <tr *ngIf="event.availability">
                     <td>Availability</td>
                     <td>{{ event.availability }}</td>
@@ -101,18 +98,15 @@
             <mat-card-content [innerHTML]="event.bodyText.json | richTextToHTML">
             </mat-card-content>
             <div 
-                class="event-details-button" 
-                fxLayoutAlign.xs="center center">
+                class="section">
                 <a href="{{ event.link }}">
-                    <button mat-raised-button>
+                    <button class="standard-button" mat-flat-button>
                         <b>Event Details</b>
                     </button>
                 </a>
             </div>
         </div>
     </ng-template>
-
-    <ng-template #googleMap></ng-template>
 
     <ng-template #keywords>
         <div id="keywords">
@@ -131,12 +125,11 @@
     </ng-template>
 
     <!-- Event Content -->
+    <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
     <div
-        class="site-padding top-padding margin-bottom"
+        class="site-padding-2 top-padding margin-bottom"
         ngClass.xs="site-padding-sm top-padding margin-bottom"
-        ngClass.sm="site-padding-sm top-padding margin-bottom"
-        ngClass.md="site-padding-sm top-padding margin-bottom"
-        ngClass.lg="site-padding-sm top-padding margin-bottom">
+        ngClass.sm="site-padding-sm top-padding margin-bottom">
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
         <ng-container *ngTemplateOutlet="title"></ng-container>
         <ng-container *ngTemplateOutlet="description"></ng-container>

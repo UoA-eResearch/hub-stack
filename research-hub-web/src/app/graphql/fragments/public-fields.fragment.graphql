@@ -94,7 +94,6 @@ fragment PublicFields on Entry {
   ... on Person {
       __typename
       name
-      role
   }
   ... on Video {
       title

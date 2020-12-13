@@ -1,4 +1,5 @@
 @import '../../../themes.scss';
+@import '../../../styles.scss';
 @import '../search-results/search-results.component.scss';
 
 mat-expansion-panel, mat-card  {
@@ -13,7 +14,6 @@ mat-expansion-panel, mat-card  {
  * The container for an individual event
  */ 
 #event-container {
-    width: 65%;
     margin: 0 auto;
 
     #breadcrumbs {
@@ -118,17 +118,23 @@ mat-expansion-panel, mat-card  {
     text-align: left;
     background-color: map-get($hub-teal, 500);
     color: $color-background;
-  }
-
-/**
-* Event Details Button
-*/ 
-.event-details-button {
-    margin: 50px 0px;
 }
 
-.event-details-button .mat-raised-button {
+/**
+ * Banner
+ */
+.banner-container {
+    text-align: center;
+    min-width: 100vw; 
+    min-height: 40vh;
+    max-height: auto;
+    overflow: hidden;
+    background-size: cover!important;
+}
+
+.banner-content {
+    width: 50%;
+    margin: 10em auto;
     color: white;
-    background-color: map-get($hub-teal, 500);
-    border-radius: 50px;
+    display: inline-block;
 }

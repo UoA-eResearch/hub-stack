@@ -58,7 +58,9 @@ query GetEventByID($id: String!) {
           url
         }
       }
-      location
+      location {
+        json
+      }
       address {
           lat 
           lon 

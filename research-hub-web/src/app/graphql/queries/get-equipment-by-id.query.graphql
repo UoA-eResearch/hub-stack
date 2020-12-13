@@ -56,71 +56,16 @@ query GetEquipmentByID($id: String!) {
       items { ...PublicFields }
     }
     eligibility {
-      json 
-      links {
-        entries {
-          block { ...PublicFields }
-          inline { ...PublicFields }
-          hyperlink { ...PublicFields }
-        }
-        assets {
-          block {
-            title
-            description
-            url
-          }
-          hyperlink {
-            title
-            description
-            url
-          }
-        }
-      }
+      json
     }
     costToUse {
-      json 
-      links {
-        entries {
-          block { ...PublicFields }
-          inline { ...PublicFields }
-          hyperlink { ...PublicFields }
-        }
-        assets {
-          block {
-            title
-            description
-            url
-          }
-          hyperlink {
-            title
-            description
-            url
-          }
-        }
-      }
+      json
     }
-    location
+    location {
+      json
+    }
     access {
       json 
-      links {
-        entries {
-          block { ...PublicFields }
-          inline { ...PublicFields }
-          hyperlink { ...PublicFields }
-        }
-        assets {
-          block {
-            title
-            description
-            url
-          }
-          hyperlink {
-            title
-            description
-            url
-          }
-        }
-      }
     }
   }
 }
