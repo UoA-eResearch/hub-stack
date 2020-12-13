@@ -15,10 +15,10 @@ import { AppComponentService } from '@app/app.component.service';
 
 @Component({
   selector: 'app-event',
-  templateUrl: './event.component.html',
-  styleUrls: ['./event.component.scss']
+  templateUrl: './events.component.html',
+  styleUrls: ['./events.component.scss']
 })
-export class EventComponent implements OnInit {
+export class EventsComponent implements OnInit {
   public allEvents$: Observable<EventCollection>;
   public event$: Observable<Event>;
   public slug: string;

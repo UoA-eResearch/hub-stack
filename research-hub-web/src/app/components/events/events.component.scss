@@ -6,10 +6,6 @@ mat-expansion-panel, mat-card  {
     margin: 1vh 0;
 }
 
-.section {
-    padding: 20px 0px;
- }
-
 /**
  * The container for an individual event
  */ 
@@ -32,7 +28,8 @@ mat-expansion-panel, mat-card  {
         }
     }
     .breadcrumbs-mobile {
-        font-size: 8px;
+        padding: 0px;
+        font-size: 11px;
     }
 
     #keywords {
