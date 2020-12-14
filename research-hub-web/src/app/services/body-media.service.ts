@@ -16,5 +16,9 @@ export class BodyMediaService {
   setBodyMedia(bodyMedia) {
     this.bodyMedia.next(bodyMedia)
   }
+
+  getBodyMedia() {
+    return this.bodyMedia;
+  }
 }
 

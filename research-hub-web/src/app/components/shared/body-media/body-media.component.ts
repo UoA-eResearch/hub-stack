@@ -10,11 +10,12 @@ import { Subscription } from 'rxjs';
 })
 export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestroy {
   public data;
+  public returnVal;
   public contentItem;
   public mediaSub: Subscription;
 
   constructor(
-    private bodyMediaService: BodyMediaService)
+    public bodyMediaService: BodyMediaService)
   { super(); }
 
   async ngOnInit() {
@@ -23,31 +24,27 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit, OnDestro
     /**
      * Get BodyMedia for current content from BodyMedia service
      */
-    this.mediaSub = this.bodyMediaService.bodyMedia.subscribe(x => {
-      /**
-       * Switch case based on response nodeType
-       * filter response data by piping e.g. x.assets.(nodeType).filter((id) => id == this.data.data.target.sys.id)
-       */
+     this.bodyMediaService.getBodyMedia().subscribe(res => this.returnVal = res);
+
       switch(this.data.nodeType) {
         case 'embedded-asset-block':
-          this.contentItem = x.assets['block'].find(x => x.sys.id == this.data.data.target.sys.id);
+          this.contentItem = this.returnVal.assets['block'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
         case 'embedded-entry-block':
-          this.contentItem = x.entries['block'].find(x => x.sys.id == this.data.data.target.sys.id);
+          this.contentItem = this.returnVal.entries['block'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
         case 'embedded-entry-inline':
-          this.contentItem = x.entries['inline'].find(x => x.sys.id == this.data.data.target.sys.id);
+          this.contentItem = this.returnVal.entries['inline'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
         case 'entry-hyperlink':
-          this.contentItem = x.entries['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
+          this.contentItem = this.returnVal.entries['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
         case 'asset-hyperlink':
-          this.contentItem = x.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
+          this.contentItem = this.returnVal.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
         case 'blockquote':
           this.contentItem = this.data.content[0];
       }
-    });
   }
 
   async ngOnDestroy() {
