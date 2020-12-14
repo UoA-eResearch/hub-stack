@@ -55,17 +55,16 @@ query GetEquipmentByID($id: String!) {
     relatedOrgsCollection {
       items { ...PublicFields }
     }
-    eligibility {
-      json
+    relatedFacilityCollection {
+      items { ...PublicFields }
     }
-    costToUse {
-      json
-    }
+    publisher { ...PublicFields }
+    category
+    cost
+    availability
+    audience
     location {
       json
-    }
-    access {
-      json 
     }
   }
 }
