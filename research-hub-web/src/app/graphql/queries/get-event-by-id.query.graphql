@@ -1,0 +1,69 @@
+query GetEventByID($id: String!) {
+    event(id: $id) {
+        __typename
+        sys {
+            id
+        }
+        title
+        slug
+        ssoProtected
+        searchable
+        banner {
+            url
+        }
+        icon {
+            url
+        }
+        summary
+        bodyText {
+        json 
+        links {
+          entries {
+            block { ...PublicFields }
+            inline { ...PublicFields }
+            hyperlink { ...PublicFields }
+          }
+          assets {
+            block {
+              title
+              description
+              url
+            }
+            hyperlink {
+              title
+              description
+              url
+            }
+          }
+        }
+      }
+      keywords
+      relatedContactsCollection {
+        items { ...PublicFields }
+      }
+      relatedOrgsCollection {
+        items { ...PublicFields }
+      }
+      link
+      audience
+      mode
+      availability
+      date
+      capabilities
+      mediaCollection {
+        items {
+          title
+          description
+          size
+          url
+        }
+      }
+      location {
+        json
+      }
+      address {
+          lat 
+          lon 
+      }
+    }
+}

@@ -74,14 +74,5 @@ query GetEquipmentByID($id: String!) {
     location {
       json
     }
-    eligibility {
-      json 
-    }
-    costToUse {
-      json 
-    }
-    access {
-      json 
-    }
   }
 }
