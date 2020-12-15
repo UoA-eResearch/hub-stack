@@ -75,7 +75,7 @@ export class SubhubsComponent implements OnInit {
    * Runs the query for the main body of a subhub item as including it's child pages but excluding it's ancestor/parent data.
    * @param slug Page slug
    */
-  public getAllSubHubs(slug: string): Observable<SubHubCollection> {
+  public getAllSubHubs(): Observable<SubHubCollection> {
     try {
       return this.AllSubHubGQL.fetch()
         .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>;

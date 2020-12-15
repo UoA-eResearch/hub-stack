@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { BodyMediaService } from './body-media.service';
 
-xdescribe('BodyMediaService', () => {
+describe('BodyMediaService', () => {
   let service: BodyMediaService;
 
   beforeEach(() => {

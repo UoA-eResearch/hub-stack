@@ -535,10 +535,12 @@ describe('SubhubsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  xit('Title for a subhub page collection item should be truthy.', async () => {
-    const de = fixture.debugElement.query(By.css('#title'));
-    expect(de.nativeElement.innerHTML).toBeTruthy();
-  });
+  it('Should get all SubHubs', () => {
+    spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);
+    component.getAllSubHubs().subscribe(res => {
+      expect(res).toBeTruthy();
+    });
+  })
 
   describe('When a url slug is present', async () => {
     beforeEach(() => {

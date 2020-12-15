@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntryBlockComponent } from './entry-block.component';
+import { HumanCasePipe } from '../../../pipes/human-case.pipe';
 
 const mockEntry= {
   "title": "Test - First article",
@@ -14,7 +15,7 @@ describe('EntryBlockComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EntryBlockComponent ]
+      declarations: [ EntryBlockComponent, HumanCasePipe ]
     })
     .compileComponents();
   });
@@ -26,7 +27,7 @@ describe('EntryBlockComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

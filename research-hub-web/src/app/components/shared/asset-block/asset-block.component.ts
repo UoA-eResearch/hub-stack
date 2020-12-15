@@ -11,7 +11,6 @@ export class AssetBlockComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { 
-    console.log(this.contentItem);
     this.contentItem['size'] = Math.round(this.contentItem['size'] / 1000) + (Math.round(this.contentItem['size'] % 1000) / 100);
   }
 

@@ -16,8 +16,8 @@
 //         cy.get('#you-might-be-interested-in').should('exist');
 //     }); 
 
-//     it('clicking a related item takes you to its page', () => {
-//         cy.get('#you-might-be-interested-in').contains('Jedi').click();
-//         cy.contains('A Jedi was a devotee to the ways of the Jedi Order, an ancient order of protectors united by their ability to harness the power of the Force.');
-//     });
-// });
+    it('clicking a related item takes you to its page', () => {
+        cy.get('#you-might-be-interested-in').contains('Starkiller Base').click();
+        cy.contains('Starkiller Base was a military base located on the ice planet of Ilum in the Unknown Regions');
+    });
+});

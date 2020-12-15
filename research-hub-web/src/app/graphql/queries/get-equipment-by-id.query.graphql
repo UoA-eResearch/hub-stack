@@ -13,42 +13,31 @@ query GetEquipmentByID($id: String!) {
       description
       url
     }
+    icon {
+      title
+      description
+      url
+    }
     summary
     bodyText {
       json 
       links {
         entries {
-            block { 
-              ...PublicFields
-              sys {
-                id
-              }
-              ... on Software {
-                link
-              }
-            }
-            inline { 
-              ...PublicFields
-              sys {
-                id
-              } 
-              ... on Software {
-                link
-              }
-            }
-            hyperlink { 
-              ...PublicFields 
-              sys {
-                id
-              }
-              ... on Software {
-                link
-              }
-            }
-          }
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
         assets {
-          block { ...AssetFields }
-          hyperlink { ...AssetFields }
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
         }
       }
     }
@@ -61,16 +50,19 @@ query GetEquipmentByID($id: String!) {
       items { ...PublicFields }
     }
     relatedContactsCollection {
-      items { 
-        ...PublicFields
-          ...on Person {
-            role
-          } 
-        }
+      items { ...PublicFields }
     }
     relatedOrgsCollection {
       items { ...PublicFields }
     }
+    relatedFacilityCollection {
+      items { ...PublicFields }
+    }
+    publisher { ...PublicFields }
+    category
+    cost
+    availability
+    audience
     location {
       json
     }
