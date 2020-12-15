@@ -103,7 +103,6 @@ describe('BodyMediaComponent', () => {
   }));
 
   beforeEach(() => {
-    controller = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(BodyMediaComponent);
     component = fixture.componentInstance;
     component.bodyMediaService.setBodyMedia(mockLinkCard);
