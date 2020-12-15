@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BodyMediaService {
   public bodyMedia: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  public bodyMediaSub: Observable<BehaviorSubject<any>>;
 
   constructor() { }
 
@@ -18,7 +19,7 @@ export class BodyMediaService {
   }
 
   getBodyMedia() {
-    return this.bodyMedia;
+    return this.bodyMedia.value;
   }
 }
 
