@@ -555,7 +555,7 @@ describe('SubhubsComponent', () => {
 
     it('Should get all SubHubs', async () => {
       spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);
-      component.getAllSubHubs(component.slug).subscribe(res => {
+      component.getAllSubHubs().subscribe(res => {
         expect(res).toBeTruthy();
       });
     })

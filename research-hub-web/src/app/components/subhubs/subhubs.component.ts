@@ -75,7 +75,7 @@ export class SubhubsComponent implements OnInit {
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.allSubHubs$ = this.getAllSubHubs(this.slug);
+      this.allSubHubs$ = this.getAllSubHubs();
     }
   }
 
