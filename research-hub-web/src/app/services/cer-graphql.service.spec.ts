@@ -146,15 +146,15 @@ describe('CerGraphqlService', () => {
     service['_subHubCollectionWithChildPagesSlugs'] = mock_subHubCollectionWithChildPagesSlugs;
     const expectedBreadcrumbs = [
       {
-        'title': 'Test - Engagement',
+        'title': 'Engagement',
         'slug': 'engagement'
       },
       {
-        'title': 'Test - Our Services',
+        'title': 'Our Services',
         'slug': 'our-services'
       },
       {
-        'title': 'Test - Centre for eResearch',
+        'title': 'Centre for eResearch',
         'slug': 'cer'
       }
     ];

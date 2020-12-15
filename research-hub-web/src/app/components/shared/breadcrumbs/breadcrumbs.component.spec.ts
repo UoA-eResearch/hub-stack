@@ -16,10 +16,25 @@ describe('BreadcrumbsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BreadcrumbsComponent);
     component = fixture.componentInstance;
+    component.contentItem = [
+      {
+        'title': 'Engagement',
+        'slug': 'engagement'
+      },
+      {
+        'title': 'Our Services',
+        'slug': 'our-services'
+      },
+      {
+        'title': 'Centre for eResearch',
+        'slug': 'cer'
+      }
+    ];
+    component.title = "First Article"
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
