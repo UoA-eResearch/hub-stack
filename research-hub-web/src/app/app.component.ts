@@ -180,6 +180,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         filter(event => event instanceof NavigationEnd))
         .subscribe(async event => {
 
+          // console.log('=> ', event)
+          // this.router.navigate(event['url'].split('/'));
+
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
