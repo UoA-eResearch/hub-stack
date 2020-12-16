@@ -1,0 +1,103 @@
+<!-- If we're displaying a collection of software  -->
+<app-collection-list 
+    *ngIf="allSoftware$ | async as allSoftware" 
+    [collection]="allSoftware">
+</app-collection-list>
+
+<!-- If we're displaying an individual software -->
+<div 
+    id="software-container"
+    ngClass.xs="mobile"
+    ngClass.sm="mobile"
+    *ngIf="software$ | async as software">
+
+    <!-- Templates -->
+    <ng-template #dynamicBanner>
+        <div 
+            class="banner-container"
+            [style]="software.banner ? 'background: url(' + software.banner.url + ') no-repeat' : ''">
+        </div>  
+    </ng-template>
+
+    <ng-template #breadcrumbs>
+        <div 
+            id="breadcrumbs" 
+            class="section"
+            *ngIf="!!parentSubHubs" 
+            ngClass.xs="breadcrumbs-mobile">
+            <span 
+                class="breadcrumb-subhub" 
+                *ngFor="let subHub of parentSubHubs.slice().reverse()">
+                <a [routerLink]="'/subhub/' + subHub.slug">
+                    {{ subHub.title }}
+                </a>
+            </span>
+            <span id="breadcrumb-current-page">
+                {{ software.title }}
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template #title>
+        <div>
+            <span>
+                <div 
+                    class="software-title"
+                    ngClass.xs="software-title-xs">
+                    {{ software.title }}
+                </div>
+                <div 
+                    class="software-summary"
+                    ngClass.xs="software-summary-xs">
+                    {{ software.summary }}
+                </div>
+            </span>
+            <div class="section">
+                <hr/>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #description>
+        <div>
+            <mat-card-content [innerHTML]="software.bodyText.json | richTextToHTML">
+            </mat-card-content>
+            <div 
+                class="section">
+                <a href="{{ software.link }}">
+                    <button class="standard-button" mat-flat-button>
+                        <b>Software Details</b>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #keywords>
+        <div id="keywords">
+            <h4>Keywords<hr/></h4>
+            <mat-card-subtitle 
+                fxLayout="row wrap"> 
+                <span *ngFor="let keyword of software.keywords">
+                    <mat-card 
+                        fxLayout="row" 
+                        class="keyword-card">
+                            {{ keyword | humanCase }}
+                    </mat-card>
+                </span>
+            </mat-card-subtitle>
+        </div>
+    </ng-template>
+
+    <!-- Software Content -->
+    <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
+    <div
+        class="site-padding-2 top-padding margin-bottom"
+        ngClass.xs="site-padding-sm top-padding margin-bottom"
+        ngClass.sm="site-padding-sm top-padding margin-bottom">
+        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+        <ng-container *ngTemplateOutlet="title"></ng-container>
+        <ng-container *ngTemplateOutlet="description"></ng-container>
+        <ng-container *ngTemplateOutlet="keywords"></ng-container>
+    </div>
+</div>

@@ -1,12 +1,16 @@
 @import '../../../themes.scss';
+@import '../../../styles.scss';
 @import '../search-results/search-results.component.scss';
 
 mat-expansion-panel, mat-card  {
     margin: 1vh 0;
 }
 
-// The container for an individual article
-#article-container {
+/**
+ * The container for an individual software
+ */ 
+#software-container {
+    margin: 0 auto;
 
     #breadcrumbs {
         margin-bottom: 3vh;
@@ -24,10 +28,13 @@ mat-expansion-panel, mat-card  {
         }
     }
     .breadcrumbs-mobile {
-        font-size: 8px;
+        padding: 0px;
+        font-size: 11px;
     }
 
     #keywords {
+        margin-top: 40px;
+        font-size: 14px;
         color: map-get($hub-navy, 500);
     }
 
@@ -35,52 +42,57 @@ mat-expansion-panel, mat-card  {
         color: gray;
     }
 }
+.mobile {
+    width: 100%!important;
+}
 
-/* Vanilla CSS Styling */
-// Article Titles
 
-.article-title {
-    color: map-get($hub-navy, 500);
-    font-size: 50px;
+/**
+ * Event Title
+ */
+.software-title {
+    font-size: 48px;
     font-weight: bold; 
     line-height: 110%;
+    margin-bottom: 5px;
+    color: map-get($hub-navy, 500);
 }
-
-.article-title-sm {
-    font-size: 35px;
-}
-
-.article-title-xs {
+.software-title-xs {
     font-size: 25px;
 }
 
-// Article Summary
-.article-summary {
+
+/**
+ * Event Summary
+ */ 
+.software-summary {
     font-size: 20px; 
+    margin-bottom: 10px;
     color: $color-icon;
     line-height: 110%;
 }
-
-.article-summary-sm {
-    font-size: 20px; 
-}
-
-.article-summary-xs {
+.software-summary-xs {
     font-size: 15px; 
 }
 
-// Keyword
+
+/**
+ * Keyword Card
+ */ 
 .keyword-card {
-    color: #828282;
-    background: #F0F0F0;
     margin: 5px; 
     padding: 5px 10px;
     font-size: 12px; 
     border-radius: 25px;
+    color: #828282;
+    background: #F0F0F0;
     box-shadow: none !important;
 }
 
-// Banner Styling
+
+/**
+ * Banner
+ */
 .banner-container {
     text-align: center;
     min-width: 100vw; 
@@ -95,30 +107,4 @@ mat-expansion-panel, mat-card  {
     margin: 10em auto;
     color: white;
     display: inline-block;
-}
-
-// Related Item Card
-.related-item-card {
-    max-height: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.related-item-card-mobile {
-    height: 70px;
-}
-
-.card-title {
-    color: map-get($hub-teal, 500);
-}
-
-.related-item-summary {
-    font-size: 12px;
-}
-
-// HR 
-hr {
-    background-color: #dbdbdb;
-    border: none;
-    height: 1px;
 }

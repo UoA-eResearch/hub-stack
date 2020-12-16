@@ -44,7 +44,7 @@
             class="article-title" 
             ngClass.sm="article-title-sm" 
             ngClass.xs="article-title-xs" 
-            [style.color]="article.displayBanner ? article.viewType == 'View 1' ? 'white' : '' : ''">
+            [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.title }}
         </h1>
 
@@ -52,7 +52,7 @@
             class="article-summary" 
             ngClass.sm="article-summary-sm" 
             ngClass.xs="article-summary-xs"
-            [style.color]="article.displayBanner ? article.viewType == 'View 1' ? 'white' : '' : ''">
+            [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.summary }}
         </h3>
     </ng-template>
@@ -142,7 +142,7 @@
                 *ngFor="let relatedItem of article.relatedItemsCollection.items" 
                 class="collection">
                 
-                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                    <a [routerLink]="['/', relatedItem['__typename'].toLowerCase(), relatedItem['slug']]">
                         <mat-card>
                             <span class="card-title">
                                 {{ relatedItem['title'] }}
@@ -194,9 +194,10 @@
             <!-- Dynamic Banner -->
             <div 
                 class="banner-container"
-                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
+                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : 'min-height: 0px'">
                 <div 
                     class="banner-content" 
+                    [style]="article.banner ? '' : 'margin: 2.5em auto;'"
                     *ngIf="article.viewType == 'View 1'">
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>

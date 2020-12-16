@@ -55,72 +55,8 @@ query GetEquipmentByID($id: String!) {
     relatedOrgsCollection {
       items { ...PublicFields }
     }
-    eligibility {
-      json 
-      links {
-        entries {
-          block { ...PublicFields }
-          inline { ...PublicFields }
-          hyperlink { ...PublicFields }
-        }
-        assets {
-          block {
-            title
-            description
-            url
-          }
-          hyperlink {
-            title
-            description
-            url
-          }
-        }
-      }
-    }
-    costToUse {
-      json 
-      links {
-        entries {
-          block { ...PublicFields }
-          inline { ...PublicFields }
-          hyperlink { ...PublicFields }
-        }
-        assets {
-          block {
-            title
-            description
-            url
-          }
-          hyperlink {
-            title
-            description
-            url
-          }
-        }
-      }
-    }
-    location
-    access {
-      json 
-      links {
-        entries {
-          block { ...PublicFields }
-          inline { ...PublicFields }
-          hyperlink { ...PublicFields }
-        }
-        assets {
-          block {
-            title
-            description
-            url
-          }
-          hyperlink {
-            title
-            description
-            url
-          }
-        }
-      }
+    location {
+      json
     }
   }
 }

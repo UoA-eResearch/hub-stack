@@ -1,0 +1,11 @@
+query GetSoftwareBySlug($slug: String) {
+      softwareCollection(where: {slug: $slug}) {
+        items {
+          title
+          ssoProtected
+          sys {
+            id
+          }
+        }
+      }
+    }

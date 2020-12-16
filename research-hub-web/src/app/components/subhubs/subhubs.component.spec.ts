@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SubhubsComponent } from './subhubs.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
@@ -500,7 +500,7 @@ describe('SubhubsComponent', () => {
     "__typename": "SubHubCollection"
   } as unknown as SubHubCollection);
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SubhubsComponent],
       imports: [
