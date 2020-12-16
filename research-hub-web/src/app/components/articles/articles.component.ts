@@ -15,6 +15,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-articles',
@@ -52,8 +53,16 @@ export class ArticlesComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
+      this.route.params.subscribe(params => {
+        this.slug = params.slug || this.route.snapshot.data.slug;
+        this._loadContent();
+      });
+  }
 
+  /**
+   * Function that loads the article/collection depending on if a slug is present.
+   */
+  private async _loadContent() {
     /**
      * If this.slug is defined, we're loading an individual article,
      * therefore run the corresponding query. If not, return all articles.

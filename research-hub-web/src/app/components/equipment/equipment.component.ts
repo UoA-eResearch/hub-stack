@@ -52,11 +52,20 @@ export class EquipmentComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
+    this.route.params.subscribe(params => {
+      this.slug = params.slug || this.route.snapshot.data.slug;
+      this._loadContent();
+    });
 
+  }
+
+  /**
+   * Function that loads the equipment/collection depending on if a slug is present.
+   */
+  private async _loadContent() {
     /**
-     * If this.slug is defined, we're loading an individual article,
-     * therefore run the corresponding query. If not, return all articles.
+     * If this.slug is defined, we're loading an individual equipment,
+     * therefore run the corresponding query. If not, return all equipment.
      */
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
@@ -71,6 +80,7 @@ export class EquipmentComponent implements OnInit {
       this.appComponentService.setTitle('Equipment');
       this.allEquipment$ = this.getAllEquipment();
     }
+
   }
 
   /**
