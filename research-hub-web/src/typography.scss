@@ -76,24 +76,22 @@ $app-base-typography: mat-typography-config(
   $display-3:     mat-typography-level(56px, 56px, 400),
   $display-2:     mat-typography-level(45px, 48px, 400),
   $display-1:     mat-typography-level(34px, 40px, 400),
-  $headline:      mat-typography-level(32px, 36px, 400), // <h1>
-  $title:         mat-typography-level(28px, 32px, 500), // <h2>
-  $subheading-2:  mat-typography-level(24px, 28px, 400), // <h3>
-  $subheading-1:  mat-typography-level(20px, 24px, 400), // <h4>
-  $body-2:        mat-typography-level(16px, 24px, 500), // bolder body text
-  $body-1:        mat-typography-level(16px, 22px, 400), // base body text <p> ?
+  $headline:      mat-typography-level(4vh, 4.2vh, 400), // <h1>
+  $title:         mat-typography-level(3.6vh, 3.8vh, 500), // <h2>
+  $subheading-2:  mat-typography-level(3.2vh, 3.4vh, 400), // <h3>
+  $subheading-1:  mat-typography-level(2.8vh, 2vh, 400), // <h4>
+  $body-2:        mat-typography-level(2vh, 3.4vh, 500), // bolder body text
+  $body-1:        mat-typography-level(2vh, 3.2vh, 400), // base body text <p> ?
   $caption:       mat-typography-level(12px, 20px, 400), // smaller body and hint text
-  $button:        mat-typography-level(14px, 14px, 500),
-  $input:         mat-typography-level(16px, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
+  $button:        mat-typography-level(1.8vh, 1.8vh, 500),
+  $input:         mat-typography-level(2vh, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
 );
 
 // Override typography for all Angular Material, including mat-base-typography and all components.
 @include angular-material-typography($app-base-typography);
 
 /*
-
 Sidenav
-
  */
 
 $app-sidenav-list-typography: mat-typography-config(
@@ -107,9 +105,7 @@ $app-sidenav-toolbar-typography: mat-typography-config(
 );
 
 /*
-
 Search
-
  */
 
 $app-search-bar-select-typography: mat-typography-config(
@@ -123,9 +119,7 @@ $app-search-bar-typography: mat-typography-config(
 );
 
 /*
-
 Header/crumbs
-
  */
 
 $app-primary-header-typography: mat-typography-config(
@@ -133,9 +127,7 @@ $app-primary-header-typography: mat-typography-config(
 );
 
 /*
-
 Featured
-
  */
 
 $app-featured-mat-card-typography: mat-typography-config(
@@ -144,9 +136,7 @@ $app-featured-mat-card-typography: mat-typography-config(
 );
 
 /*
-
 Browse Grid / Results
-
  */
 
 $app-browse-grid-typography: mat-typography-config(
@@ -168,29 +158,24 @@ $app-chips-typography: mat-typography-config(
 
 
 /*
-
 Colors
-
  */
 
 $heading-1-font-color: map-get($hub-pink, 500);
 $heading-2-font-color: map-get($hub-pink, 500);
 $heading-3-font-color: map-get($hub-pink, 500);
-$heading-4-font-color: map-get($hub-navy, 600);
+$heading-4-font-color: map-get($hub-navy, 500);
 
-.body-text h1 {
-  color: map-get($hub-navy, 300);
-}
-.body-text h2 {
-  color: map-get($hub-navy, 400);
-}
-.body-text h3 {
+.body-text h1,
+.body-text h2,
+.body-text h3,
+.body-text h4 {
   color: map-get($hub-navy, 500);
 }
 
 $subheading-font-color: map-get($hub-pink, 500); // used in results list
 
-$body-light-bg-font-color: $body-grey;
+$body-light-bg-font-color:  black;
 $link-light-bg-color: map-get($hub-teal, 500);
 
 $body-dark-bg-font-color:  white;
@@ -198,12 +183,9 @@ $link-dark-bg-color-1: map-get($hub-teal, A100);
 $link-dark-bg-color-2: $body-dark-bg-font-color;
 
 $breadcrumb-previous-color: map-get($hub-teal, A100);
-$breadcrumb-current-color: $color-icon;
+$breadcrumb-current-color: white;
 
 $browse-tile-font-color: $body-dark-bg-font-color;
 
 $markdown-heading-color: $heading-2-font-color;
 $markdown-subheading-color: $heading-3-font-color;
-
-
-

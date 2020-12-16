@@ -41,6 +41,15 @@
             </div>
         </ng-template>
 
+        <ng-template #body>
+            <ngx-contentful-rich-text
+                class="section-2 body-text"
+                style="word-break:break-word;" 
+                [document]="subhub.bodyText.json"
+                [nodeRenderers]="nodeRenderers">
+            </ngx-contentful-rich-text>
+        </ng-template>
+
         <!-- View 1 -->
         <div [ngSwitch]="subhub.viewType">
             <div *ngSwitchCase="'View 1'">
@@ -91,12 +100,7 @@
                         
                         <!-- Main Body -->
                         <div fxFlex class="section">
-                            <ngx-contentful-rich-text
-                                class="section-2 body-text"
-                                style="word-break:break-word;" 
-                                [document]="subhub.bodyText.json"
-                                [nodeRenderers]="nodeRenderers">
-                            </ngx-contentful-rich-text>
+                            <ng-container *ngTemplateOutlet="body"></ng-container>
                         </div>
 
                         <!-- Related Items -->
@@ -151,12 +155,7 @@
                         class="main-body site-padding"
                         ngClass.sm="site-padding-sm"
                         ngClass.xs="site-padding-xs">
-                        <ngx-contentful-rich-text
-                            class="section-2"
-                            style="word-break:break-word;" 
-                            [document]="subhub.bodyText.json"
-                            [nodeRenderers]="nodeRenderers">
-                        </ngx-contentful-rich-text>
+                        <ng-container *ngTemplateOutlet="body"></ng-container>
                     </div>
             
                     <!-- SubHub Children -->
