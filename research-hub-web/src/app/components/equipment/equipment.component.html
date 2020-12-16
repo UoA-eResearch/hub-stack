@@ -60,32 +60,6 @@
             </table>
         </div>
     </ng-template>
-<<<<<<< HEAD
-=======
-
-    <ng-template #relatedItems>
-        <div 
-            *ngIf="equipment.relatedItemsCollection.items.length > 0" 
-            id="you-might-be-interested-in">
-            <h4>You might also be interested in<hr/></h4>
-
-            <mat-nav-list 
-                style="margin-bottom: 20px;" 
-                *ngFor="let relatedItem of equipment.relatedItemsCollection.items" 
-                class="collection">
-                <mat-card>
-                    <!-- TODO: Replace with array style [routerLink] (like in articles.component.html) -->
-                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                        {{ relatedItem['title'] }}<br/>
-                    </a>
-                    <span class="related-item-summary">
-                        {{ relatedItem['summary'] }}
-                    </span>
-                </mat-card>
-            </mat-nav-list>
-        </div>
-    </ng-template>
->>>>>>> 9f69b116196da784e0d6707fb9fe173108c9d23f
     
     <ng-template #relatedItems let-hide="hideImage">
         <app-cards 
