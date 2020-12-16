@@ -99,16 +99,13 @@
                             </ngx-contentful-rich-text>
                         </div>
 
-                        <!-- Related Items and Keywords -->
+                        <!-- Related Items -->
                         <div fxFlex="30%">
 
                             <!-- Related Items -->
                             <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
                                 <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
                             </div>
-
-                            <!-- Keywords -->
-                            <app-keywords [contentItem]="subhub.keywords"></app-keywords>
                         </div>
                     </div>
                 </div>
@@ -142,7 +139,9 @@
                             ngClass.sm="content-summary-sm site-padding-sm" 
                             ngClass.xs="content-summary-xs site-padding-xs">
                             {{ subhub.summary }}
-                            <hr class="section"/>
+                            <div class="mini-hr">
+                                <hr/>
+                            </div>
                         </h3>
                     </div>
             
@@ -173,16 +172,7 @@
                         <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
                             <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: true }"></ng-container>
                         </div>
-                    </div>
-
-                    <!-- Keywords -->
-                    <div
-                        class="site-padding"
-                        ngClass.sm="site-padding-sm"
-                        ngClass.xs="site-padding-xs">
-                        <app-keywords [contentItem]="subhub.keywords"></app-keywords>
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
         </div>

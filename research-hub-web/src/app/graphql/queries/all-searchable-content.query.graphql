@@ -16,10 +16,6 @@ query AllSearchableContentPublicFields {
         items { ...PublicFields }
     }
 
-    facilityCollection(where: { searchable: true }) {
-        items { ...PublicFields }
-    }
-
     organisationalUnitCollection(where: { searchable: true }) {
         items { ...PublicFields }
     }

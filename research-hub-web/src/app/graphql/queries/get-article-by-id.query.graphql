@@ -23,26 +23,17 @@ query GetArticleByID($id: String!) {
               sys {
                 id
               }
-              ... on Software {
-                link
-              }
             }
             inline { 
               ...PublicFields
               sys {
                 id
               } 
-              ... on Software {
-                link
-              }
             }
             hyperlink { 
               ...PublicFields 
               sys {
                 id
-              }
-              ... on Software {
-                link
               }
             }
           }
@@ -52,7 +43,6 @@ query GetArticleByID($id: String!) {
           }
         }
       }
-      keywords
       relatedItemsCollection {
         items { ...PublicFields }
       }

@@ -87,13 +87,6 @@
             [contentItem]="article.relatedDocsCollection">
         </app-cards>
     </ng-template>
-
-    <ng-template #keywords>
-        <app-keywords 
-            id="keywords" 
-            [contentItem]="article.keywords">
-        </app-keywords>
-    </ng-template>
     
     
     <!-- View Switcher -->
@@ -131,12 +124,7 @@
                     fxFlex
                     fxFlexOrder="2"
                     fxFlexOrder.xs="1">
-
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
-
-                    <!-- Keywords -->
-                    <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
                 </div>
 
                 <!-- Extra Links -->
@@ -194,8 +182,9 @@
                 <!-- Article Title and Summary -->
                     <div fxFlex>
                         <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-
-                        <hr/>
+                        <div class="mini-hr">
+                            <hr/>
+                        </div>
 
                         <!-- Article Body -->
                         <ng-container *ngTemplateOutlet="articleBody"></ng-container>
@@ -220,9 +209,6 @@
                         <div id="you-might-be-interested-in">
                             <ng-container *ngTemplateOutlet="relatedItems"></ng-container><div><br/></div>
                         </div>
-
-                        <!-- Keywords -->
-                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
                     </div>
             </div>
         </div>

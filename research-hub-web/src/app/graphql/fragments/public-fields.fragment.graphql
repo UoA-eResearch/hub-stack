@@ -39,14 +39,6 @@ fragment PublicFields on Entry {
       ssoProtected
       searchable
     }
-  ... on Facility {
-      __typename
-      slug
-      title
-      summary
-      ssoProtected
-      searchable
-  }
   ... on OrganisationalUnit {
       __typename
       slug

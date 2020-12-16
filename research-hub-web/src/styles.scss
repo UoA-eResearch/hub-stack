@@ -20,6 +20,17 @@ hr {
   border: none;
   height: 1px;
 }
+.mini-hr {
+  margin-bottom: 5vw;
+}
+.mini-hr hr {
+  width: 10vw;
+  border: none;
+  height: 3px;
+  position: absolute;
+  background: map-get($hub-navy, 500);
+  color: map-get($hub-navy, 500);
+}
 .section {
   margin: 20px 0px;
 }

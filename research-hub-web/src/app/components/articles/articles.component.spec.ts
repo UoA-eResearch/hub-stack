@@ -237,12 +237,6 @@ describe('ArticlesComponent', () => {
       },
       '__typename': 'ArticleBody'
     },
-    'keywords': [
-      'article',
-      'informational',
-      'general',
-      'test'
-    ],
     'slug': 'first-article',
     'searchable': true,
     'icon': {

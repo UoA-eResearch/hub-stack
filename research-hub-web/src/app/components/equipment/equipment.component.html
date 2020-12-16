@@ -20,6 +20,13 @@
         </app-breadcrumbs>
     </ng-template>
 
+    <ng-template #dynamicBanner>
+        <div 
+            class="banner-container"
+            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat' : ''">
+        </div>  
+    </ng-template>
+
     <ng-template #specificationsTable>
         <div 
             class="specifications section">
@@ -104,18 +111,9 @@
             {{ equipment.summary }}
         </h3>
     </ng-template>
-    
-    <ng-template #equipmentImage>
-        <div>
-            <div *ngIf="equipment.mainImage;">
-                <img 
-                    src="{{ equipment?.mainImage?.url }}" 
-                    alt="{{ equipment?.mainImage?.description }}" 
-                    width="100%" 
-                    height="100%"/>
-            </div>
-        </div>
-    </ng-template>
+
+    <!-- Banner -->
+    <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
     <!-- Breadcrumbs -->
     <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
@@ -126,27 +124,23 @@
         ngClass.xs="site-padding-xs margin-bottom">
 
         <div>
-            <div class="section" 
+            <div 
                 fxLayout="column wrap"  
                 fxLayout.sm="column wrap"
                 fxLayout.xs="column wrap">
 
                 <!-- Title and Summary -->
                 <div 
-                    class="equipment-info section">
+                    class="equipment-info">
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
-
-                <!-- Equipment Image -->
-                <div 
-                    *ngIf="equipment.mainImage"
-                    class="equipment-image section">
-                    <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
+                <div class="mini-hr">
+                    <hr/>
                 </div>
             </div>
 
             <!-- Equipment Body -->
-            <div class="section">
+            <div>
                 <h4>Description<hr/></h4>
                 <ngx-contentful-rich-text
                     class="section-2"
@@ -178,10 +172,6 @@
 
             <!-- Related Items -->
             <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: true }"></ng-container>
-
-            <!-- Keywords -->
-            <app-keywords [contentItem]="equipment.keywords"></app-keywords>
-
         </div>
     </div>
 </div>
