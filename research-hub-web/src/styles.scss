@@ -15,22 +15,6 @@ html, body {
   padding: 0;
   color: $body-light-bg-font-color;
 }
-hr {
-  background-color: $input-grey;
-  border: none;
-  height: 1px;
-}
-.mini-hr {
-  margin-bottom: 5vw;
-}
-.mini-hr hr {
-  width: 10vw;
-  border: none;
-  height: 3px;
-  position: absolute;
-  background: map-get($hub-navy, 500);
-  color: map-get($hub-navy, 500);
-}
 .section {
   margin: 20px 0px;
 }
@@ -39,6 +23,23 @@ hr {
 }
 .mat-card {
   border-radius: 0px!important;
+}
+hr {
+  background-color: $input-grey;
+  border: none;
+  height: 1px;
+}
+.mini-hr {
+  margin: 1vw 0px 5vw 0px;
+  position: relative;
+}
+.mini-hr hr {
+  width: 8vw;
+  border: none;
+  height: 4px;
+  position: absolute;
+  background: map-get($hub-navy, 500);
+  color: map-get($hub-navy, 500);
 }
 
 

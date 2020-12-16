@@ -173,10 +173,20 @@ Colors
 
  */
 
-$heading-1-font-color: map-get($hub-navy, 600);
-$heading-2-font-color: map-get($hub-navy, 500);
-$heading-3-font-color: map-get($hub-navy, 400);
-$heading-4-font-color: map-get($hub-navy, 300);
+$heading-1-font-color: map-get($hub-pink, 500);
+$heading-2-font-color: map-get($hub-pink, 500);
+$heading-3-font-color: map-get($hub-pink, 500);
+$heading-4-font-color: map-get($hub-navy, 600);
+
+.body-text h1 {
+  color: map-get($hub-navy, 300);
+}
+.body-text h2 {
+  color: map-get($hub-navy, 400);
+}
+.body-text h3 {
+  color: map-get($hub-navy, 500);
+}
 
 $subheading-font-color: map-get($hub-pink, 500); // used in results list
 
