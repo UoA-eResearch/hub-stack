@@ -22,7 +22,7 @@ resource "aws_cognito_user_pool_client" "client" {
   name                                 = "research-hub-${var.lifecycle_state}"
   user_pool_id                         = var.cognito_user_pool_id
   allowed_oauth_flows                  = ["code"]
-  allowed_oauth_scopes                 = concat(aws_cognito_resource_server.resource_hub.scope_identifiers, ["openid", "profile"])
+  allowed_oauth_scopes                 = concat(aws_cognito_resource_server.research_hub.scope_identifiers, ["openid", "profile"])
   allowed_oauth_flows_user_pool_client = true
   explicit_auth_flows                  = ["ALLOW_CUSTOM_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
   callback_urls                        = concat(local.scheme_urls, ["http://localhost:4200"])
