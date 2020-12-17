@@ -1,4 +1,6 @@
-# General Setups
+#######################
+#       General       #
+#######################
 variable "aws_region" {
   default = "ap-southeast-2"
 }
@@ -9,13 +11,20 @@ variable "aws_profile" {
 }
 
 variable "lifecycle_state" {
-  description = "Lifecycle status (i.e dev/tst/prd)"
-  default     = "tst"
+  description = "Lifecycle status (i.e dev/test/prod)"
+  default     = "test"
 }
 
-# Tags (to keep finance happy)
+#######################
+#       Tags          #
+#######################
+variable "application" {
+  description = "The application this deployment is linked to"
+  default     = "N/A"
+}
 variable "department" {
   description = "The department this deployment is linked to"
+  default     = "N/A"
 }
 
 variable "project_code" {
@@ -25,13 +34,27 @@ variable "project_code" {
 
 variable "cost_centre" {
   description = "The cost centre costs will be attributed to. Required"
+  default     = "N/A"
 }
 
 variable "wiki_link" {
   description = "Where on the Wiki is more infomation location"
+  default     = "N/A"
 }
 
-# Website specific
+variable "faculty" {
+  description = "The faculty this deployment is linked to"
+  default     = "N/A"
+}
+
+variable "business_service" {
+  description = "The business service this deployment is linked to"
+  default     = "N/A"
+}
+
+#######################
+#       Website       #
+#######################
 variable "dns_entry" {
   default     = "my_domain.auckland.ac.nz"
   description = "What URL should this site be reachable via. MUST be included on the used certificate"
@@ -52,7 +75,13 @@ variable "acm_arn" {
   description = "The AWS ARN for the SSL certificate to be used. This is mandatory, but must be created before this step due to our hybrid DNS configuration"
 }
 
-# Secondary website (if applicable)
+variable "route53_hosted_zone_id" {
+  description = "The ID for the Route53 hosted zone that is used to route traffic from our domain to CloudFront"
+}
+
+#####################################
+# Secondary website (if applicable) #
+#####################################
 variable "create_secondary" {
   default     = false
   description = "Should the secondary distribution and site be setup. MUST be included on the used certificate"
@@ -78,8 +107,9 @@ variable "acm_arn_secondary" {
   description = "The AWS ARN for the SSL certificate to be used for the secondary site"
 }
 
-# Loadbalancer for ECS
-
+########################
+# Loadbalancer for ECS #
+########################
 variable "lb_name" {
   description = "What name should the LB be created with"
 }
@@ -109,8 +139,9 @@ variable "lb_dns_name" {
   description = "DNS Name that the LB will be accessible via"
 }
 
-# ECS Environment
-
+#######################
+#   ECS Environment   #
+#######################
 variable "ecs_cluster_name" {
   description = "What name should the ECS cluster have?"
 }
@@ -120,8 +151,9 @@ variable "repository_name" {
   default     = "research-hub/cer-graphql"
 }
 
-# ECS Services
-
+#######################
+#    ECS Services     #
+#######################
 variable "private_subnets" {
   description = "What subnet(s) should containers run in"
   type        = list(string)
@@ -150,14 +182,27 @@ variable "fargate_spot_count" {
   default     = 2
 }
 
-# Cognito
-
+#######################
+#       Cognito       #
+#######################
 variable "cognito_user_pool_id" {
   description = "Cognito User Pool that we will be associating with"
 }
 
+variable "cognito_user_pool_arn" {
+  description = "Full ARN of the in use Cognito User Pool"
+}
+
+variable "cognito_user_pool_domain" {
+  description = "The Amazon Cognito Domain aassociated with the User Pool"
+}
+
 variable "cognito_identity_provider" {
   description = "What is the name of the Identity provider within the given pool?"
+}
+
+variable "permitted_group" {
+  description = "What groups will be permitted access (in standard UoA syntax, i.e {group1}|{group2}|{group3})"
 }
 
 # API Gateway
