@@ -1,3 +1,6 @@
+  ### Maybe this should reside with the serverless.yml for the lambda function? 
+  ### https://github.com/UoA-eResearch/research-hub-contentful-backup/blob/master/serverless.yml
+
 resource "aws_s3_bucket" "contentful-backup" {
   count  = var.create_contentful_backup_bucket ? 1 : 0
   bucket = var.dns_entry
