@@ -35,9 +35,9 @@ lb_subnets = [
 ]
 vpc_id           = "vpc-05ace6f7251ef59c3"
 ecs_lb_acm_arn   = "arn:aws:acm:ap-southeast-2:518380838815:certificate/d82fed8f-e5ee-44c6-9710-643b0dd401b6"
-r53_hosted_zone  = "dev.amazon.auckland.ac.nz"
-lb_dns_name      = "cerlb.dev.amazon.auckland.ac.nz"
-create_dns_entry = false
+r53_hosted_zone  = "sandbox.amazon.auckland.ac.nz"
+lb_dns_name      = "rhubcpapi.sandbox.amazon.auckland.ac.nz"
+create_dns_entry = false 
 
 # ECS Environment
 ecs_cluster_name = "cer-test"
@@ -61,3 +61,6 @@ cognito_user_pool_arn     = "arn:aws:cognito-idp:ap-southeast-2:416527880812:use
 cognito_user_pool_domain  = "uoapool-sandbox"
 cognito_identity_provider = "UoATestIDP"
 permitted_group           = "Employee.psrwi|staffIntranetUser.ec"
+
+# S3 Contentful Backup Bucket
+create_contentful_backup_bucket = false
