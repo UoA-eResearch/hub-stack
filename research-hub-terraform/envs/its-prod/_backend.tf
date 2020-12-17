@@ -3,9 +3,9 @@
 # Uncomment and fill in details as per https://www.terraform.io/docs/backends/types/s3.html
 terraform {
   backend "s3" {
-    bucket  = "uoa-its-nonprod-terraform"
+    bucket  = "uoa-its-prod-terraform"
     key     = "researchhub/"
     region  = "ap-southeast-2"
-    profile = "uoa-its-nonprod"
+    profile = "uoa-its-prod"
   }
 }
