@@ -60,7 +60,7 @@ cognito_user_pool_id      = "ap-southeast-2_pgErjyL4O"
 cognito_user_pool_arn     = "arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O"
 cognito_user_pool_domain  = "uoapool-sandbox"
 cognito_identity_provider = "UoATestIDP"
-permitted_group           = "Employee.psrwi|staffIntranetUser.ec"
+permitted_group           = "Postgraduate.psrwi|staffIntranetUser.ec"
 
 # S3 Contentful Backup Bucket
 create_contentful_backup_bucket = false
