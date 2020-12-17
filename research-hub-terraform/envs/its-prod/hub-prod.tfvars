@@ -36,8 +36,8 @@ lb_subnets = [
 vpc_id           = "TBC"
 ecs_lb_acm_arn   = "TBC"
 r53_hosted_zone  = "prod.amazon.auckland.ac.nz"
-lb_dns_name      = "cerlb.prod.amazon.auckland.ac.nz"
-create_dns_entry = false
+lb_dns_name      = "rhubcpapi.prod.amazon.auckland.ac.nz"
+create_dns_entry = false # prob true?
 
 # ECS Environment
 ecs_cluster_name = "cer-prod"
@@ -61,3 +61,6 @@ cognito_user_pool_arn     = "TBC"
 cognito_user_pool_domain  = "TBC"
 cognito_identity_provider = "TBC"
 permitted_group           = "TBC"
+
+# S3 Contentful Backup Bucket
+create_contentful_backup_bucket = true

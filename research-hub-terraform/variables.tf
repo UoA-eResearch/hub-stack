@@ -209,3 +209,10 @@ variable "permitted_group" {
 #variable "api-gw-domain" {
 #    description = "The domain to attach the deployment to in order to facilitate clean versioning"
 #}
+
+#######################
+#   Contentful S3     #
+#######################
+variable "create_contentful_backup_bucket" {
+  description = "Should the Contentful backup bucket be created."
+}

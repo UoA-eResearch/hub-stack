@@ -47,3 +47,6 @@ All inline comments should explain what they are doing or why they are set a cer
 | fargate_base_count | How many containers should explicitly run on base Fargate |
 | fargate_spot_weight | What weighting should be given so propotions of conatiners run on Fargate Spot (Weights must sum to 100) | 
 | fargate_spot_count | How many containers should explicitly run on Fargate Spot |
+| -----------  | ----------- |
+| **S3 Bucket for Contentful Backup** | ----------- |
+| create_contentful_backup_bucket | Should the S3 bucket be created? (Only need for prod?) |
