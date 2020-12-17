@@ -18,6 +18,7 @@ export interface SubHubTitleAndSlug {
 })
 export class CerGraphqlService {
 
+  public hasPushedSubhubRoutes = false;
   private _subHubCollectionWithChildPagesSlugs;
   private _subHubMap: SubHubMap = new SubHubMap();
 
@@ -31,6 +32,7 @@ export class CerGraphqlService {
    * Dynamically pushes the SubHubs and the SubHub child pages to the application's routing array
    */
   public async pushSubHubRoutes(): Promise<void> {
+    this.hasPushedSubhubRoutes = true;
     const routes = this.router.config;
     await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
     this._subHubMap.routes.forEach(route => { routes.push(route); }); // Push the new routes to the application's routes.

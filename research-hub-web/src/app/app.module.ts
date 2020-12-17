@@ -83,12 +83,6 @@ export function initializeApp(cerGraphqlService: CerGraphqlService, loginService
   ],
   providers: [
     CerGraphqlService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      multi: true,
-      deps: [CerGraphqlService, LoginService, Router]
-    },
     SearchBarService,
     AppComponentService,
     SearchFiltersService,

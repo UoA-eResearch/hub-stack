@@ -114,7 +114,9 @@ export const appRoutes: Routes = [
       data: { contentId: 73 }
     },
     // { path: '**', canActivate: [SubhubRoutesResolverService], redirectTo: "home"}
-    { path: '**',  redirectTo: "home"}
+    { path: '**',  
+      loadChildren: () => { console.log("Wildcard activated"); return import("@app/components/sub-hub-routes/sub-hub-routes.module").then(m => m.SubHubRoutesModuleModule)}
+    }
   ]}
   
 ];
