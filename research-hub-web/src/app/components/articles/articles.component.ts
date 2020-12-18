@@ -1,7 +1,7 @@
 import { Component, OnInit, Type } from '@angular/core';
-import { merge, Observable, forkJoin, race } from 'rxjs';
-import { pluck, map, flatMap, tap, filter } from 'rxjs/operators';
-import { ActivatedRoute, ActivationStart, NavigationEnd, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { pluck, map, flatMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {

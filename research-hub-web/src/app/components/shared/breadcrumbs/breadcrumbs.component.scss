@@ -1,3 +1,4 @@
+@import '../../../../typography.scss';
 @import '../../../../themes.scss';
 
 
@@ -16,7 +17,7 @@
     }
   
     #breadcrumb-current-page {
-        color: $color-icon;
+        color: $breadcrumb-current-color;
     }
   }
   .breadcrumbs-mobile {

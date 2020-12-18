@@ -17,26 +17,17 @@ query GetSubHubByID($id: String!) {
               sys {
                 id
               }
-              ... on Software {
-                link
-              }
             }
             inline { 
               ...PublicFields
               sys {
                 id
-              } 
-              ... on Software {
-                link
               }
             }
             hyperlink { 
               ...PublicFields 
               sys {
                 id
-              }
-              ... on Software {
-                link
               }
             }
           }
@@ -46,7 +37,6 @@ query GetSubHubByID($id: String!) {
         }
       }
     }
-    keywords
     internalPagesCollection {
       items { ...PublicFields }
     }

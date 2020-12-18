@@ -41,6 +41,15 @@
             </div>
         </ng-template>
 
+        <ng-template #body>
+            <ngx-contentful-rich-text
+                class="section-2 body-text"
+                style="word-break:break-word;" 
+                [document]="subhub.bodyText.json"
+                [nodeRenderers]="nodeRenderers">
+            </ngx-contentful-rich-text>
+        </ng-template>
+
         <!-- View 1 -->
         <div [ngSwitch]="subhub.viewType">
             <div *ngSwitchCase="'View 1'">
@@ -91,24 +100,16 @@
                         
                         <!-- Main Body -->
                         <div fxFlex class="section">
-                            <ngx-contentful-rich-text
-                                class="section-2"
-                                style="word-break:break-word;" 
-                                [document]="subhub.bodyText.json"
-                                [nodeRenderers]="nodeRenderers">
-                            </ngx-contentful-rich-text>
+                            <ng-container *ngTemplateOutlet="body"></ng-container>
                         </div>
 
-                        <!-- Related Items and Keywords -->
+                        <!-- Related Items -->
                         <div fxFlex="30%">
 
                             <!-- Related Items -->
                             <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
                                 <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
                             </div>
-
-                            <!-- Keywords -->
-                            <app-keywords [contentItem]="subhub.keywords"></app-keywords>
                         </div>
                     </div>
                 </div>
@@ -142,7 +143,9 @@
                             ngClass.sm="content-summary-sm site-padding-sm" 
                             ngClass.xs="content-summary-xs site-padding-xs">
                             {{ subhub.summary }}
-                            <hr class="section"/>
+                            <div class="mini-hr">
+                                <hr/>
+                            </div>
                         </h3>
                     </div>
             
@@ -152,12 +155,7 @@
                         class="main-body site-padding"
                         ngClass.sm="site-padding-sm"
                         ngClass.xs="site-padding-xs">
-                        <ngx-contentful-rich-text
-                            class="section-2"
-                            style="word-break:break-word;" 
-                            [document]="subhub.bodyText.json"
-                            [nodeRenderers]="nodeRenderers">
-                        </ngx-contentful-rich-text>
+                        <ng-container *ngTemplateOutlet="body"></ng-container>
                     </div>
             
                     <!-- SubHub Children -->
@@ -173,16 +171,7 @@
                         <div *ngIf="subhub.relatedItemsCollection.items.length > 0">
                             <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: true }"></ng-container>
                         </div>
-                    </div>
-
-                    <!-- Keywords -->
-                    <div
-                        class="site-padding"
-                        ngClass.sm="site-padding-sm"
-                        ngClass.xs="site-padding-xs">
-                        <app-keywords [contentItem]="subhub.keywords"></app-keywords>
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
         </div>

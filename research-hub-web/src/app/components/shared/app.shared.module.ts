@@ -26,7 +26,6 @@ import { ArticleEntryComponent } from './article-entry/article-entry.component';
 import { EventEntryComponent } from './event-entry/event-entry.component';
 import { OrganisationalUnitComponent } from './organisational-unit/organisational-unit.component';
 import { ServiceComponent } from './service/service.component';
-import { KeywordsComponent } from './keywords/keywords.component';
 import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
@@ -64,7 +63,6 @@ import { MiniCardsComponent } from './mini-cards/mini-cards.component';
     EventEntryComponent,
     OrganisationalUnitComponent,
     ServiceComponent,
-    KeywordsComponent,
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
@@ -94,7 +92,6 @@ import { MiniCardsComponent } from './mini-cards/mini-cards.component';
     EventEntryComponent,
     OrganisationalUnitComponent,
     ServiceComponent,
-    KeywordsComponent,
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,

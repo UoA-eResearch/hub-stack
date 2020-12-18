@@ -8,7 +8,7 @@ query GetEquipmentByID($id: String!) {
     slug
     ssoProtected
     searchable
-    mainImage {
+    banner {
       title
       description
       url
@@ -41,11 +41,9 @@ query GetEquipmentByID($id: String!) {
         }
       }
     }
-    keywords
     manufacturer
     model
     yearOfManufacture
-    link
     relatedItemsCollection {
       items { ...PublicFields }
     }
@@ -55,11 +53,7 @@ query GetEquipmentByID($id: String!) {
     relatedOrgsCollection {
       items { ...PublicFields }
     }
-    relatedFacilityCollection {
-      items { ...PublicFields }
-    }
     publisher { ...PublicFields }
-    category
     cost
     availability
     audience

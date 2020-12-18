@@ -1,3 +1,18 @@
+<h1>Heading 1</h1>
+<p style="font-size: 4vh">Heading 1</p>
+<h2>Heading 2</h2>
+<p style="font-size: 3.6vh">Heading 2</p>
+<h3>Heading 3</h3>
+<p style="font-size: 3.2vh">Heading 3</p>
+<h4>Heading 4</h4>
+<p style="font-size: 2.8vh">Heading 4</p>
+<h5>Heading 5</h5>
+<p>Dynamic Heading 5</p>
+<h6>Heading 6</h6>
+<p>Dynamic Heading 6</p>
+<p>Paragraph</p>
+<p style="font-size: 2vh">Paragraph</p>
+
 <!-- If we're displaying a collection of articles-->
 <div
     *ngIf="allArticles$ | async as allArticles" 
@@ -48,7 +63,7 @@
 
     <ng-template #articleBody>
         <ngx-contentful-rich-text
-            class="section-2"
+            class="section-2 body-text"
             style="word-break:break-word;" 
             [document]="article.bodyText.json"
             [nodeRenderers]="nodeRenderers">
@@ -87,13 +102,6 @@
             [contentItem]="article.relatedDocsCollection">
         </app-cards>
     </ng-template>
-
-    <ng-template #keywords>
-        <app-keywords 
-            id="keywords" 
-            [contentItem]="article.keywords">
-        </app-keywords>
-    </ng-template>
     
     
     <!-- View Switcher -->
@@ -131,12 +139,7 @@
                     fxFlex
                     fxFlexOrder="2"
                     fxFlexOrder.xs="1">
-
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
-
-                    <!-- Keywords -->
-                    <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
                 </div>
 
                 <!-- Extra Links -->
@@ -194,8 +197,9 @@
                 <!-- Article Title and Summary -->
                     <div fxFlex>
                         <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-
-                        <hr/>
+                        <div class="mini-hr">
+                            <hr/>
+                        </div>
 
                         <!-- Article Body -->
                         <ng-container *ngTemplateOutlet="articleBody"></ng-container>
@@ -220,9 +224,6 @@
                         <div id="you-might-be-interested-in">
                             <ng-container *ngTemplateOutlet="relatedItems"></ng-container><div><br/></div>
                         </div>
-
-                        <!-- Keywords -->
-                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
                     </div>
             </div>
         </div>
