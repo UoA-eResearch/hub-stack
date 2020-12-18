@@ -77,6 +77,9 @@ terraform destroy -var-file=var-file --auto-approve
 | index_doc_secondary | The root document that users will land on for the second site, relative to the base of the S3 Bucket |
 | acm_arn_secondary | ARN of certificate in us-east-1 that will be attached to the Secondary Website (not created by Terraform due to Hybrid DNS situation) |
 | -----------  | ----------- |
+| **Route53 Routing** | ----------- |
+| route53_hosted_zone_id | The ID for the Route53 hosted zone that is used to route traffic from our domain(s) to CloudFront |
+| -----------  | ----------- |
 | **Loadbalancer for ECS** | ----------- |
 | lb_name | Friendly name for the Loadbalancer |
 | lb_subnets | List of subnets the LB will be running in |

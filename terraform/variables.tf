@@ -75,10 +75,6 @@ variable "acm_arn" {
   description = "The AWS ARN for the SSL certificate to be used. This is mandatory, but must be created before this step due to our hybrid DNS configuration"
 }
 
-variable "route53_hosted_zone_id" {
-  description = "The ID for the Route53 hosted zone that is used to route traffic from our domain to CloudFront"
-}
-
 #####################################
 # Secondary website (if applicable) #
 #####################################
@@ -105,6 +101,14 @@ variable "index_doc_secondary" {
 
 variable "acm_arn_secondary" {
   description = "The AWS ARN for the SSL certificate to be used for the secondary site"
+}
+
+########################
+#        Route53       #
+########################
+# Note: Route53 hosted zone will be same for both main and secondary site
+variable "route53_hosted_zone_id" {
+  description = "The ID for the Route53 hosted zone that is used to route traffic from our domain(s) to CloudFront"
 }
 
 ########################

@@ -17,7 +17,6 @@ dns_entry              = "research-hub.sandbox.amazon.auckland.ac.nz"
 secondary_addresses    = []
 index_doc              = "index.html"
 acm_arn                = "arn:aws:acm:us-east-1:416527880812:certificate/74e9a6bf-78cc-443b-a1dd-2cd9127719d3"
-route53_hosted_zone_id = "ZMGQD6EYUM762"
 
 # Secondary website (if applicable)
 create_secondary              = false
@@ -25,6 +24,9 @@ dns_entry_secondary           = "research-hub-preview.sandbox.amazon.auckland.ac
 secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
 acm_arn_secondary             = "arn:aws:acm:us-east-1:416527880812:certificate/74e9a6bf-78cc-443b-a1dd-2cd9127719d3"
+
+# Route53
+route53_hosted_zone_id = "ZMGQD6EYUM762"
 
 # Loadbalancer for ECS
 lb_name = "CeR-Terraform-Dev"
