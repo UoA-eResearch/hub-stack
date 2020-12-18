@@ -28,22 +28,22 @@ resource "aws_s3_bucket" "contentful_backup" {
   )
 }
 
-resource "aws_s3_bucket_policy" "cdn_access_policy" {
+resource "aws_s3_bucket_policy" "contentful_backup_access_policy" {
   count  = var.create_contentful_backup_bucket ? 1 : 0
   bucket = aws_s3_bucket.contentful_backup[count.index].id
-  policy = data.aws_iam_policy_document.s3_policy.json
+  policy = data.aws_iam_policy_document.s3_policy_contentful_backup_bucket[count.index].json
 }
 
 # Policy to allow access to the bucket
 # Note: Used the default policy that was set originally.
 # TO DO: Make this more secure? Should only the lambda have access ? 
-data "aws_iam_policy_document" "s3_policy" {
+data "aws_iam_policy_document" "s3_policy_contentful_backup_bucket" {
   count  = var.create_contentful_backup_bucket ? 1 : 0
   statement {
     actions   = ["s3:*"]
     resources = [
-      "${aws_s3_bucket.contentful_backup[count.index].arn}",
-      "${aws_s3_bucket.contentful_backup[count.index].arn}/*"
+      aws_s3_bucket.contentful_backup[count.index].arn,
+      concat(aws_s3_bucket.contentful_backup[count.index].arn, "/*")
     ]
 
     principals {

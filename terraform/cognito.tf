@@ -67,6 +67,6 @@ output "aws_cognito_user_pool_client_allowed_oauth_scopes" {
 }
 
 output "aws_cognito_user_pool_client_scope_identifiers" {
-  value       = try(aws_cognito_resource_server.eresearch-dashboard.scope_identifiers, "")
+  value       = try(aws_cognito_resource_server.research_hub.scope_identifiers, "")
   description = "The Cognito app client scope_identifiers."
 }

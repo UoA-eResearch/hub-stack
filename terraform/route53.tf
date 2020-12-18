@@ -12,5 +12,5 @@ resource "aws_route53_record" "secondary_website" {
   name    = var.dns_entry_secondary
   type    = "CNAME"
   ttl     = "300"
-  records = [aws_cloudfront_distribution.secondary_website.domain_name]
+  records = [aws_cloudfront_distribution.secondary_website[count.index].domain_name]
 }

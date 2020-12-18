@@ -84,6 +84,6 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity_seconda
 }
 
 output "aws_s3_bucket_name_secondary_website" {
-  value       = try(aws_s3_bucket.secondary_website[count.index].bucket, "")
+  value       = try(aws_s3_bucket.secondary_website[0].bucket, "")
   description = "The secondary (preview) website S3 bucket name."
 }
