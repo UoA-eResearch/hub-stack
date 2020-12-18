@@ -26,6 +26,7 @@ export class SubHubRoutesComponent implements OnInit {
       return this.router.navigateByUrl(currentUrl);
     } else {
       console.log("Genuine navigation error detected");
+      return this.router.navigate(["/error/404"]);
     }
   }
 

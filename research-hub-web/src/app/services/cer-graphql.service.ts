@@ -35,8 +35,14 @@ export class CerGraphqlService {
     this.hasPushedSubhubRoutes = true;
     const routes = this.router.config;
     await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
-    this._subHubMap.routes.forEach(route => { routes.push(route); }); // Push the new routes to the application's routes.
-    this.router.resetConfig(routes);
+    const wildcardRouteIdx = routes.findIndex((route) => route.path === "**");
+    let  newRoutes;
+    if (wildcardRouteIdx > -1) {
+      newRoutes = routes.slice(0, wildcardRouteIdx).concat(this._subHubMap.routes, routes.slice(wildcardRouteIdx, routes.length))
+    } else {
+      newRoutes = routes.concat(this._subHubMap.routes);
+    }
+    this.router.resetConfig(newRoutes);
   }
 
   /**
