@@ -1,5 +1,5 @@
 
-resource "aws_ecs_task_definition" "graphql" {
+resource "aws_ecs_task_definition" "graphql_preview" {
   family                   = "cer-graphql"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -17,29 +17,32 @@ resource "aws_ecs_task_definition" "graphql" {
     "logConfiguration": {
       "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cer-graphql-task",
+          "awslogs-group": "/ecs/cer-graphql-preview-task",
           "awslogs-region": "${var.aws_region}",
           "awslogs-create-group": "true",
           "awslogs-stream-prefix": "ecs"
       }
     },
+    "environment": [
+      {"name": "IS_PREVIEW_ENV", "value": "true"}
+    ],
     "secrets": [
-      {
-        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-access-token",
-        "name": "CONTENTFUL_ACCESS_TOKEN"
-      },
-      {
-        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-space-id",
-        "name": "CONTENTFUL_SPACE_ID"
-      },
-      {
-        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-region",
-        "name": "COGNITO_REGION"
-      },
-      {
-        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-user-pool",
-        "name": "COGNITO_USER_POOL"
-      }
+        {
+         "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-access-token",
+         "name": "CONTENTFUL_ACCESS_TOKEN"
+        },
+        {
+          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-space-id",
+          "name": "CONTENTFUL_SPACE_ID"
+        },
+        {
+          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-region",
+          "name": "COGNITO_REGION"
+        },
+        {
+          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-user-pool",
+          "name": "COGNITO_USER_POOL"
+        }
     ]
   }
 ]
@@ -48,24 +51,24 @@ DEFINITION
 }
 
 # This is used to catch versions (see service)
-data "aws_ecs_task_definition" "graphql" {
-  task_definition = aws_ecs_task_definition.graphql.family
+data "aws_ecs_task_definition" "graphql_preview" {
+  task_definition = aws_ecs_task_definition.graphql_preview.family
 
-  depends_on = [aws_ecs_task_definition.graphql]
+  depends_on = [aws_ecs_task_definition.graphql_preview]
 }
 
 resource "aws_ecs_service" "this" {
-  name                    = "cer-graphql-service"
+  name                    = "cer-graphql-preview-service"
   cluster                 = aws_ecs_cluster.cer.id
   enable_ecs_managed_tags = true
   propagate_tags          = "SERVICE"
-  desired_count           = var.service_container_count
+  desired_count           = var.service_container_count_preview
   # Check to make sure the most recent task revision
   # is used. This can occur when manual changes are made during
   # the Terraform run
-  task_definition = "${aws_ecs_task_definition.graphql.family}:${max(
-    aws_ecs_task_definition.graphql.revision,
-    data.aws_ecs_task_definition.graphql.revision,
+  task_definition = "${aws_ecs_task_definition.graphql_preview.family}:${max(
+    aws_ecs_task_definition.graphql_preview.revision,
+    data.aws_ecs_task_definition.graphql_preview.revision,
   )}"
 
   # Below we can define cost saving strategies
@@ -99,7 +102,7 @@ resource "aws_ecs_service" "this" {
   tags = merge(
     local.common_tags,
     {
-      "Name" = "graphql-service-definition"
+      "Name" = "graphql-preview-service-definition"
     },
   )
   depends_on = [aws_alb_target_group.ecs-cer-graphql]
