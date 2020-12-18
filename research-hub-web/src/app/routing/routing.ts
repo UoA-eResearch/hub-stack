@@ -17,9 +17,7 @@ export const appRoutes: Routes = [
   {
     path: 'home',
     canActivate: [LoginSuccessGuard],
-    // resolve: [SubhubRoutesResolverService],
-    component: HomeComponent,
-    // loadChildren: () => import('@components/home/home.module').then((m) => m.HomeModule),
+    component: HomeComponent
   },
   {
     path: 'search',
@@ -109,9 +107,13 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@components/content-details/content-details.module').then(m => m.ContentDetailsModule),
     data: { contentId: 73 }
   },
-  // { path: '**', canActivate: [SubhubRoutesResolverService], redirectTo: "home"}
+  /**
+   * SubHub routes loader module:
+   * Checks if subhub routes are already loaded. If not, load it first, then try navigating again, just in case
+   * the wildcard route matched a subhub route. If it's already loaded, it means it's a genuine error.
+   */
   {
     path: '**',
-    loadChildren: () => { console.log("Wildcard activated"); return import("@app/components/sub-hub-routes/sub-hub-routes.module").then(m => m.SubHubRoutesModuleModule) }
+    loadChildren: () =>  import("@app/components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
   }
 ];

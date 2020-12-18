@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SubHubRoutesComponent } from './sub-hub-routes.component';
+import { SubHubRoutesLoaderComponent } from './subhub-routes-loader.component';
 
-describe('SubHubRoutesComponent', () => {
-  let component: SubHubRoutesComponent;
-  let fixture: ComponentFixture<SubHubRoutesComponent>;
+describe('SubHubRoutesLoaderComponent', () => {
+  let component: SubHubRoutesLoaderComponent;
+  let fixture: ComponentFixture<SubHubRoutesLoaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SubHubRoutesComponent ]
+      declarations: [ SubHubRoutesLoaderComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SubHubRoutesComponent);
+    fixture = TestBed.createComponent(SubHubRoutesLoaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
