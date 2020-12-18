@@ -8,7 +8,6 @@
 //         cy.contains('The Battle of Geonosis');
 //     });
 
-<<<<<<< HEAD
 //     it('can display a list of its keywords', () => {
 //         cy.get('#keywords').should('exist');
 //     });
@@ -16,11 +15,6 @@
 //     it('displays a list of related items', () => {
 //         cy.get('#you-might-be-interested-in').should('exist');
 //     }); 
-=======
-    it('displays a list of related items', () => {
-        cy.get('#you-might-be-interested-in').should('exist');
-    });
->>>>>>> body-content
 
 //     it('clicking a related item takes you to its page', () => {
 //         cy.get('#you-might-be-interested-in').contains('Who are the Jedi?').click();
