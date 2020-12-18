@@ -122,9 +122,6 @@
                 </div>
             </div> 
 
-            <!-- Breadcrumbs -->
-            <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-
             <div 
                 class="site-padding top-padding" 
                 ngClass.xs="site-padding-xs top-padding" 
@@ -133,6 +130,9 @@
                 fxLayout.sm="column wrap"
                 fxLayout.xs="column wrap"   
                 fxLayoutGap="5%">
+
+                <!-- Breadcrumbs -->
+                <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
                 <!-- Article Body -->
                 <div 
@@ -181,9 +181,6 @@
             <!-- Dynamic Banner -->
             <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
-            <!-- Breadcrumbs -->
-            <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-
             <div 
                 class="site-padding top-padding" 
                 ngClass.xs="site-padding-xs top-padding" 
@@ -193,6 +190,9 @@
                 fxLayout.xs="column wrap"   
                 fxLayoutAlign="space-between"
                 fxLayoutGap="5%">
+                
+                <!-- Breadcrumbs -->
+                <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
                 <!-- Article Title and Summary -->
                     <div fxFlex>

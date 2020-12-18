@@ -82,13 +82,13 @@
                     </div>
                 </div>
 
-                <!-- Breadcrumbs -->
-                <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-
                 <div
                     class="site-padding top-padding"
                     ngClass.sm="site-padding-sm top-padding"
                     ngClass.xs="site-padding-xs top-padding">
+
+                    <!-- Breadcrumbs -->
+                    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
                     <!-- Body Content -->
                     <div 
@@ -126,16 +126,19 @@
                 <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
                 <div>
+                    <div 
+                        class="site-padding" 
+                        ngClass.sm="site-padding-sm" 
+                        ngClass.xs="site-padding-xs">
 
-                    <!-- Breadcrumbs -->
-                    <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-
-                    <!-- Title and Summary -->
-                    <div>
+                        <!-- Breadcrumbs -->
+                        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+                    
+                        <!-- Title and Summary -->
                         <h1
-                            class="content-title site-padding" 
-                            ngClass.sm="content-title-sm site-padding-sm" 
-                            ngClass.xs="content-title-xs site-padding-xs">
+                            class="content-title" 
+                            ngClass.sm="content-title-sm" 
+                            ngClass.xs="content-title-xs">
                             {{ subhub.title }}
                         </h1>
                         <h3 
