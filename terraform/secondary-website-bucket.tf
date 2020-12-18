@@ -1,10 +1,10 @@
-resource "aws_s3_bucket" "site_secondary" {
+resource "aws_s3_bucket" "secondary_website" {
   count  = var.create_secondary ? 1 : 0
   bucket = var.dns_entry_secondary
   acl    = "private"
 
   versioning {
-    enabled = true
+    enabled = false
   }
 
   # Encrypt the data at rest. We use the default Service Side Encryption
@@ -23,11 +23,17 @@ resource "aws_s3_bucket" "site_secondary" {
       "Name" = var.dns_entry_secondary
     },
   )
+
+  lifecycle {
+    ignore_changes = [
+      logging
+    ]
+  }
 }
 
 resource "aws_s3_bucket_policy" "cdn_access_policy_secondary" {
   count  = var.create_secondary ? 1 : 0
-  bucket = aws_s3_bucket.site_secondary[count.index].id
+  bucket = aws_s3_bucket.secondary_website[count.index].id
   policy = data.aws_iam_policy_document.s3_policy_secondary[count.index].json
 }
 
@@ -36,7 +42,7 @@ data "aws_iam_policy_document" "s3_policy_secondary" {
   count = var.create_secondary ? 1 : 0
   statement {
     actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.site_secondary[count.index].arn}/*"]
+    resources = ["${aws_s3_bucket.secondary_website[count.index].arn}/*"]
 
     principals {
       type        = "AWS"
@@ -46,11 +52,27 @@ data "aws_iam_policy_document" "s3_policy_secondary" {
 
   statement {
     actions   = ["s3:ListBucket"]
-    resources = [aws_s3_bucket.site_secondary[count.index].arn]
+    resources = [aws_s3_bucket.secondary_website[count.index].arn]
 
     principals {
       type        = "AWS"
       identifiers = [aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn]
+    }
+  }
+  # This ensures all S3 actions are over HTTPS
+  statement {
+    actions   = ["s3:GetObject", "s3:PutObject"]
+    resources = ["${aws_s3_bucket.secondary_website[count.index].arn}/*"]
+    effect    = "Deny"
+    sid       = "BlockNonSSL"
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+    condition {
+      test     = "Bool"
+      variable = "aws:SecureTransport"
+      values   = ["false"]
     }
   }
 }
@@ -59,4 +81,9 @@ data "aws_iam_policy_document" "s3_policy_secondary" {
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity_secondary" {
   count   = var.create_secondary ? 1 : 0
   comment = "CloudFront Access identity to S3 for ${var.dns_entry_secondary}"
+}
+
+output "aws_s3_bucket_name_secondary_website" {
+  value       = try(aws_s3_bucket.secondary_website[count.index].bucket, "")
+  description = "The secondary (preview) website S3 bucket name."
 }
