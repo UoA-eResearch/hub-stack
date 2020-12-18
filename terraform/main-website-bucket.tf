@@ -32,11 +32,11 @@ resource "aws_s3_bucket" "main_website" {
 
 resource "aws_s3_bucket_policy" "cdn_access_policy" {
   bucket = aws_s3_bucket.main_website.id
-  policy = data.aws_iam_policy_document.s3_policy.json
+  policy = data.aws_iam_policy_document.s3_policy_main_website.json
 }
 
 # Policy to allow the created Access Identity to access the bucket
-data "aws_iam_policy_document" "s3_policy" {
+data "aws_iam_policy_document" "s3_policy_main_website" {
   statement {
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.main_website.arn}/*"]

@@ -101,37 +101,37 @@ resource "aws_cloudfront_distribution" "secondary_website" {
   )
 }
 
-output "cf_id" {
-  value       = try(aws_cloudfront_distribution.secondary_website[count.index].id, "")
+output "cf_id_secondary" {
+  value       = try(aws_cloudfront_distribution.secondary_website[0].id, "")
   description = "ID of CloudFront distribution"
 }
 
-output "cf_arn" {
-  value       = try(aws_cloudfront_distribution.secondary_website[count.index].arn, "")
+output "cf_arn_secondary" {
+  value       = try(aws_cloudfront_distribution.secondary_website[0].arn, "")
   description = "ARN of CloudFront distribution"
 }
 
-output "cf_aliases" {
-  value       = try(aws_cloudfront_distribution.secondary_website[count.index].aliases, "")
+output "cf_aliases_secondary" {
+  value       = try(aws_cloudfront_distribution.secondary_website[0].aliases, "")
   description = "Extra CNAMEs of AWS CloudFront"
 }
 
-output "cf_status" {
-  value       = try(aws_cloudfront_distribution.secondary_website[count.index].status, "")
+output "cf_status_secondary" {
+  value       = try(aws_cloudfront_distribution.secondary_website[0].status, "")
   description = "Current status of the distribution"
 }
 
-output "cf_domain_name" {
-  value       = try(aws_cloudfront_distribution.secondary_website[count.index].domain_name, "")
+output "cf_domain_name_secondary" {
+  value       = try(aws_cloudfront_distribution.secondary_website[0].domain_name, "")
   description = "Domain name corresponding to the distribution"
 }
 
-output "cf_hosted_zone_id" {
-  value       = try(aws_cloudfront_distribution.secondary_website[count.index].hosted_zone_id, "")
+output "cf_hosted_zone_id_secondary" {
+  value       = try(aws_cloudfront_distribution.secondary_website[0].hosted_zone_id, "")
   description = "CloudFront Route 53 Zone ID"
 }
 
-output "cf_origin_access_identity" {
+output "cf_origin_access_identity_secondary" {
   value       = try(aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path, "")
   description = "A shortcut to the full path for the origin access identity to use in CloudFront"
 }
