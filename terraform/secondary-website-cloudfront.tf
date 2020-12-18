@@ -1,8 +1,8 @@
-resource "aws_cloudfront_distribution" "secondary-website" {
+resource "aws_cloudfront_distribution" "secondary_website" {
   count = var.create_secondary ? 1 : 0
   origin {
     origin_id   = var.dns_entry_secondary
-    domain_name = aws_s3_bucket.site_secondary[count.index].bucket_regional_domain_name
+    domain_name = aws_s3_bucket.secondary_website[count.index].bucket_regional_domain_name
 
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity_secondary[count.index].cloudfront_access_identity_path
@@ -18,7 +18,7 @@ resource "aws_cloudfront_distribution" "secondary-website" {
 
   enabled             = true
   default_root_object = var.index_doc
-  is_ipv6_enabled     = true
+  is_ipv6_enabled     = false
 
   default_cache_behavior {
     # The following commented block shows how to configure a Lambda@Edge
@@ -68,20 +68,25 @@ resource "aws_cloudfront_distribution" "secondary-website" {
   }
 
   # Specify custom error pages
-  /*
-  custom_error_response = [
-    {
-      error_code = "400"
-      response_page_path  = "/errors/4xx-errors/400.html"
-      response_code = "400"
-    }
-  ]
-  */
+  # The following is required for a SPA to redirect to base
+  custom_error_response {
+    error_code            = "403"
+    response_page_path    = "/index.html"
+    response_code         = "200"
+    error_caching_min_ttl = 60
+  }
+
+  custom_error_response {
+    error_code            = "404"
+    response_page_path    = "/index.html"
+    response_code         = "200"
+    error_caching_min_ttl = 5
+  }
 
   # Setup the SSL certificate that is used with HTTPS
   # The protocol version specified is compliant with UoA Web Policy
   viewer_certificate {
-    cloudfront_default_certificate = false
+    cloudfront_default_certificate = true
     acm_certificate_arn            = var.acm_arn_secondary
     minimum_protocol_version       = "TLSv1.2_2018"
     ssl_support_method             = "sni-only"
@@ -94,4 +99,39 @@ resource "aws_cloudfront_distribution" "secondary-website" {
       "Name" = "${var.dns_entry_secondary}-Distribution"
     },
   )
+}
+
+output "cf_id" {
+  value       = try(aws_cloudfront_distribution.secondary_website[count.index].id, "")
+  description = "ID of CloudFront distribution"
+}
+
+output "cf_arn" {
+  value       = try(aws_cloudfront_distribution.secondary_website[count.index].arn, "")
+  description = "ARN of CloudFront distribution"
+}
+
+output "cf_aliases" {
+  value       = try(aws_cloudfront_distribution.secondary_website[count.index].aliases, "")
+  description = "Extra CNAMEs of AWS CloudFront"
+}
+
+output "cf_status" {
+  value       = try(aws_cloudfront_distribution.secondary_website[count.index].status, "")
+  description = "Current status of the distribution"
+}
+
+output "cf_domain_name" {
+  value       = try(aws_cloudfront_distribution.secondary_website[count.index].domain_name, "")
+  description = "Domain name corresponding to the distribution"
+}
+
+output "cf_hosted_zone_id" {
+  value       = try(aws_cloudfront_distribution.secondary_website[count.index].hosted_zone_id, "")
+  description = "CloudFront Route 53 Zone ID"
+}
+
+output "cf_origin_access_identity" {
+  value       = try(aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path, "")
+  description = "A shortcut to the full path for the origin access identity to use in CloudFront"
 }
