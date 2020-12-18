@@ -43,8 +43,8 @@ lb_dns_name      = "rhubcpapi.prod.amazon.auckland.ac.nz"
 create_dns_entry = false # prob true?
 
 # ECS Environment
-ecs_cluster_name = "cer-prod"
-repository_name  = "prod-repo"
+ecs_cluster_name = "cer-graphql-cluster"
+repository_name  = "research-hub/cer-graphql"
 
 # ECS Services
 private_subnets = [

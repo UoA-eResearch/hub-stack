@@ -19,7 +19,7 @@ index_doc              = "index.html"
 acm_arn                = "arn:aws:acm:us-east-1:518380838815:certificate/ca2097b7-29ae-456d-a0f5-3bdf9c7d8b66"
 
 # Secondary website (if applicable)
-create_secondary              = false
+create_secondary              = true
 dns_entry_secondary           = "research-hub-preview.connect.test.amazon.auckland.ac.nz"
 secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
@@ -42,8 +42,8 @@ lb_dns_name      = "rhubcpapi.connect.test.amazon.auckland.ac.nz"
 create_dns_entry = false # prob true?
 
 # ECS Environment
-ecs_cluster_name = "cer-test"
-repository_name  = "test-repo"
+ecs_cluster_name = "cer-graphql-cluster"
+repository_name  = "research-hub/cer-graphql"
 
 # ECS Services
 private_subnets = [

@@ -42,8 +42,8 @@ lb_dns_name      = "rhubcpapi.sandbox.amazon.auckland.ac.nz"
 create_dns_entry = false 
 
 # ECS Environment
-ecs_cluster_name = "cer-test"
-repository_name  = "test-repo"
+ecs_cluster_name = "cer-graphql-cluster"
+repository_name  = "research-hub/cer-graphql"
 
 # ECS Services
 private_subnets = [

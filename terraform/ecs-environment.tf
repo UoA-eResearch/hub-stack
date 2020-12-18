@@ -9,7 +9,7 @@ resource "aws_ecr_repository" "graphql" {
   name = var.repository_name
   # Let AWS run vulnerability scanning on image push
   image_scanning_configuration {
-    scan_on_push = true
+    scan_on_push = true   # is false in sandbox... maybe need to check if this breaks anything
   }
 }
 
