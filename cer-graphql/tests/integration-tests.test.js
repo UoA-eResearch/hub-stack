@@ -146,7 +146,7 @@ describe('Contentful filters (conditionals)', () => {
 
 });
 
-describe('Authorization resolvers', () => {
+// describe('Authorization resolvers', () => {
 
     // test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
     //     let { query } = await createServerAndTestClientWithAuth(false);
@@ -157,12 +157,12 @@ describe('Authorization resolvers', () => {
     //         message = err.message;
     //     }
     //     expect(message).toBeTruthy();
-    // }, TIMEOUT_PERIOD);
+    // }, TIMEOUT_PERIOD); 
 
-    test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
-        let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
-        expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
-    });
+    // test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
+    //     let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
+    //     expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
+    // });
 
     // test('Requesting an articleCollection non-public field with a valid Authorization header returns data', async function () {
     //     let { query } = await createServerAndTestClientWithAuth();
@@ -178,4 +178,4 @@ describe('Authorization resolvers', () => {
 
     //     expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     // });
-});
+// });
