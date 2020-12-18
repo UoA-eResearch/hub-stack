@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EventsComponent } from './events.component';
-import { EventsRoutingModule } from './events-routing.module';
+import { SoftwareComponent } from './software.component';
+import { SoftwareRoutingModule} from './software-routing.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 
 
 @NgModule({
-  declarations: [EventsComponent],
+  declarations: [SoftwareComponent],
   imports: [
     CommonModule,
-    EventsRoutingModule,
+    SoftwareRoutingModule,
     SharedModule,
     NgxContentfulRichTextModule
   ]
 })
-export class EventsModule { }
+export class SoftwareModule { }

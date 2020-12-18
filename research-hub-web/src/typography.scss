@@ -183,7 +183,7 @@ $link-dark-bg-color-1: map-get($hub-teal, A100);
 $link-dark-bg-color-2: $body-dark-bg-font-color;
 
 $breadcrumb-previous-color: map-get($hub-teal, A100);
-$breadcrumb-current-color: white;
+$breadcrumb-current-color: $color-icon;
 
 $browse-tile-font-color: $body-dark-bg-font-color;
 

@@ -1,0 +1,133 @@
+<!-- If we're displaying a collection of software  -->
+<app-collection-list 
+    *ngIf="allSoftware$ | async as allSoftware" 
+    [collection]="allSoftware">
+</app-collection-list>
+
+<!-- If we're displaying an individual software -->
+<div 
+    id="software-container"
+    ngClass.xs="mobile"
+    ngClass.sm="mobile"
+    *ngIf="software$ | async as software">
+
+    <!-- Templates -->
+    <ng-template #dynamicBanner>
+        <div 
+            class="banner-container"
+            [style]="software.banner ? 'background: url(' + software.banner.url + ') no-repeat' : ''">
+        </div>  
+    </ng-template>
+
+    <ng-template #breadcrumbs>
+        <app-breadcrumbs 
+            [contentItem]="parentSubHubs" 
+            [title]="software.title">
+        </app-breadcrumbs>
+    </ng-template>
+
+    <ng-template #title>
+        <div>
+            <span>
+                <div 
+                    class="content-title"
+                    ngClass.xs="software-title-xs">
+                    {{ software.title }}
+                </div>
+                <div 
+                    class="content-summary"
+                    ngClass.xs="software-summary-xs">
+                    {{ software.summary }}
+                </div>
+            </span>
+            <a href="{{ software.callToAction }}">
+                <button class="standard-button section" mat-flat-button>
+                    <b>Software Details</b>
+                </button>
+            </a>
+            <div class="section">
+                <hr/>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #relatedItems>
+        <app-cards 
+            id="you-might-be-interested-in"
+            [hideImage]="true"
+            [title]="'You might also be interested in'" 
+            [contentItem]="software.relatedItemsCollection">
+        </app-cards>
+    </ng-template>
+
+    <ng-template #relatedContacts let-hide="true">
+        <app-cards 
+            [hideImage]="hide"
+            [title]="'Contacts'" 
+            [contentItem]="software.relatedContactsCollection">
+        </app-cards>
+    </ng-template>
+
+    <ng-template #relatedOrganisations let-hide="hideImage">
+        <app-cards 
+            [hideImage]="hide"
+            [title]="'Organisations'" 
+            [contentItem]="software.relatedOrgsCollection">
+        </app-cards>
+    </ng-template>
+
+    <ng-template #publisherAndOwner>
+        <div 
+            *ngIf="software.publisher || software.owner"
+            class="section"
+            fxLayout="row wrap"
+            fxLayout.xs="column wrap"
+            fxLayoutGap="5%">
+            <div fxFlex>
+                <mat-card>
+                    <span class="card-title">
+                        <a>{{ software.publisher.name }}</a>
+                    </span> 
+                    <br/>
+                    <span class="card-content-item-summary">
+                        <p>{{ software.owner.email }}</p>
+                    </span>
+                </mat-card>
+            </div>
+            <div fxFlex>
+                <mat-card>
+                    <span class="card-title">
+                        <a>{{ software.owner.name }}</a>
+                    </span> 
+                    <br/>
+                    <span class="card-content-item-summary">
+                        {{ software.owner.email }}
+                    </span>
+                </mat-card>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #softwareBody>
+        <ngx-contentful-rich-text
+            class="section-2 body-text"
+            style="word-break:break-word;" 
+            [document]="software.bodyText.json"
+            [nodeRenderers]="nodeRenderers">
+        </ngx-contentful-rich-text>
+    </ng-template>
+
+    <!-- Software Content -->
+    <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
+    <div
+        class="site-padding-2 top-padding margin-bottom"
+        ngClass.xs="site-padding-sm top-padding margin-bottom"
+        ngClass.sm="site-padding-sm top-padding margin-bottom">
+        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+        <ng-container *ngTemplateOutlet="title"></ng-container>
+        <ng-container *ngTemplateOutlet="publisherAndOwner"></ng-container>
+        <ng-container *ngTemplateOutlet="softwareBody"></ng-container>
+        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+        <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
+    </div>
+</div>

@@ -20,22 +20,10 @@
     </ng-template>
 
     <ng-template #breadcrumbs>
-        <div 
-            id="breadcrumbs" 
-            class="section"
-            *ngIf="!!parentSubHubs" 
-            ngClass.xs="breadcrumbs-mobile">
-            <span 
-                class="breadcrumb-subhub" 
-                *ngFor="let subHub of parentSubHubs.slice().reverse()">
-                <a [routerLink]="'/subhub/' + subHub.slug">
-                    {{ subHub.title }}
-                </a>
-            </span>
-            <span id="breadcrumb-current-page">
-                {{ event.title }}
-            </span>
-        </div>
+        <app-breadcrumbs 
+            [contentItem]="parentSubHubs" 
+            [title]="event.title">
+        </app-breadcrumbs>
     </ng-template>
 
     <ng-template #title>
@@ -52,6 +40,14 @@
                     {{ event.summary }}
                 </div>
             </span>
+            <div 
+                class="section">
+                <a href="{{ event.callToAction }}">
+                    <button class="standard-button" mat-flat-button>
+                        <b>Event Details</b>
+                    </button>
+                </a>
+            </div>
             <div class="section">
                 <hr/>
             </div>
@@ -94,35 +90,40 @@
         </div>
     </ng-template>
 
-    <ng-template #description>
+    <ng-template #eventBody>
         <div>
-            <mat-card-content [innerHTML]="event.bodyText.json | richTextToHTML">
-            </mat-card-content>
-            <div 
-                class="section">
-                <a href="{{ event.link }}">
-                    <button class="standard-button" mat-flat-button>
-                        <b>Event Details</b>
-                    </button>
-                </a>
-            </div>
+            <ngx-contentful-rich-text
+                class="section-2 body-text"
+                style="word-break:break-word;" 
+                [document]="event.bodyText.json"
+                [nodeRenderers]="nodeRenderers">
+            </ngx-contentful-rich-text>
         </div>
     </ng-template>
 
-    <ng-template #keywords>
-        <div id="keywords">
-            <h4>Keywords<hr/></h4>
-            <mat-card-subtitle 
-                fxLayout="row wrap"> 
-                <span *ngFor="let keyword of event.keywords">
-                    <mat-card 
-                        fxLayout="row" 
-                        class="keyword-card">
-                            {{ keyword | humanCase }}
-                    </mat-card>
-                </span>
-            </mat-card-subtitle>
-        </div>
+    <ng-template #relatedItems>
+        <app-cards 
+            id="you-might-be-interested-in"
+            [hideImage]="true"
+            [title]="'You might also be interested in'" 
+            [contentItem]="event.relatedItemsCollection">
+        </app-cards>
+    </ng-template>
+
+    <ng-template #relatedOrganisations>
+        <app-cards 
+            [hideImage]="true"
+            [title]="'Organisations'" 
+            [contentItem]="event.relatedOrgsCollection">
+        </app-cards>
+    </ng-template>
+    
+    <ng-template #relatedContacts>
+        <app-cards 
+            [hideImage]="true"
+            [title]="'Contacts'" 
+            [contentItem]="event.relatedContactsCollection">
+        </app-cards>
     </ng-template>
 
     <!-- Event Content -->
@@ -133,8 +134,10 @@
         ngClass.sm="site-padding-sm top-padding margin-bottom">
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
         <ng-container *ngTemplateOutlet="title"></ng-container>
-        <ng-container *ngTemplateOutlet="description"></ng-container>
+        <ng-container *ngTemplateOutlet="eventBody"></ng-container>
         <ng-container *ngTemplateOutlet="details"></ng-container>
-        <ng-container *ngTemplateOutlet="keywords"></ng-container>
+        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+        <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
+        <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
     </div>
 </div>

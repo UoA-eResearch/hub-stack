@@ -53,10 +53,6 @@ query GetEquipmentByID($id: String!) {
     relatedOrgsCollection {
       items { ...PublicFields }
     }
-    publisher { ...PublicFields }
-    cost
-    availability
-    audience
     location {
       json
     }

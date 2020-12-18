@@ -17,9 +17,6 @@ query GetAllSubHubChildPagesSlugs {
                     ...on Event {
                         slug
                     }
-                    ...on OrganisationalUnit {
-                        slug
-                    }
                     ...on Service {
                         slug
                     }

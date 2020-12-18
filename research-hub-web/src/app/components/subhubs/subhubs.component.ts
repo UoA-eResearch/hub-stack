@@ -1,7 +1,7 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { pluck, map, flatMap, tap } from 'rxjs/operators';
+import { pluck, map, flatMap, tap} from 'rxjs/operators';
 import {
   AllSubHubGQL,
   GetSubHubByIdGQL,
@@ -48,6 +48,11 @@ export class SubhubsComponent implements OnInit {
     public bodyMediaService: BodyMediaService,
     public router: Router
   ) { }
+
+  internalNavigate(path) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.navigate([path]);
+  }
 
   async ngOnInit() {
 

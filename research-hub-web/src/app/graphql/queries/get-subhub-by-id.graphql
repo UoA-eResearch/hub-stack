@@ -12,31 +12,25 @@ query GetSubHubByID($id: String!) {
       json
       links {
         entries {
-            block { 
-              ...PublicFields
-              sys {
-                id
-              }
-            }
-            inline { 
-              ...PublicFields
-              sys {
-                id
-              }
-            }
-            hyperlink { 
-              ...PublicFields 
-              sys {
-                id
-              }
-            }
-          }
+          block { ...PublicFields }
+          inline { ...PublicFields }
+          hyperlink { ...PublicFields }
+        }
         assets {
-          block { ...AssetFields }
-          hyperlink { ...AssetFields }
+          block {
+            title
+            description
+            url
+          }
+          hyperlink {
+            title
+            description
+            url
+          }
         }
       }
     }
+    keywords
     internalPagesCollection {
       items { ...PublicFields }
     }
