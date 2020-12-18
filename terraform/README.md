@@ -94,10 +94,11 @@ terraform destroy -var-file=var-file --auto-approve
 | -----------  | ----------- |
 | **ECS Services** | ----------- |
 | private_subnets | What subnets the containers will run from |
-| service_container_count | How many containers should be running in the service |
-| fargate_base_weight | What weighting should be given so propotions of conatiners run on Base Fargate (Weights must sum to 100) |
+| service_container_count | How many containers should be running in the  main service |
+| service_container_count_preview | How many containers should be running in the preview service |
+| fargate_base_weight | What weighting should be given so proportions of containers run on Base Fargate (Weights must sum to 100) |
 | fargate_base_count | How many containers should explicitly run on base Fargate |
-| fargate_spot_weight | What weighting should be given so propotions of conatiners run on Fargate Spot (Weights must sum to 100) | 
+| fargate_spot_weight | What weighting should be given so proportions of containers run on Fargate Spot (Weights must sum to 100) | 
 | fargate_spot_count | How many containers should explicitly run on Fargate Spot |
 | -----------  | ----------- |
 | **S3 Bucket for Contentful Backup** | ----------- |

@@ -164,8 +164,13 @@ variable "private_subnets" {
 }
 
 variable "service_container_count" {
-  description = "How many tasks should run in the service"
+  description = "How many tasks should run in the main service"
   default     = 2
+}
+
+variable "service_container_count_preview" {
+  description = "How many tasks should run in the preview service"
+  default     = 1
 }
 
 variable "fargate_base_weight" {

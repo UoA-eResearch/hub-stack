@@ -52,6 +52,7 @@ private_subnets = [
   "subnet-0fc970830487f2323"
 ]
 service_container_count = 1
+service_container_count_preview = 1
 fargate_base_weight     = 0
 fargate_base_count      = 0
 fargate_spot_weight     = 100
