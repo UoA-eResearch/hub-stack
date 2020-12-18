@@ -49,16 +49,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   }
 });
 
-export function initializeApp(cerGraphqlService: CerGraphqlService, loginService: LoginService, router: Router) {
-  router.routerState.snapshot.root.queryParams;
-  return loginService.loginSuccess(router.routerState.snapshot).then(
-    () => {
-      return cerGraphqlService.pushSubHubRoutes();
-    }
-  )
-}
-
-
 @NgModule({
   declarations: [
     AppComponent, 
