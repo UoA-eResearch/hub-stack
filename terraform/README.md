@@ -2,18 +2,67 @@
 ---
 This solution will provision the core requirements of the ResearchHub environment (excluding those that deploy via Serverless Framework).
 
-All inline comments should explain what they are doing or why they are set a certain way.
+## Prerequisites
+1. Download and install the Terraform command line tool: https://www.terraform.io/downloads.html
+2. Create AWS temporary credentials for the AWS account you are deploying to. Instructions for accessing the credentials are on the [Auckland Uni wiki](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI). Make sure you name the credentials profile according to what is defined in the _backend.tf definition for the env you are deploying to (e.g. for nonprod, the profile should be 'uoa-its-nonprod').
+
+## Usage
+
+1. Initialize the Terraform backend and provider plugins (run `terraform init`)
+2. Make changes to the variables and resources defined in the .tfvars and .tf files as required.
+3. View the infrastructure that will be created/updated (run `terraform plan var-file=<var-file>`)
+4. Create/update the infrastructure in AWS (run `terraform apply var-file=<var-file>`)
+5. View output values in the console. 
+6. Use the outputs:
+  - Update/create required parameter store values
+  - Update the relevant environment variables in hub-stack, research-hub-web, and serverless-now env files etc
+  - Update Jenkinsfile with S3 bucket names and Cloudfront distribution IDs (for main and secondary (preview) websites)
+7. Deploy static website files and cer-graphql by triggering the appropriate Jenkins CI/CD pipeline.
+
+## Terraform Commands
+
+For more commands see the [CLI reference](https://www.terraform.io/docs/commands/index.html)
+
+**Initialize Terraform backend**
+
+terraform init
+
+**Check the plan for what infrastructure will be created/updated**
+
+terraform plan -var-file=var-file -out=tfplan
+e.g. `terraform plan -var-file=envs/its-nonprod/hub-test.tfvars -out=tfplan`
+
+**Apply (create/update) infrastructure**
+
+terraform apply -var-file=var-file
+e.g. `terraform apply -var-file=envs/its-nonprod/hub-test.tfvars`
+
+**Query output variables**
+
+terraform output
+
+**Teardown infrastructure**
+
+1. view what will be destroyed:
+terraform plan -destroy -var-file=var-file
+2. destroy:
+terraform destroy -var-file=var-file --auto-approve
+
+## Explanation of variables used
 
 | Input | Description |
 | -----------  | ----------- |
 | **General** | ----------- |
 | aws_region | What region this is to be deployed in |
 | aws_profile | What profile is to be used to access AWS |
-| lifecycle_state | What Lifecycle state this deployment is (i.e dev/tst/prd) | 
+| lifecycle_state | What Lifecycle state this deployment is (i.e dev/test/prod) | 
+| application | The application this deployment is linked to. |
 | department | Which team/department is looking after this application |
 | project_code | What Project Code is in use (if applicable, otherwise NA) |
 | cost_centre | The Cost Centre this resides under. Needed even if Project Code is provided |
 | wiki_link | What is the best place to get information about the deployed environment (needs to be short link) |
+| business_service | The Business Service this resides under. |
+| faculty | The Faculty this resides under. |
 | -----------  | ----------- |
 | **Website specific** | ----------- |
 | dns_entry | Primary DNS entry for the website |
