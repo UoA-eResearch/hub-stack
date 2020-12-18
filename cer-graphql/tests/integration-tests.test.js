@@ -148,16 +148,16 @@ describe('Contentful filters (conditionals)', () => {
 
 describe('Authorization resolvers', () => {
 
-    test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
-        let { query } = await createServerAndTestClientWithAuth(false);
-        let message = false;
-        try {
-            await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
-        } catch (err) {
-            message = err.message;
-        }
-        expect(message).toBeTruthy();
-    }, TIMEOUT_PERIOD);
+    // test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
+    //     let { query } = await createServerAndTestClientWithAuth(false);
+    //     let message = false;
+    //     try {
+    //         await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+    //     } catch (err) {
+    //         message = err.message;
+    //     }
+    //     expect(message).toBeTruthy();
+    // }, TIMEOUT_PERIOD);
 
     test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
