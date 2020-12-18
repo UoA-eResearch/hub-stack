@@ -64,20 +64,6 @@
         </mat-card-content>
     </ng-template>
 
-    <ng-template #keywords>
-        <h4 id="keywords">Keywords<hr/></h4>
-        <mat-card-subtitle 
-            fxLayout="row wrap"> 
-            <span *ngFor="let keyword of article.keywords">
-                <mat-card 
-                    fxLayout="row" 
-                    class="keyword-card">
-                        {{ keyword | humanCase }}
-                </mat-card>
-            </span>
-        </mat-card-subtitle>
-    </ng-template>
-
     <ng-template #relatedOrganisations>
         <div 
             *ngIf="article.relatedOrgsCollection.items.length > 0" 
@@ -95,7 +81,7 @@
                                 {{ organisation.unitName }}
                             </span> 
                             <br/>
-                            <span class="related-item-summary">
+                            <span class="card-summary">
                                 {{ organisation.summary }}
                             </span>
                         </mat-card>
@@ -224,9 +210,6 @@
                     <!-- Article Body -->
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
 
-                    <!-- Keywords -->
-                    <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
                 </div>
 
                 <!-- Extra Links -->
@@ -301,9 +284,6 @@
 
                         <!-- Related Items -->
                         <ng-container *ngTemplateOutlet="relatedItems"></ng-container><div><br/></div>
-
-                        <!-- Keywords -->
-                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
 
                     </div>
             </div>

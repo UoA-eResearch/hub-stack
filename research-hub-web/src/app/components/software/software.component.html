@@ -52,40 +52,127 @@
                     {{ software.summary }}
                 </div>
             </span>
+                <a href="{{ software.callToAction }}">
+                    <button class="standard-button section" mat-flat-button>
+                        <b>Software Details</b>
+                    </button>
+                </a>
             <div class="section">
                 <hr/>
             </div>
         </div>
     </ng-template>
 
-    <ng-template #description>
-        <div>
-            <mat-card-content [innerHTML]="software.bodyText.json | richTextToHTML">
-            </mat-card-content>
-            <div 
-                class="section">
-                <a href="{{ software.link }}">
-                    <button class="standard-button" mat-flat-button>
-                        <b>Software Details</b>
-                    </button>
-                </a>
+    <ng-template #relatedItems>
+        <div 
+            *ngIf="software.relatedItemsCollection.items.length > 0" 
+            id="you-might-be-interested-in">
+            <h4>You might also be interested in<hr/></h4>
+
+            <mat-nav-list 
+                style="margin-bottom: 2.2vh;" 
+                *ngFor="let relatedItem of software.relatedItemsCollection.items" 
+                class="collection">
+                
+                    <a [routerLink]="['/', relatedItem['__typename'].toLowerCase(), relatedItem['slug']]">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ relatedItem['title'] }}
+                            </span> 
+                            <br/>
+                            <span class="card-summary">
+                                {{ relatedItem['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #relatedContacts>
+        <div 
+            *ngIf="software.relatedContactsCollection.items.length > 0"
+            class="software-owners">
+            <h4>Contacts<hr/></h4>
+            <mat-nav-list 
+                style="margin-bottom: 2.2vh;" 
+                *ngFor="let contact of software.relatedContactsCollection.items" 
+                class="collection">
+                    <mat-card>
+                        <span class="card-title">
+                            {{ contact['name'] }}
+                        </span> 
+                        <br/>
+                        <span class="card-summary">
+                            {{ contact['email'] }}
+                        </span>
+                    </mat-card>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #relatedOrganisations>
+        <div 
+            *ngIf="software.relatedOrgsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Organisations</h4>
+            <hr/>
+            <mat-nav-list 
+                style="margin-bottom: 2.2vh;" 
+                *ngFor="let organisation of software.relatedOrgsCollection.items" 
+                class="collection">
+                
+                    <a [routerLink]="">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ organisation.unitName }}
+                            </span> 
+                            <br/>
+                            <span class="card-summary">
+                                {{ organisation.summary }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #publisherAndOwner>
+        <div 
+            *ngIf="software.publisher || software.owner"
+            class="software-owners"
+            fxLayout="row wrap"
+            fxLayout.xs="column wrap"
+            fxLayoutGap="5%">
+            <div fxFlex>
+                <mat-card>
+                    <span class="card-title">
+                        {{ software.publisher.name }}
+                    </span> 
+                    <br/>
+                    <span class="card-summary">
+                        {{ software.owner.email }}
+                    </span>
+                </mat-card>
+            </div>
+            <div fxFlex>
+                <mat-card>
+                    <span class="card-title">
+                        {{ software.owner.name }}
+                    </span> 
+                    <br/>
+                    <span class="card-summary">
+                        {{ software.owner.email }}
+                    </span>
+                </mat-card>
             </div>
         </div>
     </ng-template>
 
-    <ng-template #keywords>
-        <div id="keywords">
-            <h4>Keywords<hr/></h4>
-            <mat-card-subtitle 
-                fxLayout="row wrap"> 
-                <span *ngFor="let keyword of software.keywords">
-                    <mat-card 
-                        fxLayout="row" 
-                        class="keyword-card">
-                            {{ keyword | humanCase }}
-                    </mat-card>
-                </span>
-            </mat-card-subtitle>
+    <ng-template #description>
+        <div>
+            <div [innerHTML]="software.bodyText.json | richTextToHTML">
+            </div>
         </div>
     </ng-template>
 
@@ -97,7 +184,9 @@
         ngClass.sm="site-padding-sm top-padding margin-bottom">
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
         <ng-container *ngTemplateOutlet="title"></ng-container>
+        <ng-container *ngTemplateOutlet="publisherAndOwner"></ng-container>
         <ng-container *ngTemplateOutlet="description"></ng-container>
-        <ng-container *ngTemplateOutlet="keywords"></ng-container>
+        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+        <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
     </div>
 </div>

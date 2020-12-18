@@ -8,7 +8,7 @@ query GetEquipmentByID($id: String!) {
     slug
     ssoProtected
     searchable
-    mainImage {
+    banner {
       title
       description
       url
@@ -45,7 +45,6 @@ query GetEquipmentByID($id: String!) {
     manufacturer
     model
     yearOfManufacture
-    link
     relatedItemsCollection {
       items { ...PublicFields }
     }

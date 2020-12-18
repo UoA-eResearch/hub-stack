@@ -2,6 +2,7 @@ query GetSoftwareBySlug($slug: String) {
       softwareCollection(where: {slug: $slug}) {
         items {
           title
+          slug
           ssoProtected
           sys {
             id

@@ -1,7 +1,11 @@
 @import '~@angular/material/theming';
 @import 'research-activity';
 
-// Include the common styles for Angular Material. Be sure that you only ever include this mixin once!
+
+/**
+ * Include the common styles for Angular Material. 
+ * Be sure that you only ever include this mixin once!
+ */
 @include mat-core();
 
 // University of Auckland colors from Web Style Guide 
@@ -148,7 +152,10 @@ $hub-navy: (
   )
 );
 
-// Create the hub app theme
+
+/**
+ * Create the hub app theme
+ */
 $hub-app-primary: mat-palette($hub-teal);
 $hub-app-accent: mat-palette($hub-orange);
 $hub-app-warn: mat-palette($hub-pink);
@@ -162,8 +169,11 @@ $height-footer: 12em;
 $height-footer-xs: 16em;
 $padding-site: 7vw;
 $padding-site-top: 2vh;
+$padding-site-bottom: 2vh;
 
-// Site wide colors
+/**
+ * Site wide colors
+ */
 $color-primary: map-get($hub-app-primary, 500);
 $color-accent: map-get($hub-app-accent, A200);
 $color-pink: map-get($hub-pink, 500);
@@ -175,7 +185,8 @@ $color-content-summary-bg: auto;
 $color-browse-tile-bg: $color-pink;
 $color-guide-tile-bg: #0294a5;
 
-/* Research activity custom material themes:
+/* 
+ * Research activity custom material themes:
  * These are used apply custom themes to Angular components (buttons, sliders etc)
  * The research activity colour palettes are defined in research-activity.scss
  */

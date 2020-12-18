@@ -79,23 +79,6 @@
             </div>
         </ng-template>
 
-        <ng-template #keywords>
-            <div 
-                id="keywords" 
-                *ngIf="subhub.keywords.length > 0">
-                <h4>Keywords<hr/></h4>
-                <mat-card-subtitle fxLayout="row wrap">
-                    <span *ngFor="let keyword of subhub.keywords">
-                        <mat-card 
-                            fxLayout="row" 
-                            class="keyword-card">
-                                {{ keyword | humanCase }}
-                        </mat-card>
-                    </span>
-                </mat-card-subtitle>
-            </div>
-        </ng-template>
-
         <ng-template #breadcrumbs>
             <div 
                 id="breadcrumbs" 
@@ -177,14 +160,9 @@
                             </mat-card-content>
                         </div>
 
-                        <!-- Related Items and Keywords -->
+                        <!-- Related Items -->
                         <div fxFlex="30%">
-
-                            <!-- Related Items -->
                             <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-
-                            <!-- Keywords -->
-                            <ng-container *ngTemplateOutlet="keywords"></ng-container>
                         </div>
                     </div>
                 </div>
@@ -243,14 +221,6 @@
                         ngClass.sm="site-padding-sm"
                         ngClass.xs="site-padding-xs">
                         <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-                    </div>
-
-                    <!-- Keywords -->
-                    <div
-                        class="site-padding"
-                        ngClass.sm="site-padding-sm"
-                        ngClass.xs="site-padding-xs">
-                        <ng-container *ngTemplateOutlet="keywords"></ng-container>
                     </div>
                 </div>
             </div>

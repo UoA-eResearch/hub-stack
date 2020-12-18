@@ -81,15 +81,14 @@
             <h4>You might also be interested in<hr/></h4>
 
             <mat-nav-list 
-                style="margin-bottom: 20px;" 
+                style="margin-bottom: 3.2vh;" 
                 *ngFor="let relatedItem of equipment.relatedItemsCollection.items" 
                 class="collection">
                 <mat-card>
-                    <!-- TODO: Replace with array style [routerLink] (like in articles.component.html) -->
-                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                    <a class="card-title" [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
                         {{ relatedItem['title'] }}<br/>
                     </a>
-                    <span class="related-item-summary">
+                    <span class="card-summary">
                         {{ relatedItem['summary'] }}
                     </span>
                 </mat-card>
@@ -104,7 +103,7 @@
             <h4>Organizations</h4>
             <hr/>
             <mat-nav-list 
-                style="margin-bottom: 20px;" 
+                style="margin-bottom: 3.2vh;" 
                 *ngFor="let organisation of equipment.relatedOrgsCollection.items" 
                 class="collection">
                 
@@ -114,7 +113,7 @@
                                 {{ organisation['title'] }}
                             </span> 
                             <br/>
-                            <span class="related-item-summary">
+                            <span class="card-summary">
                                 {{ organisation['summary'] }}
                             </span>
                         </mat-card>
@@ -130,7 +129,7 @@
             <h4>Contacts</h4>
             <hr/>
             <mat-nav-list 
-                style="margin-bottom: 20px;" 
+                style="margin-bottom: 3.2vh;" 
                 *ngFor="let contact of equipment.relatedContactsCollection.items" 
                 class="collection">
                 
@@ -140,7 +139,7 @@
                                 {{ contact['name'] }}
                             </span> 
                             <br/>
-                            <span class="related-item-summary">
+                            <span class="card-summary">
                                 {{ contact['jobTitle'] }}
                             </span>
                         </mat-card>
@@ -149,49 +148,17 @@
         </div>
     </ng-template>
 
-
-    <ng-template #keywords>
-        <div 
-            *ngIf="equipment.keywords.length > 0" 
-            class="section">
-            <h4 id="keywords">Keywords<hr/></h4>
-
-            <mat-card-subtitle 
-                fxLayout="row wrap"> 
-                <span *ngFor="let keyword of equipment.keywords">
-                    <mat-card 
-                        fxLayout="row" 
-                        class="keyword-card">
-                        {{ keyword | humanCase }}
-                    </mat-card>
-                </span>
-            </mat-card-subtitle>
-        </div>
-    </ng-template>
-
-    <ng-template #equipmentImage>
-        <div>
-            <div *ngIf="equipment.mainImage;">
-                <img 
-                    src="{{ equipment?.mainImage?.url }}" 
-                    alt="{{ equipment?.mainImage?.description }}" 
-                    width="100%" 
-                    height="100%"/>
-            </div>
-        </div>
-    </ng-template>
-
     <ng-template #titleSummary>
         <h1 
-            class="equipment-title" 
-            ngClass.sm="equipment-title-sm" 
-            ngClass.xs="equipment-title-xs">
+            class="content-title" 
+            ngClass.sm="content-title-sm" 
+            ngClass.xs="content-title-xs">
             {{ equipment.title }}
         </h1>
 
-        <h3 class="equipment-summary" 
-            ngClass.sm="equipment-summary-sm" 
-            ngClass.xs="equipment-summary-xs">
+        <h3 class="content-summary" 
+            ngClass.sm="content-summary-sm" 
+            ngClass.xs="content-summary-xs">
             {{ equipment.summary }}
         </h3>
     </ng-template>
@@ -215,13 +182,6 @@
                 <div 
                     class="equipment-info">
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-                </div>
-
-                <!-- Equipment Image -->
-                <div 
-                    *ngIf="equipment.mainImage"
-                    class="equipment-image">
-                    <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
                 </div>
             </div>
 
@@ -256,9 +216,6 @@
 
             <!-- Related Items -->
             <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-
-            <!-- Keywords -->
-            <ng-container *ngTemplateOutlet="keywords"></ng-container>
 
         </div>
 </div>

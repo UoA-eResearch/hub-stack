@@ -14,19 +14,39 @@ query GetSoftwareByID($id: String!) {
     bodyText {
       json
     }
-    keywords
-    link
     relatedContactsCollection {
+      items { 
+        ...PublicFields
+        ...on Person {
+        email
+      }
+      }
+    }
+    relatedItemsCollection {
       items { ...PublicFields }
     }
     relatedOrgsCollection {
       items { ...PublicFields }
     }
-    relatedItemsCollection {
-      items { ...PublicFields }
-    }
     searchable
-    category
-    support { ...PublicFields }
+    callToAction
+    support { 
+      ...PublicFields
+      ...on Person {
+        email
+      }
+    }
+    publisher { 
+      ...PublicFields
+      ...on Person {
+        email
+      }
+    }
+    owner { 
+      ...PublicFields
+      ...on Person {
+        email
+      }
+    }
   }
 }
