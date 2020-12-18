@@ -1,7 +1,7 @@
   ### Maybe this should reside with the serverless.yml for the lambda function? 
   ### https://github.com/UoA-eResearch/research-hub-contentful-backup/blob/master/serverless.yml
 
-resource "aws_s3_bucket" "contentful-backup" {
+resource "aws_s3_bucket" "contentful_backup" {
   count  = var.create_contentful_backup_bucket ? 1 : 0
   bucket = var.dns_entry
   acl    = "private"
@@ -30,7 +30,7 @@ resource "aws_s3_bucket" "contentful-backup" {
 
 resource "aws_s3_bucket_policy" "cdn_access_policy" {
   count  = var.create_contentful_backup_bucket ? 1 : 0
-  bucket = aws_s3_bucket.site.id
+  bucket = aws_s3_bucket.contentful_backup[count.index].id
   policy = data.aws_iam_policy_document.s3_policy.json
 }
 
@@ -42,8 +42,8 @@ data "aws_iam_policy_document" "s3_policy" {
   statement {
     actions   = ["s3:*"]
     resources = [
-      "${aws_s3_bucket.contentful-backup.arn}",
-      "${aws_s3_bucket.contentful-backup.arn}/*"
+      "${aws_s3_bucket.contentful_backup[count.index].arn}",
+      "${aws_s3_bucket.contentful_backup[count.index].arn}/*"
     ]
 
     principals {
