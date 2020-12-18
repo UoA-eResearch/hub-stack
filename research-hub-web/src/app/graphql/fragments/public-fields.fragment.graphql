@@ -36,14 +36,6 @@ fragment PublicFields on Entry {
       slug
       title
       summary
-      ssoProtected
-      searchable
-    }
-  ... on OrganisationalUnit {
-      __typename
-      slug
-      title
-      summary
       banner {
         url
       }
