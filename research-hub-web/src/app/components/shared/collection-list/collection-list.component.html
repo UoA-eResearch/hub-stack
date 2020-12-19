@@ -1,11 +1,16 @@
 <ng-container *ngIf="collection">
     <div
         class="site-padding top-padding margin-bottom"
-        ngClass.sm="site-padding-sm top-padding margin-bottom"
-        ngClass.xs="site-padding-xs top-padding margin-bottom">
-        <h1 id="title">{{ collection.__typename | humanCase }}</h1>
-        Found <span class="search-results-text">{{ collection.items.length }}</span> results in <span
-            class="search-results-text">{{ collection.__typename | humanCase }}</span>
+        ngClass.lt-md="site-padding-mobile top-padding margin-bottom">
+        <h1 id="title">
+            {{ collection.__typename | humanCase }}
+        </h1>Found
+        <span class="search-results-text">
+            {{ collection.items.length }}
+        </span>results in
+        <span class="search-results-text">
+            {{ collection.__typename | humanCase }}
+        </span>
     
         <mat-expansion-panel *ngIf="collection.items.length">
             <mat-expansion-panel-header>
@@ -20,26 +25,39 @@
         <mat-nav-list>
             <mat-card *ngFor="let content of collection.items">
                 <a
-                [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" class="result-item"
-                [ngClass]="{'ssoProtected': content.ssoProtected }">
+                    [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" class="result-item"
+                    [ngClass]="{'ssoProtected': content.ssoProtected }">
                 <mat-card-header>
-                    <div mat-card-avatar id="item-avatar">
+                    <div 
+                        mat-card-avatar 
+                        id="item-avatar">
                         <div *ngIf="content.icon; else avatarIcon">
-                            <img src="{{content?.icon?.url}}" alt="{{content?.icon?.description}}" class="item-avatar"
-                                width="100%" height="100%" />
+                            <img 
+                                src="{{content?.icon?.url}}" 
+                                alt="{{content?.icon?.description}}" 
+                                class="item-avatar"
+                                width="100%" 
+                                height="100%" />
                         </div>
                         <ng-template #avatarIcon>
-                            <mat-icon id="item-avatar-icon" [innerHTML]="getDefaultTypeIcon(content.__typename)"></mat-icon>
+                            <mat-icon 
+                                id="item-avatar-icon" 
+                                [innerHTML]="getDefaultTypeIcon(content.__typename)">
+                            </mat-icon>
                         </ng-template>
                     </div>
-                    <mat-card-title>
+                    <mat-card-title class="card-title">
                         {{ content.title }}
                     </mat-card-title>
-                    <mat-card-subtitle>
+                    <mat-card-subtitle class="card-summary">
                         {{ content.summary }}
                     </mat-card-subtitle>
                     <mat-chip-avatar *ngIf="content.ssoProtected">
-                        <mat-icon color='accent' matTooltip="SSO Login Required">lock</mat-icon>
+                        <mat-icon 
+                            color='accent' 
+                            matTooltip="SSO Login Required">
+                                lock
+                        </mat-icon>
                     </mat-chip-avatar>
                 </mat-card-header>
                 </a>

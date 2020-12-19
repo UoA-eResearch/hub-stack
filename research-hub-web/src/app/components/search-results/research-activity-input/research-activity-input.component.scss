@@ -1,5 +1,5 @@
 .ra-slide-container {
-  $ra-slide-container-margin: 3px;
+  $ra-slide-container-margin: 0.375vh;
   $ra-slide-container-margin-touch: 1em;
 
   margin: $ra-slide-container-margin;
@@ -7,5 +7,10 @@
   &.mobile-view {
     margin: $ra-slide-container-margin-touch;
   }
+}
 
+mat-slide-toggle,
+mat-slide-toggle-content {
+  height: 2vh!important;
+  line-height: 3vh!important;
 }

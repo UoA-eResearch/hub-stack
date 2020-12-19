@@ -1,6 +1,6 @@
 
 import { NgModule } from '@angular/core';
-
+import { CustomBreakPointsProvider } from './custom-breakpoint';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -80,6 +80,7 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
   ],
   providers: [
     CerGraphqlService,
+    CustomBreakPointsProvider,
     {
       provide: APP_INITIALIZER,
       useFactory: initializeApp,

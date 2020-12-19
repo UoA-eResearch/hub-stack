@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { merge, Observable, forkJoin, race } from 'rxjs';
-import { pluck, map, flatMap, tap, filter } from 'rxjs/operators';
-import { ActivatedRoute, ActivationStart, NavigationEnd, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { pluck, map, flatMap, tap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import {
   AllArticlesGQL,
@@ -11,7 +11,6 @@ import {
   Article,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-articles',
@@ -27,7 +26,6 @@ export class ArticlesComponent implements OnInit {
 
   constructor(
     public route: ActivatedRoute,
-    private router: Router,
     public allArticlesGQL: AllArticlesGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public getArticleByIDGQL: GetArticleByIdGQL,

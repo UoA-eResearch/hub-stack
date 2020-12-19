@@ -1,129 +1,129 @@
 @import 'themes';
 @import 'typography';
 
+
+/**
+ * Native Elements
+ */
 * { 
   -moz-box-sizing: border-box; 
   -webkit-box-sizing: border-box; 
    box-sizing: border-box; 
 }
-
-html, body {
+html, 
+body {
   margin: 0;
   padding: 0;
   color: $body-light-bg-font-color;
 }
+hr {
+  margin: 3.125vh 0px;
+  border: none;
+  height: 1px;
+  background-color: #dbdbdb;
+}
+
 
 /*
  * Text styles
- https://material.angular.io/guide/typography
+ * https://material.angular.io/guide/typography
  */
-
 h1 {
-  margin-top: 0;
   color: $heading-1-font-color;
   font-family: $font-family;
+  margin-bottom: 2vh;
 }
-
 h2 {
   color: $heading-2-font-color;
   font-family: $font-family;
+  margin-bottom: 2vh;
 }
-
 h3 {
   color: $heading-3-font-color;
   font-family: $font-family;
+  margin-bottom: 2vh;
 }
-
 h4 {
   color: $heading-4-font-color;
-  font-family: $font-family;
-  font-size: 20px;
+  margin-bottom: 2vh;
 }
-
 p {
   color: $dark-grey;
-  margin-top: 0;
   font-family: $font-family;
 }
-
 a {
   text-decoration: none;
   color: $link-light-bg-color;
   font-family: $font-family;
 }
-
 span {
   font-family: $font-family;
 }
 
-/* app-markdown related styles
-  (they don't take effect in the component scss)
- */
 
+/* 
+ * app-markdown related styles
+ */
 @mixin headings {
   h1, h2, h3, h4, h5, h5 {
     @content;
   }
 }
-
 @mixin links {
   a {
     @content;
   }
 }
 
-.description {
-  background-color: $color-content-summary-bg;
-}
-
-.description app-markdown {
-  color: $body-light-bg-font-color;
-}
-
-.input-full-width {
-  width: 100% !important;
-}
-
-.search-results-text {
-  color: $color-pink !important;
-  font-weight: 500;
-  font-style: italic;
-}
-
-.chip-avatar {
-  margin-right: 12px;
-  border-radius: 50%;
-}
 
 /*
-Gloabl mat-chip style
+ * Gloabl styles and Material overrides
  */
-
 mat-chip.mat-chip {
   font-size: mat-font-size($app-chips-typography, button);
   font-weight: mat-font-weight($app-chips-typography, button);
 }
+mat-card  {
+  padding: 2vh;
+  margin: 1vh 0;
+}
+mat-icon,
+.mat-icon-button,
+svg {
+  font-size: 3vh!important;
+  width: 3vh!important;
+  height: 3vh!important;
+  line-height: 3vh!important;
+}
+.mat-expansion-indicator::after {
+  font-size: 1vh!important;
+  width: 1vh!important;
+  height: 1vh!important;
+}
+
 
 .avatar-btn > span.mat-button-wrapper {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
-
 .avatar-btn > span.mat-button-wrapper > img {
-  width: 56px;
-  height: 56px;
+  width: 9.3vh;
+  height: 9.3vh;
 }
-
-.flex-hack {
-  flex: 1 1 auto !important; // For Safari
-  //width: 100%; // For IE 11
-}
-
 .site-content {
-  @extend .flex-hack;
+  flex: 1 1 auto !important;
   margin: 0 auto;
-  //max-width: $width-page-max !important; If not important then gets overidden by some fxLayout styles
 }
+.search-results-text {
+  color: $color-pink !important;
+  font-weight: 500;
+  font-style: italic;
+}
+.chip-avatar {
+  margin-right: 2vh;
+  border-radius: 50%;
+}
+
 
 /**
  * Browser Settings
@@ -135,103 +135,39 @@ mat-chip.mat-chip {
 }
 .site-padding-2 {
   @extend .site-content;
-    padding-left: $padding-site * 2.2;
-    padding-right: $padding-site * 2.2;
+    padding-left: 40vh;
+    padding-right: 40vh;
 }
-
 .top-padding {
   padding-top: $padding-site-top;
 }
 .top-padding-2 {
-  padding-top: $padding-site-top * 3;
+  padding-top: 10vh;
+}
+.margin-bottom {
+  margin-bottom: $padding-site-top;
+}
+.margin-bottom-2 {
+  margin-bottom: 10vh;
 }
 
-.margin-bottom {
-  margin-bottom: 5em;
-}
 
 /**
  * Small Mobile Settings
  */
-.site-padding-sm {
+.site-padding-mobile {
   @extend .site-content;
-    padding-left: $padding-site / 2;
-    padding-right: $padding-site / 2;
+    padding-left: 5vh;
+    padding-right: 5vh;
 }
-
-.margin-bottom-sm {
-  margin-bottom: 5em;
-}
-
-/**
- * Extra Small Mobile Settings
- */
-.site-padding-xs {
-  @extend .site-content;
-    padding-left: $padding-site / 4;
-    padding-right: $padding-site / 4;
-}
-
-.margin-bottom-xs {
-  margin-bottom: 5em;
-}
-
-.back-button-padding-xs {
-  @extend .site-content;
-  margin-top: $padding-site / 2.0;
-  padding-left: $padding-site;
-  padding-right: $padding-site;
-}
-
-.site-content-padded {
-  @extend .site-content;
-  padding-top: 3em;
-  padding-bottom: 3em;
-}
-
-.back-button {
-  padding-left: 0 !important;
-  min-width: 0 !important;
-  padding-right: 10px !important;
-}
-
-.card-fab {
-  position: absolute;
-  z-index: 100;
-  bottom: -28px;
-  right: 28px;
-}
-
-.div-background-image {
-  background-size: cover;
-  background-position: center;
-  width: 100%;
-}
-
-.component {
-  margin: $offset-gt-xs;
-  max-width: $width-page-max;
-}
-
-.component-xs {
-  @extend .component;
-  margin: $padding-site;
-}
-
-/*
- * Make app-filter-dialog take up whole page
- */
-
-app-filter-dialog {
-  display: block;
-  margin: -24px;
+.margin-bottom-mobile {
+  margin-bottom: 5vh;
 }
 
 
 /*
  * Browse and guide tiles
  */
-
 .browse-tile {
   cursor: pointer;
   background-color: $color-browse-tile-bg;
@@ -242,25 +178,19 @@ app-filter-dialog {
   background-color: $color-guide-tile-bg;
   text-decoration: none;
 }
-
 .tile-content {
   text-align: center;
 }
 
 .tile-text {
   color: $browse-tile-font-color;
-  transform: translate(0%, -50%);
   @include mat-typography-level-to-styles($app-browse-grid-typography, body-1);
 }
-
 .tile-icon {
   color: $browse-tile-font-color;
   font-size: mat-font-size($app-browse-grid-typography, body-2);
   font-weight: mat-font-weight($app-browse-grid-typography, body-2);
   width: 100%;
-  position: absolute;
-  bottom: 20%;
-  left: 0; // For IE11, so that the icon will be centred, despite absolute positioning being used
 }
 
 /*
@@ -275,16 +205,65 @@ app-filter-dialog {
 /*
  * Top menu drop-down style
  */
-.mat-menu-content, .mat-menu-item {
-  background-color: #0294A5;
-  color: #ffffff;
+.mat-menu-content, 
+.mat-menu-item {
+  color: white;
+  background-color: map-get($hub-teal, 500);
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
-/*
- * Guide breadcrumb
+/**
+ * Content Styles
  */
-.breadcrumb-separator::after {
-  content: ' • ';
-  color: map-get($hub-teal, 500);
+.banner-container {
+  min-width: 100vw; 
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+  background-size: cover!important;
+}
+.banner-content {
+  width: 50%;
+  color: white;
+  display: inline-block;
+}
+.banner-content-default {
+  padding: 5vh;
+  width: 100%;
+  display: inline-block;
+  box-shadow: 0 0.5vh 0.17vh -0.3vh rgba(0,0,0,.2), 0 0.3vh 0.3vh 0 rgba(0,0,0,.14), 0 0.17vh 0.8vh 0 rgba(0,0,0,.12);
+  background-color: white;
+}
+// Content Titles
+.content-title {
+  color: map-get($hub-navy, 500);
+  font-size: 6.25vh;
+  font-weight: bold; 
+  line-height: 110%;
+}
+.content-title-mobile {
+  font-size: 4.4vh;
+}
+.content-summary {
+  color: $color-icon;
+  font-size: 2.5vh; 
+  line-height: 110%;
+}
+.content-summary-mobile {
+  font-size: 1.9vh; 
+}
+// Card Text
+.card-title {
+  font-size: 1.8vh;
+  color: map-get($hub-navy, 500);
+}
+.card-summary {
+  font-size: 1.6vh;
+  color: $color-icon;
+}
+// Section Padding
+.section {
+  margin: 4vh 0px;
 }

@@ -2,11 +2,11 @@
     class="results" 
     *ngIf="allSearchableContent$ | async as allSearchableContent">
     <div
-        class="site-padding"
-        ngClass.sm="site-padding-sm"
-        ngClass.xs="site-padding-xs">
+        class="site-padding top-padding"
+        ngClass.lt-md="site-padding-mobile">
         <h1>Browse All Content</h1>
         <p>Found <span class="search-results-text">{{ allContentLength(allSearchableContent) }}</span> results.</p>
+        
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
@@ -17,7 +17,6 @@
             <pre><code>{{ allSearchableContent$ | async | json}}</code></pre>
         </mat-expansion-panel>
     </div>
-
 
     <div *ngFor="let collection of allSearchableContent | keyvalue" class="collection">
         <app-collection-list [collection]="allSearchableContent[collection.key]"></app-collection-list>

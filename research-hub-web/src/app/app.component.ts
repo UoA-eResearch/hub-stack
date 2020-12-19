@@ -16,7 +16,6 @@ import { debounceTime } from 'rxjs/operators';
 import { ResearchHubApiService } from './services/research-hub-api.service';
 import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
 import { LoginService } from '@uoa/auth';
 import { Location } from '@angular/common';
@@ -53,7 +52,7 @@ import {
   animations: [
     trigger('contentPushLeft', [
       state('true', style({
-        marginLeft: '400px'
+        marginLeft: '50vh'
       })),
       state('false', style({
         marginLeft: '0'
@@ -155,7 +154,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
-      this.titleService.setTitle('ResearchHub | ' + this.pageTitle);
+      this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {

@@ -11,13 +11,18 @@
     *ngIf="equipment$ | async as equipment">
 
     <!-- Templates -->
+    <ng-template #dynamicBanner>
+        <div 
+            class="banner-container"
+            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat' : equipment.viewType == 'View 2' ? 'display: none;' : ''">
+        </div>  
+    </ng-template>
+
     <ng-template #breadcrumbs>
-        <div    
-            class="top-padding"
-            ngClass.sm="top-padding"
-            ngClass.xs="top-padding"
+        <div
             id="breadcrumbs"   
-            *ngIf="!!parentSubHubs">
+            *ngIf="!!parentSubHubs"
+            ngClass.lt-md="breadcrumbs-mobile">
             <span 
                 class="breadcrumb-subhub" 
                 *ngFor="let subHub of parentSubHubs.slice().reverse()">
@@ -54,21 +59,9 @@
                     <td>Model</td>
                     <td [innerHTML]="equipment.model"></td>
                 </tr>
-                <tr *ngIf="equipment.eligibility">
-                    <td>Eligibility</td>
-                    <td [innerHTML]="equipment.eligibility.json | richTextToHTML"></td>
-                </tr>
-                <tr *ngIf="equipment.costToUse">
-                    <td>Cost</td>
-                    <td [innerHTML]="equipment.costToUse.json | richTextToHTML"></td>
-                </tr>
                 <tr *ngIf="equipment.location">
                     <td>Location</td>
                     <td [innerHTML]="equipment.location"></td>
-                </tr>
-                <tr *ngIf="equipment.access">
-                    <td>Access</td>
-                    <td [innerHTML]="equipment.access.json | richTextToHTML"></td>
                 </tr>
             </table>
         </div>
@@ -78,44 +71,18 @@
         <div 
             *ngIf="equipment.relatedItemsCollection.items.length > 0" 
             id="you-might-be-interested-in">
-            <h4>You might also be interested in<hr/></h4>
-
+            <h4>You might also be interested in</h4>
             <mat-nav-list 
-                style="margin-bottom: 20px;" 
                 *ngFor="let relatedItem of equipment.relatedItemsCollection.items" 
                 class="collection">
-                <mat-card>
-                    <!-- TODO: Replace with array style [routerLink] (like in articles.component.html) -->
                     <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
-                        {{ relatedItem['title'] }}<br/>
-                    </a>
-                    <span class="related-item-summary">
-                        {{ relatedItem['summary'] }}
-                    </span>
-                </mat-card>
-            </mat-nav-list>
-        </div>
-    </ng-template>
-    
-    <ng-template #relatedOrganisations>
-        <div 
-            *ngIf="equipment.relatedOrgsCollection.items.length > 0" 
-            class="column-header">
-            <h4>Organizations</h4>
-            <hr/>
-            <mat-nav-list 
-                style="margin-bottom: 20px;" 
-                *ngFor="let organisation of equipment.relatedOrgsCollection.items" 
-                class="collection">
-                
-                    <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
-                                {{ organisation['title'] }}
-                            </span> 
+                                {{ relatedItem['title'] }}
+                            </span>
                             <br/>
-                            <span class="related-item-summary">
-                                {{ organisation['summary'] }}
+                            <span class="card-summary">
+                                {{ relatedItem['summary'] }}
                             </span>
                         </mat-card>
                     </a>
@@ -125,22 +92,18 @@
 
     <ng-template #relatedContacts>
         <div 
-            *ngIf="equipment.relatedContactsCollection.items.length > 0" 
-            class="column-header">
+            *ngIf="equipment.relatedContactsCollection.items.length > 0">
             <h4>Contacts</h4>
-            <hr/>
             <mat-nav-list 
-                style="margin-bottom: 20px;" 
                 *ngFor="let contact of equipment.relatedContactsCollection.items" 
                 class="collection">
-                
                     <a [routerLink]="">
                         <mat-card>
                             <span class="card-title">
                                 {{ contact['name'] }}
                             </span> 
                             <br/>
-                            <span class="related-item-summary">
+                            <span class="card-summary">
                                 {{ contact['jobTitle'] }}
                             </span>
                         </mat-card>
@@ -149,116 +112,68 @@
         </div>
     </ng-template>
 
-
-    <ng-template #keywords>
-        <div 
-            *ngIf="equipment.keywords.length > 0" 
-            class="section">
-            <h4 id="keywords">Keywords<hr/></h4>
-
-            <mat-card-subtitle 
-                fxLayout="row wrap"> 
-                <span *ngFor="let keyword of equipment.keywords">
-                    <mat-card 
-                        fxLayout="row" 
-                        class="keyword-card">
-                        {{ keyword | humanCase }}
-                    </mat-card>
-                </span>
-            </mat-card-subtitle>
-        </div>
-    </ng-template>
-
-    <ng-template #equipmentImage>
-        <div>
-            <div *ngIf="equipment.mainImage;">
-                <img 
-                    src="{{ equipment?.mainImage?.url }}" 
-                    alt="{{ equipment?.mainImage?.description }}" 
-                    width="100%" 
-                    height="100%"/>
-            </div>
-        </div>
-    </ng-template>
-
     <ng-template #titleSummary>
         <h1 
-            class="equipment-title" 
-            ngClass.sm="equipment-title-sm" 
-            ngClass.xs="equipment-title-xs">
+            class="content-title" 
+            ngClass.lt-md="content-title-mobile" >
             {{ equipment.title }}
         </h1>
 
-        <h3 class="equipment-summary" 
-            ngClass.sm="equipment-summary-sm" 
-            ngClass.xs="equipment-summary-xs">
+        <h3 class="content-summary" 
+            ngClass.lt-md="content-summary-mobile">
             {{ equipment.summary }}
         </h3>
     </ng-template>
 
-        <!-- View 1 -->
-        <div
-            class="site-padding"
-            ngClass.sm="site-padding-sm"
-            ngClass.xs="site-padding-xs">
+    <!-- Equipment Page Content -->
+    
+    <!-- Banner -->
+    <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
-            <!-- Breadcrumbs -->
-            <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+    <div
+        class="site-padding top-padding margin-bottom"
+        ngClass.lt-md="site-padding-mobile top-padding margin-bottom">
 
-            <div class="section" 
-                fxLayout="row wrap" 
-                fxLayoutAlign="space-between center"
-                fxLayout.sm="column wrap"
-                fxLayout.xs="column wrap">
+        <!-- Breadcrumbs -->
+        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
-                <!-- Title and Summary -->
-                <div 
-                    class="equipment-info">
-                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-                </div>
+        <div class="section" 
+            fxLayout="row wrap"
+            fxLayout.lt-md="column wrap"
+            fxLayoutAlign="space-between center">
 
-                <!-- Equipment Image -->
-                <div 
-                    *ngIf="equipment.mainImage"
-                    class="equipment-image">
-                    <ng-container *ngTemplateOutlet="equipmentImage"></ng-container>
-                </div>
-            </div>
-
-            <!-- Overview -->
-            <div
-                class="equipment-overview section"
-                fxLayout="row wrap"
-                fxLayout.xs="column wrap">
-                <div>
-                    <h4>Overview<hr/></h4>
-                    <div [innerHTML]="equipment.bodyText.json | richTextToHTML"></div>
-                </div>
-            </div>
-
-            <!-- Owners and User Facing Support -->
+            <!-- Title and Summary -->
             <div 
-                *ngIf="equipment.relatedContactsCollection.items.length || equipment.relatedOrgsCollection.items.length > 0"
-                class="equipment-owners"
-                fxLayout="row wrap"
-                fxLayout.xs="column wrap"
-                fxLayoutGap="5%">
-                <div fxFlex="47.5%">
-                    <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
-                </div>
-                <div fxFlex="47.5%">
-                    <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
-                </div>
+                class="equipment-info">
+                <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
             </div>
-
-            <!-- Specifications Table -->
-            <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-
-            <!-- Related Items -->
-            <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-
-            <!-- Keywords -->
-            <ng-container *ngTemplateOutlet="keywords"></ng-container>
-
+            <hr/>
         </div>
+
+        <!-- Body Text -->
+        <div
+            class="equipment-overview section"
+            fxLayout="row wrap"
+            fxLayout.xs="column wrap">
+            <div [innerHTML]="equipment.bodyText.json | richTextToHTML"></div>
+        </div>
+
+        <!-- Contacts -->
+        <div 
+            *ngIf="equipment.relatedContactsCollection.items.length"
+            class="equipment-owners"
+            fxLayout="row wrap"
+            fxLayout.xs="column wrap"
+            fxLayoutGap="5%">
+            <div>
+                <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
+            </div>
+        </div>
+
+        <!-- Specifications Table -->
+        <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+
+        <!-- Related Items -->
+        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+    </div>
 </div>
