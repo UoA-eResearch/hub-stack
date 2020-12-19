@@ -1,12 +1,15 @@
+@import '../../../../styles.scss';
+
 /*
  * Sets the height of the research chips on the home page and sets the pointer style. Button size is increased at xs (corresponding to when flex layout is switched to column-based) to improve usability on mobile devices.
  */
 
 .ra-chip {
-  $ra-chip-height: 37px;
-  $ra-chip-height-touch: 48px;
+  border-radius: 10vh;
+  $ra-chip-height: 4.625vh;
+  $ra-chip-height-touch: 6vh;
   $ra-chip-padding: 1.2em;
-  $ra-chip-font-size: 16px;
+  $ra-chip-font-size: 2vh;
 
   cursor: pointer;
   height: $ra-chip-height;

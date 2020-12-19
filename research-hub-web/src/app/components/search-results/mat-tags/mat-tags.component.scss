@@ -1,15 +1,20 @@
+@import '../../../../styles.scss';
+@import '../../../../typography.scss';
 
 mat-form-field {
   width: 100%;
 }
 
 img {
+  height: 3.125vh;
+  width: 3.125vh;
   vertical-align: middle;
 }
 
 $chip-margin: 0.5em;
 
 .mat-tags-chip {
+  border-radius: 10vh;
   margin-bottom: $chip-margin !important;
 }
 
@@ -18,7 +23,8 @@ $chip-margin: 0.5em;
 }
 
 .mat-tags-option {
-  height: 64px;
+  height: 8vh;
+  padding: 2vh;
 }
 
 :host mat-form-field {
@@ -26,4 +32,21 @@ $chip-margin: 0.5em;
   &.disabled {
     opacity: 0.4;
   }
+}
+
+/**
+ * Ng Deep 
+ */
+::ng-deep .mat-option-text {
+  overflow: visible!important;
+  font-size: 2vh!important;
+}
+
+::ng-deep mat-option {
+  height: 5vh!important;
+}
+
+::ng-deep .mat-autocomplete-panel,
+.cdk-overlay-panel {
+  max-height: 20vh!important;
 }

@@ -23,3 +23,7 @@ $search-flex: 4;
 .search-bar-inner mat-form-field {
   min-width: 0 !important;
 }
+
+button mat-icon {
+  color: $color-icon;
+}

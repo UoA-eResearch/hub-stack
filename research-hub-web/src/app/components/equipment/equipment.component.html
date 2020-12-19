@@ -1,11 +1,9 @@
 <!-- If we're displaying a collection of equipment -->
-<div
+<app-collection-list 
     *ngIf="allEquipment$ | async as allEquipment" 
-    class="site-padding margin-bottom top-padding" 
-    ngClass.xs="site-padding-xs margin-bottom-xs top-padding" 
-    ngClass.sm="site-padding-sm margin-bottom-sm top-padding">
-    <app-collection-list [collection]="allEquipment"></app-collection-list>
-</div>
+    [collection]="allEquipment">
+</app-collection-list>
+
 
 <!-- If we're displaying an individual equipment -->
 <div 
@@ -13,24 +11,37 @@
     *ngIf="equipment$ | async as equipment">
 
     <!-- Templates -->
-    <ng-template #breadcrumbs>
-        <app-breadcrumbs 
-            [contentItem]="parentSubHubs" 
-            [title]="equipment.title">
-        </app-breadcrumbs>
-    </ng-template>
-
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat' : ''">
+            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat' : equipment.viewType == 'View 2' ? 'display: none;' : ''">
         </div>  
+    </ng-template>
+
+    <ng-template #breadcrumbs>
+        <div
+            id="breadcrumbs"   
+            *ngIf="!!parentSubHubs"
+            ngClass.lt-md="breadcrumbs-mobile">
+            <span 
+                class="breadcrumb-subhub" 
+                *ngFor="let subHub of parentSubHubs.slice().reverse()">
+                <a [routerLink]="'/subhub/' + subHub.slug">
+                    {{ subHub.title }}
+                </a>
+            </span>
+            <span id="breadcrumb-current-page">
+                {{ equipment.title }}
+            </span>
+        </div>
     </ng-template>
 
     <ng-template #specificationsTable>
         <div 
             class="specifications section">
-            <h4>Specifications</h4>
+            <h4>
+                Specifications
+            </h4>
             <table class="specifications-table">
                 <tr>
                 <th>Name</th>
@@ -48,131 +59,124 @@
                     <td>Model</td>
                     <td [innerHTML]="equipment.model"></td>
                 </tr>
-                <tr *ngIf="equipment.eligibility">
-                    <td>Eligibility</td>
-                    <td [innerHTML]="equipment.eligibility.json | richTextToHTML"></td>
-                </tr>
-                <tr *ngIf="equipment.costToUse">
-                    <td>Cost</td>
-                    <td [innerHTML]="equipment.costToUse.json | richTextToHTML"></td>
-                </tr>
                 <tr *ngIf="equipment.location">
                     <td>Location</td>
-                    <td [innerHTML]="equipment.location.json | richTextToHTML"></td>
-                </tr>
-                <tr *ngIf="equipment.access">
-                    <td>Access</td>
-                    <td [innerHTML]="equipment.access.json | richTextToHTML"></td>
+                    <td [innerHTML]="equipment.location"></td>
                 </tr>
             </table>
         </div>
     </ng-template>
-    
-    <ng-template #relatedItems let-hide="hideImage">
-        <app-cards 
-            [hideImage]="hide"
-            [title]="'You might be interested in'" 
-            [contentItem]="equipment.relatedItemsCollection">
-        </app-cards>
-    </ng-template>
 
-    <ng-template #relatedOrganisations>
-        <app-cards 
-            [title]="'Organisations'" 
-            [contentItem]="equipment.relatedOrgsCollection">
-        </app-cards>
-    </ng-template>
-
-    <ng-template #relatedFacilities>
-        <app-cards 
-            [title]="'Organisations'" 
-            [contentItem]="equipment.relatedFacilityCollection">
-        </app-cards>
+    <ng-template #relatedItems>
+        <div 
+            *ngIf="equipment.relatedItemsCollection.items.length > 0" 
+            id="you-might-be-interested-in">
+            <h4>You might also be interested in</h4>
+            <mat-nav-list 
+                *ngFor="let relatedItem of equipment.relatedItemsCollection.items" 
+                class="collection">
+                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ relatedItem['title'] }}
+                            </span>
+                            <br/>
+                            <span class="card-summary">
+                                {{ relatedItem['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
     </ng-template>
 
     <ng-template #relatedContacts>
-        <app-cards 
-            [title]="'Contacts'" 
-            [contentItem]="equipment.relatedContactsCollection">
-        </app-cards>
+        <div 
+            *ngIf="equipment.relatedContactsCollection.items.length > 0">
+            <h4>Contacts</h4>
+            <mat-nav-list 
+                *ngFor="let contact of equipment.relatedContactsCollection.items" 
+                class="collection">
+                    <a [routerLink]="">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ contact['name'] }}
+                            </span> 
+                            <br/>
+                            <span class="card-summary">
+                                {{ contact['jobTitle'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
     </ng-template>
 
     <ng-template #titleSummary>
         <h1 
             class="content-title" 
-            ngClass.sm="content-title-sm" 
-            ngClass.xs="content-title-xs">
+            ngClass.lt-md="content-title-mobile" >
             {{ equipment.title }}
         </h1>
 
         <h3 class="content-summary" 
-            ngClass.sm="content-summary-sm" 
-            ngClass.xs="content-summary-xs">
+            ngClass.lt-md="content-summary-mobile">
             {{ equipment.summary }}
         </h3>
     </ng-template>
 
+    <!-- Equipment Page Content -->
+    
     <!-- Banner -->
     <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
     <div
-        class="site-padding margin-bottom" 
-        ngClass.sm="site-padding-sm margin-bottom" 
-        ngClass.xs="site-padding-xs margin-bottom">
+        class="site-padding top-padding margin-bottom"
+        ngClass.lt-md="site-padding-mobile top-padding margin-bottom">
 
         <!-- Breadcrumbs -->
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
-        <div>
+        <div class="section" 
+            fxLayout="row wrap"
+            fxLayout.lt-md="column wrap"
+            fxLayoutAlign="space-between center">
+
+            <!-- Title and Summary -->
             <div 
-                fxLayout="column wrap"  
-                fxLayout.sm="column wrap"
-                fxLayout.xs="column wrap">
-
-                <!-- Title and Summary -->
-                <div 
-                    class="equipment-info">
-                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-                </div>
-                <div class="mini-hr">
-                    <hr/>
-                </div>
+                class="equipment-info">
+                <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
             </div>
-
-            <!-- Equipment Body -->
-            <div>
-                <h4>Description<hr/></h4>
-                <ngx-contentful-rich-text
-                    class="section-2 body-text"
-                    style="word-break:break-word;" 
-                    [document]="equipment.bodyText.json"
-                    [nodeRenderers]="nodeRenderers">
-                </ngx-contentful-rich-text>
-            </div>
-
-            <!-- Owners and User Facing Support -->
-            <div 
-                class="equipment-owners"
-                fxLayout="row wrap"
-                fxLayout.xs="column wrap"
-                fxLayoutGap="5%">
-                <div *ngIf="equipment.relatedContactsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
-                </div>
-                <div *ngIf="equipment.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
-                </div>
-                <div  *ngIf="equipment.relatedFacilityCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedFacilities; context: { hideImage: true }"></ng-container>
-                </div>
-            </div>
-
-            <!-- Specifications Table -->
-            <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-
-            <!-- Related Items -->
-            <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: true }"></ng-container>
+            <hr/>
         </div>
+
+        <!-- Equipment Body -->
+        <div>
+            <h4>Description<hr/></h4>
+            <ngx-contentful-rich-text
+                class="section-2 body-text"
+                style="word-break:break-word;" 
+                [document]="equipment.bodyText.json"
+                [nodeRenderers]="nodeRenderers">
+            </ngx-contentful-rich-text>
+        </div>
+
+        <!-- Contacts -->
+        <div 
+            *ngIf="equipment.relatedContactsCollection.items.length"
+            class="equipment-owners"
+            fxLayout="row wrap"
+            fxLayout.xs="column wrap"
+            fxLayoutGap="5%">
+            <div>
+                <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
+            </div>
+        </div>
+
+        <!-- Specifications Table -->
+        <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+
+        <!-- Related Items -->
+        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
     </div>
 </div>
-    
