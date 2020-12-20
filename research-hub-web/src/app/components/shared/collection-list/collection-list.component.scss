@@ -33,7 +33,8 @@ div.mat-card-avatar mat-icon {
     }
 
     #item-avatar-icon {
-        font-size: $avatar-size;
+        padding: 2vh 0;
+        font-size: $avatar-size!important;
         color: $color-primary;
     }
 }
