@@ -11,6 +11,17 @@
   }
 
 /**
+ * Card Label
+ */
+.card-label {
+  top:0;
+  left:0;
+  position: absolute;
+  padding: 0px 1.875vh;
+  color: rgb(255, 255, 255);
+  background: map-get($hub-teal, 500);
+}
+/**
   * Mat-Card Title
   */
 .mat-card-title a:hover {

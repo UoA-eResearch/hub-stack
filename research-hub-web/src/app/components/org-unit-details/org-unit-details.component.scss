@@ -23,7 +23,7 @@
 }
 
 .content-cover-image {
-  height: 200px;
+  height: 25vh;
   width: 100%;
   background-size: cover;
   background: no-repeat center;
@@ -31,7 +31,7 @@
 }
 
 .content {
-  max-width: 600px;
+  max-width: 75vh;
   margin: 2em;
 }
 
@@ -42,7 +42,7 @@
 
 
 .divider {
-  height: 1px;
+  height: 0.125vh;
   overflow: hidden;
   background-color: #e0e0e0;
   margin-top: 1.4em;
@@ -50,7 +50,7 @@
 }
 
 .content {
-  max-width: 1200px;
+  max-width: 125vh;
   margin: 2em;
 }
 

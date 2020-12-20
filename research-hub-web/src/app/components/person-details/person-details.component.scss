@@ -23,7 +23,7 @@
 }
 
 .content-cover-image {
-  height: 200px;
+  height: 25vh;
   width: 100%;
   background-size: cover;
   background: no-repeat center;
@@ -31,7 +31,7 @@
 }
 
 .content {
-  max-width: 1200px;
+  max-width: 150vh;
   margin: 2em;
 }
 
@@ -42,7 +42,7 @@
 
 
 .divider {
-  height: 1px;
+  height: 0.125vh;
   overflow: hidden;
   background-color: #e0e0e0;
   margin-top: 1.4em;
@@ -50,7 +50,7 @@
 }
 
 .content {
-  max-width: 1200px;
+  max-width: 125vh;
   margin: 2em;
 }
 
@@ -78,14 +78,14 @@
   margin-right: 2em;
   margin-bottom: 1em;
   float: left;
-  max-width: 250px !important;
-  height: 250px !important;
+  max-width: 25vh !important;
+  height: 25vh !important;
 }
 
 .person-image-xs {
   @extend .person-image;
   width: 100%;
-  height: 250px;
+  height: 25vh;
   margin: 0 0 1em;
   background-position: center top;
 }
@@ -95,7 +95,7 @@ mat-list-item ::ng-deep div.mat-list-item-content {
 }
 
 .person-list {
-  margin-bottom: 8px;
+  margin-bottom: 1vh;
 }
 
 .person-list mat-list-item mat-icon {
@@ -105,8 +105,3 @@ mat-list-item ::ng-deep div.mat-list-item-content {
 .person-list mat-list-item p {
   font-size: 0.7em !important;
 }
-
-//
-//.user-menu-list div.mat-list-item-content {
-//  padding-left: 0 !important;
-//}

@@ -63,7 +63,6 @@
     "istanbul-reports": "^3.0.2",
     "localforage": "^1.7.4",
     "marked": "~1.1.0",
-    "ngx-contentful-rich-text": "^0.4.0",
     "ngx-take-until-destroy": "^5.4.0",
     "ngx-webstorage-service": "^4.1.0",
     "rxjs": "^6.6.2",
@@ -103,14 +102,14 @@
     "karma-jasmine": "^4.0.1",
     "karma-jasmine-html-reporter": "^1.5.0",
     "karma-verbose-reporter": "0.0.6",
+    "ngx-contentful-rich-text": "^0.4.0",
     "nodemon": "^2.0.4",
     "sass": "^1.26.9",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.5",
     "wait-on": "^5.2.0",
-    "webdriver-manager": "^12.1.7",
-    "ngx-contentful-rich-text": "^0.4.0"
+    "webdriver-manager": "^12.1.7"
   },
   "browser": {
     "crypto": false

@@ -20,7 +20,7 @@
             <ng-container
                 *ngIf="content.banner; then image; else noImage">
             </ng-container>
-            <span style="background: rgb(2, 149, 165);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 15px;">{{ content.__typename | humanCase }}</span>
+            <span class="card-label">{{ content.__typename | humanCase }}</span>
             <mat-card-title class="card-title">
                 <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                     {{ content['title'] }}
@@ -28,7 +28,7 @@
             </mat-card-title> 
             <br/>
             <mat-card-content>
-                <span class="card-content-item-summary">
+                <span class="card-summary">
                     {{ content['summary'] }}
                 </span>
             </mat-card-content>
@@ -39,7 +39,9 @@
                 <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                     Read More&nbsp;&nbsp;
                 </a>
-                <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
+                <img 
+                    class="arrow"
+                    src="assets/components/teal-arrow.png">
             </span>
         </mat-card>
         <br/>

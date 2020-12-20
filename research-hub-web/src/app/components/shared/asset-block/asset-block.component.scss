@@ -13,8 +13,8 @@
     object-fit: cover
 }
 .asset-summary {
-    @extend .card-content-item-summary;
-    font-size: 12px;
+    @extend .card-summary;
+    font-size: 10.25vh;
 }
 
 
@@ -48,17 +48,21 @@
  * Download Button
  */
  .download {
-    margin-top: 10px;
+     img {
+        height: 2.5vh;
+        width: auto
+     }
+    margin-top: 1.5vh;
  }
  .download a {
     color: map-get($hub-navy, 500);
 }
 .mat-card-title a {
     color: map-get($hub-navy, 500);
-    border-bottom: solid 2px transparent;
+    border-bottom: solid 0.25vh transparent;
 }
 .mat-card-title a:hover {
-    border-bottom: solid 2px map-get($hub-navy, 500);
+    border-bottom: solid 0.25vh map-get($hub-navy, 500);
 }
 .mat-card:hover .download-arrow {
     -webkit-animation: download 0.5s ease-in-out forwards;
@@ -66,8 +70,8 @@
 
 @-webkit-keyframes download {
     0% {opacity: 1; transform: translate(0px, 0px)}
-    40% {opacity: 0; transform: translate(0px, 10px)}
-    60% {opacity: 0; transform: translate(0px, -10px)}
+    40% {opacity: 0; transform: translate(0px, 1.25vh)}
+    60% {opacity: 0; transform: translate(0px, -1.25vh)}
     100%  {opacity: 1; transform: translate(0px, 0px)}
 }
 
@@ -76,7 +80,7 @@
  */
 .file-size {
     width: fit-content;
-    padding: 5px;
+    padding: 0.625vh;
     color: $dark-grey;
     background: $input-grey;
     transition: background-color 0.2s ease-in-out

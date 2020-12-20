@@ -1,19 +1,17 @@
 <div 
-  class="site-padding-2 margin-bottom-2"
-  ngClass.xs="site-padding-xs margin-bottom-2" 
-  ngClass.sm="site-padding-sm margin-bottom-2"
-  ngClass.md="site-padding-sm margin-bottom-2"
+  class="site-padding-2 margin-bottom"
+  ngClass.lt-lg="site-padding-mobile margin-bottom"
   fxLayout="column" 
-  fxLayoutGap="2.8em" 
-  style="margin-top: 2.8em;">
+  fxLayoutGap="2vh" 
+  style="margin-top: 2vh;">
   <app-research-activity></app-research-activity>
   <div 
     fxFlex="noshrink" 
     fxLayout="row" 
-    fxLayout.xs="column" 
+    fxLayout.lt-sm="column" 
     fxLayoutGap="7%">
     <div 
-      fxFlex="65" 
+      fxFlex
       fxFlex.xs="noshrink">
       <app-browse 
         [embedded]="true" 
