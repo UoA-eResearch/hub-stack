@@ -142,27 +142,27 @@ describe('CerGraphqlService', () => {
     expect(service).toBeTruthy();
   });
 
-  // it('should return the correct breadcrumbs', async () => {
-  //   service['_subHubCollectionWithChildPagesSlugs'] = mock_subHubCollectionWithChildPagesSlugs;
-  //   const expectedBreadcrumbs = [
-  //     {
-  //       'title': 'Test - Engagement',
-  //       'slug': 'engagement'
-  //     },
-  //     {
-  //       'title': 'Test - Our Services',
-  //       'slug': 'our-services'
-  //     },
-  //     {
-  //       'title': 'Test - Centre for eResearch',
-  //       'slug': 'cer'
-  //     }
-  //   ];
+  it('should return the correct breadcrumbs', async () => {
+    service['_subHubCollectionWithChildPagesSlugs'] = mock_subHubCollectionWithChildPagesSlugs;
+    const expectedBreadcrumbs = [
+      {
+        'title': 'Test - Engagement',
+        'slug': 'engagement'
+      },
+      {
+        'title': 'Test - Our Services',
+        'slug': 'our-services'
+      },
+      {
+        'title': 'Test - Centre for eResearch',
+        'slug': 'cer'
+      }
+    ];
 
-  //   const entrySlug = 'first-article';
-  //   const breadCrumbs = await service.getParentSubHubs(entrySlug)
-  //   expect(breadCrumbs).toEqual(expectedBreadcrumbs);
-  // });
+    const entrySlug = 'first-article';
+    const breadCrumbs = await service.getParentSubHubs(entrySlug)
+    expect(breadCrumbs).toEqual(expectedBreadcrumbs);
+  });
 
   it('should throw an error if a circular SubHub structure is detected', async () => {
     service['_subHubCollectionWithChildPagesSlugs'] = circularMock_subHubCollectionWithChildPagesSlugs;
