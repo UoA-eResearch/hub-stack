@@ -3,6 +3,25 @@
 @import '../../../typography.scss';
 @import '../search-results/search-results.component.scss';
 
+#article-container {
+    #breadcrumbs {
+        margin-bottom: 3vh;
+
+        .breadcrumb-subhub {
+            &::after {
+                margin: 0 0.5em 0 0.5em;
+                content: '/'
+            }
+        }
+        #breadcrumb-current-page {
+            color: $color-icon;
+        }
+    }
+    .breadcrumbs-mobile {
+        font-size: 1.2vh;
+    }
+}
+
 mat-expansion-panel,
 mat-card  {
     margin: 1vh 0;

@@ -1,8 +1,9 @@
 <!-- If we're displaying a collection of articles-->
-<app-collection-list
-    *ngIf="allArticles$ | async as allArticles"
+<app-collection-list 
+    *ngIf="allArticles$ | async as allArticles" 
     [collection]="allArticles">
 </app-collection-list>
+
 
 <!-- If we're displaying an individual article -->
 <div 
@@ -10,18 +11,29 @@
     *ngIf="article$ | async as article">
 
     <!-- Templates -->
-    <ng-template #breadcrumbs>
-        <app-breadcrumbs 
-            [contentItem]="parentSubHubs" 
-            [title]="article.title">
-        </app-breadcrumbs>
-    </ng-template>
-
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
             [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : ''">
         </div>  
+    </ng-template>
+
+    <ng-template #breadcrumbs>
+        <div 
+            id="breadcrumbs" 
+            *ngIf="!!parentSubHubs"
+            ngClass.lt-md="breadcrumbs-mobile">
+            <span 
+                class="breadcrumb-subhub" 
+                *ngFor="let subHub of parentSubHubs.slice().reverse()">
+                <a [routerLink]="'/subhub/' + subHub.slug">
+                    {{ subHub.title }}
+                </a>
+            </span>
+            <span id="breadcrumb-current-page">
+                {{ article.title }}
+            </span>
+        </div>
     </ng-template>
 
     <ng-template #titleSummary>
@@ -41,45 +53,105 @@
     </ng-template>
 
     <ng-template #articleBody>
-        <ngx-contentful-rich-text
-            class="section-2 body-text"
-            style="word-break:break-word;" 
-            [document]="article.bodyText.json"
-            [nodeRenderers]="nodeRenderers">
-        </ngx-contentful-rich-text>
+        <div 
+            [innerHTML]="article.bodyText.json | richTextToHTML">
+        </div>
     </ng-template>
 
-    <ng-template #relatedItems let-hide="hideImage">
-        <app-cards 
-            id="you-might-be-interested-in"
-            [hideImage]="hide"
-            [title]="'You might also be interested in'" 
-            [contentItem]="article.relatedItemsCollection">
-        </app-cards>
+    <ng-template #relatedOrganisations>
+        <div 
+            *ngIf="article.relatedOrgsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Organisations</h4>
+            <mat-nav-list 
+                *ngFor="let organisation of article.relatedOrgsCollection.items" 
+                class="collection">
+                    <a [routerLink]="['/', 'subhub', organisation['slug']]">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ organisation.title }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ organisation.summary }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
     </ng-template>
 
-    <ng-template #relatedOrganisations let-hide="hideImage">
-        <app-cards 
-            [hideImage]="hide"
-            [title]="'Organisations'" 
-            [contentItem]="article.relatedOrgsCollection">
-        </app-cards>
-    </ng-template>
-    
-    <ng-template #relatedContacts let-hide="hideImage">
-        <app-cards 
-            [hideImage]="hide"
-            [title]="'Contacts'" 
-            [contentItem]="article.relatedContactsCollection">
-        </app-cards>
+    <ng-template #relatedContacts>
+        <div 
+            *ngIf="article.relatedContactsCollection.items.length > 0" 
+            class="column-header">
+            <h4>Contacts</h4>
+            <mat-nav-list 
+                style="margin-bottom: 2.5vh;" 
+                *ngFor="let contact of article.relatedContactsCollection.items" 
+                class="collection">
+                
+                    <a>
+                        <mat-card>
+                            <span class="card-title">
+                                {{ contact['name'] }}
+                            </span> 
+                            <br/>
+                            <span class="related-item-summary">
+                                {{ contact['jobTitle'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
     </ng-template>
 
-    <ng-template #officialDocuments let-hide="hideImage">
-        <app-cards 
-            [hideImage]="hide"
-            [title]="'Documents'" 
-            [contentItem]="article.relatedDocsCollection">
-        </app-cards>
+    <ng-template #relatedItems>
+        <div 
+            *ngIf="article.relatedItemsCollection.items.length > 0" 
+            id="you-might-be-interested-in">
+            <h4>You might also be interested in</h4>
+            <mat-nav-list 
+                style="margin-bottom: 2.5vh;" 
+                *ngFor="let relatedItem of article.relatedItemsCollection.items" 
+                class="collection">
+                
+                    <a [routerLink]="['/', relatedItem['__typename'].toLowerCase(), relatedItem['slug']]">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ relatedItem['title'] }}
+                            </span> 
+                            <br/>
+                            <span class="card-summary">
+                                {{ relatedItem['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
+    </ng-template>
+
+    <ng-template #officialDocuments>
+        <div 
+            *ngIf="article.relatedDocsCollection.items.length > 0">
+            <h4>Official Documents</h4>
+            <mat-nav-list  
+                *ngFor="let document of article.relatedDocsCollection.items" 
+                class="collection">
+                
+                    <a href={{document.url}} target="_blank">
+                        <mat-card>
+                            <span class="card-title">
+                                {{ document['title'] }}
+                            </span> 
+                            <br/>
+                            <span class="card-summary">
+                                {{ document['summary'] }}
+                            </span>
+                        </mat-card>
+                    </a>
+            </mat-nav-list>
+        </div>
     </ng-template>
     
     
@@ -95,7 +167,7 @@
                 [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : 'min-height: 0px'">
                 <div 
                     class="banner-content" 
-                    [style]="article.banner ?  '' : 'margin: 3vh 0;'"
+                    [style]="article.banner ? '' : 'margin: 2.5em auto;'"
                     *ngIf="article.viewType == 'View 1'">
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
@@ -141,13 +213,13 @@
 
                     </div>
 
-                <!-- Related items -->
-                <div 
-                    id="you-might-be-interested-in"
-                    fxLayout="column" 
-                    fxFlex="20%"
-                    fxFlexOrder="3">
-                    <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                    <!-- Related items -->
+                    <div 
+                        fxLayout="column" 
+                        fxFlex="20%"
+                        fxFlexOrder="3">
+                        <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                    </div>    
                 </div>
             </div>
         </div>
@@ -165,9 +237,6 @@
                 fxLayout.lt-sm="column wrap"  
                 fxLayoutAlign="space-between"
                 fxLayoutGap="5%">
-                
-                <!-- Breadcrumbs -->
-                <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
                 <!-- Breadcrumbs -->
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
@@ -175,9 +244,8 @@
                 <!-- Article Title and Summary -->
                 <div fxFlex>
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-                    <div class="mini-hr">
-                        <hr/>
-                    </div>
+
+                    <hr />
 
                     <!-- Article Body -->
                     <ng-container *ngTemplateOutlet="articleBody"></ng-container>
@@ -204,6 +272,6 @@
             </div>
         </div>
     </div>
+
     <!-- End of View Switcher -->
-    <div class="section"></div>
 </div>

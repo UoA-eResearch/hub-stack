@@ -12,24 +12,6 @@ import { HumanCasePipe } from '@pipes/human-case.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
 import { RichTextToHTML } from '@pipes/rich-text.pipe';
-import { BodyMediaComponent } from './body-media/body-media.component';
-import { LinkCardComponent } from './link-card/link-card.component';
-import { SoftwareComponent } from './software/software.component';
-import { VideoCardComponent } from './video-card/video-card.component';
-import { CaseStudyComponent } from './case-study/case-study.component';
-import { OfficialDocumentComponent } from './official-document/official-document.component';
-import { AssetBlockComponent } from './asset-block/asset-block.component';
-import { EntryBlockComponent } from './entry-block/entry-block.component';
-import { EntryInlineComponent } from './entry-inline/entry-inline.component';
-import { EquipmentEntryComponent } from './equipment-entry/equipment-entry.component';
-import { ArticleEntryComponent } from './article-entry/article-entry.component';
-import { EventEntryComponent } from './event-entry/event-entry.component';
-import { OrganisationalUnitComponent } from './organisational-unit/organisational-unit.component';
-import { ServiceComponent } from './service/service.component';
-import { CardsComponent } from './cards/cards.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { LargeCardsComponent } from './large-cards/large-cards.component';
-import { MiniCardsComponent } from './mini-cards/mini-cards.component';
 
 
 @NgModule({
@@ -48,25 +30,7 @@ import { MiniCardsComponent } from './mini-cards/mini-cards.component';
     ConfirmDialogComponent,
     HumanCasePipe,
     CollectionListComponent,
-    RichTextToHTML,
-    BodyMediaComponent,
-    LinkCardComponent,
-    SoftwareComponent,
-    VideoCardComponent,
-    CaseStudyComponent,
-    OfficialDocumentComponent,
-    AssetBlockComponent,
-    EntryBlockComponent,
-    EntryInlineComponent,
-    EquipmentEntryComponent,
-    ArticleEntryComponent,
-    EventEntryComponent,
-    OrganisationalUnitComponent,
-    ServiceComponent,
-    CardsComponent,
-    BreadcrumbsComponent,
-    LargeCardsComponent,
-    MiniCardsComponent
+    RichTextToHTML
   ],
   exports: [
     FlexLayoutModule,
@@ -78,24 +42,7 @@ import { MiniCardsComponent } from './mini-cards/mini-cards.component';
     ListItemToRouterLinkPipe,
     HumanCasePipe,
     CollectionListComponent,
-    RichTextToHTML,
-    LinkCardComponent,
-    SoftwareComponent,
-    VideoCardComponent,
-    CaseStudyComponent,
-    OfficialDocumentComponent,
-    AssetBlockComponent,
-    EntryBlockComponent,
-    EntryInlineComponent,
-    EquipmentEntryComponent,
-    ArticleEntryComponent,
-    EventEntryComponent,
-    OrganisationalUnitComponent,
-    ServiceComponent,
-    CardsComponent,
-    BreadcrumbsComponent,
-    LargeCardsComponent,
-    MiniCardsComponent
+    RichTextToHTML
   ],
   providers: [],
 })

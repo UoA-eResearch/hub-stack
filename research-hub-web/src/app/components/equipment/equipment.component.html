@@ -150,15 +150,12 @@
             <hr/>
         </div>
 
-        <!-- Equipment Body -->
-        <div>
-            <h4>Description<hr/></h4>
-            <ngx-contentful-rich-text
-                class="section-2 body-text"
-                style="word-break:break-word;" 
-                [document]="equipment.bodyText.json"
-                [nodeRenderers]="nodeRenderers">
-            </ngx-contentful-rich-text>
+        <!-- Body Text -->
+        <div
+            class="equipment-overview section"
+            fxLayout="row wrap"
+            fxLayout.xs="column wrap">
+            <div [innerHTML]="equipment.bodyText.json | richTextToHTML"></div>
         </div>
 
         <!-- Contacts -->

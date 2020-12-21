@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ArticlesRoutingModule } from './articles-routing.module';
 import { ArticlesComponent } from './articles.component';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
-
 
 @NgModule({
   declarations: [
@@ -13,8 +11,7 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
   imports: [
     CommonModule,
     ArticlesRoutingModule,
-    SharedModule,
-    NgxContentfulRichTextModule
+    SharedModule
   ]
 })
 export class ArticlesModule { }

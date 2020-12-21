@@ -185,8 +185,8 @@ svg {
 }
 .tile-icon {
   color: $browse-tile-font-color;
-  font-size: mat-font-size($app-browse-grid-typography, body-2);
-  font-weight: mat-font-weight($app-browse-grid-typography, body-2);
+  font-size: mat-font-size($app-browse-grid-typography, body-2)!important;
+  font-weight: mat-font-weight($app-browse-grid-typography, body-2)!important;
   width: 100%;
 }
 
