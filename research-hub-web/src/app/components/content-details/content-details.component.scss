@@ -63,8 +63,9 @@
 
 .mat-standard-chip {
   height: auto !important; // Fixes predefined material CSS causing issue with multiline chips
-  border-radius: 24px;
-  line-height: 18px !important;
+  border-radius: 3vh;
+  padding: 1vh;
+  line-height: 2.3vh;
 }
 
 .contact-chip {
@@ -216,3 +217,21 @@
     }
   }
 }
+
+/**
+ * Main content image
+ */
+mat-card-header img {
+  width: 8vh; 
+  height: 8vh; 
+  margin-right: 1em;
+}
+
+/**
+ * Level 2 image
+ */
+ mat-chip img {
+  height: 3.125vh;
+  width: 3.125vh;
+  margin-right: 1vh;
+ }

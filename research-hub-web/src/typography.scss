@@ -72,18 +72,18 @@ $font-family: 'National';
 // All typography
 $app-base-typography: mat-typography-config(
   $font-family:   $font-family,
-  $display-4:     mat-typography-level(112px, 112px, 300),
-  $display-3:     mat-typography-level(56px, 56px, 400),
-  $display-2:     mat-typography-level(45px, 48px, 400),
-  $display-1:     mat-typography-level(34px, 40px, 400),
-  $headline:      mat-typography-level(4vh, 4.2vh, 400), // <h1>
-  $title:         mat-typography-level(3.6vh, 3.8vh, 500), // <h2>
-  $subheading-2:  mat-typography-level(3.2vh, 3.4vh, 400), // <h3>
-  $subheading-1:  mat-typography-level(2.8vh, 2vh, 400), // <h4>
-  $body-2:        mat-typography-level(2vh, 3.4vh, 500), // bolder body text
-  $body-1:        mat-typography-level(2vh, 3.2vh, 400), // base body text <p> ?
-  $caption:       mat-typography-level(12px, 20px, 400), // smaller body and hint text
-  $button:        mat-typography-level(1.8vh, 1.8vh, 500),
+  $display-4:     mat-typography-level(14vh, 14vh, 300),
+  $display-3:     mat-typography-level(7vh, 7vh, 400),
+  $display-2:     mat-typography-level(5.7vh, 6vh, 400),
+  $display-1:     mat-typography-level(3vh, 5vh, 400),
+  $headline:      mat-typography-level(3.5vh, 4vh, 400), // <h1>
+  $title:         mat-typography-level(3vh, 3.5vh, 500), // <h2>
+  $subheading-2:  mat-typography-level(2.5vh, 3vh, 400), // <h3>
+  $subheading-1:  mat-typography-level(2vh, 2.5vh, 400), // <h4>
+  $body-2:        mat-typography-level(2vh, 3vh, 500), // bolder body text
+  $body-1:        mat-typography-level(2vh, 3vh, 400), // base body text <p> ?
+  $caption:       mat-typography-level(1.5vh, 2.5vh, 400), // smaller body and hint text
+  $button:        mat-typography-level(2vh, 3vh, 500),
   $input:         mat-typography-level(2vh, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
 );
 
@@ -95,13 +95,13 @@ Sidenav
  */
 
 $app-sidenav-list-typography: mat-typography-config(
-  $body-1:        mat-typography-level(16px, 20px, 400), // text
-  $body-2:        mat-typography-level(24px, 24px, 500) // icon
+  $body-1:        mat-typography-level(2vh, 2.5vh, 400), // text
+  $body-2:        mat-typography-level(3vh, 3vh, 500) // icon
 );
 
 $app-sidenav-toolbar-typography: mat-typography-config(
-  $body-1:      mat-typography-level(24px, 20px, 500), // 'ResearchHub' text
-  $button:        mat-typography-level(24px, 20px, 400) // icon
+  $body-1:      mat-typography-level(3vh, 2.5vh, 500), // 'ResearchHub' text
+  $button:        mat-typography-level(3vh, 2.5vh, 400) // icon
 );
 
 /*
@@ -109,13 +109,13 @@ Search
  */
 
 $app-search-bar-select-typography: mat-typography-config(
-  $title:         mat-typography-level(16px, 20px, 500), // current selected text
-  $body-1:      mat-typography-level(16px, 20px, 400) // option text
+  $title:         mat-typography-level(2vh, 2.5vh, 500), // current selected text
+  $body-1:      mat-typography-level(2vh, 2.5vh, 400) // option text
 );
 
 $app-search-bar-typography: mat-typography-config(
-  $body-1:        mat-typography-level(24px, 24px, 500), // icon
-  $input:         mat-typography-level(16px, 1.125, 400) // input
+  $body-1:        mat-typography-level(3vh, 3vh, 500), // icon
+  $input:         mat-typography-level(2vh, 1.125, 400) // input
 );
 
 /*
@@ -123,7 +123,7 @@ Header/crumbs
  */
 
 $app-primary-header-typography: mat-typography-config(
-  $headline:      mat-typography-level(14px, 32px, 400)
+  $headline:      mat-typography-level(1.75vh, 4vh, 400)
 );
 
 /*
@@ -131,8 +131,8 @@ Featured
  */
 
 $app-featured-mat-card-typography: mat-typography-config(
-  $body-1:      mat-typography-level(18px, 20px, 400), // text
-  $button:        mat-typography-level(14px, 20px, 400) // icon
+  $body-1:      mat-typography-level(2.25vh, 2.5vh, 400), // text
+  $button:        mat-typography-level(1.75vh, 2.5vh, 400) // icon
 );
 
 /*
@@ -140,20 +140,20 @@ Browse Grid / Results
  */
 
 $app-browse-grid-typography: mat-typography-config(
-  $body-1:        mat-typography-level(18px, 20px, 400), // text
-  $body-2:        mat-typography-level(40px, 24px, 500) // icon
+  $body-1:        mat-typography-level(2.25vh, 2.5vh, 400), // text
+  $body-2:        mat-typography-level(5vh, 3vh, 500) // icon
 );
 
 
 // NO LONGER NEEDED
 //$app-result-list-typography: mat-typography-config(
-//  $body-1:      mat-typography-level(16px, 20px, 400), // text
-//  $subheading-2: mat-typography-level(20px, 20px, 400), // h3 e.g. Managing Research Data
-//  $subheading-1: mat-typography-level(28px, 20px, 400) // we use this for the section subheadings e.g. Guides, Policies
+//  $body-1:      mat-typography-level(2vh, 2.5vh, 400), // text
+//  $subheading-2: mat-typography-level(2.5vh, 2.5vh, 400), // h3 e.g. Managing Research Data
+//  $subheading-1: mat-typography-level(3.5vh, 2.5vh, 400) // we use this for the section subheadings e.g. Guides, Policies
 //);
 
 $app-chips-typography: mat-typography-config(
-  $button:      mat-typography-level(16px, 20px, 400) // text
+  $button:      mat-typography-level(2vh, 2.5vh, 400) // text
 );
 
 

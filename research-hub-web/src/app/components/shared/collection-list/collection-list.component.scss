@@ -1,15 +1,9 @@
 @import '../../../../themes.scss';
+@import '../../../../styles.scss';
 
-mat-expansion-panel, mat-card  {
-    margin: 1vh 0;
-}
 
 div.mat-card-avatar mat-icon {
     color: map-get($hub-teal, 800);
-}
-
-div.collection {
-    margin: 3vh 0 3vh 0;
 }
 
 .result-item {
@@ -20,11 +14,11 @@ div.collection {
     }
 
     &:hover {
-        border: 1px solid map-get($hub-teal, 50);
+        border: 0.125vh solid map-get($hub-teal, 50);
     }
 
     // Used to set the height/width of both avatar images and icons.
-    $avatar-size: 55px;
+    $avatar-size: 6.875vh;
 
     #item-avatar {
         width: $avatar-size;
@@ -39,34 +33,18 @@ div.collection {
     }
 
     #item-avatar-icon {
-        font-size: $avatar-size;
+        padding: 2vh 0;
+        font-size: $avatar-size!important;
         color: $color-primary;
     }
 }
-/**
- * Result title
- */
-.mat-card-title p {
-    width: fit-content;
-    color: map-get($hub-navy, 500);
-    border-bottom: solid 2px transparent;
-}
-.mat-card-title p:hover {
-    border-bottom: solid 2px map-get($hub-navy, 500);
-    cursor: pointer;
-}
-/**
- * Result Summary
- */
- .mat-card-subtitle {
-    color: $color-icon;
-}
-
 
 /**
- * Lock Icon
+ * Material Overrides
  */
-.mat-icon {
-    color: $color-icon;
-    font-size: 18px;
+mat-card-title {
+    font-size: 2.2vh!important;
+}
+mat-expansion-panel-header {
+    height: fit-content!important;
 }

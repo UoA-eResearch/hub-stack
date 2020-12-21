@@ -3,9 +3,6 @@
 @import '../../../styles.scss';
 @import '../search-results/search-results.component.scss';
 
-mat-expansion-panel, mat-card  {
-    margin: 1vh 0;
-}
 
 div.mat-card-avatar mat-icon {
     color: map-get($hub-teal, 800);

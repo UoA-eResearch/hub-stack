@@ -1,19 +1,17 @@
 <div 
-  class="banner-container-home site-padding"
-  ngClass.xs="site-padding-xs margin-bottom-xs" 
-  ngClass.sm="site-padding-sm margin-bottom-sm"
-  ngClass.md="site-padding-sm margin-bottom-sm"
+  class="banner-container site-padding-2"
+  ngClass.lt-lg="site-padding-mobile"
   [ngStyle]="{ 'background-image': coverImageUrl }">
-  <div class="banner-content-home">
+  <div 
+    class="banner-content-default">
     <h1>{{ title }}</h1>
     <h4>{{ summary }}</h4>
   </div>
 </div> 
 
 <div
-  class="site-padding top-padding-2 margin-bottom-2"
-  ngClass.xs="site-padding-xs top-padding margin-bottom"
-  ngClass.sm="site-padding-sm top-padding margin-bottom">
+class="site-padding-2 top-padding margin-bottom"
+ngClass.lt-lg="site-padding-mobile top-padding margin-bottom">
   <h2>Message from the Director</h2>
 
   <div class="the-director div-background-image" ngClass.xs="the-director-xs" [ngStyle]="{'background-image': 'url(' + theDirectorUrl + ')'}"></div>

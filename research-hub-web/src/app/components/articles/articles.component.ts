@@ -1,7 +1,7 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck, map, flatMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { pluck, map, flatMap, tap } from 'rxjs/operators';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
@@ -15,7 +15,6 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-articles',

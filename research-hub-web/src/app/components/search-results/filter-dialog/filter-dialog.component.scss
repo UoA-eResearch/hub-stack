@@ -1,9 +1,21 @@
+@import '../../../../themes.scss';
 
-
-.example-icon {
-  padding: 0 14px;
+.refine-search-wrapper {
+  float: right;
 }
 
-.example-spacer {
-  flex: 1 1 auto;
+.refine-search {
+  color: map-get($research-activity-palette-create, 500); 
+  padding-right: 1em; 
+  cursor: pointer
+}
+
+.component {
+  margin: $offset-gt-xs;
+  max-width: $width-page-max;
+}
+
+.component-xs {
+  @extend .component;
+  margin: $padding-site;
 }
