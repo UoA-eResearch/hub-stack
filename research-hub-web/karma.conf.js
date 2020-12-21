@@ -35,7 +35,17 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: ['HeadlessChrome'],
+    customLaunchers:{
+        HeadlessChrome:{
+            base: 'ChromeHeadless',
+            flags: ['--no-sandbox']
+        }
+    },
+    browserDisconnectTimeout: 10000,
+    retryLimit: 10,
+    browserDisconnectTolerance: 10,
+    captureTimeout: 60000,
     singleRun: true,
     failOnEmptyTestSuite: false,
     captureConsole: true,
