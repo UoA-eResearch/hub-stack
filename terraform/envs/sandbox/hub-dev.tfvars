@@ -29,17 +29,17 @@ acm_arn_secondary             = "arn:aws:acm:us-east-1:416527880812:certificate/
 route53_hosted_zone_id = "ZMGQD6EYUM762"
 
 # Loadbalancer for ECS
-lb_name = "CeR-Terraform-Dev"
+lb_name = "research-hub-public-lb"   # arn:aws:elasticloadbalancing:ap-southeast-2:416527880812:loadbalancer/app/research-hub-public-lb/9db900eab79d1dd7
 lb_subnets = [
-  "subnet-0f5df2d778a581f28",
-  "subnet-01f535e3b10cf7635",
-  "subnet-0edcf885fe9115a3e"
+  "subnet-b4a78dd3",  # uoa-sandbox-public-sydney-a  10.0.12.0/26
+  "subnet-e0e5c2a9",  # uoa-sandbox-public-sydney-b  10.0.12.64/26
+  "subnet-e09e3ab8"   # uoa-sandbox-public-sydney-c  10.0.12.128/26
 ]
-vpc_id           = "vpc-05ace6f7251ef59c3"
-ecs_lb_acm_arn   = "arn:aws:acm:ap-southeast-2:518380838815:certificate/d82fed8f-e5ee-44c6-9710-643b0dd401b6"
+vpc_id           = "vpc-1e77d279"  # uoa-sandbox  10.0.12.0/22
+ecs_lb_acm_arn   = "arn:aws:acm:ap-southeast-2:416527880812:certificate/21f9b615-c2e1-4070-a5d5-1c2ba234f539"
 r53_hosted_zone  = "sandbox.amazon.auckland.ac.nz"
-lb_dns_name      = "rhubcpapi.sandbox.amazon.auckland.ac.nz"
-create_dns_entry = false 
+lb_dns_name      = "rhubcpapi.sandbox.amazon.auckland.ac.nz" # research-hub-public-lb-1550820285.ap-southeast-2.elb.amazonaws.com
+create_dns_entry = true
 
 # ECS Environment
 ecs_cluster_name = "cer-graphql-cluster"
@@ -47,11 +47,11 @@ repository_name  = "research-hub/cer-graphql"
 
 # ECS Services
 private_subnets = [
-  "subnet-0d0a68988c480b3a4",
-  "subnet-0b56849cba433ce13",
-  "subnet-0fc970830487f2323"
+  "subnet-90752ef7",  # uoa-sandbox-private-sydney-a  10.0.14.0/24
+  "subnet-4feb9106",  # uoa-sandbox-private-sydney-b  10.0.15.0/24
+  "subnet-968e59ce"   # uoa-sandbox-private-sydney-c  10.0.13.0/24
 ]
-service_container_count = 1
+service_container_count = 2
 service_container_count_preview = 1
 fargate_base_weight     = 0
 fargate_base_count      = 0

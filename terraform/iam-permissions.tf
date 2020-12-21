@@ -42,8 +42,6 @@ EOF
 
 }
 
-# TODO: Confirm Paramter store path
-
 resource "aws_iam_role_policy" "ecs_task_assume" {
   name = "researchhub-ecs_task_assume"
   role = aws_iam_role.ecs_task_assume.id
