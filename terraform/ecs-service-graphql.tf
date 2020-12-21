@@ -23,6 +23,11 @@ resource "aws_ecs_task_definition" "graphql" {
           "awslogs-stream-prefix": "ecs"
       }
     },
+    "portMappings": [
+      {
+        "containerPort": 4000
+      }
+    ],
     "secrets": [
       {
         "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-access-token",

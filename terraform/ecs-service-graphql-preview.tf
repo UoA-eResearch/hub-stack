@@ -1,6 +1,6 @@
 
 resource "aws_ecs_task_definition" "graphql_preview" {
-  family                   = "cer-graphql"
+  family                   = "cer-graphql-preview"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 256
@@ -25,6 +25,11 @@ resource "aws_ecs_task_definition" "graphql_preview" {
     },
     "environment": [
       {"name": "IS_PREVIEW_ENV", "value": "true"}
+    ],
+    "portMappings": [
+      {
+        "containerPort": 4000
+      }
     ],
     "secrets": [
         {
@@ -57,7 +62,7 @@ data "aws_ecs_task_definition" "graphql_preview" {
   depends_on = [aws_ecs_task_definition.graphql_preview]
 }
 
-resource "aws_ecs_service" "this" {
+resource "aws_ecs_service" "preview" {
   name                    = "cer-graphql-preview-service"
   cluster                 = aws_ecs_cluster.cer.id
   enable_ecs_managed_tags = true
@@ -116,8 +121,8 @@ resource "aws_ecs_service" "this" {
 
 # Configure the TG the Service will attach to.
 # IP is the setting needed for Fargate
-resource "aws_alb_target_group" "ecs-cer-graphql" {
-  name        = "ecs-cer-graphql"
+resource "aws_alb_target_group" "ecs-cer-graphql-preview" {
+  name        = "ecs-cer-graphql-preview"
   port        = "80"
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
@@ -134,60 +139,61 @@ resource "aws_alb_target_group" "ecs-cer-graphql" {
   depends_on = [aws_alb.ecs-load-balancer]
 }
 
-resource "aws_lb_listener_rule" "routing" {
+resource "aws_lb_listener_rule" "routing-preview" {
   listener_arn = aws_alb_listener.alb-listener.arn
-  # Need to ensure this increments if we add more
-  priority = 1
+
+  priority = 2
 
   action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.ecs-cer-graphql.id
+    target_group_arn = aws_alb_target_group.ecs-cer-graphql-preview.id
   }
 
   # Based upon work in Sandbox
   condition {
     path_pattern {
-      values = ["/cer-graphql-service*"]
+      values = ["/cer-graphql-preview-service*"]
     }
   }
 }
 
+# The following are already created in ecs-service-graphql.tf:
 
 # The SG for the Container task itself. Not
 # Set globally in case we can secure things 
 # more tightly
-resource "aws_security_group" "graphql_sg" {
-  name        = "${var.ecs_cluster_name}-graphql-Security-Group"
-  description = "Security Group graphql Service"
-  vpc_id      = var.vpc_id
+# resource "aws_security_group" "graphql_sg" {
+#   name        = "${var.ecs_cluster_name}-graphql-Security-Group"
+#   description = "Security Group graphql Service"
+#   vpc_id      = var.vpc_id
 
-  egress {
-    # allow all traffic to private SN
-    from_port = "0"
-    to_port   = "0"
-    protocol  = "-1"
+#   egress {
+#     # allow all traffic to private SN
+#     from_port = "0"
+#     to_port   = "0"
+#     protocol  = "-1"
 
-    cidr_blocks = [
-      "0.0.0.0/0",
-    ]
-  }
+#     cidr_blocks = [
+#       "0.0.0.0/0",
+#     ]
+#   }
 
-  tags = merge(
-    local.common_tags,
-    {
-      "Name" = "${var.ecs_cluster_name}-graphql-Security-Group"
-    },
-  )
-}
+#   tags = merge(
+#     local.common_tags,
+#     {
+#       "Name" = "${var.ecs_cluster_name}-graphql-Security-Group"
+#     },
+#   )
+# }
 
 # The reason for splitting this out is to avoid a
 # cyclic dependency. Means we can also make changes
-# as needed without impacting the core rules
-resource "aws_security_group_rule" "lb_to_graphql" {
-  type                     = "ingress"
-  from_port                = "0"
-  to_port                  = "0"
-  protocol                 = "-1"
-  source_security_group_id = aws_security_group.loadbalancer_sg.id
-  security_group_id        = aws_security_group.graphql_sg.id
-}
+# # as needed without impacting the core rules
+# resource "aws_security_group_rule" "lb_to_graphql" {
+#   type                     = "ingress"
+#   from_port                = "0"
+#   to_port                  = "0"
+#   protocol                 = "-1"
+#   source_security_group_id = aws_security_group.loadbalancer_sg.id
+#   security_group_id        = aws_security_group.graphql_sg.id
+# }
