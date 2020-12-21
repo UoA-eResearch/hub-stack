@@ -142,19 +142,19 @@ describe('CerGraphqlService', () => {
     expect(service).toBeTruthy();
   });
 
-  xit('should return the correct breadcrumbs', async () => {
+  it('should return the correct breadcrumbs', async () => {
     service['_subHubCollectionWithChildPagesSlugs'] = mock_subHubCollectionWithChildPagesSlugs;
     const expectedBreadcrumbs = [
       {
-        'title': 'Engagement',
+        'title': 'Test - Engagement',
         'slug': 'engagement'
       },
       {
-        'title': 'Our Services',
+        'title': 'Test - Our Services',
         'slug': 'our-services'
       },
       {
-        'title': 'Centre for eResearch',
+        'title': 'Demo - Centre for eResearch',
         'slug': 'cer'
       }
     ];
