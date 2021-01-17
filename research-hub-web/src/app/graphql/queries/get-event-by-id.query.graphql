@@ -1,20 +1,21 @@
-query GetArticleByID($id: String!) {
-  article(id: $id) {
-    __typename
-      sys {
-        id
-      }
-      title
-      slug
-      ssoProtected
-      searchable
-      banner {
+query GetEventByID($id: String!) {
+    event(id: $id) {
+        __typename
+        sys {
+            id
+        }
         title
-        description
-        url
-      }
-      summary
-      bodyText {
+        slug
+        ssoProtected
+        searchable
+        banner {
+            url
+        }
+        icon {
+            url
+        }
+        summary
+        bodyText {
         json 
         links {
           entries {
@@ -43,23 +44,36 @@ query GetArticleByID($id: String!) {
           }
         }
       }
-      relatedItemsCollection {
-        items { ...PublicFields }
-      }
+      keywords
       relatedContactsCollection {
-        items { 
-          ...PublicFields
-          ...on Person {
-            role
-          }
-        }
+        items { ...PublicFields }
       }
       relatedOrgsCollection {
         items { ...PublicFields }
       }
-      relatedDocsCollection {
+      relatedItemsCollection {
         items { ...PublicFields }
       }
-      viewType
-  }
+      callToAction
+      audience
+      mode
+      availability
+      date
+      capabilities
+      mediaCollection {
+        items {
+          title
+          description
+          size
+          url
+        }
+      }
+      location {
+        json
+      }
+      address {
+          lat 
+          lon 
+      }
+    }
 }

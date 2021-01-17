@@ -104,7 +104,7 @@ describe('AllComponent', () => {
       ],
       '__typename': 'CaseStudyCollection'
     }
-  } as AllSearchableContentPublicFieldsQuery)
+  } as unknown as AllSearchableContentPublicFieldsQuery)
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
