@@ -281,6 +281,25 @@ app-filter-dialog {
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
+/**
+ * Content Styles
+ */
+ .banner-container {
+  min-width: 100vw; 
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  background-size: cover!important;
+}
+.banner-content {
+  width: 50%;
+  color: white;
+  display: inline-block;
+}
+
 /*
  * Guide breadcrumb
  */
