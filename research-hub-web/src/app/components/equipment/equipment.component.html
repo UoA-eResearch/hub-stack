@@ -149,26 +149,6 @@
         </div>
     </ng-template>
 
-
-    <ng-template #keywords>
-        <div 
-            *ngIf="equipment.keywords.length > 0" 
-            class="section">
-            <h4 id="keywords">Keywords<hr/></h4>
-
-            <mat-card-subtitle 
-                fxLayout="row wrap"> 
-                <span *ngFor="let keyword of equipment.keywords">
-                    <mat-card 
-                        fxLayout="row" 
-                        class="keyword-card">
-                        {{ keyword | humanCase }}
-                    </mat-card>
-                </span>
-            </mat-card-subtitle>
-        </div>
-    </ng-template>
-
     <ng-template #equipmentImage>
         <div>
             <div *ngIf="equipment.mainImage;">
@@ -256,9 +236,6 @@
 
             <!-- Related Items -->
             <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
-
-            <!-- Keywords -->
-            <ng-container *ngTemplateOutlet="keywords"></ng-container>
 
         </div>
 </div>
