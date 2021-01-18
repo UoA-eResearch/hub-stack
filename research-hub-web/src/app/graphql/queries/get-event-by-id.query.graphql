@@ -19,21 +19,28 @@ query GetEventByID($id: String!) {
         json 
         links {
           entries {
-            block { ...PublicFields }
-            inline { ...PublicFields }
-            hyperlink { ...PublicFields }
+            block { 
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            inline { 
+              ...PublicFields
+              sys {
+                id
+              } 
+            }
+            hyperlink { 
+              ...PublicFields 
+              sys {
+                id
+              }
+            }
           }
           assets {
-            block {
-              title
-              description
-              url
-            }
-            hyperlink {
-              title
-              description
-              url
-            }
+            block { ...AssetFields }
+            hyperlink { ...AssetFields }
           }
         }
       }
@@ -44,7 +51,10 @@ query GetEventByID($id: String!) {
       relatedOrgsCollection {
         items { ...PublicFields }
       }
-      link
+      relatedItemsCollection {
+        items { ...PublicFields }
+      }
+      callToAction
       audience
       mode
       availability
