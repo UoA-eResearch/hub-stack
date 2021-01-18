@@ -109,22 +109,6 @@
         </div>
     </ng-template>
 
-    <ng-template #keywords>
-        <div id="keywords">
-            <h4>Keywords<hr/></h4>
-            <mat-card-subtitle 
-                fxLayout="row wrap"> 
-                <span *ngFor="let keyword of event.keywords">
-                    <mat-card 
-                        fxLayout="row" 
-                        class="keyword-card">
-                            {{ keyword | humanCase }}
-                    </mat-card>
-                </span>
-            </mat-card-subtitle>
-        </div>
-    </ng-template>
-
     <!-- Event Content -->
     <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
     <div
@@ -135,6 +119,5 @@
         <ng-container *ngTemplateOutlet="title"></ng-container>
         <ng-container *ngTemplateOutlet="description"></ng-container>
         <ng-container *ngTemplateOutlet="details"></ng-container>
-        <ng-container *ngTemplateOutlet="keywords"></ng-container>
     </div>
 </div>
