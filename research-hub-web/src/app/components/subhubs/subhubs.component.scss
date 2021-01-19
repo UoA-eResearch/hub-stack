@@ -10,65 +10,159 @@ div.mat-card-avatar mat-icon {
 }
 
 #breadcrumbs {
-        margin-bottom: 3vh;
+    margin-bottom: 3vh;
 
-        .breadcrumb-subhub {
-            &::after {
-                margin: 0 0.5em 0 0.5em;
-                content: ' >'
-            }
-        }
-
-        #breadcrumb-current-page {
-            color: $color-pink;
+    .breadcrumb-subhub {
+        &::after {
+            color: $color-icon;
+            margin: 0 0.5em 0 0.5em;
+            content: '/'
         }
     }
 
-.view2 {
-    $base-color: #121212;
-    $base-text-high-emphasis: rgba(white, 0.87);
-    $base-text-med-emphasis: rgba(white, 0.60);
-    $base-text-low-emphasis: rgba(white, 0.38);
-
-    color: $base-text-high-emphasis;
-    background-color: $base-color;
-    padding: 1rem;
-    border-radius: 1rem;
-
-    .mat-card-subtitle {
-        color: $base-text-med-emphasis;
+    #breadcrumb-current-page {
+        color: $color-icon;
     }
-    
-    .mat-card {
-        background-color: #202020;
-    }
-
-    .mat-card-content {
-        color: $base-text-high-emphasis;
-    }
-
-    h2, .mat-card-title {
-        color: #80c6ff;
-    }
-
-    div#breadcrumbs-current-page {
-        color: #e3ec60;
-    }
-
-    .mat-expansion-panel, .mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
-        color: #7fd15f;
-        background-color: #292929;
-    }
-    
+}
+.breadcrumbs-mobile {
+    font-size: 8px;
 }
 
-.view1 {
-    background-color: #a4c1ec;
-    border-radius: 5rem;
-    padding: 5rem;
+#keywords {
+    color: map-get($hub-navy, 500);
+    margin-top: 20px;
+}
 
-    * {
-        border-radius: 5rem !important;
-        padding: 1rem;
-    };
+.related-item-summary {
+    color: gray;
+}
+
+
+// Vanilla CSS
+
+// SubHub Title
+.subhub-title {
+    color: map-get($hub-navy, 500);
+    font-size: 50px;
+    font-weight: bold; 
+    line-height: 110%;
+}
+
+.subhub-title-sm {
+    font-size: 35px;
+}
+
+.subhub-title-xs {
+    font-size: 25px;
+}
+
+// SubHub Summary
+.subhub-summary {
+    font-size: 20px; 
+    color: $color-icon;
+    line-height: 110%;
+}
+
+.subhub-summary-sm {
+    font-size: 20px; 
+}
+
+.subhub-summary-xs {
+    font-size: 15px; 
+}
+
+// Banner Styling
+.banner-container {
+    text-align: center;
+    min-width: 100vw; 
+    min-height: 40vh;
+    max-height: auto;
+    overflow: hidden;
+    background-size: cover!important;
+}
+
+.banner-content {
+    width: 50%;
+    margin: 10em auto;
+    color: white;
+    display: inline-block;
+}
+
+// Related Item Card
+.related-item-card {
+    max-height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.related-item-card-mobile {
+    height: 70px;
+}
+
+.related-item-summary {
+    font-size: 12px;
+}
+
+// Keyword
+.keyword-card {
+    color: #828282;
+    background: #F0F0F0;
+    margin: 5px; 
+    padding: 5px 10px;
+    font-size: 12px; 
+    border-radius: 25px;
+    box-shadow: none !important;
+}
+
+// <hr />
+hr {
+    background-color: #dbdbdb;
+    border: none;
+    height: 1px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+// SubHub Card
+.subhub-card .card-title {
+    font-size: 1rem;
+    color: black;
+}
+
+.subhub-card img {
+    object-fit: cover;
+    height: 19vh;
+}
+
+.subhub-card .related-item-summary {
+    color: gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.subhub-card button {
+    color: map-get($hub-teal, 500);
+    border-color: map-get($hub-teal, 500);
+    margin-bottom: 10px;
+}
+
+.mat-card-actions {
+    padding: 10px 5px 0px 5px;
+}
+
+// Media Collection
+.media-panel {
+    @extend .margin-bottom;
+}
+
+.media-panel img{
+    width: 10vw;
+}
+
+// SubHub Children
+#subhub-children {
+    @extend .margin-bottom;
+    background: #F2F2F2;
+    padding-top: $padding-site-top * 2.5;
+    padding-bottom: $padding-site-top * 2.5;
 }

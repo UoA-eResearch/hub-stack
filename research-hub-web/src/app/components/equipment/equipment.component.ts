@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck, tap, flatMap, map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { pluck, tap, flatMap, map, catchError } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { 
     EquipmentCollection, 
     AllEquipmentGQL, 
@@ -31,6 +31,7 @@ export class EquipmentComponent implements OnInit {
 
   constructor(
     public route: ActivatedRoute,
+    public router: Router,
     public allEquipmentGQL: AllEquipmentGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public getEquipmentByIDGQL: GetEquipmentByIdGQL,
@@ -43,20 +44,11 @@ export class EquipmentComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.route.params.subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
+    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
-  }
-
-  /**
-   * Function that loads the equipment/collection depending on if a slug is present.
-   */
-  private async _loadContent() {
     /**
-     * If this.slug is defined, we're loading an individual equipment,
-     * therefore run the corresponding query. If not, return all equipment.
+     * If this.slug is defined, we're loading an individual article,
+     * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
@@ -68,7 +60,6 @@ export class EquipmentComponent implements OnInit {
       this.appComponentService.setTitle('Equipment');
       this.allEquipment$ = this.getAllEquipment();
     }
-
   }
 
   /**
@@ -109,7 +100,7 @@ export class EquipmentComponent implements OnInit {
   public getEquipmentByID(id: string): Observable<Equipment> {
     try {
       return this.getEquipmentByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.equipment)) as Observable<Equipment>;
+        .pipe(map(x => x.data.equipment), catchError(err => (this.router.navigate(['/error/500'])))) as Observable<Equipment>;
     } catch (e) { console.error(`Error loading article ${id}:`, e); }
   }
 }

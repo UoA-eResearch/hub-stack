@@ -1,26 +1,15 @@
-query GetEquipmentByID($id: String!) {
-  equipment(id: $id) {
-    __typename
-    sys {
-      id
-    }
-    title
+query GetSubHubByID($id: String!) {
+  subHub(id: $id) {
     slug
+    title
+    summary
     ssoProtected
     searchable
     banner {
-      title
-      description
       url
     }
-    icon {
-      title
-      description
-      url
-    }
-    summary
     bodyText {
-      json 
+      json
       links {
         entries {
           block { ...PublicFields }
@@ -41,20 +30,16 @@ query GetEquipmentByID($id: String!) {
         }
       }
     }
-    manufacturer
-    model
-    yearOfManufacture
+    keywords
+    internalPagesCollection {
+      items { ...PublicFields }
+    }
+    externalPagesCollection {
+      items { ...PublicFields }
+    }
     relatedItemsCollection {
       items { ...PublicFields }
     }
-    relatedContactsCollection {
-      items { ...PublicFields }
-    }
-    relatedOrgsCollection {
-      items { ...PublicFields }
-    }
-    location {
-      json
-    }
+    viewType
   }
 }

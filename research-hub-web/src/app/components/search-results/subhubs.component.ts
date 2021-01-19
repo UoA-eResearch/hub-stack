@@ -1,7 +1,7 @@
 import { Component, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { pluck, map, flatMap, tap, catchError } from 'rxjs/operators';
+import { pluck, map, flatMap, tap } from 'rxjs/operators';
 import {
   AllSubHubGQL,
   GetSubHubByIdGQL,
@@ -28,12 +28,12 @@ export class SubhubsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    public router: Router,
     public AllSubHubGQL: AllSubHubGQL,
     public GetSubHubBySlug: GetSubHubBySlugGQL,
     public GetSubHubById: GetSubHubByIdGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
+    public router: Router
   ) { }
 
   async ngOnInit() {
@@ -98,7 +98,7 @@ export class SubhubsComponent implements OnInit {
   public getSubHubById(id: string): Observable<SubHub> {
     try {
       return this.GetSubHubById.fetch({id: id})
-      .pipe(map(x => x.data.subHub), catchError(err => (this.router.navigate(['/error/500'])))) as Observable<SubHub>;
+      .pipe(map(x => x.data.subHub)) as Observable<SubHub>;
     } catch (e) { console.error(`Error loading subhub ${id}:`, e); }
   }
 }
