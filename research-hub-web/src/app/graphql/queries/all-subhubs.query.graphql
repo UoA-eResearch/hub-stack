@@ -1,7 +1,0 @@
-query AllSubHub {
-    subHubCollection {
-        items {
-            ...PublicFields
-        }
-    }
-}
