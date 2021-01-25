@@ -75,7 +75,7 @@
                         fxFlex="24%"
                         *ngFor="let subHub of subhub.internalPagesCollection.items">
                         <mat-card class="subhub-card">
-                                <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='assets/imgs/uoa_logo.png'">
+                                <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='assets/images/uoa-logo-blue.svg'">
                                 <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
                             <mat-card-title class="card-title">
                                 {{ subHub.title}}
@@ -156,15 +156,17 @@
                         fxLayoutAlign="space-between">
                         
                         <!-- Main Body -->
-                        <div fxFlex="65%" class="section">
+                        <div fxFlex class="section">
                             <mat-card-content 
                                 style="margin-bottom: 50px;" 
                                 [innerHTML]="subhub.bodyText.json | richTextToHTML">
                             </mat-card-content>
                         </div>
 
-                        <!-- Related Items and Keywords -->
-                        <div fxFlex="30%">
+                        <!-- Related Items -->
+                        <div 
+                            *ngIf="subhub.relatedItemsCollection.items.length > 0"
+                            fxFlex="30%">
 
                             <!-- Related Items -->
                             <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
