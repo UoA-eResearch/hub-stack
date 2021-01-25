@@ -17,7 +17,7 @@ import { AuthModule, CognitoConfigService, StorageService, LoginService } from '
 import { AppAuthConfigService } from './services/app-auth-config.service';
 import { ErrorPagesModule } from '@uoa/error-pages';
 import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -49,16 +49,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   }
 });
 
-export function initializeApp(cerGraphqlService: CerGraphqlService) {
-  return (): Promise<any> => {
-    return cerGraphqlService.pushSubHubRoutes();
-  }
-}
-
-
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, 
     SearchBarComponent
   ],
   imports: [
@@ -80,12 +73,6 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
   ],
   providers: [
     CerGraphqlService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      multi: true,
-      deps: [CerGraphqlService] 
-    },
     SearchBarService,
     AppComponentService,
     SearchFiltersService,

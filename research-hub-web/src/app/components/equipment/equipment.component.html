@@ -85,6 +85,7 @@
                 *ngFor="let relatedItem of equipment.relatedItemsCollection.items" 
                 class="collection">
                 <mat-card>
+                    <!-- TODO: Replace with array style [routerLink] (like in articles.component.html) -->
                     <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
                         {{ relatedItem['title'] }}<br/>
                     </a>

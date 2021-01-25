@@ -142,7 +142,7 @@
                 *ngFor="let relatedItem of article.relatedItemsCollection.items" 
                 class="collection">
                 
-                    <a [routerLink]="'/' + relatedItem['__typename'].toLowerCase() + '/' + relatedItem['slug']">
+                    <a [routerLink]="['/', relatedItem['__typename'].toLowerCase(), relatedItem['slug']]">
                         <mat-card>
                             <span class="card-title">
                                 {{ relatedItem['title'] }}

@@ -18,9 +18,9 @@ export interface SubHubTitleAndSlug {
 })
 export class CerGraphqlService {
 
+  public hasPushedSubhubRoutes = false;
   private _subHubCollectionWithChildPagesSlugs;
   private _subHubMap: SubHubMap = new SubHubMap();
-  private _hasFetchedSubHubRoutes: boolean = false;
 
   constructor(
     public getAllSubHubChildPagesSlugs: GetAllSubHubChildPagesSlugsGQL,
@@ -32,16 +32,17 @@ export class CerGraphqlService {
    * Dynamically pushes the SubHubs and the SubHub child pages to the application's routing array
    */
   public async pushSubHubRoutes(): Promise<void> {
-    console.log("Reached pushSubHubRoutes");
-    if (this._hasFetchedSubHubRoutes) {
-      // If sub hub routes are already fetched, then return.
-      return Promise.resolve();
-    }
+    this.hasPushedSubhubRoutes = true;
     const routes = this.router.config;
     await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
-    this._subHubMap.routes.forEach(route => { routes.push(route); }); // Push the new routes to the application's routes.
-    this.router.resetConfig(routes);
-    this._hasFetchedSubHubRoutes = true;
+    const wildcardRouteIdx = routes.findIndex((route) => route.path === "**");
+    let  newRoutes;
+    if (wildcardRouteIdx > -1) {
+      newRoutes = routes.slice(0, wildcardRouteIdx).concat(this._subHubMap.routes, routes.slice(wildcardRouteIdx, routes.length))
+    } else {
+      newRoutes = routes.concat(this._subHubMap.routes);
+    }
+    this.router.resetConfig(newRoutes);
   }
 
   /**
@@ -85,7 +86,7 @@ export class CerGraphqlService {
       // If the current item belongs to a SubHub
       if (breadCrumbsArray.length) {
         const locPath = breadCrumbsArray.map(x => x.slug).reverse().join('/') + '/' + entrySlug;
-        this.location.go(locPath); // Update the current location
+        this.location.replaceState(locPath); // Update the current location
       }
 
       return breadCrumbsArray;
