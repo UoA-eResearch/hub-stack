@@ -4,11 +4,11 @@ This solution will provision the core requirements of the ResearchHub environmen
 
 ## Prerequisites
 1. Download and install the Terraform command line tool: https://www.terraform.io/downloads.html
-2. Create AWS temporary credentials for the AWS account you are deploying to. Instructions for accessing the credentials are on the [Auckland Uni wiki](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI). Make sure you name the credentials profile according to what is defined in the _backend.tf definition for the env you are deploying to (e.g. for nonprod, the profile should be 'uoa-its-nonprod').
+2. Create AWS temporary credentials for the AWS account you are deploying to. Instructions for accessing the credentials are on the [Auckland Uni wiki](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI). Make sure you name the credentials profile according to what is defined in the backend.conf definition for the env you are deploying to (e.g. for nonprod, the profile should be 'uoa-its-nonprod').
 
 ## Usage
 
-1. Initialize the Terraform backend and provider plugins (run `terraform init`)
+1. Initialize the Terraform backend and provider plugins (run `terraform init -backend-config=envs/<env-name>/backend.conf`)
 2. Make changes to the variables and resources defined in the .tfvars and .tf files as required.
 3. View the infrastructure that will be created/updated (run `terraform plan var-file=<var-file>`)
 4. Create/update the infrastructure in AWS (run `terraform apply var-file=<var-file>`)
@@ -23,9 +23,13 @@ This solution will provision the core requirements of the ResearchHub environmen
 
 For more commands see the [CLI reference](https://www.terraform.io/docs/commands/index.html)
 
-**Initialize Terraform backend**
+**Initialize Terraform backend so the tfstate will be stored in s3**
+- Before running this command, ensure you have created the AWS temporary credentials for the AWS account you are deploying to.
 
-terraform init
+terraform init -backend-config=envs/env-name/backend.conf
+e.g. `terraform init -backend-config=envs/its-nonprod/backend.conf`
+
+You can check the backend s3 bucket defined in [main.tf](main.tf) to ensure the state has been stored. This 'remote state' can then be used by other team members in order to create, read, update, or destroy the current resources. Read more [here](https://www.terraform.io/docs/language/settings/backends/index.html).
 
 **Check the plan for what infrastructure will be created/updated**
 
