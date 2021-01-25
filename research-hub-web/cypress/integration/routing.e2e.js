@@ -19,15 +19,15 @@ describe('ResearchHubs Static Routing', () => {
 
 describe('ResearchHubs Dynamic SubHub Routing', () => {
 
-    it('can visit /cer and load a SubHub', () => {
-        cy.visit('/cer');
+    it('can visit /Centre-for-eResearch and load a SubHub', () => {
+        cy.visit('/Centre-for-eResearch ');
         cy.contains('Pages in this SubHub');
         cy.contains('CeR. A root level SubHub.');
     });
 
-    it('can visit /cer/our-services/engagement/first-article and load an Article', () => {
-        cy.visit('/cer/our-services/engagement/first-article');
-        cy.contains('Have a good day.');
+    it('can visit /our-services/engagement/first-article and load an Article', () => {
+        cy.visit('/our-services/engagement/first-article');
+        cy.contains('The Centre for eResearch is centrally funded by the University to deliver the services to help researchers address challenging computational problems. These services are generally free to use for research staff and students.');
         cy.get('#article-container').should('exist')
     });
 
@@ -35,7 +35,7 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
         cy.visit('/articles');
         cy.get('mat-nav-list > mat-card')
             .contains('First article').click();
-        cy.url().should('include', '/cer/');
+        cy.url().should('include', '/our-services/');
     })
 
 }); 
