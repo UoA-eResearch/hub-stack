@@ -41,6 +41,7 @@ export class CollectionListComponent implements OnInit {
       case 'Equipment': return 'build';
       case 'SubHub': return 'layers';
       case 'Service': return 'home_repair_services';
+      case 'Event': return 'calendar_today';
       default: return 'article'
     }
   }

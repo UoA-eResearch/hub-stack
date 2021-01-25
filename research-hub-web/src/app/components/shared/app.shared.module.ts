@@ -12,6 +12,7 @@ import { HumanCasePipe } from '@pipes/human-case.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
 import { RichTextToHTML } from '@pipes/rich-text.pipe';
+import { CalendarIconComponent } from './calendar-icon/calendar-icon.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { RichTextToHTML } from '@pipes/rich-text.pipe';
     ConfirmDialogComponent,
     HumanCasePipe,
     CollectionListComponent,
-    RichTextToHTML
+    RichTextToHTML,
+    CalendarIconComponent
   ],
   exports: [
     FlexLayoutModule,

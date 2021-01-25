@@ -1,0 +1,10 @@
+fragment AssetFields on Asset {
+    sys {
+      id
+    }
+    title
+    description
+    url
+    size
+    contentType
+}
