@@ -156,15 +156,17 @@
                         fxLayoutAlign="space-between">
                         
                         <!-- Main Body -->
-                        <div fxFlex="65%" class="section">
+                        <div fxFlex class="section">
                             <mat-card-content 
                                 style="margin-bottom: 50px;" 
                                 [innerHTML]="subhub.bodyText.json | richTextToHTML">
                             </mat-card-content>
                         </div>
 
-                        <!-- Related Items and Keywords -->
-                        <div fxFlex="30%">
+                        <!-- Related Items -->
+                        <div 
+                            *ngIf="subhub.relatedItemsCollection.items.length > 0"
+                            fxFlex="30%">
 
                             <!-- Related Items -->
                             <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
