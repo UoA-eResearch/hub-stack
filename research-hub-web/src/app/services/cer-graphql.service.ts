@@ -78,7 +78,7 @@ export class CerGraphqlService {
       // If the current item belongs to a SubHub
       if (breadCrumbsArray.length) {
         const locPath = breadCrumbsArray.map(x => x.slug).reverse().join('/') + '/' + entrySlug;
-        this.location.replaceState(locPath); // Update the current location
+        this.location.go(locPath); // Update the current location
       }
 
       return breadCrumbsArray;
