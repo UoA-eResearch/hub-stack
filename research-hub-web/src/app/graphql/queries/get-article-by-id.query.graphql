@@ -13,40 +13,46 @@ query GetArticleByID($id: String!) {
         description
         url
       }
-      icon {
-        title
-        description
-        url
-      }
       summary
       bodyText {
         json 
         links {
           entries {
-            block { ...PublicFields }
-            inline { ...PublicFields }
-            hyperlink { ...PublicFields }
+            block { 
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            inline { 
+              ...PublicFields
+              sys {
+                id
+              } 
+            }
+            hyperlink { 
+              ...PublicFields 
+              sys {
+                id
+              }
+            }
           }
           assets {
-            block {
-              title
-              description
-              url
-            }
-            hyperlink {
-              title
-              description
-              url
-            }
+            block { ...AssetFields }
+            hyperlink { ...AssetFields }
           }
         }
       }
-      keywords
       relatedItemsCollection {
         items { ...PublicFields }
       }
       relatedContactsCollection {
-        items { ...PublicFields }
+        items { 
+          ...PublicFields
+          ...on Person {
+            role
+          }
+        }
       }
       relatedOrgsCollection {
         items { ...PublicFields }

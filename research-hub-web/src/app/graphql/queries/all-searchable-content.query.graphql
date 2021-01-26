@@ -15,14 +15,6 @@ query AllSearchableContentPublicFields {
     eventCollection(where: { searchable: true }) {
         items { ...PublicFields }
     }
-
-    facilityCollection(where: { searchable: true }) {
-        items { ...PublicFields }
-    }
-
-    organisationalUnitCollection(where: { searchable: true }) {
-        items { ...PublicFields }
-    }
     
     serviceCollection(where: { searchable: true }) {
         items { ...PublicFields }

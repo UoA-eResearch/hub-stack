@@ -288,3 +288,30 @@ app-filter-dialog {
   content: ' • ';
   color: map-get($hub-teal, 500);
 }
+
+/**
+ * Custom Button Styles
+ */
+ .standard-button {
+  color: white;
+  border: 2px solid map-get($hub-teal, 500);
+  border-radius: 50px!important;
+  background-color: map-get($hub-teal, 500);
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+.standard-button:hover {
+  color: map-get($hub-teal, 500);
+  border-radius: 50px!important;
+  background-color: white;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+/**
+ *
+ */
+.section {
+  padding: 20px 0px;
+}
+.section-2{
+  padding: 40px 0px;
+}

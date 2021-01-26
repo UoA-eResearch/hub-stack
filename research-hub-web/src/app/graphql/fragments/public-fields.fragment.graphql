@@ -6,11 +6,6 @@ fragment PublicFields on Entry {
       summary
       ssoProtected
       searchable
-      icon {
-          title
-          description
-          url
-      }
       banner {
           title
           description
@@ -30,6 +25,9 @@ fragment PublicFields on Entry {
       slug
       title
       summary
+      banner {
+        url
+      }
       ssoProtected
       searchable
     }
@@ -38,22 +36,9 @@ fragment PublicFields on Entry {
       slug
       title
       summary
-      ssoProtected
-      searchable
-    }
-  ... on Facility {
-      __typename
-      slug
-      title
-      summary
-      ssoProtected
-      searchable
-  }
-  ... on OrganisationalUnit {
-      __typename
-      slug
-      title
-      summary
+      banner {
+        url
+      }
       ssoProtected
       searchable
     }
@@ -80,6 +65,9 @@ fragment PublicFields on Entry {
       summary
       ssoProtected
       searchable
+      banner {
+        url
+      }
     }
   ... on OfficialDocuments {
       __typename
