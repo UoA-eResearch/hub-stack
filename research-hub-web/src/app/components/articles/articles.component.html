@@ -203,7 +203,7 @@
 
                 <!-- Call to Actions -->
                  <div 
-                    fxFlex="50%"
+                    fxFlex
                     fxFlexOrder="2"
                     fxFlexOrder.xs="1">
 
@@ -214,6 +214,9 @@
 
                 <!-- Extra Links -->
                 <div 
+                    *ngIf="article.relatedDocsCollection.items.length > 0 ||
+                        article.relatedContactsCollection.items.length > 0 ||
+                        article.relatedOrgsCollection.items.length > 0"
                     fxLayout="column" 
                     fxFlex="20%"
                     fxFlexOrder="1"

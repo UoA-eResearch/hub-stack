@@ -1,4 +1,6 @@
 @import '../../../themes.scss';
+@import '../../../styles.scss';
+@import '../../../typography.scss';
 @import '../search-results/search-results.component.scss';
 
 mat-expansion-panel, mat-card  {
@@ -36,7 +38,15 @@ div.mat-card-avatar mat-icon {
 .related-item-summary {
     color: gray;
 }
-
+.results {
+    overflow-x: hidden;
+}
+ mat-nav-list {
+    margin-bottom: 20px;
+ }
+ mat-card-content {
+    margin-bottom: 50px;
+ }
 
 // Vanilla CSS
 
@@ -165,4 +175,19 @@ hr {
     background: #F2F2F2;
     padding-top: $padding-site-top * 2.5;
     padding-bottom: $padding-site-top * 2.5;
+}
+
+// Card Label
+.card-label {
+    background: rgba(2, 149, 165, 0.6);
+    color: rgb(255, 255, 255);
+    position:absolute;
+    left:0;
+    top:0;
+    padding: 0px 10px;
+}
+
+// Realted Item Card
+.related-item-list{
+    margin-bottom: 50px;
 }

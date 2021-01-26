@@ -8,8 +8,7 @@
 </div>
 
 <!-- Displaying an individual SubHub -->
-<div 
-    style="overflow-x: hidden"
+<div
     class="results" 
     *ngIf="currentSubHub$ | async as subhub">
     <div>
@@ -76,7 +75,7 @@
                         *ngFor="let subHub of subhub.internalPagesCollection.items">
                         <mat-card class="subhub-card">
                                 <img mat-card-image src="{{ subHub.banner?.url }}" onerror="this.src='assets/images/uoa-logo-blue.svg'">
-                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ subHub.__typename | humanCase }}</span>
+                                <span class="card-label">{{ subHub.__typename | humanCase }}</span>
                             <mat-card-title class="card-title">
                                 {{ subHub.title}}
                             </mat-card-title>
@@ -100,12 +99,13 @@
                 id="you-might-be-interested-in">
                 <h4>You might also be interested in<hr/></h4>
                 
-                <mat-nav-list 
-                    style="margin-bottom: 20px;" 
+                <mat-nav-list
+                    class="related-item-list"
                     *ngFor="let relatedItem of subhub.relatedItemsCollection.items" 
                     class="collection">
-                            <mat-card style="padding-top: 30px;">
-                                <span style="background: rgba(2, 149, 165, 0.6);color: rgb(255, 255, 255);position:absolute;left:0;top:0;padding: 0px 10px;">{{ relatedItem.__typename | humanCase }}</span>
+                            <mat-card 
+                                class="related-item-card">
+                                <span class="card-label">{{ relatedItem.__typename | humanCase }}</span>
                                 <span class="card-title">
                                     {{ relatedItem['title'] }}
                                 </span> 
@@ -157,8 +157,7 @@
                         
                         <!-- Main Body -->
                         <div fxFlex class="section">
-                            <mat-card-content 
-                                style="margin-bottom: 50px;" 
+                            <mat-card-content
                                 [innerHTML]="subhub.bodyText.json | richTextToHTML">
                             </mat-card-content>
                         </div>
