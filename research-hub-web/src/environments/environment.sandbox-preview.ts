@@ -1,8 +1,8 @@
 import { environment } from "./environment.sandbox";
 
 environment.cerGraphQLUrl = environment.cerGraphQLPreviewUrl;
-environment.auth.redirectUri = "http://research-hub-preview.sandbox.amazon.auckland.ac.nz:4200";
-environment.auth.logout_uri = "research-hub-preview.sandbox.amazon.auckland.ac.nz/";
+environment.auth.redirectUri = "https://research-hub-preview.sandbox.amazon.auckland.ac.nz";
+environment.auth.logout_uri = "https://research-hub-preview.sandbox.amazon.auckland.ac.nz";
 
 environment.privateUrlKeyWords = {
   get whoNeedBearerToken() {
