@@ -53,7 +53,7 @@ import {
   animations: [
     trigger('contentPushLeft', [
       state('true', style({
-        marginLeft: '400px'
+        marginLeft: '45vh'
       })),
       state('false', style({
         marginLeft: '0'
@@ -155,7 +155,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
-      this.titleService.setTitle('ResearchHub | ' + this.pageTitle);
+      this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
@@ -179,6 +179,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
         .subscribe(async event => {
+          
 
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
@@ -191,13 +192,23 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           if (routeName) {
             this.showBanner = ['home'].includes(routeName);
             this.searchBarService.setVisibility(['home', 'search'].includes(routeName));
-            if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Home');
+            if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Welcome to the ResearchHub');
 
             // Update previous and current routes
             if (this.currentRoute) {
               this.previousRoute = this.currentRoute;
             }
+
             this.currentRoute = routeName;
+
+            console.log(this.previousRoute);
+            console.log(this.currentRoute);
+          
+             // Same component navigation
+             if (this.currentRoute == this.previousRoute) {
+              this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+              this.router.navigate([url]);
+            }
 
             this.showBackBtn = routeName !== 'home';
 

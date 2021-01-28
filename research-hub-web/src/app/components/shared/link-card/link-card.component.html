@@ -1,0 +1,22 @@
+<div 
+    class="embedded-entry-block"
+    ngClass.xs="embedded-entry-block-mobile">
+
+    <a href="{{contentItem.url}}">
+        <mat-card 
+            class="call-to-action"
+            style="display: flex; align-items: center;justify-content: space-between">
+            <span>
+                <mat-card-title>
+                    <span>{{ contentItem.title }}</span>
+                </mat-card-title>              
+                <mat-card-content>
+                    <span class="card-summary">
+                        {{ contentItem.summary }}
+                    </span>
+                </mat-card-content> 
+            </span>
+            <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/navy-arrow.png">
+        </mat-card>
+    </a>
+</div>

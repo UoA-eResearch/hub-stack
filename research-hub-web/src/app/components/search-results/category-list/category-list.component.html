@@ -1,29 +1,40 @@
 <!-- Category List -->
-<div [class.compact]="compact" class="category-list" *ngIf="isSelectedCategoryAll">
+<div 
+  [class.compact]="compact" 
+  class="category-list" 
+  *ngIf="isSelectedCategoryAll">
   <div>
   </div>
   <mat-chip-list mat-line>
     <mat-chip selected>
       <span>All: {{ (results$ | async)?.totalElements }}</span>
     </mat-chip>
-    <mat-chip *ngFor="let categoryTuple of resultsCategories$ | async" (click)="onCategorySelected(categoryTuple[0])"
+    <mat-chip 
+      *ngFor="let categoryTuple of resultsCategories$ | async" 
+      (click)="onCategorySelected(categoryTuple[0])"
       [selected]="isCurrentCategory(categoryTuple[0])">
 
-      <span style="margin-right: 2px;"
-        *ngFor="let categoryValue of categoryTuple; let first=first;">{{categoryValue}}<span *ngIf="first"
-          style="padding-right: 0px">: </span></span>
+      <span 
+        *ngFor="let categoryValue of categoryTuple; let first=first;">
+          {{ categoryValue }}
+        <span *ngIf="first">:</span>
+      </span>
     </mat-chip>
   </mat-chip-list>
 </div>
 
 <!-- Category list for when a category is selected. -->
-<div [class.compact]="compact" class="category-list" *ngIf="!isSelectedCategoryAll">
+<div 
+  [class.compact]="compact" 
+  class="category-list" 
+  *ngIf="!isSelectedCategoryAll">
   <mat-chip-list mat-line>
     <mat-chip>
       <span (click)="onCategorySelected('All')">All Categories</span>
     </mat-chip>
     <mat-chip selected>
-      <span style="margin-right: 2px;">{{ getCurrentCategoryDisplayName()}}: {{(results$ | async)?.totalElements }}
+      <span>
+        {{ getCurrentCategoryDisplayName() }}: {{(results$ | async)?.totalElements }}
       </span>
     </mat-chip>
   </mat-chip-list>

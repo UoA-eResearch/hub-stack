@@ -8,7 +8,6 @@ import { ListItem } from '@model/ListItem';
 import { AppComponentService } from '@app/app.component.service';
 import { RoleTypeId, CategoryId } from '@app/global/global-variables';
 
-
 @Component({
   selector: 'app-person-details',
   templateUrl: './person-details.component.html',
