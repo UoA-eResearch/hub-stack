@@ -12,7 +12,15 @@ import { HumanCasePipe } from '@pipes/human-case.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
 import { RichTextToHTML } from '@pipes/rich-text.pipe';
-import { CalendarIconComponent } from './calendar-icon/calendar-icon.component';
+import { BodyMediaComponent } from './body-media/body-media.component';
+import { LinkCardComponent } from './link-card/link-card.component';
+import { VideoCardComponent } from './video-card/video-card.component';
+import { AssetBlockComponent } from './asset-block/asset-block.component';
+import { EntryBlockComponent } from './entry-block/entry-block.component';
+import { EntryInlineComponent } from './entry-inline/entry-inline.component';
+import { CardsComponent } from './cards/cards.component';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { LargeCardsComponent } from './large-cards/large-cards.component';
 
 
 @NgModule({
@@ -32,7 +40,15 @@ import { CalendarIconComponent } from './calendar-icon/calendar-icon.component';
     HumanCasePipe,
     CollectionListComponent,
     RichTextToHTML,
-    CalendarIconComponent
+    BodyMediaComponent,
+    LinkCardComponent,
+    VideoCardComponent,
+    AssetBlockComponent,
+    EntryBlockComponent,
+    EntryInlineComponent,
+    CardsComponent,
+    BreadcrumbsComponent,
+    LargeCardsComponent,
   ],
   exports: [
     FlexLayoutModule,
@@ -44,7 +60,15 @@ import { CalendarIconComponent } from './calendar-icon/calendar-icon.component';
     ListItemToRouterLinkPipe,
     HumanCasePipe,
     CollectionListComponent,
-    RichTextToHTML
+    RichTextToHTML,
+    LinkCardComponent,
+    VideoCardComponent,
+    AssetBlockComponent,
+    EntryBlockComponent,
+    EntryInlineComponent,
+    CardsComponent,
+    BreadcrumbsComponent,
+    LargeCardsComponent,
   ],
   providers: [],
 })

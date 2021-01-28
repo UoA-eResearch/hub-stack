@@ -2,37 +2,43 @@
 
 
 ::ng-deep div h3:first-child {
-  margin-bottom: 8px !important;
+  margin-bottom: 1vh !important;
 }
 
 ::ng-deep div h3:not(:first-child) {
-  margin-top: 24px !important;
-  margin-bottom: 8px !important;
+  margin-top: 3vh !important;
+  margin-bottom: 1vh !important;
 }
 
 ::ng-deep ul {
-  margin: 0 0 12px !important;
+  margin: 0 0 1.5vh !important;
 }
 
 ::ng-deep div h4:not(:first-child) {
-  margin-top: 20px !important;
-  margin-bottom: 6px !important;
+  margin-top: 2.5vh !important;
+  margin-bottom: 0.75vh !important;
 }
 
-//Sass table colour variables
+
+/**
+ * Sass table colour variables
+ */
 $table-row-dark-background-color: #E5E5E5;
 $table-row-light-background-color: rgba(0,0,0,.05);
 $table-row-hover-background-color: #fff;
 $table-font-color-default: rgba(0,0,0,.87);
 $table-font-color-heading: #b13462;
 
-// Scrolling Version
+
+/**
+ * Scrolling Version
+ */
 ::ng-deep app-markdown table {
   font-size: smaller;
   display: block;
   overflow-x: auto;
   white-space: nowrap;
-  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);
+  box-shadow: 0 0.375vh 0.125vh -0.25vh rgba(0,0,0,.2),0 0.25vh 0.25vh 0 rgba(0,0,0,.14),0 0.125vh 0.625vh 0 rgba(0,0,0,.12);
   margin-bottom: 1em;
   margin-top: 1em;
 }
@@ -40,7 +46,7 @@ $table-font-color-heading: #b13462;
 ::ng-deep app-markdown th, ::ng-deep app-markdown td  {
   margin: auto;
   text-align: center;
-  padding: 2px 5px 2px 5px;
+  padding: 0.25vh 0.625vh 0.25vh 0.625vh;
 }
 
 ::ng-deep app-markdown tr:hover {

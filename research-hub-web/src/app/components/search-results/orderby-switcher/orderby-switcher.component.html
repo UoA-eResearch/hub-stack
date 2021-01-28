@@ -1,8 +1,16 @@
-<div fxFlex="100px">
-  <mat-form-field floatLabel="never" class="no-floating-label input-full-width">
-    <mat-select placeholder="Sort By" (selectionChange)="onSortByChange($event)" [(value)]="value">
-      <mat-option *ngFor="let item of sortOptions" [value]="item.id" [disabled]="relevanceDisabled && item.name=='Relevance'">
-        {{ item.name }}
+<div fxFlex="16vh">
+  <mat-form-field 
+    floatLabel="never" 
+    class="no-floating-label input-full-width">
+    <mat-select 
+      placeholder="Sort By" 
+      (selectionChange)="onSortByChange($event)" 
+      [(value)]="value">
+      <mat-option 
+        *ngFor="let item of sortOptions" 
+        [value]="item.id"
+        [disabled]="relevanceDisabled && item.name=='Relevance'">
+          {{ item.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>

@@ -7,7 +7,7 @@ import { ResearchHubApiService } from '@services/research-hub-api.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 import { ErrorStateMatcher } from '@angular/material/core';
 
-xdescribe('CategoryListComponent', () => {
+describe('CategoryListComponent', () => {
   let component: CategoryListComponent;
   let fixture: ComponentFixture<CategoryListComponent>;
 

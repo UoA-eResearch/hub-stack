@@ -14,26 +14,23 @@
       [queryParams]="{categoryId: item.id}" 
       [matTooltip]="getCategoryDescription(item.id)"
       [matTooltipShowDelay]="500">
-      <div fxLayout="column" 
+      <div 
+        fxLayout="column" 
         fxLayoutAlign="center center" 
+        fxLayoutGap="2vh"
         class="tile-content">
         <span class="tile-text">
           {{ item.name }}
         </span>
         <mat-icon 
-          class="tile-icon"
-          ngClass.md="tile-icon-md"
-          ngClass.sm="tile-icon-sm"
-          ngClass.xs="tile-icon-xs">
+          class="tile-icon">
             {{ item.icon }}
           </mat-icon>
       </div>
     </mat-grid-tile>
   </mat-grid-list>
   <div
-    class="top-padding"
-    ngClass.xs="top-padding" 
-    ngClass.sm="top-padding">
+    class="top-padding">
     <h2 *ngIf="embedded">
         NEW - Browse GraphQL Categories
     </h2>
@@ -51,14 +48,11 @@
         <div 
           fxLayout="column" 
           fxLayoutAlign="center center" 
+          fxLayoutGap="2vh"
           class="tile-content">
           <span class="tile-text">{{item.name}}</span>
           <mat-icon 
-            class="tile-icon"
-            ngClass.lg="tile-icon-lg"
-            ngClass.md="tile-icon-md"
-            ngClass.sm="tile-icon-sm"
-            ngClass.xs="tile-icon-xs">
+            class="tile-icon">
               {{item.icon}}
           </mat-icon>
         </div>

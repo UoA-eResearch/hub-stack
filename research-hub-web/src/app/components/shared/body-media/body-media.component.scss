@@ -1,0 +1,29 @@
+@import '../../../../themes.scss';
+@import '../../../../typography.scss';
+
+/**
+ * Blockquote
+ */
+ .blockquote-container {
+     width: fit-content;
+     border-left: solid 0.5vh $input-grey;
+     margin: 3.75vh auto;
+ }
+ .blockquote {
+    word-break: break-word;
+    font-size: 3vh;
+    line-height: 1.2;
+ }
+ .blockquote p {
+    margin: 1.5vh 0.625vh 1.5vh 1.875vh;
+    width: fit-content;
+    text-align: center;
+    font-family: 'National Light';
+ }
+
+/**
+ * If viewed on a mobile device
+ */
+.blockquote-mobile {
+    width: 100%; 
+}

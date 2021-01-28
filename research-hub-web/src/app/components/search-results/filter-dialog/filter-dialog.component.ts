@@ -3,7 +3,6 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { SearchFiltersService, DEFAULT_FILTERS_VALUE } from '../search-filters/search-filters.service';
 import { AnalyticsService } from '@services/analytics.service';
 
-
 @Component({
   selector: 'app-filter-dialog',
   templateUrl: './filter-dialog.component.html',

@@ -15,8 +15,6 @@ import {
   ContentTypeId
 } from '@app/global/global-variables';
 
-
-
 @Component({
   selector: 'app-content-details',
   templateUrl: './content-details.component.html',
