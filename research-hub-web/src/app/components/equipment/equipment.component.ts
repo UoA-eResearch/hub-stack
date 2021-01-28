@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck, tap, flatMap, map } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
+import { pluck, tap, flatMap, map, catchError } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { 
     EquipmentCollection, 
     AllEquipmentGQL, 
@@ -31,6 +31,7 @@ export class EquipmentComponent implements OnInit {
 
   constructor(
     public route: ActivatedRoute,
+    public router: Router,
     public allEquipmentGQL: AllEquipmentGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public getEquipmentByIDGQL: GetEquipmentByIdGQL,
@@ -41,13 +42,13 @@ export class EquipmentComponent implements OnInit {
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getArticleBySlug() method.
+     * passed to the getEquipmentBySlug() method.
      */
     this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
 
     /**
-     * If this.slug is defined, we're loading an individual article,
-     * therefore run the corresponding query. If not, return all articles.
+     * If this.slug is defined, we're loading an individual equipment,
+     * therefore run the corresponding query. If not, return all equipment.
      */
     if (!!this.slug) {
       this.getEquipmentBySlug(this.slug).subscribe(data => {
@@ -62,11 +63,11 @@ export class EquipmentComponent implements OnInit {
   }
 
   /**
-   * Function that returns all articles from the ArticleCollection as an observable
-   * of type ArticleCollection. This is then unwrapped with the async pipe.
+   * Function that returns all equipment from the EquipmentCollection as an observable
+   * of type EquipmentCollection. This is then unwrapped with the async pipe.
    *
    * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting article/slug-name.
+   * user is visiting Equipment/slug-name.
    */
   public getAllEquipment(): Observable<EquipmentCollection> {
     try {
@@ -76,13 +77,13 @@ export class EquipmentComponent implements OnInit {
   }
 
   /**
-   * Function that returns an individual article from the ArticleCollection by it's slug
-   * as an observable of type Article. This is then unwrapped with the async pipe.
+   * Function that returns an individual equipment from the EquipmentCollection by it's slug
+   * as an observable of type Equipment. This is then unwrapped with the async pipe.
    *
    * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /articles.
+   * the user is visiting /equipment.
    *
-   * @param slug The article's slug. Retrieved from the route parameter of the same name.
+   * @param slug The equipment's slug. Retrieved from the route parameter of the same name.
    */
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
     try {
@@ -92,14 +93,14 @@ export class EquipmentComponent implements OnInit {
   }
 
   /**
-   * Function that returns an individual article from the ArticleCollection by it's ID
-   * as an observable of type Article. This is then unwrapped with the async pipe.
-   * ID is retrieved by subscribing to 'getArticleBySlug'.
+   * Function that returns an individual equipment from the EquipmentCollection by it's ID
+   * as an observable of type Equipment. This is then unwrapped with the async pipe.
+   * ID is retrieved by subscribing to 'getEquipmentBySlug'.
    */
   public getEquipmentByID(id: string): Observable<Equipment> {
     try {
       return this.getEquipmentByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.equipment)) as Observable<Equipment>;
-    } catch (e) { console.error(`Error loading article ${id}:`, e); }
+        .pipe(map(x => x.data.equipment), catchError(err => (this.router.navigate(['/error/500'])))) as Observable<Equipment>;
+    } catch (e) { console.error(`Error loading Equipment ${id}:`, e); }
   }
 }
