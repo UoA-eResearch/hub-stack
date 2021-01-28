@@ -37,6 +37,10 @@ resource "aws_ecs_task_definition" "graphql_preview" {
          "name": "CONTENTFUL_ACCESS_TOKEN"
         },
         {
+          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-preview-access-token",
+          "name": "CONTENTFUL_PREVIEW_ACCESS_TOKEN"
+        },
+        {
           "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-space-id",
           "name": "CONTENTFUL_SPACE_ID"
         },
