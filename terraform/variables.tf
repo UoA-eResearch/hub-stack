@@ -155,6 +155,10 @@ variable "repository_name" {
   default     = "research-hub/cer-graphql"
 }
 
+variable "kms_uoa_central_key_id" {
+  description = "Id of the UoA Central Key from KMS"
+}
+
 #######################
 #    ECS Services     #
 #######################

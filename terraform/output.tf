@@ -4,5 +4,5 @@ output "repository_id" {
 }
 
 output "Please_create_the_following_values_in_parameter_store" {
-    value = "/${var.lifecycle_state}/research-hub/contentful-access-token, /${var.lifecycle_state}/research-hub/contentful-space-id, /${var.lifecycle_state}/research-hub/cognito-region, /${var.lifecycle_state}/research-hub/cognito-user-pool"
+    value = "/${var.lifecycle_state}/research-hub/contentful-access-token, /${var.lifecycle_state}/research-hub/contentful-preview-access-token, /${var.lifecycle_state}/research-hub/contentful-space-id, /${var.lifecycle_state}/research-hub/cognito-region, /${var.lifecycle_state}/research-hub/cognito-user-pool"
 }
