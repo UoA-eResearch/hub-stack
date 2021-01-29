@@ -8,10 +8,6 @@ describe('ResearchHubs Article Pages', () => {
         cy.contains('First article');
     });
 
-    it('can display a list of its keywords', () => {
-        cy.get('#keywords').should('exist');
-    });
-
     it('displays a list of related items', () => {
         cy.get('#you-might-be-interested-in').should('exist');
     });
