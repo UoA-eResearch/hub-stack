@@ -1,14 +1,18 @@
 @import '../../../../themes.scss';
 @import '../../../../styles.scss';
 
+
 /**
- * Entry Block
- */
-.embedded-entry-block .mat-card-img {
-    object-fit: cover;
+ * Card Image
+ */ 
+ .mat-card-image {
+    min-height: 10vh;
+    max-height: 19vh;
+    margin-bottom: 0.625vh;
     min-width: 100%;
-    height: auto;
+    object-fit: cover;
 }
+
 .embedded-entry-block .mat-card-title a {
     font-size: 2.25vh; 
     color: map-get($hub-navy, 500);
@@ -17,18 +21,6 @@
     border-bottom: solid 0.25vh map-get($hub-navy, 500);
 }
 
-
-/**
- * HTML Elements
- */
  small {
     color: #757575;
 }
-
-
-/**
- * If viewed on a mobile device
- */
-.embedded-entry-block-mobile {
-     width: 100%; 
- }

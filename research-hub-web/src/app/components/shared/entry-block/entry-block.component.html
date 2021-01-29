@@ -1,12 +1,21 @@
+<!-- Templates -->
+<ng-template #image>
+    <img mat-card-image src="{{ contentItem.banner?.url }}">
+</ng-template>
+
+<ng-template #noImage>
+    <div style="margin-top: 1.25vh;"></div>
+</ng-template>
+
 <!-- Default Entry Block Template -->
 <ng-template #default>
     <mat-card class="embedded-entry-block section">
+        <ng-container *ngIf="contentItem.banner; then image; else noImage"></ng-container>
         <mat-card-title>
             <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
                 {{ contentItem['title'] }}
             </a>
-        </mat-card-title> 
-        <br/>
+        </mat-card-title>
         <mat-card-content>
             <span class="card-summary">
                 {{ contentItem['summary'] }}
