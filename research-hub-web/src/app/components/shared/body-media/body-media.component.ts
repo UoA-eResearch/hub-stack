@@ -1,7 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaService} from '@services/body-media.service';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-body-media',

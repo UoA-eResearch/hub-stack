@@ -14,14 +14,13 @@ div.collection {
     cursor: pointer;
 
     &.ssoProtected {
-        // Any optional styling to add to ssoProtected items
+        
     }
 
     &:hover {
         border: 0.125vh solid map-get($hub-teal, 50);
     }
 
-    // Used to set the height/width of both avatar images and icons.
     $avatar-size: 8vh;
 
     #item-avatar {
@@ -47,7 +46,7 @@ div.collection {
 /**
  * Material Overrides
  */
- mat-card-title .card-title {
+mat-card-title .card-title {
     @extend .card-title;
     font-size: 2.2vh!important;
     border-bottom: 0.5vh solid rgba(0, 0, 0, 0);
