@@ -23,7 +23,7 @@ const getCredentials = (isFromFile) => {
     if (process.env.IS_PREVIEW_ENV !== undefined) {
         isPreviewEnv = process.env.IS_PREVIEW_ENV === "true";
     }
-    const configFromEnvVars = {
+    return {
         CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
         CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
         COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
