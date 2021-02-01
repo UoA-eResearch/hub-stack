@@ -18,11 +18,12 @@ const getCredentials = (isFromFile) => {
             throw configResult.error;
         }
     }
+    console.log("IS_PREVIEW? ", process.env.IS_PREVIEW_ENV, "equals true? ", process.env.IS_PREVIEW_ENV === "true");
     let isPreviewEnv = false;
     if (process.env.IS_PREVIEW_ENV !== undefined) {
         isPreviewEnv = process.env.IS_PREVIEW_ENV === "true";
     }
-    return {
+    const configFromEnvVars = {
         CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
         CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
         COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
