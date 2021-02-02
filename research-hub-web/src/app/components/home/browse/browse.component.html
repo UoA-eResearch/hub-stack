@@ -1,62 +1,33 @@
-<div>
-  <h2 *ngIf="embedded">
-    Browse categories
-  </h2>
-  <mat-grid-list 
-    [cols]="numCols" 
-    gutterSize="1em">
-    <mat-grid-tile 
-      class="browse-tile" 
-      *ngFor="let item of categoryOptions;" 
-      [colspan]="1" 
-      [rowspan]="1"
-      [routerLink]="['/search']" 
-      [queryParams]="{categoryId: item.id}" 
-      [matTooltip]="getCategoryDescription(item.id)"
-      [matTooltipShowDelay]="500">
+<div class="text">
+  <h2>Research Categories</h2>
+  <p>Little description about what research categories are and what purpose they serve. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>  
+</div>
+
+<div class="research-categories-content">
+  <div 
+    fxLayout="column wrap" 
+    fxLayoutGap="1vh"
+    fxLayout.lt-sm="column">
+    <div *ngFor="let item of categoryOptionsGQL; let i = index" [ngClass]="item.className">
       <div 
-        fxLayout="column" 
-        fxLayoutAlign="center center" 
-        fxLayoutGap="2vh"
-        class="tile-content">
-        <span class="tile-text">
-          {{ item.name }}
-        </span>
-        <mat-icon 
-          class="tile-icon">
-            {{ item.icon }}
-          </mat-icon>
-      </div>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <div
-    class="top-padding">
-    <h2 *ngIf="embedded">
-        NEW - Browse GraphQL Categories
-    </h2>
-    <mat-grid-list 
-      [cols]="numCols" 
-      gutterSize="1em">
-      <mat-grid-tile 
-        class="browse-tile-new" 
-        *ngFor="let item of categoryOptionsGQL;" 
-        [colspan]="1"
-        [rowspan]="1" 
-        [routerLink]="item.url" 
-        [matTooltip]="getCategoryDescription(item.id)" 
-        [matTooltipShowDelay]="500">
+        class="panel"
+        fxLayout="row wrap">
         <div 
-          fxLayout="column" 
-          fxLayoutAlign="center center" 
-          fxLayoutGap="2vh"
-          class="tile-content">
-          <span class="tile-text">{{item.name}}</span>
-          <mat-icon 
-            class="tile-icon">
-              {{item.icon}}
-          </mat-icon>
+          class="inner-panel"
+          [style]="'transform: skew(30deg); width:55vw; margin-left: -5vw;'">
+          <div
+            [style]="'transform: skew(-30deg); width: 60%;'"
+            selected 
+            [routerLink]="item.url">
+            <h3>
+              {{ item.name }}
+            </h3>
+            <p>
+              {{ item.description }}
+            </p>
+          </div>
         </div>
-      </mat-grid-tile>
-    </mat-grid-list>
+      </div>
+    </div>
   </div>
 </div>

@@ -40,8 +40,7 @@ import {
   menuOptions,
   categoryOptions,
   categoryOptionsGQL,
-  researchActivityOptions,
-  CoverImageURL
+  researchActivityOptions
 } from '@app/global/global-variables';
 
 
@@ -64,7 +63,6 @@ import {
   ]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
-  public coverImageUrl = CoverImageURL
   public menuOptions = menuOptions;
   public categoryOptions = categoryOptions;
   public categoryOptionsGQL = categoryOptionsGQL;
@@ -200,9 +198,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             }
 
             this.currentRoute = routeName;
-
-            console.log(this.previousRoute);
-            console.log(this.currentRoute);
           
              // Same component navigation
              if (this.currentRoute == this.previousRoute) {
