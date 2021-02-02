@@ -1,24 +1,33 @@
-<div class="section">
-  <h2>Research Activities</h2>
-  <mat-chip-list>
-    <div 
-      fxLayout="row wrap" 
-      fxLayout.lt-sm="column" 
-      fxLayoutAlign="space-between stretch"
-      style="width:100%">
-      <div 
-        *ngFor="let activity of researchActivityOptions" 
-        [ngClass]="activity.className">
-        <mat-chip 
-          selected [routerLink]="['/search']" 
-          [queryParams]="getQueryParams(activity)"
-          [ngClass]="[activity.className, 'ra-chip']" 
-          [ngClass.lt-md]="[activity.className, 'ra-chip', 'tablet-view']"
-          [ngClass.lt-sm]="[activity.className, 'ra-chip', 'mobile-view']"
-          (click)="analyticsService.trackUserExperience('Home page research activities', 'click')">
-            {{activity.name}}
-        </mat-chip>
-      </div>
+
+<div class="research-activity-content">
+  <div class="text">
+    <h2>Research Activities</h2>
+    <p>Little description about what research activities are and what purpose they serve. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>  
+  </div>
+  <div
+    fxLayoutGap="1%"
+    fxLayout="row wrap"
+    fxLayout.lt-md="column wrap"
+    class="site-padding margin-bottom"
+    ngClass.lt-lg="site-padding-mobile margin-bottom">
+    <div
+      *ngFor="let item of researchActivityOptions;"
+      fxFlex="19%"
+      fxLayout="column"
+      fxLayoutAlign="center">
+      <mat-card class="activity tile-content">
+        <mat-card-title class="card-title"><a>{{ item.name }}</a></mat-card-title>
+        <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
+        <mat-card-actions>
+          <a [routerLink]="item.url">
+            <button 
+                mat-flat-button 
+                class="button">
+                See More
+            </button>
+          </a>
+        </mat-card-actions>
+      </mat-card>
     </div>
-  </mat-chip-list>
+  </div>
 </div>

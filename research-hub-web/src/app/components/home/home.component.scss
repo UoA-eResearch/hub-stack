@@ -1,2 +1,8 @@
 @import "../../../styles";
+@import "../../../typography.scss";
+@import "../../../themes.scss";
 
+.grey-background {
+    padding-bottom: 5vh;
+    background-color: $light-grey;
+}

@@ -221,22 +221,12 @@ $app-primary-header-typography: mat-typography-config(
 );
 
 /*
-Featured
- */
-
-$app-featured-mat-card-typography: mat-typography-config(
-  $body-1:      mat-typography-level(2.25vh, 2.5vh, 400), // text
-  $button:        mat-typography-level(1.75vh, 2.5vh, 400) // icon
-);
-
-/*
 Browse Grid / Results
  */
 
 $app-browse-grid-typography: mat-typography-config(
   $font-family:   $font-family,
-  $body-1:        mat-typography-level(2.25vh, 2.5vh, 400), // text
-  $body-2:        mat-typography-level(4vh, 4vh, 500) // icon
+  $body-1:        mat-typography-level(3vh, 3.25vh, 400), // text
 );
 
 
