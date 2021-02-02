@@ -21,6 +21,35 @@
 
 
 /*
+ * Banner Styling
+ */
+ .banner-container-home {
+  height: 100vh;
+  text-align: center;
+  max-height: auto;
+  background-size: cover!important;
+}
+
+.banner-content-home {      
+  margin: 25vh auto;
+  display: inline-block;
+}
+.banner-text h1,
+.banner-text h4 {
+  width: 65vw;
+  margin: 0 auto;
+  color: white;
+}
+.banner-content-home h1 {
+  font-size: 6vh;
+}
+.banner-content-home h4 {
+  font-size: 3vh;
+  line-height: 100%;
+}
+
+
+/*
  * Button styles
  */
 .menu-button {
@@ -75,7 +104,7 @@ mat-list-item.mat-list-item {
 }
 .app-toolbar-container {
   position: relative;
-  background: map-get($hub-teal, 500);
+  background-color: rgba(0,0,0,0);  
   color: white;
 }
 .app-toolbar {
@@ -112,14 +141,18 @@ mat-expansion-panel {
 mat-expansion-panel-header .mat-expanded {
   height: 8vh !important;
 }
-.mat-menu-panel {
+.mat-menu-panel,
+.mat-menu-content {
   min-width: fit-content!important;
+  background: rgba(10, 10, 10, 0.4);
 }
 .mat-menu-item {
   color: white!important;
   padding: 0 2vh!important;
   height: fit-content!important;
   line-height: 6vh!important;
+  background: rgba(10, 10, 10, 0);
+  font-size: mat-font-size($app-base-typography, body-1);
 }
 .mat-expansion-panel-body {
   margin-left: 0 !important;

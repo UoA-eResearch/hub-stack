@@ -1,1 +1,51 @@
 @import "../../../../styles";
+
+/**
+ * Text
+ */
+ .text {
+    text-align: center;
+    width: 50vw;
+    margin: 5vh auto;
+  }
+  .text h2 {
+    font-size: 5.5vh;
+  }
+  .text p {
+    font-size: 3vh;
+  }
+  
+  
+  /**
+   * Panel
+   */
+  .panel {
+    width: 100vw;
+  }
+  .inner-panel{
+    height: 30vh;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background: map-get($hub-teal, 500);
+  }
+  .inner-panel *,
+  .inner-panel *:hover {
+    color: white!important;
+    cursor: pointer
+  }
+  .inner-panel h3 {
+    font-style: italic;
+    font-weight: bold;
+    line-height: 1.1;
+    font-size: 5vh;
+  }
+  .inner-panel p {
+    font-style: italic;
+    font-size: 2.5vh;
+  }
+  .inner-panel-image {
+    flex-grow: 1;
+    margin-left: -5vw;
+  }
