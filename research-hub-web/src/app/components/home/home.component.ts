@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchBarService } from '../search-bar/search-bar.service';
+import { CategoryId } from '../../global/global-variables';
 
 
 @Component({
@@ -13,19 +14,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    enum CategoryId {
-      All = 1,
-      Support,
-      Equipment,
-      Training,
-      Software,
-      Facilities,
-      Guide,
-      Person,
-      Policies,
-      Articles,
-      SubHubs
-    }
     this.searchBarService.setSearchText('');
     this.searchBarService.setCategory(CategoryId.All);
   }
