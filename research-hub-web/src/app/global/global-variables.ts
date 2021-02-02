@@ -36,7 +36,7 @@ export enum ResearchActivityId {
 
   export enum CategoryId {
     All = 1,
-    Support = 2,
+    Support,
     Equipment,
     Training,
     Software,

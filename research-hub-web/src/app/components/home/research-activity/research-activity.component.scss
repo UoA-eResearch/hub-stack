@@ -45,15 +45,11 @@
 /**
  * Hover Animation
  */
-.card-title a {
-  color: map-get($hub-navy, 500);
+.card-title p {
+  color: map-get($hub-navy, 400);
   display: inline;
   font-size: 2.5vh;
   border-bottom: solid 0.25vh transparent;
-}
-.card-title a:hover {
-  border-bottom: solid 0.25vh map-get($hub-navy, 500);
-  cursor: pointer;
 }
 
 
@@ -62,13 +58,14 @@
  */
  .button {
   color: white!important;
-  border: 0.25vh solid map-get($hub-navy, 500)!important;
+  margin: 1vh 0;
+  border: 0.25vh solid map-get($hub-navy, 400)!important;
   border-radius: 6.25vh!important;
-  background-color: map-get($hub-navy, 500)!important;
+  background-color: map-get($hub-navy, 400)!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .button:hover {
-  color: map-get($hub-navy, 500)!important;
+  color: map-get($hub-navy, 400)!important;
   border-radius: 6.25vh!important;
   background-color: white!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;

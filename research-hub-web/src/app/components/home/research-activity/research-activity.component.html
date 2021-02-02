@@ -15,19 +15,28 @@
       fxFlex="19%"
       fxLayout="column"
       fxLayoutAlign="center">
-      <mat-card class="activity tile-content">
-        <mat-card-title class="card-title"><a>{{ item.name }}</a></mat-card-title>
-        <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
+      <mat-card 
+        class="activity tile-content"
+        fxLayout="column"
+        fxLayoutAlign="space-between">
+        <div>
+          <mat-card-title class="card-title">{{ item.name }}</mat-card-title>
+          <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
+        </div>
         <mat-card-actions>
-          <a [routerLink]="item.url">
-            <button 
+            <button
+              selected
+              [routerLink]="['/search']"
+              [queryParams]="getQueryParams(item)"
                 mat-flat-button 
                 class="button">
                 See More
             </button>
-          </a>
         </mat-card-actions>
       </mat-card>
     </div>
   </div>
 </div>
+
+
+<!-- not changing slider -->
