@@ -13,13 +13,11 @@ import {
 })
 export class ResearchActivityComponent implements OnInit {
   public researchActivityOptions = researchActivityOptions;
-  
   constructor(public analyticsService: AnalyticsService) {}
 
   getQueryParams(activity) {
     return { researchActivityId: [activity.id] };
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

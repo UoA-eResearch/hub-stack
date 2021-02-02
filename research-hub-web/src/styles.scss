@@ -183,34 +183,6 @@ svg {
 
 
 /*
- * Browse and guide tiles
- */
-.browse-tile {
-  cursor: pointer;
-  background-color: $color-browse-tile-bg;
-  text-decoration: none;
-}
-.browse-tile-new {
-  cursor: pointer;
-  background-color: $color-guide-tile-bg;
-  text-decoration: none;
-}
-.tile-content {
-  text-align: center;
-}
-.tile-text {
-  color: $browse-tile-font-color;
-  @include mat-typography-level-to-styles($app-browse-grid-typography, body-1);
-}
-.tile-icon {
-  color: $browse-tile-font-color;
-  font-size: mat-font-size($app-browse-grid-typography, body-2)!important;
-  font-weight: mat-font-weight($app-browse-grid-typography, body-2)!important;
-  width: 100%;
-}
-
-
-/*
  * Override site-wide material design tooltip style
  */
 .mat-tooltip {
