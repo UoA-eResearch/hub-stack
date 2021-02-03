@@ -20,10 +20,13 @@
    * Panel
    */
   .panel {
-    width: 100vw;
+    width: 100%;
   }
   .inner-panel{
     height: 30vh;
+    width: 55vw;
+    transform: skew(30deg); 
+    margin-left: -5vw;
     display: flex;
     text-align: center;
     align-items: center;

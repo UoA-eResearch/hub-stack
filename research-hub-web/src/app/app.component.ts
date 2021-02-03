@@ -320,4 +320,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   getYear() {
     return format(new Date(), 'yyyy');
   }
+
+  clearSearchText() {
+    this.searchText = '';
+  }
 }

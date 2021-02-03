@@ -142,6 +142,13 @@
                 <br/>
                 <h4>{{ summary }}</h4>
               </div>
+              <br>
+              <input
+                #searchTextInput
+                class="initial-search" 
+                type="search"
+                [(ngModel)]="searchText"
+                placeholder="Search">
             </div>
           </div>
 
@@ -159,7 +166,8 @@
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
               <div #content>
-               <app-search-bar 
+               <app-search-bar
+                [style.display]="showBanner ? 'none' : 'block'"
                 [categories]="categoryOptions" 
                 [category]="selectedCategory"
                 [searchText]="searchText">

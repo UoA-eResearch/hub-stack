@@ -1,11 +1,13 @@
 import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AnalyticsService } from '@services/analytics.service';
+import { ActivatedRoute } from '@angular/router';
 import { 
   ResearchActivityId,
   OptionType,
   researchActivityOptions
 } from '@app/global/global-variables';
+import { throwServerError } from '@apollo/client/core';
 
 @Component({
   selector: 'app-research-activity-input',
@@ -21,6 +23,7 @@ import {
 })
 export class ResearchActivityInputComponent implements OnInit, ControlValueAccessor {
   public researchActivityOptions = researchActivityOptions;
+  public id;
   public model = {};
 
   @Input() _value: number[] = [];
@@ -47,19 +50,22 @@ export class ResearchActivityInputComponent implements OnInit, ControlValueAcces
     this.updateState();
   }
 
-  constructor(public analyticsService: AnalyticsService) {
+  constructor(
+    public analyticsService: AnalyticsService,
+    public route: ActivatedRoute) {
+
     for (const activity of this.researchActivityOptions) {
       this.model[activity.id] = { selected: false };
     }
   }
 
   ngOnInit() {}
-
+  
   setDisabledState(isDisabled) {
     this.isDisabled = isDisabled;
   }
 
-  onToggle(activityId, toggleEvent) {
+  onToggle(activityId) {
     this.model[activityId].selected = !this.model[activityId].selected;
     this.updateValue();
     this.analyticsService.trackUserExperience('Filter panel', 'filter by research activity');
