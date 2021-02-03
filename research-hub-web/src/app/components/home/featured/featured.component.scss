@@ -1,11 +1,15 @@
-@import "../../../../styles";
-
-
-.card-gt-xs {
-  flex: 1 0 31.25vh;
-  -webkit-flex: 1 0 31.25vh;
-}
-
-mat-card-content {
-  margin-bottom: 2vh;
-}
+/**
+ * Text
+ */
+ .text {
+    text-align: center;
+    width: 50vw;
+    margin: 5vh auto;
+  }
+  .text h2 {
+    font-size: 5.5vh;
+  }
+  .text p {
+    font-size: 3vh;
+  }
+  
