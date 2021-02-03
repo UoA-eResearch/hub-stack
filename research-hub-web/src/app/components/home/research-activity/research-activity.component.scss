@@ -7,7 +7,9 @@
  */
 .research-activity-content {
   @extend .margin-bottom;
+  padding: 2vh 0;
   width: 95vw;
+  text-align: center;
   margin: 0 auto;
 }
 
@@ -41,18 +43,6 @@
   text-align: center;
 }
 
-
-/**
- * Hover Animation
- */
-.card-title p {
-  color: map-get($hub-navy, 400);
-  display: inline;
-  font-size: 2.5vh;
-  border-bottom: solid 0.25vh transparent;
-}
-
-
 /**
  * Custom Button Styles
  */
@@ -69,4 +59,21 @@
   border-radius: 6.25vh!important;
   background-color: white!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+/**
+ * Mobile
+ */
+ @media only screen and (max-width: 124vh) {
+ .text {
+  text-align: center;
+  width: 95vw;
+  margin: 1vh auto;
+  }
+  .text h2 {
+    font-size: 4vh;
+  }
+  .text p {
+    font-size: 2vh;
+  }
 }

@@ -31,7 +31,9 @@ import { onError } from 'apollo-link-error';
 import { environment } from '@environments/environment';
 import { AppStorageService } from './services/app-storage.service';
 
-// Dynamic Routing
+/**
+ * Dynamic Routing
+ */
 import { APP_INITIALIZER } from '@angular/core';
 import { CerGraphqlService } from './services/cer-graphql.service';
 
@@ -42,7 +44,6 @@ import { CerGraphqlService } from './services/cer-graphql.service';
  * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
  */
 import result from './graphql/possible-types';
-import { FeaturedComponent } from './featured/featured.component';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData: {
@@ -59,8 +60,7 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
 @NgModule({
   declarations: [
     AppComponent,
-    SearchBarComponent,
-    FeaturedComponent
+    SearchBarComponent
   ],
   imports: [
     AuthModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatCarousel, MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
 
 @Component({
   selector: 'app-featured',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeaturedComponent implements OnInit {
 
+  slides = ["one", "two", "three", "four", "five"];
   constructor() { }
 
   ngOnInit(): void {

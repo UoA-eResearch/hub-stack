@@ -1,3 +1,16 @@
+@import '../../../../styles.scss';
+@import '../../../../themes.scss';
+@import '../../../../typography.scss';
+
+
+/**
+ * Featured Container
+ */
+ .featured-container {
+   padding: 2vh 0;
+ }
+
+ 
 /**
  * Text
  */
@@ -13,3 +26,20 @@
     font-size: 3vh;
   }
   
+
+/**
+ * Mobile
+ */
+ @media only screen and (max-width: 124vh) {
+  .text {
+    text-align: center;
+    width: 95vw;
+    margin: 1vh auto;
+  }
+  .text h2 {
+    font-size: 4vh;
+  }
+  .text p {
+    font-size: 2vh;
+  }
+}
