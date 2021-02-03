@@ -11,7 +11,7 @@
     <mat-slide-toggle 
       [disabled]="isDisabled"
       [checked]="model[activity.id].selected"
-      (change)="onToggle(activity.id,$event)">
+      (change)="onToggle(activity.id)">
       {{activity.name}}
     </mat-slide-toggle>
   </div>

@@ -49,6 +49,35 @@
 }
 
 
+/**
+ * Initial Search
+ */ 
+.initial-search {
+  width: 20vw;
+  padding: 0.5vh;
+  font-style: italic;
+  font-size: 2.5vh;
+  color: rgba(200, 200, 200, 1);
+  background-color: rgba(100, 100, 100, 0.5);
+  border: 0.1vh solid rgba(100, 100, 100, 0.9);
+}
+.initial-search:active,
+.initial-search:focus {
+  text-decoration: none;
+  outline: none;
+}
+.initial-search::-webkit-search-cancel-button{
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  background-size: contain;
+  background-image: url('../assets/components/image.png');
+  color: white;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+
 /*
  * Button styles
  */
