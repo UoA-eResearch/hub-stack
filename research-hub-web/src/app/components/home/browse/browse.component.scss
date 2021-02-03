@@ -1,5 +1,14 @@
 @import "../../../../styles";
 
+
+/**
+ * Browse Container
+ */
+.browse-container {
+  padding: 2vh 0;
+}
+
+
 /**
  * Text
  */
@@ -31,13 +40,22 @@
     text-align: center;
     align-items: center;
     justify-content: center;
+    border: 2vh solid map-get($hub-teal, 500);
     background: map-get($hub-teal, 500);
+    transition: background 0.11s ease-in-out, color 0.1s ease-in-out;
   }
-  .inner-panel *,
-  .inner-panel *:hover {
-    color: white!important;
-    cursor: pointer
+  .inner-panel:hover {
+    background: white;
+    border: 0.5vh solid map-get($hub-teal, 500);
+    transition: background 0.11s ease-in-out;
   }
+  .inner-panel:hover * {
+    transition: background 0.11s ease-in-out;
+    color: map-get($hub-teal, 500)!important;
+  }
+  .inner-panel * {
+    color: white;
+   }
   .inner-panel div {
     transform: skew(-30deg); 
     width: 60%;
@@ -56,7 +74,11 @@
     flex-grow: 1;
     margin-left: -5vw;
   }
-
+  .inner-panel div:active,
+  .inner-panel div:focus {
+    text-decoration: none;
+    outline: none;
+  }
 
 /**
  * Mobile
@@ -84,5 +106,16 @@
     }
     .inner-panel-image {
       flex-grow: 0;
+    }
+    .text {
+      text-align: center;
+      width: 95vw;
+      margin: 1vh auto;
+    }
+    .text h2 {
+      font-size: 4vh;
+    }
+    .text p {
+      font-size: 2vh;
     }
   }
