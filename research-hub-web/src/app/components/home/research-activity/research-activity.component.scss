@@ -13,6 +13,7 @@
   margin: 0 auto;
 }
 
+
 /**
  * Text
  */
@@ -46,21 +47,25 @@
 /**
  * Custom Button Styles
  */
- .button {
-  color: white!important;
-  margin: 1vh 0;
-  border: 0.25vh solid map-get($hub-navy, 400)!important;
-  border-radius: 6.25vh!important;
-  background-color: map-get($hub-navy, 400)!important;
-  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-}
-.button:hover {
-  color: map-get($hub-navy, 400)!important;
-  border-radius: 6.25vh!important;
-  background-color: white!important;
-  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-}
+//  .button {
+//   color: white!important;
+//   margin: 1vh 0;
+//   border: 0.25vh solid map-get($hub-navy, 400)!important;
+//   border-radius: 6.25vh!important;
+//   background-color: map-get($hub-navy, 400)!important;
+//   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+// }
+// .button:hover {
+//   color: map-get($hub-navy, 400)!important;
+//   border-radius: 6.25vh!important;
+//   background-color: white!important;
+//   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+// }
 
+mat-card-actions a {
+  color: map-get($hub-navy, 500);
+  font-size: 2vh!important;
+}
 /**
  * Mobile
  */
