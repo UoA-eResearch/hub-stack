@@ -47,7 +47,7 @@
             [style.height]="showBanner ? '':'8vh'">
 
             <div #topbar class="app-toolbar-container">
-              <div class="site-content app-toolbar" ngClass.xs="site-content app-toolbar-xs" [style.background-color]="showBanner ? 'rgba(0,0,0,0)' : '#0294a5'">
+              <div class="site-content app-toolbar" ngClass.lt-lg="site-content app-toolbar-xs" [style.background-color]="showBanner ? 'rgba(0,0,0,0)' : '#0294a5'">
                 <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="center center" color="primary">
                   <button style="margin-right: 6px;" fxHide.gt-sm mat-icon-button (click)="sidenav.toggle()"
                     matTooltip="Menu">
@@ -72,7 +72,7 @@
                   </button>
 
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
-                    <button mat-menu-item *ngFor="let item of categoryOptions" [routerLink]="['/search']"
+                    <button [style.background]="showBanner ? '' : '#0294a5'" mat-menu-item *ngFor="let item of categoryOptions" [routerLink]="['/search']"
                       [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
                   </mat-menu>
 
@@ -82,7 +82,7 @@
                   </button>
 
                   <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
-                    <button mat-menu-item *ngFor="let item of researchActivityOptions"
+                    <button [style.background]="showBanner ? '' : '#0294a5'" mat-menu-item *ngFor="let item of researchActivityOptions"
                       [routerLink]="['/search']" [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
                   </mat-menu>
 

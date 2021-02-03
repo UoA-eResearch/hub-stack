@@ -147,7 +147,8 @@ mat-list-item.mat-list-item {
   padding-right: $padding-site;
 }
 .app-toolbar-xs {
-  @extend .site-padding-mobile;
+  padding-left: 5vh;
+  padding-right: 5vh;
 }
 .app-toolbar .app-toolbar-row {
   height: 8vh;
@@ -178,7 +179,7 @@ mat-expansion-panel-header .mat-expanded {
 .mat-menu-panel,
 .mat-menu-content {
   min-width: fit-content!important;
-  background: rgba(10, 10, 10, 0.4);
+  background: rgba(10, 10, 10, 0.6);
 }
 .mat-menu-item {
   color: white!important;
