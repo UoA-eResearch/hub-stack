@@ -36,16 +36,20 @@
 }
 .banner-text h1,
 .banner-text h4 {
-  width: 65vw;
+  width: 50vw;
   margin: 0 auto;
   color: white;
 }
 .banner-content-home h1 {
-  font-size: 6vh;
+  font-size: 5.5vh;
 }
 .banner-content-home h4 {
-  font-size: 3vh;
+  font-size: 2vh;
   line-height: 100%;
+}
+.banner-content-home img{      
+  width: 40vw;
+  height: auto;
 }
 
 
@@ -57,9 +61,9 @@
   padding: 0.5vh;
   font-style: italic;
   font-size: 2.5vh;
-  color: rgba(200, 200, 200, 1);
-  background-color: rgba(100, 100, 100, 0.5);
-  border: 0.1vh solid rgba(100, 100, 100, 0.9);
+  color: rgba(230, 230, 230, 1);
+  background-color: rgba(150, 150, 150, 0.4);
+  border: 0.1vh solid rgba(150, 150, 150, 0.7);
 }
 .initial-search:active,
 .initial-search:focus {
@@ -72,7 +76,6 @@
   width: 1em;
   background-size: contain;
   background-image: url('../assets/components/image.png');
-  color: white;
   opacity: 0.8;
   cursor: pointer;
 }
