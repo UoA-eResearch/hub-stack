@@ -42,6 +42,7 @@ import { CerGraphqlService } from './services/cer-graphql.service';
  * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
  */
 import result from './graphql/possible-types';
+import { FeaturedComponent } from './featured/featured.component';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData: {
@@ -58,7 +59,8 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
 @NgModule({
   declarations: [
     AppComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    FeaturedComponent
   ],
   imports: [
     AuthModule,
