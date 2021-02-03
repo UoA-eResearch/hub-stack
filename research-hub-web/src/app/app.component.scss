@@ -48,7 +48,7 @@
   line-height: 100%;
 }
 .banner-content-home img{      
-  width: 40vw;
+  width: 70vh;
   height: auto;
 }
 
@@ -59,8 +59,9 @@
 .initial-search {
   width: 20vw;
   padding: 0.5vh;
+  margin: 0 auto;
+  font-size: 2vh;
   font-style: italic;
-  font-size: 2.5vh;
   color: rgba(230, 230, 230, 1);
   background-color: rgba(150, 150, 150, 0.4);
   border: 0.1vh solid rgba(150, 150, 150, 0.7);
@@ -363,4 +364,20 @@ app-search-bar {
 .sign-out-button {
   color: black; 
   background-color: white;
+}
+
+
+/**
+ * Mobile
+ */
+@media only screen and (max-width: 124vh) {
+  .initial-search {
+    width: 60vw;
+  }
+  .banner-content-home h1 {
+    font-size: 4.5vh;
+  }
+  .banner-content-home img{      
+    width: 50vh;
+  }
 }

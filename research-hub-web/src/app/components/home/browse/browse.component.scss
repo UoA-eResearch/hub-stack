@@ -38,6 +38,10 @@
     color: white!important;
     cursor: pointer
   }
+  .inner-panel div {
+    transform: skew(-30deg); 
+    width: 60%;
+  }
   .inner-panel h3 {
     font-style: italic;
     font-weight: bold;
@@ -51,4 +55,34 @@
   .inner-panel-image {
     flex-grow: 1;
     margin-left: -5vw;
+  }
+
+
+/**
+ * Mobile
+ */
+  @media only screen and (max-width: 124vh) {
+    .inner-panel {
+      width: 100%;
+      margin: 0 auto;
+      transform: skew(0deg); 
+      margin-left: 0vw;
+    }
+    .inner-panel div {
+      transform: skew(0deg); 
+      width: 100%;
+    }
+    .inner-panel h3 {
+      line-height: 1.1;
+      font-size: 3vh;
+    }
+    .inner-panel p {
+      font-size: 2vh;
+      width: 90vw;
+      margin: 0 auto;
+      word-wrap: break-word;
+    }
+    .inner-panel-image {
+      flex-grow: 0;
+    }
   }
