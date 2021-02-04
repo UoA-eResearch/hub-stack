@@ -18,7 +18,6 @@ const getCredentials = (isFromFile) => {
             throw configResult.error;
         }
     }
-    console.log("IS_PREVIEW? ", process.env.IS_PREVIEW_ENV, "equals true? ", process.env.IS_PREVIEW_ENV === "true");
     let isPreviewEnv = false;
     if (process.env.IS_PREVIEW_ENV !== undefined) {
         isPreviewEnv = process.env.IS_PREVIEW_ENV === "true";
