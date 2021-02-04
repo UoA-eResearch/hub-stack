@@ -17,7 +17,7 @@ import { AuthModule, CognitoConfigService, StorageService, LoginService } from '
 import { AppAuthConfigService } from './services/app-auth-config.service';
 import { ErrorPagesModule } from '@uoa/error-pages';
 import { HttpClientModule } from '@angular/common/http';
-import { Router, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -51,7 +51,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 
 @NgModule({
   declarations: [
-    AppComponent, 
+    AppComponent,
     SearchBarComponent
   ],
   imports: [
@@ -89,9 +89,6 @@ export class AppModule {
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
     const error = onError(({ networkError, graphQLErrors }) => {
-      this.loginService.isAuthenticated().then( data => {
-        console.log("Logged in?"+data);
-      });
       if (networkError) {
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
           this.loginService.doLogin(this.router.url);

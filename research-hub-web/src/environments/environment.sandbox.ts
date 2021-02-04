@@ -1,4 +1,4 @@
-  export const environment = {
+export const environment = {
   production: true,
   researchHubApiUrl: 'https://research-hub.auckland.ac.nz/api/',
   cerApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/cer-api/', // TODO: Remove cer-api logic
