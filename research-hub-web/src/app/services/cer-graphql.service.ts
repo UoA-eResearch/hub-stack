@@ -41,7 +41,9 @@ export class CerGraphqlService {
     if (wildcardRouteIdx > -1) {
       // If so, insert the new routes before the wildcard route, so the wildcard is not matched 
       // against a path before they are tested with the new routes. 
-      newRoutes = routes.slice(0, wildcardRouteIdx).concat(this._subHubMap.routes, routes.slice(wildcardRouteIdx, routes.length))
+      const routesBeforeWildcard = routes.slice(0, wildcardRouteIdx);
+      const routesAfterWildcard = routes.slice(wildcardRouteIdx, routes.length);
+      newRoutes = routesBeforeWildcard.concat(this._subHubMap.routes, routesAfterWildcard);
     } else {
       newRoutes = routes.concat(this._subHubMap.routes);
     }
