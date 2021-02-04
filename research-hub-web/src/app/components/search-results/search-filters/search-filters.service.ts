@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { CategoryId } from '@services/options.service';
 import { Subject, Observable } from 'rxjs';
+import { CategoryId } from '@app/global/global-variables';
+
 
 export const DEFAULT_FILTERS_VALUE = {
   categoryId: CategoryId.All,

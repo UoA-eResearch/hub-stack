@@ -1,4 +1,10 @@
-<div *ngIf="person" fxLayout="column" fxLayoutGap="1em">
+<div 
+  class="site-padding top-padding margin-bottom"
+  ngClass.sm="site-padding-sm top-padding margin-bottom"
+  ngClass.xs="site-padding-xs top-padding margin-bottom" 
+  *ngIf="person" 
+  fxLayout="column" 
+  fxLayoutGap="1em">
   <mat-card>
     <mat-card-header>
       <img fxHide.xs style="width: 64px; height: 64px; margin-right: 1em;" mat-card-avatar

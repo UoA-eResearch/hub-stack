@@ -2,7 +2,7 @@
 <span style="color: rgba(0,0,0,0.54);padding-bottom: 0.5em;display: block;">Limit items by research activity</span>
 <div class="inputs" [ngClass]="{'touch':touchFriendly}" fxLayout="column">
   <div
-   *ngFor="let activity of optionsService.researchActivityOptions"
+   *ngFor="let activity of researchActivityOptions"
    [ngClass]="[activity.className, 'ra-slide-container']"
    [ngClass.xs]="[activity.className, 'ra-slide-container', 'mobile-view']">
     <mat-slide-toggle [disabled]="isDisabled"

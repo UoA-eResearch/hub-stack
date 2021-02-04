@@ -33,8 +33,16 @@ export class SubhubsComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-    this.slug = this.route.snapshot.params.slug || this.route.snapshot.data.slug;
+    this.route.params.subscribe(params => {
+      this.slug = params.slug || this.route.snapshot.data.slug;
+      this._loadContent();
+    });
+  }
 
+  /**
+   * Function that loads the subHub/collection depending on if a slug is present.
+   */
+  private async _loadContent() {
     if (!!this.slug) {
       this.subhub$ = this.getSubHub(this.slug);
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

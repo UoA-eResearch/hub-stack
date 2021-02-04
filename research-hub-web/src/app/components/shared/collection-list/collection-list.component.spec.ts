@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CollectionListComponent } from './collection-list.component';
 import { CommonModule } from '@angular/common';
@@ -9,11 +9,11 @@ describe('CollectionListComponent', () => {
   let component: CollectionListComponent;
   let fixture: ComponentFixture<CollectionListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [CollectionListComponent],
       imports: [
-        RouterModule.forRoot([]),
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         CommonModule,
         SharedModule
       ]

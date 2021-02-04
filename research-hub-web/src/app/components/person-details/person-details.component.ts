@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { AnalyticsService } from '@services/analytics.service';
 import { ListItem } from '@model/ListItem';
 import { AppComponentService } from '@app/app.component.service';
-import { CategoryId, RoleTypeId } from '@services/options.service';
+import { RoleTypeId, CategoryId } from '@app/global/global-variables';
 
 
 @Component({
