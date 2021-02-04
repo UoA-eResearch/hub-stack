@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 import { HomeComponent } from '@components/home/home.component';
-// import { SubhubRoutesResolverService } from "../services/subhub-routes-resolver.service";
 
 
 export const appRoutes: Routes = [
@@ -109,8 +108,7 @@ export const appRoutes: Routes = [
   },
   /**
    * SubHub routes loader module:
-   * Checks if subhub routes are already loaded. If not, load it first, then try navigating again, just in case
-   * the wildcard route matched a subhub route. If it's already loaded, it means it's a genuine error.
+   * Wildcard route that loads a component module that checks if the route is a subhub friendly URL.
    */
   {
     path: '**',
