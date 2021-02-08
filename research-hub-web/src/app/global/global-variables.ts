@@ -36,14 +36,6 @@ export enum ResearchActivityId {
 
   export enum CategoryId {
     All = 1,
-    Support,
-    Equipment,
-    Training,
-    Software,
-    Facilities,
-    Guide,
-    Person,
-    Policies,
     ResearchImpact,
     HeKorowaiMātauranga,
     Funding,
@@ -60,7 +52,15 @@ export enum ResearchActivityId {
     ContractingAndConsultingServices,
     Governance,
     ResearchServiceProviders,
-    ManagingYourResearchProject
+    ManagingYourResearchProject,
+    Support,
+    Equipment,
+    Training,
+    Software,
+    Facilities,
+    Guide,
+    Person,
+    Policies,
   }
   
   export const researchActivityOptions = [

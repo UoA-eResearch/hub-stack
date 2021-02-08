@@ -13,6 +13,8 @@ import {
   styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit, OnDestroy {
+  public title = 'Research Categories';
+  public description = "The University of Auckland provides top-quality support to our research community. The ResearchHub is your gateway to research support at the University of Auckland. Here you can explore what's on offer by topic.";
   public categoryOptions = categoryOptions;
   public categoryOptionsGQL = categoryOptionsGQL;
 

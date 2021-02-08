@@ -1,7 +1,7 @@
 <div class="research-activity-content">
   <div class="text">
-    <h2>Research Activities</h2>
-    <p>Little description about what research activities are and what purpose they serve. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>  
+    <h2>{{ title }}</h2>
+    <p>{{ description }}</p>  
   </div>
   <div
     fxLayoutGap="1%"
@@ -14,32 +14,40 @@
       fxFlex="19%"
       fxLayout="column"
       fxLayoutAlign="center">
-      <mat-card 
-        class="activity tile-content"
-        fxLayout="column"
-        fxLayoutAlign="space-between">
-        <div>
-          <mat-card-title class="card-title">{{ item.name }}</mat-card-title>
-          <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
-        </div>
-        <mat-card-actions>
-          <span 
-            fxLayout="row"
-            fxLayoutAlign="center center"
-            class="call-to-action">
-            <a
-            selected
-            [routerLink]="['/search']"
-            [queryParams]="getQueryParams(item)">
-              See More
-            </a>&nbsp;&nbsp;
-            <img 
-              class="arrow" 
-              style="height: 2.5vh; width: auto" 
-              src="assets/components/navy-arrow.png">
-          </span>
-        </mat-card-actions>
-      </mat-card>
+        <mat-card
+          class="activity tile-content"
+          fxLayout="column"
+          fxLayoutAlign="space-between">
+          <div>
+            <mat-card-title class="card-title">
+              <a 
+                selected
+                class="title-text"
+                [routerLink]="['/search']"
+                [queryParams]="getQueryParams(item)">
+                  {{ item.name }}
+              </a>
+            </mat-card-title>
+            <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
+          </div>
+          <mat-card-actions>
+            <span 
+              fxLayout="row"
+              fxLayoutAlign="center center"
+              class="call-to-action">
+              <a
+              selected
+              [routerLink]="['/search']"
+              [queryParams]="getQueryParams(item)">
+                See More
+              </a>&nbsp;&nbsp;
+              <img 
+                class="arrow" 
+                style="height: 2.5vh; width: auto" 
+                src="assets/components/navy-arrow.png">
+            </span>
+          </mat-card-actions>
+        </mat-card>
     </div>
   </div>
 </div>

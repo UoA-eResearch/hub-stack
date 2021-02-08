@@ -528,7 +528,6 @@ describe('SubhubsComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
-    controller.verify();
   });
 
   it('Should create', () => {
