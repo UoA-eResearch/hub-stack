@@ -2,8 +2,8 @@
   
 </div>
 <div class="text">
-  <h2>Research Categories</h2>
-  <p>Little description about what research categories are and what purpose they serve. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>  
+  <h2>{{ title }}</h2>
+  <p>{{ description }}</p>  
 </div>
 
 <div>
@@ -27,6 +27,9 @@
               {{ item.description }}
             </p>
           </div>
+        </div>
+        <div fxHide.lt-lg class="research-category-img" style="width: 55vw;margin-left: -5vw;">
+          <img style="object-fit:cover;width:100%;max-height:30vh" src="assets/images/research-categories/{{item.id}}-min.jpg">
         </div>
       </div>
     </div>

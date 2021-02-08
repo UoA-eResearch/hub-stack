@@ -292,7 +292,6 @@ describe('ArticlesComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
-    controller.verify();
   });
 
   it('Should create', () => {

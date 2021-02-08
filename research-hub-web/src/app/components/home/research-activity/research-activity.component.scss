@@ -34,12 +34,11 @@
  * Browse and guide tiles
  */
 .activity {
-  cursor: pointer;
   background-color: white;
   text-decoration: none;
 }
 .tile-content {
-  padding: 2vh;
+  padding: 2.5vh;
   height: 100%;
   text-align: center;
 }
@@ -82,3 +81,13 @@ mat-card-actions a {
     font-size: 2vh;
   }
 }
+
+/**
+ * Card Text
+ */
+ .title-text {
+   font-size: 3vh;
+   color: map-get($hub-navy, 500);
+   border-bottom: 0.5vh solid rgba(0, 0, 0, 0);
+   transition: border-bottom ease-in-out;
+ }

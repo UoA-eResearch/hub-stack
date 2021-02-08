@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,7 +31,6 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     ReactiveFormsModule,
     MaterialModule,
     RouterModule,
-    MatCarouselModule.forRoot(),
   ],
   declarations: [
     MarkdownComponent,

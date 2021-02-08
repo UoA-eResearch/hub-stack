@@ -1,35 +1,40 @@
 @import "../../../../styles";
-
-
+  
+  
 /**
  * Browse Container
  */
 .browse-container {
   padding: 2vh 0;
 }
-
-
+  
+  
 /**
  * Text
  */
- .text {
-    text-align: center;
-    width: 50vw;
-    margin: 5vh auto;
-  }
-  .text h2 {
-    font-size: 5.5vh;
-  }
-  .text p {
-    font-size: 3vh;
-  }
-  
-  
+.text {
+  text-align: center;
+  width: 50vw;
+  margin: 5vh auto;
+}
+.text h2 {
+  font-size: 5.5vh;
+}
+.text p {
+  font-size: 3vh;
+}
+    
   /**
-   * Panel
-   */
+    * Panel
+    */
   .panel {
+    text-align: center;
     width: 100%;
+  }
+  .panel:active,
+  .panel:focus {
+    outline: none;
+    text-decoration: none;
   }
   .inner-panel{
     height: 30vh;
@@ -40,12 +45,13 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    border: 2vh solid map-get($hub-teal, 500);
+    border: 0.5vh solid map-get($hub-teal, 500);
     background: map-get($hub-teal, 500);
     transition: background 0.11s ease-in-out, color 0.1s ease-in-out;
   }
   .inner-panel:hover {
-    background: white;
+    cursor: pointer;
+    background: #fafafa;
     border: 0.5vh solid map-get($hub-teal, 500);
     transition: background 0.11s ease-in-out;
   }
@@ -54,8 +60,8 @@
     color: map-get($hub-teal, 500)!important;
   }
   .inner-panel * {
-    color: white;
-   }
+    color: #fafafa;
+    }
   .inner-panel div {
     transform: skew(-30deg); 
     width: 60%;
@@ -81,9 +87,9 @@
   }
 
 /**
- * Mobile
- */
-  @media only screen and (max-width: 124vh) {
+  * Mobile
+  */
+  @media screen and (max-width: 150vh) {
     .inner-panel {
       width: 100%;
       margin: 0 auto;

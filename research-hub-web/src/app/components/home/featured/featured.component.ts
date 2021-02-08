@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatCarousel, MatCarouselSlide, MatCarouselSlideComponent } from '@ngmodule/material-carousel';
 
 @Component({
   selector: 'app-featured',
@@ -7,8 +6,9 @@ import { MatCarousel, MatCarouselSlide, MatCarouselSlideComponent } from '@ngmod
   styleUrls: ['./featured.component.scss']
 })
 export class FeaturedComponent implements OnInit {
+  public title = 'Featured Items';
+  public description = "The thing you learn about learning is that there's always more to learn! Here are the highlights of what we are all learning together in the research community at the University of Auckland.";
 
-  slides = ["one", "two", "three", "four", "five"];
   constructor() { }
 
   ngOnInit(): void {
