@@ -19,24 +19,10 @@ describe("hub-search-proxy", () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        query: "agriculture"
+        query: "Tis better to have tested and lost than never to have tested at all"
       })
     });
     console.log(resBody)
     expect(resBody.message).to.contain('hub-search-proxy');
-  });
-
-  it("Retrieves the example AWS secret", async function () {
-    this.timeout(TIMEOUT_PERIOD);
-    const resBody = await getResBody({
-      httpMethod: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: "Tis better to have tested and lost than never to have tested at all",
-      }),
-    });
-    expect(resBody.aws_message).to.contain('Welcome');
   });
 });

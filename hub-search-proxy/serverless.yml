@@ -1,5 +1,6 @@
 service: hub-search-proxy
 custom:
+  bucketBaseName: serverless-shared-bucket
   ResearchHub: ${self:service}
   BusinessService: Faculty of Science
   Department: Centre for eResearch
@@ -16,7 +17,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: ${opt:stage, 'sandbox'} # Deploy with sls deploy --stage STAGE (default dev)
+  stage: ${opt:stage, 'sandbox'} # Deploy with sls deploy --stage STAGE (default sandbox)
   region: ap-southeast-2
   endpointType: regional
   role: arn:aws:iam::${file(env/${self:provider.stage}.json):awsAccountId}:${file(env/${self:provider.stage}.json):lambdaRole}
@@ -38,10 +39,11 @@ provider:
     Application: ${self:custom.Application}
     CostCentre: ${self:custom.CostCentre}
     Faculty: ${self:custom.Faculty}
+  deploymentBucket:
+    name: ${self:custom.bucketBaseName}-${self:provider.stage}
   environment:
     # Environment variables available to all functions in this service
     LEVEL: INFO
-    EXAMPLE_KEY: ${file(env/${self:provider.stage}.json):EXAMPLE_KEY}
     ELASTICSEARCH_API_KEY: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_API_KEY}
   iamRoleStatements:
     - Effect: Allow
@@ -70,6 +72,19 @@ provider:
               - ${self:provider.region}
               - ${file(env/${self:provider.stage}.json):awsAccountId}
               - ${file(env/${self:provider.stage}.json):resourceKey}
+    - Effect: Allow
+      Action:
+        - es:ESHttpGet
+      Resource:
+        - arn:
+          Fn::Join:
+            - ":"
+            - - arn
+              - aws
+              - es
+              - ${self:provider.region}
+              - ${file(env/${self:provider.stage}.json):awsAccountId}
+              - domain/domain-name/test-index/_search # ****** update this! dev and test should probably eventually both point to prod ES instance so we only have one ES ******
 package:
   exclude:
     - .git/**
