@@ -13,7 +13,7 @@ module.exports.main = async (event) => {
     console.log(`Received query string: ${queryString}`); 
 
     try {
-      let req = { // The query object to be sent to Contentful
+      let req = { // The query object to be sent to ElasticSearch
         _source: {
           includes: [
             "fields.slug",
@@ -43,7 +43,7 @@ module.exports.main = async (event) => {
         }
       };
 
-      let res = await getRes(req) // The response from contentful
+      let res = await getRes(req) // The response from ElasticSearch
         .then(res => res.hits.hits)
       console.log(JSON.stringify(res, null, 2));
 
@@ -55,7 +55,6 @@ module.exports.main = async (event) => {
         body: JSON.stringify({
           message: "Welcome to hub-search-proxy",
           your_request: event.body,
-          aws_message: process.env.EXAMPLE_KEY,
           result: res
         }),
       };
@@ -67,9 +66,9 @@ module.exports.main = async (event) => {
   async function getRes(data = null) {
     const options = {
       method: data ? "POST" : "GET",
-      hostname: '6436fa2b0fdd4163bbfd2ea48a8bfd4d.ap-southeast-2.aws.found.io',
+      hostname: '6436fa2b0fdd4163bbfd2ea48a8bfd4d.ap-southeast-2.aws.found.io',  // UPDATE THIS
       port: 9243,
-      path: '/_search/',
+      path: '/_search/',  
       headers: {
         "Authorization": "Basic " + process.env.ELASTICSEARCH_API_KEY,
         "Content-Type": "application/json",
