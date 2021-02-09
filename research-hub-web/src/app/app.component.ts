@@ -200,9 +200,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
             }
 
             this.currentRoute = routeName;
-
-            console.log(this.previousRoute);
-            console.log(this.currentRoute);
           
              // Same component navigation
              if (this.currentRoute == this.previousRoute) {

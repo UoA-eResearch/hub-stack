@@ -8,9 +8,9 @@ mat-card  {
 }
 
 /**
- * Container for an individual Equipment
+ * Container for an individual event
  */
-#equipment-container {
+#event-container {
 
     #item-avatar {
         $avatar-size: 9.375vh;
@@ -37,9 +37,9 @@ mat-card  {
 
 
 /**
- * Equipment Image
+ * event Image
  */
-.equipment-image {
+.event-image {
     margin: 0 auto;
 }
 
@@ -49,7 +49,8 @@ mat-card  {
  */
  .specifications-table {
     border-collapse: collapse; 
-    width: 50%;
+    width: 100%;
+    @include size(medium) { width: 50% }
 }
 .specifications-table td, 
 .specifications-table th {
