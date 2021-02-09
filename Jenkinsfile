@@ -160,27 +160,27 @@ pipeline {
             }
         }
 
-        stage('Run tests') {
-            parallel {
-                stage('Run research-hub-web tests') {
-                    when {
-                        anyOf {
-                            changeset "**/research-hub-web/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
-                        }
-                    }
-                    steps {
-                        echo 'Testing research-hub-web project'
+        // stage('Run tests') {
+        //     parallel {
+        //         stage('Run research-hub-web tests') {
+        //             when {
+        //                 anyOf {
+        //                     changeset "**/research-hub-web/**/*.*"
+        //                     equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+        //                 }
+        //             }
+        //             steps {
+        //                 echo 'Testing research-hub-web project'
 
-                        dir("research-hub-web") {
-                            echo 'Running research-hub-web unit tests'
-                            sh 'npm run test-ci'
+        //                 dir("research-hub-web") {
+        //                     echo 'Running research-hub-web unit tests'
+        //                     sh 'npm run test-ci'
 
-                            echo 'Running research-hub-web e2e tests'
-                            sh "npm run e2e-ci"
-                        }
-                    }
-                }
+        //                     echo 'Running research-hub-web e2e tests'
+        //                     sh "npm run e2e-ci"
+        //                 }
+        //             }
+        //         }
                 stage('Run cer-graphql tests') {
                     when {
                         anyOf {
@@ -196,8 +196,8 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
+        //     }
+        // }
 
         stage('Deploy projects') {
             parallel {

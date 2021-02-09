@@ -46,6 +46,12 @@ query GetArticleByID($id: String!) {
       relatedItemsCollection {
         items { ...PublicFields }
       }
+      relatedOrgsCollection {
+        items { ...PublicFields }
+      }
+      relatedDocsCollection {
+        items { ...PublicFields }
+      }
       relatedContactsCollection {
         items { 
           ...PublicFields
@@ -53,12 +59,6 @@ query GetArticleByID($id: String!) {
             role
           }
         }
-      }
-      relatedOrgsCollection {
-        items { ...PublicFields }
-      }
-      relatedDocsCollection {
-        items { ...PublicFields }
       }
       viewType
   }

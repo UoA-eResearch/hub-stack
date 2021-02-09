@@ -1,34 +1,20 @@
 @import '../../../themes.scss';
+@import '../../../typography.scss';
+@import '../../../styles.scss';
 @import '../search-results/search-results.component.scss';
 
-mat-expansion-panel, mat-card  {
+mat-expansion-panel,
+mat-card  {
     margin: 1vh 0;
 }
 
-#mat-card-avatar mat-icon {
-    color: map-get($hub-teal, 800);
-}
-
-// The container for an individual equipment
+/**
+ * Container for an individual Equipment
+ */
 #equipment-container {
 
-    #breadcrumbs {
-        margin-bottom: 3vh;
-
-        .breadcrumb-subhub {
-            &::after {
-                margin: 0 0.5em 0 0.5em;
-                content: '/'
-            }
-        }
-
-        #breadcrumb-current-page {
-            color: $color-icon;
-        }
-    }
-
     #item-avatar {
-        $avatar-size: 75px;
+        $avatar-size: 9.375vh;
         width: $avatar-size;
         height: $avatar-size;
 
@@ -45,103 +31,42 @@ mat-expansion-panel, mat-card  {
         color: $color-primary;
     }
 
-    #keywords {
-        color: map-get($hub-navy, 500);
-    }
-
     .related-item-summary {
         color: gray;
     }
 }
 
-/* Vanilla CSS Styling */
 
-// HR Tag
-hr {
-    background-color: #dbdbdb;
-    border: none;
-    height: 1px;
-}
-
-// Equipment Titles
-.equipment-title {
-    color: map-get($hub-navy, 500); 
-    font-size: 50px;
-    font-weight: bold; 
-    line-height: 110%;
-}
-
-.equipment-title-sm {
-    font-size: 35px;
-}
-
-.equipment-title-xs {
-    font-size: 25px;
-}
-
-// Equipment Summary
-.equipment-summary {
-    color: $color-icon; 
-    font-size: 25px; 
-    line-height: 110%;
-}
-
-.equipment-summary-sm {
-    font-size: 20px; 
-}
-
-.equipment-summary-xs {
-    font-size: 15px; 
-}
-
-// Equipment Image
+/**
+ * Equipment Image
+ */
 .equipment-image {
     margin: 0 auto;
 }
 
-// Keyword
-.keyword-card {
-    color: #828282;
-    background: #F0F0F0;
-    margin: 5px; 
-    padding: 5px 10px;
-    font-size: 12px; 
-    border-radius: 25px;
-    box-shadow: none !important;
-}
 
-// Related Item
-.related-item-summary {
-    font-size: 12px;
-}
-
-// Specifications Table
-.specifications-table {
+/**
+ * Specifications Table
+ */
+ .specifications-table {
     border-collapse: collapse; 
-    width: 100%;
-  }
-  
-  .specifications-table td, .specifications-table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-  }
-  
-  .specifications-table tr:nth-child(even){
-      background-color: #f2f2f2;
-    }
-  .specifications-table td:nth-child(odd){
-      font-weight: bold;
-      width: 25%}
-  
-  .specifications-table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
+    width: 50%;
+}
+.specifications-table td, 
+.specifications-table th {
+    border: 0.125vh solid #ddd;
+    padding: 1vh;
+}
+.specifications-table tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+.specifications-table td:nth-child(odd){
+    font-weight: bold;
+    width: 25%}
+.specifications-table th {
+    padding-top: 1.5vh;
+    margin-bottom: 1.5vh;
     text-align: left;
     background-color: map-get($hub-teal, 500);
     color: $color-background;
-  }
-
-  // Card Title
-.card-title {
-    color: map-get($hub-teal, 500);
 }

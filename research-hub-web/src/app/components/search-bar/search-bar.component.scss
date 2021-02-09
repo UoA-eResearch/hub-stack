@@ -1,6 +1,6 @@
 @import "../../../styles";
 
-$mat-select-width: 200px;
+$mat-select-width: 25vh;
 $mat-select-flex: 1;
 $search-flex: 4;
 
@@ -22,4 +22,8 @@ $search-flex: 4;
 
 .search-bar-inner mat-form-field {
   min-width: 0 !important;
+}
+
+button mat-icon {
+  color: $color-icon;
 }

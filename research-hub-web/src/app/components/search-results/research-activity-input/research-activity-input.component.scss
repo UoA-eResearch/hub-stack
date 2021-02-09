@@ -1,5 +1,5 @@
 .ra-slide-container {
-  $ra-slide-container-margin: 3px;
+  $ra-slide-container-margin: 0.375vh;
   $ra-slide-container-margin-touch: 1em;
 
   margin: $ra-slide-container-margin;
@@ -7,5 +7,28 @@
   &.mobile-view {
     margin: $ra-slide-container-margin-touch;
   }
+}
 
+mat-slide-toggle,
+mat-slide-toggle-content {
+  height: 2vh!important;
+  line-height: 3vh!important;
+}
+
+
+/**
+ * Ng Deep 
+ */
+::ng-deep .mat-slide-toggle-thumb {
+  height: 2.2vh!important;
+  width: 2.2vh!important;
+  border-radius: 10vh!important;
+}
+::ng-deep .mat-slide-toggle-bar {
+  width: 4.2vh!important;
+  height: 1.5vh!important;
+  border-radius: 10vh!important;
+}
+::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
+  transform: translate3d(2vh,0,0) !important;
 }
