@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EquipmentRoutingModule } from './equipment-routing.module';
-import { EquipmentComponent } from './equipment.component';
+
+import { ServiceRoutingModule } from './services-routing.module';
+import { ServicesComponent } from './services.component';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 
 @NgModule({
-  declarations: [EquipmentComponent],
+  declarations: [ServicesComponent],
   imports: [
     CommonModule,
-    EquipmentRoutingModule,
+    ServiceRoutingModule,
     SharedModule,
     NgxContentfulRichTextModule
   ]
 })
-export class EquipmentModule { }
+export class ServiceModule { }

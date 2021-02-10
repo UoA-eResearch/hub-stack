@@ -1,7 +1,6 @@
 @import '../../../themes.scss';
 @import '../../../typography.scss';
 @import '../../../styles.scss';
-@import '../search-results/search-results.component.scss';
 
 mat-expansion-panel,
 mat-card  {
@@ -9,9 +8,9 @@ mat-card  {
 }
 
 /**
- * Container for an individual Equipment
+ * Container for an individual service
  */
-#equipment-container {
+#service-container {
 
     #item-avatar {
         $avatar-size: 9.375vh;
@@ -38,9 +37,9 @@ mat-card  {
 
 
 /**
- * Equipment Image
+ * Service Image
  */
-.equipment-image {
+.service-image {
     margin: 0 auto;
 }
 

@@ -1,5 +1,5 @@
-query GetEventBySlug($slug: String) {
-    eventCollection(where: {slug: $slug}) {
+query GetServiceBySlug($slug: String) {
+    serviceCollection(where: {slug: $slug}) {
         items {
             ssoProtected
             title
