@@ -18,9 +18,9 @@ import { BodyMediaComponent } from '@components/shared/body-media/body-media.com
 
 
 @Component({
-  selector: 'app-Event',
-  templateUrl: './Event.component.html',
-  styleUrls: ['./Event.component.scss']
+  selector: 'app-event',
+  templateUrl: './event.component.html',
+  styleUrls: ['./event.component.scss']
 })
 export class EventComponent implements OnInit {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponentService } from '@app/app.component.service';
-import { EventComponent } from './Event.component';
+import { EventComponent } from './event.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
