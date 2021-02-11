@@ -75,6 +75,7 @@ provider:
     - Effect: Allow
       Action:
         - es:ESHttpGet
+        - es:ESHttpPost
       Resource:
         - arn:
           Fn::Join:
