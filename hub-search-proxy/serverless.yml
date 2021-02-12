@@ -13,11 +13,10 @@ custom:
     domainName: ${file(env/${self:provider.stage}.json):infra.awsApiGatewayCustomDomainName}
     basePath: ${self:service}
     stage: ${self:provider.stage}
-    createRoute53Records: true
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: ${opt:stage, 'sandbox'} # Deploy with sls deploy --stage STAGE (default sandbox)
+  stage: ${opt:stage, 'dev'} # Deploy with sls deploy --stage STAGE (default dev)
   region: ap-southeast-2
   endpointType: regional
   role: arn:aws:iam::${file(env/${self:provider.stage}.json):awsAccountId}:${file(env/${self:provider.stage}.json):lambdaRole}
@@ -44,7 +43,8 @@ provider:
   environment:
     # Environment variables available to all functions in this service
     LEVEL: INFO
-    ELASTICSEARCH_API_KEY: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_API_KEY}
+    # ELASTICSEARCH_API_KEY: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_API_KEY}
+    ELASTICSEARCH_ENDPOINT: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_ENDPOINT}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -58,7 +58,7 @@ provider:
               - aws
               - ssm:${self:provider.region}
               - ${file(env/${self:provider.stage}.json):awsAccountId}
-              - parameter/${self:provider.stage}/research-hub/*"
+              - parameter/${self:provider.stage}/research-hub/*
     - Effect: Allow
       Action:
         - kms:Decrypt
@@ -85,7 +85,7 @@ provider:
               - es
               - ${self:provider.region}
               - ${file(env/${self:provider.stage}.json):awsAccountId}
-              - domain/domain-name/test-index/_search # ****** update this! dev and test should probably eventually both point to prod ES instance so we only have one ES ******
+              - domain/*
 package:
   exclude:
     - .git/**
@@ -106,3 +106,70 @@ plugins:
   - serverless-offline
   - serverless-mocha-plugin
   - serverless-domain-manager
+
+# resources:
+#   Resources:
+#     myDefaultRole:
+#       Type: "AWS::IAM::Role"
+#       Properties:
+#         Path: /
+#         RoleName: ${self:service}-lambda-role
+#         AssumeRolePolicyDocument:
+#           Version: "2012-10-17"
+#           Statement:
+#             - Effect: Allow
+#               Principal:
+#                 Service:
+#                   - lambda.amazonaws.com
+#               Action: "sts:AssumeRole"
+#         ManagedPolicyArns:
+#           - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+#         Policies:
+#           - PolicyName: myPolicyName
+#             PolicyDocument:
+#               Version: "2012-10-17"
+#               Statement:
+#                 - Effect: Allow
+#                   Action:
+#                     - "logs:CreateLogGroup"
+#                     - "logs:CreateLogStream"
+#                     - "logs:PutLogEvents"
+#                   Resource:
+#                     - "Fn::Join":
+#                         - ":"
+#                         - - "arn:aws:logs"
+#                           - Ref: "AWS::Region"
+#                           - Ref: "AWS::AccountId"
+#                           - "log-group:/aws/lambda/*:*:*"
+#                 - Effect: Allow
+#                   Action:
+#                     - ssm:GetParameter
+#                     - ssm:GetParameters
+#                   Resource:
+#                     - "Fn::Join":
+#                         - ":"
+#                         - - "arn:aws:ssm"
+#                           - Ref: "AWS::Region"
+#                           - Ref: "AWS::AccountId"
+#                           - "parameter/${self:provider.stage}/research-hub/*"
+#                 - Effect: Allow
+#                   Action:
+#                     - kms:Decrypt
+#                   Resource:
+#                     - "Fn::Join":
+#                         - ":"
+#                         - - "arn:aws:kms"
+#                           - Ref: "AWS::Region"
+#                           - Ref: "AWS::AccountId"
+#                           - "${file(env/${self:provider.stage}.json):resourceKey"
+#                 - Effect: Allow
+#                   Action:
+#                     - es:ESHttpGet
+#                     - es:ESHttpPost
+#                   Resource:
+#                     - "Fn::Join":
+#                         - ":"
+#                         - - "arn:aws:es"
+#                           - Ref: "AWS::Region"
+#                           - Ref: "AWS::AccountId"
+#                           - "domain/*"
