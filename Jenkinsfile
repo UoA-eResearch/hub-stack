@@ -235,13 +235,13 @@ pipeline {
                                     // TODO: Enter nonprod/prod CloudFrontDistroIds
                                     def awsCloudFrontDistroId = (
                                         env.BRANCH_NAME == 'prod' ? '' :
-                                        env.BRANCH_NAME == 'nonprod' ? '' :
+                                        env.BRANCH_NAME == 'nonprod' ? 'E22KP4O00VK941' :
                                         'E20R95KPAKSWTG'
                                     )
 
                                     def previewAwsCloudFrontDistroId = (
                                         env.BRANCH_NAME == 'prod' ? '' :
-                                        env.BRANCH_NAME == 'nonprod' ? '' :
+                                        env.BRANCH_NAME == 'nonprod' ? 'E1V3EOI1YKYNGI' :
                                         'E2GBENCKM7YT9Q'                                    )
 
                                     echo "Cloudfront distro id: ${awsCloudFrontDistroId}"
