@@ -2,6 +2,7 @@
 aws_region      = "ap-southeast-2"
 aws_profile     = "uoa-its-nonprod"
 lifecycle_state = "test"
+aws_account_id = "518380838815"
 
 # Tags
 application      = "Research Hub"
@@ -28,6 +29,10 @@ acm_arn_secondary             = "arn:aws:acm:us-east-1:518380838815:certificate/
 # Route53
 route53_hosted_zone_id = "Z165SO9T1OX8VZ"
 
+# Network
+vpc_id           = "vpc-05ace6f7251ef59c3" # uoa-connect-nonprod  10.0.64.0/18
+subnets = ["subnet-0d0a68988c480b3a4", "subnet-0b56849cba433ce13", "subnet-0fc970830487f2323"]
+
 # Loadbalancer for ECS
 lb_name = "CeR-Terraform-Test"
 lb_subnets = [
@@ -35,7 +40,6 @@ lb_subnets = [
   "subnet-01f535e3b10cf7635",  # uoa-connect-nonprod-public-alb-b  10.0.119.0/24
   "subnet-0edcf885fe9115a3e"   # uoa-connect-nonprod-public-alb-c  10.0.120.0/24
 ]
-vpc_id           = "vpc-05ace6f7251ef59c3" # uoa-connect-nonprod  10.0.64.0/18
 ecs_lb_acm_arn   = "arn:aws:acm:ap-southeast-2:518380838815:certificate/feace7b3-0427-4ed9-b873-b6e7824aa2be"
 r53_hosted_zone  = "connect.test.amazon.auckland.ac.nz"
 lb_dns_name      = "rhubcpapi.connect.test.amazon.auckland.ac.nz"
@@ -68,3 +72,18 @@ permitted_group           = "Postgraduate.psrwi|staffIntranetUser.ec"
 
 # S3 Contentful Backup Bucket
 create_contentful_backup_bucket = false
+
+# ElasticSearch Service
+es_version = 7.9
+prefix = "researchhub"
+
+#Id for Managed User pool 'uoa-pool'
+user_pool_id = "ap-southeast-2_gtuqqgIIq"
+#Id for Managed Identity pool 'uoa_identity_pool'
+identity_pool_id = "ap-southeast-2:89bc7766-5686-4d6f-b332-d5e9292d525d"
+#ARN for IAM role 'CognitoAccessForAmazonES'
+cognito_iam_role_arn = "arn:aws:iam::518380838815:role/service-role/CognitoAccessForAmazonES"
+#ARN for IAM role 'Authenticated-ES-Access'
+master_user_iam_role_arn = "arn:aws:iam::518380838815:role/Authenticated-ES-Access"
+#Name for Identity Provider 'UoATestIDP'
+enabled_identity_providers = ["UoATestIDP"]

@@ -15,6 +15,11 @@ variable "lifecycle_state" {
   default     = "test"
 }
 
+variable "aws_account_id" {
+  type = string
+  description = "Account id of the AWS account where the task is run"
+}
+
 #######################
 #       Tags          #
 #######################
@@ -112,6 +117,19 @@ variable "route53_hosted_zone_id" {
 }
 
 ########################
+#        Network       #
+########################
+variable "vpc_id" {
+  description = "What is the ID of the VPC this will reside within"
+}
+
+variable "subnets" {
+  description = "Private subnets within the VPC"
+  type        = list(string)
+}
+
+
+########################
 # Loadbalancer for ECS #
 ########################
 variable "lb_name" {
@@ -120,10 +138,6 @@ variable "lb_name" {
 
 variable "lb_subnets" {
   description = "Which subnets should the LB be deployed into?"
-}
-
-variable "vpc_id" {
-  description = "What is the ID of the VPC this will reside within"
 }
 
 variable "ecs_lb_acm_arn" {
@@ -228,4 +242,47 @@ variable "permitted_group" {
 #######################
 variable "create_contentful_backup_bucket" {
   description = "Should the Contentful backup bucket be created."
+}
+
+###############################
+#   ElasticSearch Service     #
+###############################
+variable "es_version" {
+  type = string
+  description = "The version of Elasticsearch to deploy."
+}
+
+variable "prefix" {
+  type = string
+  description = "common name prefix for resources in this module"
+}
+
+variable "user_pool_id" {
+  type = string
+  description = "Cognito user pool id"
+  default = null
+}
+
+variable "identity_pool_id" {
+  type = string
+  description = "Cognito identity pool id"
+  default = null
+}
+
+variable "cognito_iam_role_arn" {
+  type = string
+  description = "IAM role, used for fine-grained security control in cognito, ARN"
+  default = null
+}
+
+variable "master_user_iam_role_arn" {
+  type = string
+  description = "IAM role, used for master user in fine-grained security control , ARN"
+  default = null
+}
+
+variable "enabled_identity_providers" {
+  type = list(string)
+  description = "List of supported identity providers"
+  default = []
 }
