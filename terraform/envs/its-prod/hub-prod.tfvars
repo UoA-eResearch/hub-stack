@@ -2,6 +2,7 @@
 aws_region      = "ap-southeast-2"
 aws_profile     = "uoa-its-nonprod"
 lifecycle_state = "prod"
+aws_account_id = "TBC"
 
 # Tags
 application      = "Research Hub"
@@ -29,6 +30,10 @@ acm_arn_secondary             = "TBC"
 # Route53
 route53_hosted_zone_id = "TBC"
 
+# Network
+vpc_id           = "TBC"
+subnets = ["TBC", "TBC", "TBC"]
+
 # Loadbalancer for ECS
 lb_name = "CeR-Terraform-Prod"
 lb_subnets = [
@@ -36,7 +41,6 @@ lb_subnets = [
   "TBC",
   "TBC"
 ]
-vpc_id           = "TBC"
 ecs_lb_acm_arn   = "TBC"
 r53_hosted_zone  = "prod.amazon.auckland.ac.nz"
 lb_dns_name      = "rhubcpapi.prod.amazon.auckland.ac.nz"
@@ -69,3 +73,18 @@ permitted_group           = "TBC"
 
 # S3 Contentful Backup Bucket
 create_contentful_backup_bucket = true
+
+# ElasticSearch Service
+es_version = 7.9
+prefix = "researchhub"
+
+#Id for Managed User pool 'uoa-pool'
+user_pool_id = "TBC"
+#Id for Managed Identity pool 'uoa_identity_pool'
+identity_pool_id = "TBC"
+#ARN for IAM role 'CognitoAccessForAmazonES'
+cognito_iam_role_arn = "TBC"
+#ARN for IAM role 'Authenticated-ES-Access'
+master_user_iam_role_arn = "TBC"
+#Name for Identity Provider
+enabled_identity_providers = ["TBC"]
