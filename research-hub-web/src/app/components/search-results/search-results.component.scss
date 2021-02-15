@@ -1,59 +1,76 @@
-@import '../../../styles';
+@import '../../../styles.scss';
+@import '../../../themes.scss';
 
 .search-results-text {
   color: $color-pink !important;
   font-weight: 500;
   font-style: italic;
 }
-
 .list-item {
-  padding-top: 3px;
-  padding-bottom: 3px;
+  height: fit-content!important;
+  padding: 1vh 0!important;
 }
-
 .item-title {
-  color: #b13462;
-  font-size: 18px !important;
+  color: map-get($hub-pink, 500);
+  font-size: 2.25vh !important;
   font-weight: 500 !important;
-  padding-bottom: 5px !important;
+  padding-bottom: 0.625vh !important;
 }
-
 .item-subtitle {
-  color: #004059;
-  font-size: 14px;
-  padding-bottom: 7px !important;
+  color: map-get($hub-navy, 500);
+  font-size: 1.75vh!important;
+  padding-bottom: 0.875vh !important;
 }
-
 .list-item img {
-  width: 64px;
-  height: 64px;
+  width: 8vh;
+  height: 8vh;
+  margin-right: 1vh;
 }
 
-// The mat-chips in the search result lists (both card and list view)
+
+/**
+ * The mat-chips in the search result lists (both card and list view)
+ */
 mat-chip-list {
+  overflow: hidden;
+  height: fit-content;
+  font-size: 1.5vh!important;
   mat-chip {
-    font-size: 12px;
-    line-height: 26px;
-    height: 18px;
+    border-radius: 10vh;
+    line-height: 3.25vh;
+    height: 2.25vh;
+    margin-right: 0.5vh;
+    padding: 1vh 1.5vh;
+    span {
+      color: map-get($hub-navy, 500);
+      font-size: 1.5vh!important;
+    }
 
     &.mat-standard-chip { // Fixes predefined material CSS causing oversized chips
       min-height: 100%;
     }
   }
 }
-
 .search-paginator {
   background-color: $color-background;
   color: rgba(0, 0, 0, 0.87);
-  font-size: 16px;
+  font-size: 2vh;
 }
 
-//Paginator items per page selector/popup font size
-::ng-deep .search-paginator .mat-select, ::ng-deep .mat-option-text, ::ng-deep .search-paginator .mat-select-value {
-  font-size: 16px;
+
+/**
+ * Paginator items per page selector/popup font size
+ */
+::ng-deep .search-paginator .mat-select,
+::ng-deep .search-paginator .mat-select-value,
+::ng-deep .mat-option-text {
+  font-size: 2vh;
 }
 
-//Card Result Styles
+
+/**
+ * Card Result Styles
+ */
 .card-result-image {
   height: 50%;
   width: 100%;
@@ -65,7 +82,6 @@ mat-chip-list {
   top: 0;
   cursor: pointer;
 }
-
 .card-result-content {
   background-color: $color-browse-tile-bg;
   height: 50%;
@@ -77,7 +93,6 @@ mat-chip-list {
   top: 50%;
   color: $light-primary-text;
 }
-
 .card-result-title {
   width: 90%;
   height: 25%;
@@ -86,22 +101,24 @@ mat-chip-list {
   margin: 0 auto;
   display: flex;
   align-items: center;
-  font-size: 18px !important;
+  font-size: 2.25vh !important;
   font-weight: 500 !important;
   overflow: hidden;
 }
-
 .card-result-subtitle {
   width: 90%;
   height: 55%;
   position: relative;
   padding: 0;
   margin: 0 auto;
-  font-size: 14px;
+  font-size: 1.75vh;
   overflow: hidden;
 }
 
-// This is just the bottom section of the card view cards, not to be confused with mat-chip-list
+
+/**
+ * This is just the bottom section of the card view cards, not to be confused with mat-chip-list
+ */
 .card-result-chip-list {
   width: 90%;
   height: 20%;
@@ -111,16 +128,17 @@ mat-chip-list {
   overflow: hidden;
 }
 
-// Used in a div surrounding the category list that is displayed when the filter-panel is hidden
+
+/**
+ * Used in a div surrounding the category list that is displayed when the filter-panel is hidden
+ */
 .inline-category-list {
   margin-top:1.25em;
   margin-bottom: 0.25em;
 }
-
 .search-results-title {
   margin-top:2.5em;
 }
-
 .refine-search {
   margin-top:0em;
 
@@ -128,11 +146,9 @@ mat-chip-list {
     margin-top:1em;
   }
 }
-
 .refine-search-text {
-  margin-bottom:0px;
+  margin-bottom: 0vh;
 }
-
 .results-list,.resultsCards {
   transition: opacity 200ms ease-in-out;
 
@@ -141,11 +157,9 @@ mat-chip-list {
     cursor: default;
   }
 }
-
 .results-list.loading {
   opacity: 0.1;
 }
-
 .resultsCards.loading {
   opacity: 0.5;
 }

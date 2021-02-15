@@ -1,0 +1,26 @@
+@import '../../../../themes.scss';
+@import '../../../../styles.scss';
+
+
+/**
+ * Card Image
+ */ 
+ .mat-card-image {
+    min-height: 10vh;
+    max-height: 19vh;
+    margin-bottom: 0.625vh;
+    min-width: 100%;
+    object-fit: cover;
+}
+
+.embedded-entry-block .mat-card-title a {
+    font-size: 2.25vh; 
+    color: map-get($hub-navy, 500);
+}
+.embedded-entry-block .mat-card-title a:hover {
+    border-bottom: solid 0.25vh map-get($hub-navy, 500);
+}
+
+ small {
+    color: #757575;
+}

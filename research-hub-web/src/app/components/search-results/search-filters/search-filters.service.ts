@@ -3,7 +3,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
 import { CategoryId } from '@app/global/global-variables';
 
-
 export const DEFAULT_FILTERS_VALUE = {
   categoryId: CategoryId.All,
   personTags: [],

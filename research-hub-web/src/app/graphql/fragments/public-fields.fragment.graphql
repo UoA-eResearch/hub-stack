@@ -1,16 +1,14 @@
 fragment PublicFields on Entry {
     ... on Article {
       __typename
+      icon {
+        url
+      }
       slug
       title
       summary
       ssoProtected
       searchable
-      icon {
-          title
-          description
-          url
-      }
       banner {
           title
           description
@@ -19,6 +17,9 @@ fragment PublicFields on Entry {
     } 
     ... on CaseStudy {
       __typename
+      icon {
+        url
+      }
       slug
       title
       summary
@@ -27,38 +28,37 @@ fragment PublicFields on Entry {
     }
     ... on Equipment {
       __typename
+      icon {
+        url
+      }
       slug
       title
       summary
+      banner {
+        url
+      }
       ssoProtected
       searchable
     }
   ... on Event {
       __typename
+      icon {
+        url
+      }
       slug
       title
       summary
-      ssoProtected
-      searchable
-    }
-  ... on Facility {
-      __typename
-      slug
-      title
-      summary
-      ssoProtected
-      searchable
-  }
-  ... on OrganisationalUnit {
-      __typename
-      slug
-      title
-      summary
+      banner {
+        url
+      }
       ssoProtected
       searchable
     }
     ... on Service {
       __typename
+      icon {
+        url
+      }
       slug
       title
       summary
@@ -67,6 +67,9 @@ fragment PublicFields on Entry {
     }
   ... on Software {
       __typename
+      icon {
+        url
+      }
       slug
       title
       summary
@@ -75,11 +78,17 @@ fragment PublicFields on Entry {
     }
     ... on SubHub {
       __typename
+      icon {
+        url
+      }
       slug
       title
       summary
       ssoProtected
       searchable
+      banner {
+        url
+      }
     }
   ... on OfficialDocuments {
       __typename
