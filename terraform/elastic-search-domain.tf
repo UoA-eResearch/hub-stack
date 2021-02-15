@@ -86,5 +86,15 @@ output "kibana_endpoint" {
 # manual step required for config of Kibana app client - see https://github.com/hashicorp/terraform-provider-aws/issues/5557
 output "modify_kibana_appclient" {
   value       = "Please find the Kibana cognito app client in AWS console and change IDP to the UoA IDP."
-  description = "manual step required for config of Kibana app client"
+  description = "manual step required for config of Kibana app client."
+}
+
+output "add_auth_provider_to_identity_pool" {
+  value       = "Please find the Cognito identity pool in AWS console. Edit Identity Pool > Authentication Providers > Cognito > Add Another Provider. Use the user pool id and app client id. "
+  description = "manual step required for config of Kibana cognito identity pool."
+}
+
+output "Create_param_for_allowed_access_groups_for_Kibana_App_Client" {
+  value       = "/${var.lifecycle_state}/cognito/<kibana_app_client_id>"
+  description = "manual step required to add groups check for cognito into parameter store. CeR staff and cloud team should have access."
 }
