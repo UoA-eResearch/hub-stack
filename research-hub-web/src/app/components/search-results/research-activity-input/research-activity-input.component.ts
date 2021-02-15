@@ -7,7 +7,6 @@ import {
   researchActivityOptions
 } from '@app/global/global-variables';
 
-
 @Component({
   selector: 'app-research-activity-input',
   templateUrl: './research-activity-input.component.html',

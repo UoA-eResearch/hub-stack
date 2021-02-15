@@ -1,0 +1,88 @@
+<!-- Templates -->
+<ng-template #image>
+    <img mat-card-image src="{{ contentItem.banner?.url }}">
+</ng-template>
+
+<ng-template #noImage>
+    <div style="margin-top: 1.25vh;"></div>
+</ng-template>
+
+<!-- Default Entry Block Template -->
+<ng-template #default>
+    <mat-card class="embedded-entry-block section">
+        <ng-container *ngIf="contentItem.banner; then image; else noImage"></ng-container>
+        <mat-card-title>
+            <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
+                {{ contentItem['title'] }}
+            </a>
+        </mat-card-title>
+        <mat-card-content>
+            <span class="card-summary">
+                {{ contentItem['summary'] }}
+            </span>
+        </mat-card-content>
+        <span
+            *ngIf="contentItem['__typename'] != 'Person'"
+            class="call-to-action" 
+            style="display: flex; align-items: center;max-width: fit-content">
+            <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
+                View {{ contentItem['__typename'] | humanCase }}&nbsp;&nbsp;
+            </a>
+            <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/teal-arrow.png">
+        </span>
+    </mat-card>
+</ng-template>
+
+<span [ngSwitch]="contentItem.__typename">
+
+    <!-- Article -->
+    <span *ngSwitchCase="'Article'">
+        <ng-container *ngTemplateOutlet="default"></ng-container>
+    </span>
+
+    <!-- Case Study -->
+    <span *ngSwitchCase="'CaseStudy'">
+        <ng-container *ngTemplateOutlet="default"></ng-container>
+    </span>
+
+    <!-- Equipment -->
+    <span *ngSwitchCase="'Equipment'">
+        <ng-container *ngTemplateOutlet="default"></ng-container>
+    </span>
+
+    <!-- Event -->
+    <span *ngSwitchCase="'Event'">
+        <ng-container *ngTemplateOutlet="default"></ng-container>
+    </span>
+
+    <!-- Link Card -->
+    <span *ngSwitchCase="'LinkCard'">
+        <app-link-card [contentItem]="contentItem"></app-link-card>
+    </span>
+
+    <!-- Official Document -->
+    <span *ngSwitchCase="'OfficialDocuments'">
+        <ng-container *ngTemplateOutlet="default"></ng-container>
+    </span>
+
+    <!-- Organisational Unit -->
+    <span *ngSwitchCase="'OrganisationalUnit'">
+        <ng-container *ngTemplateOutlet="default"></ng-container>
+    </span>
+
+    <!-- Service -->
+    <span *ngSwitchCase="'Service'">
+        <ng-container *ngTemplateOutlet="default"></ng-container>
+    </span>
+
+    <!-- Software -->
+    <span *ngSwitchCase="'Software'">
+        <ng-container *ngTemplateOutlet="default"></ng-container>
+    </span>
+
+    <!-- Video -->
+    <span *ngSwitchCase="'Video'">
+        <app-video-card [contentItem]="contentItem"></app-video-card>
+    </span>
+
+</span>

@@ -1,0 +1,60 @@
+<span [ngSwitch]="contentItem.contentType">
+
+    <ng-template #image>
+        <div 
+            class="embedded-asset-block section-2"
+            ngClass.xs="embedded-asset-block-mobile">
+            <a href="{{ contentItem.url }}">
+                <img *ngIf="contentItem.url" src="{{ contentItem.url }}"/>
+            </a>
+            <br>{{ contentItem.title }}
+            <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
+        </div>
+    </ng-template>
+
+    <!-- Asset Image -->
+    <span *ngSwitchCase="'image/jpeg'">
+        <ng-container *ngTemplateOutlet="image"></ng-container>
+    </span>
+    <span *ngSwitchCase="'image/png'">
+        <ng-container *ngTemplateOutlet="image"></ng-container>
+    </span>
+    <span *ngSwitchCase="'image/gif'">
+        <ng-container *ngTemplateOutlet="image"></ng-container>
+    </span>
+    <span *ngSwitchCase="'image/webp'">
+        <ng-container *ngTemplateOutlet="image"></ng-container>
+    </span>
+
+    <!-- Asset File -->
+    <span *ngSwitchDefault>
+        <div 
+            class="embedded-asset-block file"
+            ngClass.xs="embedded-asset-block-mobile">
+            <a href="{{ contentItem.url }}">
+                <mat-card>
+                    <mat-card-title class="card-title">
+                        <a href="{{ contentItem.url }}">
+                            {{ contentItem.title }}
+                        </a>
+                    </mat-card-title>
+                    <mat-card-content class="card-summary">
+                        <div>
+                            {{ contentItem.description }}
+                        </div>
+                        <div class="download">
+                            <a href="{{ contentItem.url }}">
+                                <img class="download-arrow" style="height: 10px; width: auto" src="assets/components/navy-download.png">
+                                Download File
+                            </a>
+                            &nbsp;
+                            <span class="file-size">
+                                {{ contentItem.size }}&nbsp;kB
+                            </span>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </a>
+        </div>
+    </span>
+</span>

@@ -1,0 +1,11 @@
+query GetSubHubBySlug($slug: String) {
+    subHubCollection(where: {slug: $slug}) {
+        items {
+            ssoProtected
+            title
+            sys {
+                id
+            }
+        }
+    }
+}

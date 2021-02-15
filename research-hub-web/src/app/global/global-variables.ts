@@ -1,14 +1,14 @@
 
 
 const coverImages = [
-  'banner1.jpg',
-  'banner2.jpg',
-  'banner3.jpg',
-  'banner4.jpg',
-  'banner5.jpg'
+  'img1.jpg',
+  'img22.jpg',
+  'img3.jpg',
+  'img55.jpg',
+  'img9.jpg',
 ];
 
-export const CoverImageURL = 'url(../assets/images/' + coverImages[Math.floor(Math.random() * 5)] + ');';
+export const CoverImageURL = 'url(assets/images/' + coverImages[Math.floor(Math.random() * 4)] + ');';
 
 export enum ActionTypeId {
   Integrated = 1,
@@ -121,4 +121,11 @@ export enum ResearchActivityId {
     { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
     { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
   ];
+
+  export const CategoryDisplayNames = {
+    'Policies': 'Policy',
+    'Support': 'Service',
+    'Facilities': 'Facility',
+    'Person': 'People'
+  };
   

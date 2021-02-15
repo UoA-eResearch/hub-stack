@@ -3,15 +3,7 @@ import { SearchResultsComponentService } from '../search-results-component.servi
 import { Observable } from 'rxjs';
 import { Page } from '@model/Page';
 import { ListItem } from '@model/ListItem';
-import { CategoryId } from '@app/global/global-variables';
-
-
-const CategoryDisplayNames = {
-  'Policies': 'Policy',
-  'Support': 'Service',
-  'Facilities': 'Facility',
-  'Person': 'People'
-};
+import { CategoryId, CategoryDisplayNames } from '@app/global/global-variables';
 
 @Component({
   selector: 'category-list',
@@ -19,6 +11,7 @@ const CategoryDisplayNames = {
   styleUrls: ['./category-list.component.scss']
 })
 export class CategoryListComponent implements OnInit, OnChanges {
+  public CategoryDisplayNames = CategoryDisplayNames;
 
   /**
   * ID of the selcted category, as defined in the CategoryId enum.

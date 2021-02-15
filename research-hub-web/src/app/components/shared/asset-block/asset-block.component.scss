@@ -1,0 +1,87 @@
+@import '../../../../styles.scss';
+@import '../../../../themes.scss';
+
+/**
+ * Asset Block
+ */
+ .embedded-asset-block {
+    max-width: 100%; 
+    text-align: center; 
+}
+.embedded-asset-block img {
+    width: 70%; 
+    object-fit: cover
+}
+.asset-summary {
+    @extend .card-summary;
+    font-size: 1.5vh;
+}
+
+
+ /**
+  * Download Card
+  */
+ .file {
+     @extend .section;
+ }
+ .file .mat-card {
+     width: 35%;
+     margin: 0 auto;
+     text-align: left;
+     background-color: $light-grey;
+     transition: background-color 0.2s ease-in-out
+ }
+ .file .mat-card:hover {
+    background-color: $input-grey;
+    transition: background-color 0.2s ease-in-out
+}
+.file .mat-card:hover .file-size{
+    background-color: #c9c9c9;
+    transition: background-color 0.2s ease-in-out
+}
+
+/**
+ * Download Button
+ */
+ .download {
+    margin-top: 1.25vh;
+ }
+ .download a {
+    color: map-get($hub-navy, 500);
+}
+.mat-card-title a {
+    color: map-get($hub-navy, 500);
+    border-bottom: solid 0.25vh transparent;
+}
+.mat-card-title a:hover {
+    border-bottom: solid 0.25vh map-get($hub-navy, 500);
+}
+.mat-card:hover .download-arrow {
+    -webkit-animation: download 0.5s ease-in-out forwards;
+}
+
+@-webkit-keyframes download {
+    0% {opacity: 1; transform: translate(0px, 0px)}
+    40% {opacity: 0; transform: translate(0px, 1.25vh)}
+    60% {opacity: 0; transform: translate(0px, -1.25vh)}
+    100%  {opacity: 1; transform: translate(0px, 0px)}
+}
+
+/**
+ * File Size Label
+ */
+.file-size {
+    width: fit-content;
+    padding: 0.625vh;
+    color: $dark-grey;
+    background: $input-grey;
+    transition: background-color 0.2s ease-in-out
+}
+
+/**
+ * If viewed on a mobile device
+ */
+ .embedded-asset-block-mobile img,
+ .embedded-asset-block-mobile .mat-card  {
+     width: 100%; 
+ }

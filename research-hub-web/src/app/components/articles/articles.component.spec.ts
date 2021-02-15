@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponentService } from '../../app.component.service';
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
@@ -237,12 +237,6 @@ describe('ArticlesComponent', () => {
       },
       '__typename': 'ArticleBody'
     },
-    'keywords': [
-      'article',
-      'informational',
-      'general',
-      'test'
-    ],
     'slug': 'first-article',
     'searchable': true,
     'icon': {
@@ -298,7 +292,6 @@ describe('ArticlesComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
-    controller.verify();
   });
 
   it('Should create', () => {
