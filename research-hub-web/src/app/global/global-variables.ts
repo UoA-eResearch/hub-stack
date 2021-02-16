@@ -3,12 +3,10 @@
 const coverImages = [
   'img1.jpg',
   'img22.jpg',
-  'img3.jpg',
   'img55.jpg',
-  'img9.jpg',
 ];
 
-export const CoverImageURL = 'url(assets/images/' + coverImages[Math.floor(Math.random() * 4)] + ');';
+export const CoverImageURL = 'url(assets/images/' + coverImages[Math.floor(Math.random() * 2)] + ');';
 
 export enum ActionTypeId {
   Integrated = 1,

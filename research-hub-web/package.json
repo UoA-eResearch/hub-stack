@@ -2,6 +2,10 @@
   "name": "research-hub-web",
   "version": "2.0.0",
   "license": "MIT",
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": ["<rootDir>/setupJest.ts"]
+  },
   "scripts": {
     "ng": "ng",
     "dev": "concurrently \"npm run graphql-server-watch\" \"sleep 3 && npm run generate-watch\" \"sleep 3 && npm start\" \"sleep 3 && npm run test-watch\"",
@@ -13,9 +17,9 @@
     "build": "ng build --source-map=false",
     "prebuild": "npm run generate",
     "postinstall": "ngcc",
-    "test": "ng test",
-    "test-ci": "ng test --watch=false",
-    "test-watch": "ng test --watch=true",
+    "test": "jest",
+    "test-ci": "jest --watch=false",
+    "test-watch": "jest --watch=true",
     "lint": "ng lint",
     "bundle-report": "ng build --stats-json && webpack-bundle-analyzer www/stats.json",
     "testrunner": "./test.sh",
@@ -96,6 +100,8 @@
     "fibers": "^5.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
+    "jest": "^26.6.3",
+    "jest-preset-angular": "^8.3.2",
     "karma": "^5.1.1",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "^2.0.3",
