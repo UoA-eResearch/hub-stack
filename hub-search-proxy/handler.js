@@ -2,7 +2,7 @@
 
 const sendElasticsearchRequest = require('./elasticsearch-client');
 
-module.exports.main = async (event, context) => {
+module.exports.search = async (event, context) => {
   let queryString = JSON.parse(event.body).query;
   console.log(`Received query string: ${queryString}`); 
 
@@ -39,9 +39,7 @@ module.exports.main = async (event, context) => {
   const params = {
     httpMethod: 'POST',
     requestPath: 'main-index/_search',
-    payload: {
-      query
-    }
+    payload: query
   };
 
   const result = await sendElasticsearchRequest(params);
@@ -61,5 +59,33 @@ module.exports.main = async (event, context) => {
     };
   } else {
     context.fail('Search failed. ' + JSON.stringify(result));
+  }
+}
+
+module.exports.indexDoc = async (event, context) => {
+  let doc = JSON.parse(event.body);
+  console.log('Received doc to index');
+
+  const params = {
+    httpMethod: 'PUT',
+    requestPath: `main-index/_doc/${doc.sys.id}`,
+    payload: doc
+  };
+
+  const result = await sendElasticsearchRequest(params);
+
+  if (result.statusCode == 200 || result.statusCode == 201) {
+    console.log("Request status: " + result.statusCode + " " + result.statusMessage);   
+    return {
+      statusCode: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        result: result.body
+      }),
+    };
+  } else {
+    context.fail('Error. ' + JSON.stringify(result) + ' . Payload: ' + JSON.stringify(doc));
   }
 }
