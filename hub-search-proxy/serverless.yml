@@ -43,8 +43,13 @@ provider:
   environment:
     # Environment variables available to all functions in this service
     LEVEL: INFO
-    # ELASTICSEARCH_API_KEY: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_API_KEY}
     ELASTICSEARCH_ENDPOINT: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_ENDPOINT}
+  apiGateway:
+    apiKeySourceType: HEADER
+  apiKeys:
+    - name: ${self:service}-${self:provider.stage}-apiKey
+
+
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -95,13 +100,22 @@ package:
     - "!node_modules/uuid/**"
 functions:
   hub-search-proxy:
-    handler: handler.main
+    handler: handler.search
     events:
       - http:
           path: /
           method: post
           cors: 
             true
+  hub-search-proxy-put-doc:
+    handler: handler.indexDoc
+    events:
+      - http:
+          path: index-doc
+          method: put
+          cors: 
+            true
+          private: true
             
 plugins:
   - serverless-offline
