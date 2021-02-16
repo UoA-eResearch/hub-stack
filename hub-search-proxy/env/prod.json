@@ -3,7 +3,8 @@
     "infra": {
         "awsApiGatewayCustomDomainName": "apigw.prod.amazon.auckland.ac.nz"
     },
-    "ELASTICSEARCH_API_KEY": "${ssm:/prod/research-hub/ELASTICSEARCH_API_KEY~true}",
+    "elasticsearchDomainName": "researchhub-prod-domain",
+    "ELASTICSEARCH_ENDPOINT": "TBD - add endpoint to parameter store",
     "resourceKey": "key/180f8f50-c1f3-4b9a-b793-0fca514ab708",
     "lambdaRole": "role/lambda_basic_execution_with_read_only_access_to_SSM"
 }

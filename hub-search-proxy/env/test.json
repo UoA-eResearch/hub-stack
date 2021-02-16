@@ -3,7 +3,8 @@
     "infra": {
         "awsApiGatewayCustomDomainName": "apigw.test.amazon.auckland.ac.nz"
     },
-    "ELASTICSEARCH_API_KEY": "${ssm:/test/research-hub/ELASTICSEARCH_API_KEY~true}",
+    "elasticsearchDomainName": "researchhub-test-domain",
+    "ELASTICSEARCH_ENDPOINT": "${ssm:/test/research-hub/elasticsearch_endpoint~true}",
     "resourceKey": "key/891f7417-3a6e-4152-b6d5-c37433acae54",
     "lambdaRole": "role/lambda_basic_execution_with_read_only_access_to_SSM"
 }
