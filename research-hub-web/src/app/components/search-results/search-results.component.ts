@@ -294,7 +294,7 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
           const searchText = typeof params['searchText'] === 'string' ? params['searchText'] : '';
           const personIds = SearchResultsComponent.parseParamArray(params['personIds']);
           const orgUnitIds = SearchResultsComponent.parseParamArray(params['orgUnitIds']);
-          const researchActivityIds = SearchResultsComponent.parseParamArray(params['researchActivityIds']);
+          const researchActivityIds = SearchResultsComponent.parseParamArray(params['researchActivityId']);
           this.pageIndex = +(params['pageIndex'] || 0);
           this.pageSize = +(params['pageSize'] || 21);
           this.orderBy = params['orderBy'] || OrderBy.Relevance;

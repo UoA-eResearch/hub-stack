@@ -1,127 +1,93 @@
-@import "../../../../styles";
-  
-  
+@import '../../../../styles.scss';
+@import '../../../../typography.scss';
+
+
 /**
- * Browse Container
+ * Research Activity Content
  */
 .browse-container {
+  @extend .margin-bottom;
   padding: 2vh 0;
+  width: 95vw;
+  text-align: center;
+  margin: 0 auto;
 }
-  
-  
+
+
 /**
  * Text
  */
-.text {
+ .text {
   text-align: center;
   width: 50vw;
   margin: 5vh auto;
 }
-.text h2 {
+.text h3 {
   font-size: 5.5vh;
 }
 .text p {
   font-size: 3vh;
 }
-    
-  /**
-    * Panel
-    */
-  .panel {
-    text-align: center;
-    width: 100%;
+
+
+/*
+ * Browse and guide tiles
+ */
+.activity {
+  background-color: white;
+  text-decoration: none;
+}
+.tile-content {
+  padding: 2.5vh;
+  height: 100%;
+  text-align: center;
+}
+
+mat-card-actions a {
+  color: map-get($hub-navy, 500);
+  font-size: 2vh!important;
+}
+/**
+ * Mobile
+ */
+ @media only screen and (max-width: 124vh) {
+ .text {
+  text-align: center;
+  width: 95vw;
+  margin: 1vh auto;
   }
-  .panel:active,
-  .panel:focus {
-    outline: none;
-    text-decoration: none;
+  .text h2 {
+    font-size: 4vh;
   }
-  .inner-panel{
-    height: 30vh;
-    width: 55vw;
-    transform: skew(30deg); 
-    margin-left: -5vw;
-    display: flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    border: 0.5vh solid map-get($hub-teal, 500);
-    background: map-get($hub-teal, 500);
-    transition: background 0.11s ease-in-out, color 0.1s ease-in-out;
+  .text p {
+    font-size: 2vh;
   }
-  .inner-panel:hover {
-    cursor: pointer;
-    background: #fafafa;
-    border: 0.5vh solid map-get($hub-teal, 500);
-    transition: background 0.11s ease-in-out;
-  }
-  .inner-panel:hover * {
-    transition: background 0.11s ease-in-out;
-    color: map-get($hub-teal, 500)!important;
-  }
-  .inner-panel * {
-    color: #fafafa;
-    }
-  .inner-panel div {
-    transform: skew(-30deg); 
-    width: 60%;
-  }
-  .inner-panel h3 {
-    font-style: italic;
-    font-weight: bold;
-    line-height: 1.1;
-    font-size: 5vh;
-  }
-  .inner-panel p {
-    font-style: italic;
-    font-size: 2.5vh;
-  }
-  .inner-panel-image {
-    flex-grow: 1;
-    margin-left: -5vw;
-  }
-  .inner-panel div:active,
-  .inner-panel div:focus {
-    text-decoration: none;
-    outline: none;
-  }
+}
 
 /**
-  * Mobile
-  */
-  @media screen and (max-width: 150vh) {
-    .inner-panel {
-      width: 100%;
-      margin: 0 auto;
-      transform: skew(0deg); 
-      margin-left: 0vw;
-    }
-    .inner-panel div {
-      transform: skew(0deg); 
-      width: 100%;
-    }
-    .inner-panel h3 {
-      line-height: 1.1;
-      font-size: 3vh;
-    }
-    .inner-panel p {
-      font-size: 2vh;
-      width: 90vw;
-      margin: 0 auto;
-      word-wrap: break-word;
-    }
-    .inner-panel-image {
-      flex-grow: 0;
-    }
-    .text {
-      text-align: center;
-      width: 95vw;
-      margin: 1vh auto;
-    }
-    .text h2 {
-      font-size: 4vh;
-    }
-    .text p {
-      font-size: 2vh;
-    }
-  }
+ * Card Text
+ */
+ .title-text {
+   font-size: 3vh;
+   color: map-get($hub-navy, 500);
+   border-bottom: 0.5vh solid rgba(0, 0, 0, 0);
+   transition: border-bottom ease-in-out;
+ }
+
+ /**
+ * Custom Button Styles
+ */
+ .browse-container .standard-button {
+  color: white!important;
+  border: 0.25vh solid map-get($hub-navy, 500)!important;
+  border-radius: 6.25vh!important;
+  margin-bottom: 2vh;
+  background-color: map-get($hub-navy, 500)!important;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+.browse-container .standard-button:hover {
+  color: map-get($hub-navy, 500)!important;
+  border-radius: 6.25vh!important;
+  background-color: white!important;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
