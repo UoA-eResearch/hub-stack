@@ -34,27 +34,22 @@
   margin: 30vh 10vh;
   display: inline-block;
 }
-.banner-text h1,
-.banner-text h4 {
+.banner-text .page-title,
+.banner-text .page-summary {
   width: 45vw;
-  margin: 0 auto;
   color: white;
 }
-.banner-content-home p {
+.banner-content-home .page-title {
   color: #FAFAFA;
   margin-bottom: 4vh;
   font-size: 12vh;
 }
-.banner-content-home h4 {
+.banner-content-home .page-summary {
   font-size: 2.5vh;
+  word-wrap: break-word;
   color: $light-grey;
   line-height: 100%;
 }
-.banner-content-home img{      
-  width: 70vh;
-  height: auto;
-}
-
 
 /**
  * Initial Search
@@ -147,9 +142,6 @@ mat-list-item.mat-list-item {
   background-color: map-get($hub-teal, 500);
   padding-left: $padding-site;
   padding-right: $padding-site;
-}
-.app-toolbar-xs {
-  @extend .site-padding-mobile;
 }
 .app-toolbar .app-toolbar-row {
   height: 8vh;
@@ -377,10 +369,17 @@ app-search-bar {
   .initial-search {
     width: 60vw;
   }
-  .banner-content-home h1 {
-    font-size: 4.5vh;
+  .banner-container-home {
+    text-align: center;
   }
-  .banner-content-home img{      
-    width: 50vh;
+  .banner-content-home {     
+    margin: 30vh 2.5vh;
+    display: inline-block;
+  }
+  .banner-text p {
+    width: auto!important;
+  }
+  .page-title {
+    font-size: 7vh!important;
   }
 }
