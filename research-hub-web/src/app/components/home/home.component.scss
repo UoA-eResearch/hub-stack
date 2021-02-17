@@ -6,3 +6,8 @@
     padding-bottom: 5vh;
     background-color: #eeeeee;
 }
+
+.teal-background {
+    padding-bottom: 5vh;
+    background-color: map-get($hub-teal, 500);
+}

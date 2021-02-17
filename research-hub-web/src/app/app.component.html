@@ -6,7 +6,7 @@
       opened="false">
       <div 
         class="app-toolbar" 
-        ngClass.xs="app-toolbar-xs">
+        ngClass.lt-md="site-padding-mobile">
         <div 
           class="app-toolbar-row" 
           fxLayout="row" 
@@ -153,12 +153,10 @@
             </div>
             <div
               class="banner-content-home"
-              style="text-align: left;"
               [style.display]="showBanner ? '' : 'none'">
               <div class="banner-text">
-                <p><b>Research</b>Hub</p>
-                <!-- <img [src]="'assets/images/hub-logo.svg'"> -->
-                <h4>{{ summary }}</h4>
+                <p class="page-title"><b>Research</b>Hub</p>
+                <p class="page-summary">{{ summary }}</p>
               </div>
               <br>
               <input
