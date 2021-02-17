@@ -23,7 +23,7 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : 'min-height: 0px'">
+            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'min-height: 0px'">
         </div>  
     </ng-template>
 
@@ -100,7 +100,7 @@
             <!-- Dynamic Banner -->
             <div 
                 class="banner-container"
-                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : 'height: fit-content'">
+                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'height: fit-content'">
                 <div 
                     class="banner-content" 
                     [style]="article.banner ?  '' : 'margin: 3vh 0;'"

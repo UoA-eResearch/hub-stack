@@ -205,6 +205,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
               this.router.navigate([url]);
             }
 
+            console.log(this.previousRoute);
+            console.log(this.currentRoute);
+          
+             // Same component navigation
+             if (this.currentRoute == this.previousRoute) {
+              this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+              this.router.navigate([url]);
+            }
+
             this.showBackBtn = routeName !== 'home';
 
             this.appComponentService.setProgressBarVisibility(false);

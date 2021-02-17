@@ -9,19 +9,14 @@ import { ListItemToRouterLinkPipe } from '@pipes/list-item-to-router-link.pipe';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { HumanCasePipe } from '@pipes/human-case.pipe';
+import { RichTextToHTML } from '@pipes/rich-text.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
-import { RichTextToHTML } from '@pipes/rich-text.pipe';
 import { BodyMediaComponent } from './body-media/body-media.component';
-import { LinkCardComponent } from './link-card/link-card.component';
-import { VideoCardComponent } from './video-card/video-card.component';
-import { AssetBlockComponent } from './asset-block/asset-block.component';
-import { EntryBlockComponent } from './entry-block/entry-block.component';
-import { EntryInlineComponent } from './entry-inline/entry-inline.component';
 import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
-
+import { VideoCardComponent } from './video-card/video-card.component';
 
 @NgModule({
   imports: [
@@ -30,7 +25,7 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    RouterModule,
+    RouterModule
   ],
   declarations: [
     MarkdownComponent,
@@ -38,17 +33,13 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     ErrorDialogComponent,
     ConfirmDialogComponent,
     HumanCasePipe,
-    CollectionListComponent,
     RichTextToHTML,
+    CollectionListComponent,
     BodyMediaComponent,
-    LinkCardComponent,
-    VideoCardComponent,
-    AssetBlockComponent,
-    EntryBlockComponent,
-    EntryInlineComponent,
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
+    VideoCardComponent
   ],
   exports: [
     FlexLayoutModule,
@@ -59,16 +50,12 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     ErrorDialogComponent,
     ListItemToRouterLinkPipe,
     HumanCasePipe,
-    CollectionListComponent,
     RichTextToHTML,
-    LinkCardComponent,
-    VideoCardComponent,
-    AssetBlockComponent,
-    EntryBlockComponent,
-    EntryInlineComponent,
+    CollectionListComponent,
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
+    VideoCardComponent
   ],
   providers: [],
 })

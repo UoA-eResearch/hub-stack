@@ -25,26 +25,28 @@
  */
  .banner-container-home {
   height: 100vh;
-  text-align: center;
+  text-align: left;
   max-height: auto;
   background-size: cover!important;
 }
 
-.banner-content-home {      
-  margin: 25vh auto;
+.banner-content-home {     
+  margin: 30vh 10vh;
   display: inline-block;
 }
 .banner-text h1,
 .banner-text h4 {
-  width: 50vw;
+  width: 45vw;
   margin: 0 auto;
   color: white;
 }
-.banner-content-home h1 {
-  font-size: 5.5vh;
+.banner-content-home p {
+  color: #FAFAFA;
+  margin-bottom: 4vh;
+  font-size: 12vh;
 }
 .banner-content-home h4 {
-  font-size: 2vh;
+  font-size: 2.5vh;
   color: $light-grey;
   line-height: 100%;
 }
@@ -147,8 +149,7 @@ mat-list-item.mat-list-item {
   padding-right: $padding-site;
 }
 .app-toolbar-xs {
-  padding-left: 5vh;
-  padding-right: 5vh;
+  @extend .site-padding-mobile;
 }
 .app-toolbar .app-toolbar-row {
   height: 8vh;

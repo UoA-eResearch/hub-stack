@@ -1,41 +1,58 @@
 <section class="mat-typography">
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav mode="over" opened="false">
-      <div class="app-toolbar" ngClass.xs="app-toolbar-xs" style="background-color: #0294a5;padding-left: 24px;">
-        <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
-          <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
+    <mat-sidenav 
+      #sidenav 
+      mode="over" 
+      opened="false">
+      <div 
+        class="app-toolbar" 
+        ngClass.xs="app-toolbar-xs">
+        <div 
+          class="app-toolbar-row" 
+          fxLayout="row" 
+          fxLayoutAlign="start center" 
+          color="primary">
+          <a 
+            routerLink="/home" 
+            class="hub-logo" 
+            ngClass.xs="hub-logo-xs">
             <img [src]="'assets/images/hub-logo.svg'">
           </a>
         </div>
       </div>
 
       <mat-nav-list>
-        <ng-container *ngFor="let menuOption of menuOptions;">
-          <ng-container *ngIf="menuOption.sublist === undefined">
-            <mat-list-item [routerLink]="menuOption.routerLink" (click)="sidenav.close()">
-              <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
-              <a mat-line>{{menuOption.name}}</a>
+          <ng-container *ngFor="let menuOption of menuOptions;">
+            <ng-container *ngIf="menuOption.sublist === undefined">
+              <mat-list-item
+                [routerLink]="menuOption.routerLink" 
+                (click)="sidenav.close()">
+                <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
+                <a mat-line>{{menuOption.name}}</a>
             </mat-list-item>
-          </ng-container>
+            </ng-container>
+            <ng-container *ngIf="menuOption.sublist !== undefined">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header class="expandable-menu">
+                  <mat-list-item>
+                    <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
+                    <a mat-line>{{menuOption.name}}</a>
+                  </mat-list-item>
+                </mat-expansion-panel-header>
 
-          <ng-container *ngIf="menuOption.sublist !== undefined">
-            <mat-expansion-panel>
-              <mat-expansion-panel-header class="expandable-menu">
-                <mat-list-item style="width: 100%;height: 100%;">
-                  <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
-                  <a mat-line>{{menuOption.name}}</a>
+                <mat-list-item 
+                  *ngFor="let item of menuOption.sublist;" 
+                  (click)="sidenav.close()"
+                  [routerLink]="['/search']" 
+                  [queryParams]="getSearchQueryParams(item)">
+                  <a mat-line>{{item.name}}</a>
                 </mat-list-item>
-              </mat-expansion-panel-header>
-
-              <mat-list-item *ngFor="let item of menuOption.sublist;" (click)="sidenav.close()"
-                [routerLink]="['/search']" [queryParams]="getSearchQueryParams(item)">
-                <a mat-line>{{item.name}}</a>
-              </mat-list-item>
-            </mat-expansion-panel>
+              </mat-expansion-panel>
+            </ng-container>
           </ng-container>
-        </ng-container>
       </mat-nav-list>
     </mat-sidenav>
+
     <mat-sidenav-content>
       <div class="sidenav-content-wrapper">
         <div #topContent class="sidenav-content" fxLayout="column" ngClass.xs="sidenav-content-xs">
@@ -136,11 +153,11 @@
             </div>
             <div
               class="banner-content-home"
+              style="text-align: left;"
               [style.display]="showBanner ? '' : 'none'">
               <div class="banner-text">
-                <h1>Welcome to the</h1>
-                <img [src]="'assets/images/hub-logo.svg'">
-                <br/>
+                <p><b>Research</b>Hub</p>
+                <!-- <img [src]="'assets/images/hub-logo.svg'"> -->
                 <h4>{{ summary }}</h4>
               </div>
               <br>
@@ -156,13 +173,13 @@
           <!-- <mat-drawer-container> -->
           <mat-sidenav-container fxFlex="noshrink">
 
-            <!-- Content sidenav -->
-            <mat-sidenav class="content-sidenav" mode="side" disableClose
-              [opened]="appComponentService.isContentSidenavVisible" [fixedInViewport]="isContentSidenavFixed"
-              [ngStyle]="{'height':contentSidenavHeight + 'px'}" [@.disabled]="true">
-              <router-outlet name="contentSidenav" (activate)="setContentSidenavHasContent(true)"
-                (deactivate)="setContentSidenavHasContent(false)"></router-outlet>
-            </mat-sidenav>
+          <!-- Content sidenav -->
+          <mat-sidenav class="content-sidenav" mode="side" disableClose
+          [opened]="appComponentService.isContentSidenavVisible" [fixedInViewport]="isContentSidenavFixed"
+          [ngStyle]="{'height':contentSidenavHeight + 'px'}" [@.disabled]="true">
+          <router-outlet name="contentSidenav" (activate)="setContentSidenavHasContent(true)"
+            (deactivate)="setContentSidenavHasContent(false)"></router-outlet>
+          </mat-sidenav>
 
             <!-- Search bar  -->
             <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
@@ -180,11 +197,20 @@
           </mat-sidenav-container>
         </div>
         <footer ngClass.xs="footer-xs">
-          <div class="footer-content" ngClass.xs="footer-content-xs" fxLayout="column" fxLayoutGap="1em"
+          <div 
+            class="footer-content" 
+            ngClass.xs="footer-content-xs" 
+            fxLayout="column" 
+            fxLayoutGap="1vh"
             fxLayoutAlign="center center">
             <div>
-              <a [href]="aucklandUniUrl" target="_blank" (click)="analyticsService.trackOutboundLink(aucklandUniUrl)">
-                <img class="logo-img" ngClass.xs="logo-img-xs"
+              <a 
+                [href]="aucklandUniUrl" 
+                target="_blank" 
+                (click)="analyticsService.trackOutboundLink(aucklandUniUrl)">
+                <img 
+                  ngClass.gt-xs="logo-img" 
+                  ngClass.lt-sm="logo-img-xs"
                   [src]="apiService.getAssetUrl('page-elements/uoa-logo.svg')">
               </a>
             </div>
@@ -199,11 +225,14 @@
               <a routerLink="/about">About</a>
               <span fxHide.xs class="footer-divider">•</span>
               <a [href]="disclaimerUrl" target="_blank"
-                (click)="analyticsService.trackOutboundLink(disclaimerUrl)">Disclaimer</a>
+              (click)="analyticsService.trackOutboundLink(disclaimerUrl)">Disclaimer</a>
             </div>
 
-            <a [href]="eResearchUrl" target="_blank" (click)="analyticsService.trackOutboundLink(eResearchUrl)">
-              Copyright © {{getYear()}}, Centre for eResearch
+            <a 
+              [href]="eResearchUrl" 
+              target="_blank" 
+              (click)="analyticsService.trackOutboundLink(eResearchUrl)">
+                Copyright © {{ getYear() }}, Centre for eResearch
             </a>
           </div>
         </footer>

@@ -1,56 +1,37 @@
 <div class="research-activity-content">
-  <div class="text">
-    <h2>{{ title }}</h2>
-    <p>{{ description }}</p>  
-  </div>
-  <div
-    fxLayoutGap="1%"
-    fxLayout="row wrap"
-    fxLayout.lt-md="column wrap"
-    class="site-padding"
-    ngClass.lt-lg="site-padding-mobile">
-    <div
-      *ngFor="let item of researchActivityOptions;"
-      fxFlex="19%"
-      fxLayout="column"
-      fxLayoutAlign="center">
-        <mat-card
-          class="activity tile-content"
-          fxLayout="column"
-          fxLayoutAlign="space-between">
-          <div>
-            <mat-card-title class="card-title">
-              <a 
-                selected
-                class="title-text"
-                [routerLink]="['/search']"
-                [queryParams]="getQueryParams(item)">
-                  {{ item.name }}
-              </a>
-            </mat-card-title>
-            <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
+  
+</div>
+<div class="text">
+  <h2>{{ title }}</h2>
+  <p>{{ description }}</p>  
+</div>
+
+<div>
+  <div 
+    fxLayout="column wrap" 
+    fxLayoutGap="1vh"
+    fxLayout.lt-sm="column">
+    <div *ngFor="let item of researchActivityOptions;">
+      <div 
+        class="panel"
+        fxLayout="row wrap">
+        <div 
+          class="inner-panel">
+          <div
+            selected 
+            [routerLink]="item.url">
+            <h3>
+              {{ item.name }}
+            </h3>
+            <p>
+              {{ item.description }}
+            </p>
           </div>
-          <mat-card-actions>
-            <span 
-              fxLayout="row"
-              fxLayoutAlign="center center"
-              class="call-to-action">
-              <a
-              selected
-              [routerLink]="['/search']"
-              [queryParams]="getQueryParams(item)">
-                See More
-              </a>&nbsp;&nbsp;
-              <img 
-                class="arrow" 
-                style="height: 2.5vh; width: auto" 
-                src="assets/components/navy-arrow.png">
-            </span>
-          </mat-card-actions>
-        </mat-card>
+        </div>
+        <div fxHide.lt-lg class="research-category-img" style="width: 55vw;margin-left: -5vw;">
+          <img style="object-fit:cover;width:100%;max-height:30vh" src="assets/images/research-categories/{{item.id}}-min.jpg">
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-
-<!-- not changing slider -->

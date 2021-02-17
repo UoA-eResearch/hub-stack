@@ -37,7 +37,7 @@
         <ng-template #dynamicBanner>
             <div 
                 class="banner-container"
-                [style]="subhub.banner? 'background: url(' + subhub.banner.url + ') no-repeat' : subhub.viewType == 'View 2' ? 'display: none;' : 'height: fit-content'">
+                [style]="subhub.banner ? 'background: url(' + subhub.banner.url + ') no-repeat' : subhub.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'height: fit-content'">
             </div>
         </ng-template>
 
@@ -55,7 +55,7 @@
             <div *ngSwitchCase="'View 1'">
                 <div 
                 class="banner-container"
-                [style]="subhub.banner ? 'background: url(' + subhub.banner.url + ') no-repeat' : subhub.viewType == 'View 2' ? 'display: none;' : 'height: fit-content'">
+                [style]="subhub.banner ? 'background: url(' + subhub.banner.url + ') no-repeat' : subhub.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'height: fit-content'">
                     <div
                         class="banner-content" 
                         [style]="subhub.banner ? '' : 'margin: 3vh 0;'"
