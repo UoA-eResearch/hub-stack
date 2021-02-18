@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/app.material.module';
@@ -27,7 +27,8 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     ReactiveFormsModule,
     MaterialModule,
     RouterModule,
-    LazyLoadImageModule
+    LazyLoadImageModule,
+    MatCarouselModule
   ],
   declarations: [
     MarkdownComponent,
@@ -44,6 +45,7 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     VideoCardComponent
   ],
   exports: [
+    MatCarouselModule,
     LazyLoadImageModule,
     FlexLayoutModule,
     FormsModule,

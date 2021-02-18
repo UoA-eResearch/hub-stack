@@ -48,6 +48,7 @@
     "@apollo/link-context": "^2.0.0-beta.3",
     "@contentful/rich-text-html-renderer": "^14.1.1",
     "@contentful/rich-text-types": "^14.1.1",
+    "@ngmodule/material-carousel": "^0.6.0",
     "@uoa/auth": "^0.2.0",
     "@uoa/error-pages": "0.0.7",
     "apollo-angular": "^2.0.3",
