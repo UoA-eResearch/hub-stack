@@ -3,7 +3,11 @@
 const sendElasticsearchRequest = require('./elasticsearch-client');
 
 module.exports.search = async (event, context) => {
-  let queryString = JSON.parse(event.body).query;
+  const requestBody = JSON.parse(event.body);
+  let queryString = '';
+  if (requestBody.hasOwnProperty('query')) {
+    queryString = requestBody.query;
+  }
   console.log(`Received query string: ${queryString}`); 
 
   let query = { // The query object to be sent to ElasticSearch
@@ -23,7 +27,7 @@ module.exports.search = async (event, context) => {
         must: [
           {
             simple_query_string: {
-              query: `${queryString}~2`
+              query: `${queryString}~AUTO`
             }
           },
           {
@@ -34,7 +38,7 @@ module.exports.search = async (event, context) => {
         ]
       }
     }
-  };    // possibly the fuzziness should be AUTO rather than a defined number (~2)
+  };
 
   const params = {
     httpMethod: 'POST',
@@ -42,50 +46,81 @@ module.exports.search = async (event, context) => {
     payload: query
   };
 
-  const result = await sendElasticsearchRequest(params);
-
-  if (result.statusCode == 200) {
-    console.log("Request status: " + result.statusCode + " " + result.statusMessage);   
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        message: "Welcome to hub-search-proxy",
-        your_request: event.body,
-        result: result.body // .hits.hits ?
-      }),
-    };
-  } else {
-    context.fail('Search failed. ' + JSON.stringify(result));
+  try {
+    const result = await sendElasticsearchRequest(params);
+    return formatResponse(
+      JSON.stringify({
+        query: queryString,
+        result: result.body
+      }
+    ))
+  } catch(error) {
+    return formatError(error)
   }
 }
 
-module.exports.indexDoc = async (event, context) => {
+module.exports.update = async (event, context) => {
+  console.log(event);
   let doc = JSON.parse(event.body);
-  console.log('Received doc to index');
 
   const params = {
     httpMethod: 'PUT',
-    requestPath: `main-index/_doc/${doc.sys.id}`,
+    requestPath: `main-index/_doc/${event.pathParameters.id}`,
     payload: doc
   };
 
-  const result = await sendElasticsearchRequest(params);
-
-  if (result.statusCode == 200 || result.statusCode == 201) {
-    console.log("Request status: " + result.statusCode + " " + result.statusMessage);   
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
+  try {
+    const result = await sendElasticsearchRequest(params);
+    return formatResponse(
+      JSON.stringify({
         result: result.body
-      }),
-    };
-  } else {
-    context.fail('Error. ' + JSON.stringify(result) + ' . Payload: ' + JSON.stringify(doc));
+      }
+    ))
+  } catch(error) {
+    return formatError(error)
   }
+}
+
+module.exports.delete = async (event, context) => {
+  console.log(event);
+
+  const params = {
+    httpMethod: 'DELETE',
+    requestPath: `main-index/_doc/${event.pathParameters.id}`
+  };
+
+  try {
+    const result = await sendElasticsearchRequest(params);
+    return formatResponse(
+      JSON.stringify({
+        result: result.body
+      }
+    ))
+  } catch(error) {
+    return formatError(error)
+  }
+}
+
+var formatResponse = function(body){
+  var response = {
+    "statusCode": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    },
+    "body": body
+  }
+  return response
+}
+
+var formatError = function(error){
+  var response = {
+    "statusCode": error.statusCode,
+    "headers": {
+      "Content-Type": "text/plain",
+      "Access-Control-Allow-Origin": "*"
+    },
+    "body": error.code + ": " + error.message
+  }
+  return response
 }

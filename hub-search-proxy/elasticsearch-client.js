@@ -8,6 +8,13 @@ const AWS = require('aws-sdk');
 const endpoint = new AWS.Endpoint(process.env.ELASTICSEARCH_ENDPOINT);
 const region = 'ap-southeast-2';
 const httpClient = new AWS.HttpClient();
+/*
+ * The AWS credentials are picked up from the environment.
+ * They belong to the IAM role assigned to the Lambda function.
+ * Since the ES requests are signed using these credentials,
+ * make sure to apply a policy that allows ES domain operations
+ * to the role.
+ */
 const credentials = new AWS.EnvironmentCredentials('AWS');
 
 /**
@@ -25,6 +32,7 @@ function sendRequest({ httpMethod, requestPath, payload }) {
   request.path = path.join(request.path, requestPath);
   request.body = JSON.stringify(payload);
   request.headers['Content-Type'] = 'application/json';
+  request.headers['presigned-expires'] = false;
   request.headers['Host'] = endpoint.host;
 
   console.log("Signing request...");

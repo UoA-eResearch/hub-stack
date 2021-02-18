@@ -5,6 +5,5 @@
     },
     "elasticsearchDomainName": "researchhub-test-domain",
     "ELASTICSEARCH_ENDPOINT": "${ssm:/dev/research-hub/elasticsearch_endpoint~true}",
-    "resourceKey": "key/3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d",
-    "lambdaRole": "role/lambda_basic_execution_with_read_only_access_to_SSM"
+    "resourceKey": "3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d"
 }
