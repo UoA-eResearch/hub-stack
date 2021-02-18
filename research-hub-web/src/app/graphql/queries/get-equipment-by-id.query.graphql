@@ -20,7 +20,7 @@ query GetEquipmentByID($id: String!) {
     }
     summary
     callToAction
-    callToActionLable
+    callToActionLabel
     bodyText {
       json 
       links {
