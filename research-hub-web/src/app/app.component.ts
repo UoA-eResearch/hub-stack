@@ -1,4 +1,4 @@
-import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { filter, distinctUntilChanged, pluck } from 'rxjs/operators';
 import { 
   Component, 
   OnDestroy, 
@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, fromEvent } from 'rxjs';
+import { Subscription, fromEvent, Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ResearchHubApiService } from './services/research-hub-api.service';
 import { AnalyticsService } from './services/analytics.service';
@@ -32,7 +32,12 @@ import {
 } from '@angular/animations';
 import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
-import { AllEquipmentGQL } from './graphql/schema';
+import { 
+  AllCategoriesGQL,
+  AllEventsGQL,
+  CategoryCollection,
+  EventCollection
+} from './graphql/schema';
 import { environment } from '@environments/environment';
 import {
   OptionType,
@@ -84,6 +89,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private contentSidenavVisibilitySub: Subscription;
   private scrollSub: Subscription;
   private winResizeSub: Subscription;
+  public allCategories$: Observable<CategoryCollection>;
+  public allEvents$: Observable<EventCollection>;
 
   public selectedCategory = CategoryId.All;
   public searchText = '';
@@ -122,7 +129,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private ngZone: NgZone,
     public loginService: LoginService,
     public apollo: Apollo,
-    public allEquipmentGQL: AllEquipmentGQL,
+    public allCategoriesGQL: AllCategoriesGQL,
+    public allEventsGQL: AllEventsGQL,
     private _bypass: BypassErrorService) {this._bypass.bypassError(environment.cerGraphQLUrl, [500]);}
 
   getSearchQueryParams(item: any) {
@@ -204,9 +212,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               this.router.navigate([url]);
             }
-
-            console.log(this.previousRoute);
-            console.log(this.currentRoute);
           
              // Same component navigation
              if (this.currentRoute == this.previousRoute) {

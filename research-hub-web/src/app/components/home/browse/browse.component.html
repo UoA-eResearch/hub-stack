@@ -1,4 +1,6 @@
-<div class="browse-container">
+<div 
+  *ngIf="allCategories$ | async as allCategories" 
+  class="browse-container">
   <div class="text">
     <h3>{{ title }}</h3>
     <p>{{ description }}</p>  
@@ -10,8 +12,8 @@
     class="site-padding"
     ngClass.lt-lg="site-padding-mobile">
     <div
-      *ngFor="let item of categoryOptionsGQL; let i = index" [ngClass]="item.className"
-      fxFlex="19%"
+      *ngFor="let item of allCategories.items"
+      fxFlex="24%"
       fxLayout="column"
       fxLayoutAlign="center">
         <mat-card
@@ -23,14 +25,14 @@
               <a 
                 selected
                 class="title-text"
-                [routerLink]="item.url">
+                [routerLink]="['/']"> <!-- Add slug link here -->
                   {{ item.name }}
               </a>
             </mat-card-title>
-            <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
+            <mat-card-content class="card-summary">{{ item.summary }}</mat-card-content>
           </div>
           <mat-card-actions>
-            <a [routerLink]="item.url">
+            <a [routerLink]="['/']"> <!-- Add slug link here -->
               <button 
                   mat-flat-button 
                   class="standard-button">

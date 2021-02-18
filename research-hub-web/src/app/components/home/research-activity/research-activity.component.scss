@@ -4,10 +4,7 @@
 /**
  * Browse Container
  */
-.research-activity-content,
-.research-activity-content * {
-  padding: 2vh 0;
-  overflow-x: hidden !important;
+.research-activity-content {
 }
   
   
@@ -21,6 +18,7 @@
 }
 .text h3 {
   font-size: 5.5vh;
+  color: #333333;
 }
 .text p {
   font-size: 3vh;
@@ -40,7 +38,7 @@
   }
   .inner-panel{
     height: 30vh;
-    width: 55vw;
+    width: 55%;
     transform: skew(30deg); 
     margin-left: -5vw;
     display: flex;
@@ -77,10 +75,6 @@
   .inner-panel p {
     font-style: italic;
     font-size: 2.5vh;
-  }
-  .inner-panel-image {
-    flex-grow: 1;
-    margin-left: -5vw;
   }
   .inner-panel div:active,
   .inner-panel div:focus {

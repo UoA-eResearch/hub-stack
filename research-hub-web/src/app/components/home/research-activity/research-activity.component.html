@@ -1,20 +1,18 @@
-<div class="research-activity-content">
-  
-</div>
+<div class="research-activity-content margin-bottom">
 <div class="text">
   <h3>{{ title }}</h3>
   <p>{{ description }}</p>  
 </div>
 
 <div>
-  <div 
+  <div
     fxLayout="column wrap" 
     fxLayoutGap="1vh"
     fxLayout.lt-sm="column">
     <div *ngFor="let item of researchActivityOptions;">
       <div 
         class="panel"
-        fxLayout="row wrap">
+        fxLayout="row">
         <div 
           class="inner-panel">
           <div
@@ -34,4 +32,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
