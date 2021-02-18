@@ -1,4 +1,4 @@
-<div class="research-activity-content margin-bottom">
+<div class="research-activity-content margin-bottom-2">
 <div class="text">
   <h3>{{ title }}</h3>
   <p>{{ description }}</p>  
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div fxHide.lt-lg class="research-category-img" style="width: 55vw;margin-left: -5vw;">
-          <img style="object-fit:cover;width:100%;max-height:30vh" src="assets/images/research-categories/{{item.id}}-min.jpg">
+          <img style="object-fit:cover;width:100%;height:30vh" [lazyLoad]="'assets/images/research-categories/' + item.id + '-min.jpg'">
         </div>
       </div>
     </div>

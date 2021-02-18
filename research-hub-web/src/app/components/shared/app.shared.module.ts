@@ -17,6 +17,7 @@ import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
 import { VideoCardComponent } from './video-card/video-card.component';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { VideoCardComponent } from './video-card/video-card.component';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    LazyLoadImageModule
   ],
   declarations: [
     MarkdownComponent,
@@ -42,6 +44,7 @@ import { VideoCardComponent } from './video-card/video-card.component';
     VideoCardComponent
   ],
   exports: [
+    LazyLoadImageModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
