@@ -19,7 +19,7 @@ provider:
   stage: ${opt:stage, 'dev'} # Deploy with sls deploy --stage STAGE (default dev)
   region: ap-southeast-2
   endpointType: regional
-  role: arn:aws:iam::${file(env/${self:provider.stage}.json):awsAccountId}:${file(env/${self:provider.stage}.json):lambdaRole}
+  role: myDefaultRole
   tags:
     ResearchHub: ${self:custom.ResearchHub}
     BusinessService: ${self:custom.BusinessService}
@@ -48,48 +48,7 @@ provider:
     apiKeySourceType: HEADER
   apiKeys:
     - name: ${self:service}-${self:provider.stage}-apiKey
-
-
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - ssm:GetParameter
-        - ssm:GetParameters
-      Resource:
-        - arn:
-          Fn::Join:
-            - ":"
-            - - arn
-              - aws
-              - ssm:${self:provider.region}
-              - ${file(env/${self:provider.stage}.json):awsAccountId}
-              - parameter/${self:provider.stage}/research-hub/*
-    - Effect: Allow
-      Action:
-        - kms:Decrypt
-      Resource:
-        - arn:
-          Fn::Join:
-            - ":"
-            - - arn
-              - aws
-              - kms
-              - ${self:provider.region}
-              - ${file(env/${self:provider.stage}.json):awsAccountId}
-              - ${file(env/${self:provider.stage}.json):resourceKey}
-    - Effect: Allow
-      Action:
-        - es:ESHttp*
-      Resource:
-        - arn:
-          Fn::Join:
-            - ":"
-            - - arn
-              - aws
-              - es
-              - ${self:provider.region}:518380838815
-              - domain/${file(env/${self:provider.stage}.json):elasticsearchDomainName}/*
-              # NOTE: hardcoded account id of the es domain - change to prod account id once es is deployed to prod
+    
 package:
   exclude:
     - .git/**
@@ -99,7 +58,7 @@ package:
     - "!node_modules/@uoa/**"
     - "!node_modules/uuid/**"
 functions:
-  hub-search-proxy:
+  search:
     handler: handler.search
     events:
       - http:
@@ -107,17 +66,97 @@ functions:
           method: post
           cors: 
             true
-  hub-search-proxy-put-doc:
-    handler: handler.indexDoc
+          private: true
+          timeout: 30
+  update:
+    handler: handler.update
     events:
       - http:
-          path: index-doc
+          path: doc/{id}
           method: put
-          cors: 
+          cors:
             true
           private: true
+          timeout: 30
+  delete:
+    handler: handler.delete
+    events:
+      - http:
+          path: doc/{id}
+          method: delete
+          cors:
+            true
+          private: true
+          timeout: 30
             
 plugins:
   - serverless-offline
   - serverless-mocha-plugin
   - serverless-domain-manager
+
+resources:
+  Resources:
+    myDefaultRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        Path: /
+        RoleName: ${self:service}-lambda-role
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: "sts:AssumeRole"
+        ManagedPolicyArns:
+          - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        Policies:
+          - PolicyName: myPolicyName
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                  Resource:
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:logs"
+                          - Ref: "AWS::Region"
+                          - Ref: "AWS::AccountId"
+                          - "log-group:/aws/lambda/*:*:*"
+                - Effect: Allow
+                  Action:
+                    - ssm:GetParameter
+                    - ssm:GetParameters
+                  Resource:
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:ssm"
+                          - Ref: "AWS::Region"
+                          - Ref: "AWS::AccountId"
+                          - "parameter/${self:provider.stage}/research-hub/*"
+                - Effect: Allow
+                  Action:
+                    - kms:Decrypt
+                  Resource:
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:kms"
+                          - Ref: "AWS::Region"
+                          - Ref: "AWS::AccountId"
+                          - "key/${file(env/${self:provider.stage}.json):resourceKey}"
+                - Effect: Allow
+                  Action:
+                    - es:ESHttp*
+                  Resource:
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:es"
+                          - Ref: "AWS::Region"
+                          - "518380838815"
+                          - "domain/${file(env/${self:provider.stage}.json):elasticsearchDomainName}/*"
+                          # NOTE: hardcoded account id of the es domain - change to prod account id once es is deployed to prod
