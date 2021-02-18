@@ -17,7 +17,8 @@
           class="inner-panel">
           <div
             selected 
-            [routerLink]="item.url">
+            [routerLink]="['/search']" 
+            [queryParams]="getQueryParams(item)">
             <h3>
               {{ item.name }}
             </h3>
@@ -26,7 +27,7 @@
             </p>
           </div>
         </div>
-        <div fxHide.lt-lg class="research-category-img" style="width: 55vw;margin-left: -5vw;">
+        <div fxHide.lt-lg class="research-category-img">
           <img style="object-fit:cover;width:100%;height:30vh" [lazyLoad]="'assets/images/research-categories/' + item.id + '-min.jpg'">
         </div>
       </div>
