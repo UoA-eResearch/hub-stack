@@ -23,7 +23,7 @@ export class FeaturedComponent implements OnInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event?) {
+  onResize() {
     this.screenHeight = window.innerHeight;
     this.screenWidth = window.innerWidth;
   }
