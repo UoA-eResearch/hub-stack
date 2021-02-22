@@ -99,7 +99,7 @@ resource "aws_ecs_service" "preview" {
   }
 
   load_balancer {
-    target_group_arn = aws_alb_target_group.ecs-cer-graphql.arn
+    target_group_arn = aws_alb_target_group.ecs-cer-graphql-preview.arn
     container_name   = "cer-graphql"
     container_port   = 4000
   }
@@ -114,7 +114,7 @@ resource "aws_ecs_service" "preview" {
       "Name" = "graphql-preview-service-definition"
     },
   )
-  depends_on = [aws_alb_target_group.ecs-cer-graphql]
+  depends_on = [aws_alb_target_group.ecs-cer-graphql-preview]
   lifecycle {
     # create_before_destroy = true
     ignore_changes = [desired_count]
@@ -160,44 +160,3 @@ resource "aws_lb_listener_rule" "routing-preview" {
     }
   }
 }
-
-# The following are already created in ecs-service-graphql.tf:
-
-# The SG for the Container task itself. Not
-# Set globally in case we can secure things 
-# more tightly
-# resource "aws_security_group" "graphql_sg" {
-#   name        = "${var.ecs_cluster_name}-graphql-Security-Group"
-#   description = "Security Group graphql Service"
-#   vpc_id      = var.vpc_id
-
-#   egress {
-#     # allow all traffic to private SN
-#     from_port = "0"
-#     to_port   = "0"
-#     protocol  = "-1"
-
-#     cidr_blocks = [
-#       "0.0.0.0/0",
-#     ]
-#   }
-
-#   tags = merge(
-#     local.common_tags,
-#     {
-#       "Name" = "${var.ecs_cluster_name}-graphql-Security-Group"
-#     },
-#   )
-# }
-
-# The reason for splitting this out is to avoid a
-# cyclic dependency. Means we can also make changes
-# # as needed without impacting the core rules
-# resource "aws_security_group_rule" "lb_to_graphql" {
-#   type                     = "ingress"
-#   from_port                = "0"
-#   to_port                  = "0"
-#   protocol                 = "-1"
-#   source_security_group_id = aws_security_group.loadbalancer_sg.id
-#   security_group_id        = aws_security_group.graphql_sg.id
-# }

@@ -34,7 +34,7 @@ vpc_id           = "vpc-05ace6f7251ef59c3" # uoa-connect-nonprod  10.0.64.0/18
 subnets = ["subnet-0d0a68988c480b3a4", "subnet-0b56849cba433ce13", "subnet-0fc970830487f2323"]
 
 # Loadbalancer for ECS
-lb_name = "CeR-Terraform-Test"
+lb_name = "rhubcpapi-lb-test"
 lb_subnets = [
   "subnet-0f5df2d778a581f28",  # uoa-connect-nonprod-public-alb-a  10.0.118.0/24
   "subnet-01f535e3b10cf7635",  # uoa-connect-nonprod-public-alb-b  10.0.119.0/24

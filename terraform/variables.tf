@@ -221,7 +221,7 @@ variable "cognito_user_pool_arn" {
 }
 
 variable "cognito_user_pool_domain" {
-  description = "The Amazon Cognito Domain aassociated with the User Pool"
+  description = "The Amazon Cognito Domain associated with the User Pool"
 }
 
 variable "cognito_identity_provider" {
@@ -231,11 +231,6 @@ variable "cognito_identity_provider" {
 variable "permitted_group" {
   description = "What groups will be permitted access (in standard UoA syntax, i.e {group1}|{group2}|{group3})"
 }
-
-# API Gateway
-#variable "api-gw-domain" {
-#    description = "The domain to attach the deployment to in order to facilitate clean versioning"
-#}
 
 #######################
 #   Contentful S3     #

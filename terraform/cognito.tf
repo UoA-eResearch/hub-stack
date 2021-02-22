@@ -6,14 +6,6 @@ resource "aws_cognito_resource_server" "research_hub" {
     scope_name        = "spa"
     scope_description = "Access scope for the Research Hub SPA"
   }
-  # scope {
-  # scope_name        = "servicenow"
-  #   scope_description = "Access scope for the Research Hub ServiceNow"
-  # }
-  # scope {
-  #   scope_name        = "contentful"
-  #   scope_description = "Access scope for the Research Hub Contentful"
-  # }
 
   user_pool_id = var.cognito_user_pool_id
 }

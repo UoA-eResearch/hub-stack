@@ -10,8 +10,8 @@ This solution will provision the core requirements of the ResearchHub environmen
 
 1. Initialize the Terraform backend and provider plugins (run `terraform init -backend-config=envs/<env-name>/backend.conf`)
 2. Make changes to the variables and resources defined in the .tfvars and .tf files as required.
-3. View the infrastructure that will be created/updated (run `terraform plan var-file=<var-file>`)
-4. Create/update the infrastructure in AWS (run `terraform apply var-file=<var-file>`)
+3. View the infrastructure that will be created/updated (run `terraform plan -var-file=<var-file>`)
+4. Create/update the infrastructure in AWS (run `terraform apply -var-file=<var-file>`)
 5. View output values in the console. 
 6. Use the outputs:
   - Update/create required parameter store values
@@ -59,7 +59,8 @@ terraform destroy -var-file=var-file --auto-approve
 | **General** | ----------- |
 | aws_region | What region this is to be deployed in |
 | aws_profile | What profile is to be used to access AWS |
-| lifecycle_state | What Lifecycle state this deployment is (i.e dev/test/prod) | 
+| lifecycle_state | What Lifecycle state this deployment is (i.e dev/test/prod) |
+| aws_account_id | What AWS Account this deployment is (i.e sandbox/nonprod/prod) | 
 | application | The application this deployment is linked to. |
 | department | Which team/department is looking after this application |
 | project_code | What Project Code is in use (if applicable, otherwise NA) |
@@ -105,5 +106,19 @@ terraform destroy -var-file=var-file --auto-approve
 | fargate_spot_weight | What weighting should be given so proportions of containers run on Fargate Spot (Weights must sum to 100) | 
 | fargate_spot_count | How many containers should explicitly run on Fargate Spot |
 | -----------  | ----------- |
-| **S3 Bucket for Contentful Backup** | ----------- |
-| create_contentful_backup_bucket | Should the S3 bucket be created? (Only need for prod?) |
+| **Cognito** | ----------- |
+| cognito_user_pool_id | Cognito User Pool that we will be associating with |
+| cognito_user_pool_arn | Full ARN of the in use Cognito User Pool |
+| cognito_user_pool_domain | The Amazon Cognito Domain associated with the User Pool |
+| cognito_identity_provider | What is the name of the Identity provider within the given pool |
+| permitted_group | What groups will be permitted access |
+| -----------  | ----------- |
+| **ElasticSearch Service** | ----------- |
+| es_version | The version of Elasticsearch to deploy |
+| prefix | Common name prefix for resources in this module |
+| user_pool_id | Cognito user pool id for master user access to Kibana |
+| identity_pool_id | Cognito identity pool id for master user access to Kibana |
+| cognito_iam_role_arn | IAM role, used for fine-grained security control in cognito, ARN |
+| master_user_iam_role_arn | IAM role, used for master user in fine-grained security control , ARN |
+| enabled_identity_providers | List of supported identity providers |
+| -----------  | ----------- |
