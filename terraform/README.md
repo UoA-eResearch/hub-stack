@@ -114,6 +114,7 @@ terraform destroy -var-file=var-file --auto-approve
 | permitted_group | What groups will be permitted access |
 | -----------  | ----------- |
 | **ElasticSearch Service** | ----------- |
+| create_elasticsearch_domain | Should an ES domain be created? Theoretically only one domain (in prod) should be required |
 | es_version | The version of Elasticsearch to deploy |
 | prefix | Common name prefix for resources in this module |
 | user_pool_id | Cognito user pool id for master user access to Kibana |

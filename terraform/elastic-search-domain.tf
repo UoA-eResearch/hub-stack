@@ -1,4 +1,5 @@
 resource "aws_elasticsearch_domain" "elasticsearch_domain" {
+  count  = var.create_elasticsearch_domain ? 1 : 0
   domain_name = "${var.prefix}-${var.lifecycle_state}-domain"
   elasticsearch_version = var.es_version
   cluster_config {
@@ -74,12 +75,12 @@ resource "aws_elasticsearch_domain" "elasticsearch_domain" {
 }
 
 output "elasticsearch_endpoint" {
-  value       = try(aws_elasticsearch_domain.elasticsearch_domain.endpoint, "")
+  value       = try(aws_elasticsearch_domain.elasticsearch_domain[0].endpoint, "")
   description = "Endpoint for the ElasticSearch domain"
 }
 
 output "kibana_endpoint" {
-  value       = try(aws_elasticsearch_domain.elasticsearch_domain.kibana_endpoint, "")
+  value       = try(aws_elasticsearch_domain.elasticsearch_domain[0].kibana_endpoint, "")
   description = "Endpoint for Kibana"
 }
 

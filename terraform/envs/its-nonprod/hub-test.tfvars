@@ -74,6 +74,7 @@ permitted_group           = "Postgraduate.psrwi|staffIntranetUser.ec"
 create_contentful_backup_bucket = false
 
 # ElasticSearch Service
+create_elasticsearch_domain = true
 es_version = 7.9
 prefix = "researchhub"
 
