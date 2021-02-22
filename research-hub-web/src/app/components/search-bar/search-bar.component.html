@@ -32,33 +32,6 @@
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
-  
-      <mat-form-field 
-        fxFlex="25vh" 
-        fxHide.lt-md 
-        floatLabel="never" 
-        placeholder="Categories">
-        <mat-select 
-          [(ngModel)]="category">
-          <mat-option 
-            *ngFor="let category of categoriesValue" 
-            [value]="category.id">
-              {{category.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <div 
-        fxFlex="5vh" 
-        fxHide.gt-sm 
-        *ngIf="isFilterBtnVisible" 
-        fxLayoutAlign="center center">
-        <button 
-          mat-icon-button 
-          (click)="openSearchFilter(); this.analyticsService.trackUserExperience('Filter panel', 'open')">
-          <mat-icon>filter_list</mat-icon>
-        </button>
-      </div>
     </div>
   </div>  
 </div>

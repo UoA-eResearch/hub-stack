@@ -1,7 +1,6 @@
 @import '../../../themes.scss';
 @import '../../../typography.scss';
 @import '../../../styles.scss';
-@import '../search-results/search-results.component.scss';
 
 mat-expansion-panel,
 mat-card  {
@@ -50,7 +49,7 @@ mat-card  {
  */
  .specifications-table {
     border-collapse: collapse; 
-    width: 50%;
+    width: 100%;
 }
 .specifications-table td, 
 .specifications-table th {

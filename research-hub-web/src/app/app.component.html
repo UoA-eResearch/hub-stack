@@ -116,11 +116,8 @@
                   #browseMenu="matMenu" 
                   [overlapTrigger]="false">
                   <button 
-                    mat-menu-item 
-                    *ngFor="let item of categoryOptions" 
-                    [routerLink]="['/search']"
-                    [queryParams]="getSearchQueryParams(item)">
-                      {{item.name}}
+                    mat-menu-item
+                    [routerLink]="['/search']">
                   </button>
                 </mat-menu>
 
@@ -260,8 +257,6 @@
                   </div>
                 </div>  
                 <app-search-bar 
-                  [categories]="categoryOptions" 
-                  [category]="selectedCategory"
                   [searchText]="searchText">
                 </app-search-bar>
 
@@ -271,44 +266,41 @@
             </mat-sidenav-content>
           </mat-sidenav-container>
         </div>
-        <footer ngClass.xs="footer-xs">
+        <footer>
           <div 
-            class="footer-content" 
-            ngClass.xs="footer-content-xs" 
+            class="footer-content"
             fxLayout="column" 
             fxLayoutGap="1vh"
             fxLayoutAlign="center center">
             <div>
               <a 
                 [href]="aucklandUniUrl" 
-                target="_blank" 
-                (click)="analyticsService.trackOutboundLink(aucklandUniUrl)">
+                target="_blank" >
                 <img 
                   ngClass.gt-xs="logo-img" 
                   ngClass.lt-sm="logo-img-xs"
-                  [src]="apiService.getAssetUrl('page-elements/uoa-logo.svg')">
+                  src="assets/images/uoa-logo.svg">
               </a>
             </div>
 
-            <div fxLayout="row" fxLayout.xs="column">
+            <div fxLayout="row" fxLayout.lt-sm="column">
               <a routerLink="/userStudy">Join User Study</a>
-              <span fxHide.xs class="footer-divider">•</span>
+              <span fxHide.xs class="footer-divider"></span>
               <a routerLink="/feedback">Provide Feedback</a>
-              <span fxHide.xs class="footer-divider">•</span>
+              <span fxHide.xs class="footer-divider"></span>
               <a routerLink="/contact">Contact</a>
-              <span fxHide.xs class="footer-divider">•</span>
+              <span fxHide.xs class="footer-divider"></span>
               <a routerLink="/about">About</a>
-              <span fxHide.xs class="footer-divider">•</span>
-              <a [href]="disclaimerUrl" target="_blank"
-              (click)="analyticsService.trackOutboundLink(disclaimerUrl)">Disclaimer</a>
+              <span fxHide.xs class="footer-divider"></span>
+              <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
             </div>
-
-            <a 
+            <div>
+              <a 
               [href]="eResearchUrl" 
-              target="_blank" 
-              (click)="analyticsService.trackOutboundLink(eResearchUrl)">
-                Copyright © {{ getYear() }}, Centre for eResearch
-            </a>
+              target="_blank">
+                  Copyright © {{ getYear() }} Centre for eResearch
+              </a>
+            </div>
           </div>
         </footer>
       </div>
