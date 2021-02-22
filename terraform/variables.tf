@@ -242,6 +242,12 @@ variable "create_contentful_backup_bucket" {
 ###############################
 #   ElasticSearch Service     #
 ###############################
+
+variable "create_elasticsearch_domain" {
+  description = "Should an ES domain be created."
+  default     = false
+}
+
 variable "es_version" {
   type = string
   description = "The version of Elasticsearch to deploy."

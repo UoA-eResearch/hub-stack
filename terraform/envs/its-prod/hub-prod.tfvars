@@ -75,6 +75,7 @@ permitted_group           = "TBC"
 create_contentful_backup_bucket = true
 
 # ElasticSearch Service
+create_elasticsearch_domain = true
 es_version = 7.9
 prefix = "researchhub"
 
