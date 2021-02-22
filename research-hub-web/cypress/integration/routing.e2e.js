@@ -1,10 +1,4 @@
 describe('ResearchHubs Static Routing', () => {
-
-    it('can visit /about and load the About Page', () => {
-        cy.visit('/about');
-        cy.contains('Message from the Director');
-    });
-
     it('can visit /articles and load a list of Articles', () => {
         cy.visit('/articles');
         cy.contains('Article Collection');
@@ -14,11 +8,9 @@ describe('ResearchHubs Static Routing', () => {
         cy.visit('/article/communicating-your-research');
         cy.contains('The impact of Research Communication goes further than just explaining it, it’s about building bridges between research and the public to create a mutual engagement.');
     });
-
 });
 
 describe('ResearchHubs Dynamic SubHub Routing', () => {
-
     it('can visit /research-impact and load a SubHub', () => {
         cy.visit('/research-impact');
         cy.contains('Research Impact');
@@ -37,5 +29,4 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
             .contains('Support for impactful research').click();
         cy.url().should('include', '/research-impact/');
     })
-
-}); 
+});
