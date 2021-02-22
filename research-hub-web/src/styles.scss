@@ -340,33 +340,36 @@ svg {
 }
 
 
-/**
- * Size/Media Query Mixins
- */
- @mixin size($size) {
+/**************************/
+
+// Size/Media Query Mixins /
+
+/**************************/
+
+@mixin size($size) {
 
   /* Extra small devices (phones, 600px and down) */
   @if $size == extra-small {
-      @media only screen and (max-width: 96vh) { @content; }
+      @media only screen and (max-width: 599px) { @content; }
   }
 
   /* Small devices (portrait tablets and large phones, 640px and up) */
   @if $size == small {
-      @media only screen and (min-width: 124vh) { @content; }
+      @media only screen and (min-width: 640px) { @content; }
   }
 
   /* Medium devices (landscape tablets, 768px and up) */
   @if $size == medium {
-      @media only screen and (min-width: 150vh) { @content; }
+      @media only screen and (min-width: 768px) { @content; }
   }
 
   /* Large devices (laptops/desktops, 992px and up) */
   @if $size == large {
-      @media only screen and (min-width: 240vh) { @content; }
+      @media only screen and (min-width: 992px) { @content; }
   }
 
   /* Extra large devices (large laptops and desktops, 1200px and up) */
   @if $size == extra-large {
-      @media only screen and (min-width: 625vh) { @content; }
+      @media only screen and (min-width: 1200px) { @content; }
   }
 }

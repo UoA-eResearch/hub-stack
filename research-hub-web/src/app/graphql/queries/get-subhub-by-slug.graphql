@@ -1,11 +1,58 @@
 query GetSubHubBySlug($slug: String) {
-    subHubCollection(where: {slug: $slug}) {
+    subHubCollection(limit: 1, where: {slug: $slug}) {
         items {
-            ssoProtected
+            slug
             title
-            sys {
-                id
+            summary
+            ssoProtected
+            searchable
+            banner {
+            url
             }
+            bodyText {
+            json
+            links {
+                entries {
+                    block { 
+                    ...PublicFields
+                    sys {
+                        id
+                    }
+                    }
+                    inline { 
+                    ...PublicFields
+                    sys {
+                        id
+                    } 
+                    }
+                    hyperlink { 
+                    ...PublicFields 
+                    sys {
+                        id
+                    }
+                    }
+                }
+                assets {
+                block {
+                    ...AssetFields
+                }
+                hyperlink {
+                    ...AssetFields
+                }
+                }
+            }
+            }
+            keywords
+            internalPagesCollection {
+            items { ...PublicFields }
+            }
+            externalPagesCollection {
+            items { ...PublicFields }
+            }
+            relatedItemsCollection {
+            items { ...PublicFields }
+            }
+            viewType
         }
     }
 }

@@ -9,7 +9,7 @@
 <!-- If we're displaying an individual equipment -->
 <div 
     id="equipment-container"
-    *ngIf="equipment$ | async as equipment">
+    *ngIf="equipment | async as equipment">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
@@ -22,7 +22,7 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat' : 'height: 0px; margin-top: 2vh'">
+            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat' : 'display: none;'">
         </div>  
     </ng-template>
 

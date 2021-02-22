@@ -16,17 +16,18 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
     public bodyMediaService: BodyMediaService)
   { super(); }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.data = this.node;
 
     /**
      * Get BodyMedia for current content from BodyMedia service
      */
-     this.returnVal$ = this.bodyMediaService.getBodyMedia()
+     this.returnVal$ = this.bodyMediaService.getBodyMedia();
 
       switch(this.data.nodeType) {
         case 'embedded-asset-block':
           this.contentItem = this.returnVal$.assets['block'].find(x => x.sys.id == this.data.data.target.sys.id);
+          this.contentItem['size'] = Math.round(this.contentItem['size'] / 1000) + (Math.round(this.contentItem['size'] % 1000) / 100);
           break;
         case 'embedded-entry-block':
           this.contentItem = this.returnVal$.entries['block'].find(x => x.sys.id == this.data.data.target.sys.id);

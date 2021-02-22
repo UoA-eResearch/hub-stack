@@ -1,62 +1,62 @@
-import { Component, OnInit, Type } from '@angular/core';
-import { Observable } from 'rxjs';
-import { pluck, flatMap, map, first, catchError } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, Type } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { pluck, map, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { 
-    ServiceCollection, 
-    AllServicesGQL,  
-    GetServiceBySlugGQL,
-    GetServiceByIdGQL,
-    Service 
-} from '../../graphql/schema';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
-import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { CerGraphqlService } from '@services/cer-graphql.service';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
+import {
+  AllServicesGQL,
+  GetServiceBySlugGQL,
+  ServiceCollection,
+  Service,
+} from '@graphql/schema';
+import { CerGraphqlService } from '@services/cer-graphql.service';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
-
 
 @Component({
   selector: 'app-services',
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.scss']
 })
-export class ServicesComponent implements OnInit {
+export class ServicesComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
     [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
-    [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent
+    [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
   };
 
-  public allServices$: Observable<ServiceCollection>;
-  public service$: Observable<Service>;
   public slug: string;
+  public service: Observable<Service>;
+  public service$: Subscription;
+  public route$: Subscription;
+  public bodyLinks$: Subscription;
+  public allServices$: Observable<ServiceCollection>;
   public parentSubHubs;
 
   constructor(
     public route: ActivatedRoute,
-    public router: Router,
     public allServicesGQL: AllServicesGQL,
     public getServiceBySlugGQL: GetServiceBySlugGQL,
-    public getServiceByIDGQL: GetServiceByIdGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
-    private bodyMediaService: BodyMediaService
+    public bodyMediaService: BodyMediaService,
+    public router: Router
   ) { }
 
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getArticleBySlug() method.
+     * passed to the getServiceBySlug() method.
      */
-    this.route.params.pipe(first()).subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
+      this.route$ = this.route.params.subscribe(params => {
+        this.slug = params.slug || this.route.snapshot.data.slug;
+        this._loadContent();
+      });
   }
 
   /**
@@ -65,63 +65,57 @@ export class ServicesComponent implements OnInit {
   private async _loadContent() {
     /**
      * If this.slug is defined, we're loading an individual Service,
-     * therefore run the corresponding query. If not, return all Service.
+     * therefore run the corresponding query. If not, return all Services.
      */
     if (!!this.slug) {
-      this.getServiceBySlug(this.slug).pipe(first()).subscribe(data => {
-        this.service$ = this.getServiceByID(data.sys.id);
-        this.service$.pipe(first()).subscribe(res => {
-          this.bodyMediaService.setBodyMedia(res.bodyText.links);
-        });
+      this.service = this.getServiceBySlug(this.slug);
+      this.service$ = this.service.subscribe(data => {
+          this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Services');
       this.allServices$ = this.getAllServices();
+      this.service$.unsubscribe();
     }
-
   }
 
   /**
-   * Function that returns all articles from the ArticleCollection as an observable
-   * of type ArticleCollection. This is then unwrapped with the async pipe.
+   * Function that returns all Services from the ServiceCollection as an observable
+   * of type ServiceCollection. This is then unwrapped with the async pipe.
    *
    * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting article/slug-name.
+   * user is visiting Service/slug-name.
    */
   public getAllServices(): Observable<ServiceCollection> {
     try {
       return this.allServicesGQL.fetch()
         .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
-    } catch (e) { console.error('Error loading all services:', e) };
+    } catch (e) { console.error('Error loading all Services:', e) };
   }
 
   /**
-   * Function that returns an individual article from the ArticleCollection by it's slug
-   * as an observable of type Article. This is then unwrapped with the async pipe.
+   * Function that returns an individual Service from the ServiceCollection by it's slug
+   * as an observable of type Service. This is then unwrapped with the async pipe.
    *
    * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /articles.
+   * the user is visiting /Services.
    *
-   * @param slug The article's slug. Retrieved from the route parameter of the same name.
+   * @param slug The Service's slug. Retrieved from the route parameter of the same name.
    */
   public getServiceBySlug(slug: string): Observable<Service> {
     try {
       return this.getServiceBySlugGQL.fetch({ slug: this.slug })
         .pipe(flatMap(x => x.data.serviceCollection.items)) as Observable<Service>;
-    } catch (e) { console.error(`Error loading service ${slug}:`, e); }
+    } catch (e) { console.error(`Error loading Service ${slug}:`, e); }
   }
 
-   /**
-   * Function that returns an individual Service from the serviceCollection by it's ID
-   * as an observable of type Service. This is then unwrapped with the async pipe.
-   * ID is retrieved by subscribing to 'getServiceBySlug'.
-   */
-  public getServiceByID(id: string): Observable<Service> {
+  ngOnDestroy() {
     try {
-      return this.getServiceByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.service), catchError(err => (this.router.navigate(['/error/500'])))) as Observable<Service>;
-    } catch (e) { console.error(`Error loading service ${id}:`, e); }
+      this.service$.unsubscribe();
+      this.route$.unsubscribe();
+      this.bodyLinks$.unsubscribe();
+    } catch {}
   }
 }

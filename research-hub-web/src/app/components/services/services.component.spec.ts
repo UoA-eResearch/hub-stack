@@ -101,12 +101,5 @@ describe('ServicesComponent', () => {
         expect(res.slug).toEqual('death-star');
       });
     })
-
-    it('Should get a single Service data by ID', () => {
-      spyOn(component, 'getServiceByID').and.returnValue(mockService$);
-      component.getServiceByID('').subscribe(res => {
-        expect(res.sys.id).toEqual('111');
-      });
-    })
   });
 });

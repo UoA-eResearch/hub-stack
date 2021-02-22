@@ -322,12 +322,5 @@ describe('ArticlesComponent', () => {
         expect(res.slug).toEqual('first-article');
       });
     });
-
-    it('Should get a single article data by ID', () => {
-      spyOn(component, 'getArticleByID').and.returnValue(mockArticle$);
-      component.getArticleByID('').subscribe(res => {
-        expect(res.sys.id).toEqual('111');
-      });
-    })
   });
 });

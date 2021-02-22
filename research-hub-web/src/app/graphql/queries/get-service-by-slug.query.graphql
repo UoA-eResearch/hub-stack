@@ -1,11 +1,62 @@
 query GetServiceBySlug($slug: String) {
-    serviceCollection(where: {slug: $slug}) {
+    serviceCollection(limit: 1, where: {slug: $slug}) {
         items {
-            ssoProtected
-            title
+            __typename
             sys {
-                id
+            id
             }
+            title
+            slug
+            ssoProtected
+            searchable
+            banner {
+            title
+            description
+            url
+            }
+            icon {
+            title
+            description
+            url
+            }
+            summary
+            callToAction
+            callToActionLabel
+            bodyText {
+            json 
+            links {
+                entries {
+                block { ...PublicFields }
+                inline { ...PublicFields }
+                hyperlink { ...PublicFields }
+                }
+                assets {
+                block {
+                    title
+                    description
+                    url
+                }
+                hyperlink {
+                    title
+                    description
+                    url
+                }
+                }
+            }
+            }
+            relatedContactsCollection {
+            items { ...PublicFields }
+            }
+            relatedOrgsCollection {
+            items { ...PublicFields }
+            }
+            relatedItemsCollection {
+            items { ...PublicFields }
+            }
+            audience
+            availability
+            cost 
+            access
         }
     }
 }
