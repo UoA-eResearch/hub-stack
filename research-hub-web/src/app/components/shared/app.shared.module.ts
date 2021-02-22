@@ -14,6 +14,7 @@ import { BodyMediaComponent } from './body-media/body-media.component';
 import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
+import { VideoCardComponent } from './video-card/video-card.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
+    VideoCardComponent
   ],
   exports: [
     FlexLayoutModule,
@@ -48,6 +50,7 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
+    VideoCardComponent
   ],
   providers: [],
 })
