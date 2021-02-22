@@ -11,8 +11,6 @@ import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Params } from '@services/research-hub-api.service';
-import { MatExpansionPanelContent } from '@angular/material/expansion';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
@@ -322,12 +320,5 @@ describe('ArticlesComponent', () => {
         expect(res.slug).toEqual('first-article');
       });
     });
-
-    it('Should get a single article data by ID', () => {
-      spyOn(component, 'getArticleByID').and.returnValue(mockArticle$);
-      component.getArticleByID('').subscribe(res => {
-        expect(res.sys.id).toEqual('111');
-      });
-    })
   });
 });

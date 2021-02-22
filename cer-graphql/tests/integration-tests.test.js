@@ -123,10 +123,10 @@ describe('Basic single resource queries', () => {
     test('Can return an individual article by its sys id', async function () {
         let res = await query({
             query: TQ.GET_ARTICLE_BY_SYS_ID,
-            variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
+            variables: { id: '7y4NmxQyIKrsSVmqSew0KJ' }
         });
 
-        expect(res.data.article.title).toEqual('Test - Top Secret Article')
+        expect(res.data.article.title).toEqual('Large Scale Visualisation Facility')
     });
 
 });
@@ -134,7 +134,7 @@ describe('Basic single resource queries', () => {
 describe('Contentful filters (conditionals)', () => {
 
     test('Can return an article from the articleCollection with a where clause', async function () {
-        const ARTICLE_TITLE = 'Test - First article';
+        const ARTICLE_TITLE = 'Large Scale Visualisation Facility';
 
         let res = await query({
             query: TQ.GET_ARTICLE_BY_WHERE,

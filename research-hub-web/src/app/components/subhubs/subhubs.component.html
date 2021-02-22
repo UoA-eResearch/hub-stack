@@ -10,7 +10,7 @@
 <div 
     style="overflow-x: hidden"
     class="results" 
-    *ngIf="currentSubHub$ | async as subhub">
+    *ngIf="subHub | async as subhub">
     <div>
 
         <!-- Templates -->
@@ -31,6 +31,34 @@
                 [hideImage]="hide"
                 [title]="'You might be interested in'" 
                 [contentItem]="subhub.relatedItemsCollection">
+            </app-cards>
+        </ng-template>
+
+        <ng-template #relatedOrganisations>
+            <app-cards 
+                [title]="'Organisations'" 
+                [contentItem]="subhub.relatedOrgsCollection">
+            </app-cards>
+        </ng-template>
+    
+        <ng-template #relatedFacilities>
+            <app-cards 
+                [title]="'Facilities'" 
+                [contentItem]="subhub.relatedFacilityCollection">
+            </app-cards>
+        </ng-template>
+    
+        <ng-template #relatedDocs>
+            <app-cards 
+                [title]="'Documents'" 
+                [contentItem]="subhub.relatedDocsCollection">
+            </app-cards>
+        </ng-template>
+    
+        <ng-template #relatedContacts>
+            <app-cards 
+                [title]="'Contacts'" 
+                [contentItem]="subhub.relatedContactsCollection">
             </app-cards>
         </ng-template>
 
@@ -91,8 +119,7 @@
                     <!-- Body Content -->
                     <div 
                         fxLayout="row wrap"
-                        fxLayout.sm="column wrap"
-                        fxLayout.xs="column wrap"
+                        fxLayout.lt-sm="column wrap"
                         fxLayoutGap="2%"
                         fxLayoutAlign="space-between">
                         
@@ -103,7 +130,6 @@
 
                         <!-- Related Items -->
                         <div *ngIf="subhub.relatedItemsCollection.items.length > 0" fxFlex="30%">
-
                             <!-- Related Items -->
                             <div>
                                 <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column wrap'}"></ng-container>
