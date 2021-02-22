@@ -34,6 +34,34 @@
             </app-cards>
         </ng-template>
 
+        <ng-template #relatedOrganisations>
+            <app-cards 
+                [title]="'Organisations'" 
+                [contentItem]="subhub.relatedOrgsCollection">
+            </app-cards>
+        </ng-template>
+    
+        <ng-template #relatedFacilities>
+            <app-cards 
+                [title]="'Facilities'" 
+                [contentItem]="subhub.relatedFacilityCollection">
+            </app-cards>
+        </ng-template>
+    
+        <ng-template #relatedDocs>
+            <app-cards 
+                [title]="'Documents'" 
+                [contentItem]="subhub.relatedDocsCollection">
+            </app-cards>
+        </ng-template>
+    
+        <ng-template #relatedContacts>
+            <app-cards 
+                [title]="'Contacts'" 
+                [contentItem]="subhub.relatedContactsCollection">
+            </app-cards>
+        </ng-template>
+
         <ng-template #dynamicBanner>
             <div 
                 class="banner-container"
