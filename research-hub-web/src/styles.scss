@@ -323,18 +323,18 @@ svg {
 /**
  * Call To Action Arrow
  */
-//  .call-to-action a {
-//   font-size: 2.25vh;
-// }
-// .arrow {
-//   transition: transform 0.2s ease-out;
-//   height: 2.5vh;
-//   width: auto;
-// }
-// .call-to-action:hover .arrow {
-//   transform: translate(1.25vh);
-//   transition: transform 0.2s ease-out
-// }
+ .call-to-action a {
+  font-size: 2.25vh;
+}
+.arrow {
+  transition: transform 0.2s ease-out;
+  height: 2.5vh;
+  width: auto;
+}
+.call-to-action:hover .arrow {
+  transform: translate(1.25vh);
+  transition: transform 0.2s ease-out
+}
 
 
 /**************************/
