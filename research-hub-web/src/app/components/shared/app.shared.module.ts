@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/app.material.module';
-import { MarkdownComponent } from './markdown/markdown.component';
-import { ListItemToRouterLinkPipe } from '@pipes/list-item-to-router-link.pipe';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { HumanCasePipe } from '@pipes/human-case.pipe';
@@ -28,8 +26,6 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     RouterModule
   ],
   declarations: [
-    MarkdownComponent,
-    ListItemToRouterLinkPipe,
     ErrorDialogComponent,
     ConfirmDialogComponent,
     HumanCasePipe,
@@ -45,9 +41,7 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    MarkdownComponent,
     ErrorDialogComponent,
-    ListItemToRouterLinkPipe,
     HumanCasePipe,
     RichTextToHTML,
     CollectionListComponent,

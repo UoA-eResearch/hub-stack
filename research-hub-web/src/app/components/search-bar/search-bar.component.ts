@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { MatInput } from '@angular/material/input';
 import { NavigationEnd, Router } from "@angular/router";
 import { filter } from 'rxjs/operators';
-import { AnalyticsService } from '@services/analytics.service';
 
 
 @Component({
@@ -30,7 +29,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
 
-  constructor(private searchBarService: SearchBarService, private router: Router, public analyticsService: AnalyticsService) {
+  constructor(private searchBarService: SearchBarService, private router: Router) {
   }
 
   ngOnInit() {

@@ -13,8 +13,6 @@ import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { ResearchHubApiService } from './services/research-hub-api.service';
-import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
@@ -117,8 +115,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private searchBarService: SearchBarService, 
     private router: Router,
     private titleService: Title,
-    public apiService: ResearchHubApiService, 
-    public analyticsService: AnalyticsService,
     public appComponentService: AppComponentService,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,

@@ -281,12 +281,11 @@
             <div>
               <a 
                 [href]="aucklandUniUrl" 
-                target="_blank" 
-                (click)="analyticsService.trackOutboundLink(aucklandUniUrl)">
+                target="_blank" >
                 <img 
                   ngClass.gt-xs="logo-img" 
                   ngClass.lt-sm="logo-img-xs"
-                  [src]="apiService.getAssetUrl('page-elements/uoa-logo.svg')">
+                  src="assets/images/uoa-logo.svg">
               </a>
             </div>
 
@@ -299,14 +298,12 @@
               <span fxHide.xs class="footer-divider">•</span>
               <a routerLink="/about">About</a>
               <span fxHide.xs class="footer-divider">•</span>
-              <a [href]="disclaimerUrl" target="_blank"
-              (click)="analyticsService.trackOutboundLink(disclaimerUrl)">Disclaimer</a>
+              <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
             </div>
 
             <a 
               [href]="eResearchUrl" 
-              target="_blank" 
-              (click)="analyticsService.trackOutboundLink(eResearchUrl)">
+              target="_blank">
                 Copyright © {{ getYear() }}, Centre for eResearch
             </a>
           </div>
