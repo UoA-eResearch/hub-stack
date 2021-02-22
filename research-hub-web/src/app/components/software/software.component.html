@@ -9,7 +9,7 @@
 <!-- If we're displaying an individual software -->
 <div 
     id="software-container"
-    *ngIf="software$ | async as software">
+    *ngIf="software | async as software">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
@@ -22,7 +22,7 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="software.banner ? 'background: url(' + software.banner.url + ') no-repeat' : 'height: 0px; margin-top: 2vh'">
+            [style]="software.banner ? 'background: url(' + software.banner.url + ') no-repeat' : 'display:none'">
         </div>  
     </ng-template>
 

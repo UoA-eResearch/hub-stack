@@ -1,11 +1,67 @@
 query GetArticleBySlug($slug: String) {
-    articleCollection(where: {slug: $slug}) {
+    articleCollection(limit: 1, where: {slug: $slug}) {
         items {
-            ssoProtected
-            title
-            sys {
+            __typename
+      sys {
+        id
+      }
+      title
+      slug
+      ssoProtected
+      searchable
+      banner {
+        title
+        description
+        url
+      }
+      summary
+      bodyText {
+        json 
+        links {
+          entries {
+            block { 
+              ...PublicFields
+              sys {
                 id
+              }
             }
+            inline { 
+              ...PublicFields
+              sys {
+                id
+              } 
+            }
+            hyperlink { 
+              ...PublicFields 
+              sys {
+                id
+              }
+            }
+          }
+          assets {
+            block { ...AssetFields }
+            hyperlink { ...AssetFields }
+          }
+        }
+      }
+      relatedItemsCollection {
+        items { ...PublicFields }
+      }
+      relatedOrgsCollection {
+        items { ...PublicFields }
+      }
+      relatedDocsCollection {
+        items { ...PublicFields }
+      }
+      relatedContactsCollection {
+        items { 
+          ...PublicFields
+          ...on Person {
+            role
+          }
+        }
+      }
+      viewType
         }
     }
 }

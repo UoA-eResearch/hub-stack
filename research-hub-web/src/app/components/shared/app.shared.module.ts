@@ -13,11 +13,6 @@ import { CollectionListComponent } from './collection-list/collection-list.compo
 import { RouterModule } from '@angular/router';
 import { RichTextToHTML } from '@pipes/rich-text.pipe';
 import { BodyMediaComponent } from './body-media/body-media.component';
-import { LinkCardComponent } from './link-card/link-card.component';
-import { VideoCardComponent } from './video-card/video-card.component';
-import { AssetBlockComponent } from './asset-block/asset-block.component';
-import { EntryBlockComponent } from './entry-block/entry-block.component';
-import { EntryInlineComponent } from './entry-inline/entry-inline.component';
 import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
@@ -38,14 +33,9 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     ErrorDialogComponent,
     ConfirmDialogComponent,
     HumanCasePipe,
-    CollectionListComponent,
     RichTextToHTML,
+    CollectionListComponent,
     BodyMediaComponent,
-    LinkCardComponent,
-    VideoCardComponent,
-    AssetBlockComponent,
-    EntryBlockComponent,
-    EntryInlineComponent,
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
@@ -59,13 +49,8 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
     ErrorDialogComponent,
     ListItemToRouterLinkPipe,
     HumanCasePipe,
-    CollectionListComponent,
     RichTextToHTML,
-    LinkCardComponent,
-    VideoCardComponent,
-    AssetBlockComponent,
-    EntryBlockComponent,
-    EntryInlineComponent,
+    CollectionListComponent,
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
