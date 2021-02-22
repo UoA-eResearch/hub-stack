@@ -95,6 +95,11 @@ fragment PublicFields on Entry {
       title
       summary
     }
+    ... on OrgUnit {
+      __typename
+      name
+      link
+    }
   ... on LinkCard {
       title
       summary

@@ -101,12 +101,5 @@ describe('EquipmentComponent', () => {
         expect(res.slug).toEqual('death-star');
       });
     })
-
-    it('Should get a single equipment data by ID', () => {
-      spyOn(component, 'getEquipmentByID').and.returnValue(mockEquipment$);
-      component.getEquipmentByID('').subscribe(res => {
-        expect(res.sys.id).toEqual('111');
-      });
-    })
   });
 });
