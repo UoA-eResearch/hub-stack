@@ -62,18 +62,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   @Input()
-  get categories() {
-    return this.categoriesValue;
-  }
-
-  @Input()
   get searchText() {
     return this.searchTextValue;
-  }
-
-  @Input()
-  get category() {
-    return this.categoryValue;
   }
 
   set categories(val) {

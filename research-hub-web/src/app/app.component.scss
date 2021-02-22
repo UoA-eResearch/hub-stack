@@ -169,24 +169,17 @@ mat-expansion-panel-header .mat-expanded {
  */
 footer {
   background: linear-gradient(360deg, rgba(2,148,165,1) 0%,  rgba(4,132,147,1) 62%);
-  height: $height-footer;
+  height: fit-content;
   padding-left: $padding-site;
   padding-right: $padding-site;
   z-index: 1;
 }
-footer.footer-xs {
-  height: $height-footer-xs;
-  padding-left: $padding-site;
-  padding-right: $padding-site;
-}
 .footer-content {
   @extend .site-content;
-  height: $height-footer !important;
+  min-height: fit-content !important;
+  padding: 2vh 0;
   display: grid;
   grid-auto-flow: row;
-}
-.footer-content-xs {
-  height: $height-footer-xs !important;
 }
 footer a {
   text-align: left;
