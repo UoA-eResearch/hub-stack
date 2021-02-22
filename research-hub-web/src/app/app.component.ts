@@ -36,7 +36,6 @@ import {
   OptionType,
   CategoryId,
   menuOptions,
-  categoryOptions,
   categoryOptionsGQL,
   researchActivityOptions,
   CoverImageURL
@@ -64,7 +63,6 @@ import {
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public coverImageUrl = CoverImageURL
   public menuOptions = menuOptions;
-  public categoryOptions = categoryOptions;
   public categoryOptionsGQL = categoryOptionsGQL;
   public researchActivityOptions = researchActivityOptions;
 

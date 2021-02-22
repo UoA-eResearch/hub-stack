@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { 
-  categoryOptions,
   categoryOptionsGQL 
 } from '@app/global/global-variables';
 
@@ -10,7 +9,6 @@ import {
   styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit {
-  public categoryOptions = categoryOptions;
   public categoryOptionsGQL = categoryOptionsGQL;
 
   @Input()
