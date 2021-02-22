@@ -3,13 +3,12 @@ resource "aws_ecs_cluster" "cer" {
 }
 
 # We will leave this separate in case we want to revist other options
-# Query is, do we put the ECR Repository here?
 
 resource "aws_ecr_repository" "graphql" {
   name = var.repository_name
   # Let AWS run vulnerability scanning on image push
   image_scanning_configuration {
-    scan_on_push = true   # is false in sandbox... maybe need to check if this breaks anything
+    scan_on_push = true
   }
 }
 

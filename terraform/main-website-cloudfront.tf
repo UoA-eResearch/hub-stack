@@ -85,7 +85,7 @@ resource "aws_cloudfront_distribution" "main_website" {
   # Setup the SSL certificate that is used with HTTPS
   # The protocol version specified is compliant with UoA Web Policy
   viewer_certificate {
-    cloudfront_default_certificate = true
+    cloudfront_default_certificate = false
     acm_certificate_arn            = var.acm_arn
     minimum_protocol_version       = "TLSv1.2_2018"
     ssl_support_method             = "sni-only"

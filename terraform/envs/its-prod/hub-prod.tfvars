@@ -35,7 +35,7 @@ vpc_id           = "TBC"
 subnets = ["TBC", "TBC", "TBC"]
 
 # Loadbalancer for ECS
-lb_name = "CeR-Terraform-Prod"
+lb_name = "rhubcpapi-lb-prod"
 lb_subnets = [
   "TBC",
   "TBC",

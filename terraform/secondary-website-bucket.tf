@@ -46,7 +46,7 @@ data "aws_iam_policy_document" "s3_policy_secondary" {
 
     principals {
       type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn]
+      identifiers = [aws_cloudfront_origin_access_identity.origin_access_identity_secondary[count.index].iam_arn]
     }
   }
 
@@ -56,7 +56,7 @@ data "aws_iam_policy_document" "s3_policy_secondary" {
 
     principals {
       type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.origin_access_identity.iam_arn]
+      identifiers = [aws_cloudfront_origin_access_identity.origin_access_identity_secondary[count.index].iam_arn]
     }
   }
   # This ensures all S3 actions are over HTTPS

@@ -17,7 +17,20 @@ resource "aws_route53_record" "ecs-lb-entry" {
   count   = var.create_dns_entry ? 1 : 0
   zone_id = data.aws_route53_zone.host_zone[count.index].id
   name    = var.lb_dns_name
-  type    = "CNAME"   # TO DO: check if this should be "A"?
+  type    = "A"
+
+  alias {
+    name                   = aws_alb.ecs-load-balancer.dns_name
+    zone_id                = aws_alb.ecs-load-balancer.zone_id
+    evaluate_target_health = false
+  }
+}
+
+resource "aws_route53_record" "ecs-lb-entry-ipv6" {
+  count   = var.create_dns_entry ? 1 : 0
+  zone_id = data.aws_route53_zone.host_zone[count.index].id
+  name    = var.lb_dns_name
+  type    = "AAAA"
 
   alias {
     name                   = aws_alb.ecs-load-balancer.dns_name

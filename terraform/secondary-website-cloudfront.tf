@@ -86,7 +86,7 @@ resource "aws_cloudfront_distribution" "secondary_website" {
   # Setup the SSL certificate that is used with HTTPS
   # The protocol version specified is compliant with UoA Web Policy
   viewer_certificate {
-    cloudfront_default_certificate = true
+    cloudfront_default_certificate = false
     acm_certificate_arn            = var.acm_arn_secondary
     minimum_protocol_version       = "TLSv1.2_2018"
     ssl_support_method             = "sni-only"
@@ -132,6 +132,6 @@ output "cf_hosted_zone_id_secondary" {
 }
 
 output "cf_origin_access_identity_secondary" {
-  value       = try(aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path, "")
+  value       = try(aws_cloudfront_origin_access_identity.origin_access_identity_secondary[0].cloudfront_access_identity_path, "")
   description = "A shortcut to the full path for the origin access identity to use in CloudFront"
 }
