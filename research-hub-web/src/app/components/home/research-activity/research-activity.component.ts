@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AnalyticsService } from '@services/analytics.service';
 import { 
   ResearchActivityId, 
   researchActivityOptions,
@@ -16,7 +15,7 @@ export class ResearchActivityComponent implements OnInit {
   public description = 'The research lifecycle describes the research journey from project inception to completion. It highlights five project stages. Below you can explore what the University of Auckland provides to support you according to where you are in your research journey.';
   public researchActivityOptions = researchActivityOptions;
   
-  constructor(public analyticsService: AnalyticsService) {}
+  constructor() {}
 
   getQueryParams(activity) {
     return { researchActivityId: [activity.id] };

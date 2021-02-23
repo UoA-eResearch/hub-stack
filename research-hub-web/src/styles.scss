@@ -296,6 +296,7 @@ svg {
  */
  .standard-button {
   color: white!important;
+  padding-bottom: 0.3vh!important;
   border: 0.25vh solid map-get($hub-teal, 500)!important;
   border-radius: 6.25vh!important;
   background-color: map-get($hub-teal, 500)!important;
@@ -309,6 +310,7 @@ svg {
 }
 
 .alternate-button {
+  padding-bottom: 0.3vh!important;
   color: map-get($hub-teal, 500)!important;
   border: 0.25vh solid white!important;
   border-radius: 6.25vh!important;
@@ -337,4 +339,39 @@ svg {
 .call-to-action:hover .arrow {
   transform: translate(1.25vh);
   transition: transform 0.2s ease-out
+}
+
+
+/**************************/
+
+// Size/Media Query Mixins /
+
+/**************************/
+
+@mixin size($size) {
+
+  /* Extra small devices (phones, 600px and down) */
+  @if $size == extra-small {
+      @media only screen and (max-width: 599px) { @content; }
+  }
+
+  /* Small devices (portrait tablets and large phones, 640px and up) */
+  @if $size == small {
+      @media only screen and (min-width: 640px) { @content; }
+  }
+
+  /* Medium devices (landscape tablets, 768px and up) */
+  @if $size == medium {
+      @media only screen and (min-width: 768px) { @content; }
+  }
+
+  /* Large devices (laptops/desktops, 992px and up) */
+  @if $size == large {
+      @media only screen and (min-width: 992px) { @content; }
+  }
+
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @if $size == extra-large {
+      @media only screen and (min-width: 1200px) { @content; }
+  }
 }

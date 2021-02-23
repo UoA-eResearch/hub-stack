@@ -4,8 +4,6 @@ import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/app.material.module';
-import { MarkdownComponent } from './markdown/markdown.component';
-import { ListItemToRouterLinkPipe } from '@pipes/list-item-to-router-link.pipe';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { HumanCasePipe } from '@pipes/human-case.pipe';
@@ -31,8 +29,6 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     MatCarouselModule
   ],
   declarations: [
-    MarkdownComponent,
-    ListItemToRouterLinkPipe,
     ErrorDialogComponent,
     ConfirmDialogComponent,
     HumanCasePipe,
@@ -51,9 +47,7 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    MarkdownComponent,
     ErrorDialogComponent,
-    ListItemToRouterLinkPipe,
     HumanCasePipe,
     RichTextToHTML,
     CollectionListComponent,

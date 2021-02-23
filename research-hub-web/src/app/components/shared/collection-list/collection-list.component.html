@@ -1,7 +1,5 @@
 <ng-container *ngIf="collection">
-    <div
-        class="site-padding top-padding margin-bottom"
-        ngClass.lt-md="site-padding-mobile top-padding margin-bottom">
+    <div>
         <h1 id="title">
             {{ collection.__typename | humanCase }}
         </h1>Found
@@ -11,16 +9,6 @@
         <span class="search-results-text">
             {{ collection.__typename | humanCase }}
         </span>
-    
-        <!-- <mat-expansion-panel *ngIf="collection.items.length">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    JSON Result
-                </mat-panel-title>
-                <mat-panel-description>Click to see raw JSON</mat-panel-description>
-            </mat-expansion-panel-header>
-            <pre><code>{{ collection | json}}</code></pre>
-        </mat-expansion-panel> -->
     
         <mat-nav-list>
             <mat-card *ngFor="let content of collection.items">
