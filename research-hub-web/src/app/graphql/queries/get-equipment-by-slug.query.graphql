@@ -23,23 +23,34 @@ query GetEquipmentBySlug($slug: String) {
           callToAction
           callToActionLabel
           bodyText {
-            json 
+            json
             links {
               entries {
-                block { ...PublicFields }
-                inline { ...PublicFields }
-                hyperlink { ...PublicFields }
+                block { 
+                  ...PublicFields
+                  sys {
+                      id
+                  }
+                }
+                inline { 
+                  ...PublicFields
+                  sys {
+                      id
+                  } 
+                }
+                hyperlink { 
+                  ...PublicFields 
+                  sys {
+                      id
+                  }
+                }
               }
               assets {
                 block {
-                  title
-                  description
-                  url
+                    ...AssetFields
                 }
                 hyperlink {
-                  title
-                  description
-                  url
+                    ...AssetFields
                 }
               }
             }
@@ -47,6 +58,10 @@ query GetEquipmentBySlug($slug: String) {
           manufacturer
           model
           yearOfManufacture
+          audience
+          availability
+          cost
+          access
           relatedItemsCollection {
             items { ...PublicFields }
           }
@@ -54,6 +69,9 @@ query GetEquipmentBySlug($slug: String) {
             items { ...PublicFields }
           }
           relatedOrgsCollection {
+            items { ...PublicFields }
+          }
+          relatedDocsCollection {
             items { ...PublicFields }
           }
           location {

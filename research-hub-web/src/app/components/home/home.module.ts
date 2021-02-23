@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { routing } from './home.routing';
 
 import { HomeComponent } from './home.component';
-import { FeaturedComponent } from './featured/featured.component';
 import { BrowseComponent } from './browse/browse.component';
 import { ResearchActivityComponent } from './research-activity/research-activity.component';
 import { SharedModule } from '@components/shared/app.shared.module';
@@ -17,7 +16,6 @@ import { SharedModule } from '@components/shared/app.shared.module';
   ],
   declarations: [
     HomeComponent,
-    FeaturedComponent,
     BrowseComponent,
     ResearchActivityComponent
   ]

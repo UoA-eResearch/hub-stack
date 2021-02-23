@@ -14,8 +14,7 @@
           [queryParams]="getQueryParams(activity)"
           [ngClass]="[activity.className, 'ra-chip']" 
           [ngClass.lt-md]="[activity.className, 'ra-chip', 'tablet-view']"
-          [ngClass.lt-sm]="[activity.className, 'ra-chip', 'mobile-view']"
-          (click)="analyticsService.trackUserExperience('Home page research activities', 'click')">
+          [ngClass.lt-sm]="[activity.className, 'ra-chip', 'mobile-view']">
             {{activity.name}}
         </mat-chip>
       </div>

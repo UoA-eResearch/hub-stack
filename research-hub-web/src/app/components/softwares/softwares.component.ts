@@ -5,10 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
-  AllEquipmentGQL,
-  GetEquipmentBySlugGQL,
-  EquipmentCollection,
-  Equipment,
+  AllSoftwareGQL,
+  GetSoftwareBySlugGQL,
+  SoftwareCollection,
+  Software,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -16,11 +16,11 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
-  selector: 'app-equipment',
-  templateUrl: './equipment.component.html',
-  styleUrls: ['./equipment.component.scss']
+  selector: 'app-software',
+  templateUrl: './softwares.component.html',
+  styleUrls: ['./softwares.component.scss']
 })
-export class EquipmentComponent implements OnInit, OnDestroy {
+export class SoftwaresComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
@@ -31,17 +31,17 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public equipment: Observable<Equipment>;
-  public equipment$: Subscription;
+  public software: Observable<Software>;
+  public software$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
-  public allEquipment$: Observable<EquipmentCollection>;
+  public allSoftware$: Observable<SoftwareCollection>;
   public parentSubHubs;
 
   constructor(
     public route: ActivatedRoute,
-    public allEquipmentGQL: AllEquipmentGQL,
-    public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
+    public allSoftwareGQL: AllSoftwareGQL,
+    public getSoftwareBySlugGQL: GetSoftwareBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
@@ -51,7 +51,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getEquipmentBySlug() method.
+     * passed to the getSoftwareBySlug() method.
      */
       this.route$ = this.route.params.subscribe(params => {
         this.slug = params.slug || this.route.snapshot.data.slug;
@@ -60,60 +60,60 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function that loads the Equipment/collection depending on if a slug is present.
+   * Function that loads the Software/collection depending on if a slug is present.
    */
   private async _loadContent() {
     /**
-     * If this.slug is defined, we're loading an individual Equipment,
-     * therefore run the corresponding query. If not, return all Equipment.
+     * If this.slug is defined, we're loading an individual Software,
+     * therefore run the corresponding query. If not, return all Software.
      */
     if (!!this.slug) {
-      this.equipment = this.getEquipmentBySlug(this.slug);
-      this.equipment$ = this.equipment.subscribe(data => {
+      this.software = this.getSoftwareBySlug(this.slug);
+      this.software$ = this.software.subscribe(data => {
           this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.appComponentService.setTitle('Equipment');
-      this.allEquipment$ = this.getAllEquipment();
-      try { this.equipment$.unsubscribe(); } catch {}
+      this.appComponentService.setTitle('Software');
+      this.allSoftware$ = this.getAllSoftware();
+      try { this.software$.unsubscribe(); } catch {}
     }
   }
 
   /**
-   * Function that returns all Equipment from the EquipmentCollection as an observable
-   * of type EquipmentCollection. This is then unwrapped with the async pipe.
+   * Function that returns all Software from the SoftwareCollection as an observable
+   * of type SoftwareCollection. This is then unwrapped with the async pipe.
    *
    * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting Equipment/slug-name.
+   * user is visiting Software/slug-name.
    */
-  public getAllEquipment(): Observable<EquipmentCollection> {
+  public getAllSoftware(): Observable<SoftwareCollection> {
     try {
-      return this.allEquipmentGQL.fetch()
-        .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
-    } catch (e) { console.error('Error loading all Equipment:', e) };
+      return this.allSoftwareGQL.fetch()
+        .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
+    } catch (e) { console.error('Error loading all Software:', e) };
   }
 
   /**
-   * Function that returns an individual Equipment from the EquipmentCollection by it's slug
-   * as an observable of type Equipment. This is then unwrapped with the async pipe.
+   * Function that returns an individual Software from the SoftwareCollection by it's slug
+   * as an observable of type Software. This is then unwrapped with the async pipe.
    *
    * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /Equipment.
+   * the user is visiting /Software.
    *
-   * @param slug The Equipment's slug. Retrieved from the route parameter of the same name.
+   * @param slug The Software's slug. Retrieved from the route parameter of the same name.
    */
-  public getEquipmentBySlug(slug: string): Observable<Equipment> {
+  public getSoftwareBySlug(slug: string): Observable<Software> {
     try {
-      return this.getEquipmentBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.equipmentCollection.items)) as Observable<Equipment>;
-    } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
+      return this.getSoftwareBySlugGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.softwareCollection.items)) as Observable<Software>;
+    } catch (e) { console.error(`Error loading Software ${slug}:`, e); }
   }
 
   ngOnDestroy() {
     try {
-      this.equipment$.unsubscribe();
+      this.software$.unsubscribe();
       this.route$.unsubscribe();
       this.bodyLinks$.unsubscribe();
     } catch {}
