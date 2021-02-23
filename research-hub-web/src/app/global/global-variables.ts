@@ -48,6 +48,7 @@ export enum ResearchActivityId {
     All = 1,
     Equipment,
     Software,
+    CaseStudy,
     Articles,
     SubHubs
   }
@@ -88,6 +89,7 @@ export enum ResearchActivityId {
   export const categoryOptionsGQL = [
     { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
     { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
+    { id: CategoryId.CaseStudy, name: 'Case Studies', icon: 'work_outline', type: OptionType.Category, url: '/case-studies' },
     { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
     { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }
   ];
