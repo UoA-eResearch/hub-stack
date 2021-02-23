@@ -1,29 +1,29 @@
-<!-- If we're displaying a collection of articles-->
+<!-- If we're displaying a collection of caseStudys-->
 <div
-    *ngIf="allArticles$ | async as allArticles" 
+    *ngIf="allCaseStudies$ | async as allCaseStudies" 
     class="site-padding margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allArticles"></app-collection-list>
+    <app-collection-list [collection]="allCaseStudies"></app-collection-list>
 </div>
 
 
-<!-- If we're displaying an individual article -->
+<!-- If we're displaying an individual caseStudy -->
 <div 
-    id="article-container" 
-    *ngIf="article | async as article">
+    id="caseStudy-container" 
+    *ngIf="caseStudy | async as caseStudy">
     
     <!-- Templates -->
     <ng-template #breadcrumbs>
         <app-breadcrumbs 
             [contentItem]="parentSubHubs" 
-            [title]="article.title">
+            [title]="caseStudy.title">
         </app-breadcrumbs>
     </ng-template>
 
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : 'min-height: 0px'">
+            [style]="caseStudy.banner ? 'background: url(' + caseStudy.banner.url + ') no-repeat' : caseStudy.viewType == 'View 2' ? 'display: none;' : 'min-height: 0px'">
         </div>  
     </ng-template>
 
@@ -31,23 +31,23 @@
         <h1 
             class="content-title" 
             ngClass.lt-md="content-title-mobile"
-            [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
-            {{ article.title }}
+            [style.color]="caseStudy.banner ? caseStudy.viewType == 'View 1' ? 'white' : '' : ''">
+            {{ caseStudy.title }}
         </h1>
 
         <h3 
             class="content-summary" 
             ngClass.lt-sm="content-summary-sm"
-            [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
-            {{ article.summary }}
+            [style.color]="caseStudy.banner ? caseStudy.viewType == 'View 1' ? 'white' : '' : ''">
+            {{ caseStudy.summary }}
         </h3>
     </ng-template>
 
-    <ng-template #articleBody>
+    <ng-template #caseStudyBody>
         <ngx-contentful-rich-text
             class="section-2 body-text"
             style="word-break:break-word;" 
-            [document]="article.bodyText.json"
+            [document]="caseStudy.bodyText.json"
             [nodeRenderers]="nodeRenderers">
         </ngx-contentful-rich-text>
     </ng-template>
@@ -58,7 +58,7 @@
             id="you-might-be-interested-in"
             [hideImage]="hide"
             [title]="'You might also be interested in'" 
-            [contentItem]="article.relatedItemsCollection">
+            [contentItem]="caseStudy.relatedItemsCollection">
         </app-cards>
     </ng-template>
 
@@ -67,7 +67,7 @@
             [flex]="flex"
             [hideImage]="hide"
             [title]="'Organisations'" 
-            [contentItem]="article.relatedOrgsCollection">
+            [contentItem]="caseStudy.relatedOrgsCollection">
         </app-cards>
     </ng-template>
     
@@ -76,7 +76,7 @@
             [flex]="flex"
             [hideImage]="hide"
             [title]="'Contacts'" 
-            [contentItem]="article.relatedContactsCollection">
+            [contentItem]="caseStudy.relatedContactsCollection">
         </app-cards>
     </ng-template>
 
@@ -85,13 +85,13 @@
             [flex]="flex"
             [hideImage]="hide"
             [title]="'Documents'" 
-            [contentItem]="article.relatedDocsCollection">
+            [contentItem]="caseStudy.relatedDocsCollection">
         </app-cards>
     </ng-template>
     
     
     <!-- View Switcher -->
-    <div [ngSwitch]="article.viewType"> 
+    <div [ngSwitch]="caseStudy.viewType"> 
 
         <!-- View 1 -->
         <div *ngSwitchCase="'View 1'">
@@ -99,11 +99,11 @@
             <!-- Dynamic Banner -->
             <div 
                 class="banner-container"
-                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none;' : 'height: fit-content'">
+                [style]="caseStudy.banner ? 'background: url(' + caseStudy.banner.url + ') no-repeat' : caseStudy.viewType == 'View 2' ? 'display: none;' : 'height: fit-content'">
                 <div 
                     class="banner-content" 
-                    [style]="article.banner ?  '' : 'margin: 3vh 0;'"
-                    *ngIf="article.viewType == 'View 1'">
+                    [style]="caseStudy.banner ?  '' : 'margin: 3vh 0;'"
+                    *ngIf="caseStudy.viewType == 'View 1'">
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
             </div> 
@@ -120,20 +120,20 @@
                     fxLayout.lt-md="column wrap"
                     fxLayoutGap="5%">
 
-                    <!-- Article Body -->
+                    <!-- caseStudy Body -->
                     <div 
                         fxFlex
                         fxFlexOrder="2"
                         fxFlexOrder.xs="1">
-                        <ng-container *ngTemplateOutlet="articleBody"></ng-container>
+                        <ng-container *ngTemplateOutlet="caseStudyBody"></ng-container>
                     </div>
 
                     <!-- Extra Links -->
                     <div 
                         *ngIf="
-                            article.relatedDocsCollection.items.length > 0 ||
-                            article.relatedContactsCollection.items.length > 0 ||
-                            article.relatedOrgsCollection.items.length > 0"
+                            caseStudy.relatedDocsCollection.items.length > 0 ||
+                            caseStudy.relatedContactsCollection.items.length > 0 ||
+                            caseStudy.relatedOrgsCollection.items.length > 0"
                         fxLayout="column" 
                         fxFlex="20%"
                         fxFlexOrder="1"
@@ -153,7 +153,7 @@
                     <!-- Related items -->
                     <div 
                         id="you-might-be-interested-in"
-                        *ngIf="article.relatedItemsCollection.items.length > 0"
+                        *ngIf="caseStudy.relatedItemsCollection.items.length > 0"
                         fxLayout="column" 
                         fxFlex="20%"
                         fxFlexOrder="3">
@@ -182,25 +182,25 @@
                     fxLayoutAlign="space-between"
                     fxLayoutGap="5%">
 
-                    <!-- Article Title and Summary -->
+                    <!-- caseStudy Title and Summary -->
                     <div fxFlex>
                         <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                         <div class="mini-hr">
                             <hr/>
                         </div>
 
-                        <!-- Article Body -->
-                        <ng-container *ngTemplateOutlet="articleBody"></ng-container>
+                        <!-- caseStudy Body -->
+                        <ng-container *ngTemplateOutlet="caseStudyBody"></ng-container>
 
                     </div>
 
                     <!-- Extra Links -->
                     <div
                         *ngIf="
-                            article.relatedItemsCollection.items.length > 0 ||
-                            article.relatedDocsCollection.items.length > 0 ||
-                            article.relatedContactsCollection.items.length > 0 ||
-                            article.relatedOrgsCollection.items.length > 0"
+                            caseStudy.relatedItemsCollection.items.length > 0 ||
+                            caseStudy.relatedDocsCollection.items.length > 0 ||
+                            caseStudy.relatedContactsCollection.items.length > 0 ||
+                            caseStudy.relatedOrgsCollection.items.length > 0"
                         fxLayout="column" 
                         fxFlex="25%">
 
