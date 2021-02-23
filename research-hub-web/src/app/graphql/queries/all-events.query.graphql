@@ -1,7 +1,0 @@
-query AllEvents {
-    eventCollection {
-        items {
-            ...PublicFields
-        }
-    }
-}

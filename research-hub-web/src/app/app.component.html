@@ -63,17 +63,30 @@
             [style.background-image]="showBanner ? 'linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(../assets/images/homepage.jpeg)' : ''"
             [style.height]="showBanner ? '':'8vh'">
 
-            <div #topbar class="app-toolbar-container">
-              <div class="site-content app-toolbar" ngClass.lt-lg="site-content app-toolbar-xs" [style.background-color]="showBanner ? 'rgba(0,0,0,0)' : '#0294a5'">
-                <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="center center" color="primary">
-                  <button style="margin-right: 6px;" fxHide.gt-sm mat-icon-button (click)="sidenav.toggle()"
+            <div 
+              #topbar 
+              class="app-toolbar-container">
+              <div 
+                class="site-content site-padding" 
+                ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs" 
+                [style.background-color]="showBanner ? 'rgba(0,0,0,0)' : '#0294a5'">
+                <div 
+                  class="app-toolbar-row" 
+                  fxLayout="row" 
+                  fxLayoutAlign="center center" 
+                  color="primary">
+                  <button 
+                    style="margin-right: 6px;" 
+                    fxHide.gt-sm 
+                    mat-icon-button 
+                    (click)="sidenav.toggle()"
                     matTooltip="Menu">
                     <mat-icon>menu</mat-icon>
                   </button>
-                  <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
+                  <a fxFlex routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
                     <img [src]="'assets/images/hub-logo.svg'">
                   </a>
-                  <span style="flex: 1 1 auto;"></span>
+                  <span fxHide.lt-md style="flex: 1 1 auto;"></span>
 
                   <button mat-icon-button fxHide.gt-sm routerLink="/search" matTooltip="Search">
                     <mat-icon>search</mat-icon>
@@ -89,8 +102,13 @@
                   </button>
 
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
-                    <button [style.background]="showBanner ? '' : '#0294a5'" mat-menu-item *ngFor="let item of categoryOptions" [routerLink]="['/search']"
-                      [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
+                    <div *ngIf="allCategories$ | async as allCategories">
+                      <button 
+                        [style.background]="showBanner ? '' : '#0294a5'" 
+                        mat-menu-item *ngFor="let item of allCategories.items" 
+                        [routerLink]="['/search']"
+                        [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
+                    </div>
                   </mat-menu>
 
                   <button class="button-menu" fxHide.lt-md mat-button [matMenuTriggerFor]="researchActivityMenu">
@@ -184,8 +202,6 @@
               <div #content>
                <app-search-bar
                 [style.display]="showBanner ? 'none' : 'block'"
-                [categories]="categoryOptions" 
-                [category]="selectedCategory"
                 [searchText]="searchText">
               </app-search-bar>
                 <!-- Page content -->
@@ -194,44 +210,41 @@
             </mat-sidenav-content>
           </mat-sidenav-container>
         </div>
-        <footer ngClass.xs="footer-xs">
+        <footer>
           <div 
-            class="footer-content" 
-            ngClass.xs="footer-content-xs" 
+            class="footer-content"
             fxLayout="column" 
             fxLayoutGap="1vh"
             fxLayoutAlign="center center">
             <div>
               <a 
                 [href]="aucklandUniUrl" 
-                target="_blank" 
-                (click)="analyticsService.trackOutboundLink(aucklandUniUrl)">
+                target="_blank" >
                 <img 
                   ngClass.gt-xs="logo-img" 
                   ngClass.lt-sm="logo-img-xs"
-                  [src]="apiService.getAssetUrl('page-elements/uoa-logo.svg')">
+                  src="assets/images/uoa-logo.svg">
               </a>
             </div>
 
-            <div fxLayout="row" fxLayout.xs="column">
+            <div fxLayout="row" fxLayout.lt-sm="column">
               <a routerLink="/userStudy">Join User Study</a>
-              <span fxHide.xs class="footer-divider">•</span>
+              <span fxHide.xs class="footer-divider"></span>
               <a routerLink="/feedback">Provide Feedback</a>
-              <span fxHide.xs class="footer-divider">•</span>
+              <span fxHide.xs class="footer-divider"></span>
               <a routerLink="/contact">Contact</a>
-              <span fxHide.xs class="footer-divider">•</span>
+              <span fxHide.xs class="footer-divider"></span>
               <a routerLink="/about">About</a>
-              <span fxHide.xs class="footer-divider">•</span>
-              <a [href]="disclaimerUrl" target="_blank"
-              (click)="analyticsService.trackOutboundLink(disclaimerUrl)">Disclaimer</a>
+              <span fxHide.xs class="footer-divider"></span>
+              <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
             </div>
-
-            <a 
+            <div>
+              <a 
               [href]="eResearchUrl" 
-              target="_blank" 
-              (click)="analyticsService.trackOutboundLink(eResearchUrl)">
-                Copyright © {{ getYear() }}, Centre for eResearch
-            </a>
+              target="_blank">
+                  Copyright © {{ getYear() }} Centre for eResearch
+              </a>
+            </div>
           </div>
         </footer>
       </div>

@@ -55,7 +55,6 @@ export enum ResearchActivityId {
     ManagingYourResearchProject,
     Support,
     Equipment,
-    Training,
     Software,
     Facilities,
     Guide,
@@ -100,18 +99,6 @@ export enum ResearchActivityId {
       type: OptionType.ResearchActivity
     }
   ];
-  
-  export const categoryOptions = [
-    { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
-    { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
-    { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
-    { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
-    { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
-    { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
-    { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
-    { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
-    { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
-  ];
 
   export const categoryOptionsGQL = [
     { id: CategoryId.All, name: 'All Content', description: 'Explore all research categories', type: OptionType.Category, url: '/all' },
@@ -136,7 +123,7 @@ export enum ResearchActivityId {
   
   export const menuOptions = [
     { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
-    { name: 'Browse', icon: 'view_list', routerLink: '', sublist: categoryOptions, type: OptionType.Menu },
+    { name: 'Browse', icon: 'view_list', routerLink: '', sublist: categoryOptionsGQL, type: OptionType.Menu },
     { name: 'Research Activities', icon: 'school', routerLink: '', sublist: researchActivityOptions, type: OptionType.Menu },
     { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
     { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },

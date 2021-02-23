@@ -9,7 +9,7 @@
 <!-- If we're displaying an individual equipment -->
 <div 
     id="equipment-container"
-    *ngIf="equipment$ | async as equipment">
+    *ngIf="equipment | async as equipment">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
@@ -22,14 +22,13 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat' : ''">
+            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat' : 'display: none;'">
         </div>  
     </ng-template>
 
     <ng-template #specificationsTable>
         <div 
             class="specifications">
-            <h4>Specifications</h4>
             <table class="specifications-table">
                 <tr>
                 <th>Name</th>
@@ -39,29 +38,40 @@
                     <td>Manufacturer</td>
                     <td [innerHTML]="equipment.manufacturer"></td>
                 </tr>
-                <tr *ngIf="equipment.year">
-                    <td>Year</td>
-                    <td [innerHTML]="equipment.year"></td>
-                </tr>
                 <tr *ngIf="equipment.model">
                     <td>Model</td>
                     <td [innerHTML]="equipment.model"></td>
                 </tr>
-                <tr *ngIf="equipment.eligibility">
-                    <td>Eligibility</td>
-                    <td [innerHTML]="equipment.eligibility.json | richTextToHTML"></td>
+                <tr *ngIf="equipment.year">
+                    <td>Year</td>
+                    <td [innerHTML]="equipment.year"></td>
+                </tr>
+            </table>
+        </div>
+    </ng-template>
+
+    <ng-template #specificationsTable2>
+        <div 
+            class="specifications">
+            <table class="specifications-table">
+                <th>Name</th>
+                <th>Description</th>
+                <tr *ngIf="equipment.audience">
+                    <td>Audience</td>
+                    <td [innerHTML]="equipment.audience"></td>
+                </tr>
+            
+                <tr *ngIf="equipment.availability">
+                    <td>Availability</td>
+                    <td [innerHTML]="equipment.availability"></td>
                 </tr>
                 <tr *ngIf="equipment.costToUse">
                     <td>Cost</td>
-                    <td [innerHTML]="equipment.costToUse.json | richTextToHTML"></td>
-                </tr>
-                <tr *ngIf="equipment.location">
-                    <td>Location</td>
-                    <td [innerHTML]="equipment.location.json | richTextToHTML"></td>
+                    <td [innerHTML]="equipment.costToUse"></td>
                 </tr>
                 <tr *ngIf="equipment.access">
                     <td>Access</td>
-                    <td [innerHTML]="equipment.access.json | richTextToHTML"></td>
+                    <td [innerHTML]="equipment.access"></td>
                 </tr>
             </table>
         </div>
@@ -69,8 +79,6 @@
     
     <ng-template #relatedItems let-hide="hideImage">
         <app-cards
-            [flex]="'row wrap'"
-            [hideImage]="hide"
             [title]="'You might be interested in'" 
             [contentItem]="equipment.relatedItemsCollection">
         </app-cards>
@@ -83,10 +91,10 @@
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedFacilities>
+    <ng-template #relatedDocs>
         <app-cards 
-            [title]="'Organisations'" 
-            [contentItem]="equipment.relatedFacilityCollection">
+            [title]="'Documents'" 
+            [contentItem]="equipment.relatedDocsCollection">
         </app-cards>
     </ng-template>
 
@@ -143,13 +151,13 @@
             </div>
 
             <!-- Call To Action -->
-            <div class="section">
+            <div>
                 <a href="{{ equipment.callToAction }}">
                     <button 
                         mat-flat-button 
-                        class="standard-button">
-                        <span *ngIf="equipment.callToActionLabel">
-                            {{ equipment.callToActionLabel }}
+                        class="standard-button section">
+                        <span *ngIf="equipment.callToActionLable">
+                            {{ equipment.callToActionLable }}
                         </span>
                         <span *ngIf="!equipment.callToActionLabel">
                             View Equipment
@@ -158,30 +166,51 @@
                 </a>
             </div>
 
+            <div 
+                fxLayout="row"
+                fxLayout.lt-sm="column wrap"
+                fxLayoutGap="5%"
+                fxLayoutAlign="space-between">
+                <!-- Specifications Table -->
+                <div fxFlex *ngIf="
+                    equipment.manufacturer ||
+                    equipment.model ||
+                    equipment.yearOfManufacture">
+                    <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+                </div>
 
-            <!-- Owners and User Facing Support -->
+                <!-- Specifications Table 2 -->
+                <div fxFlex *ngIf="
+                    equipment.audience ||
+                    equipment.availability ||
+                    equipment.cost ||
+                    equipment.access">
+                    <ng-container *ngTemplateOutlet="specificationsTable2"></ng-container>
+                </div>
+            </div>
+
+            <!-- Related -->
             <div
-                class="equipment-owners"
-                fxLayout="row wrap"
-                fxLayout.xs="column wrap"
-                fxLayoutGap="5%">
+                *ngIf="
+                    equipment.relatedItemsCollection?.items.length > 0 ||
+                    equipment.relatedContactsCollection?.items.length > 0 ||
+                    equipment.relatedOrgsCollection?.items.length > 0 ||
+                    equipment.relatedDocsCollection?.items.length > 0"
+                class="equipment-owners section "
+                fxLayout="column wrap"
+                fxLayoutGap="1%">
+                <div *ngIf="equipment.relatedItemsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false }"></ng-container>
+                </div>
                 <div *ngIf="equipment.relatedContactsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
                 </div>
                 <div *ngIf="equipment.relatedOrgsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
                 </div>
-                <div  *ngIf="equipment.relatedFacilityCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedFacilities; context: { hideImage: true }"></ng-container>
+                <div  *ngIf="equipment.relatedDocsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true }"></ng-container>
                 </div>
-            </div>
-
-            <!-- Specifications Table -->
-            <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-
-            <!-- Related Items -->
-            <div class="section">
-                <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false }"></ng-container>
             </div>
         </div>
     </div>

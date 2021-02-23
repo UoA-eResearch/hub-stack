@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
 
 // Measure server startup time
-var startTime = new Date().getTime();
+var startTime = new Date().getTime(); 
 
 const getCredentials = (isFromFile) => {
     // isFromFile determines where we load the credentials from.
@@ -78,12 +78,12 @@ async function createServer(config) {
 
     // Load remote schemas here
     contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
-        `?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
+        `/environments/master?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
 
     // Load Cognito public keys in order to verify tokens.
     const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
         "/.well-known/jwks.json",
-        cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl);
+        cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl); 
 
     // Get a list of the types that have the ssoProtected field
     let protectedTypes = Object.keys(contentfulSchema._typeMap)
@@ -132,7 +132,7 @@ async function createServer(config) {
                 var requestedFields = []; // List of fields requested, populated in the recursive function below
 
                 let recursive_iteration_count = 0; // Tracks the number of recursive iterations
-                const MAX_RECURSIVE_ITERATIONS = 500; // The maximum allowed number of recursive iterations
+                const MAX_RECURSIVE_ITERATIONS = 2000; // The maximum allowed number of recursive iterations
                 var getRequestedFields = function (obj) {
                     recursive_iteration_count++;
                     if (recursive_iteration_count > MAX_RECURSIVE_ITERATIONS) {

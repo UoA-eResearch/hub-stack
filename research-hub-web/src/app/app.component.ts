@@ -13,8 +13,6 @@ import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, fromEvent, Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { ResearchHubApiService } from './services/research-hub-api.service';
-import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
@@ -34,7 +32,6 @@ import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
 import { 
   AllCategoriesGQL,
-  AllEventsGQL,
   CategoryCollection,
   EventCollection
 } from './graphql/schema';
@@ -43,7 +40,6 @@ import {
   OptionType,
   CategoryId,
   menuOptions,
-  categoryOptions,
   categoryOptionsGQL,
   researchActivityOptions
 } from '@app/global/global-variables';
@@ -69,7 +65,6 @@ import {
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public menuOptions = menuOptions;
-  public categoryOptions = categoryOptions;
   public categoryOptionsGQL = categoryOptionsGQL;
   public researchActivityOptions = researchActivityOptions;
 
@@ -90,7 +85,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private scrollSub: Subscription;
   private winResizeSub: Subscription;
   public allCategories$: Observable<CategoryCollection>;
-  public allEvents$: Observable<EventCollection>;
 
   public selectedCategory = CategoryId.All;
   public searchText = '';
@@ -122,15 +116,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private searchBarService: SearchBarService, 
     private router: Router,
     private titleService: Title,
-    public apiService: ResearchHubApiService, 
-    public analyticsService: AnalyticsService,
     public appComponentService: AppComponentService,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
     public loginService: LoginService,
     public apollo: Apollo,
     public allCategoriesGQL: AllCategoriesGQL,
-    public allEventsGQL: AllEventsGQL,
     private _bypass: BypassErrorService) {this._bypass.bypassError(environment.cerGraphQLUrl, [500]);}
 
   getSearchQueryParams(item: any) {
@@ -181,6 +172,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     });
 
+    // Get All Categories
+    this.allCategories$ = this.getAllCategories();
+
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
@@ -228,6 +222,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         });
     }
+  }
+
+  public getAllCategories(): Observable<CategoryCollection> {
+    try {
+      return this.allCategoriesGQL.fetch()
+        .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
+    } catch (e) { console.error('Error loading all Categories:', e) };
   }
 
   restyleContentSidenav() {
