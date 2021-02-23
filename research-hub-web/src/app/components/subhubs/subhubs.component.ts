@@ -77,7 +77,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     } else {
       this.appComponentService.setTitle('SubHub');
       this.allSubHubs$ = this.getAllSubHubs();
-      this.subHub$.unsubscribe();
+      try { this.subHub$.unsubscribe(); } catch {}
     }
   }
 

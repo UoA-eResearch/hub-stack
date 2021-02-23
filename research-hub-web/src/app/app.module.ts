@@ -11,7 +11,6 @@ import { ServicesModule } from './services/services.module';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { AppComponentService } from './app.component.service';
-import { SearchFiltersService } from './components/search-results/search-filters/search-filters.service';
 
 import { AuthModule, CognitoConfigService, StorageService, LoginService } from '@uoa/auth';
 import { AppAuthConfigService } from './services/app-auth-config.service';
@@ -42,7 +41,6 @@ import { CerGraphqlService } from './services/cer-graphql.service';
  * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
  */
 import result from './graphql/possible-types';
-import { EventModule } from '@components/event/event.module';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData: {
@@ -76,8 +74,7 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
     HomeModule,
     HomeModule,
     HttpLinkModule,
-    ErrorPagesModule,
-    EventModule
+    ErrorPagesModule
   ],
   providers: [
     CerGraphqlService,
@@ -90,7 +87,6 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
     },
     SearchBarService,
     AppComponentService,
-    SearchFiltersService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
     { provide: StorageService, useClass: AppStorageService },
   ],

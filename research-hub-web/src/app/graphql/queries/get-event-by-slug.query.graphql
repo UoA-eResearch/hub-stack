@@ -55,12 +55,15 @@ query GetEventBySlug($slug: String) {
         relatedItemsCollection {
             items { ...PublicFields }
         }
+        relatedDocsCollection {
+            items { ...PublicFields }
+        }
         callToAction
         audience
         mode
         availability
         date
-        capabilities
+        access
         location {
             json
         }

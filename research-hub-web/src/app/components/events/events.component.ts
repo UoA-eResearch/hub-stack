@@ -5,10 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
-  AllEquipmentGQL,
-  GetEquipmentBySlugGQL,
-  EquipmentCollection,
-  Equipment,
+  AllEventsGQL,
+  GetEventBySlugGQL,
+  EventCollection,
+  Event,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -16,11 +16,11 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
-  selector: 'app-equipment',
-  templateUrl: './equipment.component.html',
-  styleUrls: ['./equipment.component.scss']
+  selector: 'app-events',
+  templateUrl: './events.component.html',
+  styleUrls: ['./events.component.scss']
 })
-export class EquipmentComponent implements OnInit, OnDestroy {
+export class EventsComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
@@ -31,17 +31,17 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public equipment: Observable<Equipment>;
-  public equipment$: Subscription;
+  public event: Observable<Event>;
+  public event$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
-  public allEquipment$: Observable<EquipmentCollection>;
+  public allEvents$: Observable<EventCollection>;
   public parentSubHubs;
 
   constructor(
     public route: ActivatedRoute,
-    public allEquipmentGQL: AllEquipmentGQL,
-    public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
+    public allEventsGQL: AllEventsGQL,
+    public getEventBySlugGQL: GetEventBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
@@ -51,7 +51,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getEquipmentBySlug() method.
+     * passed to the getEventBySlug() method.
      */
       this.route$ = this.route.params.subscribe(params => {
         this.slug = params.slug || this.route.snapshot.data.slug;
@@ -60,60 +60,60 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function that loads the Equipment/collection depending on if a slug is present.
+   * Function that loads the Event/collection depending on if a slug is present.
    */
   private async _loadContent() {
     /**
-     * If this.slug is defined, we're loading an individual Equipment,
-     * therefore run the corresponding query. If not, return all Equipment.
+     * If this.slug is defined, we're loading an individual Event,
+     * therefore run the corresponding query. If not, return all Events.
      */
     if (!!this.slug) {
-      this.equipment = this.getEquipmentBySlug(this.slug);
-      this.equipment$ = this.equipment.subscribe(data => {
+      this.event = this.getEventBySlug(this.slug);
+      this.event$ = this.event.subscribe(data => {
           this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.appComponentService.setTitle('Equipment');
-      this.allEquipment$ = this.getAllEquipment();
-      try { this.equipment$.unsubscribe(); } catch {}
+      this.appComponentService.setTitle('Events');
+      this.allEvents$ = this.getAllEvents();
+      try { this.event$.unsubscribe(); } catch {}
     }
   }
 
   /**
-   * Function that returns all Equipment from the EquipmentCollection as an observable
-   * of type EquipmentCollection. This is then unwrapped with the async pipe.
+   * Function that returns all Events from the EventCollection as an observable
+   * of type EventCollection. This is then unwrapped with the async pipe.
    *
    * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting Equipment/slug-name.
+   * user is visiting Event/slug-name.
    */
-  public getAllEquipment(): Observable<EquipmentCollection> {
+  public getAllEvents(): Observable<EventCollection> {
     try {
-      return this.allEquipmentGQL.fetch()
-        .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
-    } catch (e) { console.error('Error loading all Equipment:', e) };
+      return this.allEventsGQL.fetch()
+        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
+    } catch (e) { console.error('Error loading all Events:', e) };
   }
 
   /**
-   * Function that returns an individual Equipment from the EquipmentCollection by it's slug
-   * as an observable of type Equipment. This is then unwrapped with the async pipe.
+   * Function that returns an individual Event from the EventCollection by it's slug
+   * as an observable of type Event. This is then unwrapped with the async pipe.
    *
    * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /Equipment.
+   * the user is visiting /Events.
    *
-   * @param slug The Equipment's slug. Retrieved from the route parameter of the same name.
+   * @param slug The Event's slug. Retrieved from the route parameter of the same name.
    */
-  public getEquipmentBySlug(slug: string): Observable<Equipment> {
+  public getEventBySlug(slug: string): Observable<Event> {
     try {
-      return this.getEquipmentBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.equipmentCollection.items)) as Observable<Equipment>;
-    } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
+      return this.getEventBySlugGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.eventCollection.items)) as Observable<Event>;
+    } catch (e) { console.error(`Error loading Event ${slug}:`, e); }
   }
 
   ngOnDestroy() {
     try {
-      this.equipment$.unsubscribe();
+      this.event$.unsubscribe();
       this.route$.unsubscribe();
       this.bodyLinks$.unsubscribe();
     } catch {}
