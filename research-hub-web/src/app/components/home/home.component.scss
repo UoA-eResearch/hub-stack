@@ -1,6 +1,7 @@
 @import "../../../styles";
 @import "../../../typography.scss";
 @import "../../../themes.scss";
+@import "../../../styles.scss";
 
 .grey-background {
     padding-bottom: 5vh;
@@ -10,4 +11,33 @@
 .teal-background {
     padding-bottom: 5vh;
     background-color: map-get($hub-teal, 500);
+}
+
+.about {
+    max-width: 90vw;
+    position: relative; 
+    margin: 0 auto;
+    > div.text {
+        >.border {
+            width: 100%;
+            margin: 10vh auto;
+            border-left: 4px solid map-get($hub-navy, 500);
+            @include size(medium) { width: 70%; }
+            > p {
+                font-family: "National Book";
+                padding-left: 20px;
+                color: $body-grey;
+                &.quote {
+                    font-size: 3.5vh;
+                    font-style: italic;
+                    line-height: 1.1;
+                }
+                &.director {
+                    color: map-get($hub-navy, 500);
+                    font-size: 3vh;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 }
