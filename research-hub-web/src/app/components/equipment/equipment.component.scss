@@ -50,7 +50,6 @@ mat-card  {
  .specifications-table {
     border-collapse: collapse; 
     width: 100%;
-    @include size(medium) { width: 50% }
 }
 .specifications-table td, 
 .specifications-table th {

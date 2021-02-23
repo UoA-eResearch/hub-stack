@@ -307,8 +307,8 @@ svg {
 }
 
 .alternate-button {
-  color: map-get($hub-teal, 500)!important;
   padding-bottom: 0.3vh!important;
+  color: map-get($hub-teal, 500)!important;
   border: 0.25vh solid white!important;
   border-radius: 6.25vh!important;
   background-color: white!important;
@@ -325,8 +325,7 @@ svg {
 /**
  * Call To Action Arrow
  */
- .call-to-action a,
- .call-to-action span {
+ .call-to-action a {
   font-size: 2.25vh;
 }
 .arrow {

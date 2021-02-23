@@ -53,6 +53,9 @@ query GetServiceBySlug($slug: String) {
             relatedItemsCollection {
             items { ...PublicFields }
             }
+            relatedDocsCollection {
+            items { ...PublicFields }
+            }
             audience
             availability
             cost 

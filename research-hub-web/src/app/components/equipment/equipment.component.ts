@@ -77,7 +77,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     } else {
       this.appComponentService.setTitle('Equipment');
       this.allEquipment$ = this.getAllEquipment();
-      this.equipment$.unsubscribe();
+      try { this.equipment$.unsubscribe(); } catch {}
     }
   }
 

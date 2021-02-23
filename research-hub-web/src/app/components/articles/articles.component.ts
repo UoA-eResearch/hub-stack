@@ -77,7 +77,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     } else {
       this.appComponentService.setTitle('Articles');
       this.allArticles$ = this.getAllArticles();
-      this.article$.unsubscribe();
+      try { this.article$.unsubscribe(); } catch {}
     }
   }
 

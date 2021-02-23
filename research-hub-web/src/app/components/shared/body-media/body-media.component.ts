@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { BodyMediaService } from '@services/body-media.service';
+import { BodyMediaService} from '@services/body-media.service';
 
 @Component({
   selector: 'app-body-media',

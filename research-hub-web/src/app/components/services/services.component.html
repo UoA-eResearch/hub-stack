@@ -75,10 +75,10 @@
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedFacilities>
+    <ng-template #relatedDocuments>
         <app-cards 
-            [title]="'Organisations'" 
-            [contentItem]="service.relatedFacilityCollection">
+            [title]="'Documents'" 
+            [contentItem]="service.relatedDocsCollection">
         </app-cards>
     </ng-template>
 
@@ -97,8 +97,7 @@
         </h1>
 
         <h3 class="content-summary" 
-            ngClass.sm="content-summary-sm" 
-            ngClass.xs="content-summary-xs">
+            ngClass.lt-sm="content-summary-sm">
             {{ service.summary }}
         </h3>
     </ng-template>
@@ -135,15 +134,15 @@
             </div>
             
             <!-- Call To Action -->
-            <div class="section">
+            <div>
                 <a href="{{ service.callToAction }}">
                     <button 
                         mat-flat-button
-                        class="standard-button">
-                        <span *ngIf="service.callToActionLable">
-                            {{ service.callToActionLable }}
+                        class="standard-button section">
+                        <span *ngIf="service.callToActionLabel">
+                            {{ service.callToActionLabel }}
                         </span>
-                        <span *ngIf="!service.callToActionLable">
+                        <span *ngIf="!service.callToActionLabel">
                             View Service
                         </span>
                     </button>
@@ -155,21 +154,21 @@
 
             <!-- Owners and User Facing Support -->
             <div
-                class="service-owners"
+                class="service-owners section"
                 fxLayout="column wrap"
-                fxLayout.xs="column wrap"
-                fxLayoutGap="5%">
+                fxLayoutGap="1%">
+                <div  *ngIf="service.relatedItemsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                </div>
                 <div *ngIf="service.relatedContactsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
                 </div>
                 <div *ngIf="service.relatedOrgsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
                 </div>
-            </div>
-
-            <!-- Related Items -->
-            <div class="section">
-                <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false }"></ng-container>
+                <div *ngIf="service.relatedDocsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedDocuments; context: { hideImage: true }"></ng-container>
+                </div>
             </div>
         </div>
     </div>
