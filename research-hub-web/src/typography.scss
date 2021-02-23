@@ -6,6 +6,17 @@
 /**
  * National Fonts
  */ 
+
+ @font-face {
+  font-family: 'National Light';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: 100;
+}
+
  @font-face {
   font-family: 'National';
   src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.eot');
