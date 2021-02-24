@@ -13,7 +13,7 @@
   @extend .hub-logo;
 }
 .hub-logo-xs {
-  height: 2.7vh;
+  height: 2.5vh;
 }
 .hub-logo-xs img {
   @extend .hub-logo-xs;
@@ -229,7 +229,7 @@ mat-expansion-panel-header .mat-expanded {
  * Footer
  */
 footer {
-  background: linear-gradient(360deg, rgba(2,148,165,1) 0%,  rgba(4,132,147,1) 62%);
+  background: map-get($hub-teal, 500);
   height: fit-content;
   padding-left: $padding-site;
   padding-right: $padding-site;
