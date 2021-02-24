@@ -2,6 +2,46 @@
 @import "../../../themes.scss";
 @import "../../../styles.scss";
 
+
+/**
+ * Section Header Text
+ */
+ .text {
+    width: 95vw;
+    margin: 5vh auto;
+    text-align: center;
+    @include size(medium) { 
+        width: 50vw;
+        margin: 1vh auto;
+        }
+    > h3 {
+      color: #333333;
+      font-size: 4vh;
+      @include size(medium) { 
+        font-size: 5.5vh;
+        }
+    }
+    > p {
+      font-size: 2vh;
+      @include size(medium) { 
+        font-size: 2.5vh;
+        }
+    }
+}
+
+
+/**
+ * Content Container
+ */
+ .content-container {
+    @extend .margin-bottom;
+    padding: 2vh 0;
+    width: 95vw;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
 .grey-background {
     padding-bottom: 5vh;
     background-color: #eeeeee;

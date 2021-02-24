@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { MediaObserver } from '@angular/flex-layout';
 import { 
   categoryOptionsGQL 
 } from '@app/global/global-variables';
-import { AllCategoriesGQL, CategoryCollection, EventCollection } from '@app/graphql/schema';
+import { AllCategoriesGQL, CategoryCollection } from '@app/graphql/schema';
 import { pluck } from 'rxjs/operators';
 
 @Component({
@@ -18,22 +18,9 @@ export class BrowseComponent implements OnInit {
   public categoryOptionsGQL = categoryOptionsGQL;
   public allCategories$: Observable<CategoryCollection>;
 
-  @Input()
-  embedded = false;
-
-  @Input()
-  maxCols = 5;
-
-  @Input()
-  numCols = 4;
-
-  constructor(
-    private media: MediaObserver,
-    public allCategoriesGQL: AllCategoriesGQL) {
-  }
+  constructor(public allCategoriesGQL: AllCategoriesGQL) {}
 
   async ngOnInit() {
-    // Get all categories
     this.allCategories$ = this.getAllCategories();
   }
 
