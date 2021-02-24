@@ -48,6 +48,9 @@
 }
 
 .contact {
+    text-align: center;
+    margin: 0 auto;
+    @include size(medium) { text-align: left; }
     > div {
         margin: 5vh auto;
     }
