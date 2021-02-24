@@ -27,30 +27,34 @@
     <!-- About -->
     <div class="about">
       <div class="text">
-        <div class="border">
-          <p class="quote">"{{ quote }}"</p>
-          <br><br>
-          <p class="director">{{ director }}</p>
-        </div>
+        <h2>Message from the Director</h2>
+      </div>
+      <div class="border">
+        <br>
+        <p class="quote">"{{ quote }}"</p>
+        <br><br>
+        <p class="director">{{ director }}</p>
       </div>
     </div>
 
     <!-- Contact -->
     <div class="grey-background">
       <div
-        class="site-padding contact"
+        class="site-padding contact content-container"
         ngClass.lt-md="site-padding-mobile">
 
         <!-- Title -->
-        <div class="text">
-          <h3>{{ title }}</h3>
+        <div
+          class="text site-padding"
+          ngClass.lt-md="site-padding-mobile">
+          <h2>{{ title }}</h2>
           <p>{{ description }}</p>
         </div>
 
         
         <!-- Contact Content -->
         <div
-          class="section-2"
+          class="contact-content section-2"
           fxLayout="row"
           fxLayoutGap="5%"
           fxLayout.lt-sm="column">
@@ -113,11 +117,11 @@
           <!-- Contact -->
           <div
             fxFlex="50%"
-            fxFlexOrder.lt-md="0"
-            class="address-container"
             fxLayout="row"
             fxLayoutGap="5%"
-            fxLayout.lt-md="column wrap">
+            fxFlexOrder.lt-md="0"
+            fxLayout.lt-md="column wrap"
+            class="address-container">
 
             <!-- Address Text -->
             <div
@@ -177,7 +181,7 @@
 
             <!-- Images and Maps -->
             <div
-              fxHide.lt-lg
+              fxHide.lt-xl
               class="address-images"
               fxLayout="column"
               fxLayoutGap="5%">
