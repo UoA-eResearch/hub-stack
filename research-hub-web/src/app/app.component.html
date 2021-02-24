@@ -228,13 +228,13 @@
             </div>
 
             <div fxLayout="row" fxLayout.lt-sm="column">
-              <a routerLink="/userStudy">Join User Study</a>
+              <a href="{{ aboutUs }}">About</a>
               <span fxHide.xs class="footer-divider"></span>
-              <a routerLink="/feedback">Provide Feedback</a>
+              <a href="{{ userStudyLink }}">User Study</a>
+              <span fxHide.xs class="footer-divider"></span>
+              <a href="{{ feedbackLink }}">Feedback</a>
               <span fxHide.xs class="footer-divider"></span>
               <a routerLink="/contact">Contact</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a routerLink="/about">About</a>
               <span fxHide.xs class="footer-divider"></span>
               <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
             </div>
