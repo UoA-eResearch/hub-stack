@@ -13,8 +13,6 @@ import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { ResearchHubApiService } from './services/research-hub-api.service';
-import { AnalyticsService } from './services/analytics.service';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
@@ -38,7 +36,6 @@ import {
   OptionType,
   CategoryId,
   menuOptions,
-  categoryOptions,
   categoryOptionsGQL,
   researchActivityOptions,
   CoverImageURL
@@ -53,7 +50,7 @@ import {
   animations: [
     trigger('contentPushLeft', [
       state('true', style({
-        marginLeft: '400px'
+        marginLeft: '45vh'
       })),
       state('false', style({
         marginLeft: '0'
@@ -66,7 +63,6 @@ import {
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public coverImageUrl = CoverImageURL
   public menuOptions = menuOptions;
-  public categoryOptions = categoryOptions;
   public categoryOptionsGQL = categoryOptionsGQL;
   public researchActivityOptions = researchActivityOptions;
 
@@ -117,8 +113,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     private searchBarService: SearchBarService, 
     private router: Router,
     private titleService: Title,
-    public apiService: ResearchHubApiService, 
-    public analyticsService: AnalyticsService,
     public appComponentService: AppComponentService,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
@@ -155,7 +149,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
-      this.titleService.setTitle('ResearchHub | ' + this.pageTitle);
+      this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
     this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
@@ -179,6 +173,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
         .subscribe(async event => {
+          
 
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
@@ -191,13 +186,20 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           if (routeName) {
             this.showBanner = ['home'].includes(routeName);
             this.searchBarService.setVisibility(['home', 'search'].includes(routeName));
-            if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Home');
+            if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Welcome to the ResearchHub');
 
             // Update previous and current routes
             if (this.currentRoute) {
               this.previousRoute = this.currentRoute;
             }
+
             this.currentRoute = routeName;
+          
+             // Same component navigation
+             if (this.currentRoute == this.previousRoute) {
+              this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+              this.router.navigate([url]);
+            }
 
             this.showBackBtn = routeName !== 'home';
 

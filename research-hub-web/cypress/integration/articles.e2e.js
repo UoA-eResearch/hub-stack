@@ -1,15 +1,11 @@
 describe('ResearchHubs Article Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/article/first-article');
+        cy.visit('/article/planning-for-impact');
     });
 
     it('can visit an article and display its title', () => {
-        cy.contains('First article');
-    });
-
-    it('can display a list of its keywords', () => {
-        cy.get('#keywords').should('exist');
+        cy.contains('Planning for Impact');
     });
 
     it('displays a list of related items', () => {
@@ -17,7 +13,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Starkiller Base').click();
-        cy.contains('ice planet');
+        cy.get('#you-might-be-interested-in').contains('Communicating your Research').click();
+        cy.contains('The impact of Research Communication goes further than just explaining it, it’s about building bridges between research and the public to create a mutual engagement.');
     });
 });
