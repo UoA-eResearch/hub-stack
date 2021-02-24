@@ -1,94 +1,34 @@
 @import '../../../../styles.scss';
+@import '../../../../themes.scss';
 @import '../../../../typography.scss';
+@import '../home.component.scss';
 
 
 /**
- * Research Activity Content
- */
-.browse-container {
-  @extend .margin-bottom;
-  padding: 2vh 0;
-  width: 95vw;
-  text-align: center;
-  margin: 0 auto;
-}
-
-
-/**
- * Text
- */
- .text {
-  text-align: center;
-  width: 50vw;
-  margin: 5vh auto;
-}
-.text h3 {
-  color: #333333;
-  font-size: 5.5vh;
-}
-.text p {
-  font-size: 2.5vh;
-}
-
-
-/*
  * Browse and guide tiles
  */
-.activity {
+.tile-content {
+  height: 100%;
+  padding: 2.5vh;
+  text-align: center;
   background-color: white;
   text-decoration: none;
-}
-.tile-content {
-  padding: 2.5vh;
-  height: 100%;
-  text-align: center;
-}
-
-mat-card-actions a {
-  color: map-get($hub-navy, 500);
-  font-size: 2vh!important;
-}
-/**
- * Mobile
- */
- @media only screen and (max-width: 124vh) {
- .text {
-  text-align: center;
-  width: 95vw;
-  margin: 1vh auto;
+  & .title-text {
+      font-size: 3vh;
+      color: map-get($hub-navy, 500);
   }
-  .text h2 {
-    font-size: 4vh;
+  & .tile-button {
+    color: map-get($hub-navy, 500);
+    font-size: 2vh!important;
   }
-  .text p {
-    font-size: 2vh;
+  & .standard-button {
+    @extend .standard-button;
+    border: 0.25vh solid map-get($hub-navy, 500)!important;
+    background-color: map-get($hub-navy, 500)!important;
+    &:hover {
+      @extend .standard-button;
+      background-color: white!important;
+      color: map-get($hub-navy, 500)!important;
+    }
   }
-}
-
-/**
- * Card Text
- */
- .title-text {
-   font-size: 3vh;
-   color: map-get($hub-navy, 500);
-   border-bottom: 0.5vh solid rgba(0, 0, 0, 0);
-   transition: border-bottom ease-in-out;
- }
-
- /**
- * Custom Button Styles
- */
- .browse-container .standard-button {
-  color: white!important;
-  border: 0.25vh solid map-get($hub-navy, 500)!important;
-  border-radius: 6.25vh!important;
-  margin-bottom: 2vh;
-  background-color: map-get($hub-navy, 500)!important;
-  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-}
-.browse-container .standard-button:hover {
-  color: map-get($hub-navy, 500)!important;
-  border-radius: 6.25vh!important;
-  background-color: white!important;
-  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }

@@ -1,38 +1,48 @@
 <div 
   *ngIf="allCategories$ | async as allCategories" 
-  class="browse-container">
+  class="content-container">
   <div class="text">
     <h3>{{ title }}</h3>
     <p>{{ description }}</p>  
   </div>
+
+  <!-- Category Cards Container -->
   <div
-    fxLayoutGap="1%"
     fxLayout="row wrap"
+    fxLayoutGap="1%"
     fxLayout.lt-md="column wrap"
     class="site-padding"
-    ngClass.lt-lg="site-padding-mobile">
+    ngClass.lt-md="site-padding-mobile">
+
+    <!-- Category Cards Content -->
     <div
       *ngFor="let item of allCategories.items"
       fxFlex="24%"
       fxLayout="column"
       fxLayoutAlign="center">
+
+        <!-- Individual Category Card -->
         <mat-card
-          class="activity tile-content"
           fxLayout="column"
-          fxLayoutAlign="space-between">
+          fxLayoutAlign="space-between"
+          class="tile-content">
           <div>
             <mat-card-title class="card-title">
               <a 
                 selected
                 class="title-text"
-                [routerLink]="['/']"> <!-- Add slug link here -->
+                [routerLink]="['/']"> <!-- Redirect to search page -->
                   {{ item.name }}
               </a>
             </mat-card-title>
-            <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
+            <mat-card-content class="card-summary">
+              {{ item.description }}
+            </mat-card-content>
           </div>
           <mat-card-actions>
-            <a [routerLink]="['/']"> <!-- Add slug link here -->
+            <a 
+              class="tile-button"
+              [routerLink]="['/']"> <!-- Redirect to search page -->
               <button 
                   mat-flat-button 
                   class="standard-button">
