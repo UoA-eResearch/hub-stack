@@ -1,0 +1,25 @@
+@import '../../../../typography.scss';
+@import '../../../../themes.scss';
+
+
+/**
+ * Breadcrums Styling
+ */
+ #breadcrumbs {
+    margin: 2vh auto;
+  
+    .breadcrumb-subhub {
+        &::after {
+            color: $color-icon;
+            margin: 0 0.5em 0 0.5em;
+            content: '/'
+        }
+    }
+  
+    #breadcrumb-current-page {
+        color: $breadcrumb-current-color;
+    }
+  }
+  .breadcrumbs-mobile {
+    font-size: 1.5vh;
+  }

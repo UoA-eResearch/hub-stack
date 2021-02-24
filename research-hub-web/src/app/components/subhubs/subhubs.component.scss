@@ -1,5 +1,6 @@
 @import '../../../themes.scss';
-@import '../search-results/search-results.component.scss';
+@import '../../../typography.scss';
+@import '../../../styles.scss';
 
 mat-expansion-panel, mat-card  {
     margin: 1vh 0;
@@ -9,66 +10,15 @@ div.mat-card-avatar mat-icon {
     color: map-get($hub-teal, 800);
 }
 
-#breadcrumbs {
-        margin-bottom: 3vh;
-
-        .breadcrumb-subhub {
-            &::after {
-                margin: 0 0.5em 0 0.5em;
-                content: ' >'
-            }
-        }
-
-        #breadcrumb-current-page {
-            color: $color-pink;
-        }
-    }
-
-.view2 {
-    $base-color: #121212;
-    $base-text-high-emphasis: rgba(white, 0.87);
-    $base-text-med-emphasis: rgba(white, 0.60);
-    $base-text-low-emphasis: rgba(white, 0.38);
-
-    color: $base-text-high-emphasis;
-    background-color: $base-color;
-    padding: 1rem;
-    border-radius: 1rem;
-
-    .mat-card-subtitle {
-        color: $base-text-med-emphasis;
-    }
-    
-    .mat-card {
-        background-color: #202020;
-    }
-
-    .mat-card-content {
-        color: $base-text-high-emphasis;
-    }
-
-    h2, .mat-card-title {
-        color: #80c6ff;
-    }
-
-    div#breadcrumbs-current-page {
-        color: #e3ec60;
-    }
-
-    .mat-expansion-panel, .mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
-        color: #7fd15f;
-        background-color: #292929;
-    }
-    
+.related-item-summary {
+    color: gray;
 }
 
-.view1 {
-    background-color: #a4c1ec;
-    border-radius: 5rem;
-    padding: 5rem;
+.mat-card-actions {
+    padding: 1.5vh 0.75vh 0px 0.75vh;
+}
 
-    * {
-        border-radius: 5rem !important;
-        padding: 1rem;
-    };
+// SubHub Children
+.subhub-children {
+    background: $light-grey;
 }

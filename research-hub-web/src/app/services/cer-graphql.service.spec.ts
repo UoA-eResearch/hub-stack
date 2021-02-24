@@ -12,7 +12,7 @@ describe('CerGraphqlService', () => {
       {
         'slug': 'engagement',
         'title': 'Engagement',
-        'subhubPagesCollection': {
+        'internalPagesCollection': {
           'items': [
             {
               'slug': 'death-star',
@@ -31,35 +31,35 @@ describe('CerGraphqlService', () => {
               '__typename': 'Article'
             }
           ],
-          '__typename': 'SubHubSubhubPagesCollection'
+          '__typename': 'SubHubInternalPagesCollection'
         },
         '__typename': 'SubHub'
       },
       {
         'slug': 'cer',
         'title': 'Centre for eResearch',
-        'subhubPagesCollection': {
+        'internalPagesCollection': {
           'items': [
             {
               'slug': 'our-services',
               '__typename': 'SubHub'
             }
           ],
-          '__typename': 'SubHubSubhubPagesCollection'
+          '__typename': 'SubHubInternalPagesCollection'
         },
         '__typename': 'SubHub'
       },
       {
         'slug': 'our-services',
         'title': 'Our Services',
-        'subhubPagesCollection': {
+        'internalPagesCollection': {
           'items': [
             {
               'slug': 'engagement',
               '__typename': 'SubHub'
             }
           ],
-          '__typename': 'SubHubSubhubPagesCollection'
+          '__typename': 'SubHubInternalPagesCollection'
         },
         '__typename': 'SubHub'
       }
@@ -70,7 +70,7 @@ describe('CerGraphqlService', () => {
       {
         'slug': 'engagement',
         'title': 'Engagement',
-        'subhubPagesCollection': {
+        'internalPagesCollection': {
           'items': [
             {
               'slug': 'death-star',
@@ -93,35 +93,35 @@ describe('CerGraphqlService', () => {
               '__typename': 'Article'
             }
           ],
-          '__typename': 'SubHubSubhubPagesCollection'
+          '__typename': 'SubHubInternalPagesCollection'
         },
         '__typename': 'SubHub'
       },
       {
         'slug': 'cer',
         'title': 'Centre for eResearch',
-        'subhubPagesCollection': {
+        'internalPagesCollection': {
           'items': [
             {
               'slug': 'our-services',
               '__typename': 'SubHub'
             }
           ],
-          '__typename': 'SubHubSubhubPagesCollection'
+          '__typename': 'SubHubInternalPagesCollection'
         },
         '__typename': 'SubHub'
       },
       {
         'slug': 'our-services',
         'title': 'Our Services',
-        'subhubPagesCollection': {
+        'internalPagesCollection': {
           'items': [
             {
               'slug': 'engagement',
               '__typename': 'SubHub'
             }
           ],
-          '__typename': 'SubHubSubhubPagesCollection'
+          '__typename': 'SubHubInternalPagesCollection'
         },
         '__typename': 'SubHub'
       }
@@ -142,27 +142,27 @@ describe('CerGraphqlService', () => {
     expect(service).toBeTruthy();
   });
 
-  xit('should return the correct breadcrumbs', async () => {
-    service['_subHubCollectionWithChildPagesSlugs'] = mock_subHubCollectionWithChildPagesSlugs;
-    const expectedBreadcrumbs = [
-      {
-        'title': 'Test - Engagement',
-        'slug': 'engagement'
-      },
-      {
-        'title': 'Test - Our Services',
-        'slug': 'our-services'
-      },
-      {
-        'title': 'Test - Centre for eResearch',
-        'slug': 'cer'
-      }
-    ];
+  // it('should return the correct breadcrumbs', async () => {
+  //   service['_subHubCollectionWithChildPagesSlugs'] = mock_subHubCollectionWithChildPagesSlugs;
+  //   const expectedBreadcrumbs = [
+  //     {
+  //       'title': 'Engagement',
+  //       'slug': 'engagement'
+  //     },
+  //     {
+  //       'title': 'Our Services',
+  //       'slug': 'our-services'
+  //     },
+  //     {
+  //       'title': 'Centre for eResearch',
+  //       'slug': 'cer'
+  //     }
+  //   ];
 
-    const entrySlug = 'first-article';
-    const breadCrumbs = await service.getParentSubHubs(entrySlug)
-    expect(breadCrumbs).toEqual(expectedBreadcrumbs);
-  });
+  //   const entrySlug = 'first-article';
+  //   const breadCrumbs = await service.getParentSubHubs(entrySlug)
+  //   expect(breadCrumbs).toEqual(expectedBreadcrumbs);
+  // });
 
   it('should throw an error if a circular SubHub structure is detected', async () => {
     service['_subHubCollectionWithChildPagesSlugs'] = circularMock_subHubCollectionWithChildPagesSlugs;

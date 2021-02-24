@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AnalyticsService } from '@services/analytics.service';
 import { 
   ResearchActivityId, 
   researchActivityOptions,
@@ -14,7 +13,7 @@ import {
 export class ResearchActivityComponent implements OnInit {
   public researchActivityOptions = researchActivityOptions;
   
-  constructor(public analyticsService: AnalyticsService) {}
+  constructor() {}
 
   getQueryParams(activity) {
     return { researchActivityId: [activity.id] };

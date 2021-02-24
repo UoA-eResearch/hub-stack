@@ -71,7 +71,6 @@ describe('EquipmentComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
-    controller.verify();
   });
 
   it('Should create', () => {
@@ -100,13 +99,6 @@ describe('EquipmentComponent', () => {
       spyOn(component, 'getEquipmentBySlug').and.returnValue(mockEquipment$);
       component.getEquipmentBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('death-star');
-      });
-    })
-
-    it('Should get a single equipment data by ID', () => {
-      spyOn(component, 'getEquipmentByID').and.returnValue(mockEquipment$);
-      component.getEquipmentByID('').subscribe(res => {
-        expect(res.sys.id).toEqual('111');
       });
     })
   });

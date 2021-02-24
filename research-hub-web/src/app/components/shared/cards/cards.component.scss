@@ -1,0 +1,43 @@
+@import '../../../../themes.scss';
+@import '../../../../styles.scss';
+
+
+/**
+ * Card Image
+ */ 
+ .mat-card-image {
+    min-height: 10vh;
+    max-height: 19vh;
+    margin-bottom: 0.625vh;
+    object-fit: cover;
+  }
+
+
+/**
+  * Mat-Card Title
+  */
+.mat-card-title a:hover {
+  border-bottom: solid 0.25vh map-get($hub-navy, 500);
+}
+
+
+/**
+ * Call To Action
+ */
+a {
+    margin: 0.625vh 0px;
+    color: map-get($hub-teal, 500);
+}
+
+
+/**
+ * Card Label
+ */
+ .card-label {
+  background: map-get($hub-teal, 500);
+  color: rgb(255, 255, 255);
+  position:absolute;
+  left:0;
+  top:0;
+  padding: 0px 1.875vh;
+ }

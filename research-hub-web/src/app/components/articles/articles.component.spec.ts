@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponentService } from '../../app.component.service';
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
@@ -11,8 +11,6 @@ import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Params } from '@services/research-hub-api.service';
-import { MatExpansionPanelContent } from '@angular/material/expansion';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
@@ -237,12 +235,6 @@ describe('ArticlesComponent', () => {
       },
       '__typename': 'ArticleBody'
     },
-    'keywords': [
-      'article',
-      'informational',
-      'general',
-      'test'
-    ],
     'slug': 'first-article',
     'searchable': true,
     'icon': {
@@ -298,7 +290,6 @@ describe('ArticlesComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
-    controller.verify();
   });
 
   it('Should create', () => {
@@ -329,12 +320,5 @@ describe('ArticlesComponent', () => {
         expect(res.slug).toEqual('first-article');
       });
     });
-
-    it('Should get a single article data by ID', () => {
-      spyOn(component, 'getArticleByID').and.returnValue(mockArticle$);
-      component.getArticleByID('').subscribe(res => {
-        expect(res.sys.id).toEqual('111');
-      });
-    })
   });
 });
