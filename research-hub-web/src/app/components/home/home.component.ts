@@ -9,7 +9,7 @@ import { Message } from '../../global/global-variables';
 })
 export class HomeComponent implements OnInit {
   public message = Message;
-  public director = "- Mark Gahegan";
+  public director = "- Mark Gahegan, Director of Centre for eResearch";
 
   constructor(private searchBarService: SearchBarService) {
   }

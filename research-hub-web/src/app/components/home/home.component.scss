@@ -25,8 +25,8 @@
             @include size(medium) { width: 70%; }
             > p {
                 font-family: "National Book";
-                padding-left: 20px;
-                color: $body-grey;
+                padding-left: 25px;
+                color: #6f6f72;
                 &.quote {
                     font-size: 3.5vh;
                     font-style: italic;
