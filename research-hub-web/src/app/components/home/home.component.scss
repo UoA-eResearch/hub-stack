@@ -1,4 +1,3 @@
-@import "../../../styles";
 @import "../../../typography.scss";
 @import "../../../themes.scss";
 @import "../../../styles.scss";
@@ -38,6 +37,56 @@
                     font-weight: bold;
                 }
             }
+        }
+    }
+}
+
+.divider {
+    border-top: 2px solid;
+    @include size(small) { border-left: 2px solid; }
+    color: $input-grey;
+}
+
+.contact {
+    p > b {
+       color: map-get($hub-navy, 500); 
+    }
+    /**
+    * Custom Button Styles
+    */
+    .standard-button {
+        color: #eeeeee!important;
+        padding-bottom: 0.3vh!important;
+        border: 0.25vh solid map-get($hub-navy, 500)!important;
+        border-radius: 6.25vh!important;
+        background-color: map-get($hub-navy, 500)!important;
+        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    }
+    .standard-button:hover {
+        color: map-get($hub-navy, 500)!important;
+        border-radius: 6.25vh!important;
+        background-color: #eeeeee!important;
+        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    }
+    @extend .section;
+    max-width: 95vw;
+    > .text {
+            > * {
+                text-align: center;
+                color: #333333;
+            }
+            > h3 {
+                font-size: 5.5vh;
+            }
+            > p {
+                font-size: 2.5vh;
+            }
+        }
+    > div > .address-container {
+        > .address-content {
+            text-align: left;
+            width: fit-content;
+            margin: 0 auto;
         }
     }
 }
