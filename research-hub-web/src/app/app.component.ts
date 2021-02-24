@@ -41,7 +41,10 @@ import {
   CategoryId,
   menuOptions,
   categoryOptionsGQL,
-  researchActivityOptions
+  researchActivityOptions,
+  feedbackLink,
+  userStudyLink,
+  aboutUs
 } from '@app/global/global-variables';
 
 
@@ -67,6 +70,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   public menuOptions = menuOptions;
   public categoryOptionsGQL = categoryOptionsGQL;
   public researchActivityOptions = researchActivityOptions;
+  public feedbackLink = feedbackLink;
+  public userStudyLink = userStudyLink;
+  public aboutUs = aboutUs;
 
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';

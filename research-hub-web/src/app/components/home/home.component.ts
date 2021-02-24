@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchBarService } from '../search-bar/search-bar.service';
-import { Message } from '../../global/global-variables';
+import { Message, feedbackLink, userStudyLink } from '../../global/global-variables';
 
 @Component({
   selector: 'app-home',
@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
   public email = "eresearch-support@auckland.ac.nz";
   public phone = "+64 9 373 7599 ext 82231";
   public  building = "assets/images/cer-level5-20170905.svg";
-  public userStudyLink = "https://docs.google.com/forms/d/e/1FAIpQLSeXhrPKLqmdAr_r3aUwY9zyPa5REWJs63FQdmNwRbXKBUS8WQ/viewform";
-  public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
+  public feedbackLink = feedbackLink;
+  public userSudyLink = userStudyLink;
 
   constructor(private searchBarService: SearchBarService) {
   }
