@@ -48,6 +48,9 @@
 }
 
 .contact {
+    > div {
+        margin: 5vh auto;
+    }
     p > b {
        color: map-get($hub-navy, 500); 
     }

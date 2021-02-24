@@ -37,7 +37,7 @@
 
     <!-- Contact -->
     <div class="grey-background">
-      <div 
+      <div
         class="site-padding contact"
         ngClass.lt-md="site-padding-mobile">
 
@@ -53,11 +53,11 @@
           class="section-2"
           fxLayout="row"
           fxLayoutGap="5%"
-          fxLayout.lt-sm="column wrap">
+          fxLayout.lt-sm="column">
 
           <!-- Feedback and User Study -->
           <div
-            fxFlex
+            fxFlex="50%"
             fxFlexOrder.lt-md="2"
             fxLayoutAlign="space-between"
             fxLayout="column">
@@ -112,16 +112,15 @@
 
           <!-- Contact -->
           <div
+            fxFlex="50%"
             fxFlexOrder.lt-md="0"
             class="address-container"
-            fxLayout="row wrap"
+            fxLayout="row"
             fxLayoutGap="5%"
-            fxLayout.lt-md="column wrap"
-            fxFlex>
+            fxLayout.lt-md="column wrap">
 
             <!-- Address Text -->
             <div
-              fxFlex
               class="address-content"
               fxLayout="column"
               fxLayoutGap="10%">
@@ -179,9 +178,8 @@
             <!-- Images and Maps -->
             <div
               fxHide.lt-lg
-              fxFlex
               class="address-images"
-              fxLayout="column wrap"
+              fxLayout="column"
               fxLayoutGap="5%">
               <div style="text-align: center" fxFlex="45%">
                 <img style="width: auto; height: 100%;" src="{{ building }}"/>
