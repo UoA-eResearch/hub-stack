@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   public phone = "+64 9 373 7599 ext 82231";
   public  building = "assets/images/cer-level5-20170905.svg";
   public feedbackLink = feedbackLink;
-  public userSudyLink = userStudyLink;
+  public userStudyLink = userStudyLink;
 
   constructor(private searchBarService: SearchBarService) {
   }
