@@ -1,7 +1,11 @@
-<div class="top-padding">
-  <div class="text">
-    <h3>{{ title }}</h3>
-    <p>{{ description }}</p>  
+<div>
+  <div class="content-container">
+    <div
+      class="text site-padding"
+      ngClass.lt-md="site-padding-mobile">
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>  
+    </div>
   </div>
 
   <!-- Research Acitivities Container -->
@@ -36,7 +40,7 @@
 
           <!-- Panel Image -->
           <div 
-            fxHide.lt-lg 
+            fxHide.lt-lg
             class="research-category-img">
               <img src="assets/images/research-categories/{{ item.id }}-min.jpg">
           </div>

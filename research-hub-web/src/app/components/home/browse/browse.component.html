@@ -1,8 +1,10 @@
 <div 
   *ngIf="allCategories$ | async as allCategories" 
   class="content-container">
-  <div class="text">
-    <h3>{{ title }}</h3>
+  <div
+    class="text site-padding"
+    ngClass.lt-md="site-padding-mobile">
+    <h2>{{ title }}</h2>
     <p>{{ description }}</p>  
   </div>
 

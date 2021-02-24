@@ -14,7 +14,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, fromEvent, Observable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
 import { LoginService } from '@uoa/auth';
 import { Location } from '@angular/common';
@@ -180,6 +179,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Get All Categories
     this.allCategories$ = this.getAllCategories();
+    
 
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(

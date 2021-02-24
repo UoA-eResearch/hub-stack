@@ -3,6 +3,17 @@
 @import '../../../../typography.scss';
 @import '../home.component.scss';
 
+/**
+ * Custom Text
+ */
+.text {
+  width: 100%;
+  @extend .text;
+  @include size(large) { 
+    text-align: left;
+  }
+}
+
 
 /**
  * Browse and guide tiles
@@ -11,8 +22,8 @@
   height: 100%;
   padding: 2.5vh;
   text-align: center;
-  background-color: white;
   text-decoration: none;
+  background-color: white;
   & .title-text {
       font-size: 3vh;
       color: map-get($hub-navy, 500);
@@ -23,6 +34,7 @@
   }
   & .standard-button {
     @extend .standard-button;
+    margin-bottom: 2vh;
     border: 0.25vh solid map-get($hub-navy, 500)!important;
     background-color: map-get($hub-navy, 500)!important;
     &:hover {

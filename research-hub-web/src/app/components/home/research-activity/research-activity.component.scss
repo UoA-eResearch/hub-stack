@@ -1,7 +1,19 @@
-@import '../../../../styles.scss';
+@import "../../../../styles.scss";
 @import '../../../../themes.scss';
 @import '../../../../typography.scss';
 @import '../home.component.scss';
+
+
+/**
+ * Custom Text
+ */
+ .text {
+  width: 100%;
+  @extend .text;
+  @include size(large) { 
+    text-align: left;
+  }
+}
 
 
 /**
@@ -15,7 +27,7 @@
       outline: none;
       text-decoration: none;
     }
-    > .inner-panel {
+    & .inner-panel{
       width: 100%;
       margin: 0 auto;
       transform: skew(0deg); 
@@ -33,14 +45,17 @@
         margin-left: -5vw;
         transform: skew(30deg);
       }
-      > div {
+      & * {
+        color: #fafafa;
+      }
+      & div {
         width: 100%;
-        transform: skew(0deg);
+        transform: skew(0deg); 
         @include size(large) {
           width: 60%;
           transform: skew(-30deg); 
         }
-        & :hover, :focus {
+        &:active, &:focus {
           text-decoration: none;
           outline: none;
         }
@@ -57,32 +72,40 @@
         margin: 0 auto;
         word-wrap: break-word;
         @include size(large) {
+          width: 100%;
           font-style: italic;
           font-size: 2.5vh;
         }
-      }
-      & * {
-        color: #fafafa;
       }
       &:hover {
         cursor: pointer;
         background: #fafafa;
         border: 0.5vh solid map-get($hub-teal, 500);
         transition: background 0.11s ease-in-out;
-        > * {
+        & * {
           transition: background 0.11s ease-in-out;
           color: map-get($hub-teal, 500)!important;
         }
       }
     }
-    > .research-category-img {
+    .research-category-img {
       width: 55vw;
       margin-left: -5vw;
+  
       > img {
         object-fit: cover;
-        width: 100%;
-        height: 30vh
+        width:100%;
+        height:30vh
       }
     }
   }
 }
+
+/**
+  * Mobile
+  */
+  @media screen and (max-width: 150vh) {
+    .inner-panel-image {
+      flex-grow: 0;
+    }
+  }

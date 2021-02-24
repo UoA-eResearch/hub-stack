@@ -7,18 +7,17 @@
  * Section Header Text
  */
  .text {
-    width: 95vw;
+    width: 100%;
     margin: 5vh auto;
-    text-align: center;
     @include size(medium) { 
-        width: 50vw;
-        margin: 1vh auto;
+        width: 60%;
+        margin: 5vh auto;
         }
-    > h3 {
+    > h2 {
       color: #333333;
-      font-size: 4vh;
+      font-size: 4.5vh;
       @include size(medium) { 
-        font-size: 5.5vh;
+        font-size: 6vh;
         }
     }
     > p {
@@ -52,87 +51,90 @@
     background-color: map-get($hub-teal, 500);
 }
 
-.about {
+
+/**
+ * About Section
+ */
+ .about {
     max-width: 90vw;
     position: relative; 
     margin: 0 auto;
-    > div.text {
-        >.border {
-            width: 100%;
-            margin: 10vh auto;
-            border-left: 4px solid map-get($hub-navy, 500);
-            @include size(medium) { width: 70%; }
-            > p {
-                font-family: "National Book";
-                padding-left: 25px;
-                color: #6f6f72;
-                &.quote {
-                    font-size: 3.5vh;
-                    font-style: italic;
-                    line-height: 1.1;
-                }
-                &.director {
-                    color: map-get($hub-navy, 500);
-                    font-size: 3vh;
-                    font-weight: bold;
-                }
+    > .text {
+        width: 100%;
+        margin-top: 10vh;
+        margin-bottom: 0vh;
+        @include size(large) { width: 70%; }
+        & h2 {
+            text-align: left;
+            font-size: 4.5vh;
+            color: map-get($hub-navy, 500);
+        }
+    }
+    > .border {
+        width: 100%;
+        margin: 0vh auto 10vh auto;
+        border-left: 4px solid map-get($hub-navy, 500);
+        @include size(large) { width: 70%; }
+        > p {
+            line-height: 1.1;
+            padding-left: 25px;
+            color: #6f6f72;
+            &.quote {
+                font-size: 3vh;
+                font-style: italic;
+                @include size(large) { font-size: 3.5vh; }
+            }
+            &.director {
+                font-size: 2.5vh;
+                font-weight: bold;
+                color: map-get($hub-navy, 500);
+                @include size(large) { font-size: 3vh; }
             }
         }
     }
 }
 
-.divider {
-    border-top: 2px solid;
-    @include size(small) { border-left: 2px solid; }
-    color: $input-grey;
-}
 
+/**
+ * Contact Section
+ */
 .contact {
-    text-align: center;
     margin: 0 auto;
-    @include size(medium) { text-align: left; }
-    > div {
-        margin: 5vh auto;
+    text-align: center;
+    @include size(large) { text-align: left; }
+    .text {
+        width: 100%;
+        @extend .text;
+        @include size(large) { 
+        text-align: left;
+        }
+    }
+    > .contact-content {
+        @extend .site-padding;
     }
     p > b {
        color: map-get($hub-navy, 500); 
     }
-    /**
-    * Custom Button Styles
-    */
-    .standard-button {
-        color: #eeeeee!important;
-        padding-bottom: 0.3vh!important;
+    & .standard-button {
+        @extend .standard-button;
         border: 0.25vh solid map-get($hub-navy, 500)!important;
-        border-radius: 6.25vh!important;
         background-color: map-get($hub-navy, 500)!important;
-        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-    }
-    .standard-button:hover {
-        color: map-get($hub-navy, 500)!important;
-        border-radius: 6.25vh!important;
-        background-color: #eeeeee!important;
-        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-    }
-    @extend .section;
-    max-width: 95vw;
-    > .text {
-            > * {
-                text-align: center;
-                color: #333333;
-            }
-            > h3 {
-                font-size: 5.5vh;
-            }
-            > p {
-                font-size: 2.5vh;
-            }
+        &:hover {
+          @extend .standard-button;
+          background-color: white!important;
+          color: map-get($hub-navy, 500)!important;
         }
+    }
     > div > .address-container {
         > .address-content {
+            margin: 0 auto;
             text-align: left;
             width: fit-content;
-            margin: 0 auto;
         }
+    }
+    & .divider {
+        color: $input-grey;
+        border-top: 2px solid;
+        @include size(small) { border-left: 2px solid; }
     }
 }
