@@ -43,8 +43,7 @@
                 <mat-list-item 
                   *ngFor="let item of menuOption.sublist;" 
                   (click)="sidenav.close()"
-                  [routerLink]="['/search']" 
-                  [queryParams]="getSearchQueryParams(item)">
+                  [routerLink]="['/search']">
                   <a mat-line>{{item.name}}</a>
                 </mat-list-item>
               </mat-expansion-panel>
@@ -96,18 +95,22 @@
                     Search
                   </button>
 
-                  <button class="button-menu" fxHide.lt-md mat-button [matMenuTriggerFor]="browseMenu">
+                  <button
+                    class="button-menu"
+                    fxHide.lt-md
+                    mat-button
+                    [matMenuTriggerFor]="browseMenu">
                     Browse
                     <mat-icon matPrefix>expand_more</mat-icon>
                   </button>
 
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allCategories$ | async as allCategories">
-                      <button 
+                      <button
+                        *ngFor="let item of allCategories.items"
+                        mat-menu-item
                         [style.background]="showBanner ? '' : '#0294a5'" 
-                        mat-menu-item *ngFor="let item of allCategories.items" 
-                        [routerLink]="['/search']"
-                        [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
+                        [routerLink]="['/search']">{{item.name}}</button>
                     </div>
                   </mat-menu>
 
@@ -118,7 +121,7 @@
 
                   <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
                     <button [style.background]="showBanner ? '' : '#0294a5'" mat-menu-item *ngFor="let item of researchActivityOptions"
-                      [routerLink]="['/search']" [queryParams]="getSearchQueryParams(item)">{{item.name}}</button>
+                      [routerLink]="['/search']">{{item.name}}</button>
                   </mat-menu>
 
                   <button mat-button fxHide.lt-md routerLink="/userStudy">

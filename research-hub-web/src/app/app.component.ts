@@ -1,4 +1,4 @@
-import { filter, distinctUntilChanged, pluck } from 'rxjs/operators';
+import { filter, distinctUntilChanged, pluck, take } from 'rxjs/operators';
 import { 
   Component, 
   OnDestroy, 
@@ -38,7 +38,6 @@ import { environment } from '@environments/environment';
 import {
   OptionType,
   CategoryId,
-  menuOptions,
   categoryOptionsGQL,
   researchActivityOptions,
   feedbackLink,
@@ -66,7 +65,7 @@ import {
   ]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
-  public menuOptions = menuOptions;
+  public menuOptions;
   public categoryOptionsGQL = categoryOptionsGQL;
   public researchActivityOptions = researchActivityOptions;
   public feedbackLink = feedbackLink;
@@ -129,10 +128,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public allCategoriesGQL: AllCategoriesGQL,
     private _bypass: BypassErrorService) {this._bypass.bypassError(environment.cerGraphQLUrl, [500]);}
 
-  getSearchQueryParams(item: any) {
-    return item['type'] === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
-  }
-
   getRouteName(url: string) {
     this.appComponentService.getRouteSlug(url);
     const routeName = url.replace('?', '/');
@@ -180,6 +175,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     // Get All Categories
     this.allCategories$ = this.getAllCategories();
     
+    this.menuOptions = [
+      { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
+      { name: 'Browse', icon: 'view_list', routerLink: '', sublist: this.allCategories$.pipe(take(1)), type: OptionType.Menu },
+      { name: 'Research Activities', icon: 'school', routerLink: '', sublist: researchActivityOptions, type: OptionType.Menu },
+      { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
+      { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },
+      { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
+      { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
+    ];
 
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
