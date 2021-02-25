@@ -1,4 +1,4 @@
-import { filter, distinctUntilChanged, pluck, take } from 'rxjs/operators';
+import { filter, distinctUntilChanged, pluck } from 'rxjs/operators';
 import { 
   Component, 
   OnDestroy, 
@@ -31,12 +31,10 @@ import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
 import { 
   AllCategoriesGQL,
-  CategoryCollection,
-  EventCollection
+  CategoryCollection
 } from './graphql/schema';
 import { environment } from '@environments/environment';
 import {
-  OptionType,
   CategoryId,
   categoryOptionsGQL,
   researchActivityOptions,
@@ -155,10 +153,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
-    this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
-      this.showProgressBar = isVisible;
-    });
-
     // Navigate to the search page if user starts typing
     this.searchTextChangeSub = this.searchBarService.searchTextChange.pipe(distinctUntilChanged()).subscribe(searchText => {
       const url = this.location.path();
@@ -174,16 +168,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Get All Categories
     this.allCategories$ = this.getAllCategories();
-    
-    this.menuOptions = [
-      { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
-      { name: 'Browse', icon: 'view_list', routerLink: '', sublist: this.allCategories$.pipe(take(1)), type: OptionType.Menu },
-      { name: 'Research Activities', icon: 'school', routerLink: '', sublist: researchActivityOptions, type: OptionType.Menu },
-      { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
-      { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },
-      { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
-      { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
-    ];
 
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
