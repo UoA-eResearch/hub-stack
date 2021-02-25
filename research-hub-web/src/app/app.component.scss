@@ -40,8 +40,7 @@
 .banner-text {
   p { 
     width: auto!important;
-    @include size(medium) { 
-      width: 70%!important;
+    @include size(medium) {
       margin: 0 auto;
     }
   }
