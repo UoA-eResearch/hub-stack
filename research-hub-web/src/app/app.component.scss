@@ -255,21 +255,34 @@ footer {
     min-height: fit-content !important;
   }
   a {
-    color: white;
+    color: $light-grey;
     text-align: left;
     text-decoration: none;
-    font-size: mat-font-size($app-base-typography, button) !important;
-    font-weight: mat-font-weight($app-base-typography, caption) !important;
+    font-size: mat-font-size($app-base-typography, button);
+    font-weight: mat-font-weight($app-base-typography, caption);
   }
   .footer-xs a {
     text-align: center;
   }
   .footer-links {
     text-align: left;
+    .link-header {
+      color: map-get($hub-navy, 500);
+    }
   }
   .copyright {
-    @include size(small) { padding-top: $padding-site-top; }
     margin-bottom: 1vh;
+    @include size(small) { padding-top: $padding-site-top; }
+    a {
+      color: $light-grey;
+      font-size: 1.7vh;
+    }
+  }
+  .divider {
+    color: #fafafa;
+    padding-left: 5px;
+    margin-left: 3px;
+    border-left: 1.5px solid;
   }
 }
 .footer-divider {
@@ -277,12 +290,15 @@ footer {
   padding-left: 1em;
   padding-right: 1em;
 }
-.logo-img {
-  height: 8vh;
-  width: auto;
-  display: block;
+
+.logo-img-container {
   margin: 0 auto;
-  @include size(small) { height: 10vh; }
+  .logo-img {
+    height: 8vh;
+    width: auto;
+    display: block;
+    @include size(small) { height: 10vh; }
+  }
 }
 
 

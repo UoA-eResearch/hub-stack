@@ -285,18 +285,27 @@
             <!-- Main Footer Links -->
             <div
               style="width: 100%;"
-              fxLayout="row"
               fxLayoutGap="5%"
               fxLayout.lt-md="column"
               fxLayoutAlign="space-between">
               <div
-                fxFlex="45%" 
-                fxFlexOrder.lt-md="1">
-                <a 
+                fxFlex="45%"
+                fxLayout="row"
+                fxFlexOrder.lt-md="1"
+                class="logo-img-container">
+                <a
+                  fxLayout="column"
+                  fxLayoutAlign="center center"
                   [href]="aucklandUniUrl" 
                   target="_blank" >
                   <img class="logo-img" src="assets/images/uoa-logo.svg">
                 </a>
+                <div
+                  fxLayout="column"
+                  fxLayoutAlign="center center"
+                  class="divider">
+                  Centre<br>for eResearch
+                </div>
               </div>
   
               <div
@@ -305,11 +314,26 @@
                 fxLayout="row wrap"
                 fxFlexOrder.lt-md="0"
                 fxLayoutAlign="space-between">
-                <a href="{{ aboutUs }}">About</a>
-                <a href="{{ userStudyLink }}">User Study</a>
-                <a href="{{ feedbackLink }}">Feedback</a>
-                <a routerLink="/contact">Contact</a>
-                <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+                <div fxLayout="column">
+                  <a class="link-header">About</a>
+                  <a href="https://www.eresearch.auckland.ac.nz/?_ga=2.81806550.1543311154.1613887992-1526168235.1613564667">Centre for eResearch</a>
+                  <a href="https://auckland.ac.nz">The University of Auckland</a>
+                </div>
+                <div fxLayout="column">
+                  <a class="link-header">Engage</a>
+                  <a href="{{ userStudyLink }}">User Study</a>
+                  <a href="{{ feedbackLink }}">Feedback</a>
+                  <a routerLink="/contact">Contact</a>
+                </div>
+                <div fxLayout="column">
+                  <a class="link-header">Explore</a>
+                  <a routerLink="/contact">Research Categories</a>
+                  <a routerLink="/contact">Research Activities</a>
+                </div>
+                <div fxLayout="column">
+                  <a class="link-header">Helpful Links</a>
+                  <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+                </div>
               </div>
             </div>
             
