@@ -120,16 +120,6 @@ export enum ResearchActivityId {
     { id: CategoryId.ResearchServiceProviders, name: 'Research Service Providers', description: 'Information relating to groups/centres who provide support services to researchers at the University of Auckland', type: OptionType.Category, url: '/research-service-providers' },
     { id: CategoryId.ManagingYourResearchProject, name: 'Managing your Research Project', description: 'Policy, process, and support services for the management and administration of research', type: OptionType.Category, url: '/managing-your-research-project' },
   ];
-  
-  export const menuOptions = [
-    { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
-    { name: 'Browse', icon: 'view_list', routerLink: '', sublist: categoryOptionsGQL, type: OptionType.Menu },
-    { name: 'Research Activities', icon: 'school', routerLink: '', sublist: researchActivityOptions, type: OptionType.Menu },
-    { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
-    { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },
-    { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
-    { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
-  ];
 
   export const Message = "The computational demands of today's research questions often require highly specialised computing and storage infrastructure, along with advanced software tools and services. The Centre for eResearch pioneers the development of such infrastructure and services on behalf of the University's research communities. We work hand-in-hand with researchers to help them leverage computational advances in pursuit of their own research questions. To this end we aim to provide sophisticated computing environments, advanced storage solutions for managing large research data collections, and a variety of productivity and community support software tools. The centre also plays a key role in providing leadership in eResearch at the national level, hosting both the BeSTGRID grid middleware and the New Zealand eScience Infrastructure (NeSI) at the University of Auckland. Our vision at the Centre for eResearch is to be a nationally and internationally influential community of eResearch practitioners, developers and thought leaders. We aim to excel in facilitating the research of others, as well as contributing to the evolving research themes within the field of eResearch itself. The information on this website will give you a real sense of the many different kinds of services we provide and the wide range of researchers and research communities that we partner with. If you would like to find out more, or how the centre might help you with your computational needs, please do not hesitate to get in touch with our staff.";
 
