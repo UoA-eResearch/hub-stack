@@ -32,13 +32,13 @@
       margin: 0 auto;
       transform: skew(0deg); 
       margin-left: 0vw;
-      height: 30vh; 
+      height: 240px; 
       display: flex;
       text-align: center;
       align-items: center;
       justify-content: center;
       background: map-get($hub-teal, 500);
-      border: 0.5vh solid map-get($hub-teal, 500);
+      border: 4px solid map-get($hub-teal, 500);
       transition: background 0.11s ease-in-out, color 0.1s ease-in-out;
       @include size(large) {
         width: 55%;
@@ -61,26 +61,26 @@
         }
       }
       & h3 {
-        font-size: 3vh;
+        font-size: 36px;
         font-style: italic;
         font-weight: bold;
-        @include size(large) { font-size: 5vh; }
+        @include size(large) { font-size: 40px; }
       }
       & p {
         width: 90vw;
-        font-size: 2vh;
+        font-size: 16px;
         margin: 0 auto;
         word-wrap: break-word;
         @include size(large) {
           width: 100%;
           font-style: italic;
-          font-size: 2.5vh;
+          font-size: 20px;
         }
       }
       &:hover {
         cursor: pointer;
         background: #fafafa;
-        border: 0.5vh solid map-get($hub-teal, 500);
+        border: 4px solid map-get($hub-teal, 500);
         transition: background 0.11s ease-in-out;
         & * {
           transition: background 0.11s ease-in-out;
@@ -94,18 +94,9 @@
   
       > img {
         object-fit: cover;
-        width:100%;
-        height:30vh
+        width: 100%;
+        height: 240px;
       }
     }
   }
 }
-
-/**
-  * Mobile
-  */
-  @media screen and (max-width: 150vh) {
-    .inner-panel-image {
-      flex-grow: 0;
-    }
-  }

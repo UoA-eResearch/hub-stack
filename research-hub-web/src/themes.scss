@@ -333,8 +333,8 @@ $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn
  */
 $width-page-max: 100vw;
 $offset-gt-xs: 2vw;
-$height-footer: 24vh;
-$height-footer-xs: 32vh;
+$height-footer: 192px;
+$height-footer-xs: 256px;
 $padding-site: 10vh;
 $padding-site-top: 4vh;
 
@@ -350,7 +350,6 @@ $color-icon: #757575;
 $color-background: #fafafa;
 $color-content-header: map-get($hub-navy, 500);
 $color-content-summary-bg: auto;
-$color-browse-tile-bg: $color-pink;
 $color-guide-tile-bg: map-get($hub-teal, 500);
 
 

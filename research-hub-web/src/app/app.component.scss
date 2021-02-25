@@ -7,13 +7,13 @@
  * Hub Logo
  */
 .hub-logo {
-  height: 4vh;
+  height: 32px;
 }
 .hub-logo img {
   @extend .hub-logo;
 }
 .hub-logo-xs {
-  height: 2.5vh;
+  height: 20px;
 }
 .hub-logo-xs img {
   @extend .hub-logo-xs;
@@ -31,7 +31,7 @@
 }
 
 .banner-content-home {  
-  margin: 30vh 2.5vh;
+  margin: 25vh 2.5vh;
   display: inline-block;  
   @include size(medium) {
     margin: 30vh 10vh;
@@ -53,12 +53,12 @@
   }
   .page-title {
     color: #FAFAFA;
-    margin-bottom: 4vh;
-    font-size: 7vh;
-    @include size(medium) { font-size: 12vh; }
+    margin-bottom: 32px;
+    font-size: 56px;
+    @include size(medium) { font-size: 96px; }
   }
   .page-summary {
-    font-size: 2.5vh;
+    font-size: 20px;
     word-wrap: break-word;
     color: $light-grey;
     line-height: 100%;
@@ -71,13 +71,13 @@
 .initial-search {
   width: 60vw;
   @include size(medium) { width: 20vw; }
-  padding: 0.5vh;
+  padding: 4px;
   margin: 0 auto;
-  font-size: 2vh;
+  font-size: 16px;
   font-style: italic;
   color: rgba(230, 230, 230, 1);
   background-color: rgba(150, 150, 150, 0.4);
-  border: 0.1vh solid rgba(150, 150, 150, 0.7);
+  border: 0.8px solid rgba(150, 150, 150, 0.7);
 }
 .initial-search:active,
 .initial-search:focus {
@@ -100,22 +100,22 @@
  */
 .menu-button {
   color: white !important;
-  top: 0.6vh;
-  right: 1.3vh;
+  top: 4.8px;
+  right: 10.5px;
 }
 .menu-button-xs {
   @extend .menu-button;
-  top: 0.3vh;
-  right: 1.3vh;
+  top: 2.4px;
+  right: 10.5px;
 }
 .mat-button {
-  line-height: 8vh!important;
-  padding: 0 2vh!important;
-  min-width: 8vh!important;
+  line-height:  64px!important;
+  padding: 0 16px!important;
+  min-width:  64px!important;
 }
 mat-list-item.mat-list-item {
-  height: 7.6vh!important;
-  padding: 0 2vh!important;
+  height: 60.8px!important;
+  padding: 0 16px!important;
 }
 
 
@@ -139,7 +139,7 @@ mat-list-item.mat-list-item {
  * User Menu
  */
 .user-menu-list {
-  margin-bottom: 1.3vh;
+  margin-bottom: 10.5px;
 }
 .user-menu-list mat-list-item mat-icon {
   color: white;
@@ -158,12 +158,12 @@ mat-list-item.mat-list-item {
   padding-right: $padding-site;
   background-color: map-get($hub-teal, 500);
   & .app-toolbar-row {
-    height: 8vh;
+    height:  64px;
   }
 }
 .app-toolbar-xs {
   .app-toolbar-row {
-    height: 8vh;
+    height:  64px;
   }
 }
 
@@ -178,13 +178,13 @@ mat-list-item.mat-list-item {
   }
 }
 mat-list-base {
-  padding: 0 2vh;
+  padding: 0 16px;
 }
 mat-expansion-panel {
   box-shadow: none !important;
 }
 mat-expansion-panel-header .mat-expanded {
-  height: 8vh !important;
+  height:  64px !important;
 }
 .mat-menu-panel,
 .mat-menu-content {
@@ -193,9 +193,9 @@ mat-expansion-panel-header .mat-expanded {
 }
 .mat-menu-item {
   color: white!important;
-  padding: 0 2vh!important;
+  padding: 0 16px!important;
   height: fit-content!important;
-  line-height: 6vh!important;
+  line-height: 48px!important;
   background: rgba(10, 10, 10, 0);
   font-size: mat-font-size($app-base-typography, body-1);
 }
@@ -205,20 +205,20 @@ mat-expansion-panel-header .mat-expanded {
 }
 .mat-expansion-panel-body 
 .mat-list-item-content {
-  padding-left: 6.7vh !important;
+  padding-left: 53.6px !important;
 }
 .expandable-menu {
   background-color: #fafafa !important;
   padding-left: 0 !important;
-  height: 8vh !important;
+  height:  64px !important;
 }
 .sidenav-container {
-  min-height: calc(100vh);
+  min-height: calc(800px);
 }
 .sidenav-container {
   mat-sidenav {
     background-color: $color-background;
-    box-shadow: 0.5vh 0 1vh rgba(0, 0, 0, .24);
+    box-shadow: 4px 0 8px rgba(0, 0, 0, .24);
   }
 }
 .sidenav-container {
@@ -233,10 +233,10 @@ mat-expansion-panel-header .mat-expanded {
 }
 .sidenav-content {
   flex: 1 0 auto; // So that content takes up space correctly in IE11 (pushing sticky footer out of the way)
-  min-height: calc(100vh - #{$height-footer});
+  min-height: calc(800px - #{$height-footer});
   background-color: $color-background;
   @include size(small) {
-    min-height: calc(100vh - #{$height-footer-xs});
+    min-height: calc(800px - #{$height-footer-xs});
   }
 }
 
@@ -271,11 +271,11 @@ footer {
     }
   }
   .copyright {
-    margin-bottom: 1vh;
+    margin-bottom: 8px;
     @include size(small) { padding-top: $padding-site-top; }
     a {
       color: $light-grey;
-      font-size: 1.7vh;
+      font-size: 13.6px;
     }
   }
   .divider {
@@ -294,10 +294,10 @@ footer {
 .logo-img-container {
   margin: 0 auto;
   .logo-img {
-    height: 8vh;
+    height:  64px;
     width: auto;
     display: block;
-    @include size(small) { height: 10vh; }
+    @include size(small) { height: 80px; }
   }
 }
 
@@ -306,8 +306,8 @@ footer {
  * User Detail Dropdown
  */
 .user-detail-dropdown {
-  margin-right: 1vh; 
-  margin-left: 1vh;
+  margin-right: 8px; 
+  margin-left: 8px;
 }
 
 

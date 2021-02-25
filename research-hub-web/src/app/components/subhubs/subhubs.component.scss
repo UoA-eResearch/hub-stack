@@ -3,7 +3,7 @@
 @import '../../../styles.scss';
 
 mat-expansion-panel, mat-card  {
-    margin: 1vh 0;
+    margin: 8px 0;
 }
 
 div.mat-card-avatar mat-icon {
@@ -15,7 +15,7 @@ div.mat-card-avatar mat-icon {
 }
 
 .mat-card-actions {
-    padding: 1.5vh 0.75vh 0px 0.75vh;
+    padding: 12px 6px 0px 6px;
 }
 
 // SubHub Children

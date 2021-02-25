@@ -52,7 +52,7 @@ import {
   animations: [
     trigger('contentPushLeft', [
       state('true', style({
-        marginLeft: '45vh'
+        marginLeft: '360px'
       })),
       state('false', style({
         marginLeft: '0'

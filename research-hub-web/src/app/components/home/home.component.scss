@@ -8,22 +8,22 @@
  */
  .text {
     width: 100%;
-    margin: 5vh auto;
+    margin: 40px auto;
     @include size(medium) { 
         width: 60%;
-        margin: 5vh auto;
+        margin: 40px auto;
         }
     > h2 {
       color: #333333;
-      font-size: 4.5vh;
+      font-size: 36px;
       @include size(medium) { 
-        font-size: 6vh;
+        font-size: 48px;
         }
     }
     > p {
-      font-size: 2vh;
+      font-size: 16px;
       @include size(medium) { 
-        font-size: 2.5vh;
+        font-size: 20px;
         }
     }
 }
@@ -34,7 +34,7 @@
  */
  .content-container {
     @extend .margin-bottom;
-    padding: 2vh 0;
+    padding: 16px 0;
     width: 95vw;
     margin: 0 auto;
     text-align: center;
@@ -42,12 +42,12 @@
 
 
 .grey-background {
-    padding-bottom: 5vh;
+    padding-bottom: 40px;
     background-color: #eeeeee;
 }
 
 .teal-background {
-    padding-bottom: 5vh;
+    padding-bottom: 40px;
     background-color: map-get($hub-teal, 500);
 }
 
@@ -61,18 +61,18 @@
     margin: 0 auto;
     > .text {
         width: 100%;
-        margin-top: 10vh;
-        margin-bottom: 0vh;
+        margin-top: 80px;
+        margin-bottom: 0px;
         @include size(large) { width: 70%; }
         & h2 {
             text-align: left;
-            font-size: 4.5vh;
+            font-size: 32px;
             color: map-get($hub-navy, 500);
         }
     }
     > .border {
         width: 100%;
-        margin: 0vh auto 10vh auto;
+        margin: 0px auto 80px auto;
         border-left: 4px solid map-get($hub-navy, 500);
         @include size(large) { width: 70%; }
         > p {
@@ -80,15 +80,15 @@
             padding-left: 25px;
             color: #6f6f72;
             &.quote {
-                font-size: 3vh;
+                font-size: 20px;
                 font-style: italic;
-                @include size(large) { font-size: 3.5vh; }
+                @include size(large) { font-size: 24px; }
             }
             &.director {
-                font-size: 2.5vh;
+                font-size: 18px;
                 font-weight: bold;
                 color: map-get($hub-navy, 500);
-                @include size(large) { font-size: 3vh; }
+                @include size(large) { font-size: 20px; }
             }
         }
     }
@@ -117,7 +117,7 @@
     }
     & .standard-button {
         @extend .standard-button;
-        border: 0.25vh solid map-get($hub-navy, 500)!important;
+        border: 2px solid map-get($hub-navy, 500)!important;
         background-color: map-get($hub-navy, 500)!important;
         &:hover {
           @extend .standard-button;
