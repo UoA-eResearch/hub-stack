@@ -7,7 +7,7 @@ div.mat-card-avatar mat-icon {
 }
 
 div.collection {
-    margin: 3vh 0 3vh 0;
+    margin: 24px 0 24px 0;
 }
 
 .result-item {
@@ -18,7 +18,7 @@ div.collection {
     }
 
     &:hover {
-        border: 0.17vh solid map-get($hub-teal, 50);
+        border: 1.36px solid map-get($hub-teal, 50);
     }
 }
 
@@ -26,6 +26,6 @@ div.collection {
  * Material Overrides
  */
 mat-expansion-panel-header {
-    font-size: 2vh!important;
+    font-size: 16px!important;
     height: fit-content!important;
 }

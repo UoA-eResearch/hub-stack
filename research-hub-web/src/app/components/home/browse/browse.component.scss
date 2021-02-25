@@ -20,22 +20,22 @@
  */
 .tile-content {
   height: 100%;
-  padding: 2.5vh;
+  padding: 20px;
   text-align: center;
   text-decoration: none;
   background-color: white;
   & .title-text {
-      font-size: 3vh;
+      font-size: 24px;
       color: map-get($hub-navy, 500);
   }
   & .tile-button {
     color: map-get($hub-navy, 500);
-    font-size: 2vh!important;
+    font-size: 16px!important;
   }
   & .standard-button {
     @extend .standard-button;
-    margin-bottom: 2vh;
-    border: 0.25vh solid map-get($hub-navy, 500)!important;
+    margin-bottom: 16px;
+    border: 2px solid map-get($hub-navy, 500)!important;
     background-color: map-get($hub-navy, 500)!important;
     &:hover {
       @extend .standard-button;

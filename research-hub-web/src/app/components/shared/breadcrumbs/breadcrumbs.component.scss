@@ -6,7 +6,7 @@
  * Breadcrums Styling
  */
  #breadcrumbs {
-    margin: 2vh auto;
+    margin: 16px auto;
   
     .breadcrumb-subhub {
         &::after {
@@ -21,5 +21,5 @@
     }
   }
   .breadcrumbs-mobile {
-    font-size: 1.5vh;
+    font-size: 12px;
   }

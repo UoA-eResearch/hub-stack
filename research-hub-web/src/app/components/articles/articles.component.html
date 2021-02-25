@@ -103,7 +103,7 @@
                 [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'height: fit-content'">
                 <div 
                     class="banner-content" 
-                    [style]="article.banner ?  '' : 'margin: 3vh 0;'"
+                    [style]="article.banner ?  '' : 'margin: 24px 0;'"
                     *ngIf="article.viewType == 'View 1'">
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>

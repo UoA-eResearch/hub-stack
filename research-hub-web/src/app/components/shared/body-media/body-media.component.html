@@ -72,7 +72,7 @@
         </ng-template>
 
         <ng-template #noImage>
-            <div style="margin-top: 1.25vh;"></div>
+            <div style="margin-top: 10px;"></div>
         </ng-template>
 
         <!-- Default Entry Block Template -->
@@ -96,7 +96,7 @@
                     <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
                         View {{ contentItem['__typename'] | humanCase }}&nbsp;&nbsp;
                     </a>
-                    <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/teal-arrow.png">
+                    <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
                 </span>
             </mat-card>
         </ng-template>
@@ -142,7 +142,7 @@
                                     </span>
                                 </mat-card-content> 
                             </span>
-                            <!-- <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/navy-arrow.png"> -->
+                            <!-- <img class="arrow" style="height: 20px; width: auto" src="assets/components/navy-arrow.png"> -->
                         </mat-card>
                     </a>
                 </div>

@@ -4,8 +4,8 @@
 
 
 mat-card[_ngcontent-vta-c287] {
-    padding: 0vh!important;
-    margin: 1vh 0;
+    padding: 0px!important;
+    margin: 8px 0;
 }
 
 /**
@@ -16,23 +16,23 @@ mat-card[_ngcontent-vta-c287] {
 }
 .subhub-card .card-title a {
     display: inline;
-    font-size: 2.5vh;
+    font-size: 20px;
     color: white;
-    border-bottom: solid 0.25vh transparent;
+    border-bottom: solid 2px transparent;
 }
 .subhub-card .card-title a:hover {
-    border-bottom: solid 0.25vh white;
+    border-bottom: solid 2px white;
     cursor: pointer;
 }
 .subhub-card .content-item-summary {
-    font-size: 1.75vh;
+    font-size: 14px;
     color: white;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 .subhub-card img {
     object-fit: cover;
-    max-height: 25vh;
+    max-height: 200px;
 }
 .card-label {
     color: map-get($hub-teal, 500);
@@ -40,6 +40,6 @@ mat-card[_ngcontent-vta-c287] {
     position:absolute;
     left:0;
     top:0;
-    padding: 0px 1.5vh;
+    padding: 0px 12px;
 }
  

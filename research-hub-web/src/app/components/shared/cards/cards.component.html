@@ -18,7 +18,7 @@
             </ng-template>
 
             <ng-template #noImage>
-                <div style="margin-top: 1.25vh;"></div>
+                <div style="margin-top: 10px;"></div>
             </ng-template>
 
             <mat-card>
@@ -50,7 +50,7 @@
                     <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                         Read More&nbsp;&nbsp;
                     </a>
-                    <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/teal-arrow.png">
+                    <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
                 </span>
                 <span
                     *ngIf="content['__typename'] == 'OrgUnit'"
