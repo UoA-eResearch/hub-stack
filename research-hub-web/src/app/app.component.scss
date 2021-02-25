@@ -7,16 +7,16 @@
  * Hub Logo
  */
 .hub-logo {
-  height: 32px;
-}
-.hub-logo img {
-  @extend .hub-logo;
-}
-.hub-logo-xs {
-  height: 20px;
-}
-.hub-logo-xs img {
-  @extend .hub-logo-xs;
+  height: 30px;
+  & img {
+    height: 30px;
+    @include size(small) { 
+      height: 32px;
+      & img {
+        height: 32px;
+      } 
+    }
+  }
 }
 
 
@@ -24,7 +24,6 @@
  * Banner Styling
  */
  .banner-container-home {
-  height: 100vh;
   text-align: center;
   max-height: auto;
   background-size: cover!important;
@@ -99,9 +98,9 @@
  * Button styles
  */
 .menu-button {
-  color: white !important;
   top: 4.8px;
   right: 10.5px;
+  color: white !important;
 }
 .menu-button-xs {
   @extend .menu-button;
@@ -112,6 +111,7 @@
   line-height:  64px!important;
   padding: 0 16px!important;
   min-width:  64px!important;
+  font-weight: 100;
 }
 mat-list-item.mat-list-item {
   height: 60.8px!important;
@@ -213,7 +213,7 @@ mat-expansion-panel-header .mat-expanded {
   height:  64px !important;
 }
 .sidenav-container {
-  min-height: calc(800px);
+  min-height: calc(100vh);
 }
 .sidenav-container {
   mat-sidenav {
@@ -233,10 +233,10 @@ mat-expansion-panel-header .mat-expanded {
 }
 .sidenav-content {
   flex: 1 0 auto; // So that content takes up space correctly in IE11 (pushing sticky footer out of the way)
-  min-height: calc(800px - #{$height-footer});
+  min-height: calc(100vh - #{$height-footer-xs});
   background-color: $color-background;
-  @include size(small) {
-    min-height: calc(800px - #{$height-footer-xs});
+  @include size(medium) {
+    min-height: calc(100vh - #{$height-footer});
   }
 }
 
@@ -246,13 +246,15 @@ mat-expansion-panel-header .mat-expanded {
  */
 footer {
   z-index: 1;
-  height: fit-content;
+  min-height: $height-footer-xs;
+  @include size(medium) { min-height: $height-footer; }
   background: map-get($hub-teal, 500);
   .footer-content {
     @extend .top-padding;
     @extend .site-padding;
     @extend .site-content;
-    min-height: fit-content !important;
+    min-height: $height-footer-xs;
+    @include size(medium) { min-height: $height-footer; }
   }
   a {
     color: $light-grey;

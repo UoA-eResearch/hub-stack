@@ -101,8 +101,9 @@
           <!-- Banner -->
           <div 
             class="banner-container-home"
-            [style.background-image]="showBanner ? 'linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(../assets/images/homepage.jpeg)' : ''">
+            [style]="showBanner ? 'background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(../assets/images/homepage.jpeg); height:100vh' : ''">
 
+            <!-- Main Navbar -->
             <div 
               #topbar 
               class="app-toolbar-container">
@@ -110,22 +111,36 @@
                 class="site-content site-padding" 
                 ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs" 
                 [style.background-color]="showBanner ? 'rgba(0,0,0,0)' : '#0294a5'">
-                <div 
+
+                <!-- Main Navbar Content -->
+                <div
+                  fxLayout="row"
                   class="app-toolbar-row" 
-                  fxLayout="row" 
                   fxLayoutAlign="center center">
-                  <button 
-                    style="margin-right: 6px;" 
+
+                  <!-- Mobile Menu Toggle -->
+                  <button
                     fxHide.gt-sm 
                     mat-icon-button 
+                    style="margin-right: 6px;" 
                     (click)="sidenav.toggle()"
                     matTooltip="Menu">
                     <mat-icon>menu</mat-icon>
                   </button>
-                  <a fxFlex routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
+
+                  <!-- Logo/Home -->
+                  <a 
+                    fxFlex.lt-md 
+                    class="hub-logo"
+                    routerLink="/home">
                     <img [src]="'assets/images/hub-logo.svg'">
                   </a>
-                  <span fxHide.lt-md style="flex: 1 1 auto;"></span>
+
+                  <!-- Space Divider -->
+                  <span 
+                    fxHide.lt-md 
+                    style="flex: 1 1 auto;">
+                  </span>
 
                   <button mat-icon-button fxHide.gt-sm routerLink="/search" matTooltip="Search">
                     <mat-icon>search</mat-icon>
@@ -136,19 +151,18 @@
                   </button>
 
                   <button
-                    class="button-menu"
-                    fxHide.lt-md
                     mat-button
+                    fxHide.lt-md
+                    class="button-menu"
                     [matMenuTriggerFor]="browseMenu">
                     Research Categories
-                    <!-- <mat-icon matPrefix>expand_more</mat-icon> -->
                   </button>
 
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allCategories$ | async as allCategories">
                       <button
-                        *ngFor="let item of allCategories.items"
                         mat-menu-item
+                        *ngFor="let item of allCategories.items"
                         [style.background]="showBanner ? '' : '#0294a5'" 
                         [routerLink]="['/search']">{{item.name}}</button>
                     </div>
@@ -156,15 +170,26 @@
 
                   <button class="button-menu" fxHide.lt-md mat-button [matMenuTriggerFor]="researchActivityMenu">
                     Research Activities
-                    <!-- <mat-icon matPrefix>expand_more</mat-icon> -->
                   </button>
 
-                  <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
-                    <button [style.background]="showBanner ? '' : '#0294a5'" mat-menu-item *ngFor="let item of researchActivityOptions"
-                      [routerLink]="['/search']">{{item.name}}</button>
+                  <mat-menu
+                    #researchActivityMenu="matMenu"
+                    [overlapTrigger]="false">
+                    <button
+                      [style.background]="showBanner ? '' : '#0294a5'"
+                      mat-menu-item *ngFor="let item of researchActivityOptions"
+                      [routerLink]="['/search']">
+                        {{item.name}}
+                    </button>
                   </mat-menu>
 
-                  <button *ngIf="!authenticated" fxHide.lt-md  mat-button (click)="loginService.doLogin()">Sign In</button>
+                  <button 
+                    *ngIf="!authenticated"
+                    fxHide.lt-md
+                    mat-button
+                    (click)="loginService.doLogin()">
+                      Sign In
+                  </button>
 
                   <button class="button-menu" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
                     <mat-icon matPrefix style="margin-right: 5px;" fxHide.xs>person</mat-icon>
