@@ -40,7 +40,7 @@
       background: map-get($hub-teal, 500);
       border: 4px solid map-get($hub-teal, 500);
       transition: background 0.11s ease-in-out, color 0.1s ease-in-out;
-      @include size(medium) {
+      @include size(large) {
         width: 55%;
         margin-left: -5vw;
         transform: skew(30deg);
@@ -51,7 +51,7 @@
       & div {
         width: 100%;
         transform: skew(0deg); 
-        @include size(medium) {
+        @include size(large) {
           width: 60%;
           transform: skew(-30deg); 
         }
@@ -71,7 +71,7 @@
         font-size: 16px;
         margin: 0 auto;
         word-wrap: break-word;
-        @include size(medium) {
+        @include size(large) {
           width: 100%;
           font-style: italic;
           font-size: 20px;
