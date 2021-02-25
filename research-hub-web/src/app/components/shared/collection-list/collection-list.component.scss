@@ -48,7 +48,7 @@ div.collection {
  */
 mat-card-title .card-title {
     @extend .card-title;
-    font-size: 140.8px!important;
+    font-size: 18px!important;
     border-bottom: 2px solid rgba(0, 0, 0, 0);
     &:hover {
         border-bottom: 2px solid map-get($hub-navy, 500);
