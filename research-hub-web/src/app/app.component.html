@@ -1,9 +1,15 @@
 <section class="mat-typography">
+
+  <!-- Landing Page -->
   <mat-sidenav-container class="sidenav-container">
+
+    <!-- Navbar Container -->
     <mat-sidenav 
       #sidenav 
       mode="over" 
       opened="false">
+
+      <!-- Main Navbar -->
       <div 
         class="app-toolbar" 
         ngClass.lt-md="site-padding-mobile">
@@ -21,46 +27,100 @@
         </div>
       </div>
 
+      <!-- Mobile Drawer -->
       <mat-nav-list>
-          <ng-container *ngFor="let menuOption of menuOptions;">
-            <ng-container *ngIf="menuOption.sublist === undefined">
-              <mat-list-item
-                [routerLink]="menuOption.routerLink" 
-                (click)="sidenav.close()">
-                <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
-                <a mat-line>{{menuOption.name}}</a>
-            </mat-list-item>
-            </ng-container>
-            <ng-container *ngIf="menuOption.sublist !== undefined">
-              <mat-expansion-panel>
-                <mat-expansion-panel-header class="expandable-menu">
-                  <mat-list-item>
-                    <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
-                    <a mat-line>{{menuOption.name}}</a>
-                  </mat-list-item>
-                </mat-expansion-panel-header>
 
-                <mat-list-item 
-                  *ngFor="let item of menuOption.sublist;" 
-                  (click)="sidenav.close()"
-                  [routerLink]="['/search']">
-                  <a mat-line>{{item.name}}</a>
-                </mat-list-item>
-              </mat-expansion-panel>
-            </ng-container>
-          </ng-container>
+        <!-- Search -->
+        <mat-list-item
+          [routerLink]="['/search']" 
+          (click)="sidenav.close()">
+          <a mat-line>Search</a>
+        </mat-list-item>
+
+        <!-- About -->
+        <mat-list-item
+          [routerLink]="['/search']" 
+          (click)="sidenav.close()">
+          <a mat-line>About</a>
+        </mat-list-item>
+
+          <!-- Browse -->
+          <mat-expansion-panel>
+
+          <!-- Browse Title -->
+          <mat-expansion-panel-header class="expandable-menu">
+            <mat-list-item>
+              <a mat-line>Browse</a>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+
+          <!-- Browse Options -->
+          <mat-nav-list
+            *ngIf="allCategories$ | async as allCategories">
+            <mat-list-item 
+              *ngFor="let item of allCategories.items" 
+              (click)="sidenav.close()"
+              [routerLink]="['/search']">
+              <a mat-line>{{ item.name }}</a>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-expansion-panel>
+
+        <!-- Research Activites -->
+        <mat-expansion-panel>
+
+          <!-- Research Activities Name -->
+          <mat-expansion-panel-header class="expandable-menu">
+            <mat-list-item>
+              <a mat-line>Research Activities</a>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+
+          <!-- Research Activities List -->
+          <mat-list-item 
+            *ngFor="let item of researchActivityOptions" 
+            (click)="sidenav.close()"
+            [routerLink]="['/search']">
+            <a mat-line>{{ item.name }}</a>
+          </mat-list-item>
+        </mat-expansion-panel>
+
+        <!-- User Study -->
+        <mat-list-item
+          [routerLink]="['/search']" 
+          (click)="sidenav.close()">
+          <a mat-line>User Study</a>
+        </mat-list-item>
+
+        <!-- Feedback -->
+        <mat-list-item
+          [routerLink]="['/search']" 
+          (click)="sidenav.close()">
+          <a mat-line>Feedback</a>
+        </mat-list-item>
+
+        <!-- Contact -->
+        <mat-list-item
+          [routerLink]="['/search']" 
+          (click)="sidenav.close()">
+          <a mat-line>Contact</a>
+        </mat-list-item>
+
       </mat-nav-list>
     </mat-sidenav>
 
+    <!-- Main Screen -->
     <mat-sidenav-content>
       <div class="sidenav-content-wrapper">
-        <div #topContent class="sidenav-content" fxLayout="column" ngClass.xs="sidenav-content-xs">
+        <div 
+          #topContent  
+          fxLayout="column"
+          class="sidenav-content">
 
           <!-- Banner -->
           <div 
             class="banner-container-home"
-            [style.background-image]="showBanner ? 'linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(../assets/images/homepage.jpeg)' : ''"
-            [style.height]="showBanner ? '':'8vh'">
+            [style.background-image]="showBanner ? 'linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url(../assets/images/homepage.jpeg)' : ''">
 
             <div 
               #topbar 
@@ -72,8 +132,7 @@
                 <div 
                   class="app-toolbar-row" 
                   fxLayout="row" 
-                  fxLayoutAlign="center center" 
-                  color="primary">
+                  fxLayoutAlign="center center">
                   <button 
                     style="margin-right: 6px;" 
                     fxHide.gt-sm 
@@ -169,8 +228,6 @@
 
                 </div>
               </div>
-              <mat-progress-bar class="app-progress-bar" mode="indeterminate" color="accent"
-                [style.visibility]="showProgressBar ? 'visible' : 'hidden'"></mat-progress-bar>
             </div>
             <div
               class="banner-content-home"
@@ -213,36 +270,51 @@
             </mat-sidenav-content>
           </mat-sidenav-container>
         </div>
+
+        <!-- Footer -->
         <footer>
+
+          <!-- Footer Content -->
           <div 
             class="footer-content"
             fxLayout="column" 
             fxLayoutGap="1vh"
-            fxLayoutAlign="center center">
-            <div>
-              <a 
-                [href]="aucklandUniUrl" 
-                target="_blank" >
-                <img 
-                  ngClass.gt-xs="logo-img" 
-                  ngClass.lt-sm="logo-img-xs"
-                  src="assets/images/uoa-logo.svg">
-              </a>
-            </div>
+            fxLayoutAlign="center center"
+            ngClass.lt-md="site-padding-mobile">
 
-            <div fxLayout="row" fxLayout.lt-sm="column">
-              <a href="{{ aboutUs }}">About</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a href="{{ userStudyLink }}">User Study</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a href="{{ feedbackLink }}">Feedback</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a routerLink="/contact">Contact</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+            <!-- Main Footer Links -->
+            <div
+              style="width: 100%;"
+              fxLayout="row"
+              fxLayoutGap="5%"
+              fxLayout.lt-md="column"
+              fxLayoutAlign="space-between">
+              <div
+                fxFlex="45%" 
+                fxFlexOrder.lt-md="1">
+                <a 
+                  [href]="aucklandUniUrl" 
+                  target="_blank" >
+                  <img class="logo-img" src="assets/images/uoa-logo.svg">
+                </a>
+              </div>
+  
+              <div
+                fxFlex="45%"
+                class="footer-links"
+                fxLayout="row wrap"
+                fxFlexOrder.lt-md="0"
+                fxLayoutAlign="space-between">
+                <a href="{{ aboutUs }}">About</a>
+                <a href="{{ userStudyLink }}">User Study</a>
+                <a href="{{ feedbackLink }}">Feedback</a>
+                <a routerLink="/contact">Contact</a>
+                <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+              </div>
             </div>
-            <div>
-              <a 
+            
+            <div class="copyright">
+              <a
               [href]="eResearchUrl" 
               target="_blank">
                   Copyright © {{ getYear() }} Centre for eResearch

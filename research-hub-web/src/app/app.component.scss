@@ -30,32 +30,47 @@
   background-size: cover!important;
 }
 
-.banner-content-home {     
-  margin: 30vh 10vh;
-  display: inline-block;
+.banner-content-home {  
+  margin: 30vh 2.5vh;
+  display: inline-block;  
+  @include size(medium) {
+    margin: 30vh 10vh;
+    display: inline-block;
+  }
 }
-.banner-text .page-title,
-.banner-text .page-summary {
-  width: 45vw;
-  color: white;
-}
-.banner-content-home .page-title {
-  color: #FAFAFA;
-  margin-bottom: 4vh;
-  font-size: 12vh;
-}
-.banner-content-home .page-summary {
-  font-size: 2.5vh;
-  word-wrap: break-word;
-  color: $light-grey;
-  line-height: 100%;
+.banner-text {
+  p { 
+    width: auto!important;
+    @include size(medium) { 
+      width: 70%!important;
+      margin: 0 auto;
+    }
+  }
+  .page-summary, 
+  .page-title {
+    width: 45vw;
+    color: white;
+  }
+  .page-title {
+    color: #FAFAFA;
+    margin-bottom: 4vh;
+    font-size: 7vh;
+    @include size(medium) { font-size: 12vh; }
+  }
+  .page-summary {
+    font-size: 2.5vh;
+    word-wrap: break-word;
+    color: $light-grey;
+    line-height: 100%;
+  }
 }
 
 /**
  * Initial Search
  */ 
 .initial-search {
-  width: 20vw;
+  width: 60vw;
+  @include size(medium) { width: 20vw; }
   padding: 0.5vh;
   margin: 0 auto;
   font-size: 2vh;
@@ -134,20 +149,22 @@ mat-list-item.mat-list-item {
   color: white;
 }
 .app-toolbar-container {
+  color: white;
   position: relative;
   background-color: rgba(0,0,0,0);  
-  color: white;
 }
 .app-toolbar {
-  background-color: map-get($hub-teal, 500);
   padding-left: $padding-site;
   padding-right: $padding-site;
+  background-color: map-get($hub-teal, 500);
+  & .app-toolbar-row {
+    height: 8vh;
+  }
 }
-.app-toolbar .app-toolbar-row {
-  height: 8vh;
-}
-.app-toolbar-xs .app-toolbar-row {
-  height: 8vh;
+.app-toolbar-xs {
+  .app-toolbar-row {
+    height: 8vh;
+  }
 }
 
 
@@ -156,9 +173,9 @@ mat-list-item.mat-list-item {
  */
 .sidenav-home {
   padding: 0 !important;
-}
-.sidenav-home mat-nav-list {
-  width: 100% !important;
+  mat-nav-list {
+    width: 100% !important;
+  }
 }
 mat-list-base {
   padding: 0 2vh;
@@ -186,24 +203,29 @@ mat-expansion-panel-header .mat-expanded {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
-.mat-expansion-panel-body .mat-list-item-content {
+.mat-expansion-panel-body 
+.mat-list-item-content {
   padding-left: 6.7vh !important;
 }
 .expandable-menu {
-  background-color: #FAFAFA !important;
+  background-color: #fafafa !important;
   padding-left: 0 !important;
   height: 8vh !important;
 }
 .sidenav-container {
   min-height: calc(100vh);
 }
-.sidenav-container mat-sidenav {
-  box-shadow: 0.5vh 0 1vh rgba(0, 0, 0, .24);
-  background-color: $color-background;
+.sidenav-container {
+  mat-sidenav {
+    background-color: $color-background;
+    box-shadow: 0.5vh 0 1vh rgba(0, 0, 0, .24);
+  }
 }
-.sidenav-container mat-sidenav mat-list {
-  padding-left: 1em;
-  padding-top: 1em;
+.sidenav-container {
+  mat-sidenav mat-list {
+    padding-left: 1em;
+    padding-top: 1em;
+  }
 }
 .sidenav-content-wrapper {
   display: flex;
@@ -213,15 +235,9 @@ mat-expansion-panel-header .mat-expanded {
   flex: 1 0 auto; // So that content takes up space correctly in IE11 (pushing sticky footer out of the way)
   min-height: calc(100vh - #{$height-footer});
   background-color: $color-background;
-}
-.sidenav-content-xs {
-  @extend .sidenav-content;
-  min-height: calc(100vh - #{$height-footer-xs});
-}
-.app-progress-bar {
-  position: absolute !important;
-  left: 0 !important;
-  bottom: -0.8vh !important; // Offset height of progress bar from bottom of tool
+  @include size(small) {
+    min-height: calc(100vh - #{$height-footer-xs});
+  }
 }
 
 
@@ -229,111 +245,44 @@ mat-expansion-panel-header .mat-expanded {
  * Footer
  */
 footer {
-  background: map-get($hub-teal, 500);
-  height: fit-content;
-  padding-left: $padding-site;
-  padding-right: $padding-site;
   z-index: 1;
-}
-.footer-content {
-  @extend .site-content;
-  min-height: fit-content !important;
-  padding: 2vh 0;
-  display: grid;
-  grid-auto-flow: row;
-}
-footer a {
-  text-align: left;
-  text-decoration: none;
-  color: white;
-  font-size: mat-font-size($app-base-typography, button) !important;
-  font-weight: mat-font-weight($app-base-typography, caption) !important;
-}
-footer.footer-xs a {
-  text-align: center;
+  height: fit-content;
+  background: map-get($hub-teal, 500);
+  .footer-content {
+    @extend .top-padding;
+    @extend .site-padding;
+    @extend .site-content;
+    min-height: fit-content !important;
+  }
+  a {
+    color: white;
+    text-align: left;
+    text-decoration: none;
+    font-size: mat-font-size($app-base-typography, button) !important;
+    font-weight: mat-font-weight($app-base-typography, caption) !important;
+  }
+  .footer-xs a {
+    text-align: center;
+  }
+  .footer-links {
+    text-align: left;
+  }
+  .copyright {
+    @include size(small) { padding-top: $padding-site-top; }
+    margin-bottom: 1vh;
+  }
 }
 .footer-divider {
   color: white;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 .logo-img {
-  display: block;
-  height: 10vh;
+  height: 8vh;
   width: auto;
-}
-.logo-img-xs {
-  height: 6vh;
   display: block;
-  width: auto;
-}
-
-
-/*
- * Breadcrumb styling
- */
-.breadcrumb span {
-  color: $breadcrumb-current-color;
-}
-.breadcrumb a {
-  color: $breadcrumb-previous-color;
-}
-.breadcrumb ul {
-  padding-left: 0;
-}
-.breadcrumb ul > li {
-  display: inline-block;
-  zoom:1;
-  *display:inline;   /* a fix needed for IE7- */
-  cursor: pointer;
-}
-.breadcrumb li:not(:first-child):before {
-  padding-left: 0.5em;
-  padding-right: 0.4em;
-  content: ">";
-  cursor: default;
-}
-
-
-/*
- * Re arrange footer / content on small screens
- */
-.primary-toolbar {
-  position: relative !important; // Needed so we can absolutely position progress bar inside it
-}
-app-search-bar {
-  height: inherit;
-  width: 100%;
-}
-.beta-bar{
-  cursor:pointer;
-  background-color: $color-orange;
-  color:$body-dark-bg-font-color;
-  text-align: center;
-}
-.beta-bar a {
-  color:$body-dark-bg-font-color;
-}
-
-
-/*
- * Github fork ribbon styling
- */
-.github-fork-ribbon.left-bottom:before {
-  background-color: $color-orange;
-}
-.github-fork-ribbon.left-bottom {
-  box-sizing: unset;
-}
-.button-menu {
-  padding-left: 1.6vh !important;
-  padding-right: 0.8vh !important;
-  min-width: 0 !important;
-}
-.content-sidenav {
-  width: 50vh;
-  box-shadow: 0.5vh 0 1vh rgba(0, 0, 0, .24);
-  background-color: $color-background;
+  margin: 0 auto;
+  @include size(small) { height: 10vh; }
 }
 
 
@@ -352,27 +301,4 @@ app-search-bar {
 .sign-out-button {
   color: black; 
   background-color: white;
-}
-
-
-/**
- * Mobile
- */
-@media only screen and (max-width: 124vh) {
-  .initial-search {
-    width: 60vw;
-  }
-  .banner-container-home {
-    text-align: center;
-  }
-  .banner-content-home {     
-    margin: 30vh 2.5vh;
-    display: inline-block;
-  }
-  .banner-text p {
-    width: auto!important;
-  }
-  .page-title {
-    font-size: 7vh!important;
-  }
 }
