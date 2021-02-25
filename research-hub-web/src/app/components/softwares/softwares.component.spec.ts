@@ -10,9 +10,9 @@ import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-describe('SoftwareComponent', () => {
-  let component: SoftwareComponent;
-  let fixture: ComponentFixture<SoftwareComponent>;
+describe('SoftwaresComponent', () => {
+  let component: SoftwaresComponent;
+  let fixture: ComponentFixture<SoftwaresComponent>;
   let controller: ApolloTestingController;
 
   const mockAllSoftware$: Observable<SoftwareCollection> = of({
@@ -45,7 +45,7 @@ describe('SoftwareComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
-        SoftwareComponent
+        SoftwaresComponent
       ],
       imports: [
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
@@ -64,7 +64,7 @@ describe('SoftwareComponent', () => {
 
   beforeEach(() => {
     controller = TestBed.inject(ApolloTestingController);
-    fixture = TestBed.createComponent(SoftwareComponent);
+    fixture = TestBed.createComponent(SoftwaresComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -87,7 +87,7 @@ describe('SoftwareComponent', () => {
   describe('When a url slug is present', async () => {
     beforeEach(() => {
       controller = TestBed.inject(ApolloTestingController);
-      fixture = TestBed.createComponent(SoftwareComponent);
+      fixture = TestBed.createComponent(SoftwaresComponent);
       component = fixture.componentInstance;
       TestBed.inject(ActivatedRoute).params = of({
         slug: 'death-star'
@@ -99,13 +99,6 @@ describe('SoftwareComponent', () => {
       spyOn(component, 'getSoftwareBySlug').and.returnValue(mockSoftware$);
       component.getSoftwareBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('death-star');
-      });
-    })
-
-    it('Should get a single Software data by ID', () => {
-      spyOn(component, 'getSoftwareByID').and.returnValue(mockSoftware$);
-      component.getSoftwareByID('').subscribe(res => {
-        expect(res.sys.id).toEqual('111');
       });
     })
   });
