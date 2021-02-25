@@ -1,7 +1,7 @@
-resource "aws_cloudfront_distribution" "main-website" {
+resource "aws_cloudfront_distribution" "main_website" {
   origin {
     origin_id   = var.dns_entry
-    domain_name = aws_s3_bucket.site.bucket_regional_domain_name
+    domain_name = aws_s3_bucket.main_website.bucket_regional_domain_name
 
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path
@@ -17,7 +17,7 @@ resource "aws_cloudfront_distribution" "main-website" {
 
   enabled             = true
   default_root_object = var.index_doc
-  is_ipv6_enabled     = true
+  is_ipv6_enabled     = false
 
   default_cache_behavior {
     # The following commented block shows how to configure a Lambda@Edge
@@ -67,15 +67,20 @@ resource "aws_cloudfront_distribution" "main-website" {
   }
 
   # Specify custom error pages
-  /*
-  custom_error_response = [
-    {
-      error_code = "400"
-      response_page_path  = "/errors/4xx-errors/400.html"
-      response_code = "400"
-    }
-  ]
-  */
+  # The following is required for a SPA to redirect to base
+  custom_error_response {
+    error_code            = "403"
+    response_page_path    = "/index.html"
+    response_code         = "200"
+    error_caching_min_ttl = 60
+  }
+
+  custom_error_response {
+    error_code            = "404"
+    response_page_path    = "/index.html"
+    response_code         = "200"
+    error_caching_min_ttl = 5
+  }
 
   # Setup the SSL certificate that is used with HTTPS
   # The protocol version specified is compliant with UoA Web Policy
@@ -93,4 +98,39 @@ resource "aws_cloudfront_distribution" "main-website" {
       "Name" = "${var.dns_entry}-Distribution"
     },
   )
+}
+
+output "cf_id" {
+  value       = try(aws_cloudfront_distribution.main_website.id, "")
+  description = "ID of CloudFront distribution"
+}
+
+output "cf_arn" {
+  value       = try(aws_cloudfront_distribution.main_website.arn, "")
+  description = "ARN of CloudFront distribution"
+}
+
+output "cf_aliases" {
+  value       = try(aws_cloudfront_distribution.main_website.aliases, "")
+  description = "Extra CNAMEs of AWS CloudFront"
+}
+
+output "cf_status" {
+  value       = try(aws_cloudfront_distribution.main_website.status, "")
+  description = "Current status of the distribution"
+}
+
+output "cf_domain_name" {
+  value       = try(aws_cloudfront_distribution.main_website.domain_name, "")
+  description = "Domain name corresponding to the distribution"
+}
+
+output "cf_hosted_zone_id" {
+  value       = try(aws_cloudfront_distribution.main_website.hosted_zone_id, "")
+  description = "CloudFront Route 53 Zone ID"
+}
+
+output "cf_origin_access_identity" {
+  value       = try(aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path, "")
+  description = "A shortcut to the full path for the origin access identity to use in CloudFront"
 }
