@@ -37,20 +37,13 @@
           <a mat-line>Search</a>
         </mat-list-item>
 
-        <!-- About -->
-        <mat-list-item
-          [routerLink]="['/search']" 
-          (click)="sidenav.close()">
-          <a mat-line>About</a>
-        </mat-list-item>
-
           <!-- Browse -->
           <mat-expansion-panel>
 
           <!-- Browse Title -->
           <mat-expansion-panel-header class="expandable-menu">
             <mat-list-item>
-              <a mat-line>Browse</a>
+              <a mat-line>Research Categories</a>
             </mat-list-item>
           </mat-expansion-panel-header>
 
@@ -85,25 +78,13 @@
           </mat-list-item>
         </mat-expansion-panel>
 
-        <!-- User Study -->
-        <mat-list-item
-          [routerLink]="['/search']" 
-          (click)="sidenav.close()">
-          <a mat-line>User Study</a>
-        </mat-list-item>
-
-        <!-- Feedback -->
-        <mat-list-item
-          [routerLink]="['/search']" 
-          (click)="sidenav.close()">
-          <a mat-line>Feedback</a>
-        </mat-list-item>
-
-        <!-- Contact -->
-        <mat-list-item
-          [routerLink]="['/search']" 
-          (click)="sidenav.close()">
-          <a mat-line>Contact</a>
+        <!-- Sign In -->
+        <mat-list-item>
+          <a 
+            mat-line 
+            (click)="loginService.doLogin()">
+                Sign In
+          </a>
         </mat-list-item>
 
       </mat-nav-list>
@@ -159,8 +140,8 @@
                     fxHide.lt-md
                     mat-button
                     [matMenuTriggerFor]="browseMenu">
-                    Browse
-                    <mat-icon matPrefix>expand_more</mat-icon>
+                    Research Categories
+                    <!-- <mat-icon matPrefix>expand_more</mat-icon> -->
                   </button>
 
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
@@ -175,21 +156,13 @@
 
                   <button class="button-menu" fxHide.lt-md mat-button [matMenuTriggerFor]="researchActivityMenu">
                     Research Activities
-                    <mat-icon matPrefix>expand_more</mat-icon>
+                    <!-- <mat-icon matPrefix>expand_more</mat-icon> -->
                   </button>
 
                   <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
                     <button [style.background]="showBanner ? '' : '#0294a5'" mat-menu-item *ngFor="let item of researchActivityOptions"
                       [routerLink]="['/search']">{{item.name}}</button>
                   </mat-menu>
-
-                  <button mat-button fxHide.lt-md routerLink="/userStudy">
-                    User Study
-                  </button>
-
-                  <button mat-button fxHide.lt-md routerLink="/feedback">
-                    Feedback
-                  </button>
 
                   <button *ngIf="!authenticated" fxHide.lt-md  mat-button (click)="loginService.doLogin()">Sign In</button>
 
