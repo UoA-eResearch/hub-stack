@@ -21,45 +21,76 @@
                 <div style="margin-top: 11px;"></div>
             </ng-template>
 
-            <mat-card>
-                <ng-container *ngIf="content.banner; then image; else noImage">
-                </ng-container>
-                <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
-                <span *ngIf="content.__typename != 'SubHub'" class="card-label">{{ content.__typename | humanCase }}</span>
+            <ng-container *ngIf="content.__typename == 'Person'; then contact; else standard">
+            </ng-container>
 
-                <mat-card-title>
-                    <h4>
-                        <a 
-                            class="card-title"
-                            *ngIf="content.__typename == 'Contact'|| content.__typename == 'Unit'"
-                            href="{{ content.link }}">
-                            {{ content['title'] }}
+            <ng-template #standard>
+                <mat-card>
+                    <ng-container *ngIf="content.banner; then image; else noImage">
+                    </ng-container>
+                    <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
+                    <span *ngIf="content.__typename != 'SubHub'" class="card-label">{{ content.__typename | humanCase }}</span>
+    
+                    <mat-card-title>
+                        <h4>
+                            <a 
+                                class="card-title"
+                                [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+                                {{ content['title'] }}
+                            </a>
+                        </h4>
+                    </mat-card-title>
+                    <mat-card-content>
+                        <span
+                            class="card-summary">
+                            <p>{{ content['summary'] }}</p>
+                        </span>
+                    </mat-card-content>
+                    <span
+                        class="call-to-action"
+                        style="display: flex; align-items: center;max-width: fit-content">
+                        <a *ngIf="content.__typename != 'Unit'" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+                            Read More&nbsp;&nbsp;
                         </a>
-                        <a 
-                            class="card-title"
-                            *ngIf="content.__typename != 'Contact' && content.__typename != 'Unit'"
-                            [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
-                            {{ content['title'] }}
+                        <a *ngIf="content.__typename == 'Unit'" href="{{ content.link }}">
+                            See Unit&nbsp;&nbsp;
                         </a>
-                    </h4>
-                </mat-card-title>
-                <mat-card-content>
-                    <span class="card-summary">
-                        <p>{{ content['summary'] }}</p>
-                        <p *ngIf="content.__typename == 'Contact'"><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></p>
-                        <p *ngIf="content.__typename == 'Contact'"><a href="tel:{{ content['phone'] }}">{{ content['phone'] }}</a></p>
+                        <img 
+                            class="arrow" 
+                            style="height: 20px; width: auto" 
+                            src="assets/components/teal-arrow.png">
                     </span>
-                </mat-card-content>
-                <span
-                    class="call-to-action"
-                    *ngIf="content['__typename'] != 'Contact' && content['__typename'] != 'Unit'"
-                    style="display: flex; align-items: center;max-width: fit-content">
-                    <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
-                        Read More&nbsp;&nbsp;
-                    </a>
-                    <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
-                </span>
-            </mat-card>
+                </mat-card>
+            </ng-template>
+
+            <ng-template #contact>
+                <mat-card>
+                    <ng-container *ngIf="content.banner; then image; else noImage">
+                    </ng-container>
+                    <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
+                    <span *ngIf="content.__typename != 'SubHub'" class="card-label">Contact</span>
+    
+                    <mat-card-title>
+                        <h4>
+                            <a 
+                                class="card-title"
+                                href="{{ content.link }}">
+                                    {{ content['name'] }}
+                            </a>
+                        </h4>
+                    </mat-card-title>
+                    <mat-card-content>
+                        <span
+                            class="card-summary">
+                            <p style="word-wrap: break-word">
+                                <!-- {{ content['role'] }}<br>
+                                <a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a><br>
+                                <a href="tel:{{ content['phone'] }}">{{ content['phone'] }}</a> -->
+                            </p>
+                        </span>
+                    </mat-card-content>
+                </mat-card>
+            </ng-template>
             <br/>
         </mat-nav-list>
     </div>

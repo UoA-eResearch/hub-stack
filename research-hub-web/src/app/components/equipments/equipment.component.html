@@ -77,7 +77,7 @@
         </div>
     </ng-template>
     
-    <ng-template #relatedItems let-hide="hideImage">
+    <ng-template #relatedItems>
         <app-cards
             [title]="'Explore Related'" 
             [contentItem]="equipment.relatedItemsCollection">
@@ -200,16 +200,16 @@
                 fxLayout="column wrap"
                 fxLayoutGap="1%">
                 <div *ngIf="equipment.relatedItemsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
                 </div>
                 <div *ngIf="equipment.relatedContactsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
                 </div>
                 <div  *ngIf="equipment.relatedDocsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedDocs"></ng-container>
                 </div>
                 <div *ngIf="equipment.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>
                 </div>
             </div>
         </div>
