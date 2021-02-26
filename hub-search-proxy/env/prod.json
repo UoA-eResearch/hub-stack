@@ -5,5 +5,6 @@
     },
     "elasticsearchDomainName": "researchhub-prod-domain",
     "ELASTICSEARCH_ENDPOINT": "TBD - add endpoint to parameter store",
+    "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "TBD",
     "resourceKey": "180f8f50-c1f3-4b9a-b793-0fca514ab708"
 }
