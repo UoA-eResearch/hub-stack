@@ -108,6 +108,10 @@ fragment PublicFields on Entry {
   ... on Person {
       __typename
       name
+      role 
+      email
+      phone
+      link
   }
   ... on Video {
       title

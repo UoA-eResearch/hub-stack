@@ -27,11 +27,11 @@
     </ng-template>
 
     <ng-template #specificationsTable>
-        <div 
-            class="specifications">
+        <div class="specifications">
+            <h4>Equipment</h4>
             <table class="specifications-table">
                 <tr>
-                <th>Name</th>
+                <th>Details</th>
                 <th>Description</th>
                 </tr>
                 <tr *ngIf="equipment.manufacturer">
@@ -51,10 +51,10 @@
     </ng-template>
 
     <ng-template #specificationsTable2>
-        <div 
-            class="specifications">
+        <div class="specifications">
+            <h4>User</h4>
             <table class="specifications-table">
-                <th>Name</th>
+                <th>Details</th>
                 <th>Description</th>
                 <tr *ngIf="equipment.audience">
                     <td>Audience</td>
@@ -79,7 +79,7 @@
     
     <ng-template #relatedItems let-hide="hideImage">
         <app-cards
-            [title]="'You might be interested in'" 
+            [title]="'Explore Related'" 
             [contentItem]="equipment.relatedItemsCollection">
         </app-cards>
     </ng-template>
@@ -136,6 +136,21 @@
                 <div>
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
+                <!-- Call To Action -->
+                <div>
+                    <a href="{{ equipment.callToAction }}">
+                        <button 
+                            mat-flat-button 
+                            class="standard-button">
+                            <span *ngIf="equipment.callToActionLabel">
+                                {{ equipment.callToActionLabel }}
+                            </span>
+                            <span *ngIf="!equipment.callToActionLabel">
+                                View Equipment
+                            </span>
+                        </button>
+                    </a>
+                </div>
                 <div class="mini-hr">
                     <hr/>
                 </div>
@@ -150,23 +165,8 @@
                 </ngx-contentful-rich-text>
             </div>
 
-            <!-- Call To Action -->
-            <div>
-                <a href="{{ equipment.callToAction }}">
-                    <button 
-                        mat-flat-button 
-                        class="standard-button section">
-                        <span *ngIf="equipment.callToActionLable">
-                            {{ equipment.callToActionLable }}
-                        </span>
-                        <span *ngIf="!equipment.callToActionLabel">
-                            View Equipment
-                        </span>
-                    </button>
-                </a>
-            </div>
-
-            <div 
+            <div
+                class="section"
                 fxLayout="row"
                 fxLayout.lt-sm="column wrap"
                 fxLayoutGap="5%"
@@ -205,11 +205,11 @@
                 <div *ngIf="equipment.relatedContactsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
                 </div>
-                <div *ngIf="equipment.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
-                </div>
                 <div  *ngIf="equipment.relatedDocsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true }"></ng-container>
+                </div>
+                <div *ngIf="equipment.relatedOrgsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
                 </div>
             </div>
         </div>

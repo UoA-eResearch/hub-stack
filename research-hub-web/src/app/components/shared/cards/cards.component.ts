@@ -20,6 +20,7 @@ export class CardsComponent implements OnInit {
       this.contentItem.items.forEach(element => {
         element['title']= element['name'];
         element['summary'] = element['role'];
+        element['__typename'] = 'Contact'
       });
     }
 
@@ -33,9 +34,16 @@ export class CardsComponent implements OnInit {
     // If card is displaying an Organizational Unit
     if (this.contentItem.items[0]?.__typename == 'OrgUnit') {
       this.contentItem.items.forEach(element => {
-        element['title']= element['name'];
+        element['title'] = element['name'];
+        element['__typename'] = 'Unit'
       });
     }
 
+    // If card is displaying an OfficialDocument
+    if (this.contentItem.items[0]?.__typename == 'OfficialDocuments') {
+      this.contentItem.items.forEach(element => {
+        element['__typename'] = 'Document'
+      });
+    }
   }
 }

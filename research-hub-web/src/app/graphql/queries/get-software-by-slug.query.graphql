@@ -42,12 +42,7 @@ query GetSoftwareBySlug($slug: String) {
               }
             }
           relatedContactsCollection {
-            items { 
-              ...PublicFields
-              ...on Person {
-              email
-            }
-            }
+            items { ...PublicFields }
           }
           relatedItemsCollection {
             items { ...PublicFields }
@@ -57,24 +52,9 @@ query GetSoftwareBySlug($slug: String) {
           }
           searchable
           callToAction
-          support { 
-            ...PublicFields
-            ...on Person {
-              email
-            }
-          }
-          publisher { 
-            ...PublicFields
-            ...on Person {
-              email
-            }
-          }
-          owner { 
-            ...PublicFields
-            ...on Person {
-              email
-            }
-          }
+          support { ...PublicFields }
+          publisher { ...PublicFields }
+          owner { ...PublicFields }
         }
       }
     }

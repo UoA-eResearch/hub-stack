@@ -53,49 +53,6 @@
 
 
 /**
- * About Section
- */
- .about {
-    max-width: 90vw;
-    position: relative; 
-    margin: 0 auto;
-    > .text {
-        width: 100%;
-        margin-top: 80px;
-        margin-bottom: 0px;
-        @include size(large) { width: 70%; }
-        & h2 {
-            text-align: left;
-            font-size: 32px;
-            color: map-get($hub-navy, 500);
-        }
-    }
-    > .border {
-        width: 100%;
-        margin: 0px auto 80px auto;
-        border-left: 4px solid map-get($hub-navy, 500);
-        @include size(large) { width: 70%; }
-        > p {
-            line-height: 1.1;
-            padding-left: 25px;
-            color: #6f6f72;
-            &.quote {
-                font-size: 20px;
-                font-style: italic;
-                @include size(large) { font-size: 24px; }
-            }
-            &.director {
-                font-size: 18px;
-                font-weight: bold;
-                color: map-get($hub-navy, 500);
-                @include size(large) { font-size: 20px; }
-            }
-        }
-    }
-}
-
-
-/**
  * Contact Section
  */
 .contact {
@@ -109,12 +66,6 @@
         text-align: left;
         }
     }
-    > .contact-content {
-        @extend .site-padding;
-    }
-    p > b {
-       color: map-get($hub-navy, 500); 
-    }
     & .standard-button {
         @extend .standard-button;
         border: 2px solid map-get($hub-navy, 500)!important;
@@ -124,17 +75,5 @@
           background-color: white!important;
           color: map-get($hub-navy, 500)!important;
         }
-    }
-    > div > .address-container {
-        > .address-content {
-            margin: 0 auto;
-            text-align: left;
-            width: fit-content;
-        }
-    }
-    & .divider {
-        color: $input-grey;
-        border-top: 2px solid;
-        @include size(small) { border-left: 2px solid; }
     }
 }
