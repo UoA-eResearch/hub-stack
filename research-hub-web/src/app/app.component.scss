@@ -43,8 +43,8 @@
   .page-title {
     margin: 0 auto;
     font-weight: lighter;
-    width: 45vw!important;
     color: white!important;
+    @include size(medium) { width: 45vw!important; }
   }
   .page-title {
     color: #FAFAFA;
@@ -163,20 +163,11 @@ mat-list-item.mat-list-item {
   }
 }
 
-
-/*
- * SideNav
- */
-.sidenav-home {
-  padding: 0 !important;
-  mat-nav-list {
-    width: 100% !important;
-  }
-}
 mat-list-base {
   padding: 0 16px;
 }
 mat-expansion-panel {
+  width: 70vw;
   box-shadow: none !important;
 }
 mat-expansion-panel-header .mat-expanded {
