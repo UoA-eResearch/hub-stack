@@ -1,7 +1,7 @@
 {
-  "name": "serverless-now",
+  "name": "hub-search-proxy",
   "version": "1.0.0",
-  "description": "Serverless Framework Lambda functions to interact with the UoA ServiceNow.",
+  "description": "Serverless Framework Lambda functions to interact with AWS ElasticSearch Service.",
   "main": "handler.js",
   "scripts": {
     "start": "sls offline",
@@ -12,25 +12,21 @@
   },
   "keywords": [
     "Lambda",
-    "ServiceNow",
+    "ElasticsSearch",
     "Serverless",
     "Framework"
   ],
-  "author": "Sam Kavanagh (tofu.dev)",
+  "author": "Rose McColl",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^2.0.3",
-    "serverless": "^1.68.0",
     "serverless-domain-manager": "^4.1.1",
     "serverless-mocha-plugin": "^1.12.0",
     "serverless-offline": "^6.1.4"
   },
   "dependencies": {
-    "@uoa/utilities": "0.0.6",
-    "aws-sdk": "^2.841.0",
-    "aws4": "^1.10.1",
-    "crypto": "^1.0.1",
-    "node-fetch": "^2.6.1",
-    "uuid": "^8.1.0"
+    "@elastic/elasticsearch": "^7.11.0",
+    "aws-elasticsearch-connector": "^9.0.3",
+    "aws-sdk": "^2.841.0"
   }
 }

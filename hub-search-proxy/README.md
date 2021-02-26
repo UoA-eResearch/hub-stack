@@ -12,7 +12,14 @@ npm install -g serverless
 ```
 npm install
 ```
-3. [Obtain Temporary AWS credentials for UoA (**Note:** only valid for 1 hour)](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI)
+3. Obtain Temporary AWS credentials for UoA (**Note:** only valid for 1 hour):
+Running and testing locally will not succeed without AWS credentials. Instructions for accessing the credentials are on the [Auckland Uni wiki](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI).
+
+* Generated credentials are located in ~/.aws/credentials. Take note of the profile name for the credentials. Currently "saml" is the default profile at the time of writing this.
+* Passing in the aws credentials to the deploy and test commands can be done by adding arguments after a double dash to the run/test commands. This applies to any npm command.
+e.g.
+* Deploying with the default sandbox stage and saml profile:
+`npm run deploy -- --aws-profile saml`
 
 ## Run locally
 To run the tests locally simply execute:
@@ -57,6 +64,12 @@ To get information about the currently deployed endpoints, region, stage, layers
 
 ```
 sls info
+```
+
+For info on a specific stage, and AWS account profile, use the profile and stage flags. e.g.:
+
+```
+sls info --stage test --aws-profile uoa-its-nonprod
 ```
 
 ## Invoke a deployed Lambda function running on AWS

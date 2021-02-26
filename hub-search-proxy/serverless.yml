@@ -42,7 +42,6 @@ provider:
     name: ${self:custom.bucketBaseName}-${self:provider.stage}
   environment:
     # Environment variables available to all functions in this service
-    LEVEL: INFO
     ELASTICSEARCH_ENDPOINT: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_ENDPOINT}
   apiGateway:
     apiKeySourceType: HEADER
@@ -53,10 +52,11 @@ package:
   exclude:
     - .git/**
     - .vscode/*
-    - events/*
-    - node_modules/**
-    - "!node_modules/@uoa/**"
-    - "!node_modules/uuid/**"
+    - test/*
+    - package.json
+    - package-lock.json
+    - README.md
+    - serverless.yml
 functions:
   search:
     handler: handler.search
