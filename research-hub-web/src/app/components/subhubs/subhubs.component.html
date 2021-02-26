@@ -41,7 +41,7 @@
             </app-cards>
         </ng-template>
     
-        <ng-template #relatedDocs>
+        <ng-template #relatedDocuments>
             <app-cards 
                 [title]="'Documents'" 
                 [contentItem]="subhub.relatedDocsCollection">
@@ -143,7 +143,7 @@
                 <ng-container *ngTemplateOutlet="relatedContacts"></ng-container>
 
                 <!-- Official Documents -->
-                <ng-container *ngTemplateOutlet="officialDocuments"></ng-container>
+                <ng-container *ngTemplateOutlet="relatedDocuments"></ng-container>
 
                 <!-- Organizations -->
                 <ng-container *ngTemplateOutlet="relatedOrganisations"></ng-container>

@@ -36,7 +36,6 @@ import {
 import { environment } from '@environments/environment';
 import {
   CategoryId,
-  categoryOptionsGQL,
   researchActivityOptions,
   feedbackLink,
   userStudyLink,
@@ -63,8 +62,6 @@ import {
   ]
 })
 export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
-  public menuOptions;
-  public categoryOptionsGQL = categoryOptionsGQL;
   public researchActivityOptions = researchActivityOptions;
   public feedbackLink = feedbackLink;
   public userStudyLink = userStudyLink;
