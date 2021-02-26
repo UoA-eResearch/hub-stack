@@ -55,26 +55,15 @@ query GetSoftwareBySlug($slug: String) {
           relatedOrgsCollection {
             items { ...PublicFields }
           }
+          relatedDocsCollection {
+            items { ...PublicFields }
+          }
           searchable
           callToAction
-          support { 
-            ...PublicFields
-            ...on Person {
-              email
-            }
-          }
-          publisher { 
-            ...PublicFields
-            ...on Person {
-              email
-            }
-          }
-          owner { 
-            ...PublicFields
-            ...on Person {
-              email
-            }
-          }
+          licencing
+          cost
+          access
+          limitations
         }
       }
     }
