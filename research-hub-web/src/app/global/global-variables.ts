@@ -91,8 +91,9 @@ export enum ResearchActivityId {
     { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
     { id: CategoryId.CaseStudy, name: 'Case Studies', icon: 'work_outline', type: OptionType.Category, url: '/case-studies' },
     { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
-    { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }
-  ];
+    { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }  ,
+    { id: CategoryId.Software, name: 'Software', icon: 'code', type: OptionType.Category, url: '/software' }
+];
   
   export const menuOptions = [
     { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },

@@ -1,0 +1,181 @@
+<!-- If we're displaying a collection of software -->
+<div
+    *ngIf="allSoftware$ | async as allSoftware" 
+    class="site-padding margin-bottom top-padding" 
+    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
+    <app-collection-list [collection]="allSoftware"></app-collection-list>
+</div>
+
+<!-- If we're displaying an individual software -->
+<div 
+    id="software-container"
+    *ngIf="software | async as software">
+
+    <!-- Templates -->
+    <ng-template #breadcrumbs>
+        <app-breadcrumbs 
+            [contentItem]="parentSubHubs" 
+            [title]="software.title">
+        </app-breadcrumbs>
+    </ng-template>
+
+    <ng-template #dynamicBanner>
+        <div 
+            class="banner-container"
+            [style]="software.banner ? 'background: url(' + software.banner.url + ') no-repeat' : 'display:none'">
+        </div>  
+    </ng-template>
+
+    <ng-template #titleSummary>
+        <h1 
+            class="content-title" 
+            ngClass.lt-md="content-title-mobile">
+            {{ software.title }}
+        </h1>
+
+        <h3 class="content-summary" 
+            ngClass.lt-sm="content-summary-sm">
+            {{ software.summary }}
+        </h3>
+    </ng-template>
+
+    <ng-template #specificationsTable>
+        <div 
+            class="specifications">
+            <table class="specifications-table">
+                <tr>
+                <th>Name</th>
+                <th>Description</th>
+                </tr>
+                <tr *ngIf="software.licensing">
+                    <td>Licensing</td>
+                    <td [innerHTML]="software.licensing"></td>
+                </tr>
+                <tr *ngIf="software.cost">
+                    <td>Cost</td>
+                    <td [innerHTML]="software.cost"></td>
+                </tr>
+                <tr *ngIf="software.access">
+                    <td>Access</td>
+                    <td [innerHTML]="software.access"></td>
+                </tr>
+                <tr *ngIf="software.limitations">
+                    <td>Limitations</td>
+                    <td [innerHTML]="software.limitations"></td>
+                </tr>
+            </table>
+        </div>
+    </ng-template>
+    
+    <ng-template #relatedItems let-hide="hideImage">
+        <app-cards
+            [flex]="'row wrap'"
+            [hideImage]="hide"
+            [title]="'You might be interested in'" 
+            [contentItem]="software.relatedItemsCollection">
+        </app-cards>
+    </ng-template>
+
+    <ng-template #relatedOrganisations>
+        <app-cards 
+            [title]="'Organisations'" 
+            [contentItem]="software.relatedOrgsCollection">
+        </app-cards>
+    </ng-template>
+
+    <ng-template #relatedDocs>
+        <app-cards 
+            [title]="'Docs'" 
+            [contentItem]="software.relatedDocsCollection">
+        </app-cards>
+    </ng-template>
+
+    <ng-template #relatedContacts>
+        <app-cards 
+            [title]="'Contacts'" 
+            [contentItem]="software.relatedContactsCollection">
+        </app-cards>
+    </ng-template>
+
+    <!-- Banner -->
+    <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
+
+    <div
+        class="site-padding margin-bottom" 
+        ngClass.lt-md="site-padding-mobile top-padding">
+
+        <!-- Breadcrumbs -->
+        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
+
+        <div>
+
+            <!-- Title and Summary -->
+            <div fxLayout="column wrap">
+                <div>
+                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
+                </div>
+                <div class="mini-hr">
+                    <hr/>
+                </div>
+            </div>
+
+            <!-- software Body -->
+            <div class="body-text">
+                <ngx-contentful-rich-text
+                    style="word-break:break-word;" 
+                    [document]="software.bodyText.json"
+                    [nodeRenderers]="nodeRenderers">
+                </ngx-contentful-rich-text>
+            </div>
+
+            <!-- Call To Action -->
+            <div>
+                <a href="{{ software.callToAction }}">
+                    <button 
+                        mat-flat-button 
+                        class="standard-button section">
+                        <span *ngIf="software.callToActionLabel">
+                            {{ software.callToActionLabel }}
+                        </span>
+                        <span *ngIf="!software.callToActionLabel">
+                            View Software
+                        </span>
+                    </button>
+                </a>
+            </div>
+    
+            <!-- Specifications Table -->
+            <div *ngIf="
+                software.licensing ||
+                software.cost ||
+                software.access ||
+                software.limitations">
+                <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+            </div>
+
+            <!-- Related -->
+            <div
+            *ngIf="
+                software.relatedItemsCollection?.items.length > 0 ||
+                software.relatedContactsCollection?.items.length > 0 ||
+                software.relatedOrgsCollection?.items.length > 0 ||
+                software.relatedDocsCollection?.items.length > 0"
+                class="software-owners section"
+                fxLayout="column wrap"
+                fxLayoutGap="1%">
+                <div *ngIf="software.relatedItemsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false }"></ng-container>
+                </div>
+                <div *ngIf="software.relatedContactsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
+                </div>
+                <div *ngIf="software.relatedOrgsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
+                </div>
+                <div  *ngIf="software.relatedDocsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true }"></ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
