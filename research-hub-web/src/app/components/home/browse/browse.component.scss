@@ -35,7 +35,7 @@
   & .standard-button {
     @extend .standard-button;
     margin-bottom: 16px;
-    border: 2px solid map-get($hub-navy, 500)!important;
+    border: 3px solid map-get($hub-navy, 500)!important;
     background-color: map-get($hub-navy, 500)!important;
     &:hover {
       @extend .standard-button;

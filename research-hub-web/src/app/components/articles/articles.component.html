@@ -35,13 +35,13 @@
             {{ article.title }}
         </h1>
 
-        <h3 
+        <p
             class="content-summary" 
             ngClass.sm="content-summary-sm" 
             ngClass.xs="content-summary-xs"
             [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
             {{ article.summary }}
-        </h3>
+        </p>
     </ng-template>
 
     <ng-template #articleBody>

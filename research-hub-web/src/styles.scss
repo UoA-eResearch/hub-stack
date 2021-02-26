@@ -22,13 +22,13 @@ hr {
   background-color: $input-grey;
 }
 .mini-hr {
-  margin: 1vw 0px 5vw 0px;
+  margin: 1vw 0px 4vw 0px;
   position: relative;
 }
 .mini-hr hr {
-  width: 8vw;
+  width: 9vw;
   border: none;
-  height: 4px;
+  height: 6px;
   position: absolute;
   background: map-get($hub-navy, 500);
   color: map-get($hub-navy, 500);
@@ -255,7 +255,6 @@ svg {
  */
 .card-title {
   font-size: 16px;
-  color: map-get($hub-navy, 500)!important;
 }
 .card-summary {
   font-size: 14px;
@@ -275,7 +274,7 @@ svg {
  .standard-button {
   color: white!important;
   padding-bottom: 2.4px!important;
-  border: 4px solid map-get($hub-teal, 500)!important;
+  border: 3px solid map-get($hub-teal, 500)!important;
   border-radius: 50px!important;
   background-color: map-get($hub-teal, 500)!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
@@ -290,7 +289,7 @@ svg {
 .alternate-button {
   padding-bottom: 2.4px!important;
   color: map-get($hub-teal, 500)!important;
-  border: 4px solid white!important;
+  border: 3px solid white!important;
   border-radius: 50px!important;
   background-color: white!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
@@ -307,7 +306,7 @@ svg {
  * Call To Action Arrow
  */
  .call-to-action a {
-  font-size: 18px;
+  font-size: 16px;
 }
 .arrow {
   transition: transform 0.2s ease-out;

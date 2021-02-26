@@ -24,8 +24,9 @@ mat-card[_ngcontent-vta-c287] {
     border-bottom: solid 2px white;
     cursor: pointer;
 }
-.subhub-card .content-item-summary {
-    font-size: 14px;
+.subhub-card 
+.content-item-summary * {
+    font-size: 16px;
     color: white;
     overflow: hidden;
     text-overflow: ellipsis;

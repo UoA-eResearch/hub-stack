@@ -39,5 +39,4 @@ export class LargeCardsComponent implements OnInit {
       });
     }
   }
-
 }
