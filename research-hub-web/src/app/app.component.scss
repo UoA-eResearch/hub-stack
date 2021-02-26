@@ -38,14 +38,10 @@
   }
 }
 .banner-text {
-  p { 
-    width: auto!important;
-    @include size(medium) {
-      margin: 0 auto;
-    }
-  }
+  width: auto!important;
   .page-summary, 
   .page-title {
+    margin: 0 auto;
     font-weight: lighter;
     width: 45vw!important;
     color: white!important;
