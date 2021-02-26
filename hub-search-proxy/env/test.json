@@ -5,5 +5,6 @@
     },
     "elasticsearchDomainName": "researchhub-test-domain",
     "ELASTICSEARCH_ENDPOINT": "${ssm:/test/research-hub/elasticsearch_endpoint~true}",
+    "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "*",
     "resourceKey": "891f7417-3a6e-4152-b6d5-c37433acae54"
 }

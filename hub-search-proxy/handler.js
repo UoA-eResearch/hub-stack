@@ -3,9 +3,9 @@ const { Client } = require('@elastic/elasticsearch');
 const AWS = require('aws-sdk');
 const createAwsElasticsearchConnector = require('aws-elasticsearch-connector');
 
+
 const credentials = new AWS.EnvironmentCredentials('AWS');
 const region = 'ap-southeast-2';
-console.log(JSON.stringify(credentials));
 
 AWS.config.update({
   credentials: credentials,
@@ -63,17 +63,20 @@ module.exports.search = async (event, context) => {
   }
 
   try {
-    console.log('starting search...');
     const result = await esClient.search(params);
     console.log(result);
     return formatResponse(
-      JSON.stringify({
+      200,
+      { 
         query: queryString,
         result: result.body
       }
-    ))
+    )
   } catch(error) {
-    return formatError(error)
+    return formatResponse(
+      error.statusCode,
+      { result: error }
+    )
   }
 }
 
@@ -91,12 +94,14 @@ module.exports.update = async (event, context) => {
     const result = await esClient.update(params);
     console.log(result);
     return formatResponse(
-      JSON.stringify({
-        result: result.body
-      }
-    ))
+      200,
+      { result: result.body }
+    )
   } catch(error) {
-    return formatError(error)
+    return formatResponse(
+      error.statusCode,
+      { result: error }
+    )
   }
 }
 
@@ -111,35 +116,66 @@ module.exports.delete = async (event, context) => {
     const result = await esClient.delete(params);
     console.log(result);
     return formatResponse(
-      JSON.stringify({
-        result: result.body
-      }
-    ))
+      200,
+      { result: result.body }
+    )
   } catch(error) {
-    return formatError(error)
+    return formatResponse(
+      error.statusCode,
+      { result: error }
+    )
   }
 }
 
-var formatResponse = function(body){
-  var response = {
-    "statusCode": 200,
-    "headers": {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*"
+/**
+ * Bulk upload handler.
+ * Uses client helper: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.x/client-helpers.html
+ */
+module.exports.bulk = async () => {
+  // TODO: export entries from contentful 
+  // TODO: transform data to reduce size
+
+
+  const params = {
+    datasource: myDatasource,  // TODO
+    onDocument (doc) {
+      return [
+        { update: { _index: ELASTICSEARCH_INDEX_NAME, _id: doc.sys.id } },
+        { doc_as_upsert: true }
+      ]
     },
-    "body": body
+    onDrop (doc) {  // called everytime a document can’t be indexed and it has reached the maximum amount of retries.
+      console.log(doc);
+    },
+    refreshOnCompletion: true, // Refresh the index after this
+    wait: 3000,   // How much time to wait before retries in milliseconds
+    retries: 3,   // How many times a document will be retried before to call the onDrop callback
+    concurrency: 5,  // How many request will be executed at the same time.
+    flushBytes: 5000000,  // The size of the bulk body in bytes to reach before to send it. Default of 5MB.
+
+  };
+
+  try {
+    const result = await esClient.helpers.bulk(params);
+    console.log(result);
+    return formatResponse(
+      200,
+      { result: result.body }
+    )
+  } catch(error) {
+    return formatResponse(
+      error.statusCode,
+      { result: error }
+    )
   }
-  return response
 }
 
-var formatError = function(error){
-  var response = {
-    "statusCode": error.statusCode,
-    "headers": {
-      "Content-Type": "text/plain",
-      "Access-Control-Allow-Origin": "*"
-    },
-    "body": error.code + ": " + error.message
+function formatResponse(status, body) {
+  return {
+      statusCode: status,
+      body: JSON.stringify(body),
+      headers: {
+          "Access-Control-Allow-Origin": process.env.CORS_ACCESS_CONTROL_ALLOW_ORIGINS
+      }
   }
-  return response
 }

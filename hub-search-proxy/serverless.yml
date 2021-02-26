@@ -43,6 +43,7 @@ provider:
   environment:
     # Environment variables available to all functions in this service
     ELASTICSEARCH_ENDPOINT: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_ENDPOINT}
+    CORS_ACCESS_CONTROL_ALLOW_ORIGINS: ${file(env/${self:provider.stage}.json):CORS_ACCESS_CONTROL_ALLOW_ORIGINS}
   apiGateway:
     apiKeySourceType: HEADER
   apiKeys:
@@ -84,6 +85,16 @@ functions:
       - http:
           path: doc/{id}
           method: delete
+          cors:
+            true
+          private: true
+          timeout: 30
+  bulk:
+    handler: handler.bulk
+    events:
+      - http:
+          path: bulk
+          method: get
           cors:
             true
           private: true
