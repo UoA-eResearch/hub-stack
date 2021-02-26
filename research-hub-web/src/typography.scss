@@ -235,4 +235,5 @@ $heading-4-font-color: map-get($hub-navy, 500);
 $body-light-bg-font-color:  black;
 $link-light-bg-color: map-get($hub-teal, 500);
 
-$breadcrumb-current-color: white;
+$breadcrumb-previous-color: map-get($hub-teal, A100);
+$breadcrumb-current-color: $color-icon;
