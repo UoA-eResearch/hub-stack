@@ -91,8 +91,10 @@ export enum ResearchActivityId {
     { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
     { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
     { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' },
-    { id: CategoryId.Services, name: 'Services', icon: 'miscellaneous_services', type: OptionType.Category, url: '/services' }
-  ];
+    { id: CategoryId.Services, name: 'Services', icon: 'miscellaneous_services', type: OptionType.Category, url: '/services' },
+    { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' },
+    { id: CategoryId.Software, name: 'Software', icon: 'code', type: OptionType.Category, url: '/software' }
+];
   
   export const menuOptions = [
     { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },

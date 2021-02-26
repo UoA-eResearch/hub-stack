@@ -51,6 +51,14 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
   },
   {
+    path: 'software',
+    loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+  },
+  {
+    path: 'software/:slug',
+    loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+  },
+  {
     path: 'all',
     loadChildren: () => import('@components/all/all.module').then(m => m.AllModule)
   },
