@@ -248,11 +248,19 @@
           <mat-sidenav-container fxFlex="noshrink">
 
           <!-- Content sidenav -->
-          <mat-sidenav class="content-sidenav" mode="side" disableClose
-          [opened]="appComponentService.isContentSidenavVisible" [fixedInViewport]="isContentSidenavFixed"
-          [ngStyle]="{'height':contentSidenavHeight + 'px'}" [@.disabled]="true">
-          <router-outlet name="contentSidenav" (activate)="setContentSidenavHasContent(true)"
-            (deactivate)="setContentSidenavHasContent(false)"></router-outlet>
+          <mat-sidenav 
+            mode="side"
+            disableClose
+            [@.disabled]="true"
+            class="content-sidenav"
+            [fixedInViewport]="isContentSidenavFixed"
+            [ngStyle]="{'height':contentSidenavHeight + 'px'}"
+            [opened]="appComponentService.isContentSidenavVisible">
+            <router-outlet 
+              name="contentSidenav" 
+              (activate)="setContentSidenavHasContent(true)"
+              (deactivate)="setContentSidenavHasContent(false)">
+            </router-outlet>
           </mat-sidenav>
 
             <!-- Search bar  -->
