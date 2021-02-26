@@ -20,11 +20,11 @@ export const appRoutes: Routes = [
   },
   {
     path: 'equipment',
-    loadChildren: () => import('@components/equipment/equipment.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
   },
   {
     path: 'equipment/:slug',
-    loadChildren: () => import('@components/equipment/equipment.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
   },
   {
     path: 'articles',
