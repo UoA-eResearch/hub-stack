@@ -44,13 +44,22 @@ query GetSubHubBySlug($slug: String) {
             }
             keywords
             internalPagesCollection {
-            items { ...PublicFields }
+                items { ...PublicFields }
             }
             externalPagesCollection {
-            items { ...PublicFields }
+                items { ...PublicFields }
             }
             relatedItemsCollection {
-            items { ...PublicFields }
+                items { ...PublicFields }
+            }
+            relatedContactsCollection {
+                items { ...PublicFields }
+            }
+            relatedOrgsCollection {
+                items { ...PublicFields }
+            }
+            relatedDocsCollection {
+                items { ...PublicFields }
             }
             viewType
         }
