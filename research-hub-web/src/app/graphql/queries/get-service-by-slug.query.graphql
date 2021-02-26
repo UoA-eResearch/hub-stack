@@ -23,26 +23,33 @@ query GetServiceBySlug($slug: String) {
             callToAction
             callToActionLabel
             bodyText {
-            json 
-            links {
+                json 
+                links {
                 entries {
-                block { ...PublicFields }
-                inline { ...PublicFields }
-                hyperlink { ...PublicFields }
+                    block { 
+                    ...PublicFields
+                    sys {
+                        id
+                    }
+                    }
+                    inline { 
+                    ...PublicFields
+                    sys {
+                        id
+                    } 
+                    }
+                    hyperlink { 
+                    ...PublicFields 
+                    sys {
+                        id
+                    }
+                    }
                 }
                 assets {
-                block {
-                    title
-                    description
-                    url
-                }
-                hyperlink {
-                    title
-                    description
-                    url
+                    block { ...AssetFields }
+                    hyperlink { ...AssetFields }
                 }
                 }
-            }
             }
             relatedContactsCollection {
             items { ...PublicFields }

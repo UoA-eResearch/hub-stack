@@ -77,7 +77,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
     } else {
       this.appComponentService.setTitle('Services');
       this.allServices$ = this.getAllServices();
-      this.service$.unsubscribe();
+      try { this.service$.unsubscribe(); } catch {}
     }
   }
 
