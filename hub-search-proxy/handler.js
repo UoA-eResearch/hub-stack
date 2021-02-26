@@ -1,6 +1,23 @@
 'use strict';
+const { Client } = require('@elastic/elasticsearch');
+const AWS = require('aws-sdk');
+const createAwsElasticsearchConnector = require('aws-elasticsearch-connector');
 
-const sendElasticsearchRequest = require('./elasticsearch-client');
+const credentials = new AWS.EnvironmentCredentials('AWS');
+const region = 'ap-southeast-2';
+console.log(JSON.stringify(credentials));
+
+AWS.config.update({
+  credentials: credentials,
+  region: region
+});
+
+const esClient = new Client({
+    ...createAwsElasticsearchConnector(AWS.config),
+    node: process.env.ELASTICSEARCH_ENDPOINT
+});
+
+const ELASTICSEARCH_INDEX_NAME = 'main-index';
 
 module.exports.search = async (event, context) => {
   const requestBody = JSON.parse(event.body);
@@ -41,13 +58,14 @@ module.exports.search = async (event, context) => {
   };
 
   const params = {
-    httpMethod: 'POST',
-    requestPath: 'main-index/_search',
-    payload: query
-  };
+    index: ELASTICSEARCH_INDEX_NAME,
+    q: query
+  }
 
   try {
-    const result = await sendElasticsearchRequest(params);
+    console.log('starting search...');
+    const result = await esClient.search(params);
+    console.log(result);
     return formatResponse(
       JSON.stringify({
         query: queryString,
@@ -60,17 +78,18 @@ module.exports.search = async (event, context) => {
 }
 
 module.exports.update = async (event, context) => {
-  console.log(event);
   let doc = JSON.parse(event.body);
 
   const params = {
-    httpMethod: 'PUT',
-    requestPath: `main-index/_doc/${event.pathParameters.id}`,
-    payload: doc
+    id: event.pathParameters.id,
+    index: ELASTICSEARCH_INDEX_NAME,
+    body: doc,
+    refresh: 'true'   // index refresh
   };
 
   try {
-    const result = await sendElasticsearchRequest(params);
+    const result = await esClient.update(params);
+    console.log(result);
     return formatResponse(
       JSON.stringify({
         result: result.body
@@ -82,15 +101,15 @@ module.exports.update = async (event, context) => {
 }
 
 module.exports.delete = async (event, context) => {
-  console.log(event);
-
   const params = {
-    httpMethod: 'DELETE',
-    requestPath: `main-index/_doc/${event.pathParameters.id}`
+    id: event.pathParameters.id,
+    index: ELASTICSEARCH_INDEX_NAME,
+    refresh: 'true'   // index refresh
   };
 
   try {
-    const result = await sendElasticsearchRequest(params);
+    const result = await esClient.delete(params);
+    console.log(result);
     return formatResponse(
       JSON.stringify({
         result: result.body
