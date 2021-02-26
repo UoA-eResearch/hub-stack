@@ -24,14 +24,13 @@
             <mat-card>
                 <ng-container *ngIf="content.banner; then image; else noImage">
                 </ng-container>
-                <span *ngIf="content.__typename != 'Person'" class="card-label">{{ content.__typename | humanCase }}</span>
-                <span *ngIf="content.__typename == 'Person'" class="card-label">Contact</span>
+                <span class="card-label">{{ content.__typename | humanCase }}</span>
 
                 <mat-card-title>
-                    <a class="card-title" *ngIf="content.__typename != 'Person' && content.__typename != 'OrgUnit'" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+                    <a class="card-title" *ngIf="content.__typename != 'Contact' && content.__typename != 'OrgUnit'" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                         {{ content['title'] }}
                     </a>
-                    <a  class="card-title" *ngIf="content.__typename == 'Person'">
+                    <a  class="card-title" *ngIf="content.__typename == 'Contact'" href="{{ content['link']}}">
                         {{ content['title'] }}
                     </a>
                     <a class="card-title" *ngIf="content.__typename == 'OrgUnit'" href="{{ content['link']}}">
@@ -42,9 +41,15 @@
                     <span class="card-summary">
                         {{ content['summary'] }}
                     </span>
+                    <span 
+                        *ngIf="content.__typename == 'Contact'"
+                        class="card-summary">
+                        <div><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></div>
+                        <div><a href="tel:{{ content['phone'] }}">{{ content['phone'] }}</a></div>
+                    </span>
                 </mat-card-content>
                 <span
-                    *ngIf="content['__typename'] != 'Person' && content['__typename'] != 'OrgUnit'"
+                    *ngIf="content['__typename'] != 'Contact' && content['__typename'] != 'OrgUnit'"
                     class="call-to-action" 
                     style="display: flex; align-items: center;max-width: fit-content">
                     <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">

@@ -24,19 +24,6 @@
       <app-research-activity></app-research-activity>
     </div>
 
-    <!-- About -->
-    <div class="about">
-      <div class="text">
-        <h2>Message from the Director</h2>
-      </div>
-      <div class="border">
-        <br>
-        <p class="quote">"{{ quote }}"</p>
-        <br><br>
-        <p class="director">{{ director }}</p>
-      </div>
-    </div>
-
     <!-- Contact -->
     <div class="grey-background">
       <div
@@ -54,149 +41,22 @@
         
         <!-- Contact Content -->
         <div
-          class="contact-content section-2"
-          fxLayout="row"
-          fxLayoutGap="5%"
-          fxLayout.lt-sm="column">
+          class="contact-content section-2 site-padding">
 
-          <!-- Feedback and User Study -->
-          <div
-            fxFlex="50%"
-            fxFlexOrder.lt-md="2"
-            fxLayoutAlign="space-between"
-            fxLayout="column">
-
-            <!-- Feedback -->
-            <div class="feedback-container">
-              <div class="feedback-content">
-                <p>
-                  <b>Feedback</b><br>
-                  We are developing the ResearchHub further and would be grateful for your feedback. This will give us pointers for user-led refinement and further development of the interface content displayed in the ResearchHub.
-                </p>
-                <br>
-                <a href="{{ feedbackLink }}">
-                  <button 
-                      mat-flat-button 
-                      class="standard-button">
-                      <span>
-                          Provide Feedback
-                      </span>
-                  </button>
-                </a>
-              </div>
-            </div>
-
-            <br>
-
-            <!-- User Study -->
-            <div class="user-study-container">
-              <div class="user-study-content">
-                <p>
-                  <b>User Study</b><br>
-                  You can register your interest in helping our User Experience Specialist running through a usability study.
-                </p>
-                <br>
-                <a href="{{ userStudyLink }}">
-                  <button 
-                      mat-flat-button 
-                      class="standard-button">
-                      <span>
-                          User Study
-                      </span>
-                  </button>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div
-            fxFlexOrder.lt-md="1"
-            class="divider">
-          </div>
-
-          <!-- Contact -->
-          <div
-            fxFlex="50%"
-            fxLayout="row"
-            fxLayoutGap="5%"
-            fxFlexOrder.lt-md="0"
-            fxLayout.lt-md="column wrap"
-            class="address-container">
-
-            <!-- Address Text -->
-            <div
-              class="address-content"
-              fxLayout="column"
-              fxLayoutGap="10%">
-
-              <span 
-                fxLayout="row"
-                fxLayoutGap="5%">
-                <mat-icon>location_on</mat-icon>
-                <a href="https://www.eresearch.auckland.ac.nz/getting-in-touch/">
-                  <p>
-                    <b>Centre for eResearch</b><br>
-                    Building 302, Level 5, Room 585<br>
-                    23 Symonds Street<br>
-                    Auckland Central<br>
-                    Auckland 1010<br>
-                    New Zealand<br>
-                  </p>
-                </a>
-              </span>
-
-              <span
-                fxLayout="row"
-                fxLayoutGap="5%">
-                <mat-icon>email</mat-icon>
-                <p class="email">
-                  <a href="mailto:{{ email }}">{{ email }}</a>
-                </p>
-              </span>
-
-              <span
-                fxLayout="row"
-                fxLayoutGap="5%">
-                <mat-icon>phone</mat-icon>
-                <p class="phone">
-                  <a href="tel:{{ phone }}">{{ phone }}</a>
-                </p>
-              </span>
-
-              <span
-                fxLayout="row"
-                fxLayoutGap="5%">
-                <mat-icon>markunread_mailbox</mat-icon>
-                <a href="https://www.google.com/maps/place/The+University+of+Auckland/@-36.8523378,174.7669186,17z/data=!3m1!4b1!4m5!3m4!1s0x6d0d47e383f32253:0xbd49f61f758a9e5b!8m2!3d-36.8523378!4d174.7691073">
-                  <p>
-                    <b>Centre for eResearch</b><br>
-                    The University of Auckland<br>
-                    Private Bag 92019<br>
-                    Auckland 1142<br>
-                    New Zealand<br>
-                  </p>
-                </a>
-              </span>
-            </div>
-
-            <!-- Images and Maps -->
-            <div
-              fxHide.lt-xl
-              class="address-images"
-              fxLayout="column"
-              fxLayoutGap="5%">
-              <div style="text-align: center" fxFlex="45%">
-                <img style="width: auto; height: 100%;" src="{{ building }}"/>
-              </div>
-              <div fxFlex="45%">
-                  <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3192.5503663205586!2d174.7663845157219!3d-36.85324317993754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d0d47e385a59abf%3A0x1bfa5dcc43edfefc!2s23+Symonds+St%2C+Auckland%2C+1010!5e0!3m2!1sen!2snz!4v1505104084141" 
-                    width="100%"
-                    height="100%" 
-                    frameborder="0" 
-                    allowfullscreen>
-                  </iframe>
-              </div>
+          <!-- Feedback -->
+          <div class="feedback-container">
+            <div class="feedback-content">
+              <p>We are developing the ResearchHub further and would be grateful for your feedback. This will give us pointers for user-led refinement and further development of the interface content displayed in the ResearchHub.</p>
+              <br>
+              <a href="{{ feedbackLink }}">
+                <button 
+                    mat-flat-button 
+                    class="standard-button">
+                    <span>
+                        Provide Feedback
+                    </span>
+                </button>
+              </a>
             </div>
           </div>
         </div>
