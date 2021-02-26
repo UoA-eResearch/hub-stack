@@ -25,12 +25,13 @@
                 <ng-container
                     *ngIf="subHub.banner; then image; else noImage">
                 </ng-container>
-                <span class="card-label">{{ subHub.__typename | humanCase }}</span>
+                <span *ngIf="subHub.__typename == 'SubHub'" class="card-label">Topic</span>
+                <span *ngIf="subHub.__typename != 'SubHub'" class="card-label">{{ subHub.__typename | humanCase }}</span>
                 <mat-card-title class="card-title">
-                    <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">{{ subHub.title }}</a>
+                    <h4><a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">{{ subHub.title }}</a></h4>
                 </mat-card-title>
                 <mat-card-content class="content-item-summary">
-                    {{ subHub.summary }}
+                    <p>{{ subHub.summary }}</p>
                 </mat-card-content>
                 <br>
                 <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">

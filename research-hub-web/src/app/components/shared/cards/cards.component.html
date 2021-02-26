@@ -1,6 +1,6 @@
 <div *ngIf="contentItem.items.length > 0">
 
-    <h4>{{ title }}<hr/></h4>
+    <h3>{{ title }}<hr/></h3>
 
     <!-- Related Items List -->
     <div
@@ -18,49 +18,46 @@
             </ng-template>
 
             <ng-template #noImage>
-                <div style="margin-top: 10px;"></div>
+                <div style="margin-top: 11px;"></div>
             </ng-template>
 
             <mat-card>
                 <ng-container *ngIf="content.banner; then image; else noImage">
                 </ng-container>
-                <span class="card-label">{{ content.__typename | humanCase }}</span>
+                <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
+                <span *ngIf="content.__typename != 'SubHub'" class="card-label">{{ content.__typename | humanCase }}</span>
 
                 <mat-card-title>
-                    <a class="card-title" *ngIf="content.__typename != 'Contact' && content.__typename != 'OrgUnit'" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
-                        {{ content['title'] }}
-                    </a>
-                    <a  class="card-title" *ngIf="content.__typename == 'Contact'" href="{{ content['link']}}">
-                        {{ content['title'] }}
-                    </a>
-                    <a class="card-title" *ngIf="content.__typename == 'OrgUnit'" href="{{ content['link']}}">
-                        {{ content['title'] }}
-                    </a>
+                    <h4>
+                        <a 
+                            class="card-title"
+                            *ngIf="content.__typename == 'Contact'|| content.__typename == 'Unit'"
+                            href="{{ content.link }}">
+                            {{ content['title'] }}
+                        </a>
+                        <a 
+                            class="card-title"
+                            *ngIf="content.__typename != 'Contact' && content.__typename != 'Unit'"
+                            [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+                            {{ content['title'] }}
+                        </a>
+                    </h4>
                 </mat-card-title>
                 <mat-card-content>
                     <span class="card-summary">
-                        {{ content['summary'] }}
-                    </span>
-                    <span 
-                        *ngIf="content.__typename == 'Contact'"
-                        class="card-summary">
-                        <div><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></div>
-                        <div><a href="tel:{{ content['phone'] }}">{{ content['phone'] }}</a></div>
+                        <p>{{ content['summary'] }}</p>
+                        <p *ngIf="content.__typename == 'Contact'"><a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a></p>
+                        <p *ngIf="content.__typename == 'Contact'"><a href="tel:{{ content['phone'] }}">{{ content['phone'] }}</a></p>
                     </span>
                 </mat-card-content>
                 <span
-                    *ngIf="content['__typename'] != 'Contact' && content['__typename'] != 'OrgUnit'"
-                    class="call-to-action" 
+                    class="call-to-action"
+                    *ngIf="content['__typename'] != 'Contact' && content['__typename'] != 'Unit'"
                     style="display: flex; align-items: center;max-width: fit-content">
                     <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                         Read More&nbsp;&nbsp;
                     </a>
                     <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png">
-                </span>
-                <span
-                    *ngIf="content['__typename'] == 'OrgUnit'"
-                    class="call-to-action" 
-                    style="display: flex; align-items: center;max-width: fit-content">
                 </span>
             </mat-card>
             <br/>

@@ -112,11 +112,11 @@
             {{ equipment.title }}
         </h1>
 
-        <h3 class="content-summary" 
+        <p class="content-summary" 
             ngClass.sm="content-summary-sm" 
             ngClass.xs="content-summary-xs">
             {{ equipment.summary }}
-        </h3>
+    </p>
     </ng-template>
 
     <!-- Banner -->
@@ -196,7 +196,7 @@
                     equipment.relatedContactsCollection?.items.length > 0 ||
                     equipment.relatedOrgsCollection?.items.length > 0 ||
                     equipment.relatedDocsCollection?.items.length > 0"
-                class="equipment-owners section "
+                class="section "
                 fxLayout="column wrap"
                 fxLayoutGap="1%">
                 <div *ngIf="equipment.relatedItemsCollection?.items.length > 0" fxFlex>

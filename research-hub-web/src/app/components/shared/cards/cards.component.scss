@@ -16,8 +16,13 @@
 /**
   * Mat-Card Title
   */
-.mat-card-title a:hover {
-  border-bottom: solid 2px map-get($hub-navy, 500);
+.mat-card-title {
+  a {
+    color: $body-grey;
+  }
+  a:hover {
+    border-bottom: solid 2px $body-grey;
+  }
 }
 
 
@@ -36,7 +41,8 @@ a {
  .card-label {
   background: map-get($hub-teal, 500);
   color: rgb(255, 255, 255);
-  position:absolute;
+  position: absolute;
+  font-size: 14px;
   left:0;
   top:0;
   padding: 0px 15px;

@@ -33,10 +33,10 @@
             {{ software.title }}
         </h1>
 
-        <h3 class="content-summary" 
+        <p class="content-summary" 
             ngClass.lt-sm="content-summary-sm">
             {{ software.summary }}
-        </h3>
+        </p>
     </ng-template>
 
     <ng-template #specificationsTable>
@@ -69,9 +69,7 @@
     
     <ng-template #relatedItems let-hide="hideImage">
         <app-cards
-            [flex]="'row wrap'"
-            [hideImage]="hide"
-            [title]="'You might be interested in'" 
+            [title]="'Explore Related'" 
             [contentItem]="software.relatedItemsCollection">
         </app-cards>
     </ng-template>
@@ -114,34 +112,33 @@
                 <div>
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
+                <!-- Call To Action -->
+                <div>
+                    <a href="{{ software.callToAction }}">
+                        <button 
+                            mat-flat-button 
+                            class="standard-button">
+                            <span *ngIf="software.callToActionLabel">
+                                {{ software.callToActionLabel }}
+                            </span>
+                            <span *ngIf="!software.callToActionLabel">
+                                View Software
+                            </span>
+                        </button>
+                    </a>
+                </div>
                 <div class="mini-hr">
                     <hr/>
                 </div>
             </div>
 
-            <!-- software Body -->
+            <!-- Software Body -->
             <div class="body-text">
                 <ngx-contentful-rich-text
                     style="word-break:break-word;" 
                     [document]="software.bodyText.json"
                     [nodeRenderers]="nodeRenderers">
                 </ngx-contentful-rich-text>
-            </div>
-
-            <!-- Call To Action -->
-            <div>
-                <a href="{{ software.callToAction }}">
-                    <button 
-                        mat-flat-button 
-                        class="standard-button section">
-                        <span *ngIf="software.callToActionLabel">
-                            {{ software.callToActionLabel }}
-                        </span>
-                        <span *ngIf="!software.callToActionLabel">
-                            View Software
-                        </span>
-                    </button>
-                </a>
             </div>
     
             <!-- Specifications Table -->
@@ -155,12 +152,12 @@
 
             <!-- Related -->
             <div
-            *ngIf="
-                software.relatedItemsCollection?.items.length > 0 ||
-                software.relatedContactsCollection?.items.length > 0 ||
-                software.relatedOrgsCollection?.items.length > 0 ||
-                software.relatedDocsCollection?.items.length > 0"
-                class="software-owners section"
+                *ngIf="
+                    software.relatedItemsCollection?.items.length > 0 ||
+                    software.relatedContactsCollection?.items.length > 0 ||
+                    software.relatedOrgsCollection?.items.length > 0 ||
+                    software.relatedDocsCollection?.items.length > 0"
+                class="section"
                 fxLayout="column wrap"
                 fxLayoutGap="1%">
                 <div *ngIf="software.relatedItemsCollection?.items.length > 0" fxFlex>
@@ -169,11 +166,11 @@
                 <div *ngIf="software.relatedContactsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
                 </div>
-                <div *ngIf="software.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
-                </div>
                 <div  *ngIf="software.relatedDocsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true }"></ng-container>
+                </div>
+                <div *ngIf="software.relatedOrgsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
                 </div>
             </div>
         </div>
