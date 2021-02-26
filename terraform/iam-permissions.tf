@@ -42,8 +42,6 @@ EOF
 
 }
 
-# TODO: Confirm Paramter store path
-
 resource "aws_iam_role_policy" "ecs_task_assume" {
   name = "researchhub-ecs_task_assume"
   role = aws_iam_role.ecs_task_assume.id
@@ -68,7 +66,17 @@ resource "aws_iam_role_policy" "ecs_task_assume" {
         {
             "Effect": "Allow",
             "Action": [
-                "ssm:GetParameters"
+                "kms:Decrypt"
+            ],
+            "Resource": [
+                "arn:aws:kms:${var.aws_region}:${data.aws_caller_identity.current.account_id}:key/${var.kms_uoa_central_key_id}"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameters",
+                "ssm:GetParameter"
             ],
             "Resource": [
                 "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/*"

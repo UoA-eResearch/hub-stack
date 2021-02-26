@@ -1,9 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MediaObserver } from '@angular/flex-layout';
-import { 
-  categoryOptionsGQL 
-} from '@app/global/global-variables';
 import { AllCategoriesGQL, CategoryCollection } from '@app/graphql/schema';
 import { pluck } from 'rxjs/operators';
 
@@ -15,7 +11,6 @@ import { pluck } from 'rxjs/operators';
 export class BrowseComponent implements OnInit {
   public title = 'Research Categories';
   public description = "The University of Auckland provides top-quality support to our research community. The ResearchHub is your gateway to research support at the University of Auckland. Here you can explore what's on offer by topic.";
-  public categoryOptionsGQL = categoryOptionsGQL;
   public allCategories$: Observable<CategoryCollection>;
 
   constructor(public allCategoriesGQL: AllCategoriesGQL) {}

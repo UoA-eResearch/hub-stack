@@ -1,6 +1,6 @@
 
-resource "aws_ecs_task_definition" "graphql" {
-  family                   = "cer-graphql"
+resource "aws_ecs_task_definition" "graphql_preview" {
+  family                   = "cer-graphql-preview"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 256
@@ -15,18 +15,30 @@ resource "aws_ecs_task_definition" "graphql" {
     "networkMode": "awsvpc",
     "name": "cer-graphql",
     "logConfiguration": {
-		"logDriver": "awslogs",
-			"options": {
-				"awslogs-group": "/ecs/cer-graphql-task",
-				"awslogs-region": "${var.aws_region}",
-				"awslogs-create-group": "true",
-                "awslogs-stream-prefix": "ecs"
-		}
-	},
+      "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/cer-graphql-preview-task",
+          "awslogs-region": "${var.aws_region}",
+          "awslogs-create-group": "true",
+          "awslogs-stream-prefix": "ecs"
+      }
+    },
+    "environment": [
+      {"name": "IS_PREVIEW_ENV", "value": "true"}
+    ],
+    "portMappings": [
+      {
+        "containerPort": 4000
+      }
+    ],
     "secrets": [
-         {
-          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-access-token",
-          "name": "CONTENTFUL_ACCESS_TOKEN"
+        {
+         "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-access-token",
+         "name": "CONTENTFUL_ACCESS_TOKEN"
+        },
+        {
+          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-preview-access-token",
+          "name": "CONTENTFUL_PREVIEW_ACCESS_TOKEN"
         },
         {
           "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-space-id",
@@ -40,12 +52,6 @@ resource "aws_ecs_task_definition" "graphql" {
           "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-user-pool",
           "name": "COGNITO_USER_POOL"
         }
-    ],
-    "portMappings": [
-        {
-            "hostPort": 4000,
-            "containerPort": 4000
-        }
     ]
   }
 ]
@@ -54,24 +60,24 @@ DEFINITION
 }
 
 # This is used to catch versions (see service)
-data "aws_ecs_task_definition" "graphql" {
-  task_definition = aws_ecs_task_definition.graphql.family
+data "aws_ecs_task_definition" "graphql_preview" {
+  task_definition = aws_ecs_task_definition.graphql_preview.family
 
-  depends_on = [aws_ecs_task_definition.graphql]
+  depends_on = [aws_ecs_task_definition.graphql_preview]
 }
 
-resource "aws_ecs_service" "this" {
-  name                    = "cer-graphql-service"
+resource "aws_ecs_service" "preview" {
+  name                    = "cer-graphql-preview-service"
   cluster                 = aws_ecs_cluster.cer.id
   enable_ecs_managed_tags = true
   propagate_tags          = "SERVICE"
-  desired_count           = var.service_container_count
+  desired_count           = var.service_container_count_preview
   # Check to make sure the most recent task revision
   # is used. This can occur when manual changes are made during
   # the Terraform run
-  task_definition = "${aws_ecs_task_definition.graphql.family}:${max(
-    aws_ecs_task_definition.graphql.revision,
-    data.aws_ecs_task_definition.graphql.revision,
+  task_definition = "${aws_ecs_task_definition.graphql_preview.family}:${max(
+    aws_ecs_task_definition.graphql_preview.revision,
+    data.aws_ecs_task_definition.graphql_preview.revision,
   )}"
 
   # Below we can define cost saving strategies
@@ -93,7 +99,7 @@ resource "aws_ecs_service" "this" {
   }
 
   load_balancer {
-    target_group_arn = aws_alb_target_group.ecs-cer-graphql.arn
+    target_group_arn = aws_alb_target_group.ecs-cer-graphql-preview.arn
     container_name   = "cer-graphql"
     container_port   = 4000
   }
@@ -105,10 +111,10 @@ resource "aws_ecs_service" "this" {
   tags = merge(
     local.common_tags,
     {
-      "Name" = "graphql-service-definition"
+      "Name" = "graphql-preview-service-definition"
     },
   )
-  depends_on = [aws_alb_target_group.ecs-cer-graphql]
+  depends_on = [aws_alb_target_group.ecs-cer-graphql-preview]
   lifecycle {
     # create_before_destroy = true
     ignore_changes = [desired_count]
@@ -119,8 +125,8 @@ resource "aws_ecs_service" "this" {
 
 # Configure the TG the Service will attach to.
 # IP is the setting needed for Fargate
-resource "aws_alb_target_group" "ecs-cer-graphql" {
-  name        = "ecs-cer-graphql"
+resource "aws_alb_target_group" "ecs-cer-graphql-preview" {
+  name        = "ecs-cer-graphql-preview"
   port        = "80"
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
@@ -137,60 +143,20 @@ resource "aws_alb_target_group" "ecs-cer-graphql" {
   depends_on = [aws_alb.ecs-load-balancer]
 }
 
-resource "aws_lb_listener_rule" "routing" {
+resource "aws_lb_listener_rule" "routing-preview" {
   listener_arn = aws_alb_listener.alb-listener.arn
-  # Need to ensure this increments if we add more
-  priority = 1
+
+  priority = 2
 
   action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.ecs-cer-graphql.id
+    target_group_arn = aws_alb_target_group.ecs-cer-graphql-preview.id
   }
 
   # Based upon work in Sandbox
   condition {
     path_pattern {
-      values = ["/cer-graphql-service*"]
+      values = ["/cer-graphql-preview-service*"]
     }
   }
-}
-
-
-# The SG for the Container task itself. Not
-# Set globally in case we can secure things 
-# more tightly
-resource "aws_security_group" "graphql_sg" {
-  name        = "${var.ecs_cluster_name}-graphql-Security-Group"
-  description = "Security Group graphql Service"
-  vpc_id      = var.vpc_id
-
-  egress {
-    # allow all traffic to private SN
-    from_port = "0"
-    to_port   = "0"
-    protocol  = "-1"
-
-    cidr_blocks = [
-      "0.0.0.0/0",
-    ]
-  }
-
-  tags = merge(
-    local.common_tags,
-    {
-      "Name" = "${var.ecs_cluster_name}-graphql-Security-Group"
-    },
-  )
-}
-
-# The reason for splitting this out is to avoid a
-# cyclic dependency. Means we can also make changes
-# as needed without impacting the core rules
-resource "aws_security_group_rule" "lb_to_graphql" {
-  type                     = "ingress"
-  from_port                = "0"
-  to_port                  = "0"
-  protocol                 = "-1"
-  source_security_group_id = aws_security_group.loadbalancer_sg.id
-  security_group_id        = aws_security_group.graphql_sg.id
 }
