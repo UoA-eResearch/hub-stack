@@ -63,7 +63,13 @@ mat-expansion-panel-header {
 /**
  * Lock Icon
  */
- .mat-icon {
-    color: $color-icon;
+.mat-icon {
+    color: $body-grey!important;
     font-size: 16px;
+}
+/**
+ * Card Result Icon
+ */
+#item-avatar-icon {
+    color: map-get($hub-navy, 500)!important;
 }
