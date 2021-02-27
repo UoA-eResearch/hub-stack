@@ -1,7 +1,7 @@
 <!-- If we're displaying a collection of software -->
 <div
     *ngIf="allSoftware$ | async as allSoftware" 
-    class="site-padding margin-bottom top-padding" 
+    class="site-padding-2 margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [collection]="allSoftware"></app-collection-list>
 </div>
