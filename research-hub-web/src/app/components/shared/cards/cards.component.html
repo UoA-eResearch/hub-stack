@@ -83,9 +83,15 @@
                             <p style="word-wrap: break-word">
                                 {{ content['role'] }}</p>
                                 <a  *ngIf="content.email" 
-                                    href="mailto:{{ content['email'] }}">{{ content['email'] }}</a>
+                                    href="mailto:{{ content['email'] }}">
+                                    <mat-icon>email</mat-icon>
+                                        {{ content['email'] }}
+                                </a>
                                 <a *ngIf="content.phone" 
-                                    href="tel:{{ content['phone'] }}">{{ content['phone'] }}</a>
+                                    href="tel:{{ content['phone'] }}">
+                                    <mat-icon>phone</mat-icon>
+                                        {{ content['phone'] }}
+                                </a>
                         </span>
                         <span *ngIf="content.__typename == 'OrgUnit'">
                             <span
