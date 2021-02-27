@@ -2,7 +2,7 @@
 <!-- If we're displaying a collection of service -->
 <div
     *ngIf="allServices$ | async as allServices" 
-    class="site-padding margin-bottom top-padding" 
+    class="site-padding-2 margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [collection]="allServices"></app-collection-list>
 </div>
@@ -23,7 +23,7 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="service.banner ? 'background: url(' + service.banner.url + ') no-repeat' : 'display:none'">
+            [style]="service.banner ? 'background: url(' + service.banner.url + ') no-repeat fixed center' : 'display: none'">
         </div>  
     </ng-template>
 
@@ -36,7 +36,7 @@
             class="specifications">
             <table class="specifications-table margin-bottom">
                 <tr>
-                <th>Name</th>
+                <th>Details</th>
                 <th>Description</th>
                 </tr>
                 <tr *ngIf="service.audience">
@@ -59,31 +59,37 @@
         </div>
     </ng-template>
     
-    <ng-template #relatedItems let-hide="hideImage">
+    <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
         <app-cards
-            [flex]="'row wrap'"
+            [flex]="flex"
             [hideImage]="hide"
             [title]="'You might be interested in'" 
             [contentItem]="service.relatedItemsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedOrganisations>
-        <app-cards 
+    <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [flex]="flex"
+            [hideImage]="hide"
             [title]="'Organisations'" 
             [contentItem]="service.relatedOrgsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedDocuments>
-        <app-cards 
+    <ng-template #relatedDocuments let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [flex]="flex"
+            [hideImage]="hide"
             [title]="'Documents'" 
             [contentItem]="service.relatedDocsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedContacts>
-        <app-cards 
+    <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [flex]="flex"
+            [hideImage]="hide"
             [title]="'Contacts'" 
             [contentItem]="service.relatedContactsCollection">
         </app-cards>
@@ -119,7 +125,24 @@
                 <div>
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
-                <div class="mini-hr">
+                <!-- Call To Action -->
+                <div *ngIf="service.callToAction">
+                    <a href="{{ service.callToAction }}">
+                        <button 
+                            mat-flat-button
+                            class="standard-button section">
+                            <span *ngIf="service.callToActionLabel">
+                                {{ service.callToActionLabel }}
+                            </span>
+                            <span *ngIf="!service.callToActionLabel">
+                                View Service
+                            </span>
+                        </button>
+                    </a>
+                </div>
+                <div
+                    class="mini-hr"
+                    *ngIf="!service.callToAction">
                     <hr/>
                 </div>
             </div>
@@ -132,22 +155,6 @@
                     [nodeRenderers]="nodeRenderers">
                 </ngx-contentful-rich-text>
             </div>
-            
-            <!-- Call To Action -->
-            <div>
-                <a href="{{ service.callToAction }}">
-                    <button 
-                        mat-flat-button
-                        class="standard-button section">
-                        <span *ngIf="service.callToActionLabel">
-                            {{ service.callToActionLabel }}
-                        </span>
-                        <span *ngIf="!service.callToActionLabel">
-                            View Service
-                        </span>
-                    </button>
-                </a>
-            </div>
 
             <!-- Specifications Table -->
             <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
@@ -155,16 +162,15 @@
             <!-- Owners and User Facing Support -->
             <div
                 class="service-owners section"
-                fxLayout="column wrap"
-                fxLayoutGap="1%">
+                fxLayout="column">
                 <div  *ngIf="service.relatedItemsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
                 </div>
                 <div *ngIf="service.relatedContactsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
                 </div>
                 <div *ngIf="service.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
                 </div>
                 <div *ngIf="service.relatedDocsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedDocuments; context: { hideImage: true }"></ng-container>
