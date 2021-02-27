@@ -26,9 +26,7 @@ div.collection {
     #item-avatar {
         width: $avatar-size;
         height: $avatar-size;
-
-        margin-right: $avatar-size * 0.1;
-
+        margin-right: $avatar-size * 0.15;
         img {
             object-fit: cover;
             width: $avatar-size;
@@ -46,27 +44,37 @@ div.collection {
 /**
  * Material Overrides
  */
-mat-card-title .card-title {
-    @extend .card-title;
-    font-size: 18px!important;
-    border-bottom: 2px solid rgba(0, 0, 0, 0);
-    &:hover {
-        border-bottom: 2px solid $body-grey;
+.card-content {
+    width: 90%;
+    p {
+        @include size(medium) {
+            display: inline-block;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+    .card-title {
+        @extend .card-title;
+        width: fit-content;
+        display: inline-block;
+        margin-bottom: 0!important;
+        border-bottom: 2px solid rgba(0, 0, 0, 0);
+        &:hover {
+            border-bottom: 2px solid $body-grey;
+        }
+    }
+    /**
+    * Lock Icon
+    */
+    mat-icon {
+        color: $dark-grey!important;
+        font-size: 14px!important;
+        vertical-align: middle;
     }
 }
-mat-expansion-panel-header {
-    @extend .card-summary;
-    height: fit-content!important;
-}
 
-
-/**
- * Lock Icon
- */
-.mat-icon {
-    color: $body-grey!important;
-    font-size: 16px;
-}
 /**
  * Card Result Icon
  */

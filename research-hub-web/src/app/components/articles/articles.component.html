@@ -20,23 +20,6 @@
         </app-breadcrumbs>
     </ng-template>
 
-    <ng-template #titleSummary>
-        <h1 
-            class="content-title" 
-            ngClass.lt-md="content-title-mobile"
-            [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
-            {{ article.title }}
-        </h1>
-
-        <p
-            class="content-summary" 
-            ngClass.sm="content-summary-sm" 
-            ngClass.xs="content-summary-xs"
-            [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
-            {{ article.summary }}
-        </p>
-    </ng-template>
-
     <ng-template #articleBody>
         <ngx-contentful-rich-text
             class="section-2 body-text"
@@ -86,7 +69,13 @@
         <div>
             <div
             class="banner-container"
-            [style]="article.banner ? 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat fixed center; padding: 72px 0px' : ''">
+            [style]="article.banner ? 
+                        isMobile ? 
+                            'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat; padding: 72px 0px' 
+                            : 
+                            'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat fixed center; padding: 72px 0px' 
+                        :
+                        ''">
                 <div class="banner-content">
 
                     <!-- Title -->

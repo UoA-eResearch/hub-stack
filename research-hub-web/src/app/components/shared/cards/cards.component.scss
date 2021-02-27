@@ -1,4 +1,5 @@
 @import '../../../../themes.scss';
+@import '../../../../typography.scss';
 @import '../../../../styles.scss';
 
 /**
@@ -16,21 +17,13 @@
   * Mat-Card Title
   */
 .mat-card-title {
-  a {
-    color: $body-grey;
-  }
   a:hover {
-    border-bottom: solid 2px $body-grey;
+    border-bottom: solid 2px $dark-grey;
   }
 }
 
-
-/**
- * Call To Action
- */
-a {
-    margin: 5px 0px;
-    color: map-get($hub-teal, 500);
+.mat-card a {
+  color: $dark-grey;
 }
 
 

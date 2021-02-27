@@ -21,6 +21,10 @@ hr {
   border: none;
   background-color: $input-grey;
 }
+
+/**
+ * Underline for titles and headings
+ */
 .main-underline {
   width: 45%;
   margin: 20px auto;
@@ -39,6 +43,11 @@ hr {
       margin-left: 0;
   }
 }
+
+
+/**
+ * Vertical spacer
+ */
 .section {
   margin: 12px 0px;
 }
@@ -71,7 +80,7 @@ h4 {
   margin-bottom: 16px;
 }
 p {
-  color: $dark-grey;
+  color: $body-grey;
   font-family: $font-family;
 }
 a {
@@ -108,6 +117,7 @@ mat-chip.mat-chip {
 }
 mat-card  {
   margin: 8px 0;
+  border-radius: 0%;
 }
 mat-icon,
 .mat-icon-button,
@@ -123,8 +133,6 @@ svg {
   height: 8px!important;
   margin-right: 16px!important;
 }
-
-
 .avatar-btn > span.mat-button-wrapper {
   padding-top: 0 !important;
   margin-bottom: 0 !important;
@@ -145,7 +153,6 @@ svg {
   margin-right: 16px;
   border-radius: 50%;
 }
-
 
 
 /**
@@ -211,7 +218,7 @@ svg {
 /**
  * Content Styles
  */
- .banner-container {
+.banner-container {
   min-width: 100%;
   padding-top: 32px;
   padding-bottom: 32px;
@@ -255,6 +262,8 @@ svg {
 .content-summary-mobile {
   font-size: 20px; 
 }
+
+
 /**
  * Card Text
  */
@@ -265,6 +274,8 @@ svg {
   font-size: 14px;
   color: $color-icon;
 }
+
+
 /**
  * Section Padding
  */
@@ -290,7 +301,6 @@ svg {
   background-color: white!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
-
 .alternate-button {
   padding-bottom: 2.4px!important;
   color: map-get($hub-teal, 500)!important;

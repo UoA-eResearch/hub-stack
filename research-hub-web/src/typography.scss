@@ -6,7 +6,6 @@
 /**
  * National Fonts
  */ 
-
  @font-face {
   font-family: 'National Light';
   src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.eot');
@@ -222,7 +221,7 @@ $app-chips-typography: mat-typography-config(
  */
 $heading-1-font-color: map-get($hub-navy, 500);
 $heading-2-font-color: map-get($hub-navy, 500);
-$heading-3-font-color: $body-grey;
+$heading-3-font-color: $dark-grey;
 $heading-4-font-color: $dark-grey;
 
 h1,
