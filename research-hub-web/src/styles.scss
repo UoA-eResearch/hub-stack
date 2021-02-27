@@ -304,8 +304,10 @@ svg {
 /**
  * Call To Action Arrow
  */
- .call-to-action a {
-  font-size: 16px;
+.call-to-action a {
+   color: $body-grey;
+   font-weight: bold;
+   font-size: 16px;
 }
 .arrow {
   transition: transform 0.2s ease-out;
