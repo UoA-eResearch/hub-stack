@@ -47,6 +47,7 @@
                         </span>
                     </mat-card-content>
                     <span
+                        *ngIf="content.__typename != 'OfficialDocuments'"
                         class="call-to-action"
                         style="display: flex; align-items: center;max-width: fit-content">
                         <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
@@ -56,6 +57,20 @@
                             class="arrow" 
                             style="height: 20px; width: auto" 
                             src="assets/components/dark-arrow.png">
+                    </span>
+                    <span *ngIf="content.__typename == 'OfficialDocuments'">
+                        <span
+                            *ngIf="content.url != 'null' || content.document != 'null'"
+                            class="call-to-action"
+                            style="display: flex; align-items: center;max-width: fit-content">
+                            <a href="{{ content.url ? content.url : content.document?.url }}">
+                                View Document&nbsp;&nbsp;
+                            </a>
+                            <img 
+                                class="arrow" 
+                                style="height: 20px; width: auto" 
+                                src="assets/components/dark-arrow.png">
+                        </span>
                     </span>
                 </mat-card>
             </ng-template>

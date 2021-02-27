@@ -116,13 +116,12 @@
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
                 <div 
-                    fxLayout="row wrap" 
+                    fxLayout="row" 
                     fxLayout.lt-md="column wrap"
                     fxLayoutGap="5%">
 
                     <!-- Article Body -->
-                    <div 
-                        fxFlex
+                    <div
                         fxFlexOrder="2"
                         fxFlexOrder.xs="1">
                         <ng-container *ngTemplateOutlet="articleBody"></ng-container>
@@ -140,13 +139,13 @@
                         fxFlexOrder.lt-md="2">
 
                         <!-- Contacts -->
-                        <ng-container *ngTemplateOutlet="relatedContacts; context: { flex: 'column wrap'}"></ng-container>
+                        <ng-container *ngTemplateOutlet="relatedContacts; context: { flex: 'column', hide: 'true' }"></ng-container>
 
                         <!-- Official Documents -->
-                        <ng-container *ngTemplateOutlet="officialDocuments; context: { flex: 'column wrap'}"></ng-container>
+                        <ng-container *ngTemplateOutlet="officialDocuments; context: { flex: 'column', hide: 'true'}"></ng-container>
 
                         <!-- Organizations -->
-                        <ng-container *ngTemplateOutlet="relatedOrganisations; context: { flex: 'column wrap'}"></ng-container>
+                        <ng-container *ngTemplateOutlet="relatedOrganisations; context: { flex: 'column', hide: 'true'}"></ng-container>
 
                     </div>
 
@@ -157,7 +156,7 @@
                         fxLayout="column" 
                         fxFlex="20%"
                         fxFlexOrder="3">
-                        <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column wrap'}"></ng-container>
+                        <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column', hide: 'true'}"></ng-container>
                     </div>
                 </div>
             </div>
