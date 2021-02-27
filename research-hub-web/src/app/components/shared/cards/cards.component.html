@@ -18,18 +18,18 @@
             </ng-template>
 
             <ng-template #noImage>
-                <div style="margin-top: 11px;"></div>
+                <div style="margin-top: 12px;"></div>
             </ng-template>
 
-            <ng-container *ngIf="content.__typename == 'Person'; then contact; else standard">
-            </ng-container>
+            <ng-container *ngIf="content.__typename == 'Person' || content.__typename == 'OrgUnit'; then contact; else standard"></ng-container>
 
             <ng-template #standard>
                 <mat-card>
                     <ng-container *ngIf="content.banner; then image; else noImage">
                     </ng-container>
                     <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
-                    <span *ngIf="content.__typename != 'SubHub'" class="card-label">{{ content.__typename | humanCase }}</span>
+                    <span *ngIf="content.__typename == 'OfficialDocuments'" class="card-label">Document</span>
+                    <span *ngIf="content.__typename != 'SubHub' && content.__typename != 'OfficialDocuments'" class="card-label">{{ content.__typename | humanCase }}</span>
     
                     <mat-card-title>
                         <h4>
@@ -49,11 +49,8 @@
                     <span
                         class="call-to-action"
                         style="display: flex; align-items: center;max-width: fit-content">
-                        <a *ngIf="content.__typename != 'Unit'" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+                        <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                             Read More&nbsp;&nbsp;
-                        </a>
-                        <a *ngIf="content.__typename == 'Unit'" href="{{ content.link }}">
-                            See Unit&nbsp;&nbsp;
                         </a>
                         <img 
                             class="arrow" 
@@ -67,8 +64,8 @@
                 <mat-card>
                     <ng-container *ngIf="content.banner; then image; else noImage">
                     </ng-container>
-                    <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
-                    <span *ngIf="content.__typename != 'SubHub'" class="card-label">Contact</span>
+                    <span *ngIf="content.__typename == 'Person'" class="card-label">Contact</span>
+                    <span *ngIf="content.__typename == 'OrgUnit'" class="card-label">Unit</span>
     
                     <mat-card-title>
                         <h4>
@@ -81,12 +78,26 @@
                     </mat-card-title>
                     <mat-card-content>
                         <span
+                            *ngIf="content.__typename == 'Person'"
                             class="card-summary">
                             <p style="word-wrap: break-word">
-                                {{ content['role'] }}<br>
-                                <a href="mailto:{{ content['email'] }}">{{ content['email'] }}</a><br>
-                                <a href="tel:{{ content['phone'] }}">{{ content['phone'] }}</a>
+                                {{ content['role'] }}
+                                <a *ngIf="content.email" href="mailto:{{ content['email'] }}"><br>{{ content['email'] }}</a>
+                                <a *ngIf="content.phone" href="tel:{{ content['phone'] }}"><br>{{ content['phone'] }}</a>
                             </p>
+                        </span>
+                        <span *ngIf="content.__typename == 'OrgUnit'">
+                            <span
+                                class="call-to-action"
+                                style="display: flex; align-items: center;max-width: fit-content">
+                                <a href="{{ content.link }}">
+                                    See Unit&nbsp;&nbsp;
+                                </a>
+                                <img 
+                                    class="arrow" 
+                                    style="height: 20px; width: auto" 
+                                    src="assets/components/teal-arrow.png">
+                            </span>
                         </span>
                     </mat-card-content>
                 </mat-card>

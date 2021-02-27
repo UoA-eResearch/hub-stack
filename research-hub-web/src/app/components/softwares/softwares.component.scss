@@ -22,7 +22,9 @@ mat-card  {
 .specifications-table {
     width: 100%;
     border-collapse: collapse;
-    @include size(large) { width: 50%; }
+    @include size(large) { 
+        width: 50%;
+        margin: 0 auto;}
     td, th {
         border: 1px solid #ddd;
         padding: 8px;

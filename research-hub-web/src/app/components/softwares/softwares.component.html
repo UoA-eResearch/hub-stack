@@ -1,7 +1,7 @@
 <!-- If we're displaying a collection of software -->
 <div
     *ngIf="allSoftware$ | async as allSoftware" 
-    class="site-padding margin-bottom top-padding" 
+    class="site-padding-2 margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [collection]="allSoftware"></app-collection-list>
 </div>
@@ -44,7 +44,7 @@
             class="specifications">
             <table class="specifications-table">
                 <tr>
-                <th>Name</th>
+                <th>Details</th>
                 <th>Description</th>
                 </tr>
                 <tr *ngIf="software.licensing">
@@ -67,29 +67,37 @@
         </div>
     </ng-template>
     
-    <ng-template #relatedItems let-hide="hideImage">
+    <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
         <app-cards
+            [hideImage]="hide"
+            [flex]="flex"
             [title]="'Explore Related'" 
             [contentItem]="software.relatedItemsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedOrganisations>
-        <app-cards 
+    <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [hideImage]="hide"
+            [flex]="flex"
             [title]="'Organisations'" 
             [contentItem]="software.relatedOrgsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedDocs>
-        <app-cards 
+    <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [hideImage]="hide"
+            [flex]="flex"
             [title]="'Docs'" 
             [contentItem]="software.relatedDocsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedContacts>
-        <app-cards 
+    <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [hideImage]="hide"
+            [flex]="flex"
             [title]="'Contacts'" 
             [contentItem]="software.relatedContactsCollection">
         </app-cards>
@@ -99,7 +107,7 @@
     <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
     <div
-        class="site-padding margin-bottom" 
+        class="site-padding-2 margin-bottom" 
         ngClass.lt-md="site-padding-mobile top-padding">
 
         <!-- Breadcrumbs -->
@@ -113,7 +121,9 @@
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
                 <!-- Call To Action -->
-                <div>
+                <div
+                    class="section"
+                    *ngIf="software.callToAction">
                     <a href="{{ software.callToAction }}">
                         <button 
                             mat-flat-button 
@@ -127,7 +137,9 @@
                         </button>
                     </a>
                 </div>
-                <div class="mini-hr">
+                <div
+                    class="mini-hr"
+                    *ngIf="!software.callToAction">
                     <hr/>
                 </div>
             </div>
@@ -142,11 +154,13 @@
             </div>
     
             <!-- Specifications Table -->
-            <div *ngIf="
-                software.licensing ||
-                software.cost ||
-                software.access ||
-                software.limitations">
+            <div
+                class="section-2"
+                *ngIf="
+                    software.licensing ||
+                    software.cost ||
+                    software.access ||
+                    software.limitations">
                 <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
             </div>
 
@@ -160,17 +174,22 @@
                 class="section"
                 fxLayout="column wrap"
                 fxLayoutGap="1%">
+                <div
+                    fxLayout="row"
+                    fxLayoutGap="1%"
+                    fxLayout.lt-md="column">
+                    <div *ngIf="software.relatedContactsCollection?.items.length > 0" fxFlex>
+                        <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true, flex: 'column wrap' }"></ng-container>
+                    </div>
+                    <div *ngIf="software.relatedOrgsCollection?.items.length > 0" fxFlex>
+                        <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true, flex: 'column wrap' }"></ng-container>
+                    </div>
+                    <div  *ngIf="software.relatedDocsCollection?.items.length > 0" fxFlex>
+                        <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true, flex: 'column wrap' }"></ng-container>
+                    </div>
+                </div>
                 <div *ngIf="software.relatedItemsCollection?.items.length > 0" fxFlex>
                     <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false }"></ng-container>
-                </div>
-                <div *ngIf="software.relatedContactsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
-                </div>
-                <div  *ngIf="software.relatedDocsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true }"></ng-container>
-                </div>
-                <div *ngIf="software.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
                 </div>
             </div>
         </div>

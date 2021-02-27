@@ -21,20 +21,5 @@ export class CardsComponent implements OnInit {
         delete element['banner'].url;
       });
     };
-
-    // If card is displaying an Organizational Unit
-    if (this.contentItem.items[0]?.__typename == 'OrgUnit') {
-      this.contentItem.items.forEach(element => {
-        element['title'] = element['name'];
-        element['__typename'] = 'Unit'
-      });
-    }
-
-    // If card is displaying an OfficialDocument
-    if (this.contentItem.items[0]?.__typename == 'OfficialDocuments') {
-      this.contentItem.items.forEach(element => {
-        element['__typename'] = 'Document'
-      });
-    }
   }
 }
