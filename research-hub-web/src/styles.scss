@@ -21,17 +21,23 @@ hr {
   border: none;
   background-color: $input-grey;
 }
-.mini-hr {
-  margin: 1vw 0px 4vw 0px;
-  position: relative;
+.main-underline {
+  width: 45%;
+  margin: 20px auto;
+  border-bottom: 6px solid #333333;
+  @media only screen and (min-width: 1280px) {
+      width: 15%;
+      margin-left: 0;
+  }
 }
-.mini-hr hr {
-  width: 9vw;
-  border: none;
-  height: 6px;
-  position: absolute;
-  background: map-get($hub-navy, 500);
-  color: map-get($hub-navy, 500);
+.main-underline-navy {
+  width: 45%;
+  margin: 20px auto;
+  border-bottom: 6px solid map-get($hub-navy, 500);
+  @media only screen and (min-width: 1280px) {
+      width: 15%;
+      margin-left: 0;
+  }
 }
 .section {
   margin: 12px 0px;
