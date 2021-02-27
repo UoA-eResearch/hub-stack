@@ -101,7 +101,13 @@
           <!-- Banner -->
           <div 
             class="banner-container-home"
-            [style]="showBanner ? 'background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.05) ), url(../assets/images/homepage.jpeg) no-repeat fixed center; height:100vh' : ''">
+            [style]="showBanner ? 
+                        isMobile ? 
+                          'background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.05) ), url(../assets/images/homepage.jpeg) no-repeat; height: 100vh'
+                          : 
+                          'background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.05) ), url(../assets/images/homepage.jpeg) no-repeat fixed center; height: 100vh' 
+                        : 
+                        ''">
 
             <!-- Main Navbar -->
             <div 

@@ -22,7 +22,13 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="equipment.banner ? 'background: url(' + equipment.banner.url + ') no-repeat fixed center' : 'display: none;'">
+            [style]="equipment.banner ? 
+                        isMobile ?
+                        'background: url(' + equipment.banner.url + ') no-repeat'
+                        :
+                        'background: url(' + equipment.banner.url + ') no-repeat fixed center'
+                    :
+                    'display: none;'">
         </div>  
     </ng-template>
 
