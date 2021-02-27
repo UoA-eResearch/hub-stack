@@ -1,7 +1,7 @@
 <!-- If we're displaying a collection of event -->
 <div
     *ngIf="allEvents$ | async as allEvents" 
-    class="site-padding margin-bottom top-padding" 
+    class="site-padding-2 margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [collection]="allEvents"></app-collection-list>
 </div>
@@ -22,7 +22,7 @@
     <ng-template #dynamicBanner>
         <div 
             class="banner-container"
-            [style]="event.banner ? 'background: url(' + event.banner.url + ') no-repeat' : 'display: none;'">
+            [style]="event.banner ? 'background: url(' + event.banner.url + ') no-repeat fixed center;' : 'display: none;'">
         </div>  
     </ng-template>
 
@@ -45,7 +45,7 @@
             class="specifications section">
             <table class="specifications-table">
                 <tr>
-                <th>Name</th>
+                <th>Details</th>
                 <th>Description</th>
                 </tr>
                 <tr *ngIf="event.audience">
@@ -72,31 +72,37 @@
         </div>
     </ng-template>
     
-    <ng-template #relatedItems let-hide="hideImage">
+    <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
         <app-cards
-            [flex]="'row wrap'"
+            [flex]="flex"
             [hideImage]="hide"
             [title]="'You might be interested in'" 
             [contentItem]="event.relatedItemsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedOrganisations>
-        <app-cards 
+    <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [flex]="flex"
+            [hideImage]="hide"
             [title]="'Organisations'" 
             [contentItem]="event.relatedOrgsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedFacilities>
-        <app-cards 
-            [title]="'Organisations'" 
-            [contentItem]="event.relatedFacilityCollection">
+    <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [flex]="flex"
+            [hideImage]="hide"
+            [title]="'Documents'" 
+            [contentItem]="event.relatedDocsCollection">
         </app-cards>
     </ng-template>
 
-    <ng-template #relatedContacts>
-        <app-cards 
+    <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
+        <app-cards
+            [flex]="flex"
+            [hideImage]="hide"
             [title]="'Contacts'" 
             [contentItem]="event.relatedContactsCollection">
         </app-cards>
@@ -119,34 +125,35 @@
                 <div>
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
-                <div class="mini-hr">
+                <!-- Call To Action -->
+                <div *ngIf="event.callToAction">
+                    <a href="{{ event.callToAction }}">
+                        <button 
+                            mat-flat-button 
+                            class="standard-button section">
+                            <span *ngIf="event.callToActionLabel">
+                                {{ event.callToActionLabel }}
+                            </span>
+                            <span *ngIf="!event.callToActionLabel">
+                                View Event
+                            </span>
+                        </button>
+                    </a>
+                </div>
+                <div 
+                    class="mini-hr"
+                    *ngIf="!event.callToAction">
                     <hr/>
                 </div>
             </div>
 
-            <!-- event Body -->
+            <!-- Event Body -->
             <div class="body-text">
                 <ngx-contentful-rich-text
                     style="word-break:break-word;" 
                     [document]="event.bodyText.json"
                     [nodeRenderers]="nodeRenderers">
                 </ngx-contentful-rich-text>
-            </div>
-
-            <!-- Call To Action -->
-            <div>
-                <a href="{{ event.callToAction }}">
-                    <button 
-                        mat-flat-button 
-                        class="standard-button section">
-                        <span *ngIf="event.callToActionLable">
-                            {{ event.callToActionLable }}
-                        </span>
-                        <span *ngIf="!event.callToActionLable">
-                            View Event
-                        </span>
-                    </button>
-                </a>
             </div>
 
             <!-- Specifications Table -->
@@ -162,19 +169,18 @@
             <!-- Related -->
             <div
                 class="event-owners section"
-                fxLayout="column wrap"
-                fxLayoutGap="1%">
-                <div *ngIf="event.relatedItemsCollection?.items.length > 0">
-                    <ng-container *ngTemplateOutlet="relatedItems"></ng-container>
+                fxLayout="column">
+                <div *ngIf="event.relatedItemsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
                 </div>
                 <div *ngIf="event.relatedContactsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
                 </div>
                 <div *ngIf="event.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
                 </div>
-                <div  *ngIf="event.relatedFacilityCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedFacilities; context: { hideImage: true }"></ng-container>
+                <div  *ngIf="event.relatedDocsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
                 </div>
             </div>
         </div>
