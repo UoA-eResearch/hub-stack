@@ -37,7 +37,7 @@ hr {
   margin: 12px 0px;
 }
 .section-2 {
-  margin: 5vh 0px;
+  margin: 45px 0px;
 }
 
 
@@ -131,7 +131,7 @@ svg {
   margin: 0 auto;
 }
 .search-results-text {
-  color: $color-pink !important;
+  color: map-get($hub-navy, 500)!important;
   font-weight: 500;
   font-style: italic;
 }
@@ -152,8 +152,8 @@ svg {
 }
 .site-padding-2 {
   @extend .site-content;
-    padding-left: 20vw;
-    padding-right: 20vw;
+    padding-left: 18vw;
+    padding-right: 18vw;
 }
 .top-padding {
   padding-top: $padding-site-top;
@@ -206,8 +206,7 @@ svg {
  * Content Styles
  */
  .banner-container {
-  min-width: 100%; 
-  min-height: 320px;
+  min-width: 100%;
   padding-top: 32px;
   padding-bottom: 32px;
   display: flex;
@@ -244,11 +243,11 @@ svg {
 }
 .content-summary {
   color: $color-icon;
-  font-size: 20px; 
+  font-size: 24px; 
   line-height: 110%;
 }
 .content-summary-mobile {
-  font-size: 16px; 
+  font-size: 20px; 
 }
 /**
  * Card Text

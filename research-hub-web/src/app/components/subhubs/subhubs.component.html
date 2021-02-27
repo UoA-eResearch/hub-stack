@@ -1,7 +1,7 @@
 <!-- Displaying all SubHubs -->
 <div
     *ngIf="allSubHubs$ | async as allSubHubs" 
-    class="site-padding margin-bottom top-padding" 
+    class="site-padding-2 margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [collection]="allSubHubs"></app-collection-list>
 </div>
@@ -55,13 +55,6 @@
             </app-cards>
         </ng-template>
 
-        <ng-template #dynamicBanner>
-            <div 
-                class="banner-container"
-                [style]="subhub.banner ? 'background: url(' + subhub.banner.url + ') no-repeat' : subhub.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'height: fit-content'">
-            </div>
-        </ng-template>
-
         <ng-template #body>
             <ngx-contentful-rich-text
                 class="section-2 body-text"
@@ -73,18 +66,14 @@
         <div>
             <div 
             class="banner-container"
-            [style]="subhub.banner ? 'background: url(' + subhub.banner.url + ') no-repeat' : subhub.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'height: fit-content'">
-                <div
-                    class="banner-content" 
-                    [style]="subhub.banner ? '' : 'margin: 24px 0;'"
-                    *ngIf="subhub.viewType == 'View 1'">
+            [style]="subhub.banner ? 'background: url(' + subhub.banner.url + ') no-repeat; padding: 64px 0px' : ''">
+                <div class="banner-content">
 
-                    <!-- Title and Summary for View 1 -->
                     <!-- Title -->
                     <h1 
                         class="content-title" 
                         ngClass.lt-md="content-title-mobile"
-                        [style.color]="subhub.banner ? subhub.viewType == 'View 1' ? 'white' : '' : ''">
+                        [style.color]="subhub.banner ? 'white' : ''">
                             {{ subhub.title }}
                     </h1>
 
@@ -100,8 +89,8 @@
             </div>
 
             <div
-                class="site-padding top-padding" 
-                ngClass.lt-md="site-padding-mobile top-padding">
+                class="site-padding" 
+                ngClass.lt-md="site-padding-mobile">
 
                 <!-- Breadcrumbs -->
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>

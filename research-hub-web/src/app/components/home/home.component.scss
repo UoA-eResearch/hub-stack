@@ -66,14 +66,18 @@
         text-align: left;
         }
     }
-    & .standard-button {
-        @extend .standard-button;
-        border: 3px solid map-get($hub-navy, 500)!important;
-        background-color: map-get($hub-navy, 500)!important;
-        &:hover {
-          @extend .standard-button;
-          background-color: white!important;
-          color: map-get($hub-navy, 500)!important;
-        }
+    .standard-button {
+        color: #eeeeee!important;
+        padding-bottom: 2.4px!important;
+        border: 3px solid $dark-grey!important;
+        border-radius: 50px!important;
+        background-color: $dark-grey!important;
+        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    }
+    .standard-button:hover {
+        color: $dark-grey!important;
+        border-radius: 50px!important;
+        background-color: #eeeeee!important;
+        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
     }
 }

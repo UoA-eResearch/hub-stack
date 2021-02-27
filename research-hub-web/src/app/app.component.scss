@@ -235,7 +235,7 @@ footer {
   z-index: 1;
   min-height: $height-footer-xs;
   @include size(medium) { min-height: $height-footer; }
-  background: map-get($hub-teal, 500);
+  background: $dark-grey;
   .footer-content {
     @extend .top-padding;
     @extend .site-padding;
@@ -244,7 +244,7 @@ footer {
     @include size(medium) { min-height: $height-footer; }
   }
   a {
-    color: $light-grey;
+    color: #a1a1a1;
     text-align: left;
     text-decoration: none;
     font-size: mat-font-size($app-base-typography, button);
@@ -256,14 +256,15 @@ footer {
   .footer-links {
     text-align: left;
     .link-header {
-      color: map-get($hub-navy, 500);
+      font-size: 16px;
+      color: white;
     }
   }
   .copyright {
     margin-bottom: 8px;
     @include size(small) { padding-top: $padding-site-top; }
     a {
-      color: $light-grey;
+      color: white;
       font-size: 13.6px;
     }
   }

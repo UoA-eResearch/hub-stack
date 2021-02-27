@@ -1,7 +1,7 @@
 <!-- If we're displaying a collection of articles-->
 <div
     *ngIf="allArticles$ | async as allArticles" 
-    class="site-padding margin-bottom top-padding" 
+    class="site-padding-2 margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [collection]="allArticles"></app-collection-list>
 </div>
@@ -18,13 +18,6 @@
             [contentItem]="parentSubHubs" 
             [title]="article.title">
         </app-breadcrumbs>
-    </ng-template>
-
-    <ng-template #dynamicBanner>
-        <div 
-            class="banner-container"
-            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'min-height: 0px'">
-        </div>  
     </ng-template>
 
     <ng-template #titleSummary>
@@ -91,22 +84,33 @@
     </ng-template>
 
         <div>
+            <div
+            class="banner-container"
+            [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat; padding: 64px 0px' : ''">
+                <div class="banner-content">
 
-            <!-- Dynamic Banner -->
-            <div 
-                class="banner-container"
-                [style]="article.banner ? 'background: url(' + article.banner.url + ') no-repeat' : article.viewType == 'View 2' ? 'display: none; min-height: 0px' : 'height: fit-content'">
-                <div 
-                    class="banner-content" 
-                    [style]="article.banner ?  '' : 'margin: 24px 0;'"
-                    *ngIf="article.viewType == 'View 1'">
-                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
+                    <!-- Title -->
+                    <h1 
+                        class="content-title" 
+                        ngClass.lt-md="content-title-mobile"
+                        [style.color]="article.banner ? 'white' : ''">
+                            {{ article.title }}
+                    </h1>
+
+                    <!-- Summary -->
+                    <p
+                        class="content-summary" 
+                        ngClass.sm="content-summary-sm" 
+                        ngClass.xs="content-summary-xs"
+                        [style.color]="article.banner ? article.viewType == 'View 1' ? 'white' : '' : ''">
+                            <small>{{ article.summary }}</small>
+                    </p>
                 </div>
-            </div> 
+            </div>
 
             <div 
-                class="site-padding top-padding" 
-                ngClass.lt-md="site-padding-mobile top-padding">
+                class="site-padding" 
+                ngClass.lt-md="site-padding-mobile">
 
                 <!-- Breadcrumbs -->
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
