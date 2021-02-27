@@ -1,7 +1,7 @@
 <!-- If we're displaying a collection of equipment -->
 <div
     *ngIf="allEquipment$ | async as allEquipment" 
-    class="site-padding-2 margin-bottom top-padding" 
+    class="site-padding margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [collection]="allEquipment"></app-collection-list>
 </div>
@@ -131,7 +131,7 @@
     <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
     <div
-        class="site-padding-2 margin-bottom" 
+        class="site-padding margin-bottom" 
         ngClass.lt-md="site-padding-mobile top-padding">
 
         <!-- Breadcrumbs -->
@@ -209,24 +209,18 @@
                     equipment.relatedOrgsCollection?.items.length > 0 ||
                     equipment.relatedDocsCollection?.items.length > 0"
                 class="section"
-                fxLayout="column wrap"
-                fxLayoutGap="1%">
-                <div
-                    fxLayout="row"
-                    fxLayoutGap="1%"
-                    fxLayout.lt-md="column">
-                    <div *ngIf="equipment.relatedContactsCollection?.items.length > 0" fxFlex>
-                        <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true, flex: 'column wrap' }"></ng-container>
-                    </div>
-                    <div *ngIf="equipment.relatedOrgsCollection?.items.length > 0" fxFlex>
-                        <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true, flex: 'column wrap' }"></ng-container>
-                    </div>
-                    <div  *ngIf="equipment.relatedDocsCollection?.items.length > 0" fxFlex>
-                        <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true, flex: 'column wrap' }"></ng-container>
-                    </div>
-                </div>
+                fxLayout="column">
                 <div *ngIf="equipment.relatedItemsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
+                </div>
+                <div *ngIf="equipment.relatedContactsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: true, flex: 'row wrap' }"></ng-container>
+                </div>
+                <div *ngIf="equipment.relatedOrgsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: true, flex: 'row wrap' }"></ng-container>
+                </div>
+                <div  *ngIf="equipment.relatedDocsCollection?.items.length > 0" fxFlex>
+                    <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: true, flex: 'row wrap' }"></ng-container>
                 </div>
             </div>
         </div>
