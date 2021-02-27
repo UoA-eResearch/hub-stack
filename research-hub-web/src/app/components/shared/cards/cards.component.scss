@@ -46,3 +46,12 @@ a {
   top:0;
   padding: 0px 15px;
  }
+
+ .contact-card-summary a {
+  color: #0294A5;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+ }

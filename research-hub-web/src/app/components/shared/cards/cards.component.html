@@ -79,12 +79,13 @@
                     <mat-card-content>
                         <span
                             *ngIf="content.__typename == 'Person'"
-                            class="card-summary">
+                            class="card-summary contact-card-summary">
                             <p style="word-wrap: break-word">
-                                {{ content['role'] }}
-                                <a *ngIf="content.email" href="mailto:{{ content['email'] }}"><br>{{ content['email'] }}</a>
-                                <a *ngIf="content.phone" href="tel:{{ content['phone'] }}"><br>{{ content['phone'] }}</a>
-                            </p>
+                                {{ content['role'] }}</p>
+                                <a  *ngIf="content.email" 
+                                    href="mailto:{{ content['email'] }}">{{ content['email'] }}</a>
+                                <a *ngIf="content.phone" 
+                                    href="tel:{{ content['phone'] }}">{{ content['phone'] }}</a>
                         </span>
                         <span *ngIf="content.__typename == 'OrgUnit'">
                             <span
