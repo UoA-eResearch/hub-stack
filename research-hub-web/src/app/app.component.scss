@@ -158,6 +158,12 @@ mat-list-item.mat-list-item {
   }
 }
 
+.app-toolbar-xs {
+  .app-toolbar-row {
+    height:  64px;
+  }
+}
+
 mat-list-base {
   padding: 0 16px;
 }
