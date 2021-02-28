@@ -35,7 +35,6 @@ import {
 } from './graphql/schema';
 import { environment } from '@environments/environment';
 import {
-  CategoryId,
   researchActivityOptions,
   feedbackLink,
   userStudyLink,
@@ -86,7 +85,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private winResizeSub: Subscription;
   public allCategories$: Observable<CategoryCollection>;
 
-  public selectedCategory = CategoryId.All;
   public searchText = '';
   public showFilterButton = false;
   public showProgressBar = false;
