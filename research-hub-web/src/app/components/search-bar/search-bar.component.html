@@ -1,10 +1,4 @@
-<div
-  [ngClass]="isVisible ? isFilterBtnVisible ? 'site-padding top-padding' : 'site-padding-2 top-padding' : 'site-padding'"
-  [ngClass.lt-lg]="isVisible ? isFilterBtnVisible ? 'site-padding-mobile top-padding' : 'site-padding-mobile top-padding' : 'site-padding-mobile'" >
-  <div 
-    class="search-bar-outer" 
-    ngClass.lt-md="search-bar-outer-xs" 
-    *ngIf="isVisible">
+<div>
     <div 
       class="search-bar-inner" 
       fxFlex="100" 
@@ -34,5 +28,4 @@
         </button>
       </mat-form-field>
     </div>
-  </div>  
 </div>

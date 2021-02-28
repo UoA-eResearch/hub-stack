@@ -19,6 +19,10 @@ export const appRoutes: Routes = [
     component: HomeComponent,
   },
   {
+    path: 'search',
+    loadChildren: () => import('@app/components/search-page/search-page.module').then((m) => m.SearchPageModule),
+  },
+  {
     path: 'equipment',
     loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
   },
