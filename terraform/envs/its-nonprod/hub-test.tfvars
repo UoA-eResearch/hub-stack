@@ -26,6 +26,9 @@ secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
 acm_arn_secondary             = "arn:aws:acm:us-east-1:518380838815:certificate/ca2097b7-29ae-456d-a0f5-3bdf9c7d8b66"
 
+# 2FAB callback url
+two_fab_url = "https://apigw.test.amazon.auckland.ac.nz/aws-token-grabber/"
+
 # Route53
 route53_hosted_zone_id = "Z165SO9T1OX8VZ"
 
