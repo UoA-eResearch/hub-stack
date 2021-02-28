@@ -1,7 +1,7 @@
 <section class="mat-typography">
 
   <!-- Landing Page -->
-  <mat-sidenav-container style="z-index: 1" class="sidenav-container">
+  <mat-sidenav-container class="sidenav-container">
 
     <!-- Navbar Container -->
     <mat-sidenav 
@@ -37,8 +37,8 @@
           <a mat-line>Search</a>
         </mat-list-item>
 
-          <!-- Browse -->
-          <mat-expansion-panel>
+        <!-- Browse -->
+        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
 
           <!-- Browse Title -->
           <mat-expansion-panel-header class="expandable-menu">
@@ -50,7 +50,7 @@
           <!-- Browse Options -->
           <mat-nav-list
             *ngIf="allCategories$ | async as allCategories">
-            <mat-list-item 
+            <mat-list-item
               *ngFor="let item of allCategories.items" 
               (click)="sidenav.close()"
               [routerLink]="['/search']">
@@ -60,7 +60,7 @@
         </mat-expansion-panel>
 
         <!-- Research Activites -->
-        <mat-expansion-panel>
+        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
 
           <!-- Research Activities Name -->
           <mat-expansion-panel-header class="expandable-menu">
@@ -294,6 +294,7 @@
                 </a>
               </div>
 
+              <!-- Spacer between footer content -->
               <div fxFlex fxHide.lt-md></div>
 
               <div
