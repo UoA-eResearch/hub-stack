@@ -70,12 +70,14 @@
           </mat-expansion-panel-header>
 
           <!-- Research Activities List -->
-          <mat-list-item 
-            *ngFor="let item of researchActivityOptions" 
-            (click)="sidenav.close()"
-            [routerLink]="['/search']">
-            <a mat-line>{{ item.name }}</a>
-          </mat-list-item>
+          <div *ngIf="allStages$ | async as allStages">
+            <mat-list-item 
+              *ngFor="let item of allStages.items" 
+              (click)="sidenav.close()"
+              [routerLink]="['/search']">
+              <a mat-line>{{ item.name }}</a>
+            </mat-list-item>
+          </div>
         </mat-expansion-panel>
 
         <!-- Sign In -->
@@ -101,13 +103,7 @@
           <!-- Banner -->
           <div 
             class="banner-container-home"
-            [style]="showBanner ? 
-                        isMobile ? 
-                          'background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.05) ), url(../assets/images/homepage.jpeg) no-repeat; height: 100vh'
-                          : 
-                          'background: linear-gradient( rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.05) ), url(../assets/images/homepage.jpeg) no-repeat fixed center; height: 100vh' 
-                        : 
-                        ''">
+            [style]="showBanner ? isMobile ? mobileBackground : desktopBackground : ''">
 
             <!-- Main Navbar -->
             <div 
@@ -148,11 +144,18 @@
                     style="flex: 1 1 auto;">
                   </span>
 
-                  <button mat-icon-button fxHide.gt-sm routerLink="/search" matTooltip="Search">
+                  <button 
+                    mat-icon-button 
+                    fxHide.gt-sm 
+                    routerLink="/search" 
+                    matTooltip="Search">
                     <mat-icon>search</mat-icon>
                   </button>
 
-                  <button mat-button fxHide.lt-md routerLink="/search">
+                  <button 
+                    mat-button 
+                    fxHide.lt-md 
+                    routerLink="/search">
                     Search
                   </button>
 
@@ -164,8 +167,11 @@
                     Research Categories
                   </button>
 
-                  <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
-                    <div *ngIf="allCategories$ | async as allCategories">
+                  <mat-menu
+                    #browseMenu="matMenu"
+                    [overlapTrigger]="false">
+                    <div
+                      *ngIf="allCategories$ | async as allCategories">
                       <button
                         mat-menu-item
                         *ngFor="let item of allCategories.items"
@@ -174,19 +180,24 @@
                     </div>
                   </mat-menu>
 
-                  <button class="button-menu" fxHide.lt-md mat-button [matMenuTriggerFor]="researchActivityMenu">
+                  <button
+                    class="button-menu" 
+                    fxHide.lt-md 
+                    mat-button 
+                    [matMenuTriggerFor]="researchActivityMenu">
                     Research Activities
                   </button>
 
-                  <mat-menu
-                    #researchActivityMenu="matMenu"
-                    [overlapTrigger]="false">
-                    <button
-                      [style.background]="showBanner ? '' : '#0294a5'"
-                      mat-menu-item *ngFor="let item of researchActivityOptions"
-                      [routerLink]="['/search']">
-                        {{item.name}}
-                    </button>
+                    <mat-menu 
+                      #researchActivityMenu="matMenu" 
+                      [overlapTrigger]="false">
+                    <div *ngIf="allStages$ | async as allStages">
+                      <button
+                        mat-menu-item
+                        *ngFor="let item of allStages.items"
+                        [style.background]="showBanner ? '' : '#0294a5'" 
+                        [routerLink]="['/search']">{{ item.name }}</button>
+                    </div>
                   </mat-menu>
 
                   <button 
