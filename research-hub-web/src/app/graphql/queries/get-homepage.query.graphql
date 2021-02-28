@@ -1,0 +1,9 @@
+query GetHomepage {
+    homepageCollection {
+        items {
+            image {
+                url
+            }
+        }
+    }
+}

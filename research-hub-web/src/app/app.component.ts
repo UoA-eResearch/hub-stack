@@ -1,4 +1,4 @@
-import { filter, distinctUntilChanged, pluck } from 'rxjs/operators';
+import { filter, distinctUntilChanged, pluck, flatMap } from 'rxjs/operators';
 import { 
   Component, 
   OnDestroy, 
@@ -17,8 +17,12 @@ import { Title } from '@angular/platform-browser';
 import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
 import {
+  GetHomepageGQL,
+  Homepage,
   AllCategoriesGQL,
-  CategoryCollection
+  CategoryCollection,
+  AllStagesGQL,
+  StageCollection
 } from './graphql/schema';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -50,6 +54,8 @@ export class AppComponent implements OnInit, OnDestroy {
   private scrollSub: Subscription;
   private winResizeSub: Subscription;
   public allCategories$: Observable<CategoryCollection>;
+  public homepage$: Observable<Homepage>
+  public allStages$: Observable<StageCollection>;
 
   public searchText = '';
   public showFilterButton = false;
@@ -63,6 +69,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public userInfo;
   public authenticated;
   public isMobile: Boolean;
+  public mobileBackground;
+  public desktopBackground;
 
   constructor(
     private location: Location, 
@@ -73,6 +81,8 @@ export class AppComponent implements OnInit, OnDestroy {
     public loginService: LoginService,
     public apollo: Apollo,
     public allCategoriesGQL: AllCategoriesGQL,
+    public getHomepageGQL: GetHomepageGQL,
+    public allStagesGQL: AllStagesGQL,
     private _bypass: BypassErrorService,
     private deviceService: DeviceDetectorService) {
       this.detectDevice();
@@ -124,6 +134,20 @@ export class AppComponent implements OnInit, OnDestroy {
 
     // Get All Categories
     this.allCategories$ = this.getAllCategories();
+
+    // Get All Stages
+    this.allStages$ = this.getAllStages();
+
+    // Get Homepage Image
+    this.getHomepage().subscribe(data => {
+
+      // If mobile
+      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.05) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
+
+      // If desktop
+      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.05) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
+    });
+    
 
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
@@ -177,6 +201,22 @@ export class AppComponent implements OnInit, OnDestroy {
       return this.allCategoriesGQL.fetch()
         .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
     } catch (e) { console.error('Error loading all Categories:', e) };
+  }
+
+  // Get all research stages
+  public getAllStages(): Observable<StageCollection> {
+    try {
+      return this.allStagesGQL.fetch()
+        .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
+    } catch (e) { console.error('Error loading all stages:', e) };
+  }
+
+  // Get homepage
+  public getHomepage(): Observable<Homepage> {
+    try {
+      return this.getHomepageGQL.fetch()
+        .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
+    } catch (e) { console.error('Error loading all stages:', e) };
   }
 
   ngOnDestroy() {
