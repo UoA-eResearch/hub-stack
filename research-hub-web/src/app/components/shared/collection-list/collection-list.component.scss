@@ -16,11 +16,6 @@ div.collection {
     &.ssoProtected {
         
     }
-
-    &:hover {
-        border: 1px solid map-get($hub-teal, 50);
-    }
-
     $avatar-size:  64px;
 
     #item-avatar {
