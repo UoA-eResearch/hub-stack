@@ -56,6 +56,9 @@ export class SearchBarService {
   }
 
   getSearchParams(): SearchBarParams {
-    return {searchText: this.searchText, category: this.category} as SearchBarParams;
+    return {
+      searchText: this.searchText,
+      category: this.category
+    } as SearchBarParams;
   }
 }
