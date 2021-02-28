@@ -157,7 +157,15 @@
             </div>
 
             <!-- Specifications Table -->
+            <div
+                class="section-2"
+                *ngIf="
+                    service.audience ||
+                    service.cost ||
+                    service.access ||
+                    service.availability">
             <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+            </div>
 
             <!-- Owners and User Facing Support -->
             <div
