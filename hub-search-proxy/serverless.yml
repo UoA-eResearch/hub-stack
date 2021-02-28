@@ -44,6 +44,8 @@ provider:
     # Environment variables available to all functions in this service
     ELASTICSEARCH_ENDPOINT: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_ENDPOINT}
     CORS_ACCESS_CONTROL_ALLOW_ORIGINS: ${file(env/${self:provider.stage}.json):CORS_ACCESS_CONTROL_ALLOW_ORIGINS}
+    CONTENTFUL_SPACE_ID: ${file(env/${self:provider.stage}.json):CONTENTFUL_SPACE_ID}
+    CONTENTFUL_ACCESS_TOKEN: ${file(env/${self:provider.stage}.json):CONTENTFUL_ACCESS_TOKEN}
   apiGateway:
     apiKeySourceType: HEADER
   apiKeys:

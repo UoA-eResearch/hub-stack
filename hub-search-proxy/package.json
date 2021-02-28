@@ -27,6 +27,7 @@
   "dependencies": {
     "@elastic/elasticsearch": "^7.11.0",
     "aws-elasticsearch-connector": "^9.0.3",
-    "aws-sdk": "^2.841.0"
+    "aws-sdk": "^2.841.0",
+    "contentful-export": "^7.11.7"
   }
 }

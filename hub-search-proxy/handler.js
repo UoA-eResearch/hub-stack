@@ -2,6 +2,7 @@
 const { Client } = require('@elastic/elasticsearch');
 const AWS = require('aws-sdk');
 const createAwsElasticsearchConnector = require('aws-elasticsearch-connector');
+const contentfulExporter = require('exportFromContentful');
 
 
 const credentials = new AWS.EnvironmentCredentials('AWS');
