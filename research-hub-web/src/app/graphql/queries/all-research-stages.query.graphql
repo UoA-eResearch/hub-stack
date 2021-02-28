@@ -1,0 +1,11 @@
+query AllStages {
+    stageCollection {
+        items {
+            name
+            description
+            image {
+                url
+            }
+        }
+    }
+}
