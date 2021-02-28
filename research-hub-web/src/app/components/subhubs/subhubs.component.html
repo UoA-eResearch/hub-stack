@@ -79,7 +79,7 @@
                     <h1 
                         class="content-title" 
                         ngClass.lt-md="content-title-mobile"
-                        [style.color]="subhub.banner ? 'white' : ''">
+                        [style]="subhub.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
                             {{ subhub.title }}
                     </h1>
 
@@ -88,7 +88,7 @@
                         class="content-summary" 
                         ngClass.sm="content-summary-sm" 
                         ngClass.xs="content-summary-xs"
-                        [style.color]="subhub.banner ? 'white' : ''">
+                        [style]="subhub.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
                             <small>{{ subhub.summary }}</small>
                     </p>
                 </div>
