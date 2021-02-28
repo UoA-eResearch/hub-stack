@@ -9,41 +9,43 @@
     </div>
   </div>
 
-  <!-- Research Acitivities Container -->
-  <div class="research-activity-container">
+  <div *ngIf="allStages$ | async as allStages">
+    <!-- Research Acitivities Container -->
+    <div class="research-activity-container">
 
-    <!-- Research Activities Content -->
-    <div
-      fxLayout="column" 
-      fxLayoutGap="8px"
-      class="research-activity-content">
-      <div *ngFor="let item of researchActivityOptions">
+      <!-- Research Activities Content -->
+      <div
+        fxLayout="column" 
+        fxLayoutGap="8px"
+        class="research-activity-content">
+        <div *ngFor="let item of allStages.items">
 
-        <!-- Panel Container -->
-        <div 
-          class="outer-panel"
-          fxLayout="row">
-
-          <!-- Panel Button -->
-          <div class="inner-panel">
-            <div
-              selected 
-              [routerLink]="['/search']" 
-              [queryParams]="getQueryParams(item)">
-              <h3>
-                {{ item.name }}
-              </h3>
-              <p>
-                {{ item.description }}
-              </p>
-            </div>
-          </div>
-
-          <!-- Panel Image -->
+          <!-- Panel Container -->
           <div 
-            fxHide.lt-lg
-            class="research-category-img">
-              <img src="assets/images/research-categories/{{ item.id }}-min.jpg">
+            class="outer-panel"
+            fxLayout="row">
+
+            <!-- Panel Button -->
+            <div class="inner-panel">
+              <div
+                selected 
+                [routerLink]="['/search']" 
+                [queryParams]="getQueryParams(item)">
+                <h3>
+                  {{ item.name }}
+                </h3>
+                <p>
+                  {{ item.description }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Panel Image -->
+            <div 
+              fxHide.lt-lg
+              class="research-category-img">
+                <img src="{{ item.image.url }}">
+            </div>
           </div>
         </div>
       </div>

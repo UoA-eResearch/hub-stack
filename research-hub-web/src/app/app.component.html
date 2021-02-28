@@ -250,37 +250,8 @@
             </div>
           </div>
 
-          <!-- <mat-drawer-container> -->
-          <mat-sidenav-container fxFlex="noshrink">
-
-          <!-- Content sidenav -->
-          <mat-sidenav 
-            mode="side"
-            disableClose
-            [@.disabled]="true"
-            class="content-sidenav"
-            [fixedInViewport]="isContentSidenavFixed"
-            [ngStyle]="{'height':contentSidenavHeight + 'px'}"
-            [opened]="appComponentService.isContentSidenavVisible">
-            <router-outlet 
-              name="contentSidenav" 
-              (activate)="setContentSidenavHasContent(true)"
-              (deactivate)="setContentSidenavHasContent(false)">
-            </router-outlet>
-          </mat-sidenav>
-
-            <!-- Search bar  -->
-            <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
-              <div #content>
-               <app-search-bar
-                [style.display]="showBanner ? 'none' : 'block'"
-                [searchText]="searchText">
-              </app-search-bar>
-                <!-- Page content -->
-                <router-outlet></router-outlet>
-              </div>
-            </mat-sidenav-content>
-          </mat-sidenav-container>
+          <!-- Page Content -->
+          <router-outlet></router-outlet>
         </div>
 
         <!-- Footer -->
