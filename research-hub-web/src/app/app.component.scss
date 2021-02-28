@@ -30,10 +30,10 @@
 }
 
 .banner-content-home {  
-  margin: 25vh 2.5vh;
+  margin: 20vh 2.5vh;
   display: inline-block;  
   @include size(medium) {
-    margin: 30vh 10vh;
+    margin: 25vh 10vh;
     display: inline-block;
   }
 }

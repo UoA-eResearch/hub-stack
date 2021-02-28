@@ -26,6 +26,7 @@ import {
 } from './graphql/schema';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
@@ -88,6 +89,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.detectDevice();
       this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
     }
+    public isLoading = true;
 
   // Detect if device is Mobile
   detectDevice() {
@@ -146,6 +148,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
       // If desktop
       this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.05) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
+    
     });
     
 
@@ -174,12 +177,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
             // Set current route name
             this.currentRoute = routeName;
-          
-            // Same component navigation
-            if (this.currentRoute == this.previousRoute) {
-              this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-              this.router.navigate([url]);
-            }
           
             // Same component navigation
             if (this.currentRoute == this.previousRoute) {
@@ -216,7 +213,7 @@ export class AppComponent implements OnInit, OnDestroy {
     try {
       return this.getHomepageGQL.fetch()
         .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
-    } catch (e) { console.error('Error loading all stages:', e) };
+    } catch (e) { console.error('Error loading homepage:', e) };
   }
 
   ngOnDestroy() {
