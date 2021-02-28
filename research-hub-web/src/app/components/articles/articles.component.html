@@ -82,7 +82,7 @@
                     <h1 
                         class="content-title" 
                         ngClass.lt-md="content-title-mobile"
-                        [style.color]="article.banner ? 'white' : ''">
+                        [style]="article.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
                             {{ article.title }}
                     </h1>
 
@@ -91,7 +91,7 @@
                         class="content-summary" 
                         ngClass.sm="content-summary-sm" 
                         ngClass.xs="content-summary-xs"
-                        [style.color]="article.banner ? 'white' : ''">
+                        [style]="article.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
                             <small>{{ article.summary }}</small>
                     </p>
                 </div>
