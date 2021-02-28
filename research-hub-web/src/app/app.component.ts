@@ -26,7 +26,6 @@ import {
 } from './graphql/schema';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { trigger, transition, style, animate } from '@angular/animations';
 
 
 @Component({
@@ -226,10 +225,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.url.unsubscribe();
   }
 
+  // Get year for footer copyright
   getYear() {
     return format(new Date(), 'yyyy');
   }
 
+  // Reset Search Bar content
   clearSearchText() {
     this.searchText = '';
   }
