@@ -287,7 +287,7 @@
         <footer>
 
           <!-- Footer Content -->
-          <div 
+          <div
             class="footer-content"
             fxLayout="column" 
             fxLayoutGap="8px"
@@ -298,35 +298,27 @@
             <div
               style="width: 100%;"
               fxLayoutGap="5%"
-              fxLayout.lt-md="column"
-              fxLayoutAlign="space-between">
+              fxLayout.lt-md="column">
+
               <div
-                fxFlex="45%"
-                fxLayout="row"
                 fxFlexOrder.lt-md="1"
                 class="logo-img-container">
                 <a
-                  fxLayout="column"
-                  fxLayoutAlign="center center"
                   [href]="aucklandUniUrl" 
                   target="_blank" >
                   <img 
                     class="logo-img" 
                     src="assets/images/uoa-logo.svg">
                 </a>
-                <!-- <div
-                  fxLayout="column"
-                  fxLayoutAlign="center center"
-                  class="divider">
-                  Centre<br>for eResearch
-                </div> -->
               </div>
-  
+
+              <div fxFlex fxHide.lt-md></div>
+
               <div
-                fxFlex
                 class="footer-links"
-                fxLayout="row wrap"
+                fxLayout="row"
                 fxFlexOrder.lt-md="0"
+                fxLayoutGap="2vw"
                 fxLayoutAlign="space-between">
                 <div fxLayout="column">
                   <a class="link-header">About</a>
