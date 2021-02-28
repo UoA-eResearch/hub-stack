@@ -23,7 +23,7 @@
 }
 
 .mat-card a {
-  color: $dark-grey;
+  color: $dark-grey!important;
 }
 
 
@@ -42,7 +42,7 @@
 
 .contact-card-summary  {
   a {
-    color: #0294A5;
+    color: #0294A5!important;
     display: inline-block;
     width: 100%;
     overflow: hidden;
