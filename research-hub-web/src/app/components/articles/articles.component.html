@@ -205,6 +205,11 @@
                         fxLayout="column" 
                         fxFlex="25%">
 
+                        <!-- Related Items -->
+                        <div id="you-might-be-interested-in">
+                            <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column wrap'}"></ng-container><div><br/></div>
+                        </div>
+
                         <!-- Official Documents -->
                         <ng-container *ngTemplateOutlet="officialDocuments; context: { flex: 'column wrap'}"></ng-container><div><br/></div>
 
@@ -213,11 +218,6 @@
 
                         <!-- Organizations -->
                         <ng-container *ngTemplateOutlet="relatedOrganisations; context: { flex: 'column wrap'}"></ng-container><div><br/></div>
-
-                        <!-- Related Items -->
-                        <div id="you-might-be-interested-in">
-                            <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column wrap'}"></ng-container><div><br/></div>
-                        </div>
                     </div>
                 </div>
             </div>

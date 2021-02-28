@@ -1,0 +1,34 @@
+@import '../../../../themes.scss';
+@import '../../../../styles.scss';
+@import '../../../../typography.scss';
+
+.category-list .mat-chip {
+  cursor: pointer;
+  border-radius: 10vh;
+  color: map-get($hub-navy, 500);
+  margin: 0.15em 0px !important;
+  margin-right: 1vh !important;
+  outline: 0;
+  padding: 1vh 1.5vh;
+  outline: none;
+}
+.category-list .mat-chip-selected {
+  color: white;
+}
+
+
+/**
+ * Category list that is displayed when the filter-panel is hidden
+ */
+.category-list.compact {
+  mat-chip {
+    font-size: 1.75vh;
+    line-height: 3.25vh;
+    height: 3.125vh;
+  
+    &.mat-standard-chip { // Fixes predefined material CSS causing oversized chips
+      min-height: 100%;
+    }
+  }
+}
+

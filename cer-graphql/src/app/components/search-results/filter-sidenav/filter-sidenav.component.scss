@@ -1,0 +1,31 @@
+@import '../../../../styles';
+@import '../../../../typography.scss';
+@import '../../../../themes.scss';
+
+.filter-sidenav-content,.filter-header {
+  padding-left: 4vh;
+  padding-right: 4vh;
+}
+
+.close-button {
+  padding-right: 2.4vh;
+  padding-top: 2.125vh;
+  color: #b3b3b3;
+  :hover {
+    color: $color-icon;
+  }
+}
+
+.reset-button {
+  color: map-get($research-activity-palette-create, 500); 
+  cursor: pointer
+}
+
+.filter-header {
+  background-color: inherit;
+  padding-top: 0.75vh;
+}
+
+.filter-footer {
+  padding-bottom: 4vh;
+}

@@ -1,0 +1,31 @@
+<div 
+  fxLayout="row" 
+  fxLayoutAlign="end" 
+  class="close-button">
+  <button 
+    mat-icon-button 
+    (click)="done(); analyticsService.trackUserExperience('Filter panel', 'close')">
+    <mat-icon 
+      aria-label="Close the refine search panel.">
+        close
+    </mat-icon>
+  </button>
+</div>
+  <div class="filter-header" >
+    <h2>Refine your search</h2>
+  </div>
+<div class="filter-sidenav-content">
+  <app-search-filters [filtersForm]="filtersForm"></app-search-filters>
+  <div 
+    class="filter-footer" 
+    fxLayout="row" 
+    fxLayoutAlign="end center" 
+    fxLayoutGap="1em" 
+    style="padding-top: 3em;">
+    <span 
+      class="reset-button"
+      (click)="clear()">
+        Reset
+    </span>
+  </div>
+</div>

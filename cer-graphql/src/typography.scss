@@ -1,0 +1,286 @@
+@import '~@angular/material/theming';
+@import './themes.scss';
+
+// https://material.angular.io/guide/typography
+
+/**
+ * National Fonts
+ */ 
+ @font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BoldItalic.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Book.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Book.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Book.woff') format('woff');
+  /* Pretty Modern Browsers */
+}
+
+@font-face {
+  font-family: 'National';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BookItalic.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BookItalic.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-BookItalic.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-style: italic;
+}
+
+html,
+body,
+span,
+button,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ion-item,
+ion-title {
+  font-family: 'National' !important;
+  white-space: normal;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.not-bold {
+  font-weight: 100;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.crossed {
+  text-decoration: line-through;
+}
+
+.font-s {
+  font-size: 0.89rem;
+}
+.font-default {
+  font-size: 1rem;
+}
+
+.font-l {
+  font-size: 1.25rem;
+}
+
+.font-xl {
+  font-size: 1.5rem !important;
+}
+
+.font-xxl {
+  font-size: 2rem !important;
+}
+
+$font-family: 'National';
+
+// All typography
+$app-base-typography: mat-typography-config(
+  $font-family:   $font-family,
+  $display-4:     mat-typography-level(14vh, 14vh, 300),
+  $display-3:     mat-typography-level(7vh, 7vh, 400),
+  $display-2:     mat-typography-level(5.7vh, 6vh, 400),
+  $display-1:     mat-typography-level(3vh, 5vh, 400),
+  $headline:      mat-typography-level(3.5vh, 4vh, 400), // <h1>
+  $title:         mat-typography-level(3vh, 3.5vh, 500), // <h2>
+  $subheading-2:  mat-typography-level(2.5vh, 3vh, 400), // <h3>
+  $subheading-1:  mat-typography-level(2vh, 2.5vh, 400), // <h4>
+  $body-2:        mat-typography-level(2vh, 3vh, 500), // bolder body text
+  $body-1:        mat-typography-level(2vh, 3vh, 400), // base body text <p> ?
+  $caption:       mat-typography-level(1.5vh, 2.5vh, 400), // smaller body and hint text
+  $button:        mat-typography-level(2vh, 3vh, 500),
+  $input:         mat-typography-level(2vh, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
+);
+
+// Override typography for all Angular Material, including mat-base-typography and all components.
+@include angular-material-typography($app-base-typography);
+
+/*
+Sidenav
+ */
+
+$app-sidenav-list-typography: mat-typography-config(
+  $body-1:        mat-typography-level(2vh, 2.5vh, 400), // text
+  $body-2:        mat-typography-level(3vh, 3vh, 500) // icon
+);
+
+$app-sidenav-toolbar-typography: mat-typography-config(
+  $body-1:      mat-typography-level(3vh, 2.5vh, 500), // 'ResearchHub' text
+  $button:        mat-typography-level(3vh, 2.5vh, 400) // icon
+);
+
+/*
+Search
+ */
+
+$app-search-bar-select-typography: mat-typography-config(
+  $title:         mat-typography-level(2vh, 2.5vh, 500), // current selected text
+  $body-1:      mat-typography-level(2vh, 2.5vh, 400) // option text
+);
+
+$app-search-bar-typography: mat-typography-config(
+  $body-1:        mat-typography-level(3vh, 3vh, 500), // icon
+  $input:         mat-typography-level(2vh, 1.125, 400) // input
+);
+
+/*
+Header/crumbs
+ */
+
+$app-primary-header-typography: mat-typography-config(
+  $headline:      mat-typography-level(1.75vh, 4vh, 400)
+);
+
+/*
+Featured
+ */
+
+$app-featured-mat-card-typography: mat-typography-config(
+  $body-1:      mat-typography-level(2.25vh, 2.5vh, 400), // text
+  $button:        mat-typography-level(1.75vh, 2.5vh, 400) // icon
+);
+
+/*
+Browse Grid / Results
+ */
+
+$app-browse-grid-typography: mat-typography-config(
+  $font-family:   $font-family,
+  $body-1:        mat-typography-level(2.25vh, 2.5vh, 400), // text
+  $body-2:        mat-typography-level(4vh, 4vh, 500) // icon
+);
+
+
+// NO LONGER NEEDED
+//$app-result-list-typography: mat-typography-config(
+//  $body-1:      mat-typography-level(2vh, 2.5vh, 400), // text
+//  $subheading-2: mat-typography-level(2.5vh, 2.5vh, 400), // h3 e.g. Managing Research Data
+//  $subheading-1: mat-typography-level(3.5vh, 2.5vh, 400) // we use this for the section subheadings e.g. Guides, Policies
+//);
+
+$app-chips-typography: mat-typography-config(
+  $button:      mat-typography-level(2vh, 2.5vh, 400) // text
+);
+
+
+/*
+Colors
+ */
+
+$heading-1-font-color: map-get($hub-pink, 500);
+$heading-2-font-color: map-get($hub-pink, 500);
+$heading-3-font-color: map-get($hub-pink, 500);
+$heading-4-font-color: map-get($hub-navy, 500);
+
+.body-text h1,
+.body-text h2,
+.body-text h3,
+.body-text h4 {
+  color: map-get($hub-navy, 500);
+}
+
+$subheading-font-color: map-get($hub-pink, 500); // used in results list
+
+$body-light-bg-font-color:  black;
+$link-light-bg-color: map-get($hub-teal, 500);
+
+$body-dark-bg-font-color:  white;
+$link-dark-bg-color-1: map-get($hub-teal, A100);
+$link-dark-bg-color-2: $body-dark-bg-font-color;
+
+$breadcrumb-previous-color: map-get($hub-teal, A100);
+$breadcrumb-current-color: $color-icon;
+
+$browse-tile-font-color: $body-dark-bg-font-color;
+
+$markdown-heading-color: $heading-2-font-color;
+$markdown-subheading-color: $heading-3-font-color;

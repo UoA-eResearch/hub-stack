@@ -49,6 +49,7 @@ export enum ResearchActivityId {
     Equipment,
     Software,
     Articles,
+    Events,
     SubHubs
   }
   
@@ -89,7 +90,8 @@ export enum ResearchActivityId {
     { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
     { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
     { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
-    { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }  ,
+    { id: CategoryId.Events, name: 'Events', icon: 'calendar_today', type: OptionType.Category, url: '/events' },
+    { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' },
     { id: CategoryId.Software, name: 'Software', icon: 'code', type: OptionType.Category, url: '/software' }
 ];
   
