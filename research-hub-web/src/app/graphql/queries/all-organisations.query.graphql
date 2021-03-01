@@ -1,0 +1,10 @@
+query AllOrganisations {
+    orgUnitCollection {
+        items {
+            name
+            link
+            description
+            displayOrder
+        }
+    }
+}
