@@ -8,13 +8,12 @@
 }
 .search-bar-inner {
   color: white;
-  background-color: rgba(150, 150, 150, 0.7);
+  background-color: rgba(185, 185, 185, 0.6);
   padding-left: 1em;
   padding-right: 1em;
-}
-
-.search-bar-inner mat-form-field {
-  min-width: 0 !important;
+  mat-form-field {
+    min-width: 0 !important;
+  }
 }
 
 button mat-icon {
