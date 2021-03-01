@@ -255,12 +255,17 @@
                 <p class="page-summary">{{ summary }}</p>
               </div>
               <br>
-              <input
+
+              <!-- Initial Search Bar -->
+              <app-search-bar
+                *ngIf="showBanner"
                 type="search"
+                name="search-bar"
+                ngDefaultControl
                 #searchTextInput
-                class="initial-search" 
                 [(ngModel)]="searchText"
                 placeholder="Search">
+              </app-search-bar>
             </div>
           </div>
 

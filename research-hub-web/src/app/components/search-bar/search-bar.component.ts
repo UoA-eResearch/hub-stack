@@ -55,6 +55,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       });
   }
 
+  search(event) {
+    this.router.navigate(['/search']);
+  }
+
   ngOnDestroy() {
     this.searchCategoryChangeSub.unsubscribe();
     this.searchTextChangeSub.unsubscribe();

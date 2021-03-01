@@ -1,4 +1,4 @@
-<div>
+<div class="search-bar-outer">
     <div 
       class="search-bar-inner" 
       fxFlex="100" 
@@ -13,7 +13,8 @@
           mat-icon-button>
           <mat-icon>search</mat-icon>
         </button>
-        <input 
+        <input
+          (keydown.enter)="search($event)"
           #searchTextInput 
           matInput 
           placeholder="Search" 
