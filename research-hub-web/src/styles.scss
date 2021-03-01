@@ -217,31 +217,24 @@ svg {
 }
 
 
-/*
- * Search Bar Coloring
- */
-/* input color class */
-.search-bar-inner {
-  ::ng-deep input.mat-input-element {
-    color: white;
-  }
-  
-  /* Change label color on focused */
-  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-    color: rgba(225, 225, 225, 0.6) !important;
-  }
+::ng-deep.mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: rgba(200, 200, 200, 0.6) !important;
+ }
 
-  /* underline border color on focused */
-  ::ng-deep .mat-focused .mat-form-field-underline .mat-form-field-ripple {
-    background-color: rgba(225, 225, 225, 0.6)!important;
-  }
+ ::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple {
+  /*change color of underline*/
+  background-color: rgba(200, 200, 200, 0.6) !important;
+} 
 
-  /* text cursor color */
-  ::ng-deep input {
-    caret-color: rgba(225, 225, 225, 0.6)!important;
-  }
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: rgba(200, 200, 200, 0.6) !important;;
 }
 
+::ng-deep input {
+  caret-color: white !important;
+}
 
 /**
  * Content Styles

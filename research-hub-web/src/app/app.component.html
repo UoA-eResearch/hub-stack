@@ -1,4 +1,7 @@
 <section class="mat-typography">
+  <div style="height:100vh; position:fixed;background:red">
+
+  </div>
 
   <!-- Landing Page -->
   <mat-sidenav-container class="sidenav-container">
@@ -253,19 +256,25 @@
               <div class="banner-text">
                 <h1 class="page-title"><b>Research</b>Hub</h1>
                 <p class="page-summary">{{ summary }}</p>
+                <br>
+                <div class="initial-search-outer">
+                  <mat-form-field class="initial-search">
+                    <input
+                      autofocus
+                      matInput
+                      (keydown.enter)="search($event)"
+                      [(ngModel)]="searchText"
+                      placeholder="Search">
+                    <button
+                      matSuffix
+                      *ngIf="searchText"
+                      (click)="clearSearchText()" 
+                      mat-icon-button>
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
               </div>
-              <br>
-
-              <!-- Initial Search Bar -->
-              <app-search-bar
-                *ngIf="showBanner"
-                type="search"
-                name="search-bar"
-                ngDefaultControl
-                #searchTextInput
-                [(ngModel)]="searchText"
-                placeholder="Search">
-              </app-search-bar>
             </div>
           </div>
 

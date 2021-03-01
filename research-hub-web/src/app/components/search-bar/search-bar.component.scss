@@ -3,36 +3,23 @@
 
 .search-bar-outer {
   margin: 0 auto;
-  width: 80vw;
-  @include size(medium) { width: 30vw; }
+  width: 100%;
 }
 .search-bar-inner {
-  color: white;
-  background-color: rgba(185, 185, 185, 0.6);
+  border: 1px solid $input-grey;
+  color: $body-grey;
+  background-color: white;
   padding-left: 1em;
   padding-right: 1em;
   mat-form-field {
+    font-size: 20px;
     min-width: 0 !important;
+    input {
+      caret-color: silver!important;
+    }
   }
 }
 
 button mat-icon {
-  color: rgba(204, 204, 204, 0.7);
-}
-
-/*
- * Initial Search
- */ 
- .initial-search {
-  padding: 4px;
-  margin: 0 auto;
-  font-size: 16px;
-  font-style: italic;
-  color: white;
-  text-align: center!important;
-  &:active,
-  &:focus {
-    text-decoration: none;
-    outline: none;
-  }
+  color: $body-grey;
 }
