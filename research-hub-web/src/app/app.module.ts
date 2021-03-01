@@ -57,8 +57,7 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SearchBarComponent
+    AppComponent
   ],
   imports: [
     AuthModule,

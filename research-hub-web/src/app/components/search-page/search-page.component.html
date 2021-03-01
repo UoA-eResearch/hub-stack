@@ -1,1 +1,56 @@
-<p>search-page works!</p>
+<div class="search-page-container">
+
+    <!-- Search Header Filter Options -->
+    <div class="search-header search-page-container grey-background">
+        <div
+            fxLayout="column"
+            ngClass.gt-sm="top-padding site-padding-2"
+            ngClass.lt-md="top-padding site-padding">
+
+            <!-- Search Bar -->
+            <app-search-bar
+                type="search"
+                name="search-bar"
+                ngDefaultControl
+                #searchTextInput
+                placeholder="Search">
+            </app-search-bar>
+
+            <br>
+
+            <!-- Search Filters -->
+            <div
+                class="search-filters"
+                fxLayout="row"
+                fxLayoutAlign="space-between"
+                fxLayout.lt-sm="column"
+                fxLayoutGap="2%">
+                <div fxFlex>
+                    <mat-select multiple placeholder="Research Category" floatLabel="never">
+                        <mat-option value="One">
+                            One
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div fxFlex>
+                    <mat-select multiple placeholder="Research Activity" floatLabel="never">
+                        <mat-option value="Two">
+                            Two
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div fxFlex>
+                    <mat-select multiple placeholder="Organization" floatLabel="never">
+                        <mat-option value="Three">
+                            Three
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Results -->
+    <div class="search-content">
+    </div>
+</div>

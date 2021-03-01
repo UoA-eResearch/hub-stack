@@ -1,4 +1,4 @@
-import { filter, distinctUntilChanged, pluck, flatMap } from 'rxjs/operators';
+import { filter, pluck, flatMap } from 'rxjs/operators';
 import { 
   Component, 
   OnDestroy, 
@@ -212,6 +212,12 @@ export class AppComponent implements OnInit, OnDestroy {
       return this.getHomepageGQL.fetch()
         .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
     } catch (e) { console.error('Error loading homepage:', e) };
+  }
+
+  // Search
+  search(event) {
+    console.log(this.searchText);
+    this.router.navigate(['/search']);
   }
 
   ngOnDestroy() {
