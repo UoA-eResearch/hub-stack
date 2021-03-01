@@ -1,0 +1,37 @@
+<!-- Banner -->
+<div 
+  class="banner-container site-padding-2"
+  ngClass.lt-lg="site-padding-mobile"
+  [ngStyle]="{ 'background-image': coverImageUrl }">
+  <div 
+    class="banner-content-default">
+    <h1>{{ title }}</h1>
+    <h4>{{ summary }}</h4>
+  </div>
+</div> 
+
+<div 
+  class="site-padding-2 top-padding margin-bottom"
+  ngClass.lt-lg="site-padding-mobile top-padding margin-bottom">
+  <h2>Thank you!</h2>
+  <p>
+    You can register your interest in helping our User Experience Specialist running through a usability study.
+  </p>
+  <p>
+    Thank you,<br/>
+    The Development Team
+  </p>
+
+  <div 
+    fxLayout="row" 
+    fxLayoutGap="1em">
+    <a 
+      mat-raised-button 
+      color="accent" 
+      href="https://docs.google.com/forms/d/e/1FAIpQLSeXhrPKLqmdAr_r3aUwY9zyPa5REWJs63FQdmNwRbXKBUS8WQ/viewform" 
+      target="_blank" 
+      (click)="analyticsService.trackJoinUserStudy(location.path())">
+        Join User Study
+    </a>
+  </div>
+</div>
