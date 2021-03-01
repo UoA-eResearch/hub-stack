@@ -121,7 +121,7 @@
         <div>
 
             <!-- Title and Summary -->
-            <div fxLayout="column wrap">
+            <div fxLayout="column">
                 <div>
                     <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
                 </div>
@@ -169,20 +169,16 @@
 
             <!-- Owners and User Facing Support -->
             <div
-                class="service-owners section"
-                fxLayout="column">
-                <div  *ngIf="service.relatedItemsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
-                </div>
-                <div *ngIf="service.relatedContactsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
-                </div>
-                <div *ngIf="service.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
-                </div>
-                <div *ngIf="service.relatedDocsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedDocuments; context: { hideImage: true }"></ng-container>
-                </div>
+                *ngIf="
+                    service.relatedItemsCollection.items.length > 0 ||
+                    service.relatedDocsCollection.items.length > 0 ||
+                    service.relatedContactsCollection.items.length > 0 ||
+                    service.relatedOrgsCollection.items.length > 0"
+                    fxLayout="column">
+                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false, flex: 'row' }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: false, flex: 'row' }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: false, flex: 'row' }"></ng-container>
+                    <ng-container *ngTemplateOutlet="relatedDocuments; context: { hideImage: true, flex: 'row' }"></ng-container>
             </div>
         </div>
     </div>
