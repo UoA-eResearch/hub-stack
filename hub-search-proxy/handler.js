@@ -2,7 +2,7 @@
 const { Client } = require('@elastic/elasticsearch');
 const AWS = require('aws-sdk');
 const createAwsElasticsearchConnector = require('aws-elasticsearch-connector');
-const contentfulExporter = require('exportFromContentful');
+const contentfulExporter = require('./exportFromContentful');
 
 
 const credentials = new AWS.EnvironmentCredentials('AWS');
@@ -133,12 +133,25 @@ module.exports.delete = async (event, context) => {
  * Uses client helper: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.x/client-helpers.html
  */
 module.exports.bulk = async () => {
-  // TODO: export entries from contentful 
-  // TODO: transform data to reduce size
+  let validEntries;
+  const validContentTypes = ['article','caseStudy','equipment','event','service','software','subHub'];
 
+  // contentful export and filter entries
+  try {
+    const contentfulData = await contentfulExporter();
+    validEntries = contentfulData.entries.filter(
+      entry => validContentTypes.includes(entry.sys.contentType.sys.id)
+    );
+  } catch(error) {
+    return formatResponse(
+      error.statusCode,
+      { result: error }
+    )
+  }
 
+  // bulk upload settings
   const params = {
-    datasource: myDatasource,  // TODO
+    datasource: validEntries,
     onDocument (doc) {
       return [
         { update: { _index: ELASTICSEARCH_INDEX_NAME, _id: doc.sys.id } },
@@ -153,9 +166,9 @@ module.exports.bulk = async () => {
     retries: 3,   // How many times a document will be retried before to call the onDrop callback
     concurrency: 5,  // How many request will be executed at the same time.
     flushBytes: 5000000,  // The size of the bulk body in bytes to reach before to send it. Default of 5MB.
-
   };
 
+  // perform the upload
   try {
     const result = await esClient.helpers.bulk(params);
     console.log(result);
@@ -164,6 +177,7 @@ module.exports.bulk = async () => {
       { result: result.body }
     )
   } catch(error) {
+    console.log(JSON.stringify(error));
     return formatResponse(
       error.statusCode,
       { result: error }
