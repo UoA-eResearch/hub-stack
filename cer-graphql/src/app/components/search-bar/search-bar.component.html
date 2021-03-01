@@ -1,0 +1,64 @@
+<div
+  [ngClass]="isVisible ? isFilterBtnVisible ? 'site-padding top-padding' : 'site-padding-2 top-padding' : 'site-padding'"
+  [ngClass.lt-lg]="isVisible ? isFilterBtnVisible ? 'site-padding-mobile top-padding' : 'site-padding-mobile top-padding' : 'site-padding-mobile'" >
+  <div 
+    class="search-bar-outer" 
+    ngClass.lt-md="search-bar-outer-xs" 
+    *ngIf="isVisible">
+    <div 
+      class="search-bar-inner" 
+      fxFlex="100" 
+      fxLayout="row" 
+      fxLayoutGap="1em" 
+      fxLayoutAlign="space-between center">
+      <mat-form-field 
+        fxFlex 
+        floatLabel="never">
+        <button 
+          matPrefix 
+          mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+        <input 
+          #searchTextInput 
+          matInput 
+          placeholder="Search" 
+          [(ngModel)]="searchText" 
+          autofocus>
+        <button 
+          matSuffix 
+          (click)="clearSearchText()" 
+          mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+  
+      <mat-form-field 
+        fxFlex="25vh" 
+        fxHide.lt-md 
+        floatLabel="never" 
+        placeholder="Categories">
+        <mat-select 
+          [(ngModel)]="category">
+          <mat-option 
+            *ngFor="let category of categoriesValue" 
+            [value]="category.id">
+              {{category.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <div 
+        fxFlex="5vh" 
+        fxHide.gt-sm 
+        *ngIf="isFilterBtnVisible" 
+        fxLayoutAlign="center center">
+        <button 
+          mat-icon-button 
+          (click)="openSearchFilter(); this.analyticsService.trackUserExperience('Filter panel', 'open')">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>  
+</div>
