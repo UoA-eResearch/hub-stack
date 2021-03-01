@@ -1,0 +1,8 @@
+query AllCategories {
+    categoryCollection(order: [name_ASC]) {
+        items {
+            name
+            description
+        }
+    }
+}

@@ -50,7 +50,8 @@ export enum ResearchActivityId {
     Software,
     Articles,
     SubHubs,
-    Services
+    Services,
+    Events,
   }
   
   export const researchActivityOptions = [
@@ -92,7 +93,7 @@ export enum ResearchActivityId {
     { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
     { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' },
     { id: CategoryId.Services, name: 'Services', icon: 'miscellaneous_services', type: OptionType.Category, url: '/services' },
-    { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' },
+    { id: CategoryId.Events, name: 'Events', icon: 'calendar_today', type: OptionType.Category, url: '/events' },
     { id: CategoryId.Software, name: 'Software', icon: 'code', type: OptionType.Category, url: '/software' }
 ];
   

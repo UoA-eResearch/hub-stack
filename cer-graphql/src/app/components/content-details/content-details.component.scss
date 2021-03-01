@@ -1,0 +1,230 @@
+@import '../../../styles';
+
+.flex-hack {
+  flex: 1 1 auto !important;
+  max-width: 100vw; // For IE 11
+}
+
+.component {
+  @extend .flex-hack;
+}
+
+.component-xs {
+  @extend .component;
+}
+
+.mat-button.mat-small {
+  min-width: 1%;
+}
+
+.content-header {
+  padding: $offset-gt-xs;
+  background-color: $color-content-header;
+}
+.content-header-xs {
+  @extend .content-header;
+  padding: $padding-site $padding-site 1.2em $padding-site;
+}
+.content-header > div:nth-child(1) > h2 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0.25em;
+}
+.content-header div:nth-child(1) > h3 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.content-cover-image {
+  height: 25vh;
+  width: 100%;
+  background-size: cover;
+  background: no-repeat center;
+  padding: 1em;
+}
+.content-overview {
+  padding-right: 2em;
+}
+.content-overview-xs {
+  @extend .content-overview;
+  padding-right: 0;
+  margin-bottom: 1em;
+}
+.content-overview-xs {
+  @extend .content-overview;
+}
+
+.mat-standard-chip {
+  height: auto !important; // Fixes predefined material CSS causing issue with multiline chips
+  border-radius: 3vh;
+  padding: 1vh;
+  line-height: 2.3vh;
+}
+.contact-chip {
+  margin: 0.25em !important;
+  cursor: pointer !important;
+}
+.org-unit-chip {
+  margin: 0.25em !important;
+  cursor: pointer !important;
+}
+
+.policy-url {
+  display: block;
+  margin: 0.5em;
+  width: 100%;
+}
+.divider {
+  height: 0.125vh;
+  overflow: hidden;
+  background-color: #e0e0e0;
+  margin-top: 1.4em;
+  margin-bottom: 1.6em;
+}
+.divider-app-markdown {
+  @extend .divider;
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+}
+.browse-tile {
+  @extend .browse-tile;
+  background-color: $color-guide-tile-bg !important;
+}
+
+// CSS for custom content pages
+
+
+/**
+ * Ng Deep 
+ */
+::ng-deep .impact {
+  mat-card:first-child {
+
+    // Common to all screen sizes
+    app-markdown div {
+      display: flex;
+      justify-content: space-between;
+      
+      p:first-of-type {
+        text-align: justify;
+      }
+
+      .youtube-embedded {
+        box-shadow: 0 0 1.625vh 0 #ccc;
+      }
+   }
+
+    // Small screens
+    @media all and (max-width: 122vh) {
+      app-markdown div {
+        flex-flow: column nowrap;
+        height: 100%;
+      }
+
+      p:first-of-type {
+        flex: 1 1 auto;
+      }
+
+      p:nth-of-type(2) {
+        flex: 1 1 auto;
+        width: 100%;
+        height: 100%;
+
+        .youtube-embedded {
+          max-width: 100%;
+          width: 100%;
+          height: 33.75vh;
+          max-height: 33.75vh;
+          max-width: 60vh;
+        }
+      }
+    }
+
+    // Large screens
+    @media all and (min-width: 122vh) {
+      app-markdown div {
+        flex-flow: row nowrap;
+      }
+      
+      p:first-of-type {
+        flex: 1 1 auto;
+        padding-right: 5vh;
+      }
+
+      p:nth-of-type(2) {
+        width: 60vh;
+        height: 33.75vh;
+        flex: 1 0 auto;
+
+        .youtube-embedded {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  mat-card:last-child {
+    app-markdown div {
+      display: grid;
+
+      h3:not(:first-child) {
+        margin-top: 0px !important;
+      }
+
+      // Small screens
+      @media all and (max-width: 122vh) {
+        grid-template-cols: 1fr;
+
+        .youtube-embedded {
+          width: 100%;
+          height: 33.75vh;
+          max-height: 33.75vh;
+          max-width: 60vh;
+        }
+      }
+
+      // Large Screens
+      @media all and (min-width: 122vh) {
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 0 1.875vh;
+        
+        // Rearrange markdown content for the grid layout
+        :nth-child(1) { order: 0; grid-column: 1 / span 2;}
+        :nth-child(2) { order: 1; }
+        :nth-child(3) { order: 3; }
+        :nth-child(4) { order: 5; }
+        :nth-child(5) { order: 2; }
+        :nth-child(6) { order: 4; }
+        :nth-child(7) { order: 6; }
+
+        .youtube-embedded {
+          width: 100%;
+          height: 31.5vh;
+          max-height: 31.5vh;
+          max-width: 56.25vh;
+          box-shadow: 0 0 1.625vh 0 #ccc;
+        }
+      }
+
+    }
+  }
+}
+
+/**
+ * Main content image
+ */
+mat-card-header img {
+  width: 8vh; 
+  height: 8vh; 
+  margin-right: 1em;
+}
+
+/**
+ * Level 2 image
+ */
+ mat-chip img {
+  height: 3.125vh;
+  width: 3.125vh;
+  margin-right: 1vh;
+ }

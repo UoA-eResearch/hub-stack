@@ -1,0 +1,74 @@
+query GetEventBySlug($slug: String) {
+    eventCollection(limit: 1, where: {slug: $slug}) {
+        items {
+            ssoProtected
+            title
+            sys {
+                id
+            }
+            title
+            slug
+            ssoProtected
+            searchable
+            banner {
+                url
+            }
+            icon {
+                url
+            }
+            summary
+            bodyText {
+            json 
+            links {
+            entries {
+                block { 
+                ...PublicFields
+                sys {
+                    id
+                }
+                }
+                inline { 
+                ...PublicFields
+                sys {
+                    id
+                } 
+                }
+                hyperlink { 
+                ...PublicFields 
+                sys {
+                    id
+                }
+                }
+            }
+            assets {
+                block { ...AssetFields }
+                hyperlink { ...AssetFields }
+            }
+            }
+        }
+        keywords
+        relatedContactsCollection {
+            items { ...PublicFields }
+        }
+        relatedOrgsCollection {
+            items { ...PublicFields }
+        }
+        relatedItemsCollection {
+            items { ...PublicFields }
+        }
+        callToAction
+        audience
+        mode
+        availability
+        date
+        capabilities
+        location {
+            json
+        }
+        address {
+            lat 
+            lon 
+        }
+        }
+    }
+}
