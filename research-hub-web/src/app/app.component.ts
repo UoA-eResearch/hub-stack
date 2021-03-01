@@ -216,7 +216,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   // Search
   search(event) {
-    console.log(this.searchText);
+    this.searchBarService.setSearchText(this.searchText);
     this.router.navigate(['/search']);
   }
 

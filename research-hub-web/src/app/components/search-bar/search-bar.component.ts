@@ -24,25 +24,23 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @Output() focusOnInitChange = new EventEmitter();
   @ViewChild('searchTextInput', { read: MatInput }) searchTextInput: MatInput;
 
-  private searchBarVisibilityChangeSub: Subscription;
   private searchCategoryChangeSub: Subscription;
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
+  private searchtext: String;
 
   constructor(private searchBarService: SearchBarService, private router: Router) {
   }
 
   ngOnInit() {
+    this.searchText = this.searchBarService.getSearchText();
+    
     this.searchCategoryChangeSub = this.searchBarService.searchCategoryChange.subscribe(searchCategory => {
       this.categoryValue = searchCategory;
     });
 
     this.searchTextChangeSub = this.searchBarService.searchTextChange.subscribe(searchText => {
       this.searchTextValue = searchText;
-    });
-
-    this.searchBarVisibilityChangeSub = this.searchBarService.searchBarVisibilityChange.subscribe(isVisible => {
-      this.isVisible = isVisible;
     });
 
     this.routerSub = this.router.events.pipe(
