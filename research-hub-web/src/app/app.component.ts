@@ -121,17 +121,16 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     // Navigate to the search page if user starts typing
-    this.searchTextChangeSub = this.searchBarService.searchTextChange.pipe(distinctUntilChanged()).subscribe(searchText => {
-      const url = this.location.path();
-      if (url && !url.startsWith('/search') && searchText != null && searchText !== '') {
-        this.router.navigate(['/search'], {
-          queryParams: {
-            categoryId: this.searchBarService.category,
-            searchText: this.searchBarService.searchText
-          }
-        });
-      }
-    });
+    // this.searchTextChangeSub = this.searchBarService.searchTextChange.pipe(distinctUntilChanged()).subscribe(searchText => {
+    //   const url = this.location.path();
+    //   if (url && !url.startsWith('/search') && searchText != null && searchText !== '') {
+    //     this.router.navigate(['/search'], {
+    //       queryParams: {
+    //         searchText: this.searchBarService.searchText
+    //       }
+    //     });
+    //   }
+    // });
 
     // Get All Categories
     this.allCategories$ = this.getAllCategories();

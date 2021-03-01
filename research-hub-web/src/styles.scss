@@ -216,6 +216,33 @@ svg {
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
+
+/*
+ * Search Bar Coloring
+ */
+/* input color class */
+.search-bar-inner {
+  ::ng-deep input.mat-input-element {
+    color: rgba(204, 204, 204, 0.7);
+  }
+  
+  /* Change label color on focused */
+  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: rgba(204, 204, 204, 0.7) !important;
+  }
+  
+  /* underline border color on focused */
+  ::ng-deep .mat-focused .mat-form-field-underline .mat-form-field-ripple{
+    background-color: rgba(204, 204, 204, 0.7)!important;
+  }
+
+  /* text cursor color */
+  ::ng-deep .filter input {
+    caret-color: rgba(204, 204, 204, 0.7)!important;
+  }
+}
+
+
 /**
  * Content Styles
  */
