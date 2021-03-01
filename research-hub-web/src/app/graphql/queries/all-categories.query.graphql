@@ -3,6 +3,7 @@ query AllCategories {
         items {
             name
             description
+            displayOrder
         }
     }
 }

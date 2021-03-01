@@ -27,14 +27,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   private searchCategoryChangeSub: Subscription;
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
-  private searchtext: String;
-
   constructor(private searchBarService: SearchBarService, private router: Router) {
   }
 
   ngOnInit() {
-    this.searchText = this.searchBarService.getSearchText();
-    
+    this.searchTextValue = this.searchBarService.getSearchText();
+
     this.searchCategoryChangeSub = this.searchBarService.searchCategoryChange.subscribe(searchCategory => {
       this.categoryValue = searchCategory;
     });
@@ -42,21 +40,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.searchTextChangeSub = this.searchBarService.searchTextChange.subscribe(searchText => {
       this.searchTextValue = searchText;
     });
-
-    this.routerSub = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd))
-      .subscribe(event => {
-        /**
-         * Padding Class
-         */
-        this.isFilterBtnVisible = !event['urlAfterRedirects'].startsWith('/home');
-      });
   }
 
   ngOnDestroy() {
     this.searchCategoryChangeSub.unsubscribe();
     this.searchTextChangeSub.unsubscribe();
-    this.routerSub.unsubscribe();
   }
 
   @Input()
