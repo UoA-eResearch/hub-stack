@@ -23,7 +23,7 @@ export class SearchPageComponent implements OnInit {
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
     public allStagesGQL: AllStagesGQL,
-    public allOrganisationsGQL: AllOrganisationsGQL
+    public allOrganisationsGQL: AllOrganisationsGQL,
     ) {}
 
   async ngOnInit() {
