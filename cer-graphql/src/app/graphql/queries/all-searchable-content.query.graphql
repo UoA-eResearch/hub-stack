@@ -1,0 +1,30 @@
+#import './public-fields.fragment.graphql'
+query AllSearchableContentPublicFields {
+    articleCollection(where: { searchable: true} ) { 
+        items { ...PublicFields}
+    }
+
+    caseStudyCollection(where: { searchable: true }) {
+        items { ...PublicFields }
+    }
+
+    equipmentCollection(where: { searchable: true }) {
+        items { ...PublicFields }
+    }
+
+    eventCollection(where: { searchable: true }) {
+        items { ...PublicFields }
+    }
+    
+    serviceCollection(where: { searchable: true }) {
+        items { ...PublicFields }
+    }
+
+    softwareCollection(where: { searchable: true }) {
+        items { ...PublicFields }
+    }
+    
+    subHubCollection(where: { searchable: true }) {
+        items { ...PublicFields }
+    }
+}

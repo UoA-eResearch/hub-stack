@@ -1,0 +1,72 @@
+@import '../../../themes.scss';
+@import '../../../typography.scss';
+@import '../../../styles.scss';
+
+mat-expansion-panel,
+mat-card  {
+    margin: 1vh 0;
+}
+
+/**
+ * Container for an individual event
+ */
+#event-container {
+
+    #item-avatar {
+        $avatar-size: 9.375vh;
+        width: $avatar-size;
+        height: $avatar-size;
+
+        margin-right: $avatar-size * 0.1;
+        margin-bottom: $avatar-size * 0.25;
+
+        img {
+            border-radius: 50%;
+        }
+    }
+
+    #item-avatar-icon {
+        font-size: 55pt;
+        color: $color-primary;
+    }
+
+    .related-item-summary {
+        color: gray;
+    }
+}
+
+
+/**
+ * event Image
+ */
+.event-image {
+    margin: 0 auto;
+}
+
+
+/**
+ * Specifications Table
+ */
+ .specifications-table {
+    border-collapse: collapse; 
+    width: 100%;
+    @include size(medium) { width: 50% }
+}
+.specifications-table td, 
+.specifications-table th {
+    border: 0.125vh solid #ddd;
+    padding: 1vh;
+}
+.specifications-table tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+.specifications-table td:nth-child(odd){
+    font-weight: bold;
+    width: 25%}
+.specifications-table th {
+    padding-top: 1.5vh;
+    margin-bottom: 1.5vh;
+    text-align: left;
+    background-color: map-get($hub-teal, 500);
+    color: $color-background;
+}
