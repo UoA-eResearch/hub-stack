@@ -9,7 +9,6 @@
 
             <!-- Search Bar -->
             <app-search-bar
-                [(ngModel)]="searchText"
                 type="search"
                 name="search-bar"
                 ngDefaultControl
@@ -30,10 +29,13 @@
                 fxLayoutGap="2%">
                 <div fxFlex>
                     <mat-select
+                        [(ngModel)]="categoryFilter"
+                        name="categoryFilter" 
+                        ngDefaultControl
                         multiple
                         floatLabel="never"
                         placeholder="Research Category">
-                        <mat-select-trigger>Reesearch Categories</mat-select-trigger>
+                        <mat-select-trigger>Research Categories</mat-select-trigger>
                         <div *ngIf="allCategories$ | async as allCategories">
                             <mat-option
                                 *ngFor="let item of allCategories.items"
@@ -47,6 +49,9 @@
                 <!-- Research Activity Filters -->
                 <div fxFlex>
                     <mat-select
+                        [(ngModel)]="stageFilter"
+                        name="stageFilter" 
+                        ngDefaultControl
                         multiple
                         floatLabel="never"
                         placeholder="Research Activities">
@@ -64,6 +69,9 @@
                 <!-- Organisation Filters -->
                 <div fxFlex>
                     <mat-select
+                        [(ngModel)]="organisationFilter"
+                        name="organisationFilter" 
+                        ngDefaultControl
                         multiple
                         floatLabel="never"
                         placeholder="Organisations">

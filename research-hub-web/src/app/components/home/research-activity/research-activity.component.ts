@@ -24,7 +24,7 @@ export class ResearchActivityComponent implements OnInit {
   }
 
   getQueryParams(activity) {
-    return { researchActivityId: [activity.slug] };
+    return { researchActivities: [activity.displayOrder] };
   }
 
   // Get all research stages

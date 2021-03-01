@@ -34,7 +34,7 @@
               <a 
                 selected
                 class="title-text"
-                [routerLink]="['/']"> <!-- Redirect to search page -->
+                [routerLink]="['/search']" [queryParams]="getSearchQueryParams(item)">
                   {{ item.name }}
               </a>
             </mat-card-title>
@@ -45,7 +45,7 @@
           <mat-card-actions>
             <a 
               class="tile-button"
-              [routerLink]="['/']"> <!-- Redirect to search page -->
+              [routerLink]="['/search']" [queryParams]="getSearchQueryParams(item)">
               <button 
                   mat-flat-button 
                   class="standard-button">

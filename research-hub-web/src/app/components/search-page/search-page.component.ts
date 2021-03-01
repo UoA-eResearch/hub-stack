@@ -1,4 +1,6 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { 
   AllCategoriesGQL,
   AllStagesGQL,
@@ -19,17 +21,29 @@ export class SearchPageComponent implements OnInit {
   public allCategories$: Observable<CategoryCollection>;
   public allStages$: Observable<StageCollection>;
   public allOrganisations$: Observable<OrgUnitCollection>;
+  public categoryFilter;
+  public stageFilter;
+  public organisationFilter;
+  public params;
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
     public allStagesGQL: AllStagesGQL,
     public allOrganisationsGQL: AllOrganisationsGQL,
+    private route: ActivatedRoute
     ) {}
 
   async ngOnInit() {
     this.allCategories$ = this.getAllCategories();
     this.allStages$ = this.getAllStages();
     this.allOrganisations$ = this.getAllOrganisations();
+    this.route.queryParams.subscribe(data => {
+      this.params = data;
+    });
+    console.log([this.route.snapshot.queryParamMap.get('researchCategories')]);
+    console.log([this.route.snapshot.queryParamMap.get('researchActivities')]);
+    this.categoryFilter = [this.route.snapshot.queryParamMap.get('researchCategories')];
+    this.stageFilter = [this.route.snapshot.queryParamMap.get('researchActivities')];
   }
 
   // Get all research stages

@@ -33,4 +33,8 @@ export class BrowseComponent implements OnInit {
         .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
     } catch (e) { console.error('Error loading all Categories:', e) };
   }
+
+  getSearchQueryParams(item: any) {
+    return { researchCategories: [item.displayOrder] };
+  }
 }
