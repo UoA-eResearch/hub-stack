@@ -1,7 +1,0 @@
-query AllArticles {
-    articleCollection {
-        items {
-            ...PublicFields
-        }
-    }
-}

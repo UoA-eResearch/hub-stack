@@ -1,7 +1,0 @@
-query AllEquipment {
-    equipmentCollection {
-        items {
-        ...PublicFields
-        }
-    }
-}
