@@ -143,10 +143,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.getHomepage().subscribe(data => {
 
       // If mobile
-      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.05) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
+      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
 
       // If desktop
-      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.05) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
+      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
     
     });
     

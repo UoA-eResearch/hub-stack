@@ -61,7 +61,6 @@ query GetSubHubBySlug($slug: String) {
             relatedDocsCollection {
                 items { ...PublicFields }
             }
-            viewType
         }
     }
 }

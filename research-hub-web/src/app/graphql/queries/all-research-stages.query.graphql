@@ -1,5 +1,5 @@
 query AllStages {
-    stageCollection {
+    stageCollection(order: [displayOrder_ASC]) {
         items {
             name
             description
