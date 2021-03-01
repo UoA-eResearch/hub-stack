@@ -61,7 +61,6 @@ query GetArticleBySlug($slug: String) {
           }
         }
       }
-      viewType
         }
     }
 }
