@@ -1,0 +1,27 @@
+<div 
+  class="site-padding-2 margin-bottom"
+  ngClass.lt-lg="site-padding-mobile margin-bottom"
+  fxLayout="column" 
+  fxLayoutGap="2vh">
+  <app-research-activity></app-research-activity>
+  <div 
+    fxFlex="noshrink" 
+    fxLayout="row" 
+    fxLayout.lt-sm="column" 
+    fxLayoutGap="7%">
+    <div 
+      fxFlex
+      fxFlex.xs="noshrink">
+      <app-browse 
+        [embedded]="true" 
+        [maxCols]="3">
+      </app-browse>
+    </div>
+    <div 
+      fxFlex="35" 
+      fxFlex.xs="noshrink" 
+      fxLayoutGap="5%">
+      <app-featured></app-featured>
+    </div>
+  </div>
+</div>
