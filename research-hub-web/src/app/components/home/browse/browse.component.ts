@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AllCategoriesGQL, CategoryCollection } from '@app/graphql/schema';
+import { AllCategoriesGQL, CategoryCollection, Category } from '@app/graphql/schema';
 import { pluck } from 'rxjs/operators';
 
 @Component({
@@ -12,11 +12,19 @@ export class BrowseComponent implements OnInit {
   public title = 'Research Categories';
   public description = "The University of Auckland provides top-quality support to our research community. The ResearchHub is your gateway to research support at the University of Auckland. Here you can explore what's on offer by topic.";
   public allCategories$: Observable<CategoryCollection>;
+  public events;
 
   constructor(public allCategoriesGQL: AllCategoriesGQL) {}
 
   async ngOnInit() {
     this.allCategories$ = this.getAllCategories();
+    this.getAllCategories().subscribe(data => {
+      this.events = ({
+        "name": "Events",
+        "description": "See all upcoming events at the ResearchHub."
+      }) as unknown as Category;
+      data.items.push(this.events);
+    });
   }
 
   public getAllCategories(): Observable<CategoryCollection> {

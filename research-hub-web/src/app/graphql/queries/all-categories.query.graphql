@@ -1,5 +1,5 @@
 query AllCategories {
-    categoryCollection(order: [name_ASC]) {
+    categoryCollection(order: [displayOrder_ASC]){
         items {
             name
             description
