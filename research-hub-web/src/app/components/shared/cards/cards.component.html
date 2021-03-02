@@ -28,13 +28,16 @@
                 <span *ngIf="content.__typename == 'Person'" class="card-label">Contact</span>
 
                 <mat-card-title>
-                    <a class="card-title" *ngIf="content.__typename != 'Person' && content.__typename != 'OrgUnit'" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+                    <a class="card-title" *ngIf="content.__typename != 'Person' && content.__typename != 'OrgUnit' && content.__typename != 'OfficialDocuments'" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
                         {{ content['title'] }}
                     </a>
                     <a  class="card-title" *ngIf="content.__typename == 'Person'">
                         {{ content['title'] }}
                     </a>
-                    <a class="card-title" *ngIf="content.__typename == 'OrgUnit'" href="{{ content['link']}}">
+                    <a class="card-title" *ngIf="content.__typename == 'OrgUnit'" href="{{ content.link }}">
+                        {{ content['title'] }}
+                    </a>
+                    <a class="card-title" *ngIf="content.__typename == 'OfficialDocuments'" href="{{ content.url }}">
                         {{ content['title'] }}
                     </a>
                 </mat-card-title>
@@ -43,8 +46,9 @@
                         {{ content['summary'] }}
                     </span>
                 </mat-card-content>
+
                 <span
-                    *ngIf="content['__typename'] != 'Person' && content['__typename'] != 'OrgUnit'"
+                    *ngIf="content['__typename'] != 'Person' && content['__typename'] != 'OrgUnit' && content['__typename'] != 'OfficialDocuments'"
                     class="call-to-action" 
                     style="display: flex; align-items: center;max-width: fit-content">
                     <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
@@ -52,6 +56,17 @@
                     </a>
                     <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/teal-arrow.png">
                 </span>
+
+                <span
+                    *ngIf="content['__typename'] == 'OfficialDocuments'"
+                    class="call-to-action" 
+                    style="display: flex; align-items: center;max-width: fit-content">
+                    <a href="{{ content.url }}">
+                        Read More&nbsp;&nbsp;
+                    </a>
+                    <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/teal-arrow.png">
+                </span>
+                
                 <span
                     *ngIf="content['__typename'] == 'OrgUnit'"
                     class="call-to-action" 

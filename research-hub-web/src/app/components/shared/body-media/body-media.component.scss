@@ -7,16 +7,16 @@
  */
  .blockquote-container {
      width: fit-content;
-     border-left: solid 0.5vh $input-grey;
-     margin: 3.75vh auto;
+     border-left: solid 4px $input-grey;
+     margin: 30px auto;
  }
  .blockquote {
     word-break: break-word;
-    font-size: 3vh;
+    font-size: 24px;
     line-height: 1.2;
  }
  .blockquote p {
-    margin: 1.5vh 0.625vh 1.5vh 1.875vh;
+    margin: 12px 5px 12px 15px;
     width: fit-content;
     text-align: center;
     font-family: 'National Light';
@@ -43,7 +43,7 @@
 }
 .asset-summary {
     @extend .card-summary;
-    font-size: 1.5vh;
+    font-size: 12px;
 }
 
 
@@ -73,17 +73,17 @@
  * Download Button
  */
  .download {
-    margin-top: 1.25vh;
+    margin-top: 10px;
  }
  .download a {
     color: map-get($hub-navy, 500);
 }
 .mat-card-title a {
     color: map-get($hub-navy, 500);
-    border-bottom: solid 0.25vh transparent;
+    border-bottom: solid 2px transparent;
 }
 .mat-card-title a:hover {
-    border-bottom: solid 0.25vh map-get($hub-navy, 500);
+    border-bottom: solid 2px map-get($hub-navy, 500);
 }
 .mat-card:hover .download-arrow {
     -webkit-animation: download 0.5s ease-in-out forwards;
@@ -91,8 +91,8 @@
 
 @-webkit-keyframes download {
     0% {opacity: 1; transform: translate(0px, 0px)}
-    40% {opacity: 0; transform: translate(0px, 1.25vh)}
-    60% {opacity: 0; transform: translate(0px, -1.25vh)}
+    40% {opacity: 0; transform: translate(0px, 10px)}
+    60% {opacity: 0; transform: translate(0px, -10px)}
     100%  {opacity: 1; transform: translate(0px, 0px)}
 }
 
@@ -101,7 +101,7 @@
  */
 .file-size {
     width: fit-content;
-    padding: 0.625vh;
+    padding: 5px;
     color: $dark-grey;
     background: $input-grey;
     transition: background-color 0.2s ease-in-out
@@ -120,19 +120,19 @@
  * Card Image
  */ 
  .mat-card-image {
-    min-height: 10vh;
-    max-height: 19vh;
-    margin-bottom: 0.625vh;
+    min-height: 80px;
+    max-height: 152px;
+    margin-bottom: 5px;
     min-width: 100%;
     object-fit: cover;
 }
 
 .embedded-entry-block .mat-card-title a {
-    font-size: 2.25vh; 
+    font-size: 18px; 
     color: map-get($hub-navy, 500);
 }
 .embedded-entry-block .mat-card-title a:hover {
-    border-bottom: solid 0.25vh map-get($hub-navy, 500);
+    border-bottom: solid 2px map-get($hub-navy, 500);
 }
 
  small {
@@ -152,30 +152,28 @@
 /**
  * Entry Block
  */
- .embedded-entry-block a {
-    display: flex;
-    align-items: center;
-}
-.embedded-entry-block .mat-card {
-    width: 100%;
-    padding-right: 3.75vh;
-    background: #fafafa;
-}
-
-/**
- * Hover
- */
- .embedded-entry-block .mat-card:hover .mat-card-title span {
-    border-bottom: solid 0.25vh map-get($hub-navy, 500);
-}
-
-
-/**
- * Card Title
- */
-.embedded-entry-block .mat-card-title span {
-    font-size: 2.25vh; 
-    color: map-get($hub-navy, 500);
+.embedded-entry-block {
+    @include size(large) { width: 50% ; margin-left: auto; margin-right: auto; }
+    a {
+        display: flex;
+        align-items: center;
+    }
+    .mat-card {
+        margin: 15px auto;
+        width: 100%;
+        padding-right: 30px;
+        background: #fafafa;
+        .mat-card-title a { width: fit-content}
+        .mat-card-title a:hover {
+            border-bottom: solid 2px map-get($hub-navy, 500);
+        }
+        & .mat-card-title {
+            span  * {
+                font-size: 18px; 
+                color: map-get($hub-navy, 500);
+            }
+        }
+    }
 }
 
 .mat-card-content {

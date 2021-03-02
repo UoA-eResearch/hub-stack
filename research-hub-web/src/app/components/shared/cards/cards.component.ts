@@ -26,7 +26,9 @@ export class CardsComponent implements OnInit {
     // If you want to hide image when displayed
     if (this.hideImage) {
       this.contentItem.items.forEach(element => {
-        delete element['banner'].url;
+        try {
+          delete element['banner'].url;
+        } catch {}
       });
     };
 
