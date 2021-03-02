@@ -24,9 +24,22 @@ const ELASTICSEARCH_INDEX_NAME = 'contentful';
 module.exports.search = async (event, context) => {
   const requestBody = JSON.parse(event.body);
   let queryString = '';
+  let size = 10;
+  let from = 0;
+  
   if (requestBody.hasOwnProperty('query')) {
     queryString = requestBody.query;
   }
+  if (requestBody.hasOwnProperty('size')) {
+    size = requestBody.size;
+  }
+  if (requestBody.hasOwnProperty('from')) {
+    from = requestBody.from;
+  }
+
+  // allow fuzziness, but only if query isn't empty
+  queryString = queryString.length > 0 ? queryString + '~AUTO' : queryString;
+
   console.log(`Received query string: ${queryString}`); 
 
   let query = { // The query object to be sent to ElasticSearch
@@ -46,7 +59,7 @@ module.exports.search = async (event, context) => {
         must: [
           {
             simple_query_string: {
-              query: `${queryString}~AUTO`
+              query: queryString
             }
           },
           {
@@ -61,7 +74,9 @@ module.exports.search = async (event, context) => {
 
   const params = {
     index: ELASTICSEARCH_INDEX_NAME,
-    body: query
+    body: query,
+    size: size,
+    from: from
   }
 
   try {
