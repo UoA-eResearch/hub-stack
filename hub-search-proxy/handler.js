@@ -2,9 +2,10 @@
 const { Client } = require('@elastic/elasticsearch');
 const AWS = require('aws-sdk');
 const createAwsElasticsearchConnector = require('aws-elasticsearch-connector');
-const contentfulExporter = require('./exportFromContentful');
+const contentfulExport = require('contentful-export');
 
-
+const token = process.env.CONTENTFUL_ACCESS_TOKEN;
+const spaceId = process.env.CONTENTFUL_SPACE_ID;
 const credentials = new AWS.EnvironmentCredentials('AWS');
 const region = 'ap-southeast-2';
 
@@ -18,7 +19,7 @@ const esClient = new Client({
     node: process.env.ELASTICSEARCH_ENDPOINT
 });
 
-const ELASTICSEARCH_INDEX_NAME = 'main-index';
+const ELASTICSEARCH_INDEX_NAME = 'contentful';
 
 module.exports.search = async (event, context) => {
   const requestBody = JSON.parse(event.body);
@@ -87,7 +88,10 @@ module.exports.update = async (event, context) => {
   const params = {
     id: event.pathParameters.id,
     index: ELASTICSEARCH_INDEX_NAME,
-    body: doc,
+    body: {
+      doc: doc,
+      doc_as_upsert: true  // if doc doesn't exist, create it
+    },
     refresh: 'true'   // index refresh
   };
 
@@ -133,12 +137,22 @@ module.exports.delete = async (event, context) => {
  * Uses client helper: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.x/client-helpers.html
  */
 module.exports.bulk = async () => {
+  console.log("Bulk operation initiated.");
+  
   let validEntries;
   const validContentTypes = ['article','caseStudy','equipment','event','service','software','subHub'];
 
   // contentful export and filter entries
   try {
-    const contentfulData = await contentfulExporter();
+    console.log('Exporting data from Contentful space id: ' + spaceId);
+    const options = {
+      spaceId: spaceId,
+      managementToken: token,
+      contentOnly: true,
+      downloadAssets: false,
+      saveFile: false
+    };
+    const contentfulData = await contentfulExport(options);
     validEntries = contentfulData.entries.filter(
       entry => validContentTypes.includes(entry.sys.contentType.sys.id)
     );
@@ -149,13 +163,15 @@ module.exports.bulk = async () => {
     )
   }
 
+  console.log(`Found ${validEntries.length} entries to upload.`);
+
   // bulk upload settings
   const params = {
     datasource: validEntries,
     onDocument (doc) {
       return [
         { update: { _index: ELASTICSEARCH_INDEX_NAME, _id: doc.sys.id } },
-        { doc_as_upsert: true }
+        { doc: doc, doc_as_upsert: true }
       ]
     },
     onDrop (doc) {  // called everytime a document can’t be indexed and it has reached the maximum amount of retries.
@@ -174,12 +190,11 @@ module.exports.bulk = async () => {
     console.log(result);
     return formatResponse(
       200,
-      { result: result.body }
+      { result: result }
     )
   } catch(error) {
-    console.log(JSON.stringify(error));
     return formatResponse(
-      error.statusCode,
+      500,
       { result: error }
     )
   }

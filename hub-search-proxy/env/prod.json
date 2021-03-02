@@ -7,6 +7,6 @@
     "ELASTICSEARCH_ENDPOINT": "TBD - add endpoint to parameter store",
     "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "TBD",
     "CONTENTFUL_SPACE_ID": "${ssm:/prod/research-hub/contentful-space-id~true}",
-    "CONTENTFUL_ACCESS_TOKEN": "${ssm:/prod/research-hub/contentful-access-token~true}",
+    "CONTENTFUL_ACCESS_TOKEN": "${ssm:/prod/research-hub/contentful-mgmt-access-token~true}",
     "resourceKey": "180f8f50-c1f3-4b9a-b793-0fca514ab708"
 }

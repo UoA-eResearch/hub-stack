@@ -20,6 +20,7 @@ provider:
   region: ap-southeast-2
   endpointType: regional
   role: myDefaultRole
+  timeout: 30
   tags:
     ResearchHub: ${self:custom.ResearchHub}
     BusinessService: ${self:custom.BusinessService}
@@ -69,8 +70,6 @@ functions:
           method: post
           cors: 
             true
-          private: true
-          timeout: 30
   update:
     handler: handler.update
     events:
@@ -80,7 +79,6 @@ functions:
           cors:
             true
           private: true
-          timeout: 30
   delete:
     handler: handler.delete
     events:
@@ -90,7 +88,6 @@ functions:
           cors:
             true
           private: true
-          timeout: 30
   bulk:
     handler: handler.bulk
     events:
@@ -100,7 +97,6 @@ functions:
           cors:
             true
           private: true
-          timeout: 30
             
 plugins:
   - serverless-offline
