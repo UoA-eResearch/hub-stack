@@ -1,4 +1,4 @@
-import { SimpleChanges } from '@angular/core';
+import { SimpleChanges, ViewChild } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core'
 
 @Component({
@@ -7,15 +7,20 @@ import { Component, OnInit, Input } from '@angular/core'
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnInit {
+  public pageNumber = 1;
 
   @Input() collection;
-
   constructor() { }
 
   ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges) {
     this.collection = changes['collection'].currentValue;
+  }
+
+  // Scroll to top of the page when data is refreshed
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /**

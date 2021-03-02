@@ -76,3 +76,20 @@ div.collection {
 #item-avatar-icon {
     color: map-get($hub-navy, 500)!important;
 }
+
+/**
+ * Pagination Controls
+ */
+::ng-deep.ngx-pagination {
+    .current {
+        background: map-get($hub-teal, 500)!important;
+    }
+    text-align: center;
+    padding: 0;
+
+    a:focus, a:active, a.active, a:hover{
+        background: #fafafa!important;
+        outline: red!important;
+        outline-style: none !important;
+    }
+}
