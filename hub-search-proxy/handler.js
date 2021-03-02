@@ -61,7 +61,7 @@ module.exports.search = async (event, context) => {
 
   const params = {
     index: ELASTICSEARCH_INDEX_NAME,
-    q: query
+    body: query
   }
 
   try {
@@ -186,8 +186,8 @@ module.exports.bulk = async () => {
 
   // perform the upload
   try {
+    console.log(`Uploading documents to index: ${ELASTICSEARCH_INDEX_NAME}`);
     const result = await esClient.helpers.bulk(params);
-    console.log(result);
     return formatResponse(
       200,
       { result: result }
