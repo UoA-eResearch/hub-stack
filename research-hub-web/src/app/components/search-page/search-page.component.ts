@@ -1,4 +1,3 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { 
@@ -11,6 +10,7 @@ import {
 } from '@app/graphql/schema';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-search-page',
@@ -21,29 +21,26 @@ export class SearchPageComponent implements OnInit {
   public allCategories$: Observable<CategoryCollection>;
   public allStages$: Observable<StageCollection>;
   public allOrganisations$: Observable<OrgUnitCollection>;
-  public categoryFilter;
-  public stageFilter;
-  public organisationFilter;
+  public categoryFilter = [];
+  public stageFilter = []
+  public organisationFilter = [];
+  public queries;
   public params;
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
     public allStagesGQL: AllStagesGQL,
     public allOrganisationsGQL: AllOrganisationsGQL,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public location: Location
     ) {}
 
   async ngOnInit() {
     this.allCategories$ = this.getAllCategories();
     this.allStages$ = this.getAllStages();
     this.allOrganisations$ = this.getAllOrganisations();
-    this.route.queryParams.subscribe(data => {
-      this.params = data;
-    });
-    console.log([this.route.snapshot.queryParamMap.get('researchCategories')]);
-    console.log([this.route.snapshot.queryParamMap.get('researchActivities')]);
-    this.categoryFilter = [this.route.snapshot.queryParamMap.get('researchCategories')];
-    this.stageFilter = [this.route.snapshot.queryParamMap.get('researchActivities')];
+    this.route.snapshot.queryParamMap.get('researchCategories') != null ? this.categoryFilter = [...this.route.snapshot.queryParamMap.get('researchCategories').split(",")] : ''; 
+    this.route.snapshot.queryParamMap.get('researchActivities') != null ? this.stageFilter = this.stageFilter = [...this.route.snapshot.queryParamMap.get('researchActivities').split(",")] : '';
   }
 
   // Get all research stages
@@ -68,5 +65,23 @@ export class SearchPageComponent implements OnInit {
       return this.allOrganisationsGQL.fetch()
         .pipe(pluck('data', 'orgUnitCollection')) as Observable<OrgUnitCollection>
     } catch (e) { console.error('Error loading all organisations:', e) };
+  }
+
+  // Update search filters
+  public updateSearchFilters() {
+    let url = 'search';
+    if (this.categoryFilter.length > 0) {
+      if (url == 'search') { url += '?' } else { url += '&' }
+      url += 'researchCategories=' + this.categoryFilter;
+    }
+    if (this.stageFilter.length > 0) {
+      if (url == 'search') { url += '?' } else { url += '&' }
+      url += 'researchActivities=' + [this.stageFilter]
+    }
+    if (this.organisationFilter.length > 0) {
+      if (url == 'search') { url += '?' } else { url += '&' }
+      url += 'organisations=' + [this.organisationFilter]
+    }
+    this.location.replaceState(url);
   }
 }

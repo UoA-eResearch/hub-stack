@@ -44,7 +44,7 @@
         <mat-expansion-panel style="background: #fafafa" hideToggle="true">
 
           <!-- Browse Title -->
-          <mat-expansion-panel-header class="expandable-menu">
+          <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
             <mat-list-item>
               <a mat-line>Research Categories</a>
             </mat-list-item>
@@ -56,7 +56,8 @@
             <mat-list-item
               *ngFor="let item of allCategories.items" 
               (click)="sidenav.close()"
-              [routerLink]="['/search']">
+              [routerLink]="['/search']" 
+              [queryParams]="getQueryParams(item)">
               <a mat-line>{{ item.name }}</a>
             </mat-list-item>
           </mat-nav-list>
@@ -66,7 +67,7 @@
         <mat-expansion-panel style="background: #fafafa" hideToggle="true">
 
           <!-- Research Activities Name -->
-          <mat-expansion-panel-header class="expandable-menu">
+          <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
             <mat-list-item>
               <a mat-line>Research Activities</a>
             </mat-list-item>
@@ -74,10 +75,11 @@
 
           <!-- Research Activities List -->
           <div *ngIf="allStages$ | async as allStages">
-            <mat-list-item 
+            <mat-list-item
               *ngFor="let item of allStages.items" 
               (click)="sidenav.close()"
-              [routerLink]="['/search']">
+              [routerLink]="['/search']" 
+              [queryParams]="getQueryParams(item)">
               <a mat-line>{{ item.name }}</a>
             </mat-list-item>
           </div>
@@ -150,7 +152,8 @@
                     style="flex: 1 1 auto;">
                   </span>
 
-                  <button 
+                  <button
+                    *ngIf="!onSearchPage"
                     mat-icon-button 
                     fxHide.gt-sm 
                     routerLink="/search" 
@@ -158,7 +161,8 @@
                     <mat-icon>search</mat-icon>
                   </button>
 
-                  <button 
+                  <button
+                    *ngIf="!onSearchPage"
                     mat-button 
                     fxHide.lt-md 
                     routerLink="/search">
@@ -166,6 +170,7 @@
                   </button>
 
                   <button
+                    *ngIf="!onSearchPage"
                     mat-button
                     fxHide.lt-md
                     class="button-menu"
@@ -182,11 +187,15 @@
                         mat-menu-item
                         *ngFor="let item of allCategories.items"
                         [style.background]="showBanner ? '' : '#0294a5'" 
-                        [routerLink]="['/search']">{{item.name}}</button>
+                        [routerLink]="['/search']"
+                        [queryParams]="getQueryParams(item)">
+                          {{item.name}}
+                        </button>
                     </div>
                   </mat-menu>
 
                   <button
+                    *ngIf="!onSearchPage"
                     class="button-menu" 
                     fxHide.lt-md 
                     mat-button 
@@ -202,7 +211,8 @@
                         mat-menu-item
                         *ngFor="let item of allStages.items"
                         [style.background]="showBanner ? '' : '#0294a5'" 
-                        [routerLink]="['/search']">{{ item.name }}</button>
+                        [routerLink]="['/search']" 
+                        [queryParams]="getQueryParams(item)">{{ item.name }}</button>
                     </div>
                   </mat-menu>
 

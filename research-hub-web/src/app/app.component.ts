@@ -67,10 +67,11 @@ export class AppComponent implements OnInit, OnDestroy {
   private currentRoute = undefined;
 
   public userInfo;
-  public authenticated;
+  public authenticated: Boolean;
   public isMobile: Boolean;
-  public mobileBackground;
-  public desktopBackground;
+  public onSearchPage: Boolean;
+  public mobileBackground: String;
+  public desktopBackground: String;
 
   constructor(
     private location: Location, 
@@ -88,7 +89,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.detectDevice();
       this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
     }
-    public isLoading = true;
 
   // Detect if device is Mobile
   detectDevice() {
@@ -153,8 +153,10 @@ export class AppComponent implements OnInit, OnDestroy {
           this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
+            // Show banner if we're on the homepage
             this.showBanner = ['home', 'home#'].includes(routeName);
-            this.searchBarService.setVisibility(['home', 'search'].includes(routeName));
+
+            // Set title if we're on the homepage
             if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Welcome to the ResearchHub');
 
             // Update previous and current routes
@@ -164,7 +166,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
             // Set current route name
             this.currentRoute = routeName;
-          
+
+            // Hide search options if we're on the search page
+            this.onSearchPage = ['search'].includes(routeName);
+            
             // Same component navigation
             if (this.currentRoute == this.previousRoute) {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -176,6 +181,18 @@ export class AppComponent implements OnInit, OnDestroy {
             this.showFilterButton = routeName === 'search';
           }
         });
+    }
+  }
+
+  // Get Query Parameters
+  getQueryParams(item: any) {
+    switch (item.__typename) {
+      case 'Stage':
+        try { return { researchActivities: [item.displayOrder] }; }
+        catch { break; }
+      case 'Category':
+        try { return { researchCategories: [item.displayOrder] }; }
+        catch { break; }
     }
   }
 

@@ -29,6 +29,7 @@
                 fxLayoutGap="2%">
                 <div fxFlex>
                     <mat-select
+                        (selectionChange)="updateSearchFilters()"
                         [(ngModel)]="categoryFilter"
                         name="categoryFilter" 
                         ngDefaultControl
@@ -49,13 +50,14 @@
                 <!-- Research Activity Filters -->
                 <div fxFlex>
                     <mat-select
+                        (selectionChange)="updateSearchFilters()"
                         [(ngModel)]="stageFilter"
                         name="stageFilter" 
                         ngDefaultControl
                         multiple
                         floatLabel="never"
                         placeholder="Research Activities">
-                        <mat-select-trigger>Reesearch Activities</mat-select-trigger>
+                        <mat-select-trigger>Research Activities</mat-select-trigger>
                         <div *ngIf="allStages$ | async as allStages">
                             <mat-option
                                 *ngFor="let item of allStages.items"
@@ -69,6 +71,7 @@
                 <!-- Organisation Filters -->
                 <div fxFlex>
                     <mat-select
+                        (selectionChange)="updateSearchFilters()"
                         [(ngModel)]="organisationFilter"
                         name="organisationFilter" 
                         ngDefaultControl
