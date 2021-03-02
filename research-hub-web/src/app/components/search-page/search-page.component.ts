@@ -31,6 +31,7 @@ export class SearchPageComponent implements OnInit {
   public allPages$;
   public allPagesBaseArray = [];
   public allCurrentPages = [];
+  public allCurrentPagesUnsorted = [];
   public categoryFilter = [];
   public stageFilter = []
   public organisationFilter = [];
@@ -75,9 +76,21 @@ export class SearchPageComponent implements OnInit {
         ];
 
         // Deep copy the base array and create clone
-        this.allCurrentPages = this.allPagesBaseArray.map((x) => {return { ...x };});
+        // this.allCurrentPages = this.allPagesBaseArray.map((x) => {return { ...x };});
+        // console.log(this.createPagination(this.allCurrentPages, 10));
     });
   }
+
+  // Create pagination
+  // public createPagination(array, page_size) {
+  //   return array.reduce((acc, val, i) => {
+  //     let idx = Math.floor(i / page_size)
+  //     let page = acc[idx] || (acc[idx] = [])
+  //     page.push(val)
+  
+  //     return acc
+  //   }, [])
+  // }
 
   // Get all research stages
   public getAllStages(): Observable<StageCollection> {
@@ -211,13 +224,14 @@ export class SearchPageComponent implements OnInit {
 
   // Alphabetical sort
   sortAlphabetical() {
-    this.allCurrentPages = this.allCurrentPages.sort(function(a, b) {
+    this.allCurrentPagesUnsorted = this.allCurrentPages.map((x) => {return { ...x };});
+    this.allCurrentPages= this.allCurrentPages.sort(function(a, b) {
       return a.title.localeCompare(b.title);
     })
   }
 
   // Content sort
   sortDefault() {
-    this.allCurrentPages = this.allPagesBaseArray.map((x) => {return { ...x };});
+    this.allCurrentPages = this.allCurrentPagesUnsorted.map((x) => {return { ...x };});
   }
 }
