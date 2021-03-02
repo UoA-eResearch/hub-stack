@@ -1,17 +1,30 @@
-query GetSubHubBySlug($slug: String) {
-    subHubCollection(limit: 1, where: {slug: $slug}) {
+query GetServiceBySlug($slug: String) {
+    serviceCollection(limit: 1, where: {slug: $slug}) {
         items {
-            slug
+            __typename
+            sys {
+            id
+            }
             title
-            summary
+            slug
             ssoProtected
             searchable
             banner {
+            title
+            description
             url
             }
+            icon {
+            title
+            description
+            url
+            }
+            summary
+            callToAction
+            callToActionLabel
             bodyText {
-            json
-            links {
+                json 
+                links {
                 entries {
                     block { 
                     ...PublicFields
@@ -33,34 +46,27 @@ query GetSubHubBySlug($slug: String) {
                     }
                 }
                 assets {
-                block {
-                    ...AssetFields
-                }
-                hyperlink {
-                    ...AssetFields
+                    block { ...AssetFields }
+                    hyperlink { ...AssetFields }
                 }
                 }
-            }
-            }
-            keywords
-            internalPagesCollection {
-                items { ...PublicFields }
-            }
-            externalPagesCollection {
-                items { ...PublicFields }
-            }
-            relatedItemsCollection {
-                items { ...PublicFields }
             }
             relatedContactsCollection {
-                items { ...PublicFields }
+            items { ...PublicFields }
             }
             relatedOrgsCollection {
-                items { ...PublicFields }
+            items { ...PublicFields }
+            }
+            relatedItemsCollection {
+            items { ...PublicFields }
             }
             relatedDocsCollection {
-                items { ...PublicFields }
+            items { ...PublicFields }
             }
+            audience
+            availability
+            cost 
+            access
         }
     }
 }

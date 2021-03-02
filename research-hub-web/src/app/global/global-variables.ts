@@ -49,8 +49,9 @@ export enum ResearchActivityId {
     Equipment,
     Software,
     Articles,
+    SubHubs,
+    Services,
     Events,
-    SubHubs
   }
   
   export const researchActivityOptions = [
@@ -90,8 +91,9 @@ export enum ResearchActivityId {
     { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
     { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
     { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
-    { id: CategoryId.Events, name: 'Events', icon: 'calendar_today', type: OptionType.Category, url: '/events' },
     { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' },
+    { id: CategoryId.Services, name: 'Services', icon: 'miscellaneous_services', type: OptionType.Category, url: '/services' },
+    { id: CategoryId.Events, name: 'Events', icon: 'calendar_today', type: OptionType.Category, url: '/events' },
     { id: CategoryId.Software, name: 'Software', icon: 'code', type: OptionType.Category, url: '/software' }
 ];
   

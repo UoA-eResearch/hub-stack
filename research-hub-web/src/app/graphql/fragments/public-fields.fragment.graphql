@@ -94,6 +94,10 @@ fragment PublicFields on Entry {
       __typename
       title
       summary
+      url
+      document {
+        url
+      }
     }
     ... on OrgUnit {
       __typename
