@@ -31,6 +31,7 @@
                     <mat-select
                         (selectionChange)="updateSearchFilters()"
                         [(ngModel)]="categoryFilter"
+                        [(value)]="categoryFilter"
                         name="categoryFilter" 
                         ngDefaultControl
                         multiple
@@ -93,6 +94,61 @@
     </div>
 
     <!-- Search Results -->
-    <div class="search-content">
+    <div class="search-content site-padding-2 section" *ngIf="allPages$">
+        <div
+            fxLayout="row"
+            fxLayoutGap="5%"
+            fxLayout.lt-sm="column"
+            class="result-list-filter">
+
+            <!-- Results -->
+            <span
+                fxLayout="row"
+                fxFlexOrder.lt-md="2"
+                fxLayoutAlign="center end">
+                <h3 style="margin-bottom: 0" class="search-results-text">
+                    {{ allCurrentPages.length }}&nbsp;&nbsp;
+                </h3>
+                <p style="margin-bottom: 0" >Results found</p>
+            </span>
+
+            <!-- Divider -->
+            <div fxHide.lt-md fxFlex></div>
+
+            <!-- Filtering Options -->
+            <div fxFlexOrder.lt-md="1" fxFlex>
+                <mat-select
+                    (selectionChange)="updateOrder()"
+                    [(ngModel)]="sortType"
+                    name="organisationFilter"
+                    ngDefaultControl
+                    placeholder="Order By"
+                    floatLabel="never">
+                    <div>
+                        <mat-option value="Default">
+                            Default
+                        </mat-option>
+                        <mat-option value="Alphabetical">
+                            Alphabetical
+                        </mat-option>
+                    </div>
+                </mat-select>
+            </div>
+            <!-- <div fxFlex>
+                <mat-select
+                    (selectionChange)="updateSort()"
+                    [(ngModel)]="pageType"
+                    name="organisationFilter"
+                    ngDefaultControl
+                    placeholder="Sort By"
+                    floatLabel="never">
+                    <div>
+                        <mat-option>
+                        </mat-option>
+                    </div>
+                </mat-select>
+            </div> -->
+        </div>
+        <app-collection-list [collection]="allCurrentPages"></app-collection-list>
     </div>
 </div>

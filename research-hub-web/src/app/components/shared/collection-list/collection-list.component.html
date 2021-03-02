@@ -1,17 +1,12 @@
 <ng-container *ngIf="collection">
     <div>
-        <h1 id="title">
-            {{ collection.__typename | humanCase }}
-        </h1>Found
-        <span class="search-results-text">
-            {{ collection.items.length }}
-        </span>results in
-        <span class="search-results-text">
-            {{ collection.__typename | humanCase }}
+        <!-- <span class="search-results-text">
+            {{ collection.length }}
         </span>
+            Results found. -->
     
         <mat-nav-list>
-            <a *ngFor="let content of collection.items"
+            <a *ngFor="let content of collection"
                 [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" 
                 class="result-item"
                 [ngClass]="{'ssoProtected': content.ssoProtected }">
