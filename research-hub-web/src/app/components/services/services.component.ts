@@ -70,6 +70,10 @@ export class ServicesComponent implements OnInit, OnDestroy {
     if (!!this.slug) {
       this.service = this.getServiceBySlug(this.slug);
       this.service$ = this.service.subscribe(data => {
+          // If Call To Action is an email address
+          if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            data['callToAction'] = 'mailto:' + data['callToAction'];
+          }
           this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
