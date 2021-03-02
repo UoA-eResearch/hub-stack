@@ -158,7 +158,7 @@ module.exports.bulk = async () => {
     );
   } catch(error) {
     return formatResponse(
-      error.statusCode,
+      500,
       { result: error }
     )
   }
