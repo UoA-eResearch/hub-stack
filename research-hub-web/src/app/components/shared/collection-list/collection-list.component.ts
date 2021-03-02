@@ -1,4 +1,4 @@
-import { SimpleChanges, ViewChild } from '@angular/core';
+import { SimpleChanges } from '@angular/core';
 import { Component, OnInit, Input } from '@angular/core'
 
 @Component({

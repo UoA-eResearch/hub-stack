@@ -15,6 +15,7 @@ import {
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { Location } from '@angular/common';
+import { SearchPageService } from '@services/search-page.service';
 
 @Component({
   selector: 'app-search-page',
@@ -41,22 +42,16 @@ export class SearchPageComponent implements OnInit {
   public pageType;
 
   constructor(
-    public allCategoriesGQL: AllCategoriesGQL,
-    public allStagesGQL: AllStagesGQL,
-    public allOrganisationsGQL: AllOrganisationsGQL,
-    public allPagesGQL: AllPagesGQL,
-    public allItemsByCategoryGQL: AllItemsByCategoryGQL,
-    public allItemsByStageGQL: AllItemsByStageGQL,
-    public allItemsByOrganisationGQL: AllItemsByOrganisationGQL,
+    public searchPageService: SearchPageService,
     private route: ActivatedRoute,
     public location: Location
     ) { }
 
   async ngOnInit() {
-    this.allStages$ = this.getAllStages();
-    this.allCategories$ = this.getAllCategories();
-    this.allOrganisations$ = this.getAllOrganisations();
-    this.allPages$ = this.getAllPages();
+    this.allStages$ = this.searchPageService.getAllStages();
+    this.allCategories$ = this.searchPageService.getAllCategories();
+    this.allOrganisations$ = this.searchPageService.getAllOrganisations();
+    this.allPages$ = this.searchPageService.getAllPages();
     this.route.snapshot.queryParamMap.get('researchCategories') != null ? this.categoryFilter = [...this.route.snapshot.queryParamMap.get('researchCategories').split(",")] : ''; 
     this.route.snapshot.queryParamMap.get('researchActivities') != null ? this.stageFilter = [...this.route.snapshot.queryParamMap.get('researchActivities').split(",")] : '';
     this.updateSearchFilters();
@@ -64,7 +59,7 @@ export class SearchPageComponent implements OnInit {
 
   // Create the initial page lsit
   public initialPages() {
-    this.getAllPages().subscribe(data => {
+    this.searchPageService.getAllPages().subscribe(data => {
       this.allPagesBaseArray = 
         [...data.articleCollection.items,
           ...data.equipmentCollection.items,
@@ -80,62 +75,6 @@ export class SearchPageComponent implements OnInit {
     });
   }
 
-  // Get all research stages
-  public getAllStages(): Observable<StageCollection> {
-    try {
-      return this.allStagesGQL.fetch()
-        .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
-    } catch (e) { console.error('Error loading all stages:', e) };
-  }
-
-  // Get all research categories
-  public getAllCategories(): Observable<CategoryCollection> {
-    try {
-      return this.allCategoriesGQL.fetch()
-        .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
-    } catch (e) { console.error('Error loading all Categories:', e) };
-  }
-
-  // Get all organisations
-  public getAllOrganisations(): Observable<OrgUnitCollection> {
-    try {
-      return this.allOrganisationsGQL.fetch()
-        .pipe(pluck('data', 'orgUnitCollection')) as Observable<OrgUnitCollection>
-    } catch (e) { console.error('Error loading all organisations:', e) };
-  }
-
-  // Get All Pages
-  public getAllPages() {
-    try {
-      return this.allPagesGQL.fetch()
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Category
-  public getAllItemsByCategory(filter) {
-    try {
-      return this.allItemsByCategoryGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Stage
-  public getAllItemsByStage(filter) {
-    try {
-      return this.allItemsByStageGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Organisation
-  public getAllItemsByOrganisation(filter) {
-    try {
-      return this.allItemsByOrganisationGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
   // Update search filters
   public updateSearchFilters() {
     let url = 'search';
@@ -145,7 +84,7 @@ export class SearchPageComponent implements OnInit {
       if (url == 'search') { url += '?' } else { url += '&' }
       url += 'researchCategories=' + this.categoryFilter;
       this.categoryFilter.forEach (x => {
-        this.getAllItemsByCategory(parseInt(x)).subscribe(data => {
+        this.searchPageService.getAllItemsByCategory(parseInt(x)).subscribe(data => {
           let categories = [
             ...data.categoryCollection["items"][0]["linkedFrom"].articleCollection.items,
             ...data.categoryCollection["items"][0]["linkedFrom"].equipmentCollection.items,
@@ -163,7 +102,7 @@ export class SearchPageComponent implements OnInit {
       if (url == 'search') { url += '?' } else { url += '&' }
       url += 'researchActivities=' + this.stageFilter;
       this.stageFilter.forEach (x => {
-        this.getAllItemsByStage(parseInt(x)).subscribe(data => {
+        this.searchPageService.getAllItemsByStage(parseInt(x)).subscribe(data => {
           let stages = [
             ...data.stageCollection["items"][0]["linkedFrom"].articleCollection.items,
             ...data.stageCollection["items"][0]["linkedFrom"].equipmentCollection.items,
@@ -181,7 +120,7 @@ export class SearchPageComponent implements OnInit {
       if (url == 'search') { url += '?' } else { url += '&' }
       url += 'organisations=' + this.organisationFilter;
       this.organisationFilter.forEach (x => {
-        this.getAllItemsByOrganisation(parseInt(x)).subscribe(data => {
+        this.searchPageService.getAllItemsByOrganisation(parseInt(x)).subscribe(data => {
           let orgs = [
             ...data.orgUnitCollection["items"][0]["linkedFrom"].articleCollection.items,
             ...data.orgUnitCollection["items"][0]["linkedFrom"].equipmentCollection.items,
