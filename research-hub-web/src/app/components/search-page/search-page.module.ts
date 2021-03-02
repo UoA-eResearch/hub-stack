@@ -5,12 +5,14 @@ import { SearchPageComponent } from './search-page.component';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { CollectionListComponent } from '../shared/collection-list/collection-list.component';
 
 
 @NgModule({
   declarations: [
     SearchPageComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    CollectionListComponent
   ],
   imports: [
     CommonModule,

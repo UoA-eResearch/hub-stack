@@ -6,7 +6,9 @@ import {
   AllOrganisationsGQL,
   CategoryCollection,
   OrgUnitCollection,
-  StageCollection
+  StageCollection,
+  EntryCollection,
+  AllPagesGQL
 } from '@app/graphql/schema';
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
@@ -21,6 +23,7 @@ export class SearchPageComponent implements OnInit {
   public allCategories$: Observable<CategoryCollection>;
   public allStages$: Observable<StageCollection>;
   public allOrganisations$: Observable<OrgUnitCollection>;
+  public allPages$: Observable<EntryCollection>;
   public categoryFilter = [];
   public stageFilter = []
   public organisationFilter = [];
@@ -31,6 +34,7 @@ export class SearchPageComponent implements OnInit {
     public allCategoriesGQL: AllCategoriesGQL,
     public allStagesGQL: AllStagesGQL,
     public allOrganisationsGQL: AllOrganisationsGQL,
+    public allPagesGQL: AllPagesGQL,
     private route: ActivatedRoute,
     public location: Location
     ) {}
@@ -38,6 +42,7 @@ export class SearchPageComponent implements OnInit {
   async ngOnInit() {
     this.allCategories$ = this.getAllCategories();
     this.allStages$ = this.getAllStages();
+    this.allPages$ = this.getAllPages();
     this.allOrganisations$ = this.getAllOrganisations();
     this.route.snapshot.queryParamMap.get('researchCategories') != null ? this.categoryFilter = [...this.route.snapshot.queryParamMap.get('researchCategories').split(",")] : ''; 
     this.route.snapshot.queryParamMap.get('researchActivities') != null ? this.stageFilter = this.stageFilter = [...this.route.snapshot.queryParamMap.get('researchActivities').split(",")] : '';
@@ -65,6 +70,14 @@ export class SearchPageComponent implements OnInit {
       return this.allOrganisationsGQL.fetch()
         .pipe(pluck('data', 'orgUnitCollection')) as Observable<OrgUnitCollection>
     } catch (e) { console.error('Error loading all organisations:', e) };
+  }
+
+  // Get All Pages
+  public getAllPages(): Observable<EntryCollection> {
+    try {
+      return this.allPagesGQL.fetch()
+        .pipe(pluck('data', 'entryCollection')) as Observable<EntryCollection>
+    } catch (e) { console.error('Error loading all pages:', e) };
   }
 
   // Update search filters
