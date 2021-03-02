@@ -15,7 +15,7 @@ import {
 import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { Location } from '@angular/common';
-import { SearchPageService } from '@services/search-page.service';
+import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 
 @Component({
   selector: 'app-search-page',
@@ -42,16 +42,16 @@ export class SearchPageComponent implements OnInit {
   public pageType;
 
   constructor(
-    public searchPageService: SearchPageService,
+    public searchBarService: SearchBarService,
     private route: ActivatedRoute,
     public location: Location
     ) { }
 
   async ngOnInit() {
-    this.allStages$ = this.searchPageService.getAllStages();
-    this.allCategories$ = this.searchPageService.getAllCategories();
-    this.allOrganisations$ = this.searchPageService.getAllOrganisations();
-    this.allPages$ = this.searchPageService.getAllPages();
+    this.allStages$ = this.searchBarService.getAllStages();
+    this.allCategories$ = this.searchBarService.getAllCategories();
+    this.allOrganisations$ = this.searchBarService.getAllOrganisations();
+    this.allPages$ = this.searchBarService.getAllPages();
     this.route.snapshot.queryParamMap.get('researchCategories') != null ? this.categoryFilter = [...this.route.snapshot.queryParamMap.get('researchCategories').split(",")] : ''; 
     this.route.snapshot.queryParamMap.get('researchActivities') != null ? this.stageFilter = [...this.route.snapshot.queryParamMap.get('researchActivities').split(",")] : '';
     this.updateSearchFilters();
@@ -59,7 +59,7 @@ export class SearchPageComponent implements OnInit {
 
   // Create the initial page lsit
   public initialPages() {
-    this.searchPageService.getAllPages().subscribe(data => {
+    this.searchBarService.getAllPages().subscribe(data => {
       this.allPagesBaseArray = 
         [...data.articleCollection.items,
           ...data.equipmentCollection.items,
@@ -84,7 +84,7 @@ export class SearchPageComponent implements OnInit {
       if (url == 'search') { url += '?' } else { url += '&' }
       url += 'researchCategories=' + this.categoryFilter;
       this.categoryFilter.forEach (x => {
-        this.searchPageService.getAllItemsByCategory(parseInt(x)).subscribe(data => {
+        this.searchBarService.getAllItemsByCategory(parseInt(x)).subscribe(data => {
           let categories = [
             ...data.categoryCollection["items"][0]["linkedFrom"].articleCollection.items,
             ...data.categoryCollection["items"][0]["linkedFrom"].equipmentCollection.items,
@@ -102,7 +102,7 @@ export class SearchPageComponent implements OnInit {
       if (url == 'search') { url += '?' } else { url += '&' }
       url += 'researchActivities=' + this.stageFilter;
       this.stageFilter.forEach (x => {
-        this.searchPageService.getAllItemsByStage(parseInt(x)).subscribe(data => {
+        this.searchBarService.getAllItemsByStage(parseInt(x)).subscribe(data => {
           let stages = [
             ...data.stageCollection["items"][0]["linkedFrom"].articleCollection.items,
             ...data.stageCollection["items"][0]["linkedFrom"].equipmentCollection.items,
@@ -120,7 +120,7 @@ export class SearchPageComponent implements OnInit {
       if (url == 'search') { url += '?' } else { url += '&' }
       url += 'organisations=' + this.organisationFilter;
       this.organisationFilter.forEach (x => {
-        this.searchPageService.getAllItemsByOrganisation(parseInt(x)).subscribe(data => {
+        this.searchBarService.getAllItemsByOrganisation(parseInt(x)).subscribe(data => {
           let orgs = [
             ...data.orgUnitCollection["items"][0]["linkedFrom"].articleCollection.items,
             ...data.orgUnitCollection["items"][0]["linkedFrom"].equipmentCollection.items,
