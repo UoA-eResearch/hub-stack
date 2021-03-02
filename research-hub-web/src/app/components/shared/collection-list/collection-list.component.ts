@@ -1,21 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-
-interface Collection {
-  __typename: string;
-  items: [Content]
-}
-interface Content {
-  __typename: string;
-  slug: string;
-  title: string;
-  ssoProtected: boolean;
-  summary: string;
-  icon: {
-    title: string;
-    description: string;
-    url: string;
-  }
-}
+import { SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core'
 
 @Component({
   selector: 'app-collection-list',
@@ -24,11 +8,15 @@ interface Content {
 })
 export class CollectionListComponent implements OnInit {
 
-  @Input() collection: Collection;
+  @Input() collection;
 
   constructor() { }
 
   ngOnInit(): void { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.collection = changes['collection'].currentValue;
+  }
 
   /**
    * Returns a material-icon name. Called in the component when a content item doesn't
@@ -45,5 +33,4 @@ export class CollectionListComponent implements OnInit {
       default: return 'article'
     }
   }
-
 }

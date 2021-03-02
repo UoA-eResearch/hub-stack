@@ -19,3 +19,24 @@
         }
     }
 }
+
+.result-list-filter {
+    width: 100%;
+    @include size(medium) { 
+        width: 100%; // Change this to 100% when filtering by content page is complete
+        // margin-left: 50%
+    }
+    mat-select {
+        padding: 10px;
+        background: $input-grey;
+        border: 1px solid $silver-lining;
+    }
+    span {
+        h3 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 18px;
+        }
+    }
+}
