@@ -76,21 +76,9 @@ export class SearchPageComponent implements OnInit {
         ];
 
         // Deep copy the base array and create clone
-        // this.allCurrentPages = this.allPagesBaseArray.map((x) => {return { ...x };});
-        // console.log(this.createPagination(this.allCurrentPages, 10));
+        this.allCurrentPages = this.allPagesBaseArray.map((x) => {return { ...x };});
     });
   }
-
-  // Create pagination
-  // public createPagination(array, page_size) {
-  //   return array.reduce((acc, val, i) => {
-  //     let idx = Math.floor(i / page_size)
-  //     let page = acc[idx] || (acc[idx] = [])
-  //     page.push(val)
-  
-  //     return acc
-  //   }, [])
-  // }
 
   // Get all research stages
   public getAllStages(): Observable<StageCollection> {

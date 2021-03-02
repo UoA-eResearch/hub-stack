@@ -1,12 +1,7 @@
 <ng-container *ngIf="collection">
     <div>
-        <!-- <span class="search-results-text">
-            {{ collection.length }}
-        </span>
-            Results found. -->
-    
         <mat-nav-list>
-            <a *ngFor="let content of collection"
+            <a *ngFor="let content of collection | paginate: { itemsPerPage: 10, currentPage: pageNumber}"
                 [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" 
                 class="result-item"
                 [ngClass]="{'ssoProtected': content.ssoProtected }">
@@ -44,5 +39,8 @@
                 </mat-card>
             </a>
         </mat-nav-list>
+        <div class="section-2">
+            <pagination-controls (pageChange)="scrollToTop()" class="page-control" (pageChange)="pageNumber = $event"></pagination-controls>
+        </div>
     </div>
 </ng-container>
