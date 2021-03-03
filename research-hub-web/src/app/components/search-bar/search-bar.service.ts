@@ -209,7 +209,6 @@ export class SearchBarService {
       }
 
       // Create the search query
-      if (this.searchText != undefined || this.searchText != '') {
         let query = {
           query: this.getSearchText(),
           from: (this.getCurrentPage() - 1) * 10,
@@ -231,39 +230,34 @@ export class SearchBarService {
               "ssoProtected" : element._source.fields.ssoProtected["en-US"],
               "__typename" : element._source.sys.contentType.sys.id
             }
-
-            // Handling event filtering
-            if (this.getCategory().includes(this.eventId.toString())) {
-              this.getAllEvents().subscribe(data => {
-                array = data["items"];
-                this.setResults(array);
-                this.setTotalPages(data["items"].length);
-                this.setCategory(categories);
-              });
-            }
-            else {
-              array.push(result);
-            }
+            array.push(result);
           });
           this.setResults(array);
           this.setTotalPages(data["result"]["hits"]["total"]["value"]);
+
+          // Handling event filtering
+          if (this.getCategory().includes(this.eventId.toString())) {
+            this.getAllEvents().subscribe(data => {
+              array = data["items"];
+              this.setResults(array);
+              this.setTotalPages(data["items"].length);
+              this.setCategory(categories);
+            });
+          }
         })
-      }
 
       // If no search parameters are given, return all items
-      else {
-        this.getAllPages().subscribe(data => {
-          let array = [
-              ...data.articleCollection.items,
-              ...data.equipmentCollection.items,
-              ...data.subHubCollection.items,
-              ...data.softwareCollection.items,
-              ...data.serviceCollection.items,
-              ...data.eventCollection.items,
-              ...data.caseStudyCollection.items
-            ];
-          this.setResults(array);
-        });
-      }
+        // this.getAllPages().subscribe(data => {
+        //   let array = [
+        //       ...data.articleCollection.items,
+        //       ...data.equipmentCollection.items,
+        //       ...data.subHubCollection.items,
+        //       ...data.softwareCollection.items,
+        //       ...data.serviceCollection.items,
+        //       ...data.eventCollection.items,
+        //       ...data.caseStudyCollection.items
+        //     ];
+        //   this.setResults(array);
+        // });
   }
 }
