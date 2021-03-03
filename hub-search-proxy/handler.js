@@ -26,6 +26,7 @@ module.exports.search = async (event, context) => {
   let queryString = '';
   let size = 10;
   let from = 0;
+  let queryFilters = {};
   
   if (requestBody.hasOwnProperty('query')) {
     queryString = requestBody.query;
@@ -36,41 +37,130 @@ module.exports.search = async (event, context) => {
   if (requestBody.hasOwnProperty('from')) {
     from = requestBody.from;
   }
+  if (requestBody.hasOwnProperty('filters')) {
+    queryFilters = requestBody.filters;
+  }
 
-  // allow fuzziness, but only if query isn't empty
-  queryString = queryString.length > 0 ? queryString + '~AUTO' : queryString;
+  console.log(`Received query string: ${queryString}`);
 
-  console.log(`Received query string: ${queryString}`); 
+  let query;
 
-  let query = { // The query object to be sent to ElasticSearch
-    _source: {
-      includes: [
-        "fields.slug",
-        "fields.title",
-        "fields.summary",
-        "fields.ssoProtected",
-        "fields.searchable",
-        "fields.keywords",
-        "sys.contentType"
-      ]
-    },
-    query: { 
-      bool: {
-        must: [
-          {
-            simple_query_string: {
-              query: queryString
-            }
-          },
-          {
-            term: {
-              "fields.searchable.en-US": true
-            }
-          }
+  if(queryString.length === 0 && Object.keys(queryFilters).length === 0) {
+    query = { 
+      _source: {
+        includes: [
+          "fields.slug",
+          "fields.title",
+          "fields.summary",
+          "fields.ssoProtected",
+          "fields.searchable",
+          "fields.keywords",
+          "sys.contentType"
         ]
+      },
+      query: {
+        bool: {
+          must: {
+            match_all: {}
+          },
+          filter: [
+            {
+              term: {
+                "fields.searchable.en-US": true
+              }
+            }
+          ]
+        }
+      }
+    };
+
+  } else if(queryString.length === 0 && Object.keys(queryFilters).length > 0) {
+    // query with filters but no text search
+
+    let queryParts = [
+      {
+        term: {
+          "fields.searchable.en-US": true
+        }
+      }
+    ]
+
+    // add our search filters
+    for (const filter in queryFilters) {
+      for (const id of queryFilters[filter]) {
+        queryParts.push(
+          JSON.parse(
+            `{"match":{"fields.${filter}.en-US.sys.id":"${id}"}}`
+          )
+        )
       }
     }
-  };
+  
+    query = { 
+      _source: {
+        includes: [
+          "fields.slug",
+          "fields.title",
+          "fields.summary",
+          "fields.ssoProtected",
+          "fields.searchable",
+          "fields.keywords",
+          "sys.contentType"
+        ]
+      },
+      query: { 
+        bool: {
+          must: queryParts
+        }
+      }
+    };
+  } else {
+    // there is a query string and may or may not be any filters
+
+    let queryParts = [
+      {
+        simple_query_string: {
+          query: `${queryString}~AUTO`
+        }
+      },
+      {
+        term: {
+          "fields.searchable.en-US": true
+        }
+      }
+    ]
+
+    // add our search filters
+    for (const filter in queryFilters) {
+      for (const id of queryFilters[filter]) {
+        queryParts.push(
+          JSON.parse(
+            `{"match":{"fields.${filter}.en-US.sys.id":"${id}"}}`
+          )
+        )
+      }
+    }
+  
+    query = { 
+      _source: {
+        includes: [
+          "fields.slug",
+          "fields.title",
+          "fields.summary",
+          "fields.ssoProtected",
+          "fields.searchable",
+          "fields.keywords",
+          "sys.contentType"
+        ]
+      },
+      query: { 
+        bool: {
+          must: queryParts
+        }
+      }
+    };
+
+  }
 
   const params = {
     index: ELASTICSEARCH_INDEX_NAME,
