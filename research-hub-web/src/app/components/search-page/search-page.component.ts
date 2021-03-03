@@ -59,65 +59,12 @@ export class SearchPageComponent implements OnInit {
 
   // Update search filters
   public updateSearchFilters() {
-    let url = 'search';
+    this.searchBarService.setStage(this.stageFilter);
+    this.searchBarService.setCategory(this.categoryFilter);
+    this.searchBarService.setOrganisation(this.organisationFilter);
+
     this.searchBarService.createResultsList();
     this.initialPages();
-
-    if (this.categoryFilter.length > 0) {
-      if (url == 'search') { url += '?' } else { url += '&' }
-      url += 'researchCategories=' + this.categoryFilter;
-      this.categoryFilter.forEach (x => {
-        this.searchBarService.getAllItemsByCategory(parseInt(x)).subscribe(data => {
-          let categories = [
-            ...data.categoryCollection["items"][0]["linkedFrom"].articleCollection.items,
-            ...data.categoryCollection["items"][0]["linkedFrom"].equipmentCollection.items,
-            ...data.categoryCollection["items"][0]["linkedFrom"].subHubCollection.items,
-            ...data.categoryCollection["items"][0]["linkedFrom"].serviceCollection.items,
-            ...data.categoryCollection["items"][0]["linkedFrom"].softwareCollection.items,
-            ...data.categoryCollection["items"][0]["linkedFrom"].eventCollection.items,
-            ...data.categoryCollection["items"][0]["linkedFrom"].caseStudyCollection.items
-          ];
-          this.allCurrentPages = this.allCurrentPages.filter(x => categories.some(y => y.slug == x.slug));
-        })
-      });
-    }
-    if (this.stageFilter.length > 0) {
-      if (url == 'search') { url += '?' } else { url += '&' }
-      url += 'researchActivities=' + this.stageFilter;
-      this.stageFilter.forEach (x => {
-        this.searchBarService.getAllItemsByStage(parseInt(x)).subscribe(data => {
-          let stages = [
-            ...data.stageCollection["items"][0]["linkedFrom"].articleCollection.items,
-            ...data.stageCollection["items"][0]["linkedFrom"].equipmentCollection.items,
-            ...data.stageCollection["items"][0]["linkedFrom"].subHubCollection.items,
-            ...data.stageCollection["items"][0]["linkedFrom"].serviceCollection.items,
-            ...data.stageCollection["items"][0]["linkedFrom"].softwareCollection.items,
-            ...data.stageCollection["items"][0]["linkedFrom"].eventCollection.items,
-            ...data.stageCollection["items"][0]["linkedFrom"].caseStudyCollection.items
-          ];
-          this.allCurrentPages = this.allCurrentPages.filter(x => stages.some(y => y.slug == x.slug));
-        })
-      });
-    }
-    if (this.organisationFilter.length > 0) {
-      if (url == 'search') { url += '?' } else { url += '&' }
-      url += 'organisations=' + this.organisationFilter;
-      this.organisationFilter.forEach (x => {
-        this.searchBarService.getAllItemsByOrganisation(parseInt(x)).subscribe(data => {
-          let orgs = [
-            ...data.orgUnitCollection["items"][0]["linkedFrom"].articleCollection.items,
-            ...data.orgUnitCollection["items"][0]["linkedFrom"].equipmentCollection.items,
-            ...data.orgUnitCollection["items"][0]["linkedFrom"].subHubCollection.items,
-            ...data.orgUnitCollection["items"][0]["linkedFrom"].serviceCollection.items,
-            ...data.orgUnitCollection["items"][0]["linkedFrom"].softwareCollection.items,
-            ...data.orgUnitCollection["items"][0]["linkedFrom"].eventCollection.items,
-            ...data.orgUnitCollection["items"][0]["linkedFrom"].caseStudyCollection.items
-          ];
-          this.allCurrentPages = this.allCurrentPages.filter(x => orgs.some(y => y.slug == x.slug));
-        })
-      });
-    }
-    this.location.replaceState(url);
   }
 
   // Update ordering method when user changes filter

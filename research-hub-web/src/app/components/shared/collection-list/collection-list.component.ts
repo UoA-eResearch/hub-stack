@@ -1,5 +1,8 @@
 import { SimpleChanges } from '@angular/core';
+import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Component, OnInit, Input } from '@angular/core'
+import { SearchBarComponent } from '@app/components/search-bar/search-bar.component';
+import { isThisSecond } from 'date-fns';
 
 @Component({
   selector: 'app-collection-list',
@@ -7,21 +10,23 @@ import { Component, OnInit, Input } from '@angular/core'
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnInit {
-  public pageNumber = 1;
 
   @Input() collection;
-  constructor() { }
+  constructor(public searchBarService: SearchBarService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.pageNumber = 1;
+    this.searchBarService.setCurrentPage(this.searchBarService.getCurrentPage());
     this.collection = changes['collection'].currentValue;
   }
 
-  // Scroll to top of the page when data is refreshed
-  scrollToTop() {
+  // Scroll to top of the page when data is refreshed and set current page
+  scrollToTop($event) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.searchBarService.setCurrentPage($event);
+    this.searchBarService.createResultsList();
   }
 
   /**

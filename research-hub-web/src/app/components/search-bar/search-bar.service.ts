@@ -11,32 +11,34 @@ import {
   AllItemsByOrganisationGQL,
   CategoryCollection,
   OrgUnitCollection,
-  StageCollection
+  StageCollection,
+  EventCollection,
+  AllEventsGQL
 } from '@app/graphql/schema';
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
-export class SearchBarParams {
-  public category: string;
-  public searchText: string;
-}
-
 
 @Injectable()
 export class SearchBarService {
 
-  public filterButtonClickChange: Subject<any> = new Subject<any>();
-  public searchBarVisibilityChange: Subject<any> = new Subject<any>();
   public searchChange: Subject<any> = new Subject<any>();
   public searchCategoryChange: Subject<any> = new Subject<any>();
+  public searchStageChange: Subject<any> = new Subject<any>();
+  public searchOrganisationChange: Subject<any> = new Subject<any>();
   public resultsChange: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public searchTextChange: Subject<any> = new Subject<any>();
-  public isVisible: boolean;
+  public currentPageChange: Subject<any> = new Subject<any>();
+  public totalPagesChange: Subject<any> = new Subject<any>();
   public searchText: string;
   public category: string;
-  public allPagesBaseArray;
+  public stage: string;
+  public organisation: string;
   public resultArray;
+  public currentPage;
+  public totalPages;
+  public eventId = 16; // the displayOrder of eventId defined in contentful
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
@@ -46,46 +48,87 @@ export class SearchBarService {
     public allItemsByCategoryGQL: AllItemsByCategoryGQL,
     public allItemsByStageGQL: AllItemsByStageGQL,
     public allItemsByOrganisationGQL: AllItemsByOrganisationGQL,
+    public allEventsGQL: AllEventsGQL,
     private http: HttpClient
   ) { }
 
-  setFilterButtonClicked() {
-    this.filterButtonClickChange.next('filter');
-  }
 
-  setVisibility(isVisible: boolean) {
-    this.isVisible = isVisible;
-    this.searchBarVisibilityChange.next(isVisible);
-  }
-
+  // Category
   setCategory(category) {
     if (category !== undefined) {
       this.category = category;
       this.searchCategoryChange.next(category);
     }
   }
-
-  setSearchText(searchText) {
-      this.searchText = searchText;
-      this.searchTextChange.next(searchText);
-  }
-
   getCategory() {
     return this.category;
   }
 
+
+  // Stage
+  setStage(stage) {
+    if (stage !== undefined) {
+      this.stage = stage;
+      this.searchStageChange.next(stage);
+    }
+  }
+  getStage() {
+    return this.stage;
+  }
+
+
+  // Organisation
+  setOrganisation(organisation) {
+    if (organisation !== undefined) {
+      this.organisation = organisation;
+      this.searchOrganisationChange.next(organisation);
+    }
+  }
+  getOrganisation() {
+    return this.organisation;
+  }
+
+
+  // Search Text
+  setCurrentPage(currentPage) {
+    this.currentPage = currentPage;
+    this.currentPageChange.next(currentPage);
+  }
+  getCurrentPage() {
+    return this.currentPage;
+  }
+
+
+
+  // Search Text
+  setTotalPages(totalPages) {
+    this.totalPages = totalPages;
+    this.totalPagesChange.next(totalPages);
+  }
+  getTotalPages() {
+    return this.totalPages;
+  }
+
+
+  // Search Text
+  setSearchText(searchText) {
+      this.searchText = searchText;
+      this.searchTextChange.next(searchText);
+  }
   getSearchText() {
     return this.searchText;
   }
 
+
+  // Search Results
   getResults() {
     return this.resultArray;
   }
-
   setResults(results) {
       this.resultArray = results;
       this.resultsChange.next(results);
   }
+
 
    // Get all research stages
    public getAllStages(): Observable<StageCollection> {
@@ -109,6 +152,14 @@ export class SearchBarService {
       return this.allOrganisationsGQL.fetch()
         .pipe(pluck('data', 'orgUnitCollection')) as Observable<OrgUnitCollection>
     } catch (e) { console.error('Error loading all organisations:', e) };
+  }
+
+  // Get all Events
+  public getAllEvents(): Observable<EventCollection> {
+    try {
+      return this.allEventsGQL.fetch()
+        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
+    } catch (e) { console.error('Error loading all Events:', e) };
   }
 
   // Get All Pages
@@ -145,9 +196,18 @@ export class SearchBarService {
 
   // Create list result
   public createResultsList() {
+      if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
       if (this.searchText != undefined || this.searchText != '') {
-
-        this.http.post(environment.searchUrl, { query: this.searchText }).subscribe(data => {
+        let query = {
+          query: this.getSearchText(),
+          from: (this.getCurrentPage() - 1) * 10,
+          filters: {
+            relatedOrgs: this.getOrganisation(),
+            stage: this.getStage(),
+            category: this.getCategory()
+          }
+        };
+        this.http.post(environment.searchUrl, query).subscribe(data => {
           let array = [];
           data["result"]["hits"]["hits"].forEach(element => {
             let result = {
@@ -160,6 +220,7 @@ export class SearchBarService {
             array.push(result);
           });
           this.setResults(array)
+          this.setTotalPages(data["result"]["hits"]["total"]["value"]);
         })
       }
       else {
@@ -176,5 +237,17 @@ export class SearchBarService {
           this.setResults(array);
         });
       }
+
+    // If Event is selected
+    if (this.getCategory().indexOf(this.eventId.toString()) !== -1) {
+      this.getAllEvents().subscribe(data => {
+        this.setTotalPages(data["items"].length);
+        this.setCategory([]);
+        this.setStage([]);
+        this.setOrganisation([]);
+        this.setSearchText('');
+        this.setResults(data["items"]);
+      });
+    }
   }
 }
