@@ -58,8 +58,8 @@ export class SearchPageComponent implements OnInit {
     // If Event is selected
     if (this.categoryFilter.indexOf(this.eventId.toString()) !== -1) {
       this.searchBarService.getAllEvents().subscribe(data => {
-        setTimeout(() => this.searchBarService.setTotalPages(data["items"].length), 500); // Add delay to work, can try fix it to work without delay
-        setTimeout(() => this.searchBarService.setResults(data["items"]), 500) // Add delay to work, can try fix it to work without delay
+        setTimeout(() => this.searchBarService.setTotalPages(data["items"].length), 1000); // Add delay to work, can try fix it to work without delay
+        setTimeout(() => this.searchBarService.setResults(data["items"]), 1000) // Add delay to work, can try fix it to work without delay
         this.searchBarService.setCategory([]);
         this.searchBarService.setStage([]);
         this.searchBarService.setOrganisation([]);
@@ -69,6 +69,8 @@ export class SearchPageComponent implements OnInit {
 
     this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
       this.allCurrentPages = data;
+      this.allCurrentPagesUnsorted = data;
+      this.updateOrder();
     });
   }
 
