@@ -245,19 +245,5 @@ export class SearchBarService {
             });
           }
         })
-
-      // If no search parameters are given, return all items
-        // this.getAllPages().subscribe(data => {
-        //   let array = [
-        //       ...data.articleCollection.items,
-        //       ...data.equipmentCollection.items,
-        //       ...data.subHubCollection.items,
-        //       ...data.softwareCollection.items,
-        //       ...data.serviceCollection.items,
-        //       ...data.eventCollection.items,
-        //       ...data.caseStudyCollection.items
-        //     ];
-        //   this.setResults(array);
-        // });
   }
 }
