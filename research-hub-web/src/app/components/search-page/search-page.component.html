@@ -104,7 +104,7 @@
             <!-- Results -->
             <span
                 fxLayout="row"
-                fxFlexOrder.lt-md="2"
+                fxFlexOrder.lt-sm="2"
                 fxLayoutAlign="center end">
                 <h3 style="margin-bottom: 0" class="search-results-text">
                     {{ this.searchBarService.getTotalPages() }}&nbsp;&nbsp;
@@ -116,7 +116,7 @@
             <div fxHide.lt-md fxFlex></div>
 
             <!-- Filtering Options -->
-            <div fxFlexOrder.lt-md="1" fxFlex>
+            <div fxFlexOrder.lt-sm="1" fxFlex>
                 <mat-select
                     (selectionChange)="updateOrder()"
                     [(ngModel)]="sortType"
