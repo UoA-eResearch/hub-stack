@@ -28,7 +28,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   private searchCategoryChangeSub: Subscription;
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
-  constructor(private searchBarService: SearchBarService, private router: Router) {
+  constructor(public searchBarService: SearchBarService, private router: Router) {
   }
 
   ngOnInit() {
@@ -76,6 +76,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   clearSearchText() {
-    this.searchText = '';
+    this.searchText = undefined;
+    this.searchBarService.setSearchText(undefined)
   }
 }

@@ -66,10 +66,8 @@ export class SearchBarService {
   }
 
   setSearchText(searchText) {
-    if (searchText !== undefined) {
       this.searchText = searchText;
       this.searchTextChange.next(searchText);
-    }
   }
 
   getCategory() {

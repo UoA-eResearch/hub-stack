@@ -15,6 +15,7 @@ export class CollectionListComponent implements OnInit {
   ngOnInit(): void { }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.pageNumber = 1;
     this.collection = changes['collection'].currentValue;
   }
 
