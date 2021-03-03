@@ -1,8 +1,6 @@
 import { SimpleChanges } from '@angular/core';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Component, OnInit, Input } from '@angular/core'
-import { SearchBarComponent } from '@app/components/search-bar/search-bar.component';
-import { isThisSecond } from 'date-fns';
 
 @Component({
   selector: 'app-collection-list',
@@ -19,11 +17,11 @@ export class CollectionListComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.searchBarService.setCurrentPage(this.searchBarService.getCurrentPage());
+    this.pageNumber = this.searchBarService.getCurrentPage();
     this.collection = changes['collection'].currentValue;
   }
 
-  // Scroll to top of the page when data is refreshed and set current page
+  // Reset the search by setting currentPage to 1 and scrolling to top of page
   scrollToTop($event) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.searchBarService.setCurrentPage($event);
