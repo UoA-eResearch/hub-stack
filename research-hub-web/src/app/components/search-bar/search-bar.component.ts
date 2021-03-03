@@ -76,7 +76,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   clearSearchText() {
-    this.searchText = undefined;
-    this.searchBarService.setSearchText(undefined)
+    this.searchText = '';
+    this.searchBarService.setSearchText('')
   }
 }

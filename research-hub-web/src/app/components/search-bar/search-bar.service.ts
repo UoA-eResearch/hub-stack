@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '@environments/environment';
+import { environment } from '@environments/environment.nonprod';
 import { HttpClient } from '@angular/common/http';
 import { 
   AllCategoriesGQL,
@@ -145,7 +145,7 @@ export class SearchBarService {
 
   // Create list result
   public createResultsList() {
-      if (this.searchText != undefined) {
+      if (this.searchText != undefined || this.searchText != '') {
 
         this.http.post(environment.searchUrl, { query: this.searchText }).subscribe(data => {
           let array = [];
