@@ -13,6 +13,7 @@
           matInput 
           placeholder="Search" 
           [(ngModel)]="searchText" 
+          (keydown.enter)="searchBarService.createResultsList()"
           autofocus>
         <button
           *ngIf="searchText"
