@@ -1,7 +1,7 @@
 <ng-container *ngIf="collection">
     <div>
         <mat-nav-list>
-            <a *ngFor="let content of collection | paginate: { itemsPerPage: 10, currentPage: pageNumber}"
+            <a *ngFor="let content of collection | paginate: { itemsPerPage: 10, currentPage: searchBarService.getCurrentPage(),  totalItems: searchBarService.getTotalPages()}"
                 [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" 
                 class="result-item"
                 [ngClass]="{'ssoProtected': content.ssoProtected }">
@@ -40,7 +40,7 @@
             </a>
         </mat-nav-list>
         <div class="section-2">
-            <pagination-controls (pageChange)="scrollToTop()" class="page-control" (pageChange)="pageNumber = $event"></pagination-controls>
+            <pagination-controls (pageChange)="scrollToTop($event)" class="page-control" (pageChange)="pageNumber = $event"></pagination-controls>
         </div>
     </div>
 </ng-container>
