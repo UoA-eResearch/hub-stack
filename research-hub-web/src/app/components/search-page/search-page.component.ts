@@ -33,6 +33,8 @@ export class SearchPageComponent implements OnInit {
   public params;
   public sortType;
   public pageType;
+  public eventId = 16; // the displayOrder of eventId defined in contentful
+
 
   constructor(
     public searchBarService: SearchBarService,
@@ -52,6 +54,19 @@ export class SearchPageComponent implements OnInit {
 
   // Create the initial page lsit
   public async initialPages() {
+
+    // If Event is selected
+    if (this.categoryFilter.indexOf(this.eventId.toString()) !== -1) {
+      this.searchBarService.getAllEvents().subscribe(data => {
+        setTimeout(() => this.searchBarService.setTotalPages(data["items"].length), 500); // Add delay to work, can try fix it to work without delay
+        setTimeout(() => this.searchBarService.setResults(data["items"]), 500) // Add delay to work, can try fix it to work without delay
+        this.searchBarService.setCategory([]);
+        this.searchBarService.setStage([]);
+        this.searchBarService.setOrganisation([]);
+        this.searchBarService.setSearchText('');
+      });
+    }
+
     this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
       this.allCurrentPages = data;
     });
