@@ -325,6 +325,8 @@ $hub-app-primary: mat-palette($hub-teal);
 $hub-app-accent: mat-palette($hub-orange);
 $hub-app-warn: mat-palette($hub-pink);
 $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
+@include angular-material-theme($hub-app-theme);
+$mat-theme-ignore-duplication-warnings: true;
 
 
 /**
