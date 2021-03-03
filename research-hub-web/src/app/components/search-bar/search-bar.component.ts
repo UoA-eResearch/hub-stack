@@ -17,6 +17,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public categoriesValue = [];
   public isFilterBtnVisible = false;
   private searchTextValue = '';
+  private createResultsList;
   private categoryValue = '';
   @Output() searchTextChange = new EventEmitter();
   @Output() categoryChange = new EventEmitter();
@@ -32,6 +33,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.searchTextValue = this.searchBarService.getSearchText();
+    this.createResultsList = this.searchBarService.createResultsList();
 
     this.searchCategoryChangeSub = this.searchBarService.searchCategoryChange.subscribe(searchCategory => {
       this.categoryValue = searchCategory;

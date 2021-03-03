@@ -1,4 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { 
   AllCategoriesGQL,
   AllStagesGQL,
@@ -13,6 +15,7 @@ import {
 } from '@app/graphql/schema';
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 export class SearchBarParams {
   public category: string;
@@ -27,10 +30,13 @@ export class SearchBarService {
   public searchBarVisibilityChange: Subject<any> = new Subject<any>();
   public searchChange: Subject<any> = new Subject<any>();
   public searchCategoryChange: Subject<any> = new Subject<any>();
+  public resultsChange: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   public searchTextChange: Subject<any> = new Subject<any>();
   public isVisible: boolean;
   public searchText: string;
   public category: string;
+  public allPagesBaseArray;
+  public resultArray;
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
@@ -40,6 +46,7 @@ export class SearchBarService {
     public allItemsByCategoryGQL: AllItemsByCategoryGQL,
     public allItemsByStageGQL: AllItemsByStageGQL,
     public allItemsByOrganisationGQL: AllItemsByOrganisationGQL,
+    private http: HttpClient
   ) { }
 
   setFilterButtonClicked() {
@@ -55,7 +62,6 @@ export class SearchBarService {
     if (category !== undefined) {
       this.category = category;
       this.searchCategoryChange.next(category);
-      this.searchChange.next(this.getSearchParams());
     }
   }
 
@@ -63,7 +69,6 @@ export class SearchBarService {
     if (searchText !== undefined) {
       this.searchText = searchText;
       this.searchTextChange.next(searchText);
-      this.searchChange.next(this.getSearchParams());
     }
   }
 
@@ -75,11 +80,13 @@ export class SearchBarService {
     return this.searchText;
   }
 
-  getSearchParams(): SearchBarParams {
-    return {
-      searchText: this.searchText,
-      category: this.category
-    } as SearchBarParams;
+  getResults() {
+    return this.resultArray;
+  }
+
+  setResults(results) {
+      this.resultArray = results;
+      this.resultsChange.next(results);
   }
 
    // Get all research stages
@@ -136,5 +143,40 @@ export class SearchBarService {
       return this.allItemsByOrganisationGQL.fetch({ displayOrder: filter })
         .pipe(pluck('data'));
     } catch (e) { console.error('Error loading all pages:', e) };
+  }
+
+  // Create list result
+  public createResultsList() {
+      if (this.searchText != undefined) {
+
+        this.http.post(environment.searchUrl, { query: this.searchText }).subscribe(data => {
+          let array = [];
+          data["result"]["hits"]["hits"].forEach(element => {
+            let result = {
+              "title": element._source.fields.title["en-US"],
+              "summary" : element._source.fields.summary["en-US"],
+              "slug" : element._source.fields.slug["en-US"],
+              "ssoProtected" : element._source.fields.ssoProtected["en-US"],
+              "__typename" : element._source.sys.contentType.sys.id
+            }
+            array.push(result);
+          });
+          this.setResults(array)
+        })
+      }
+      else {
+        this.getAllPages().subscribe(data => {
+          let array = [
+              ...data.articleCollection.items,
+              ...data.equipmentCollection.items,
+              ...data.subHubCollection.items,
+              ...data.softwareCollection.items,
+              ...data.serviceCollection.items,
+              ...data.eventCollection.items,
+              ...data.caseStudyCollection.items
+            ];
+          this.setResults(array);
+        });
+      }
   }
 }

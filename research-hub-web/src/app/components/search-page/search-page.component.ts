@@ -1,21 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { 
-  AllCategoriesGQL,
-  AllStagesGQL,
-  AllOrganisationsGQL,
   CategoryCollection,
   OrgUnitCollection,
   StageCollection,
-  AllPagesGQL,
-  AllItemsByStageGQL,
-  AllItemsByCategoryGQL,
-  AllItemsByOrganisationGQL
 } from '@app/graphql/schema';
 import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-page',
@@ -29,8 +22,8 @@ export class SearchPageComponent implements OnInit {
   public allItemsByCategory$: Observable<any>;
   public allItemsByStage$: Observable<any>;
   public allItemsByOrganisation$: Observable<any>;
+  public resultSub$: Subscription;
   public allPages$;
-  public allPagesBaseArray = [];
   public allCurrentPages = [];
   public allCurrentPagesUnsorted = [];
   public categoryFilter = [];
@@ -58,26 +51,16 @@ export class SearchPageComponent implements OnInit {
   }
 
   // Create the initial page lsit
-  public initialPages() {
-    this.searchBarService.getAllPages().subscribe(data => {
-      this.allPagesBaseArray = 
-        [...data.articleCollection.items,
-          ...data.equipmentCollection.items,
-          ...data.subHubCollection.items,
-          ...data.softwareCollection.items,
-          ...data.serviceCollection.items,
-          ...data.eventCollection.items,
-          ...data.caseStudyCollection.items
-        ];
-
-        // Deep copy the base array and create clone
-        this.allCurrentPages = this.allPagesBaseArray.map((x) => {return { ...x };});
+  public async initialPages() {
+    this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
+      this.allCurrentPages = data;
     });
   }
 
   // Update search filters
   public updateSearchFilters() {
     let url = 'search';
+    this.searchBarService.createResultsList();
     this.initialPages();
 
     if (this.categoryFilter.length > 0) {
@@ -160,5 +143,9 @@ export class SearchPageComponent implements OnInit {
   // Content sort
   sortDefault() {
     this.allCurrentPages = this.allCurrentPagesUnsorted.map((x) => {return { ...x };});
+  }
+
+  ngOnDestroy() {
+    this.resultSub$.unsubscribe();
   }
 }
