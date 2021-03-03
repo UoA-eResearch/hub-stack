@@ -1,7 +1,7 @@
 <ng-container *ngIf="collection">
     <div>
         <mat-nav-list>
-            <a *ngFor="let content of collection | paginate: { itemsPerPage: 10, currentPage: searchBarService.getCurrentPage(),  totalItems: searchBarService.getTotalPages()}"
+            <a *ngFor="let content of collection | paginate: { itemsPerPage: 10, currentPage: pageNumber,  totalItems: searchBarService.getTotalPages()}"
                 [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" 
                 class="result-item"
                 [ngClass]="{'ssoProtected': content.ssoProtected }">

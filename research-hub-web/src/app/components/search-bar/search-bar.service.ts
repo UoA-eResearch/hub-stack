@@ -237,17 +237,5 @@ export class SearchBarService {
           this.setResults(array);
         });
       }
-
-    // If Event is selected
-    if (this.getCategory().indexOf(this.eventId.toString()) !== -1) {
-      this.getAllEvents().subscribe(data => {
-        this.setTotalPages(data["items"].length);
-        this.setCategory([]);
-        this.setStage([]);
-        this.setOrganisation([]);
-        this.setSearchText('');
-        this.setResults(data["items"]);
-      });
-    }
   }
 }

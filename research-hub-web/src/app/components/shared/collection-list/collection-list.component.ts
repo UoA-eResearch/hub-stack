@@ -10,6 +10,7 @@ import { isThisSecond } from 'date-fns';
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnInit {
+  public pageNumber = this.searchBarService.getCurrentPage();
 
   @Input() collection;
   constructor(public searchBarService: SearchBarService) { }
