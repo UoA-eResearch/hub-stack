@@ -39,7 +39,7 @@ export class SearchBarService {
   public resultArray;
   public currentPage;
   public totalPages;
-  public eventId = 16; // the displayOrder of eventId defined in contentful
+  public eventId = '7lTehYtUy01S5rC2Btzc76'; // the displayOrder of eventId defined in contentful
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
@@ -212,6 +212,7 @@ export class SearchBarService {
         let query = {
           query: this.getSearchText(),
           from: (this.getCurrentPage() - 1) * 10,
+          size: 10000,
           filters: {
             relatedOrgs: this.getOrganisation(),
             stage: this.getStage(),
@@ -232,17 +233,20 @@ export class SearchBarService {
             }
             array.push(result);
           });
-          this.setResults(array);
-          this.setTotalPages(data["result"]["hits"]["total"]["value"]);
 
           // Handling event filtering
-          if (this.getCategory().includes(this.eventId.toString())) {
+          if (this.getCategory().includes(this.eventId)) {
             this.getAllEvents().subscribe(data => {
-              array = data["items"];
+              array = array.filter(x => data["items"].some(y => y.slug == x.slug));
               this.setResults(array);
               this.setTotalPages(data["items"].length);
-              this.setCategory(categories);
             });
+          }
+          else {
+          
+          // Create the results array
+          this.setResults(array);
+          this.setTotalPages(data["result"]["hits"]["total"]["value"]);
           }
         })
   }

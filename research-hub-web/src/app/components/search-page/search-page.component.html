@@ -41,7 +41,7 @@
                         <div *ngIf="allCategories$ | async as allCategories">
                             <mat-option
                                 *ngFor="let item of allCategories.items"
-                                value="{{ item.displayOrder }}">
+                                value="{{ item.sys.id }}">
                                     {{ item.name }}
                             </mat-option>
                         </div>
@@ -62,7 +62,7 @@
                         <div *ngIf="allStages$ | async as allStages">
                             <mat-option
                                 *ngFor="let item of allStages.items"
-                                value="{{ item.displayOrder }}">
+                                value="{{ item.sys.id }}">
                                     {{ item.name }}
                             </mat-option>
                         </div>
@@ -83,7 +83,7 @@
                         <div *ngIf="allOrganisations$ | async as allOrganisations">
                             <mat-option
                                 *ngFor="let item of allOrganisations.items"
-                                value="{{ item.displayOrder }}">
+                                value="{{ item.sys.id }}">
                                     {{ item.name }}
                             </mat-option>
                         </div>

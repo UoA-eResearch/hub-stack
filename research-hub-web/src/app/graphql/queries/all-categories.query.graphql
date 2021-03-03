@@ -4,6 +4,9 @@ query AllCategories {
             name
             description
             displayOrder
+            sys {
+                id
+            }
         }
     }
 }
