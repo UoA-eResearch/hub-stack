@@ -55,21 +55,12 @@ export class SearchPageComponent implements OnInit {
   // Create the initial page lsit
   public async initialPages() {
 
-    // If Event is selected
-    if (this.categoryFilter.indexOf(this.eventId.toString()) !== -1) {
-      this.searchBarService.getAllEvents().subscribe(data => {
-        setTimeout(() => this.searchBarService.setTotalPages(data["items"].length), 1000); // Add delay to work, can try fix it to work without delay
-        setTimeout(() => this.searchBarService.setResults(data["items"]), 1000) // Add delay to work, can try fix it to work without delay
-        this.searchBarService.setCategory([]);
-        this.searchBarService.setStage([]);
-        this.searchBarService.setOrganisation([]);
-        this.searchBarService.setSearchText('');
-      });
-    }
+    // Updating results
+    this.resultSub$ = this.searchBarService.resultsChange.subscribe(_data => {
+      this.allCurrentPages = _data;
+      this.allCurrentPagesUnsorted = _data;
 
-    this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
-      this.allCurrentPages = data;
-      this.allCurrentPagesUnsorted = data;
+      // Update ordering if preselected
       this.updateOrder();
     });
   }

@@ -37,10 +37,15 @@ export class CollectionListComponent implements OnInit {
    */
   public getDefaultTypeIcon(__typename: string): string {
     switch (__typename) {
+      case 'article': return 'import_contacts';
       case 'Article': return 'import_contacts';
+      case 'equipment': return 'build';
       case 'Equipment': return 'build';
-      case 'SubHub': return 'layers';
+      case 'subhub': return 'layers';
+      case 'Subhub': return 'layers';
+      case 'service': return 'home_repair_services';
       case 'Service': return 'home_repair_services';
+      case 'event': return 'calendar_today';
       case 'Event': return 'calendar_today';
       default: return 'article'
     }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '@environments/environment.nonprod';
+import { environment } from '@environments/environment.sandbox';
 import { HttpClient } from '@angular/common/http';
 import { 
   AllCategoriesGQL,
@@ -18,6 +18,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 
 @Injectable()
@@ -32,9 +33,9 @@ export class SearchBarService {
   public currentPageChange: Subject<any> = new Subject<any>();
   public totalPagesChange: Subject<any> = new Subject<any>();
   public searchText: string;
-  public category: string;
-  public stage: string;
-  public organisation: string;
+  public category: Array<any>;
+  public stage: Array<any>;
+  public organisation: Array<any>;
   public resultArray;
   public currentPage;
   public totalPages;
@@ -196,7 +197,18 @@ export class SearchBarService {
 
   // Create list result
   public createResultsList() {
+      // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
+
+      // Create deep copy of category array to handle events manually
+      let categories = this.getCategory().map(x => { return  x });
+
+      // If event is selected, remove it from search parameters (will be manually handled below)
+      if (this.getCategory().includes(this.eventId.toString())) {
+        categories.splice(this.getCategory().indexOf(this.eventId.toString()), 1)
+      }
+
+      // Create the search query
       if (this.searchText != undefined || this.searchText != '') {
         let query = {
           query: this.getSearchText(),
@@ -204,9 +216,11 @@ export class SearchBarService {
           filters: {
             relatedOrgs: this.getOrganisation(),
             stage: this.getStage(),
-            category: this.getCategory()
+            category: categories
           }
         };
+
+        // Send the POST request
         this.http.post(environment.searchUrl, query).subscribe(data => {
           let array = [];
           data["result"]["hits"]["hits"].forEach(element => {
@@ -217,12 +231,26 @@ export class SearchBarService {
               "ssoProtected" : element._source.fields.ssoProtected["en-US"],
               "__typename" : element._source.sys.contentType.sys.id
             }
-            array.push(result);
+
+            // Handling event filtering
+            if (this.getCategory().includes(this.eventId.toString())) {
+              this.getAllEvents().subscribe(data => {
+                array = data["items"];
+                this.setResults(array);
+                this.setTotalPages(data["items"].length);
+                this.setCategory(categories);
+              });
+            }
+            else {
+              array.push(result);
+            }
           });
-          this.setResults(array)
+          this.setResults(array);
           this.setTotalPages(data["result"]["hits"]["total"]["value"]);
         })
       }
+
+      // If no search parameters are given, return all items
       else {
         this.getAllPages().subscribe(data => {
           let array = [
