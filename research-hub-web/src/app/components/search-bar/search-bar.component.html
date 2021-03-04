@@ -1,0 +1,37 @@
+<div
+  [ngClass]="isVisible ? isFilterBtnVisible ? 'site-padding top-padding' : 'site-padding-2 top-padding' : 'site-padding'"
+  [ngClass.lt-lg]="isVisible ? isFilterBtnVisible ? 'site-padding-mobile top-padding' : 'site-padding-mobile top-padding' : 'site-padding-mobile'" >
+  <div 
+    class="search-bar-outer" 
+    ngClass.lt-md="search-bar-outer-xs" 
+    *ngIf="isVisible">
+    <div 
+      class="search-bar-inner" 
+      fxFlex="100" 
+      fxLayout="row" 
+      fxLayoutGap="1em" 
+      fxLayoutAlign="space-between center">
+      <mat-form-field 
+        fxFlex 
+        floatLabel="never">
+        <button 
+          matPrefix 
+          mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+        <input 
+          #searchTextInput 
+          matInput 
+          placeholder="Search" 
+          [(ngModel)]="searchText" 
+          autofocus>
+        <button 
+          matSuffix 
+          (click)="clearSearchText()" 
+          mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>  
+</div>

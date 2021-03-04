@@ -1,0 +1,20 @@
+<div 
+  class="site-padding-2 margin-bottom"
+  ngClass.lt-lg="site-padding-mobile margin-bottom"
+  fxLayout="column" 
+  fxLayoutGap="2vh">
+  <app-research-activity></app-research-activity>
+  <div 
+    fxFlex="noshrink" 
+    fxLayout="row" 
+    fxLayout.lt-sm="column">
+    <div 
+      fxFlex
+      fxFlex.xs="noshrink">
+      <app-browse 
+        [embedded]="true" 
+        [maxCols]="3">
+      </app-browse>
+    </div>
+  </div>
+</div>

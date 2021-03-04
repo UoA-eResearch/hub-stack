@@ -1,0 +1,121 @@
+fragment PublicFields on Entry {
+    ... on Article {
+      __typename
+      icon {
+        url
+      }
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+      banner {
+          title
+          description
+          url
+        }
+    } 
+    ... on CaseStudy {
+      __typename
+      icon {
+        url
+      }
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+    }
+    ... on Equipment {
+      __typename
+      icon {
+        url
+      }
+      slug
+      title
+      summary
+      banner {
+        url
+      }
+      ssoProtected
+      searchable
+    }
+  ... on Event {
+      __typename
+      icon {
+        url
+      }
+      slug
+      title
+      summary
+      banner {
+        url
+      }
+      ssoProtected
+      searchable
+    }
+    ... on Service {
+      __typename
+      icon {
+        url
+      }
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+    }
+  ... on Software {
+      __typename
+      icon {
+        url
+      }
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+    }
+    ... on SubHub {
+      __typename
+      icon {
+        url
+      }
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+      banner {
+        url
+      }
+    }
+  ... on OfficialDocuments {
+      __typename
+      title
+      summary
+      url
+      document {
+        url
+      }
+    }
+    ... on OrgUnit {
+      __typename
+      name
+      link
+    }
+  ... on LinkCard {
+      title
+      summary
+      url
+  }
+  ... on Person {
+      __typename
+      name
+  }
+  ... on Video {
+      title
+      description
+      url
+    }
+}
