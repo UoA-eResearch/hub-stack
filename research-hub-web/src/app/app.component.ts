@@ -10,7 +10,7 @@ import {
   NgZone 
 } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Subscription, fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -119,7 +119,22 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public loginService: LoginService,
     public apollo: Apollo,
     public allEquipmentGQL: AllEquipmentGQL,
-    private _bypass: BypassErrorService) {this._bypass.bypassError(environment.cerGraphQLUrl, [500]);}
+    private _bypass: BypassErrorService) {
+    this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
+    //When url change, we check if actual url have # on it, then we redirect to the route without it.
+    // Redirect hash-style URLs of the old ResearchHub to the new style.
+    router.events.subscribe((event: RouterEvent): void => {
+      // const url = this.router.routerState.root.queryParamMap.subscribe(map => console.log("Param map is ",map));
+      if (!this.router.navigated && event instanceof NavigationStart) {
+        const url = event.url;  
+        if (url.match('^/#/')) {
+          router.navigateByUrl(url.replace('#/', ''), {replaceUrl: true});
+        }
+      }
+    }
+    );
+
+  }
 
   getSearchQueryParams(item: any) {
     return item['type'] === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };

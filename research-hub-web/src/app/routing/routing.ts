@@ -1,9 +1,14 @@
 import { Routes } from '@angular/router';
 import { LoginSuccessGuard } from '@uoa/auth';
 import { HomeComponent } from '@components/home/home.component';
+import { LegacyRoutingComponent } from "@components/legacy-routing/legacy-routing.component";
 
 
 export const appRoutes: Routes = [
+  {
+    path: 'content/:id',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then((m) => m.LegacyRoutingModule)
+  },
   {
     path: '',
     redirectTo: 'home',
