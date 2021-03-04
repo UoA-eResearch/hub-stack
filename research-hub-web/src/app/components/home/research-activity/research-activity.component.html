@@ -30,7 +30,7 @@
               <div
                 selected 
                 [routerLink]="['/search']" 
-                [queryParams]="getQueryParams(item)">
+                (click)="searchBarService.setStage([item.sys.id])">
                 <h3>
                   {{ item.name }}
                 </h3>

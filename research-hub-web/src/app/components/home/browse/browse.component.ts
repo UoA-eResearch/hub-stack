@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AllCategoriesGQL, CategoryCollection, Category } from '@app/graphql/schema';
 import { pluck } from 'rxjs/operators';
+import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 
 @Component({
   selector: 'app-browse',
@@ -14,7 +15,9 @@ export class BrowseComponent implements OnInit {
   public allCategories$: Observable<CategoryCollection>;
   public events;
 
-  constructor(public allCategoriesGQL: AllCategoriesGQL) {}
+  constructor(
+    public allCategoriesGQL: AllCategoriesGQL,
+    public searchBarService: SearchBarService) {}
 
   async ngOnInit() {
     this.allCategories$ = this.getAllCategories();

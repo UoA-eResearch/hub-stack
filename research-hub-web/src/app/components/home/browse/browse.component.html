@@ -35,7 +35,7 @@
                 selected
                 class="title-text"
                 [routerLink]="['/search']"
-                [queryParams]="getSearchQueryParams(item)">
+                (click)="searchBarService.setCategory([item.sys.id])">
                   {{ item.name }}
               </a>
             </mat-card-title>
@@ -47,7 +47,7 @@
             <a 
               class="tile-button"
               [routerLink]="['/search']"
-              [queryParams]="getSearchQueryParams(item)">
+              (click)="searchBarService.setCategory([item.sys.id])">
               <button 
                   mat-flat-button 
                   class="standard-button">
