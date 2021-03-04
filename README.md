@@ -14,7 +14,7 @@ An [Apollo GraphQL server](https://www.apollographql.com/docs/apollo-server/) us
 A [Serverless Framework](https://www.serverless.com/) ([AWS Lambda](https://aws.amazon.com/lambda/)) function that generates tickets on the [UoA ServiceNow](http://uoaprod.service-now.com/) via `research-hub-web`.
 
 ### 4. [subhub-link-checker/](subhub-link-checker/)
-A [Contentful App Framework app](https://www.contentful.com/developers/docs/extensibility/app-framework/) that checks to prevent cyclical content references in SubHubs..
+A [Contentful App Framework app](https://www.contentful.com/developers/docs/extensibility/app-framework/) that checks to prevent cyclical content references in SubHubs.
 ## Deployment
 CI/CD is achieved via the monorepo's [Jenkinsfile](Jenkinsfile) which is triggered when code is pushed to one of 3 Git branches corresponding the 3 [UoA AWS environments](http://aws.auckland.ac.nz/) (`sandbox`, `nonprod`, `prod`). 
 
