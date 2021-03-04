@@ -93,7 +93,7 @@ export class SearchPageComponent implements OnInit {
 
   // Content sort
   sortDefault() {
-    this.allCurrentPages = this.allCurrentPagesUnsorted.map((x) => {return { ...x };});
+    this.allCurrentPages = this.allCurrentPagesUnsorted.map((x) => {return { ...x }});
   }
 
   ngOnDestroy() {
