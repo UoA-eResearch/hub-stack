@@ -225,5 +225,6 @@ export class AppComponent implements OnInit, OnDestroy {
   // Reset Search Bar content
   clearSearchText() {
     this.searchText = '';
+    this.searchBarService.setSearchText('');
   }
 }
