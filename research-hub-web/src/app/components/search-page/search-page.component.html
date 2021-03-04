@@ -14,7 +14,7 @@
             <div class="search-filters" fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="2%">
                 <div fxFlex>
                     <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="categoryFilter" [(value)]="categoryFilter"
-                        name="categoryFilter" ngDefaultControl multiple floatLabel="never" placeholder="Research Category">
+                        name="categoryFilter" ngDefaultControl multiple placeholder="Research Category">
                         <mat-select-trigger>Research Categories</mat-select-trigger>
                         <div *ngIf="allCategories$ | async as allCategories">
                             <mat-option *ngFor="let item of allCategories.items" value="{{ item.sys.id }}">{{ item.name }}</mat-option>
@@ -25,7 +25,7 @@
                 <!-- Research Activity Filters -->
                 <div fxFlex>
                     <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="stageFilter" name="stageFilter" ngDefaultControl
-                        multiple floatLabel="never" placeholder="Research Activities">
+                        multiple placeholder="Research Activities">
                         <mat-select-trigger>Research Activities</mat-select-trigger>
                         <div *ngIf="allStages$ | async as allStages">
                             <mat-option *ngFor="let item of allStages.items" value="{{ item.sys.id }}">{{ item.name }}</mat-option>
@@ -36,7 +36,7 @@
                 <!-- Organisation Filters -->
                 <div fxFlex>
                     <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="organisationFilter" name="organisationFilter" 
-                        ngDefaultControl multiple floatLabel="never" placeholder="Organisations">
+                        ngDefaultControl multiple placeholder="Organisations">
                         <mat-select-trigger>Organisations</mat-select-trigger>
                         <div *ngIf="allOrganisations$ | async as allOrganisations">
                             <mat-option *ngFor="let item of allOrganisations.items" value="{{ item.sys.id }}" style="word-wrap: break-word;">{{ item.name }}</mat-option>
@@ -63,7 +63,7 @@
             <!-- Filtering Options -->
             <div fxFlexOrder.lt-sm="1" fxFlex>
                 <mat-select (selectionChange)="updateOrder()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
-                    placeholder="Order By" floatLabel="never">
+                    placeholder="Order By">
                     <div>
                         <mat-option value="Default">Default</mat-option>
                         <mat-option value="Alphabetical">Alphabetical</mat-option>

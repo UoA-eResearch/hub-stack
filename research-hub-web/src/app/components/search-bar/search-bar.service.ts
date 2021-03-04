@@ -238,11 +238,11 @@ export class SearchBarService {
             this.getAllEvents().subscribe(data => {
               array = array.filter(x => data["items"].some(y => y.slug == x.slug));
               this.setResults(array);
-              this.setTotalPages(data["items"].length);
+              this.setTotalPages(array.length);
             });
           }
           else {
-          
+            
           // Create the results array
           this.setResults(array);
           this.setTotalPages(data["result"]["hits"]["total"]["value"]);
