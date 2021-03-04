@@ -11,7 +11,7 @@
             <br>
 
             <!-- Research Category Filters -->
-            <div class="search-filters" fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-sm="column" fxLayoutGap="2%">
+            <div class="search-filters" fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="2%">
                 <div fxFlex>
                     <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="categoryFilter" [(value)]="categoryFilter"
                         name="categoryFilter" ngDefaultControl multiple floatLabel="never" placeholder="Research Category">
@@ -39,7 +39,7 @@
                         ngDefaultControl multiple floatLabel="never" placeholder="Organisations">
                         <mat-select-trigger>Organisations</mat-select-trigger>
                         <div *ngIf="allOrganisations$ | async as allOrganisations">
-                            <mat-option *ngFor="let item of allOrganisations.items" value="{{ item.sys.id }}">{{ item.name }}</mat-option>
+                            <mat-option *ngFor="let item of allOrganisations.items" value="{{ item.sys.id }}" style="word-wrap: break-word;">{{ item.name }}</mat-option>
                         </div>
                     </mat-select>
                 </div>
