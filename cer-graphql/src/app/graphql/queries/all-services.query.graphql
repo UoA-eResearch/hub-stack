@@ -1,7 +1,0 @@
-query AllServices {
-    serviceCollection {
-        items {
-            ...PublicFields
-        }
-    }
-}

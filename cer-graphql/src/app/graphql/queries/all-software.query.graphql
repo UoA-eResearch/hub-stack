@@ -1,7 +1,0 @@
-query AllSoftware {
-    softwareCollection {
-        items {
-            ...PublicFields
-        }
-    }
-}
