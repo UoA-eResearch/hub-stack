@@ -1,117 +1,65 @@
 <!-- Displaying all SubHubs -->
-<div
-    *ngIf="allSubHubs$ | async as allSubHubs" 
-    class="site-padding-2 margin-bottom top-padding" 
+<div *ngIf="allSubHubs$ | async as allSubHubs" class="site-padding-2 margin-bottom top-padding"
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allSubHubs"></app-collection-list>
-</div>
+    <app-collection-list [collection]="allSubHubs"></app-collection-list></div>
 
 <!-- Displaying an individual SubHub -->
-<div 
-    style="overflow-x: hidden"
-    class="results" 
-    *ngIf="subHub | async as subhub">
+<div style="overflow-x: hidden" class="results" *ngIf="subHub | async as subhub">
+    
     <div>
 
         <!-- Templates -->
-        <ng-template #subHubChildren>
-            <app-large-cards [contentItem]="subhub"></app-large-cards>
-        </ng-template>
-
-        <ng-template #breadcrumbs>
-            <app-breadcrumbs 
-                [contentItem]="parentSubHubs" 
-                [title]="subhub.title">
-            </app-breadcrumbs>
-        </ng-template>
+        <ng-template #subHubChildren><app-large-cards [contentItem]="subhub"></app-large-cards></ng-template>
+        <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="subhub.title"></app-breadcrumbs></ng-template>
 
         <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-            <app-cards 
-                [flex]="flex"
-                [hideImage]="hide"
-                [title]="'Explore Related'" 
-                [contentItem]="subhub.relatedItemsCollection">
-            </app-cards>
+            <app-cards [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" [contentItem]="subhub.relatedItemsCollection"></app-cards>
         </ng-template>
 
         <ng-template #relatedOrganisations>
-            <app-cards 
-                [title]="'Organisations'" 
-                [contentItem]="subhub.relatedOrgsCollection">
-            </app-cards>
+            <app-cards [title]="'Organisations'" [contentItem]="subhub.relatedOrgsCollection"></app-cards>
         </ng-template>
     
         <ng-template #relatedDocuments>
-            <app-cards 
-                [title]="'Documents'" 
-                [contentItem]="subhub.relatedDocsCollection">
-            </app-cards>
+            <app-cards [title]="'Documents'" [contentItem]="subhub.relatedDocsCollection"></app-cards>
         </ng-template>
     
         <ng-template #relatedContacts>
-            <app-cards 
-                [title]="'Contacts'" 
-                [contentItem]="subhub.relatedContactsCollection">
-            </app-cards>
+            <app-cards [title]="'Contacts'" [contentItem]="subhub.relatedContactsCollection"></app-cards>
         </ng-template>
 
         <ng-template #body>
-            <ngx-contentful-rich-text
-                class="section-2 body-text"
-                style="word-break:break-word;" 
-                [document]="subhub.bodyText.json"
-                [nodeRenderers]="nodeRenderers">
-            </ngx-contentful-rich-text>
+            <ngx-contentful-rich-text class="section-2 body-text" style="word-break:break-word;" [document]="subhub.bodyText.json"
+                [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
         </ng-template>
         <div>
-            <div 
-            class="banner-container"
-            [style]="subhub.banner ? 
-                        isMobile ?
+            <div class="banner-container" [style]="subhub.banner ? isMobile ?
                         'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat'
-                        :
-                        'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat fixed center; padding: 72px 0px'
-                    :
-                    ''">
+                        :'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat fixed center; padding: 72px 0px'
+                    :''">
                 <div class="banner-content">
 
                     <!-- Title -->
-                    <h1 
-                        class="content-title" 
-                        ngClass.lt-md="content-title-mobile"
-                        [style]="subhub.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
-                            {{ subhub.title }}
-                    </h1>
+                    <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
+                        [style]="subhub.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">{{ subhub.title }}</h1>
 
                     <!-- Summary -->
-                    <p
-                        class="content-summary" 
-                        ngClass.sm="content-summary-sm" 
-                        ngClass.xs="content-summary-xs"
+                    <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
                         [style]="subhub.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
-                            <small>{{ subhub.summary }}</small>
-                    </p>
+                        <small>{{ subhub.summary }}</small></p>
                 </div>
             </div>
 
-            <div
-                class="site-padding" 
-                ngClass.lt-md="site-padding-mobile">
+            <div class="site-padding" ngClass.lt-md="site-padding-mobile">
 
                 <!-- Breadcrumbs -->
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
                 <!-- Body Content -->
-                <div 
-                    fxLayout="row wrap"
-                    fxLayout.lt-sm="column wrap"
-                    fxLayoutGap="2%"
-                    fxLayoutAlign="space-between">
+                <div fxLayout="row wrap" fxLayout.lt-sm="column wrap" fxLayoutGap="2%" fxLayoutAlign="space-between">
                     
                     <!-- Main Body -->
-                    <div fxFlex class="section">
-                        <ng-container *ngTemplateOutlet="body"></ng-container>
-                    </div>
+                    <div fxFlex class="section"><ng-container *ngTemplateOutlet="body"></ng-container></div>
                 </div>
             </div>
 
@@ -121,9 +69,7 @@
             </div>
         
             <!-- Extra Links -->
-            <div
-                class="site-padding"
-                ngClass.lt-md="site-padding-mobile"
+            <div class="site-padding" ngClass.lt-md="site-padding-mobile"
                 *ngIf="
                     subhub.relatedDocsCollection.items.length > 0 ||
                     subhub.relatedContactsCollection.items.length > 0 ||

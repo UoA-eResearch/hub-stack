@@ -2,90 +2,44 @@
 
     <!-- Search Header Filter Options -->
     <div class="search-header search-page-container grey-background">
-        <div
-            fxLayout="column"
-            ngClass.gt-sm="top-padding site-padding-2"
-            ngClass.lt-md="top-padding site-padding">
+        <div fxLayout="column" ngClass.gt-sm="top-padding site-padding-2" ngClass.lt-md="top-padding site-padding">
 
             <!-- Search Bar -->
-            <app-search-bar
-                type="search"
-                name="search-bar"
-                ngDefaultControl
-                #searchTextInput
-                placeholder="Search">
-            </app-search-bar>
+            <app-search-bar type="search" name="search-bar" ngDefaultControl #searchText role="textbox" placeholder="Search"> </app-search-bar>
 
+            <!-- Vertical divider -->
             <br>
 
-            <!-- Search Filters -->
-
             <!-- Research Category Filters -->
-            <div
-                class="search-filters"
-                fxLayout="row"
-                fxLayoutAlign="space-between"
-                fxLayout.lt-sm="column"
-                fxLayoutGap="2%">
+            <div class="search-filters" fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-sm="column" fxLayoutGap="2%">
                 <div fxFlex>
-                    <mat-select
-                        (selectionChange)="updateSearchFilters()"
-                        [(ngModel)]="categoryFilter"
-                        [(value)]="categoryFilter"
-                        name="categoryFilter" 
-                        ngDefaultControl
-                        multiple
-                        floatLabel="never"
-                        placeholder="Research Category">
+                    <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="categoryFilter" [(value)]="categoryFilter"
+                        name="categoryFilter" ngDefaultControl multiple floatLabel="never" placeholder="Research Category">
                         <mat-select-trigger>Research Categories</mat-select-trigger>
                         <div *ngIf="allCategories$ | async as allCategories">
-                            <mat-option
-                                *ngFor="let item of allCategories.items"
-                                value="{{ item.sys.id }}">
-                                    {{ item.name }}
-                            </mat-option>
+                            <mat-option *ngFor="let item of allCategories.items" value="{{ item.sys.id }}">{{ item.name }}</mat-option>
                         </div>
                     </mat-select>
                 </div>
 
                 <!-- Research Activity Filters -->
                 <div fxFlex>
-                    <mat-select
-                        (selectionChange)="updateSearchFilters()"
-                        [(ngModel)]="stageFilter"
-                        name="stageFilter" 
-                        ngDefaultControl
-                        multiple
-                        floatLabel="never"
-                        placeholder="Research Activities">
+                    <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="stageFilter" name="stageFilter" ngDefaultControl
+                        multiple floatLabel="never" placeholder="Research Activities">
                         <mat-select-trigger>Research Activities</mat-select-trigger>
                         <div *ngIf="allStages$ | async as allStages">
-                            <mat-option
-                                *ngFor="let item of allStages.items"
-                                value="{{ item.sys.id }}">
-                                    {{ item.name }}
-                            </mat-option>
+                            <mat-option *ngFor="let item of allStages.items" value="{{ item.sys.id }}">{{ item.name }}</mat-option>
                         </div>
                     </mat-select>
                 </div>
 
                 <!-- Organisation Filters -->
                 <div fxFlex>
-                    <mat-select
-                        (selectionChange)="updateSearchFilters()"
-                        [(ngModel)]="organisationFilter"
-                        name="organisationFilter" 
-                        ngDefaultControl
-                        multiple
-                        floatLabel="never"
-                        placeholder="Organisations">
+                    <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="organisationFilter" name="organisationFilter" 
+                        ngDefaultControl multiple floatLabel="never" placeholder="Organisations">
                         <mat-select-trigger>Organisations</mat-select-trigger>
                         <div *ngIf="allOrganisations$ | async as allOrganisations">
-                            <mat-option
-                                *ngFor="let item of allOrganisations.items"
-                                value="{{ item.sys.id }}">
-                                    {{ item.name }}
-                            </mat-option>
+                            <mat-option *ngFor="let item of allOrganisations.items" value="{{ item.sys.id }}">{{ item.name }}</mat-option>
                         </div>
                     </mat-select>
                 </div>
@@ -95,21 +49,12 @@
 
     <!-- Search Results -->
     <div class="search-content site-padding-2 section" *ngIf="allCurrentPages">
-        <div
-            fxLayout="row"
-            fxLayoutGap="5%"
-            fxLayout.lt-sm="column"
-            class="result-list-filter">
+        <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-list-filter">
 
             <!-- Results -->
-            <span
-                fxLayout="row"
-                fxFlexOrder.lt-sm="2"
-                fxLayoutAlign="center end">
-                <h3 style="margin-bottom: 0" class="search-results-text">
-                    {{ this.searchBarService.getTotalPages() }}&nbsp;&nbsp;
-                </h3>
-                <p style="margin-bottom: 0" >Results found</p>
+            <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
+                <h3 style="margin-bottom: 0" class="search-results-text">{{ this.searchBarService.getTotalPages() }}&nbsp;&nbsp;</h3>
+                <p style="margin-bottom: 0">Results found</p>
             </span>
 
             <!-- Divider -->
@@ -117,20 +62,11 @@
 
             <!-- Filtering Options -->
             <div fxFlexOrder.lt-sm="1" fxFlex>
-                <mat-select
-                    (selectionChange)="updateOrder()"
-                    [(ngModel)]="sortType"
-                    name="organisationFilter"
-                    ngDefaultControl
-                    placeholder="Order By"
-                    floatLabel="never">
+                <mat-select (selectionChange)="updateOrder()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
+                    placeholder="Order By" floatLabel="never">
                     <div>
-                        <mat-option value="Default">
-                            Default
-                        </mat-option>
-                        <mat-option value="Alphabetical">
-                            Alphabetical
-                        </mat-option>
+                        <mat-option value="Default">Default</mat-option>
+                        <mat-option value="Alphabetical">Alphabetical</mat-option>
                     </div>
                 </mat-select>
             </div>

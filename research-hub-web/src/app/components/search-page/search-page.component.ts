@@ -24,17 +24,12 @@ export class SearchPageComponent implements OnInit {
   public allCurrentPagesUnsorted = [];
   public categoryFilter = this.searchBarService.getCategory();
   public stageFilter = this.searchBarService.getStage();
-  public organisationFilter = this.searchBarService.getOrganisation();;
-  public queries;
-  public params;
+  public organisationFilter = this.searchBarService.getOrganisation();
   public sortType;
-  public pageType;
-  public eventId = 16; // the displayOrder of eventId defined in contentful
 
 
   constructor(
     public searchBarService: SearchBarService,
-    private route: ActivatedRoute,
     public location: Location
     ) { }
 
@@ -72,28 +67,16 @@ export class SearchPageComponent implements OnInit {
   // Update ordering method when user changes filter
   updateOrder() {
     switch(this.sortType) {
-      case 'Alphabetical':
-        this.sortAlphabetical();
-        break;
-      case 'Default':
-        this.sortDefault();
-        break;
-    }
-  }
+      case 'Alphabetical': this.sortAlphabetical(); break;
+      case 'Default': this.sortDefault(); break;}}
 
   // Alphabetical sort
   sortAlphabetical() {
-    this.allCurrentPages= this.allCurrentPages.sort(function(a, b) {
-      return a.title.localeCompare(b.title);
-    })
-  }
+    this.allCurrentPages= this.allCurrentPages.sort(function(a, b) { return a.title.localeCompare(b.title) })}
 
   // Content sort
   sortDefault() {
-    this.allCurrentPages = this.allCurrentPagesUnsorted.map((x) => {return { ...x }});
-  }
+    this.allCurrentPages = this.allCurrentPagesUnsorted.map((x) => {return { ...x }})}
 
-  ngOnDestroy() {
-    this.resultSub$.unsubscribe();
-  }
+  ngOnDestroy() { this.resultSub$.unsubscribe()}
 }

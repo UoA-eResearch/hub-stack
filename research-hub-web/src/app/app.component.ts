@@ -1,10 +1,5 @@
 import { filter, pluck, flatMap } from 'rxjs/operators';
-import { 
-  Component, 
-  OnDestroy, 
-  OnInit, 
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
@@ -16,16 +11,9 @@ import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
 import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
-import {
-  GetHomepageGQL,
-  Homepage,
-  AllCategoriesGQL,
-  CategoryCollection,
-  AllStagesGQL,
-  StageCollection
-} from './graphql/schema';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { GetHomepageGQL, Homepage, AllCategoriesGQL, CategoryCollection, AllStagesGQL, StageCollection } from './graphql/schema';
 
 
 @Component({
@@ -72,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private location: Location, 
-    private searchBarService: SearchBarService, 
+    public searchBarService: SearchBarService, 
     private router: Router,
     private titleService: Title,
     public appComponentService: AppComponentService,
@@ -169,7 +157,6 @@ export class AppComponent implements OnInit, OnDestroy {
             
             // Same component navigation
             if (this.currentRoute == this.previousRoute) {
-              console.log([url]);
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               this.router.navigate([url]);
             }
@@ -215,7 +202,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   // Search
-  search(event) {
+  search() {
     this.searchBarService.setSearchText(this.searchText);
     this.router.navigate(['/search']);
   }
