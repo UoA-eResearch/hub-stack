@@ -58,9 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
   public allStages$: Observable<StageCollection>;
 
   public searchText = '';
-  public showFilterButton = false;
-  public showProgressBar = false;
-  public showBackBtn = false;
   public pageTitle = '';
 
   private previousRoute = undefined;
@@ -172,13 +169,10 @@ export class AppComponent implements OnInit, OnDestroy {
             
             // Same component navigation
             if (this.currentRoute == this.previousRoute) {
+              console.log([url]);
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               this.router.navigate([url]);
             }
-
-            // Show back button if we're not in /home
-            this.showBackBtn = routeName !== 'home';
-            this.showFilterButton = routeName === 'search';
           }
         });
     }

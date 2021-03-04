@@ -39,16 +39,20 @@ export class CollectionListComponent implements OnInit {
    */
   public getDefaultTypeIcon(__typename: string): string {
     switch (__typename) {
-      case 'article': return 'import_contacts';
-      case 'Article': return 'import_contacts';
-      case 'equipment': return 'build';
-      case 'Equipment': return 'build';
-      case 'subhub': return 'layers';
-      case 'Subhub': return 'layers';
-      case 'service': return 'home_repair_services';
-      case 'Service': return 'home_repair_services';
-      case 'event': return 'calendar_today';
-      case 'Event': return 'calendar_today';
+      case 'article': return 'article';
+      case 'Article': return 'article';
+      case 'equipment': return 'handyman';
+      case 'Equipment': return 'handyman';
+      case 'subHub': return 'language';
+      case 'Subhub': return 'language';
+      case 'service': return 'manage_accounts';
+      case 'Service': return 'manage_accounts';
+      case 'event': return 'event';
+      case 'Event': return 'event';
+      case 'software': return 'code';
+      case 'Software': return 'code';
+      case 'caseStudy': return 'cases';
+      case 'CaseStudy': return 'cases';
       default: return 'article'
     }
   }
