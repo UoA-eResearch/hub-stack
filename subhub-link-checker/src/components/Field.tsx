@@ -34,7 +34,7 @@ const doFailedAlertDialog = (sdk: FieldExtensionSDK, hasMultiplePages: boolean, 
   const page = hasMultiplePages ? "pages" : "page";
   const failedPage = failedPageNames.length > 1 ? "these pages" : "this page";
   const failedPageList = failedPageNames.map(name => "\"" + name + "\"").join(", ");
-  const paragraphBeginning = hasMultiplePages ? "Some of the pages" : `The page "${failedPageList}"`;
+  const paragraphBeginning = hasMultiplePages ? "Some of the pages" : `The page ${failedPageList}`;
   const nextStep = hasMultiplePages ? `Try adding ${failedPage} to the External Pages field instead: ${failedPageList}.` : "Try adding the page to the External Pages field instead."
   sdk.dialogs.openAlert({
     title: `Adding existing ${page} in SubHub Internal Pages field failed`,
