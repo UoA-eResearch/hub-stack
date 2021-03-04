@@ -1,2 +1,9 @@
-.terraform/
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files. Not committed to source control as it may contain sensitive values. https://www.terraform.io/docs/state/index.html
+*.tfstate
+*.tfstate.*
+
+# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
 *.tfplan
