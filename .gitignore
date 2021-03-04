@@ -42,3 +42,5 @@ research-hub-web/typings
 serverless-now/.serverless/
 serverless-now/env/local.env
 
+# ====================== subhub-link-checker =========== #
+subhub-link-checker/build/*
