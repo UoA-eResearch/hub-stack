@@ -236,6 +236,18 @@ svg {
   caret-color: white !important;
 }
 
+
+/*
+ * Search Results Filters Styling
+ */
+::ng-deep.search-filters .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: unset;
+}
+
+::ng-deep.search-filters .mat-option-pseudo-checkbox.mat-pseudo-checkbox-checked {
+  background-color: #A5C73C;
+}
+
 /**
  * Content Styles
  */
