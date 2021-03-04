@@ -19,8 +19,8 @@
       <mat-nav-list>
 
         <!-- Search -->
-        <mat-list-item  *ngIf="!onSearchPage" [routerLink]="['/search']" 
-          (click)="sidenav.close()"><a mat-line>Search</a>
+        <mat-list-item  *ngIf="!onSearchPage" [routerLink]="['/search']" (click)="clearSearchText()"
+          (keydown.enter)="clearSearchText()"><a mat-line>Search</a>
         </mat-list-item>
 
         <!-- Browse -->
@@ -99,15 +99,16 @@
                   <span fxHide.lt-md style="flex: 1 1 auto;"></span>
 
                   <!-- Search Icon (Mobile)-->
-                  <button role="button" aria-label="search" *ngIf="!onSearchPage" (click)="searchBarService.setSearchText('')"
-                    (keydown.enter)="searchBarService.setSearchText('')" mat-icon-button
+                  <button role="button" aria-label="search" *ngIf="!onSearchPage" (click)="clearSearchText()"
+                    (keydown.enter)="clearSearchText()" mat-icon-button
                     fxHide.gt-sm routerLink="/search" matTooltip="Search">
                     <mat-icon>search</mat-icon>
                   </button>
 
                   <!-- Search Button -->
                   <button role="button" aria-label="search" *ngIf="!onSearchPage" mat-button 
-                  fxHide.lt-md routerLink="/search">Search</button>
+                  fxHide.lt-md routerLink="/search" (click)="clearSearchText()" 
+                  (keydown.enter)="clearSearchText()">Search</button>
 
                   <!-- Research Categories Button -->
                   <button role="button" aria-label="categories" *ngIf="!onSearchPage" 
@@ -190,8 +191,8 @@
                     <!-- Search Bar -->
                     <input role="textbox" autofocus matInput (keydown.enter)="search()"
                       [(ngModel)]="searchText" placeholder="Search">
-                    <button role="button" matSuffix *ngIf="searchText" (click)="clearSearchText()" 
-                      (keydown.enter)="clearSearchText()"  mat-icon-button>
+                    <button role="button" matSuffix *ngIf="searchText" (click)="clearSearchText('')" 
+                      (keydown.enter)="clearSearchText('')"  mat-icon-button>
                       <mat-icon>close</mat-icon>
                     </button>
                   </mat-form-field>
