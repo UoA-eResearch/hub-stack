@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test-nonprod": "export awsProfile='test' && npm run test",
     "dev": "nodemon ./index.js --config-from-file --watch=./**/*"
   },
   "repository": {

@@ -47,26 +47,51 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
 }
 
 /**
- * Gets OAuth tokens
+ * Gets OAuth tokens from 2FAB Lambda
  */
 const getTokens = async () => {
+    let awsProfile = process.env.awsProfile;
     let awsCreds = new aws.SharedIniFileCredentials({
-        profile: process.env.awsProfile,
+        profile: awsProfile
     });
     if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
-        console.warn("Couldn't find aws profile matching environment variable awsProfile. Falling back to sandbox profile for local development.");
+        console.warn(`Couldn't find aws profile matching environment variable awsProfile: ${awsProfile}. Falling back to sandbox profile for local development.`);
+        awsProfile = 'sandbox';
         awsCreds = new aws.SharedIniFileCredentials({
             profile: 'sandbox',
         });
     }
 
+    let awsLambdaParams = null;
+    switch (awsProfile) {
+        case 'uoa-sandbox':
+        case 'sandbox':
+            awsLambdaParams = {
+                host: "ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com",
+                path: "/sandbox/",
+                region: "ap-southeast-2",
+                service: "execute-api"
+            }
+            break;
+        case 'uoa-its-sandbox':
+        case 'test':
+            awsLambdaParams = {
+                host: "apigw.test.amazon.auckland.ac.nz",
+                path: "/aws-token-grabber/",
+                region: "ap-southeast-2",
+                service: "execute-api"
+            }
+    }
+
+    clg({awsLambdaParams})
+
     // Adding the AWS4 Signature to our request parameters
     let opts = {
-        host: process.env.OAUTH_LAMBDA_HOST,
-        path: process.env.OAUTH_LAMBDA_PATH,
-        region: process.env.OAUTH_LAMBDA_REGION,
-        service: process.env.OAUTH_LAMBDA_SERVICE,
+        host: awsLambdaParams.host,
+        path: awsLambdaParams.path,
+        region: awsLambdaParams.region,
+        service: awsLambdaParams.service,
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br'
     };
