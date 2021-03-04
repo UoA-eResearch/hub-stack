@@ -34,11 +34,11 @@ const doFailedAlertDialog = (sdk: FieldExtensionSDK, hasMultiplePages: boolean, 
   const page = hasMultiplePages ? "pages" : "page";
   const failedPage = failedPageNames.length > 1 ? "these pages" : "this page";
   const failedPageList = failedPageNames.map(name => "\"" + name + "\"").join(", ");
-  const paragraphBeginning = hasMultiplePages ? "Some of the existing pages" : "The existing page";
+  const paragraphBeginning = hasMultiplePages ? "Some of the pages" : `The page "${failedPageList}"`;
   const nextStep = hasMultiplePages ? `Try adding ${failedPage} to the External Pages field instead: ${failedPageList}.` : "Try adding the page to the External Pages field instead."
   sdk.dialogs.openAlert({
     title: `Adding existing ${page} in SubHub Internal Pages field failed`,
-    message: `${paragraphBeginning} you added failed our link check. Pages may only be added to one SubHub's Internal Pages field, and SubHubs may not link to themselves. \
+    message: `${paragraphBeginning} you tried to add failed our link check. Pages may only be added to one SubHub's Internal Pages field, and SubHubs may not link to themselves. \
     The External Pages field does not have these limitations. ${nextStep}`
   });
 };
@@ -101,11 +101,12 @@ const CustomLinkActions = ({inheritedProps:props, sdk}: CustomLinkActionsProps) 
         });
       }).catch(reason => {
         sdk.dialogs.openAlert({
-          title: "Error occurred in the SubHub link-checking application",
+          title: "Error occurred in the SubHub link checking application",
           message: "Sorry, an error occurred while adding your page(s) to the SubHub Internal Pages field. " +
-            "Please try again. If problems persist, please message the ResearchHub team for assistance."
+            "Please try again. If problems persist, please message the ResearchHub team for assistance. " +
+            "You can also add your page(s) to the External Pages field as a workaround."
         });
-        console.log("Error occurred in SubHub link-checking application", reason);
+        console.log("Error occurred in SubHub link checking application", reason);
       });
   }}
 />
