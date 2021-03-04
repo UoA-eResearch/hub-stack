@@ -1,21 +1,47 @@
 # ResearchHub SubHub Internal Pages Link-Checking App
 
-Contentful App for ensuring pages on ResearchHub are only linked to by _one_ SubHub internal pages field.
-
-React/TypeScript/Contentful App SDK
+Contentful App Framework app for ensuring pages on ResearchHub are only linked to by _one_ SubHub internal pages field.
 
 The App is a replacement editor for the [default reference field editor](https://www.contentful.com/developers/docs/extensibility/field-editors/).
 The replacement editor behaves and looks the same as the built-in one. To use it, set it up as the editor for the Internal Pages field in the Content model details page.
 It checks whether the pages that the author wishes to add to the Internal Pages field already belong to another SubHub's Internal Pages field. If so, it will
 display an error. If not, it will add the pages to the field.
 
+
+Written with React/TypeScript/Contentful App Framework.
+
 Part of the Hub Expansion project. This is required due to SubHub routing logic in the frontend.
 
-See [hub-stack](https://github.com/UoA-eResearch/hub-stack) for more information on ResearchHub.
+The App is hosted on GitHub Pages, and deployed as an private App in Contentful. [Read more...](https://www.contentful.com/developers/docs/extensibility/app-framework/)
+## First time deployment
+1. Deploy the App to GitHub Pages. To deploy this App, clone the repository, then:
+    ```
+    cd subhub-link-checker
+    npm install
+    npm run deploy
+    ```
+    This will build and deploy the App to the gh-pages branch of the hub-stack monorepo. To change the deployment location, [edit the `homepage` field in the package.json file](https://create-react-app.dev/docs/deployment/#github-pages). 
 
-## Deployment
-To deploy this App to a Contentful environment.
 
+2. Then, you need to register the App on Contentful. In the `subhub-link-checker` folder, run the command:
+
+    ```
+    npx @contentful/create-contentful-app create-definition
+    ```
+
+    When prompted, enter the app name "SubHub Link Checker". In the next step, select "Entry field" and "Page" as locations where the app can be rendered. Then in the next step, select "Entry reference" and "Entry reference, list". The command will open a browser to ask you to log in to Contentful. Paste the resulting token into the command.
+
+    The App is now available in your Contentful space. Log in to Contentful, click Apps > Manage Apps, and notice "SubHub Link Checker" is listed as an available app.
+
+3. Install the App in space and use the App for the Internal Pages field
+    
+    Click on the App and press Authorize access. The App should now be listed as installed.
+
+    Click on Content model tab, then the model for SubHubs (currently titled `Page > SubHub`). Find and click on the field for internal pages (currently titled `Internal Pages`). In the Appearance tab, select the SubHub Link Checker option and Save.
+
+    Open a SubHub to verify the Internal Pages field is still editable. If it is, then the App setup is complete!
+
+Subsequent deployments only require running `npm run deploy`. This will update the GitHub Pages branch with the latest changes.
 ## Development
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
 
