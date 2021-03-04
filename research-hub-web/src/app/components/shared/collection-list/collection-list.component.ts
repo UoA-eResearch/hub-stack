@@ -44,7 +44,7 @@ export class CollectionListComponent implements OnInit {
       case 'equipment': return 'handyman';
       case 'Equipment': return 'handyman';
       case 'subHub': return 'language';
-      case 'Subhub': return 'language';
+      case 'SubHub': return 'language';
       case 'service': return 'manage_accounts';
       case 'Service': return 'manage_accounts';
       case 'event': return 'event';
