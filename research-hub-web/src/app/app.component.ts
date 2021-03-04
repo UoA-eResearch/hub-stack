@@ -183,6 +183,23 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this.authenticated = await this.loginService.isAuthenticated();
           this.userInfo = await this.loginService.getUserInfo();
 
+          window.dataLayer.push({
+            'user': JSON.stringify(this.userInfo),
+            ...this.userInfo,
+          });
+
+          // pushing an individual usergroupss to google analytics
+          if (this.userInfo.groups) {
+            this.userInfo.groups.trim().replace('\"', '').replace(']', '').replace('[', '').split(',').map(group => {
+              let groupObj = {};
+              group = group.trim().split('.')[0];
+              groupObj[group] = group;
+              window.dataLayer.push(groupObj);
+            })
+          }
+
+
+
           if (routeName) {
             this.showBanner = ['home'].includes(routeName);
             this.searchBarService.setVisibility(['home', 'search'].includes(routeName));
