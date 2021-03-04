@@ -55,9 +55,9 @@ const getTokens = async () => {
     });
     if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
-        console.log("Couldn't find aws profile matching environment variable awsProfile. Falling back to saml profile for local development.");
+        console.warn("Couldn't find aws profile matching environment variable awsProfile. Falling back to sandbox profile for local development.");
         awsCreds = new aws.SharedIniFileCredentials({
-            profile: 'saml',
+            profile: 'sandbox',
         });
     }
 
