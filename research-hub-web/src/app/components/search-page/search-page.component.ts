@@ -53,9 +53,9 @@ export class SearchPageComponent implements OnInit {
   public async initialPages() {
 
     // Updating results when searched
-    this.resultSub$ = this.searchBarService.resultsChange.subscribe(_data => {
-      this.allCurrentPages = _data;
-      this.allCurrentPagesUnsorted = _data;
+    this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
+      this.allCurrentPages = data.map((x) => {return { ...x };});
+      this.allCurrentPagesUnsorted = data.map((x) => {return { ...x };});
 
       // Update ordering if preselected
       this.updateOrder();
@@ -86,7 +86,6 @@ export class SearchPageComponent implements OnInit {
 
   // Alphabetical sort
   sortAlphabetical() {
-    this.allCurrentPagesUnsorted = this.allCurrentPages.map((x) => {return { ...x };});
     this.allCurrentPages= this.allCurrentPages.sort(function(a, b) {
       return a.title.localeCompare(b.title);
     })

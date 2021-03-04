@@ -8,24 +8,28 @@ import { Component, OnInit, Input } from '@angular/core'
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnInit {
-  public pageNumber = this.searchBarService.getCurrentPage();
+  public pageNumber;
 
   @Input() collection;
   constructor(public searchBarService: SearchBarService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {  }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.pageNumber = this.searchBarService.getCurrentPage();
     this.collection = changes['collection'].currentValue;
   }
 
-  // Reset the search by setting currentPage to 1 and scrolling to top of page
+  // Scrolling to top of page on search
   scrollToTop($event) {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    this.searchBarService.setCurrentPage($event);
+    this.pageNumber = $event;
     this.searchBarService.createResultsList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Reset pageNumber to 1 if results are out of bounds
+  public resetPage($event) {
+    this.pageNumber = $event;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /**

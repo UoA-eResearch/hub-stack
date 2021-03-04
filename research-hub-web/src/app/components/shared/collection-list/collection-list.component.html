@@ -40,7 +40,14 @@
             </a>
         </mat-nav-list>
         <div class="section-2">
-            <pagination-controls (pageChange)="scrollToTop($event)" class="page-control" (pageChange)="pageNumber = $event"></pagination-controls>
+            <pagination-controls
+                class="page-control"
+                (pageChange)="scrollToTop($event)"
+                (pageBoundsCorrection)="resetPage($event)"
+                screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
         </div>
     </div>
 </ng-container>
