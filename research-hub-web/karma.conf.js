@@ -9,7 +9,7 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
-      require('karma-coverage-istanbul-reporter'),
+      require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-verbose-reporter'),
     ],
@@ -19,7 +19,7 @@ module.exports = function (config) {
     mime: {
       'text/x-typescript': ['ts', 'tsx']
     },
-    coverageIstanbulReporter: {
+    coverageReporter: {
       dir: require('path').join(__dirname, 'coverage'),
       reports: ['html', 'lcovonly', 'text-summary'],
       thresholds: {

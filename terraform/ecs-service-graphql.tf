@@ -15,37 +15,36 @@ resource "aws_ecs_task_definition" "graphql" {
     "networkMode": "awsvpc",
     "name": "cer-graphql",
     "logConfiguration": {
-		"logDriver": "awslogs",
-			"options": {
-				"awslogs-group": "/ecs/cer-graphql-task",
-				"awslogs-region": "${var.aws_region}",
-				"awslogs-create-group": "true",
-                "awslogs-stream-prefix": "ecs"
-		}
-	},
-    "secrets": [
-         {
-          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-access-token",
-          "name": "CONTENTFUL_ACCESS_TOKEN"
-        },
-        {
-          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-space-id",
-          "name": "CONTENTFUL_SPACE_ID"
-        },
-        {
-          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-region",
-          "name": "COGNITO_REGION"
-        },
-        {
-          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-user-pool",
-          "name": "COGNITO_USER_POOL"
-        }
-    ],
+      "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/cer-graphql-task",
+          "awslogs-region": "${var.aws_region}",
+          "awslogs-create-group": "true",
+          "awslogs-stream-prefix": "ecs"
+      }
+    },
     "portMappings": [
-        {
-            "hostPort": 4000,
-            "containerPort": 4000
-        }
+      {
+        "containerPort": 4000
+      }
+    ],
+    "secrets": [
+      {
+        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-access-token",
+        "name": "CONTENTFUL_ACCESS_TOKEN"
+      },
+      {
+        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-space-id",
+        "name": "CONTENTFUL_SPACE_ID"
+      },
+      {
+        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-region",
+        "name": "COGNITO_REGION"
+      },
+      {
+        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-user-pool",
+        "name": "COGNITO_USER_POOL"
+      }
     ]
   }
 ]

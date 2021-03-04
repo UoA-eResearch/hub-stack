@@ -1,0 +1,46 @@
+<div 
+    id="subhub-children"
+    class="site-padding top-padding-2" 
+    ngClass.lt-md="site-padding-mobile top-padding">
+    <div
+        fxLayout="row wrap"
+        fxLayoutGap="1%"
+        fxLayout.lt-md="column wrap">
+        <div
+            class="margin-bottom-2"
+            ngClass.lt-md="margin-bottom"
+            fxFlex="24%"
+            *ngFor="let subHub of contentItem.items">
+
+            <!-- Templates -->
+            <ng-template #image>
+                <img mat-card-image src="{{ subHub.banner?.url }}">
+            </ng-template>
+
+            <ng-template #noImage>
+                <div style="margin-top: 1.875vh;"></div>
+            </ng-template>
+
+            <mat-card class="subhub-card">
+                <ng-container
+                    *ngIf="subHub.banner; then image; else noImage">
+                </ng-container>
+                <span class="card-label">{{ subHub.__typename | humanCase }}</span>
+                <mat-card-title class="card-title">
+                    <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">{{ subHub.title }}</a>
+                </mat-card-title>
+                <mat-card-content class="content-item-summary">
+                    {{ subHub.summary }}
+                </mat-card-content>
+                <br>
+                <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                    <button 
+                        mat-flat-button 
+                        class="alternate-button">
+                        View Page
+                    </button>
+                </a>
+            </mat-card>
+        </div>
+    </div>
+</div>

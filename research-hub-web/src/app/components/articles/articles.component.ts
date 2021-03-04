@@ -1,38 +1,51 @@
-import { Component, OnInit } from '@angular/core';
-import { merge, Observable, forkJoin, race } from 'rxjs';
-import { pluck, map, flatMap, tap, filter } from 'rxjs/operators';
-import { ActivatedRoute, ActivationStart, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, Type } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
+import { BodyMediaService } from '@services/body-media.service';
 import {
   AllArticlesGQL,
   GetArticleBySlugGQL,
-  GetArticleByIdGQL,
   ArticleCollection,
   Article,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { NodeRenderer } from 'ngx-contentful-rich-text';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss']
 })
-export class ArticlesComponent implements OnInit {
+export class ArticlesComponent implements OnInit, OnDestroy {
+  nodeRenderers: Record<string, Type<NodeRenderer>> = {
+    [BLOCKS.QUOTE]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
+    [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
+  };
 
-  public allArticles$: Observable<ArticleCollection>;
-  public article$: Observable<Article>;
   public slug: string;
+  public article: Observable<Article>;
+  public article$: Subscription;
+  public route$: Subscription;
+  public bodyLinks$: Subscription;
+  public allArticles$: Observable<ArticleCollection>;
   public parentSubHubs;
 
   constructor(
     public route: ActivatedRoute,
-    private router: Router,
     public allArticlesGQL: AllArticlesGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
-    public getArticleByIDGQL: GetArticleByIdGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService
+    public appComponentService: AppComponentService,
+    public bodyMediaService: BodyMediaService,
+    public router: Router
   ) { }
 
   async ngOnInit() {
@@ -40,7 +53,7 @@ export class ArticlesComponent implements OnInit {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getArticleBySlug() method.
      */
-      this.route.params.subscribe(params => {
+      this.route$ = this.route.params.subscribe(params => {
         this.slug = params.slug || this.route.snapshot.data.slug;
         this._loadContent();
       });
@@ -55,14 +68,16 @@ export class ArticlesComponent implements OnInit {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
-      this.getArticleBySlug(this.slug).subscribe(data => {
-        this.article$ = this.getArticleByID(data.sys.id)
-          .pipe(tap(res => this.appComponentService.setTitle(res.title)))
+      this.article = this.getArticleBySlug(this.slug);
+      this.article$ = this.article.subscribe(data => {
+          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Articles');
       this.allArticles$ = this.getAllArticles();
+      try { this.article$.unsubscribe(); } catch {}
     }
   }
 
@@ -96,16 +111,11 @@ export class ArticlesComponent implements OnInit {
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
   }
 
-  /**
-   * Function that returns an individual article from the ArticleCollection by it's ID
-   * as an observable of type Article. This is then unwrapped with the async pipe.
-   * ID is retrieved by subscribing to 'getArticleBySlug'.
-   */
-  public getArticleByID(id: string): Observable<Article> {
+  ngOnDestroy() {
     try {
-      return this.getArticleByIDGQL.fetch({id: id})
-        .pipe(map(x => x.data.article)) as Observable<Article>;
-    } catch (e) { console.error(`Error loading article ${id}:`, e); }
+      this.article$.unsubscribe();
+      this.route$.unsubscribe();
+      this.bodyLinks$.unsubscribe();
+    } catch {}
   }
 }
-
