@@ -88,7 +88,6 @@ export class SearchBarService {
     return this.organisation;
   }
 
-
   // Search Text
   setCurrentPage(currentPage) {
     this.currentPage = currentPage;
@@ -97,8 +96,6 @@ export class SearchBarService {
   getCurrentPage() {
     return this.currentPage;
   }
-
-
 
   // Search Text
   setTotalPages(totalPages) {
@@ -109,7 +106,6 @@ export class SearchBarService {
     return this.totalPages;
   }
 
-
   // Search Text
   setSearchText(searchText) {
       this.searchText = searchText;
@@ -119,7 +115,6 @@ export class SearchBarService {
     return this.searchText;
   }
 
-
   // Search Results
   getResults() {
     return this.resultArray;
@@ -128,7 +123,6 @@ export class SearchBarService {
       this.resultArray = results;
       this.resultsChange.next(results);
   }
-
 
    // Get all research stages
    public getAllStages(): Observable<StageCollection> {
@@ -196,6 +190,7 @@ export class SearchBarService {
 
   // Create list result
   public createResultsList() {
+
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
 
