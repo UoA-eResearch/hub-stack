@@ -14,7 +14,7 @@
     </ng-template>
 
     <ng-template #articleBody>
-        <ngx-contentful-rich-text class="section-2 body-text" style="word-break:break-word;" [document]="article.bodyText.json"
+        <ngx-contentful-rich-text class="section-2" style="word-break:break-word;" [document]="article.bodyText.json"
             [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
     </ng-template>
 
@@ -61,10 +61,10 @@
                 <!-- Breadcrumbs -->
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
-                <div fxLayout="row" fxLayoutAlign="space-between"fxLayout.lt-md="column wrap" fxLayoutGap="5%">
+                <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column wrap" fxLayoutGap="5%">
 
                     <!-- Article Body -->
-                    <div fxFlexOrder="2" fxFlexOrder.xs="1">
+                    <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
                         <ng-container *ngTemplateOutlet="articleBody"></ng-container>
                     </div>
 
