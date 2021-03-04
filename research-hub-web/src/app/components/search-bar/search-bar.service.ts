@@ -199,8 +199,6 @@ export class SearchBarService {
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
 
-      console.log(this.getCategory());
-
       // Create deep copy of category array to handle events manually
       let categories = this.getCategory().map(x => { return  x });
 

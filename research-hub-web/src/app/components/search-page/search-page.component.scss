@@ -3,11 +3,14 @@
 @import '../../../themes.scss';
 
 
+// Grey bakground for a section of homepage content
 .grey-background {
     padding-bottom: 20px;
     background-color: #eeeeee;
 }
 
+
+// Search controls container
 .search-header {
     box-shadow: 0px -3px 10px black;
     .search-filters {
@@ -20,11 +23,12 @@
     }
 }
 
+
+// Results controls container
 .result-list-filter {
     width: 100%;
     @include size(medium) { 
-        width: 100%; // Change this to 100% when filtering by content page is complete
-        // margin-left: 50%
+        width: 100%;
     }
     mat-select {
         padding: 10px;
@@ -32,11 +36,7 @@
         border: 1px solid $silver-lining;
     }
     span {
-        h3 {
-            font-size: 24px;
-        }
-        p {
-            font-size: 18px;
-        }
+        h3 { font-size: 24px; }
+        p { font-size: 18px; }
     }
 }

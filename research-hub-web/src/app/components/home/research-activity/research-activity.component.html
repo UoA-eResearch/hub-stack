@@ -1,8 +1,6 @@
 <div>
   <div class="content-container">
-    <div
-      class="text site-padding"
-      ngClass.lt-md="site-padding-mobile">
+    <div class="text site-padding" ngClass.lt-md="site-padding-mobile">
       <h2>{{ title }}</h2>
       <p>{{ description }}</p>
       <div class="main-underline"></div>
@@ -10,41 +8,29 @@
   </div>
 
   <div *ngIf="allStages$ | async as allStages">
+
     <!-- Research Acitivities Container -->
     <div class="research-activity-container">
 
       <!-- Research Activities Content -->
-      <div
-        fxLayout="column" 
-        fxLayoutGap="8px"
-        class="research-activity-content">
+      <div fxLayout="column" fxLayoutGap="8px" class="research-activity-content">
         <div *ngFor="let item of allStages.items">
 
           <!-- Panel Container -->
-          <div 
-            class="outer-panel"
-            fxLayout="row">
+          <div class="outer-panel" fxLayout="row">
 
             <!-- Panel Button -->
             <div class="inner-panel">
-              <div
-                selected 
-                [routerLink]="['/search']" 
-                (click)="searchBarService.setStage([item.sys.id])">
-                <h3>
-                  {{ item.name }}
-                </h3>
-                <p>
-                  {{ item.description }}
-                </p>
+              <div selected [routerLink]="['/search']" (click)="searchBarService.setStage([item.sys.id])"
+                (keydown.enter)="searchBarService.setStage([item.sys.id])">
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.description }}</p>
               </div>
             </div>
 
             <!-- Panel Image -->
-            <div 
-              fxHide.lt-lg
-              class="research-category-img">
-                <img src="{{ item.image?.url }}">
+            <div fxHide.lt-lg class="research-category-img">
+                <img src="{{ item.image?.url }}" alt="{{ item.name }}-image">
             </div>
           </div>
         </div>
