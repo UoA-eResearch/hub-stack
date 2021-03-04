@@ -18,7 +18,6 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { Subscription } from 'rxjs';
 
 
 @Injectable()
@@ -33,13 +32,13 @@ export class SearchBarService {
   public currentPageChange: Subject<any> = new Subject<any>();
   public totalPagesChange: Subject<any> = new Subject<any>();
   public searchText: string;
-  public category: Array<any>;
-  public stage: Array<any>;
-  public organisation: Array<any>;
+  public category: Array<any> = new Array<any>();
+  public stage: Array<any> = new Array<any>();
+  public organisation: Array<any> = new Array<any>();
   public resultArray;
   public currentPage;
   public totalPages;
-  public eventId = '7lTehYtUy01S5rC2Btzc76'; // the displayOrder of eventId defined in contentful
+  public eventId = '7lTehYtUy01S5rC2Btzc76'; // the sys.id of event category defined in contentful
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
@@ -199,6 +198,8 @@ export class SearchBarService {
   public createResultsList() {
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
+
+      console.log(this.getCategory());
 
       // Create deep copy of category array to handle events manually
       let categories = this.getCategory().map(x => { return  x });

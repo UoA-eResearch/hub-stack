@@ -22,9 +22,9 @@ export class SearchPageComponent implements OnInit {
   public resultSub$: Subscription;
   public allCurrentPages = [];
   public allCurrentPagesUnsorted = [];
-  public categoryFilter = [];
-  public stageFilter = []
-  public organisationFilter = [];
+  public categoryFilter = this.searchBarService.getCategory();
+  public stageFilter = this.searchBarService.getStage();
+  public organisationFilter = this.searchBarService.getOrganisation();;
   public queries;
   public params;
   public sortType;
@@ -42,11 +42,8 @@ export class SearchPageComponent implements OnInit {
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
-
-    // If navigating from homepage, set the selected parameters given through the url
-    this.route.snapshot.queryParamMap.get('researchCategories') != null ? this.categoryFilter = [...this.route.snapshot.queryParamMap.get('researchCategories').split(",")] : ''; 
-    this.route.snapshot.queryParamMap.get('researchActivities') != null ? this.stageFilter = [...this.route.snapshot.queryParamMap.get('researchActivities').split(",")] : '';
-    this.updateSearchFilters();
+    this.searchBarService.createResultsList();
+    this.initialPages();
   }
 
   // Create the initial page lsit

@@ -5,6 +5,7 @@ import {
   AllStagesGQL,
   StageCollection
 } from '@graphql/schema';
+import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 
 @Component({
   selector: 'app-research-activity',
@@ -16,15 +17,14 @@ export class ResearchActivityComponent implements OnInit {
   public description = 'The research lifecycle describes the research journey from project inception to completion. It highlights five project stages. Below you can explore what the University of Auckland provides to support you according to where you are in your research journey.';
   public allStages$: Observable<StageCollection>;
   
-  constructor(public allStagesGQL: AllStagesGQL) {}
+  constructor(
+    public allStagesGQL: AllStagesGQL,
+    public searchBarService: SearchBarService
+    ) {}
 
   async ngOnInit() {
     // Get All Categories
     this.allStages$ = this.getAllStages();
-  }
-
-  getQueryParams(activity) {
-    return { researchActivities: [activity.displayOrder] };
   }
 
   // Get all research stages
