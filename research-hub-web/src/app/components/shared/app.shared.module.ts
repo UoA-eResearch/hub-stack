@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/app.material.module';
@@ -25,7 +24,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     MaterialModule,
     RouterModule,
-    MatCarouselModule,
     NgxPaginationModule
   ],
   declarations: [
@@ -41,7 +39,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     VideoCardComponent
   ],
   exports: [
-    MatCarouselModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
