@@ -1,9 +1,6 @@
 @import '../../../themes.scss';
-@import '../search-results/search-results.component.scss';
-
-mat-expansion-panel, mat-card  {
-    margin: 1vh 0;
-}
+@import '../../../typography.scss';
+@import '../../../styles.scss';
 
 div.mat-card-avatar mat-icon {
     color: map-get($hub-teal, 800);
@@ -21,6 +18,14 @@ div.collection {
     }
 
     &:hover {
-        border: 1px solid map-get($hub-teal, 50);
+        border: 0.17vh solid map-get($hub-teal, 50);
     }
+}
+
+/**
+ * Material Overrides
+ */
+mat-expansion-panel-header {
+    font-size: 2vh!important;
+    height: fit-content!important;
 }

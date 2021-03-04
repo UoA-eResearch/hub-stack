@@ -1,78 +1,121 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { pluck, flatMap } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy, Type } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppComponentService } from '@app/app.component.service';
+import { BodyMediaService } from '@services/body-media.service';
 import {
-  AllSubHubChildPagesGQL,
+  AllSubHubGQL,
+  GetSubHubBySlugGQL,
   SubHubCollection,
-  SubHub
+  SubHub,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { NodeRenderer } from 'ngx-contentful-rich-text';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
   selector: 'app-subhubs',
   templateUrl: './subhubs.component.html',
-  styleUrls: ['./subhubs.component.scss'],
+  styleUrls: ['./subhubs.component.scss']
 })
-export class SubhubsComponent implements OnInit {
+export class SubhubsComponent implements OnInit, OnDestroy {
+  nodeRenderers: Record<string, Type<NodeRenderer>> = {
+    [BLOCKS.QUOTE]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
+    [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
+  };
 
-  public subhub$: Observable<SubHubCollection>;
-  public parentSubHubs;
-  public allSubHubs$: Observable<SubHubCollection>;
   public slug: string;
+  public subHub: Observable<SubHub>;
+  public subHub$: Subscription;
+  public route$: Subscription;
+  public bodyLinks$: Subscription;
+  public allSubHubs$: Observable<SubHubCollection>;
+  public parentSubHubs;
 
   constructor(
-    private route: ActivatedRoute,
-    public AllSubHubChildPagesGQL: AllSubHubChildPagesGQL,
-    public cerGraphQLService: CerGraphqlService
+    public route: ActivatedRoute,
+    public allSubHubGQL: AllSubHubGQL,
+    public getSubHubBySlugGQL: GetSubHubBySlugGQL,
+    public cerGraphQLService: CerGraphqlService,
+    public appComponentService: AppComponentService,
+    public bodyMediaService: BodyMediaService,
+    public router: Router
   ) { }
 
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getArticleBySlug() method.
+     * passed to the getSubHubBySlug() method.
      */
-    this.route.params.subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
+      this.route$ = this.route.params.subscribe(params => {
+        this.slug = params.slug || this.route.snapshot.data.slug;
+        this._loadContent();
+      });
   }
 
   /**
-   * Function that loads the subHub/collection depending on if a slug is present.
+   * Function that loads the SubHub/collection depending on if a slug is present.
    */
   private async _loadContent() {
+    /**
+     * If this.slug is defined, we're loading an individual SubHub,
+     * therefore run the corresponding query. If not, return all SubHub.
+     */
     if (!!this.slug) {
-      this.subhub$ = this.getSubHub(this.slug);
+      this.subHub = this.getSubHubBySlug(this.slug);
+      this.subHub$ = this.subHub.subscribe(data => {
+          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.allSubHubs$ = this.getAllSubHubs(this.slug);
+      this.appComponentService.setTitle('SubHub');
+      this.allSubHubs$ = this.getAllSubHubs();
+      try { this.subHub$.unsubscribe(); } catch {}
     }
   }
 
   /**
-   * Runs the query for the main body of a subhub item as including it's child pages but excluding it's ancestor/parent data.
-   * @param slug Page slug
+   * Function that returns all SubHub from the SubHubCollection as an observable
+   * of type SubHubCollection. This is then unwrapped with the async pipe.
+   *
+   * This function is only called if no slug parameter is present in the URL, i.e. the
+   * user is visiting SubHub/slug-name.
    */
-  public getAllSubHubs(slug: string): Observable<SubHubCollection> {
+  public getAllSubHubs(): Observable<SubHubCollection> {
     try {
-      return this.AllSubHubChildPagesGQL
-        .fetch()
-        .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>;
-    } catch (e) {
-      console.error('Error loading subhub body info and children')
-    }
+      return this.allSubHubGQL.fetch()
+        .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>
+    } catch (e) { console.error('Error loading all SubHub:', e) };
   }
 
-  public getSubHub(slug: string): Observable<SubHubCollection> {
+  /**
+   * Function that returns an individual SubHub from the SubHubCollection by it's slug
+   * as an observable of type SubHub. This is then unwrapped with the async pipe.
+   *
+   * This function is only called if no slug parameter is present in the URL, i.e.
+   * the user is visiting /SubHub.
+   *
+   * @param slug The SubHub's slug. Retrieved from the route parameter of the same name.
+   */
+  public getSubHubBySlug(slug: string): Observable<SubHub> {
     try {
-      return this.AllSubHubChildPagesGQL.fetch({
-        slug
-      }).pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>;
-    } catch (e) {
-      console.error('Error loading subhub body info and children')
-    }
+      return this.getSubHubBySlugGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.subHubCollection.items)) as Observable<SubHub>;
+    } catch (e) { console.error(`Error loading SubHub ${slug}:`, e); }
   }
 
+  ngOnDestroy() {
+    try {
+      this.subHub$.unsubscribe();
+      this.route$.unsubscribe();
+      this.bodyLinks$.unsubscribe();
+    } catch {}
+  }
 }

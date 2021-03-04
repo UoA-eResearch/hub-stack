@@ -1,14 +1,12 @@
 
 
 const coverImages = [
-  'banner1.jpg',
-  'banner2.jpg',
-  'banner3.jpg',
-  'banner4.jpg',
-  'banner5.jpg'
+  'img1.jpg',
+  'img22.jpg',
+  'img55.jpg'
 ];
 
-export const CoverImageURL = 'url(../assets/images/' + coverImages[Math.floor(Math.random() * 5)] + ');';
+export const CoverImageURL = 'url(assets/images/' + coverImages[Math.floor(Math.random() * 2)] + ');';
 
 export enum ActionTypeId {
   Integrated = 1,
@@ -48,16 +46,12 @@ export enum ResearchActivityId {
   
   export enum CategoryId {
     All = 1,
-    Support,
     Equipment,
-    Training,
     Software,
-    Facilities,
-    Guide,
-    Person,
-    Policies,
     Articles,
-    SubHubs
+    SubHubs,
+    Services,
+    Events,
   }
   
   export const researchActivityOptions = [
@@ -92,33 +86,31 @@ export enum ResearchActivityId {
       type: OptionType.ResearchActivity
     }
   ];
-  
-  export const categoryOptions = [
-    { id: CategoryId.All, name: 'All Categories', icon: 'public', type: OptionType.Category },
-    { id: CategoryId.Support, name: 'Service', icon: 'local_play', type: OptionType.Category },
-    { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category },
-    { id: CategoryId.Training, name: 'Training', icon: 'school', type: OptionType.Category },
-    { id: CategoryId.Software, name: 'Software', icon: 'desktop_mac', type: OptionType.Category },
-    { id: CategoryId.Facilities, name: 'Facility', icon: 'home', type: OptionType.Category },
-    { id: CategoryId.Guide, name: 'Guide', icon: 'import_contacts', type: OptionType.Category },
-    { id: CategoryId.Person, name: 'People', icon: 'face', type: OptionType.Category },
-    { id: CategoryId.Policies, name: 'Policy', icon: 'gavel', type: OptionType.Category },
-  ];
-  
+
   export const categoryOptionsGQL = [
     { id: CategoryId.All, name: 'All Content', icon: 'public', type: OptionType.Category, url: '/all' },
     { id: CategoryId.Equipment, name: 'Equipment', icon: 'build', type: OptionType.Category, url: '/equipment' },
     { id: CategoryId.Articles, name: 'Articles', icon: 'import_contacts', type: OptionType.Category, url: '/articles' },
-    { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' }
-  ];
+    { id: CategoryId.SubHubs, name: 'SubHubs', icon: 'build', type: OptionType.Category, url: '/subhubs' },
+    { id: CategoryId.Services, name: 'Services', icon: 'miscellaneous_services', type: OptionType.Category, url: '/services' },
+    { id: CategoryId.Events, name: 'Events', icon: 'calendar_today', type: OptionType.Category, url: '/events' },
+    { id: CategoryId.Software, name: 'Software', icon: 'code', type: OptionType.Category, url: '/software' }
+];
   
   export const menuOptions = [
     { name: 'Search', icon: 'search', routerLink: '/search', type: OptionType.Menu },
-    { name: 'Browse', icon: 'view_list', routerLink: '', sublist: categoryOptions, type: OptionType.Menu },
+    { name: 'Browse', icon: 'view_list', routerLink: '', sublist: categoryOptionsGQL, type: OptionType.Menu },
     { name: 'Research Activities', icon: 'school', routerLink: '', sublist: researchActivityOptions, type: OptionType.Menu },
     { name: 'User Study', icon: 'people', routerLink: '/userStudy', type: OptionType.Menu },
     { name: 'Feedback', icon: 'thumbs_up_down', routerLink: '/feedback', type: OptionType.Menu },
     { name: 'Contact', icon: 'phone', routerLink: '/contact', type: OptionType.Menu },
     { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
   ];
+
+  export const CategoryDisplayNames = {
+    'Policies': 'Policy',
+    'Support': 'Service',
+    'Facilities': 'Facility',
+    'Person': 'People'
+  };
   
