@@ -19,8 +19,8 @@
       <mat-nav-list>
 
         <!-- Search -->
-        <mat-list-item [routerLink]="['/search']" (click)="sidenav.close()">
-          <a mat-line>Search</a>
+        <mat-list-item  *ngIf="!onSearchPage" [routerLink]="['/search']" 
+          (click)="sidenav.close()"><a mat-line>Search</a>
         </mat-list-item>
 
         <!-- Browse -->
