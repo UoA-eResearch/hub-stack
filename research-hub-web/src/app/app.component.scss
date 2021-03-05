@@ -214,8 +214,8 @@ mat-expansion-panel-header .mat-expanded {
 }
 .sidenav-content {
   flex: 1 0 auto;
-  min-height: calc(100vh - #{$height-footer-xs});
   background-color: $color-background;
+  min-height: calc(100vh - #{$height-footer-xs});
   @include size(medium) {
     min-height: calc(100vh - #{$height-footer});
   }
