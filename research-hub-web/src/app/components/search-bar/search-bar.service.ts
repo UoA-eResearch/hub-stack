@@ -207,7 +207,6 @@ export class SearchBarService {
       // Create the search query
         let query = {
           query: this.getSearchText(),
-          from: (this.getCurrentPage() - 1) * 10,
           size: 500, // Maximum return result size from Elastic.co
           filters: {
             relatedOrgs: this.getOrganisation(),

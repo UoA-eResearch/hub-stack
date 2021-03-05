@@ -71,6 +71,6 @@
                 </mat-select>
             </div>
         </div>
-        <app-collection-list [collection]="allCurrentPages"></app-collection-list>
+        <app-collection-list [_pageNumber]="this.searchBarService.getCurrentPage()" [collection]="allCurrentPages"></app-collection-list>
     </div>
 </div>
