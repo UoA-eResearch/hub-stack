@@ -27,6 +27,7 @@ module.exports.search = async (event, context) => {
   let size = 10;
   let from = 0;
   let queryFilters = {};
+  let contentTypes = ["article","casestudy","equipment","event","service","software","subhub"];
   
   if (requestBody.hasOwnProperty('query')) {
     queryString = requestBody.query;
@@ -39,6 +40,9 @@ module.exports.search = async (event, context) => {
   }
   if (requestBody.hasOwnProperty('filters')) {
     queryFilters = requestBody.filters;
+  }
+  if (requestBody.hasOwnProperty('includeContentTypes') && requestBody.includeContentTypes.length > 0) {
+    contentTypes = requestBody.includeContentTypes.map(contentType => contentType.toLowerCase());
   }
 
   console.log(`Received query string: ${queryString}`);
@@ -68,6 +72,11 @@ module.exports.search = async (event, context) => {
               term: {
                 "fields.searchable.en-US": true
               }
+            },
+            {
+              terms: {
+                "sys.contentType.sys.id": contentTypes
+              }
             }
           ]
         }
@@ -77,13 +86,7 @@ module.exports.search = async (event, context) => {
   } else if(queryString.length === 0 && Object.keys(queryFilters).length > 0) {
     // query with filters but no text search
 
-    let queryParts = [
-      {
-        term: {
-          "fields.searchable.en-US": true
-        }
-      }
-    ]
+    let queryParts = [];
 
     // add our search filters
     for (const filter in queryFilters) {
@@ -110,7 +113,19 @@ module.exports.search = async (event, context) => {
       },
       query: { 
         bool: {
-          must: queryParts
+          must: queryParts,
+          filter: [
+            {
+              term: {
+                "fields.searchable.en-US": true
+              }
+            },
+            {
+              terms: {
+                "sys.contentType.sys.id": contentTypes
+              }
+            }
+          ]
         }
       }
     };
@@ -122,11 +137,6 @@ module.exports.search = async (event, context) => {
         simple_query_string: {
           query: `${queryString}~AUTO`
         }
-      },
-      {
-        term: {
-          "fields.searchable.en-US": true
-        }
       }
     ]
 
@@ -155,7 +165,19 @@ module.exports.search = async (event, context) => {
       },
       query: { 
         bool: {
-          must: queryParts
+          must: queryParts,
+          filter: [
+            {
+              term: {
+                "fields.searchable.en-US": true
+              }
+            },
+            {
+              terms: {
+                "sys.contentType.sys.id": contentTypes
+              }
+            }
+          ]
         }
       }
     };
@@ -171,7 +193,7 @@ module.exports.search = async (event, context) => {
 
   try {
     const result = await esClient.search(params);
-    console.log(result);
+    console.log(`Found ${result.hits.total.value} results.`);
     return formatResponse(
       200,
       { 
@@ -202,7 +224,7 @@ module.exports.update = async (event, context) => {
 
   try {
     const result = await esClient.update(params);
-    console.log(result);
+    console.log(`Processed document id ${result._id}: ${result.result}.`);
     return formatResponse(
       200,
       { result: result.body }
@@ -224,7 +246,7 @@ module.exports.delete = async (event, context) => {
 
   try {
     const result = await esClient.delete(params);
-    console.log(result);
+    console.log(`Processed document id ${result._id}: ${result.result}.`);
     return formatResponse(
       200,
       { result: result.body }
