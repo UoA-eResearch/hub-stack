@@ -190,6 +190,7 @@ export class SearchBarService {
 
   // Create list result
   public createResultsList() {
+      let pageTypes = ["equipment", "event", "article", "service", "subhub", "software", "casestudy"];
 
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
@@ -200,6 +201,7 @@ export class SearchBarService {
       // If event is selected, remove it from search parameters (will be manually handled below)
       if (this.getCategory().includes(this.eventId.toString())) {
         categories.splice(this.getCategory().indexOf(this.eventId.toString()), 1)
+        pageTypes = ["event"]
       }
 
       // Create the search query
@@ -211,12 +213,14 @@ export class SearchBarService {
             relatedOrgs: this.getOrganisation(),
             stage: this.getStage(),
             category: categories
-          }
+          },
+          includeContentTypes : pageTypes
         };
 
         // Send the POST request
         this.http.post(environment.searchUrl, query).subscribe(data => {
           let array = [];
+          console.log(data);
           data["result"]["hits"]["hits"].forEach(element => {
             let result = {
               "title": element._source.fields.title["en-US"],
@@ -227,21 +231,10 @@ export class SearchBarService {
             }
             array.push(result);
           });
-
-          // Handling event filtering
-          if (this.getCategory().includes(this.eventId)) {
-            this.getAllEvents().subscribe(data => {
-              array = array.filter(x => data["items"].some(y => y.slug == x.slug));
-              this.setResults(array);
-              this.setTotalPages(array.length);
-            });
-          }
-          else {
             
           // Create the results array
           this.setResults(array);
           this.setTotalPages(data["result"]["hits"]["total"]["value"]);
-          }
         })
   }
 }
