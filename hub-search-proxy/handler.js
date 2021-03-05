@@ -193,7 +193,7 @@ module.exports.search = async (event, context) => {
 
   try {
     const result = await esClient.search(params);
-    console.log(`Found ${result.hits.total.value} results.`);
+    console.log(`Found ${result.body.hits.total.value} results.`);
     return formatResponse(
       200,
       { 
@@ -224,7 +224,7 @@ module.exports.update = async (event, context) => {
 
   try {
     const result = await esClient.update(params);
-    console.log(`Processed document id ${result._id}: ${result.result}.`);
+    console.log(`Processed document id ${result.body._id}: ${result.body.result}.`);
     return formatResponse(
       200,
       { result: result.body }
@@ -246,7 +246,7 @@ module.exports.delete = async (event, context) => {
 
   try {
     const result = await esClient.delete(params);
-    console.log(`Processed document id ${result._id}: ${result.result}.`);
+    console.log(`Processed document id ${result.body._id}: ${result.body.result}.`);
     return formatResponse(
       200,
       { result: result.body }
