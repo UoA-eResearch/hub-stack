@@ -245,7 +245,8 @@ svg {
 }
 
 ::ng-deep.search-filters .mat-option-pseudo-checkbox.mat-pseudo-checkbox-checked {
-  background-color: #A5C73C;
+  text-decoration: none!important;
+  outline: none!important;
 }
 
 
