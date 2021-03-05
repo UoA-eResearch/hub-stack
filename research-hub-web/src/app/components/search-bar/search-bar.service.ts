@@ -220,7 +220,6 @@ export class SearchBarService {
         // Send the POST request
         this.http.post(environment.searchUrl, query).subscribe(data => {
           let array = [];
-          console.log(data);
           data["result"]["hits"]["hits"].forEach(element => {
             let result = {
               "title": element._source.fields.title["en-US"],
