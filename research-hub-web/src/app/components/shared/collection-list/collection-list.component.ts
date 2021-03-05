@@ -11,24 +11,26 @@ export class CollectionListComponent implements OnInit {
   public pageNumber;
 
   @Input() collection;
+
   constructor(public searchBarService: SearchBarService) { }
 
   ngOnInit(): void {  }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.collection = changes['collection'].currentValue;
+    this.pageNumber = this.searchBarService.getCurrentPage()
+    try { this.collection = changes['collection'].currentValue } catch {}
   }
 
   // Scrolling to top of page on search
   scrollToTop($event) {
-    this.pageNumber = $event;
+    this.searchBarService.setCurrentPage($event);
     this.searchBarService.createResultsList();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // Reset pageNumber to 1 if results are out of bounds
-  public resetPage($event) {
-    this.pageNumber = $event;
+  public resetPage() {
+    this.searchBarService.setCurrentPage(1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
