@@ -2,7 +2,7 @@ import { filter, pluck, flatMap } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subscriber } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
 import { LoginService } from '@uoa/auth';
@@ -113,7 +113,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.allStages$ = this.getAllStages();
 
     // Get Homepage Image
-    this.getHomepage().subscribe(data => {
+    this.homepage$ = this.getHomepage();
+    this.homepage$.subscribe(data => {
 
       // If mobile
       this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
