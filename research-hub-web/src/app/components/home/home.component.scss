@@ -1,32 +1,7 @@
 @import "../../../typography.scss";
 @import "../../../themes.scss";
 @import "../../../styles.scss";
-
-
-/**
- * Section Header Text
- */
- .text {
-    width: 100%;
-    margin: 40px auto;
-    @include size(medium) { 
-        width: 60%;
-        margin: 40px auto;
-        }
-    > h2 {
-      color: #333333;
-      font-size: 36px;
-      @include size(medium) { 
-        font-size: 48px;
-        }
-    }
-    > p {
-      font-size: 16px;
-      @include size(medium) { 
-        font-size: 20px;
-        }
-    }
-}
+@import '../../app.component.scss';
 
 
 /**

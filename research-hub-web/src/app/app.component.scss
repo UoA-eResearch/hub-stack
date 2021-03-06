@@ -199,7 +199,6 @@ mat-expansion-panel-header .mat-expanded {
 .sidenav-container {
   mat-sidenav {
     background-color: $color-background;
-    box-shadow: 4px 0 8px rgba(0, 0, 0, .24);
   }
 }
 .sidenav-container {
@@ -219,6 +218,63 @@ mat-expansion-panel-header .mat-expanded {
   @include size(medium) {
     min-height: calc(100vh - #{$height-footer});
   }
+}
+
+
+/**
+ * Section Header Text
+ */
+ .text {
+  width: 100%;
+  margin: 40px auto;
+  @include size(medium) { 
+      width: 60%;
+      margin: 40px auto;
+      }
+  > h2 {
+    color: #333333;
+    font-size: 36px;
+    @include size(medium) { 
+      font-size: 48px;
+      }
+  }
+  > p {
+    font-size: 16px;
+    @include size(medium) { 
+      font-size: 20px;
+      }
+  }
+}
+
+/*
+ * Featured Container
+ */
+.featured-container {
+  z-index: 1;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)!important;
+  background: map-get($hub-teal, 500);
+  .featured-content {
+    width: 95vw;
+    margin: 24px auto;
+    @extend .site-padding;
+  }
+    .featured-title {
+      color: white;
+      font-size: 36px;
+      @include size(medium) { 
+        font-size: 48px;
+      }
+    }
+    .featured-summary {
+      position: relative;
+      width: 80%;
+      word-wrap: break-word;
+      color: white;
+      font-size: 16px;
+      @include size(medium) { 
+        font-size: 20px;
+      }
+    }
 }
 
 
