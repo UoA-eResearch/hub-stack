@@ -286,17 +286,21 @@ mat-expansion-panel-header .mat-expanded {
     .featured-title {
       color: white;
       font-size: 36px;
+      text-align: center;
       @include size(medium) { 
+        text-align: left;
         font-size: 48px;
       }
     }
     .featured-summary {
-      position: relative;
-      width: 80%;
-      word-wrap: break-word;
       color: white;
       font-size: 16px;
+      position: relative;
+      word-wrap: break-word;
+      margin: 0 auto;
+      text-align: center;
       @include size(medium) { 
+        text-align: left;
         font-size: 20px;
       }
     }
