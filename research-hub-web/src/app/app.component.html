@@ -201,6 +201,10 @@
             </div>
           </div>
 
+          <!-- Featured Items -->
+          <div *ngIf="homepage$ | async as homepage">
+          </div>
+
           <!-- Page Content -->
           <router-outlet></router-outlet>
         </div>
