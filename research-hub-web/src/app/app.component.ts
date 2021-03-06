@@ -96,6 +96,11 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Scroll to element
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth'});
+  }
+
   async ngOnInit() {
     this.title = "Welcome to the ResearchHub"
     this.summary = "The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research."
@@ -104,7 +109,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.pageTitle = title;
       this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
-
 
     // Get All Categories
     this.allCategories$ = this.getAllCategories();

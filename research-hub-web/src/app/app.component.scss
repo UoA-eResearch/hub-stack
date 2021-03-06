@@ -76,6 +76,31 @@
 }
 
 
+@keyframes explore {
+  0%   { margin-top: 5px;}
+  50%  { margin-top: 16px; }
+  100% { margin-top: 5px; }
+}
+@keyframes explore2 {
+  0%   { margin-top: 0px;}
+  50%  { margin-top: 3px; }
+  100% { margin-top: 0px; }
+}
+
+/*
+ * Explore
+ */
+.explore {
+    cursor: pointer;
+  p {
+    animation: explore2 1.5s infinite;
+  }
+  .explore-arrow {
+    animation: explore 1.5s infinite;
+  }
+}
+
+
 /*
  * Button styles
  */
