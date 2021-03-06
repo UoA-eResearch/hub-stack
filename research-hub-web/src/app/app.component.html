@@ -197,11 +197,17 @@
                     </button>
                   </mat-form-field>
                 </div>
+                <br><br>
+                <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
+                  <p class="page-summary">Explore</p>
+                  <img class="explore-arrow" src="assets/components/white-arrow.png" width="25">
+                </span>
               </div>
             </div>
           </div>
 
           <!-- Featured Items -->
+          <div #featured></div>
           <div class="featured-container" *ngIf="showBanner" >
             <div *ngIf="homepage$ | async as homepage">
               <div class="featured-content">
