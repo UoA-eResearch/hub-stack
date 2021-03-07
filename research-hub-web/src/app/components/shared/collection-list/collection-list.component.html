@@ -1,53 +1,38 @@
 <ng-container *ngIf="collection">
     <div>
-        <h1 id="title">
-            {{ collection.__typename | humanCase }}
-        </h1>Found
-        <span class="search-results-text">
-            {{ collection.items.length }}
-        </span>results in
-        <span class="search-results-text">
-            {{ collection.__typename | humanCase }}
-        </span>
-    
-        <mat-nav-list>
-            <a *ngFor="let content of collection.items"
-                [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" 
-                class="result-item"
+
+        <!-- Collection Container -->
+        <mat-nav-list role="list">
+            <a *ngFor="let content of collection | paginate: { itemsPerPage: 10, currentPage: pageNumber }"
+                [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" class="result-item"
                 [ngClass]="{'ssoProtected': content.ssoProtected }">
-                <mat-card fxLayout="row">
-                    <span
-                        mat-card-avatar 
-                        id="item-avatar">
+
+                <!-- Collection Item -->
+                <mat-card fxLayout="row" role="listitem">
+                    <span mat-card-avatar id="item-avatar">
                         <div *ngIf="content.icon; else avatarIcon">
-                            <img
-                                src="{{content?.icon?.url}}"
-                                alt="{{content?.icon?.description}}"
-                                class="item-avatar"
-                                width="100%"
-                                height="100%" />
+                            <img src="{{content?.icon?.url}}" alt="{{content?.icon?.description}}"
+                                class="item-avatar" width="100%" height="100%" />
                         </div>
                         <ng-template #avatarIcon>
-                            <mat-icon  
-                                id="item-avatar-icon"
-                                [innerHTML]="getDefaultTypeIcon(content.__typename)">
-                            </mat-icon>
+                            <mat-icon id="item-avatar-icon" [innerHTML]="getDefaultTypeIcon(content.__typename)"></mat-icon>
                         </ng-template>
                     </span>
                     <span class="card-content">
-                        <h4 class="card-title">
-                            {{ content.title }}
-                        </h4>
-                        &nbsp;
-                        <mat-icon 
-                            *ngIf="content.ssoProtected" 
-                            matTooltip="SSO Login Required">
-                                lock
-                        </mat-icon>
+                        <h4 class="card-title">{{ content.title }}</h4>&nbsp;
+                        <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
                         <p class="card-summary">{{ content.summary }}</p>
                     </span>
                 </mat-card>
             </a>
         </mat-nav-list>
+        <div class="section-2">
+
+            <!-- Paginator -->
+            <pagination-controls class="page-control" responsive="true" (pageChange)="scrollToTop($event)" 
+                (pageBoundsCorrection)="resetPage()" screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+        </div>
     </div>
 </ng-container>

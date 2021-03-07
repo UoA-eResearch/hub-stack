@@ -14,7 +14,9 @@ export class LargeCardsComponent implements OnInit {
 
   ngOnInit() {
     if (this.contentItem.__typename == "SubHub") {
-      this.contentItem['items'] = [... this.contentItem.internalPagesCollection.items, ... this.contentItem.externalPagesCollection.items];
+      this.contentItem['items'] = [
+        ... this.contentItem.internalPagesCollection.items,
+        ... this.contentItem.externalPagesCollection.items];
     }
 
     // If you want to hide image when displayed

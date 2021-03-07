@@ -60,10 +60,11 @@
   }
 }
 
+
 /*
  * Initial Search
  */ 
-.initial-search {
+ .initial-search {
   width: 60vw;
   padding: 4px;
   margin: 0 auto;
@@ -92,6 +93,31 @@
   @include size(medium) { width: 30vw; }
   background-color: rgba(150, 150, 150, 0.7);
   border: 0.8px solid rgba(216, 216, 216, 0.7);
+}
+
+
+@keyframes explore {
+  0%   { margin-top: 5px;}
+  50%  { margin-top: 16px; }
+  100% { margin-top: 5px; }
+}
+@keyframes explore2 {
+  0%   { margin-top: 0px;}
+  50%  { margin-top: 3px; }
+  100% { margin-top: 0px; }
+}
+
+/*
+ * Explore
+ */
+.explore {
+    cursor: pointer;
+  p {
+    animation: explore2 1.5s infinite;
+  }
+  .explore-arrow {
+    animation: explore 1.5s infinite;
+  }
 }
 
 
@@ -218,7 +244,6 @@ mat-expansion-panel-header .mat-expanded {
 .sidenav-container {
   mat-sidenav {
     background-color: $color-background;
-    box-shadow: 4px 0 8px rgba(0, 0, 0, .24);
   }
 }
 .sidenav-container {
@@ -233,11 +258,72 @@ mat-expansion-panel-header .mat-expanded {
 }
 .sidenav-content {
   flex: 1 0 auto;
-  min-height: calc(100vh - #{$height-footer-xs});
   background-color: $color-background;
+  min-height: calc(100vh - #{$height-footer-xs});
   @include size(medium) {
     min-height: calc(100vh - #{$height-footer});
   }
+}
+
+
+/**
+ * Section Header Text
+ */
+ .text {
+  width: 100%;
+  margin: 40px auto;
+  @include size(medium) { 
+      width: 60%;
+      margin: 40px auto;
+      }
+  > h2 {
+    color: #333333;
+    font-size: 36px;
+    @include size(medium) { 
+      font-size: 48px;
+      }
+  }
+  > p {
+    font-size: 16px;
+    @include size(medium) { 
+      font-size: 20px;
+      }
+  }
+}
+
+/*
+ * Featured Container
+ */
+.featured-container {
+  z-index: 1;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)!important;
+  background: map-get($hub-teal, 500);
+  .featured-content {
+    width: 95vw;
+    margin: 60px auto;
+    @extend .site-padding;
+  }
+    .featured-title {
+      color: white;
+      font-size: 36px;
+      text-align: center;
+      @include size(medium) { 
+        text-align: left;
+        font-size: 48px;
+      }
+    }
+    .featured-summary {
+      color: white;
+      font-size: 16px;
+      position: relative;
+      word-wrap: break-word;
+      margin: 0 auto;
+      text-align: center;
+      @include size(medium) { 
+        text-align: left;
+        font-size: 20px;
+      }
+    }
 }
 
 

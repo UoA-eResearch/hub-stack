@@ -1,13 +1,8 @@
-import { filter, distinctUntilChanged, pluck, flatMap } from 'rxjs/operators';
-import { 
-  Component, 
-  OnDestroy, 
-  OnInit, 
-  ViewEncapsulation,
-} from '@angular/core';
+import { filter, pluck, flatMap } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subscriber } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
 import { LoginService } from '@uoa/auth';
@@ -16,16 +11,9 @@ import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
 import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
-import {
-  GetHomepageGQL,
-  Homepage,
-  AllCategoriesGQL,
-  CategoryCollection,
-  AllStagesGQL,
-  StageCollection
-} from './graphql/schema';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { GetHomepageGQL, Homepage, AllCategoriesGQL, CategoryCollection, AllStagesGQL, StageCollection } from './graphql/schema';
 
 
 @Component({
@@ -58,23 +46,21 @@ export class AppComponent implements OnInit, OnDestroy {
   public allStages$: Observable<StageCollection>;
 
   public searchText = '';
-  public showFilterButton = false;
-  public showProgressBar = false;
-  public showBackBtn = false;
   public pageTitle = '';
 
   private previousRoute = undefined;
   private currentRoute = undefined;
 
   public userInfo;
-  public authenticated;
+  public authenticated: Boolean;
   public isMobile: Boolean;
-  public mobileBackground;
-  public desktopBackground;
+  public onSearchPage: Boolean;
+  public mobileBackground: String;
+  public desktopBackground: String;
 
   constructor(
     private location: Location, 
-    private searchBarService: SearchBarService, 
+    public searchBarService: SearchBarService, 
     private router: Router,
     private titleService: Title,
     public appComponentService: AppComponentService,
@@ -88,7 +74,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.detectDevice();
       this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
     }
-    public isLoading = true;
 
   // Detect if device is Mobile
   detectDevice() {
@@ -111,6 +96,11 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Scroll to element
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth'});
+  }
+
   async ngOnInit() {
     this.title = "Welcome to the ResearchHub"
     this.summary = "The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research."
@@ -120,19 +110,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
-    // Navigate to the search page if user starts typing
-    this.searchTextChangeSub = this.searchBarService.searchTextChange.pipe(distinctUntilChanged()).subscribe(searchText => {
-      const url = this.location.path();
-      if (url && !url.startsWith('/search') && searchText != null && searchText !== '') {
-        this.router.navigate(['/search'], {
-          queryParams: {
-            categoryId: this.searchBarService.category,
-            searchText: this.searchBarService.searchText
-          }
-        });
-      }
-    });
-
     // Get All Categories
     this.allCategories$ = this.getAllCategories();
 
@@ -140,7 +117,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.allStages$ = this.getAllStages();
 
     // Get Homepage Image
-    this.getHomepage().subscribe(data => {
+    this.homepage$ = this.getHomepage();
+    this.homepage$.subscribe(data => {
 
       // If mobile
       this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
@@ -165,8 +143,10 @@ export class AppComponent implements OnInit, OnDestroy {
           this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
+            // Show banner if we're on the homepage
             this.showBanner = ['home', 'home#'].includes(routeName);
-            this.searchBarService.setVisibility(['home', 'search'].includes(routeName));
+
+            // Set title if we're on the homepage
             if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Welcome to the ResearchHub');
 
             // Update previous and current routes
@@ -176,18 +156,29 @@ export class AppComponent implements OnInit, OnDestroy {
 
             // Set current route name
             this.currentRoute = routeName;
-          
+
+            // Hide search options if we're on the search page
+            this.onSearchPage = ['search'].includes(routeName);
+            
             // Same component navigation
             if (this.currentRoute == this.previousRoute) {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               this.router.navigate([url]);
             }
-
-            // Show back button if we're not in /home
-            this.showBackBtn = routeName !== 'home';
-            this.showFilterButton = routeName === 'search';
           }
         });
+    }
+  }
+
+  // Get Query Parameters
+  getQueryParams(item: any) {
+    switch (item.__typename) {
+      case 'Stage':
+        try { return { researchActivities: [item.displayOrder] }; }
+        catch { break; }
+      case 'Category':
+        try { return { researchCategories: [item.displayOrder] }; }
+        catch { break; }
     }
   }
 
@@ -215,6 +206,12 @@ export class AppComponent implements OnInit, OnDestroy {
     } catch (e) { console.error('Error loading homepage:', e) };
   }
 
+  // Search
+  search() {
+    this.searchBarService.setSearchText(this.searchText);
+    this.router.navigate(['/search']);
+  }
+
   ngOnDestroy() {
     this.mediaChangeSub.unsubscribe();
     this.searchTextChangeSub.unsubscribe();
@@ -233,5 +230,6 @@ export class AppComponent implements OnInit, OnDestroy {
   // Reset Search Bar content
   clearSearchText() {
     this.searchText = '';
+    this.searchBarService.setSearchText('');
   }
 }

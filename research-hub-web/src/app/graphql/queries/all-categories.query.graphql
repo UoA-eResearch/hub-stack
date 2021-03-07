@@ -3,6 +3,10 @@ query AllCategories {
         items {
             name
             description
+            displayOrder
+            sys {
+                id
+            }
         }
     }
 }

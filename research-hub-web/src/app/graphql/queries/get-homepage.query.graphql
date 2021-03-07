@@ -1,8 +1,13 @@
 query GetHomepage {
-    homepageCollection {
+    homepageCollection(limit: 1) {
         items {
             image {
                 url
+            }
+            featuredItemsCollection {
+                items {
+                    ...PublicFields
+                }
             }
         }
     }

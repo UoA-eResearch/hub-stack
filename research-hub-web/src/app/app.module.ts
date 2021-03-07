@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { RoutingModule } from './routing/routing.module';
 import { SharedModule } from './components/shared/app.shared.module';
 import { ServicesModule } from './services/services.module';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { AppComponentService } from './app.component.service';
 
@@ -56,10 +55,7 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SearchBarComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     AuthModule,
     BrowserModule,

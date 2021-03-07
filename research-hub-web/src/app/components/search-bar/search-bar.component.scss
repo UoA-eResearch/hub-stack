@@ -1,28 +1,26 @@
 @import "../../../styles";
 
-$mat-select-width: 200px;
-$mat-select-flex: 1;
-$search-flex: 4;
 
 .search-bar-outer {
-  padding: 2em;
+  margin: 0 auto;
+  width: 100%;
 }
-
-.search-bar-outer-xs {
-  @extend .search-bar-outer;
-  padding: 1em;
-}
-
 .search-bar-inner {
+  border: 1px solid $input-grey;
+  color: $body-grey;
   background-color: white;
   padding-left: 1em;
   padding-right: 1em;
-}
-
-.search-bar-inner mat-form-field {
-  min-width: 0 !important;
+  mat-form-field {
+    font-size: 20px;
+    padding: 1px;
+    min-width: 0 !important;
+    input {
+      caret-color: silver!important;
+    }
+  }
 }
 
 button mat-icon {
-  color: $color-icon;
+  color: $body-grey;
 }

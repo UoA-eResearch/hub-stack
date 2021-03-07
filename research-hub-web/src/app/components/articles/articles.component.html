@@ -1,132 +1,71 @@
-<!-- If we're displaying a collection of articles-->
-<div
-    *ngIf="allArticles$ | async as allArticles" 
-    class="site-padding-2 margin-bottom top-padding" 
-    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allArticles"></app-collection-list>
-</div>
-
-
-<!-- If we're displaying an individual article -->
-<div 
-    id="article-container" 
-    *ngIf="article | async as article">
+<div id="article-container" *ngIf="article | async as article">
     
     <!-- Templates -->
     <ng-template #breadcrumbs>
-        <app-breadcrumbs 
-            [contentItem]="parentSubHubs" 
-            [title]="article.title">
-        </app-breadcrumbs>
+        <app-breadcrumbs [contentItem]="parentSubHubs" [title]="article.title"></app-breadcrumbs>
     </ng-template>
 
     <ng-template #articleBody>
-        <ngx-contentful-rich-text
-            class="section-2 body-text"
-            style="word-break:break-word;" 
-            [document]="article.bodyText.json"
-            [nodeRenderers]="nodeRenderers">
-        </ngx-contentful-rich-text>
+        <ngx-contentful-rich-text class="section-2" style="word-break:break-word;" [document]="article.bodyText.json"
+            [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
     </ng-template>
 
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards 
-            [flex]="flex"
-            id="you-might-be-interested-in"
-            [hideImage]="hide"
-            [title]="'Explore Related'" 
-            [contentItem]="article.relatedItemsCollection">
-        </app-cards>
+        <app-cards [flex]="flex" id="you-might-be-interested-in" [hideImage]="hide" [title]="'Explore Related'" 
+            [contentItem]="article.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards 
-            [flex]="flex"
-            [hideImage]="hide"
-            [title]="'Organisations'" 
-            [contentItem]="article.relatedOrgsCollection">
-        </app-cards>
+        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
+            [contentItem]="article.relatedOrgsCollection"></app-cards>
     </ng-template>
     
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards
-            [flex]="flex"
-            [hideImage]="hide"
-            [title]="'Contacts'" 
-            [contentItem]="article.relatedContactsCollection">
-        </app-cards>
+        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
+            [contentItem]="article.relatedContactsCollection"></app-cards>
     </ng-template>
 
     <ng-template #officialDocuments let-hide="hideImage" let-flex="flex">
-        <app-cards
-            [flex]="flex"
-            [hideImage]="hide"
-            [title]="'Documents'" 
-            [contentItem]="article.relatedDocsCollection">
-        </app-cards>
+        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
+            [contentItem]="article.relatedDocsCollection"></app-cards>
     </ng-template>
 
         <div>
-            <div
-            class="banner-container"
-            [style]="article.banner ? 
-                        isMobile ? 
-                            'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat; padding: 72px 0px' 
-                            : 
-                            'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat fixed center; padding: 72px 0px' 
-                        :
-                        ''">
+            <div class="banner-container" [style]="article.banner ? 
+                        isMobile ? 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat; padding: 72px 0px' 
+                            : 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat fixed center; padding: 72px 0px' 
+                        : ''">
                 <div class="banner-content">
 
                     <!-- Title -->
-                    <h1 
-                        class="content-title" 
-                        ngClass.lt-md="content-title-mobile"
-                        [style]="article.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
-                            {{ article.title }}
-                    </h1>
+                    <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
+                        [style]="article.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">{{ article.title }}</h1>
 
                     <!-- Summary -->
-                    <p
-                        class="content-summary" 
-                        ngClass.sm="content-summary-sm" 
-                        ngClass.xs="content-summary-xs"
+                    <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
                         [style]="article.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
-                            <small>{{ article.summary }}</small>
-                    </p>
+                        <small>{{ article.summary }}</small></p>
                 </div>
             </div>
 
-            <div 
-                class="site-padding" 
-                ngClass.lt-md="site-padding-mobile">
+            <div class="site-padding" ngClass.lt-md="site-padding-mobile">
 
                 <!-- Breadcrumbs -->
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
-                <div 
-                    fxLayout="row" 
-                    fxLayoutAlign="space-between"
-                    fxLayout.lt-md="column wrap"
-                    fxLayoutGap="5%">
+                <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column wrap" fxLayoutGap="5%">
 
                     <!-- Article Body -->
-                    <div
-                        fxFlexOrder="2"
-                        fxFlexOrder.xs="1">
+                    <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
                         <ng-container *ngTemplateOutlet="articleBody"></ng-container>
                     </div>
 
                     <!-- Extra Links -->
-                    <div 
-                        *ngIf="
+                    <div *ngIf="
                             article.relatedDocsCollection.items.length > 0 ||
                             article.relatedContactsCollection.items.length > 0 ||
                             article.relatedOrgsCollection.items.length > 0"
-                        fxLayout="column" 
-                        fxFlex="20%"
-                        fxFlexOrder="1"
-                        fxFlexOrder.lt-md="2">
+                        fxLayout="column" fxFlex="20%" fxFlexOrder="1" fxFlexOrder.lt-md="2">
 
                         <!-- Contacts -->
                         <ng-container *ngTemplateOutlet="relatedContacts; context: { flex: 'column', hide: 'true' }"></ng-container>
@@ -140,15 +79,11 @@
                     </div>
 
                     <!-- Related items -->
-                    <div 
-                        id="you-might-be-interested-in"
-                        *ngIf="article.relatedItemsCollection.items.length > 0"
-                        fxLayout="column" 
-                        fxFlex="20%"
-                        fxFlexOrder="3">
-                        <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column', hide: 'true'}"></ng-container>
-                    </div>
+                    <div id="you-might-be-interested-in" *ngIf="article.relatedItemsCollection.items.length > 0" fxLayout="column" 
+                        fxFlex="20%" fxFlexOrder="3">
+                        <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column', hide: 'true'}"></ng-container></div>
                 </div>
             </div>
         </div>
+    <div class="section"></div>
 </div>
