@@ -19,6 +19,8 @@ query GetEquipmentByID($id: String!) {
       url
     }
     summary
+    callToAction
+    callToActionLabel
     bodyText {
       json 
       links {

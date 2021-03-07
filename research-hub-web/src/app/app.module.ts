@@ -1,6 +1,6 @@
 
 import { NgModule } from '@angular/core';
-
+import { CustomBreakPointsProvider } from './custom-breakpoint';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -11,7 +11,6 @@ import { ServicesModule } from './services/services.module';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { AppComponentService } from './app.component.service';
-import { SearchFiltersService } from './components/search-results/search-filters/search-filters.service';
 
 import { AuthModule, CognitoConfigService, StorageService, LoginService } from '@uoa/auth';
 import { AppAuthConfigService } from './services/app-auth-config.service';
@@ -73,9 +72,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   ],
   providers: [
     CerGraphqlService,
+    CustomBreakPointsProvider,
     SearchBarService,
     AppComponentService,
-    SearchFiltersService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
     { provide: StorageService, useClass: AppStorageService },
   ],
