@@ -1,11 +1,9 @@
-query AllStages {
-    stageCollection(order: [displayOrder_ASC]) {
+query AllOrganisations {
+    orgUnitCollection(order: [displayOrder_ASC]) {
         items {
             name
+            link
             description
-            image {
-                url
-            }
             displayOrder
             sys {
                 id

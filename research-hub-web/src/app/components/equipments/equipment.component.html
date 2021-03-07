@@ -1,54 +1,34 @@
-<!-- If we're displaying a collection of equipment -->
-<div
-    *ngIf="allEquipment$ | async as allEquipment" 
-    class="site-padding-2 margin-bottom top-padding" 
-    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allEquipment"></app-collection-list>
-</div>
-
-<!-- If we're displaying an individual equipment -->
-<div 
-    id="equipment-container"
-    *ngIf="equipment | async as equipment">
+<div id="equipment-container" *ngIf="equipment | async as equipment">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
-        <app-breadcrumbs 
-            [contentItem]="parentSubHubs" 
-            [title]="equipment.title">
+        <app-breadcrumbs [contentItem]="parentSubHubs" [title]="equipment.title">
         </app-breadcrumbs>
     </ng-template>
 
     <ng-template #dynamicBanner>
-        <div 
-            class="banner-container"
-            [style]="equipment.banner ? 
-                        isMobile ?
+        <div class="banner-container" [style]="equipment.banner ? isMobile ?
                         'background: url(' + equipment.banner.url + ') no-repeat'
-                        :
-                        'background: url(' + equipment.banner.url + ') no-repeat fixed center'
-                    :
-                    'display: none;'">
-        </div>  
-    </ng-template>
+                        : 'background: url(' + equipment.banner.url + ') no-repeat fixed center'
+                    : 'display: none;'"></div></ng-template>
 
     <ng-template #specificationsTable>
         <div class="specifications">
             <h4>Equipment</h4>
-            <table class="specifications-table">
-                <tr>
-                <th>Details</th>
-                <th>Description</th>
+            <table class="specifications-table" role="table">
+                <tr role="row">
+                <th role="columnheader">Details</th>
+                <th role="columnheader">Description</th>
                 </tr>
-                <tr *ngIf="equipment.manufacturer">
+                <tr *ngIf="equipment.manufacturer" role="row">
                     <td>Manufacturer</td>
                     <td [innerHTML]="equipment.manufacturer"></td>
                 </tr>
-                <tr *ngIf="equipment.model">
+                <tr *ngIf="equipment.model" role="row">
                     <td>Model</td>
                     <td [innerHTML]="equipment.model"></td>
                 </tr>
-                <tr *ngIf="equipment.year">
+                <tr *ngIf="equipment.year" role="row">
                     <td>Year</td>
                     <td [innerHTML]="equipment.year"></td>
                 </tr>
@@ -59,86 +39,64 @@
     <ng-template #specificationsTable2>
         <div class="specifications">
             <h4>User</h4>
-            <table class="specifications-table">
-                <th>Details</th>
-                <th>Description</th>
-                <tr *ngIf="equipment.audience">
-                    <td>Audience</td>
-                    <td [innerHTML]="equipment.audience"></td>
+            <table class="specifications-table" role="table">
+                <tr role="row">
+                    <th role="columnheader">Details</th>
+                    <th role="columnheader">Description</th>
+                </tr>
+                <tr *ngIf="equipment.audience" role="row">
+                    <td role="cell">Audience</td>
+                    <td [innerHTML]="equipment.audience" role="cell"></td>
                 </tr>
             
-                <tr *ngIf="equipment.availability">
-                    <td>Availability</td>
-                    <td [innerHTML]="equipment.availability"></td>
+                <tr *ngIf="equipment.availability" role="row">
+                    <td role="cell">Availability</td>
+                    <td [innerHTML]="equipment.availability" role="cell"></td>
                 </tr>
-                <tr *ngIf="equipment.costToUse">
-                    <td>Cost</td>
-                    <td [innerHTML]="equipment.costToUse"></td>
+                <tr *ngIf="equipment.costToUse" role="row">
+                    <td role="cell">Cost</td>
+                    <td [innerHTML]="equipment.costToUse" role="cell"></td>
                 </tr>
-                <tr *ngIf="equipment.access">
-                    <td>Access</td>
-                    <td [innerHTML]="equipment.access"></td>
+                <tr *ngIf="equipment.access" role="row">
+                    <td role="cell">Access</td>
+                    <td [innerHTML]="equipment.access" role="cell"></td>
                 </tr>
             </table>
         </div>
     </ng-template>
     
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards
-            [hideImage]="hide"
-            [flex]="flex"
-            [title]="'Explore Related'" 
-            [contentItem]="equipment.relatedItemsCollection">
-        </app-cards>
+        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Explore Related'"
+            [contentItem]="equipment.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards
-            [hideImage]="hide"
-            [flex]="flex"
-            [title]="'Organisations'" 
-            [contentItem]="equipment.relatedOrgsCollection">
-        </app-cards>
+        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Organisations'" 
+            [contentItem]="equipment.relatedOrgsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
-        <app-cards
-            [hideImage]="hide"
-            [flex]="flex"
-            [title]="'Documents'" 
-            [contentItem]="equipment.relatedDocsCollection">
-        </app-cards>
+        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Documents'" 
+            [contentItem]="equipment.relatedDocsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards
-            [hideImage]="hide"
-            [flex]="flex"
-            [title]="'Contacts'" 
-            [contentItem]="equipment.relatedContactsCollection">
-        </app-cards>
+        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Contacts'" 
+            [contentItem]="equipment.relatedContactsCollection"></app-cards>
     </ng-template>
 
     <ng-template #titleSummary>
-        <h1 
-            class="content-title" 
-            ngClass.lt-md="content-title-mobile">
-            {{ equipment.title }}
-        </h1>
+        <h1 role="heading" aria-level="1" class="content-title" 
+            ngClass.lt-md="content-title-mobile"> {{ equipment.title }}</h1>
 
-        <p class="content-summary" 
-            ngClass.sm="content-summary-sm" 
-            ngClass.xs="content-summary-xs">
-            {{ equipment.summary }}
-    </p>
+        <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs">
+            {{ equipment.summary }} </p>
     </ng-template>
 
     <!-- Banner -->
     <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
-    <div
-        class="site-padding margin-bottom" 
-        ngClass.lt-md="site-padding-mobile top-padding">
+    <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile top-padding">
 
         <!-- Breadcrumbs -->
         <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
@@ -147,23 +105,14 @@
 
             <!-- Title and Summary -->
             <div fxLayout="column wrap">
-                <div>
-                    <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
-                </div>
+                <div><ng-container *ngTemplateOutlet="titleSummary"></ng-container></div>
+
                 <!-- Call To Action -->
-                <div
-                    class="section"
-                    *ngIf="equipment.callToAction">
+                <div class="section" *ngIf="equipment.callToAction">
                     <a href="{{ equipment.callToAction }}">
-                        <button 
-                            mat-flat-button 
-                            class="standard-button">
-                            <span *ngIf="equipment.callToActionLabel">
-                                {{ equipment.callToActionLabel }}
-                            </span>
-                            <span *ngIf="!equipment.callToActionLabel">
-                                View Equipment
-                            </span>
+                        <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button">
+                            <span *ngIf="equipment.callToActionLabel">{{ equipment.callToActionLabel }}</span>
+                            <span *ngIf="!equipment.callToActionLabel">View Equipment</span>
                         </button>
                     </a>
                 </div>
@@ -171,20 +120,12 @@
             </div>
 
             <!-- Equipment Body -->
-            <div class="body-text">
-                <ngx-contentful-rich-text
-                    style="word-break:break-word;" 
-                    [document]="equipment.bodyText.json"
-                    [nodeRenderers]="nodeRenderers">
-                </ngx-contentful-rich-text>
-            </div>
+            <div>
+                <ngx-contentful-rich-text style="word-break:break-word;" [document]="equipment.bodyText.json"
+                    [nodeRenderers]="nodeRenderers"> </ngx-contentful-rich-text></div>
 
-            <div
-                class="section-2"
-                fxLayout="row"
-                fxLayoutGap="5%"
-                fxLayout.lt-sm="column wrap"
-                fxLayoutAlign="space-between">
+            <div class="section-2" fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column wrap" fxLayoutAlign="space-between">
+                
                 <!-- Specifications Table -->
                 <div fxFlex *ngIf="
                     equipment.manufacturer ||
@@ -227,5 +168,6 @@
             </div>
         </div>
     </div>
+    <div class="section"></div>
 </div>
     

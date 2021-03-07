@@ -1,39 +1,20 @@
 <div>
-  <div 
-    fxFlex="noshrink" 
-    fxLayout="column">
-
-    <!-- Featured Component -->
-    <!-- <div
-      fxFlex
-      class="teal-background"
-      fxFlex.xs="noshrink">
-      <app-featured></app-featured>
-    </div> -->
+  <div fxFlex="noshrink" fxLayout="column">
 
     <!-- Browse Categories Component -->
-    <div
-      fxFlex
-      class="grey-background"
-      fxFlex.xs="noshrink">
-      <app-browse></app-browse>
+    <div fxFlex class="grey-background" fxFlex.xs="noshrink">
+      <app-browse #categories></app-browse>
     </div>
 
     <!-- Research Activity Component -->
-    <div>
-      <app-research-activity></app-research-activity>
-    </div>
+    <div><app-research-activity></app-research-activity></div>
 
     <!-- Contact -->
-    <div class="grey-background">
-      <div
-        class="site-padding contact content-container"
-        ngClass.lt-md="site-padding-mobile">
+    <div class="grey-background"style="box-shadow: 0px 5px 10px -2px #242323!important; z-index: 2">
+      <div class="site-padding contact content-container" ngClass.lt-md="site-padding-mobile">
 
         <!-- Title -->
-        <div
-          class="text site-padding"
-          ngClass.lt-md="site-padding-mobile">
+        <div class="text site-padding" ngClass.lt-md="site-padding-mobile">
           <h2>{{ title }}</h2>
           <p>{{ description }}</p>
           <div class="main-underline"></div>
@@ -41,8 +22,7 @@
 
         
         <!-- Contact Content -->
-        <div
-          class="contact-content section-2 site-padding">
+        <div class="contact-content section-2 site-padding">
 
           <!-- Feedback -->
           <div class="feedback-container">
@@ -50,12 +30,8 @@
               <p>We are developing the ResearchHub further and would be grateful for your feedback. This will give us pointers for user-led refinement and further development of the interface content displayed in the ResearchHub.</p>
               <br>
               <a href="{{ feedbackLink }}">
-                <button 
-                    mat-flat-button 
-                    class="standard-button">
-                    <span>
-                        Provide Feedback
-                    </span>
+                <button role="button" mat-flat-button aria-label="provide-feedback" class="standard-button">
+                    <span>Provide Feedback</span>
                 </button>
               </a>
             </div>

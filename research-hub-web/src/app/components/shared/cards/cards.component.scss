@@ -2,6 +2,14 @@
 @import '../../../../typography.scss';
 @import '../../../../styles.scss';
 
+
+/**
+ * Mat Card
+ */
+ mat-card {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.27)!important;
+}
+
 /**
  * Card Image
  */ 

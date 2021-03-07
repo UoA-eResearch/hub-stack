@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/app.material.module';
@@ -15,6 +14,7 @@ import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
 import { VideoCardComponent } from './video-card/video-card.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   imports: [
@@ -24,7 +24,7 @@ import { VideoCardComponent } from './video-card/video-card.component';
     ReactiveFormsModule,
     MaterialModule,
     RouterModule,
-    MatCarouselModule
+    NgxPaginationModule
   ],
   declarations: [
     ErrorDialogComponent,
@@ -39,7 +39,6 @@ import { VideoCardComponent } from './video-card/video-card.component';
     VideoCardComponent
   ],
   exports: [
-    MatCarouselModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
@@ -51,7 +50,8 @@ import { VideoCardComponent } from './video-card/video-card.component';
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
-    VideoCardComponent
+    VideoCardComponent,
+    NgxPaginationModule
   ],
   providers: [],
 })
