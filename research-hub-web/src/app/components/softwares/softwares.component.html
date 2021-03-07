@@ -1,9 +1,3 @@
-<!-- If we're displaying a collection of software -->
-<div *ngIf="allSoftware$ | async as allSoftware" class="site-padding-2 margin-bottom top-padding" 
-    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allSoftware"></app-collection-list></div>
-
-<!-- If we're displaying an individual software -->
 <div id="software-container" *ngIf="software | async as software">
 
     <!-- Templates -->

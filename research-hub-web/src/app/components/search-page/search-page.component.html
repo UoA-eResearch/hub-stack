@@ -48,7 +48,7 @@
     </div>
 
     <!-- Search Results -->
-    <div class="search-content site-padding-2 section" *ngIf="allCurrentPages">
+    <div ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" *ngIf="allCurrentPages">
         <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-list-filter">
 
             <!-- Results -->

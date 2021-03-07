@@ -1,9 +1,3 @@
-<!-- If we're displaying a collection of equipment -->
-<div *ngIf="allEquipment$ | async as allEquipment" class="site-padding-2 margin-bottom top-padding" 
-    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allEquipment"></app-collection-list></div>
-
-<!-- If we're displaying an individual equipment -->
 <div id="equipment-container" *ngIf="equipment | async as equipment">
 
     <!-- Templates -->
