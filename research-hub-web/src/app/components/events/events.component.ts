@@ -6,6 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEventsGQL,
+  AllEventsSlugsGQL,
   GetEventBySlugGQL,
   EventCollection,
   Event,
@@ -41,6 +42,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allEventsGQL: AllEventsGQL,
+    public allEventsSlugsGQL: AllEventsSlugsGQL,
     public getEventBySlugGQL: GetEventBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -68,16 +70,24 @@ export class EventsComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Events.
      */
     if (!!this.slug) {
-      this.event = this.getEventBySlug(this.slug);
-      this.event$ = this.event.subscribe(data => {
-
-        // If Call To Action is an email address
-        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          data['callToAction'] = 'mailto:' + data['callToAction'];
-        }
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
+      this.getAllEventsSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/500'])}
       });
+      this.event = this.getEventBySlug(this.slug);
+        this.event$ = this.event.subscribe(data => {
+
+          // If Call To Action is an email address
+          if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            data['callToAction'] = 'mailto:' + data['callToAction'];
+          }
+          
+          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.appComponentService.setTitle(data.title);
+        });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Events');
@@ -98,6 +108,20 @@ export class EventsComponent implements OnInit, OnDestroy {
       return this.allEventsGQL.fetch()
         .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
     } catch (e) { console.error('Error loading all Events:', e) };
+  }
+
+  /**
+   * Function that returns all Equipments slugs from the EventCollection as an observable
+   * of type EventCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllEventsSlugs(): Observable<EventCollection> {
+    try {
+      return this.allEventsSlugsGQL.fetch()
+        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
+    } catch (e) { console.error('Error loading all Equipments:', e) };
   }
 
   /**
