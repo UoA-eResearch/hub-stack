@@ -70,7 +70,7 @@ functions:
           path: /
           method: post
           cors:
-            origin: "${file(env/${self:provider.stage}.json):app.CORS_ACCESS_CONTROL_ALLOW_ORIGINS}"
+            origin: "${file(env/${self:provider.stage}.json):CORS_ACCESS_CONTROL_ALLOW_ORIGINS}"
             headers:
               - Content-Type
               - Authorization
