@@ -222,8 +222,15 @@ pipeline {
                         script {
                             if (BRANCH_NAME == 'sandbox' || BRANCH_NAME == 'nonprod') {
                                 echo "Invoking search-proxy tests..."
+
+                                def stage = (
+                                    BRANCH_NAME == 'prod' ? 'prod' : 
+                                    BRANCH_NAME == 'nonprod' ? 'test' : 
+                                    'dev'
+                                )
+
                                 dir('hub-search-proxy') {
-                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${stage}"
                                 }
                             }
                         }
@@ -305,10 +312,20 @@ pipeline {
                         }
                     }
                     steps {
-                        echo "Deploying hub-search-now Lambda function to ${BRANCH_NAME}"
-                        dir("hub-search-proxy") {
-                            sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                        echo "Deploying hub-search-proxy Lambda function to ${BRANCH_NAME}"
+                        script {
+                            def stage = (
+                                BRANCH_NAME == 'prod' ? 'prod' : 
+                                BRANCH_NAME == 'nonprod' ? 'test' : 
+                                'dev'
+                            )
+                            
+                            dir("hub-search-proxy") {
+                                sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${stage}"
+                            }
                         }
+                        echo "Deploy to ${BRANCH_NAME} complete"
+                        
                     }
                 }
             }
