@@ -115,7 +115,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   public getSubHubBySlug(slug: string): Observable<SubHub> {
     try {
       return this.getSubHubBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.subHubCollection.items)) as Observable<SubHub>;
+        .pipe(flatMap(x => x.data.subHubCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<SubHub>;
     } catch (e) { console.error(`Error loading SubHub ${slug}:`, e); }
   }
 

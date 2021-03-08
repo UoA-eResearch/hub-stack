@@ -136,7 +136,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   public getEventBySlug(slug: string): Observable<Event> {
     try {
       return this.getEventBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.eventCollection.items)) as Observable<Event>;
+        .pipe(flatMap(x => x.data.eventCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Event>;
     } catch (e) { console.error(`Error loading Event ${slug}:`, e); }
   }
 

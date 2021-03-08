@@ -140,7 +140,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
     try {
       return this.getEquipmentBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.equipmentCollection.items)) as Observable<Equipment>;
+        .pipe(flatMap(x => x.data.equipmentCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Equipment>;
     } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
   }
 
