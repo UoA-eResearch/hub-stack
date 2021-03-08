@@ -69,8 +69,12 @@ functions:
       - http:
           path: /
           method: post
-          cors: 
-            true
+          cors:
+            origin: "${file(env/${self:provider.stage}.json):app.CORS_ACCESS_CONTROL_ALLOW_ORIGINS}"
+            headers:
+              - Content-Type
+              - Authorization
+            allowCredentials: false
   update:
     handler: handler.update
     events:
