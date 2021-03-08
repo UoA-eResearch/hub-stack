@@ -31,6 +31,7 @@ export class SearchBarService {
   public searchTextChange: Subject<any> = new Subject<any>();
   public currentPageChange: Subject<any> = new Subject<any>();
   public totalPagesChange: Subject<any> = new Subject<any>();
+  public sortTypeChange: Subject<any> = new Subject<any>();
   public searchText: string;
   public category: Array<any> = new Array<any>();
   public stage: Array<any> = new Array<any>();
@@ -38,6 +39,7 @@ export class SearchBarService {
   public resultArray;
   public currentPage;
   public totalPages;
+  public sortType;
   public eventId = '7lTehYtUy01S5rC2Btzc76'; // the sys.id of event category defined in contentful
 
   constructor(
@@ -88,7 +90,18 @@ export class SearchBarService {
     return this.organisation;
   }
 
-  // Search Text
+  // Sort Type
+  setSort(sortType) {
+    if (sortType !== undefined) {
+      this.sortType = sortType;
+      this.sortTypeChange.next(sortType);
+    }
+  }
+  getSort() {
+    return this.sortType;
+  }
+
+  // Current Page
   setCurrentPage(currentPage) {
     this.currentPage = currentPage;
     this.currentPageChange.next(currentPage);
@@ -97,7 +110,7 @@ export class SearchBarService {
     return this.currentPage;
   }
 
-  // Search Text
+  // Toal Pages
   setTotalPages(totalPages) {
     this.totalPages = totalPages;
     this.totalPagesChange.next(totalPages);
@@ -208,6 +221,7 @@ export class SearchBarService {
         let query = {
           query: this.getSearchText(),
           size: 500, // Maximum return result size from Elastic.co
+          sort: this.getSort(),
           filters: {
             relatedOrgs: this.getOrganisation(),
             stage: this.getStage(),
@@ -215,6 +229,8 @@ export class SearchBarService {
           },
           includeContentTypes : pageTypes
         };
+        
+        console.log("Query: ", query)
 
         // Send the POST request
         this.http.post(environment.searchUrl, query).subscribe(data => {

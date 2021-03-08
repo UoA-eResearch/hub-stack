@@ -62,11 +62,11 @@
 
             <!-- Filtering Options -->
             <div fxFlexOrder.lt-sm="1" fxFlex>
-                <mat-select (selectionChange)="updateOrder()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
+                <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
                     placeholder="Order By">
                     <div>
-                        <mat-option value="Default">Default</mat-option>
-                        <mat-option value="Alphabetical">Alphabetical</mat-option>
+                        <mat-option value="">Default</mat-option>
+                        <mat-option value="A-Z">Alphabetical</mat-option>
                     </div>
                 </mat-select>
             </div>

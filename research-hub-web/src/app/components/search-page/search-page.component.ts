@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { 
   CategoryCollection,
   OrgUnitCollection,
@@ -20,12 +19,12 @@ export class SearchPageComponent implements OnInit {
   public allStages$: Observable<StageCollection>;
   public allOrganisations$: Observable<OrgUnitCollection>;
   public resultSub$: Subscription;
+  public sortType = this.searchBarService.getSort();
   public allCurrentPages = [];
   public allCurrentPagesUnsorted = [];
   public categoryFilter = this.searchBarService.getCategory();
   public stageFilter = this.searchBarService.getStage();
   public organisationFilter = this.searchBarService.getOrganisation();
-  public sortType;
 
 
   constructor(
@@ -48,14 +47,12 @@ export class SearchPageComponent implements OnInit {
     this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
       this.allCurrentPages = data.map((x) => {return { ...x };});
       this.allCurrentPagesUnsorted = data.map((x) => {return { ...x };});
-
-      // Update ordering if preselected
-      this.updateOrder();
     });
   }
 
   // Update search filters
   public updateSearchFilters() {
+    this.searchBarService.setSort(this.sortType);
     this.searchBarService.setStage(this.stageFilter);
     this.searchBarService.setCategory(this.categoryFilter);
     this.searchBarService.setOrganisation(this.organisationFilter);
@@ -63,20 +60,6 @@ export class SearchPageComponent implements OnInit {
     this.searchBarService.createResultsList();
     this.initialPages();
   }
-
-  // Update ordering method when user changes filter
-  updateOrder() {
-    switch(this.sortType) {
-      case 'Alphabetical': this.sortAlphabetical(); break;
-      case 'Default': this.sortDefault(); break;}}
-
-  // Alphabetical sort
-  sortAlphabetical() {
-    this.allCurrentPages= this.allCurrentPages.sort(function(a, b) { return a.title.localeCompare(b.title) })}
-
-  // Content sort
-  sortDefault() {
-    this.allCurrentPages = this.allCurrentPagesUnsorted.map((x) => {return { ...x }})}
 
   ngOnDestroy() { this.resultSub$.unsubscribe()}
 }
