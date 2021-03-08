@@ -22,9 +22,9 @@ e.g.
 `npm run deploy -- --aws-profile saml`
 
 ## Run locally
-To run the tests locally simply execute:
+To run locally simply execute:
 ```
-npm test
+npm test -- --aws-profile <profile> --stage <stage>
 ```
 
 ## Debug Locally
@@ -34,29 +34,21 @@ Inside Visual Studio Code hit `F5` and select `Debug` as config file. Attach bre
 To run all unit tests once simply execute:
 
 ```
-npm test
+npm test -- --aws-profile <profile> --stage <stage>
 ```
 
 ### Test and watch for changes
 To run all unit tests and have them watch your files for changes:
 
 ```
-npm run testw
+npm run testw -- --aws-profile <profile> --stage <stage>
 ```
 
 ## Deploy to AWS
-To deploy to AWS execute (**Note:** will only deploy after all unit tests have passed):
-
+To deploy to AWS execute:
+* By default it deploys to the `dev` stage if you don't provide a stage parameter
 ```
-npm deploy
-```
-
-### Deploy to a different stage
-* By default the above command deploys to the `dev` stage
-* You can optionally pass a `-- --stage STAGE_NAME` flag (**Note:** the extra `--`)
-
-```
-npm run deploy -- --stage=test
+npm deploy -- --aws-profile <profile> --stage <stage>
 ```
 
 ## Get info about existing deployment
