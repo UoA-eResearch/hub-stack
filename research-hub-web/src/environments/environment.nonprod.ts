@@ -1,19 +1,20 @@
 // TODO: Insert nonprod values
 export const environment = {
   production: true,
-  researchHubApiUrl: '',
-  cerApiUrl: '',
-  cerGraphQLUrl: '',
+  researchHubApiUrl: 'https://research-hub.auckland.ac.nz/api/',
+  cerApiUrl: 'https://test.research-hub.cer.auckland.ac.nz/cer-api/',
+  cerGraphQLUrl: 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service',
+  cerGraphQLPreviewUrl: 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-preview-service/',
   analyticsCode: '',
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
-    cognitoUserPoolId: '',
-    cognitoDomain: '',
-    cognitoClientId: '',
-    redirectUri: '',
-    scopes: '',
+    cognitoUserPoolId: 'ap-southeast-2_gtuqqgIIq',
+    cognitoDomain: 'uoapool-nonprod',
+    cognitoClientId: '6gp6nveqbfrrf0fe8v13dmvbhh',
+    redirectUri: 'https://research-hub.connect.test.amazon.auckland.ac.nz',
+    scopes: 'openid profile https://research-hub.auckland.ac.nz/spa',
     codeChallengeMethod: 'S256',
-    logout_uri: ''
+    logout_uri: 'https://research-hub.connect.test.amazon.auckland.ac.nz'
   },
   privateUrlKeyWords: {
     get whoNeedBearerToken() {

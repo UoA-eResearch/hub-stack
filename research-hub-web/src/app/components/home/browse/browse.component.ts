@@ -1,9 +1,5 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { LayoutService } from '@services/layout.service';
+import { Component, OnInit, Input } from '@angular/core';
 import { 
-  categoryOptions,
   categoryOptionsGQL 
 } from '@app/global/global-variables';
 
@@ -12,11 +8,8 @@ import {
   templateUrl: './browse.component.html',
   styleUrls: ['./browse.component.scss']
 })
-export class BrowseComponent implements OnInit, OnDestroy {
-  public categoryOptions = categoryOptions;
+export class BrowseComponent implements OnInit {
   public categoryOptionsGQL = categoryOptionsGQL;
-
-  private mediaSub: Subscription;
 
   @Input()
   embedded = false;
@@ -27,25 +20,10 @@ export class BrowseComponent implements OnInit, OnDestroy {
   @Input()
   numCols = 4;
 
-  constructor(private media: MediaObserver,
-    private layoutService: LayoutService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.updateCols(this.layoutService.getMQAlias());
-
-    this.mediaSub = this.media.media$.subscribe((change: MediaChange) => {
-      this.updateCols(change.mqAlias);
-    });
-  }
-
-  updateCols(mqAlias: string) {
-    const cols = this.layoutService.getNumGridCols(mqAlias);
-    this.numCols = Math.min(this.maxCols, cols);
-  }
-
-  ngOnDestroy() {
-    this.mediaSub.unsubscribe();
   }
 
   getCategoryDescription(categoryId: number) {
