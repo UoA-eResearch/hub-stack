@@ -1,0 +1,7 @@
+query AllArticlesSlugs {
+    articleCollection {
+        items {
+            slug
+        }
+    }
+}
