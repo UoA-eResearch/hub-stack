@@ -9,10 +9,11 @@ import { Component, OnInit, Input } from '@angular/core'
 })
 export class CollectionListComponent implements OnInit {
   public pageNumber;
+  public itemsPerPage = 10;
 
   @Input() collection;
 
-  constructor(public searchBarService: SearchBarService) { }
+  constructor(public searchBarService: SearchBarService) {  }
 
   ngOnInit(): void {  }
 
