@@ -1,3 +1,11 @@
+<!-- If we're displaying a collection of Events-->
+<div
+    *ngIf="allEvents$ | async as allEvents" 
+    class="site-padding margin-bottom top-padding" 
+    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
+    <app-collection-list [collection]="allEvents"></app-collection-list>
+</div>
+
 <div id="event-container" *ngIf="event | async as event">
 
     <!-- Templates -->
