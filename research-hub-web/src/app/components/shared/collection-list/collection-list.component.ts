@@ -1,6 +1,21 @@
-import { SimpleChanges } from '@angular/core';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input } from '@angular/core';
+
+interface Collection {
+  __typename: string;
+  items: [Content]
+}
+interface Content {
+  __typename: string;
+  slug: string;
+  title: string;
+  ssoProtected: boolean;
+  summary: string;
+  icon: {
+    title: string;
+    description: string;
+    url: string;
+  }
+}
 
 @Component({
   selector: 'app-collection-list',
@@ -8,31 +23,12 @@ import { Component, OnInit, Input } from '@angular/core'
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnInit {
-  public pageNumber;
 
-  @Input() collection;
+  @Input() collection: Collection;
 
-  constructor(public searchBarService: SearchBarService) { }
+  constructor() { }
 
-  ngOnInit(): void {  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    this.pageNumber = this.searchBarService.getCurrentPage()
-    try { this.collection = changes['collection'].currentValue } catch {}
-  }
-
-  // Scrolling to top of page on search
-  scrollToTop($event) {
-    this.searchBarService.setCurrentPage($event);
-    this.searchBarService.createResultsList();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Reset pageNumber to 1 if results are out of bounds
-  public resetPage() {
-    this.searchBarService.setCurrentPage(1);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
+  ngOnInit(): void { }
 
   /**
    * Returns a material-icon name. Called in the component when a content item doesn't
@@ -41,21 +37,13 @@ export class CollectionListComponent implements OnInit {
    */
   public getDefaultTypeIcon(__typename: string): string {
     switch (__typename) {
-      case 'article': return 'article';
-      case 'Article': return 'article';
-      case 'equipment': return 'handyman';
-      case 'Equipment': return 'handyman';
-      case 'subHub': return 'language';
-      case 'SubHub': return 'language';
-      case 'service': return 'manage_accounts';
-      case 'Service': return 'manage_accounts';
-      case 'event': return 'event';
-      case 'Event': return 'event';
-      case 'software': return 'code';
-      case 'Software': return 'code';
-      case 'caseStudy': return 'cases';
-      case 'CaseStudy': return 'cases';
+      case 'Article': return 'import_contacts';
+      case 'Equipment': return 'build';
+      case 'SubHub': return 'layers';
+      case 'Service': return 'home_repair_services';
+      case 'Event': return 'calendar_today';
       default: return 'article'
     }
   }
+
 }
