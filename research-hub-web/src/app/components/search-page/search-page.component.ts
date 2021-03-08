@@ -6,8 +6,8 @@ import {
 } from '@app/graphql/schema';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Subscription } from 'rxjs';
+import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 
 @Component({
   selector: 'app-search-page',
@@ -25,6 +25,8 @@ export class SearchPageComponent implements OnInit {
   public categoryFilter = this.searchBarService.getCategory();
   public stageFilter = this.searchBarService.getStage();
   public organisationFilter = this.searchBarService.getOrganisation();
+  public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
+  public staffIntranet = "https://www.staff.auckland.ac.nz/";
 
 
   constructor(
