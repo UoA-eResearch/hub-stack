@@ -47,6 +47,7 @@ module.exports.search = async (event, context) => {
   
   if (requestBody.hasOwnProperty('query')) {
     queryString = requestBody.query;
+    console.log(`Received query string: ${queryString}`);
   }
   if (requestBody.hasOwnProperty('size')) {
     size = requestBody.size;
@@ -68,8 +69,6 @@ module.exports.search = async (event, context) => {
       sort.push({ "fields.title.en-US.raw": "desc" });
     }
   }
-
-  console.log(`Received query string: ${queryString}`);
 
   let query;
 
@@ -208,7 +207,6 @@ module.exports.search = async (event, context) => {
       },
       sort: sort
     };
-
   }
 
   const params = {
