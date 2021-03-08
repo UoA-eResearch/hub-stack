@@ -214,14 +214,18 @@ pipeline {
                 stage('Run search-proxy tests') {
                     when {
                         anyOf {
-                            changeset "**/serverless-now/**/*.*"
+                            changeset "**/hub-search-proxy/**/*.*"
                             equals expected: true, actual: params.FORCE_REDEPLOY_SP
                         }
                     }
                     steps {
-                        echo "Invoking search-proxy tests..."
-                        dir('hub-search-proxy') {
-                            sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                        script {
+                            if (BRANCH_NAME == 'sandbox' || BRANCH_NAME == 'nonprod') {
+                                echo "Invoking search-proxy tests..."
+                                dir('hub-search-proxy') {
+                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                                }
+                            }
                         }
                     }
                 }
