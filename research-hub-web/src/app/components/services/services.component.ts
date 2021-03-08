@@ -136,7 +136,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   public getServiceBySlug(slug: string): Observable<Service> {
     try {
       return this.getServiceBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.serviceCollection.items)) as Observable<Service>;
+        .pipe(flatMap(x => x.data.serviceCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Service>;
     } catch (e) { console.error(`Error loading Service ${slug}:`, e); }
   }
 

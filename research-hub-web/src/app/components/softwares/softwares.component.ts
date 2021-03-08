@@ -138,7 +138,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   public getSoftwareBySlug(slug: string): Observable<Software> {
     try {
       return this.getSoftwareBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.softwareCollection.items)) as Observable<Software>;
+        .pipe(flatMap(x => x.data.softwareCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Software>;
     } catch (e) { console.error(`Error loading Software ${slug}:`, e); }
   }
 
