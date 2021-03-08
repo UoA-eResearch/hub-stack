@@ -83,7 +83,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/500'])}
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
       this.article = this.getArticleBySlug(this.slug);
         this.article$ = this.article.subscribe(data => {

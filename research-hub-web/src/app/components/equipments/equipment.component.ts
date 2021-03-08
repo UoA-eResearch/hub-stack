@@ -85,7 +85,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/500'])}
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
       this.equipment = this.getEquipmentBySlug(this.slug);
         this.equipment$ = this.equipment.subscribe(data => {

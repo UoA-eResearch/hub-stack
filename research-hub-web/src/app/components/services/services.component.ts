@@ -75,7 +75,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/500'])}
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
       this.service = this.getServiceBySlug(this.slug);
         this.service$ = this.service.subscribe(data => {

@@ -75,7 +75,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/500'])}
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
       this.event = this.getEventBySlug(this.slug);
         this.event$ = this.event.subscribe(data => {
