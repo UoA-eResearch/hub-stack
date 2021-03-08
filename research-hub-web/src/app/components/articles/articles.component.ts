@@ -6,6 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllArticlesGQL,
+  AllArticlesSlugsGQL,
   GetArticleBySlugGQL,
   ArticleCollection,
   Article,
@@ -43,6 +44,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
+    public allArticlesSlugsGQL: AllArticlesSlugsGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -76,12 +78,19 @@ export class ArticlesComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
-      this.article = this.getArticleBySlug(this.slug);
-      this.article$ = this.article.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
+      this.getAllArticlesSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/500'])}
       });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+      this.article = this.getArticleBySlug(this.slug);
+        this.article$ = this.article.subscribe(data => {
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.appComponentService.setTitle(data.title);
+        });
+        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Articles');
       this.allArticles$ = this.getAllArticles();
@@ -99,6 +108,20 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   public getAllArticles(): Observable<ArticleCollection> {
     try {
       return this.allArticlesGQL.fetch()
+        .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
+    } catch (e) { console.error('Error loading all articles:', e) };
+  }
+
+  /**
+   * Function that returns all articles slugs from the ArticleCollection as an observable
+   * of type ArticleCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllArticlesSlugs(): Observable<ArticleCollection> {
+    try {
+      return this.allArticlesSlugsGQL.fetch()
         .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
     } catch (e) { console.error('Error loading all articles:', e) };
   }
