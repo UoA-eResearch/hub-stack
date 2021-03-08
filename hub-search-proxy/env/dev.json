@@ -8,5 +8,6 @@
     "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "*",
     "CONTENTFUL_SPACE_ID": "${ssm:/dev/research-hub/contentful-space-id~true}",
     "CONTENTFUL_ACCESS_TOKEN": "${ssm:/dev/research-hub/contentful-mgmt-access-token~true}",
-    "resourceKey": "3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d"
+    "resourceKey": "3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d",
+    "PROFILE": "uoa-sandbox"
 }
