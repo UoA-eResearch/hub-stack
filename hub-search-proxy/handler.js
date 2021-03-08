@@ -6,8 +6,23 @@ const contentfulExport = require('contentful-export');
 
 const token = process.env.CONTENTFUL_ACCESS_TOKEN;
 const spaceId = process.env.CONTENTFUL_SPACE_ID;
-const credentials = new AWS.EnvironmentCredentials('AWS');
 const region = 'ap-southeast-2';
+
+let credentials;
+try {
+  // try getting credentials for the lambda from the AWS environment
+  credentials = new AWS.EnvironmentCredentials('AWS');
+  if (!credentials.sessionToken) {
+    // we may be running this locally or from Jenkins, so try to get the credentials
+    // from the local environment instead
+    credentials = new AWS.SharedIniFileCredentials({profile: process.env.PROFILE});
+  }
+  if (!credentials.sessionToken) {
+    throw new Error("Couldn't get credentials");
+  }
+} catch(error) {
+  console.log(`Error getting AWS credentials: ${error}`);
+}
 
 AWS.config.update({
   credentials: credentials,
@@ -28,6 +43,7 @@ module.exports.search = async (event, context) => {
   let from = 0;
   let queryFilters = {};
   let contentTypes = ["article","casestudy","equipment","event","service","software","subhub"];
+  let sort = [];
   
   if (requestBody.hasOwnProperty('query')) {
     queryString = requestBody.query;
@@ -43,6 +59,14 @@ module.exports.search = async (event, context) => {
   }
   if (requestBody.hasOwnProperty('includeContentTypes') && requestBody.includeContentTypes.length > 0) {
     contentTypes = requestBody.includeContentTypes.map(contentType => contentType.toLowerCase());
+  }
+  if (requestBody.hasOwnProperty('sort')) {
+    if (requestBody.sort === "A-Z") {
+      sort.push({ "fields.title.en-US.raw": "asc" });
+    }
+    if (requestBody.sort === "Z-A") {
+      sort.push({ "fields.title.en-US.raw": "desc" });
+    }
   }
 
   console.log(`Received query string: ${queryString}`);
@@ -80,7 +104,8 @@ module.exports.search = async (event, context) => {
             }
           ]
         }
-      }
+      },
+      sort: sort
     };
 
   } else if(queryString.length === 0 && Object.keys(queryFilters).length > 0) {
@@ -127,7 +152,8 @@ module.exports.search = async (event, context) => {
             }
           ]
         }
-      }
+      },
+      sort: sort
     };
   } else {
     // there is a query string and may or may not be any filters
@@ -179,7 +205,8 @@ module.exports.search = async (event, context) => {
             }
           ]
         }
-      }
+      },
+      sort: sort
     };
 
   }
