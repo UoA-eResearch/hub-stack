@@ -17,7 +17,7 @@
 				"owner": "custom",
 				"fileLocation": ["relative", "${workspaceFolder}"],
 				"pattern":[{
-					// FIXME Stub pattern, doesn't actually match problems.
+					// TODO Stub pattern, doesn't actually match problems.
 					// Added as it's required
 					"regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
 					"file": 1,
@@ -39,7 +39,7 @@
 				"owner": "custom",
 				"fileLocation": ["relative", "${workspaceFolder}"],
 				"pattern":[{
-					// FIXME Stub pattern, doesn't actually match problems.
+					// TODO Stub pattern, doesn't actually match problems.
 					// Added as it's required
 					"regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
 					"file": 1,
@@ -65,7 +65,7 @@
 				"owner": "custom",
 				"fileLocation": ["relative", "${workspaceFolder}"],
 				"pattern":[{
-					// FIXME Stub pattern, doesn't actually match problems.
+					// TODO Stub pattern, doesn't actually match problems.
 					// Added as it's required
 					"regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
 					"file": 1,
@@ -91,7 +91,7 @@
 				"owner": "custom",
 				"fileLocation": ["relative", "${workspaceFolder}"],
 				"pattern":[{
-					// FIXME Stub pattern, doesn't actually match problems.
+					// TODO Stub pattern, doesn't actually match problems.
 					// Added as it's required
 					"regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
 					"file": 1,

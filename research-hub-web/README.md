@@ -24,6 +24,8 @@ For local development run `npm run dev`. This will concurrently:
 4. Serve the web project locally on port `4200`, querying the locally running GraphQL server
 5. Run the unit tests, with test-coverage reporting enabled. These unit tests are re-run whenever any files are changed
 
+Alternatively, if you are using VS Code/[VSCodium](https://vscodium.com/), press F5 to run the above tasks in separate terminals with debugging support enabled, or go to `Terminal > Run Task...` to see all available tasks.
+
 ## Testing
 This project includes both [unit](#unit-tests) and [e2e](#end-to-end-tests) tests, which can either be run manually, or with an [interactive CLI test runner](./test.sh) included with the project. Further detail is provided in the corresponding sections below.
 
