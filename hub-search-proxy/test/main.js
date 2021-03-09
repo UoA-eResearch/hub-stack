@@ -14,6 +14,7 @@ describe("hub-search-proxy", () => {
   it("POST search request returns a response", async function () {
     this.timeout(TIMEOUT_PERIOD);
     const query = "Tis better to have tested and lost than never to have tested at all";
+    
     const resBody = await getResBody({
       httpMethod: "POST",
       headers: {
@@ -23,7 +24,11 @@ describe("hub-search-proxy", () => {
         query: query
       })
     });
-    console.log(resBody)
+
+    if (resBody.result.hasOwnProperty("name") && resBody.result.name === "ResponseError") {
+      console.log(JSON.stringify(resBody.result));
+    }
+    
     expect(resBody.query).to.contain(query);
   });
 });
