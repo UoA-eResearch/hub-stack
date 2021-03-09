@@ -59,10 +59,31 @@
           </div>
         </mat-expansion-panel>
 
+
         <!-- Sign In -->
-        <mat-list-item>
+        <mat-list-item *ngIf="!authenticated">
           <a mat-line (click)="loginService.doLogin()" (keydown.enter)="loginService.doLogin()">Sign In</a>
         </mat-list-item>
+
+
+        <!-- Sign Out -->
+        <mat-expansion-panel *ngIf="authenticated" style="background: #fafafa" hideToggle="true">
+
+          <!-- Sign Out Name -->
+          <mat-expansion-panel-header *ngIf="authenticated"  class="expandable-menu">
+            <mat-list-item>
+              <a mat-line fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon matPrefix style="margin-right: 5px;">person</mat-icon>
+                <span fxHide.gt-sm>{{ userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0) }}</span>
+              </a>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+
+          <!-- Sign Out List -->
+          <div *ngIf="authenticated">
+            <a mat-line (click)="loginService.logout()" (keydown.enter)="loginService.logout()">Sign Out</a>
+          </div>
+        </mat-expansion-panel>
       </mat-nav-list>
     </mat-sidenav>
 
@@ -138,11 +159,10 @@
                   <button role="button" aria-label="sign-in" *ngIf="!authenticated" fxHide.lt-md
                     mat-button (click)="loginService.doLogin()" (keydown.enter)="loginService.doLogin()">Sign In</button>
 
-                  <button role="button" class="button-menu" aria-label="user-info" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
-                    <mat-icon matPrefix style="margin-right: 5px;" fxHide.xs>person</mat-icon>
+                  <button fxHide fxShow.gt-sm role="button" class="button-menu" aria-label="user-info" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
+                    <mat-icon fxHide fxShow.gt-sm matPrefix style="margin-right: 5px;">person</mat-icon>
                     <span fxHide fxShow.gt-md>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</span>
-                    <span fxHide fxShow.md>{{ userInfo?.firstName }}</span>
-                    <span fxHide.gt-sm>{{ userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0) }}</span>
+                    <span fxHide fxShow.lt-lg>{{ userInfo?.firstName }}</span>
                   </button>
 
                   <!-- User Details -->
