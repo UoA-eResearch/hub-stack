@@ -11,6 +11,8 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
   public data;
   public returnVal$;
   public contentItem;
+  public orderedList = [];
+  public unorderedList = [];
 
   constructor(
     public bodyMediaService: BodyMediaService)
@@ -41,8 +43,21 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
         case 'asset-hyperlink':
           this.contentItem = this.returnVal$.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
+        case 'unordered-list':
+          this.contentItem = {__typename: '', items: this.data.content};
+          console.log(this.contentItem.items);
+          break;
+        case 'ordered-list':
+          this.contentItem = {__typename: '', items: []};
+          this.data.content.forEach(element => {
+            this.contentItem['items'].push(element.content[0].content[0].value);
+          })
+          break;
         case 'blockquote':
-          this.contentItem = this.data.content[0];
+          this.contentItem = {__typename: '', items: []};
+          this.data.content.forEach(element => {
+            this.contentItem['items'].push(element.content[0].content[0].value);
+          })
       }
   }
 }
