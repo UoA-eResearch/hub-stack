@@ -109,6 +109,7 @@
 
             <!-- Video -->
             <span *ngSwitchCase="'Video'"><app-video-card [contentItem]="contentItem"></app-video-card></span>
+
         </span>
     </span>
 
@@ -147,7 +148,7 @@
     <!-- Ordered List -->
     <span *ngSwitchCase="'ordered-list'">
         <ol>
-            <li  *ngFor="let item of contentItem['items']">{{ item }}</li>
+            <li *ngFor="let item of contentItem['items']">{{ item['content'][0]['content'][0].value }}</li>
         </ol>
     </span>
 </span>
