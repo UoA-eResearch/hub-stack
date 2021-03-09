@@ -44,20 +44,15 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
           this.contentItem = this.returnVal$.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
           break;
         case 'unordered-list':
-          this.contentItem = {__typename: '', items: this.data.content};
-          console.log(this.contentItem.items);
+          this.contentItem = {__typename: '', items: []};
+          this.contentItem['items'] = this.data.content;
           break;
         case 'ordered-list':
           this.contentItem = {__typename: '', items: []};
-          this.data.content.forEach(element => {
-            this.contentItem['items'].push(element.content[0].content[0].value);
-          })
+          this.contentItem['items'] = this.data.content;
           break;
         case 'blockquote':
-          this.contentItem = {__typename: '', items: []};
-          this.data.content.forEach(element => {
-            this.contentItem['items'].push(element.content[0].content[0].value);
-          })
+          this.contentItem = this.data.content[0];
       }
   }
 }
