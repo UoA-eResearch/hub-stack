@@ -13,6 +13,8 @@ export class CollectionListComponent implements OnInit {
 
   @Input() collection;
 
+  @Input() type;
+
   constructor(public searchBarService: SearchBarService) {  }
 
   ngOnInit(): void {  }
@@ -22,18 +24,27 @@ export class CollectionListComponent implements OnInit {
     try { this.collection = changes['collection'].currentValue } catch {}
   }
 
-  // Scrolling to top of page on search
-  scrollToTop($event) {
+
+  // Next page on search
+  nextPage($event) {
     this.searchBarService.setCurrentPage($event);
     this.searchBarService.createResultsList();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.scrollToTop();
   }
+
 
   // Reset pageNumber to 1 if results are out of bounds
   public resetPage() {
     this.searchBarService.setCurrentPage(1);
+    this.scrollToTop();
+  }
+
+  
+  // Scrolling to top of page on search
+  scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
 
   /**
    * Returns a material-icon name. Called in the component when a content item doesn't

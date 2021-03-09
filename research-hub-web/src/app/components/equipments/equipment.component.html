@@ -1,3 +1,11 @@
+<!-- If we're displaying a collection of articles-->
+<div
+    *ngIf="allEquipment$ | async as allEquipment" 
+    class="site-padding margin-bottom top-padding" 
+    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
+    <app-collection-list [type]="'content'" [collection]="allEquipment"></app-collection-list>
+</div>
+
 <div id="equipment-container" *ngIf="equipment | async as equipment">
 
     <!-- Templates -->

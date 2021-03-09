@@ -1,3 +1,11 @@
+<!-- If we're displaying a collection of SubHubs-->
+<div
+    *ngIf="allSubHubs$ | async as allSubHubs" 
+    class="site-padding margin-bottom top-padding" 
+    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
+    <app-collection-list [type]="'content'" [collection]="allSubHubs"></app-collection-list>
+</div>
+
 <div style="overflow-x: hidden" class="results" *ngIf="subHub | async as subhub">
     
     <div>
