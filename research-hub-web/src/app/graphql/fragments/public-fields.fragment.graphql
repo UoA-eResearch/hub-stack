@@ -102,6 +102,7 @@ fragment PublicFields on Entry {
     ... on OrgUnit {
       __typename
       name
+      maoriName
       link
     }
   ... on LinkCard {
