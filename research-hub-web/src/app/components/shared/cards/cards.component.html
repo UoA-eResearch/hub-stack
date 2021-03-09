@@ -64,6 +64,7 @@
                                     <mat-icon>phone</mat-icon>{{ content['phone'] }}</a>
                         </span>
                         <span *ngIf="content.__typename == 'OrgUnit'">
+                            <p style="word-wrap: break-word">{{ content['description'] }}</p>
                             <span class="call-to-action" style="display: flex; align-items: center;max-width: fit-content">
                                 <a href="{{ content.link }}">See Unit&nbsp;&nbsp;</a>
                                 <img class="arrow" alt="link-arrow" style="height: 20px; width: auto" src="assets/components/dark-arrow.png">

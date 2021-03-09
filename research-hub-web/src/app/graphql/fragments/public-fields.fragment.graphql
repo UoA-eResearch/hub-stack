@@ -103,6 +103,7 @@ fragment PublicFields on Entry {
       __typename
       name
       maoriName
+      description
       link
     }
   ... on LinkCard {
