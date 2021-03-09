@@ -6,6 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllSoftwareGQL,
+  AllSoftwareSlugsGQL,
   GetSoftwareBySlugGQL,
   SoftwareCollection,
   Software,
@@ -43,6 +44,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allSoftwareGQL: AllSoftwareGQL,
+    public allSoftwareSlugsGQL: AllSoftwareSlugsGQL,
     public getSoftwareBySlugGQL: GetSoftwareBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -76,12 +78,19 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Software.
      */
     if (!!this.slug) {
-      this.software = this.getSoftwareBySlug(this.slug);
-      this.software$ = this.software.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
+      this.getAllSoftwareSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+      this.software = this.getSoftwareBySlug(this.slug);
+        this.software$ = this.software.subscribe(data => {
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.appComponentService.setTitle(data.title);
+        });
+        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Software');
       this.allSoftware$ = this.getAllSoftware();
@@ -104,6 +113,20 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Function that returns all Equipments slugs from the SoftwareCollection as an observable
+   * of type SoftwareCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllSoftwareSlugs(): Observable<SoftwareCollection> {
+    try {
+      return this.allSoftwareSlugsGQL.fetch()
+        .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
+    } catch (e) { console.error('Error loading all Equipments:', e) };
+  }
+
+  /**
    * Function that returns an individual Software from the SoftwareCollection by it's slug
    * as an observable of type Software. This is then unwrapped with the async pipe.
    *
@@ -115,7 +138,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   public getSoftwareBySlug(slug: string): Observable<Software> {
     try {
       return this.getSoftwareBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.softwareCollection.items)) as Observable<Software>;
+        .pipe(flatMap(x => x.data.softwareCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Software>;
     } catch (e) { console.error(`Error loading Software ${slug}:`, e); }
   }
 

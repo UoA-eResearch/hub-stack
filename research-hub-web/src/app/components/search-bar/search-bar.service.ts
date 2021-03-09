@@ -230,8 +230,6 @@ export class SearchBarService {
           },
           includeContentTypes : pageTypes
         };
-        
-        console.log("Query: ", query)
 
         // Send the POST request
         this.http.post(environment.searchUrl, query).subscribe(data => {
