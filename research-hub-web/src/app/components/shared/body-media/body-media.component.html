@@ -68,7 +68,10 @@
             </mat-card>
         </ng-template>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> front-page
         <!-- Different Types of Entry Content -->
         <span [ngSwitch]="contentItem.__typename">
 
@@ -136,5 +139,19 @@
         <div class="blockquote-container" ngClass.xs="blockquote-mobile">
             <span><span class="blockquote"><p>{{ contentItem.content[0].value }}</p></span></span>
         </div>
+    </span>
+
+    <!-- Unordered List -->
+    <span *ngSwitchCase="'unordered-list'">
+    <ul>
+        <li *ngFor="let item of contentItem['items']">{{ item['content'][0]['content'][0].value }}</li>
+    </ul>
+    </span>
+
+    <!-- Ordered List -->
+    <span *ngSwitchCase="'ordered-list'">
+        <ol>
+            <li  *ngFor="let item of contentItem['items']">{{ item }}</li>
+        </ol>
     </span>
 </span>
