@@ -5,7 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, Observable, Subscriber } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
-import { LoginService } from '@uoa/auth';
+import { LoginService, UserInfoDto } from '@uoa/auth';
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
