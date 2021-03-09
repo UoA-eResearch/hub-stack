@@ -28,6 +28,7 @@ pipeline {
                 script {
                     echo 'Setting environment variables'
                     env.awsRegion = "ap-southeast-2"
+                    env.awsRole = 'devops'
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
                         env.BRANCH_NAME = 'sandbox'
@@ -211,31 +212,31 @@ pipeline {
                         }
                     }
                 }
-                // stage('Run search-proxy tests') {
-                //     when {
-                //         anyOf {
-                //             changeset "**/hub-search-proxy/**/*.*"
-                //             equals expected: true, actual: params.FORCE_REDEPLOY_SP
-                //         }
-                //     }
-                //     steps {
-                //         script {
-                //             if (BRANCH_NAME == 'sandbox' || BRANCH_NAME == 'nonprod') {
-                //                 echo "Invoking search-proxy tests..."
+                stage('Run search-proxy tests') {
+                    when {
+                        anyOf {
+                            changeset "**/hub-search-proxy/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
+                        }
+                    }
+                    steps {
+                        script {
+                            if (BRANCH_NAME == 'sandbox' || BRANCH_NAME == 'nonprod') {
+                                echo "Invoking search-proxy tests..."
 
-                //                 def stage = (
-                //                     BRANCH_NAME == 'prod' ? 'prod' : 
-                //                     BRANCH_NAME == 'nonprod' ? 'test' : 
-                //                     'dev'
-                //                 )
+                                def stage = (
+                                    BRANCH_NAME == 'prod' ? 'prod' : 
+                                    BRANCH_NAME == 'nonprod' ? 'test' : 
+                                    'dev'
+                                )
 
-                //                 dir('hub-search-proxy') {
-                //                     sh "npm run test -- --aws-profile ${awsProfile} --stage ${stage}"
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
+                                dir('hub-search-proxy') {
+                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${stage}"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
