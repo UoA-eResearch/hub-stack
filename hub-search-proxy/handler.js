@@ -227,10 +227,14 @@ module.exports.search = async (event, context) => {
       }
     )
   } catch(error) {
+    let statusCode = 500;
+    if (error.hasOwnProperty("meta") && error.meta.statusCode) {
+      statusCode = error.meta.statusCode;
+    }
     return formatResponse(
-      error.statusCode,
+      statusCode,
       { result: error }
-    )
+    );
   }
 }
 
@@ -255,10 +259,14 @@ module.exports.update = async (event, context) => {
       { result: result.body }
     )
   } catch(error) {
+    let statusCode = 500;
+    if (error.hasOwnProperty("meta") && error.meta.statusCode) {
+      statusCode = error.meta.statusCode;
+    }
     return formatResponse(
-      error.statusCode,
+      statusCode,
       { result: error }
-    )
+    );
   }
 }
 
@@ -277,10 +285,14 @@ module.exports.delete = async (event, context) => {
       { result: result.body }
     )
   } catch(error) {
+    let statusCode = 500;
+    if (error.hasOwnProperty("meta") && error.meta.statusCode) {
+      statusCode = error.meta.statusCode;
+    }
     return formatResponse(
-      error.statusCode,
+      statusCode,
       { result: error }
-    )
+    );
   }
 }
 
@@ -309,10 +321,14 @@ module.exports.bulk = async () => {
       entry => validContentTypes.includes(entry.sys.contentType.sys.id)
     );
   } catch(error) {
+    let statusCode = 500;
+    if (error.hasOwnProperty("meta") && error.meta.statusCode) {
+      statusCode = error.meta.statusCode;
+    }
     return formatResponse(
-      500,
+      statusCode,
       { result: error }
-    )
+    );
   }
 
   console.log(`Found ${validEntries.length} entries to upload.`);
@@ -354,10 +370,12 @@ module.exports.bulk = async () => {
 
 function formatResponse(status, body) {
   return {
+      isBase64Encoded: false,
       statusCode: status,
       body: JSON.stringify(body),
       headers: {
-          "Access-Control-Allow-Origin": process.env.CORS_ACCESS_CONTROL_ALLOW_ORIGINS
+          "Access-Control-Allow-Origin": process.env.CORS_ACCESS_CONTROL_ALLOW_ORIGINS,
+          "Content-Type": "application/json"
       }
   }
 }
