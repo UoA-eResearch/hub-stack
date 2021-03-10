@@ -249,8 +249,9 @@
           <!-- Footer Content -->
           <div class="footer-content" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center" ngClass.lt-md="site-padding-mobile">
 
-            <!-- UoA Footer Logo -->
-            <div style="width: 100%" fxLayoutGap="5%" fxLayout.lt-md="column">
+            <div style="width: 100%" fxLayoutGap="5%" fxLayout="row" fxLayout.lt-md="column">
+
+              <!-- UoA Footer Logo -->
               <div fxFlexOrder.lt-md="1" class="logo-img-container">
                 <a [href]="aucklandUniUrl" target="_blank" >
                   <img class="logo-img" src="assets/imgs/uoa-logo.svg" alt="uoa-logo">
@@ -269,11 +270,6 @@
                 <div fxLayout="column">
                   <a class="link-header">Engage</a>
                   <a href="{{ feedbackLink }}">Feedback</a>
-                </div>
-                <div fxLayout="column">
-                  <a class="link-header">Explore</a>
-                  <a routerLink="/contact">Research Categories</a>
-                  <a routerLink="/contact">Research Activities</a>
                 </div>
                 <div fxLayout="column">
                   <a class="link-header">Helpful Links</a>

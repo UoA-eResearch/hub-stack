@@ -5,7 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, Observable, Subscriber } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
-import { LoginService } from '@uoa/auth';
+import { LoginService, UserInfoDto } from '@uoa/auth';
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
@@ -14,7 +14,7 @@ import { Apollo } from 'apollo-angular';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { GetHomepageGQL, Homepage, AllCategoriesGQL, CategoryCollection, AllStagesGQL, StageCollection } from './graphql/schema';
-
+import smoothscroll from 'smoothscroll-polyfill';
 
 @Component({
   selector: 'app-root',
@@ -73,6 +73,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private deviceService: DeviceDetectorService) {
       this.detectDevice();
       this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
+
+      // Smooth scrolling in IE/Edge
+      smoothscroll.polyfill();
     }
 
   // Detect if device is Mobile
