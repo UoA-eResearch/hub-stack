@@ -51,8 +51,8 @@
     
                     <mat-card-title>
                         <h4>
+                            <a class="card-title" *ngIf="content.maoriName" href="{{ content.link }}">{{ content['maoriName'] }}<br></a>
                             <a class="card-title" href="{{ content.link }}">{{ content['name'] }}</a>
-                            <a class="card-title" *ngIf="content.maoriName" href="{{ content.link }}"><small><i style="color: #8D9091"><br>{{ content['maoriName'] }}</i></small></a>
                         </h4>
                     </mat-card-title>
                     <mat-card-content>
