@@ -83,6 +83,8 @@ module.exports.search = async (event, context) => {
     let query;
 
     if(queryString.length === 0 && Object.keys(queryFilters).length === 0) {
+      // query with no filters and no query string (fetch all searchable results)
+
       query = { 
         _source: {
           includes: [
@@ -118,7 +120,7 @@ module.exports.search = async (event, context) => {
       };
 
     } else if(queryString.length === 0 && Object.keys(queryFilters).length > 0) {
-      // query with filters but no text search
+      // query with filters but no query string
 
       let queryParts = [];
 
@@ -170,11 +172,21 @@ module.exports.search = async (event, context) => {
     } else {
       // there is a query string and may or may not be any filters
 
-      // format the query string for fuzzy search
-      const excludedWords = ['and', 'or', 'not', 'a', 'the', '+', '|', '-', '*', '(', ')'];
+      // format the query string for fuzzy search. 
+      const fuzziness = '~2'; // modify degree of fuzziness here. Note: '~AUTO' is not supported currently despite what the docs say.
       const formattedQueryString = queryString.split(' ').map(s => {
-        return excludedWords.includes(s) ? s : s + '~1'
-      }).join(' ') // make every word fuzzy (except excluded words). Note that this makes the query a little inefficient.
+        // if word contains query operators dont make it fuzzy
+        // if word is less than 3 letters dont make it fuzzy
+        // TODO: still need to handle "phrase" queries properly 
+        const queryOperators = ['+', '|', '-', '*', '"', '(', ')'];
+        let matchCount = 0;
+        for (let i = 0; i < queryOperators.length; i++) {
+          if (s.indexOf(queryOperators[i]) > -1) {
+           matchCount++;
+          }
+        };
+        return (matchCount > 0 || s.length < 3) ? s : s + fuzziness; 
+      }).join(' ');
       
       console.log(`Formatted query: ${formattedQueryString}`);
 
