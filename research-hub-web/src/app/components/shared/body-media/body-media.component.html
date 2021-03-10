@@ -110,6 +110,17 @@
             <!-- Video -->
             <span *ngSwitchCase="'Video'"><app-video-card [contentItem]="contentItem"></app-video-card></span>
 
+            <!-- Table -->
+            <span *ngSwitchCase="'Table'">
+                <div class="table-container">
+                    <h3>{{ contentItem.name }}</h3>
+                    <table class="body-table">
+                        <tr *ngFor="let row of contentItem.table.tableData">
+                            <td *ngFor="let column of row">{{ column }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </span>
         </span>
     </span>
 
