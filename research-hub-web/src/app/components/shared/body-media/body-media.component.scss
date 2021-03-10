@@ -232,6 +232,7 @@ ol li {
 }
 ol li::before {
     content: counter(ol-counter) ". ";
+    position: absolute;
     color: map-get($hub-navy, 500); /* Change the color */
     font-weight: bold; /* If you want it to be bold */
     display: inline-block; /* Needed to add space between the bullet and the text */
