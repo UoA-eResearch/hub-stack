@@ -169,11 +169,10 @@ module.exports.search = async (event, context) => {
       };
     } else {
       // there is a query string and may or may not be any filters
-
       let queryParts = [
         {
           simple_query_string: {
-            query: `${queryString}~AUTO`
+            query: queryString.split(' ').map(s => s + '~1').join(' ') // make every word fuzzy. Note that this makes the query a little inefficient.
           }
         }
       ]
