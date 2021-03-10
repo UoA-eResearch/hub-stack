@@ -169,10 +169,19 @@ module.exports.search = async (event, context) => {
       };
     } else {
       // there is a query string and may or may not be any filters
+
+      // format the query string for fuzzy search
+      const excludedWords = ['and', 'or', 'not', 'a', 'the', '+', '|', '-', '*', '(', ')'];
+      const formattedQueryString = queryString.split(' ').map(s => {
+        return excludedWords.includes(s) ? s : s + '~1'
+      }).join(' ') // make every word fuzzy (except excluded words). Note that this makes the query a little inefficient.
+      
+      console.log(`Formatted query: ${formattedQueryString}`);
+
       let queryParts = [
         {
           simple_query_string: {
-            query: queryString.split(' ').map(s => s + '~1').join(' ') // make every word fuzzy. Note that this makes the query a little inefficient.
+            query: formattedQueryString
           }
         }
       ]
