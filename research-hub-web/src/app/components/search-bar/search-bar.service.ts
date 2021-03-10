@@ -38,7 +38,6 @@ export class SearchBarService {
   public resultArray;
   public currentPage;
   public totalPages;
-  public eventId = '7lTehYtUy01S5rC2Btzc76'; // the sys.id of event category defined in contentful
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
@@ -195,15 +194,6 @@ export class SearchBarService {
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
 
-      // Create deep copy of category array to handle events manually
-      let categories = this.getCategory().map(x => { return  x });
-
-      // If event is selected, remove it from search parameters (will be manually handled below)
-      if (this.getCategory().includes(this.eventId.toString())) {
-        categories.splice(this.getCategory().indexOf(this.eventId.toString()), 1)
-        pageTypes = ["event"]
-      }
-
       // Create the search query
         let query = {
           query: this.getSearchText(),
@@ -211,7 +201,7 @@ export class SearchBarService {
           filters: {
             relatedOrgs: this.getOrganisation(),
             stage: this.getStage(),
-            category: categories
+            category: this.getAllCategories(),
           },
           includeContentTypes : pageTypes
         };
