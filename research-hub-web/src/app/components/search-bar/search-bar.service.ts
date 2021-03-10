@@ -31,6 +31,7 @@ export class SearchBarService {
   public searchTextChange: Subject<any> = new Subject<any>();
   public currentPageChange: Subject<any> = new Subject<any>();
   public totalPagesChange: Subject<any> = new Subject<any>();
+  public sortTypeChange: Subject<any> = new Subject<any>();
   public searchText: string;
   public category: Array<any> = new Array<any>();
   public stage: Array<any> = new Array<any>();
@@ -38,6 +39,9 @@ export class SearchBarService {
   public resultArray;
   public currentPage;
   public totalPages;
+  public sortType;
+  public eventIdChange: Subject<any> = new Subject<any>();
+  public eventId;
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
@@ -63,6 +67,16 @@ export class SearchBarService {
     return this.category;
   }
 
+  // Category
+  setEventId(eventId) {
+    if (eventId !== undefined) {
+      this.eventId = eventId;
+      this.eventIdChange.next(eventId);
+    }
+  }
+  getEventId() {
+    return this.eventId;
+  }
 
   // Stage
   setStage(stage) {
@@ -87,7 +101,18 @@ export class SearchBarService {
     return this.organisation;
   }
 
-  // Search Text
+  // Sort Type
+  setSort(sortType) {
+    if (sortType !== undefined) {
+      this.sortType = sortType;
+      this.sortTypeChange.next(sortType);
+    }
+  }
+  getSort() {
+    return this.sortType;
+  }
+
+  // Current Page
   setCurrentPage(currentPage) {
     this.currentPage = currentPage;
     this.currentPageChange.next(currentPage);
@@ -96,7 +121,7 @@ export class SearchBarService {
     return this.currentPage;
   }
 
-  // Search Text
+  // Toal Pages
   setTotalPages(totalPages) {
     this.totalPages = totalPages;
     this.totalPagesChange.next(totalPages);
@@ -194,14 +219,25 @@ export class SearchBarService {
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
 
+      // Create deep copy of category array to handle events manually
+      let categories = this.getCategory().map(x => { return  x });
+
+      // If event is selected, remove it from search parameters (will be manually handled below)
+      if (this.getCategory().includes(this.getEventId())) {
+        categories.splice(this.getCategory().indexOf(this.getEventId()), 1)
+        pageTypes = ["event"]
+      }
+
       // Create the search query
         let query = {
           query: this.getSearchText(),
-          size: 500, // Maximum return result size from Elastic.co
+          size: 10, // Maximum return result size from Elastic.co
+          from: (this.getCurrentPage() - 1) * 10,
+          sort: this.getSort(),
           filters: {
             relatedOrgs: this.getOrganisation(),
             stage: this.getStage(),
-            category: this.getAllCategories(),
+            category: categories
           },
           includeContentTypes : pageTypes
         };
