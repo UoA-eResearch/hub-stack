@@ -40,7 +40,8 @@ export class SearchBarService {
   public currentPage;
   public totalPages;
   public sortType;
-  public eventId = '7lTehYtUy01S5rC2Btzc76'; // the sys.id of event category defined in contentful
+  public eventIdChange: Subject<any> = new Subject<any>();
+  public eventId;
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
@@ -66,6 +67,16 @@ export class SearchBarService {
     return this.category;
   }
 
+  // Category
+  setEventId(eventId) {
+    if (eventId !== undefined) {
+      this.eventId = eventId;
+      this.eventIdChange.next(eventId);
+    }
+  }
+  getEventId() {
+    return this.eventId;
+  }
 
   // Stage
   setStage(stage) {
@@ -212,8 +223,8 @@ export class SearchBarService {
       let categories = this.getCategory().map(x => { return  x });
 
       // If event is selected, remove it from search parameters (will be manually handled below)
-      if (this.getCategory().includes(this.eventId.toString())) {
-        categories.splice(this.getCategory().indexOf(this.eventId.toString()), 1)
+      if (this.getCategory().includes(this.getEventId())) {
+        categories.splice(this.getCategory().indexOf(this.getEventId()), 1)
         pageTypes = ["event"]
       }
 
