@@ -202,44 +202,6 @@
 
 
 /**
- * List
- */
-ul,
-ol {
-    list-style: none;
-    counter-reset: ol-counter
-}
-ul li::before{
-    position: absolute;
-    content: "\25CF";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: map-get($hub-navy, 500); /* Change the color */
-    font-weight: bold; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 2em;
-}
-ul li {
-    position: relative;
-    p {
-        padding-left: 20px;
-    }
-}
-ol li {
-    position: relative;
-    counter-increment: ol-counter;
-    p {
-        padding-left: 20px;
-    }
-}
-ol li::before {
-    content: counter(ol-counter) ". ";
-    position: absolute;
-    color: map-get($hub-navy, 500); /* Change the color */
-    font-weight: bold; /* If you want it to be bold */
-    display: inline-block; /* Needed to add space between the bullet and the text */
-    width: 1em;
-}
-
-/**
  * Table
  */
 .table-container {

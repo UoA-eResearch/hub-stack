@@ -88,7 +88,7 @@
 
                 <!-- Call To Action -->
                 <div *ngIf="service.callToAction">
-                    <a href="{{ service.callToAction }}">
+                    <a href="{{ service.callToAction }}" target="_blank">
                         <button role="button" aria-label="view-service" mat-flat-button class="standard-button section">
                             <span *ngIf="service.callToActionLabel">{{ service.callToActionLabel }}</span>
                             <span *ngIf="!service.callToActionLabel">View Service</span>

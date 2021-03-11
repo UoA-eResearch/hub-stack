@@ -30,9 +30,6 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
     [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
-    [BLOCKS.UL_LIST]: BodyMediaComponent,
-    [BLOCKS.OL_LIST]: BodyMediaComponent,
-    [BLOCKS.LIST_ITEM]: BodyMediaComponent,
   };
 
   public isMobile: Boolean;
