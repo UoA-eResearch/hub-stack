@@ -86,9 +86,9 @@
             <!-- Link Card -->
             <span *ngSwitchCase="'LinkCard'">
                 <div>
-                    <a href="{{contentItem.url}}">
+                    <a href="{{contentItem.url}}" target="_blank">
                         <mat-card class="embedded-entry-block">
-                            <mat-card-title><a href="{{contentItem.url}}">{{ contentItem.title }}</a></mat-card-title>              
+                            <mat-card-title><a href="{{contentItem.url}}" target="_blank">{{ contentItem.title }}</a></mat-card-title>              
                             <mat-card-content><span class="card-summary">{{ contentItem.summary }}</span></mat-card-content> 
                         </mat-card>
                     </a>
@@ -127,7 +127,7 @@
     <!-- Entry Inline -->
     <span *ngSwitchCase="'embedded-entry-inline'">
         <span>
-            <a class="embedded-entry-inline" href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
+            <a class="embedded-entry-inline" href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}" target="_blank">
                 <b>&nbsp;{{ contentItem.title }}&nbsp;&nbsp;</b></a>
         </span>
     </span>
