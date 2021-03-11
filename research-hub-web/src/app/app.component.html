@@ -62,7 +62,7 @@
 
         <!-- Sign In -->
         <mat-list-item *ngIf="!authenticated">
-          <a mat-line (click)="loginService.doLogin()" (keydown.enter)="loginService.doLogin()">Sign In</a>
+          <a mat-line (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</a>
         </mat-list-item>
 
 
@@ -157,7 +157,7 @@
 
                   <!-- Sign In Button -->
                   <button role="button" aria-label="sign-in" *ngIf="!authenticated" fxHide.lt-md
-                    mat-button (click)="loginService.doLogin()" (keydown.enter)="loginService.doLogin()">Sign In</button>
+                    mat-button (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</button>
 
                   <button fxHide fxShow.gt-sm role="button" class="button-menu" aria-label="user-info" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
                     <mat-icon fxHide fxShow.gt-sm matPrefix style="margin-right: 5px;">person</mat-icon>
@@ -184,7 +184,7 @@
                       <!-- Sign Out Button-->
                       <div fxLayout="row" fxLayoutAlign="end">
                         <button role="button" aria-label="sign-out" mat-raised-button class="sign-out-button"
-                          href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">
+                        (click)="loginService.logout()" (keydown.enter)="loginService.logout()">
                           Sign Out
                         </button>
                       </div>
