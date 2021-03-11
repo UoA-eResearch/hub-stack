@@ -11,23 +11,23 @@
     <div>
 
         <!-- Templates -->
-        <ng-template #subHubChildren><app-large-cards [contentItem]="subhub"></app-large-cards></ng-template>
+        <ng-template #subHubChildren><app-large-cards id="subhub-children" [contentItem]="subhub"></app-large-cards></ng-template>
         <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="subhub.title"></app-breadcrumbs></ng-template>
 
         <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-            <app-cards [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" [contentItem]="subhub.relatedItemsCollection"></app-cards>
+            <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" [contentItem]="subhub.relatedItemsCollection"></app-cards>
         </ng-template>
 
         <ng-template #relatedOrganisations>
-            <app-cards [title]="'Organisations'" [contentItem]="subhub.relatedOrgsCollection"></app-cards>
+            <app-cards id="organisations" [title]="'Organisations'" [contentItem]="subhub.relatedOrgsCollection"></app-cards>
         </ng-template>
     
         <ng-template #relatedDocuments>
-            <app-cards [title]="'Documents'" [contentItem]="subhub.relatedDocsCollection"></app-cards>
+            <app-cards id="documents" [title]="'Documents'" [contentItem]="subhub.relatedDocsCollection"></app-cards>
         </ng-template>
     
         <ng-template #relatedContacts>
-            <app-cards [title]="'Contacts'" [contentItem]="subhub.relatedContactsCollection"></app-cards>
+            <app-cards id="contacts" [title]="'Contacts'" [contentItem]="subhub.relatedContactsCollection"></app-cards>
         </ng-template>
 
         <ng-template #body>
