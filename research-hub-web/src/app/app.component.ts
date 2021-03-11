@@ -50,6 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private previousRoute = undefined;
   private currentRoute = undefined;
+  public currentUrl = undefined;
 
   public userInfo;
   public authenticated: Boolean;
@@ -140,6 +141,7 @@ export class AppComponent implements OnInit, OnDestroy {
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
+          this.currentUrl = url;
 
           // Check if the user is logged in now (Cognito redirect)
           this.authenticated = await this.loginService.isAuthenticated();
