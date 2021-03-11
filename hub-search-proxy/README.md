@@ -24,7 +24,7 @@ e.g.
 ## Run locally
 To run locally simply execute:
 ```
-npm test -- --aws-profile <profile> --stage <stage>
+npm start -- --aws-profile <profile> --stage <stage>
 ```
 
 ## Debug Locally
