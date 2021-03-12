@@ -52,7 +52,7 @@ export const appRoutes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: '/error/404',
     pathMatch: 'full'
   },
 ];
