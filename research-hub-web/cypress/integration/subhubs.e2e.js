@@ -16,6 +16,15 @@ describe('ResearchHubs SubHub Pages', () => {
         cy.contains('From Word to Wordpress, the University provides access to the tools you need for your day-to-day. Explore the software below, discover how to install software on your University computer from the self-service center, or get a licence for your home computer.');
     });
 
+    it('displays subhub children', () => {
+        cy.get('#subhub-children').should('exist');
+    });
+
+    it('clicking a subhub child takes you to its page', () => {
+        cy.get('#subhub-children').contains('Skype for Business').click();
+        cy.contains('Microsoft Skype for Business offers videoconferencing, instant messaging, voice calling, online collaboration, and document sharing.');
+    });
+
     it('displays a list of related items', () => {
         cy.get('#you-might-be-interested-in').should('exist');
     });
