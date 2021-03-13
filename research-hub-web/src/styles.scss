@@ -17,27 +17,89 @@ body {
   color: $body-light-bg-font-color;
 }
 hr {
-  height: 0.125vh;
+  height: 1px;
   border: none;
   background-color: $input-grey;
 }
-.mini-hr {
-  margin: 1vw 0px 5vw 0px;
-  position: relative;
+/**
+ * List
+ */
+ ul,
+ ol {
+     list-style: none;
+     counter-reset: ol-counter
+ }
+ ul li::before{
+     position: absolute;
+     content: "\2022";
+     color: map-get($hub-navy, 500);
+     font-weight: bold;
+     display: inline-block;
+     width: 2em;
+ }
+ ul li {
+     position: relative;
+     p {
+         padding-left: 15px;
+     }
+ }
+ ol li {
+     position: relative;
+     counter-increment: ol-counter;
+     p {
+         padding-left: 20px;
+     }
+ }
+ ol li::before {
+     content: counter(ol-counter) ". ";
+     position: absolute;
+     color: map-get($hub-navy, 500);
+     font-weight: bold;
+     display: inline-block;
+     width: 1em;
+ }
+
+
+/**
+ * Underline for titles and headings
+ */
+.main-underline {
+  width: 30%;
+  margin: 20px auto;
+  border-bottom: 6px solid #333333;
+  @media only screen and (min-width: 1280px) {
+      width: 10%;
+      margin-left: 0;
+  }
 }
-.mini-hr hr {
-  width: 8vw;
-  border: none;
-  height: 0.5vh;
-  position: absolute;
-  background: map-get($hub-navy, 500);
-  color: map-get($hub-navy, 500);
+.main-underline-navy {
+  width: 45%;
+  margin: 20px auto;
+  border-bottom: 6px solid map-get($hub-navy, 500);
+  @media only screen and (min-width: 1280px) {
+      width: 15%;
+      margin-left: 0;
+  }
 }
+.main-underline-white {
+  width: 30%;
+  margin: 20px auto;
+  border-bottom: 6px solid white;
+  @media only screen and (min-width: 1280px) {
+      width: 10%;
+      margin-left: 0;
+  }
+}
+
+
+/**
+ * Vertical spacer
+ */
 .section {
-  margin: 2.5vh 0px;
+  margin: 12px 0px;
 }
 .section-2 {
-  margin: 5vh 0px;
+  margin: 45px 0px;
 }
 
 
@@ -48,24 +110,24 @@ hr {
 h1 {
   color: $heading-1-font-color;
   font-family: $font-family;
-  margin-bottom: 2vh;
+  margin-bottom: 16px;
 }
 h2 {
   color: $heading-2-font-color;
   font-family: $font-family;
-  margin-bottom: 2vh;
+  margin-bottom: 16px;
 }
 h3 {
   color: $heading-3-font-color;
   font-family: $font-family;
-  margin-bottom: 2vh;
+  margin-bottom: 16px;
 }
 h4 {
   color: $heading-4-font-color;
-  margin-bottom: 2vh;
+  margin-bottom: 16px;
 }
 p {
-  color: $dark-grey;
+  color: $body-grey;
   font-family: $font-family;
 }
 a {
@@ -101,43 +163,41 @@ mat-chip.mat-chip {
   font-weight: mat-font-weight($app-chips-typography, button);
 }
 mat-card  {
-  margin: 1vh 0;
+  margin: 8px 0;
+  border-radius: 0%;
 }
 mat-icon,
 .mat-icon-button,
 svg {
-  font-size: 3vh!important;
-  width: 3vh!important;
-  height: 3vh!important;
-  line-height: 3vh!important;
+  font-size: 24px!important;
+  width: 24px!important;
+  height: 24px!important;
+  line-height: 24px!important;
 }
 .mat-expansion-indicator::after {
-  font-size: 1vh!important;
-  width: 1vh!important;
-  height: 1vh!important;
-  margin-right: 2vh!important;
+  font-size: 8px!important;
+  width: 8px!important;
+  height: 8px!important;
+  margin-right: 16px!important;
 }
-
-
 .avatar-btn > span.mat-button-wrapper {
   padding-top: 0 !important;
   margin-bottom: 0 !important;
 }
 .avatar-btn > span.mat-button-wrapper > img {
-  width: 9.3vh;
-  height: 9.3vh;
+  width: 56px;
+  height: 56px;
 }
 .site-content {
-  flex: 1 1 auto !important;
   margin: 0 auto;
 }
 .search-results-text {
-  color: $color-pink !important;
+  color: map-get($hub-navy, 500)!important;
   font-weight: 500;
   font-style: italic;
 }
 .chip-avatar {
-  margin-right: 2vh;
+  margin-right: 16px;
   border-radius: 50%;
 }
 
@@ -152,8 +212,8 @@ svg {
 }
 .site-padding-2 {
   @extend .site-content;
-    padding-left: 20vw;
-    padding-right: 20vw;
+    padding-left: 18vw;
+    padding-right: 18vw;
 }
 .top-padding {
   padding-top: $padding-site-top;
@@ -183,34 +243,6 @@ svg {
 
 
 /*
- * Browse and guide tiles
- */
-.browse-tile {
-  cursor: pointer;
-  background-color: $color-browse-tile-bg;
-  text-decoration: none;
-}
-.browse-tile-new {
-  cursor: pointer;
-  background-color: $color-guide-tile-bg;
-  text-decoration: none;
-}
-.tile-content {
-  text-align: center;
-}
-.tile-text {
-  color: $browse-tile-font-color;
-  @include mat-typography-level-to-styles($app-browse-grid-typography, body-1);
-}
-.tile-icon {
-  color: $browse-tile-font-color;
-  font-size: mat-font-size($app-browse-grid-typography, body-2)!important;
-  font-weight: mat-font-weight($app-browse-grid-typography, body-2)!important;
-  width: 100%;
-}
-
-
-/*
  * Override site-wide material design tooltip style
  */
 .mat-tooltip {
@@ -230,12 +262,47 @@ svg {
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
+
+::ng-deep.mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: rgba(200, 200, 200, 0.6) !important;
+ }
+
+ ::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple {
+  /*change color of underline*/
+  background-color: rgba(200, 200, 200, 0.6) !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: rgba(200, 200, 200, 0.6) !important;;
+}
+
+::ng-deep input {
+  caret-color: white !important;
+}
+
+
+/*
+ * Search Results Filters Styling
+ */
+::ng-deep.search-filters .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: unset;
+}
+
+::ng-deep.search-filters .mat-option-pseudo-checkbox.mat-pseudo-checkbox-checked {
+  text-decoration: none!important;
+  outline: none!important;
+}
+
+
 /**
  * Content Styles
  */
- .banner-container {
-  min-width: 100%; 
-  height: 40vh;
+.banner-container {
+  min-width: 100%;
+  padding-top: 32px;
+  padding-bottom: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -248,43 +315,47 @@ svg {
   color: white;
   display: inline-block;
 }
-.banner-content-default {
-  padding: 5vh;
-  width: 100%;
-  display: inline-block;
-  box-shadow: 0 0.5vh 0.17vh -0.3vh rgba(0,0,0,.2), 0 0.3vh 0.3vh 0 rgba(0,0,0,.14), 0 0.17vh 0.8vh 0 rgba(0,0,0,.12);
-  background-color: white;
-}
-// Content Titles
+
+
+/**
+ * Content Titles
+ */
 .content-title {
   color: map-get($hub-navy, 500);
-  font-size: 6.25vh;
+  font-size: 52px;
   font-weight: bold; 
   line-height: 110%;
 }
 .content-title-mobile {
-  font-size: 4.4vh;
+  font-size: 36px;
 }
 .content-summary {
   color: $color-icon;
-  font-size: 2.5vh; 
+  font-size: 24px; 
   line-height: 110%;
 }
 .content-summary-mobile {
-  font-size: 1.9vh; 
+  font-size: 20px; 
 }
-// Card Text
+
+
+/**
+ * Card Text
+ */
 .card-title {
-  font-size: 1.8vh;
-  color: map-get($hub-navy, 500)!important;
+  font-size: 16px;
 }
 .card-summary {
-  font-size: 1.6vh;
+  font-size: 14px;
   color: $color-icon;
 }
-// Section Padding
+
+
+/**
+ * Section Padding
+ */
 .section {
-  margin: 4vh 0px;
+  margin: 32px 0px;
 }
 
 
@@ -293,30 +364,29 @@ svg {
  */
  .standard-button {
   color: white!important;
-  padding-bottom: 0.3vh!important;
-  border: 0.25vh solid map-get($hub-teal, 500)!important;
-  border-radius: 6.25vh!important;
+  padding-bottom: 2.4px!important;
+  border: 3px solid map-get($hub-teal, 500)!important;
+  border-radius: 50px!important;
   background-color: map-get($hub-teal, 500)!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .standard-button:hover {
   color: map-get($hub-teal, 500)!important;
-  border-radius: 6.25vh!important;
+  border-radius: 50px!important;
   background-color: white!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
-
 .alternate-button {
-  padding-bottom: 0.3vh!important;
+  padding-bottom: 2.4px!important;
   color: map-get($hub-teal, 500)!important;
-  border: 0.25vh solid white!important;
-  border-radius: 6.25vh!important;
+  border: 3px solid white!important;
+  border-radius: 50px!important;
   background-color: white!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .alternate-button:hover {
   color: white!important;
-  border-radius: 6.25vh!important;
+  border-radius: 50px!important;
   background-color: map-get($hub-teal, 500)!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
@@ -325,26 +395,25 @@ svg {
 /**
  * Call To Action Arrow
  */
- .call-to-action a {
-  font-size: 2.25vh;
+.call-to-action a {
+   color: $body-grey;
+   font-weight: bold;
+   font-size: 16px;
 }
 .arrow {
   transition: transform 0.2s ease-out;
-  height: 2.5vh;
+  height: 20px;
   width: auto;
 }
 .call-to-action:hover .arrow {
-  transform: translate(1.25vh);
+  transform: translate(10px);
   transition: transform 0.2s ease-out
 }
 
 
-/**************************/
-
-// Size/Media Query Mixins /
-
-/**************************/
-
+/**
+ * Size/Media Query Mixins
+ */
 @mixin size($size) {
 
   /* Extra small devices (phones, 600px and down) */
@@ -354,21 +423,21 @@ svg {
 
   /* Small devices (portrait tablets and large phones, 640px and up) */
   @if $size == small {
-      @media only screen and (min-width: 640px) { @content; }
+      @media only screen and (min-width: 600px) { @content; }
   }
 
   /* Medium devices (landscape tablets, 768px and up) */
   @if $size == medium {
-      @media only screen and (min-width: 768px) { @content; }
+      @media only screen and (min-width: 960px) { @content; }
   }
 
   /* Large devices (laptops/desktops, 992px and up) */
   @if $size == large {
-      @media only screen and (min-width: 992px) { @content; }
+      @media only screen and (min-width: 1280px) { @content; }
   }
 
   /* Extra large devices (large laptops and desktops, 1200px and up) */
   @if $size == extra-large {
-      @media only screen and (min-width: 1200px) { @content; }
+      @media only screen and (min-width: 1920px) { @content; }
   }
 }

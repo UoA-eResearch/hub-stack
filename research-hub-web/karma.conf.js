@@ -36,6 +36,13 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['ChromeHeadless'],
+    retryLimit: 10,
+    captureTimeout: 300000,
+    browserNoActivityTimeout: 200000,
+    flags: [
+      '--disable-gpu',
+      '--no-sandbox'
+    ],
     singleRun: true,
     failOnEmptyTestSuite: false,
     captureConsole: true,

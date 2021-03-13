@@ -14,6 +14,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-subhubs',
@@ -37,6 +38,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allSubHubs$: Observable<SubHubCollection>;
   public parentSubHubs;
+  public isMobile: Boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -45,9 +47,15 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
-  ) { }
+    public router: Router,
+    private deviceService: DeviceDetectorService
+  ) { this.detectDevice(); }
 
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
+  
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is

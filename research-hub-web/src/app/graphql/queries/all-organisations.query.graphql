@@ -1,0 +1,13 @@
+query AllOrganisations {
+    orgUnitCollection(order: [displayOrder_ASC]) {
+        items {
+            name
+            link
+            description
+            displayOrder
+            sys {
+                id
+            }
+        }
+    }
+}
