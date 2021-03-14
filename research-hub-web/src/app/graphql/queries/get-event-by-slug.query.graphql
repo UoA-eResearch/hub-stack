@@ -59,6 +59,7 @@ query GetEventBySlug($slug: String) {
             items { ...PublicFields }
         }
         callToAction
+        callToActionLabel
         audience
         mode
         availability
