@@ -53,6 +53,26 @@
                     <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
                         [style]="article.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
                         <small>{{ article.summary }}</small></p>
+
+                    <!-- Call To Action -->
+                    <div class="section" *ngIf="article.callToAction">
+                        <div *ngIf="article.banner">
+                            <a href="{{ article.callToAction }}" target="_blank">
+                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button-banner">
+                                    <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
+                                    <span *ngIf="!article.callToActionLabel">View Equipment</span>
+                                </button>
+                            </a>
+                        </div>
+                        <div *ngIf="!article.banner">
+                            <a href="{{ article.callToAction }}" target="_blank">
+                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button">
+                                    <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
+                                    <span *ngIf="!article.callToActionLabel">View Equipment</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
