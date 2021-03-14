@@ -42,7 +42,7 @@ describe('ResearchHubs Article Pages', () => {
         cy.get('#organisations').contains('Office of Research Strategy and Integrity').should('exist');
     });
 
-    // Need to test when a new tab is opened
+    // Cypress doesn't dupport multi-tab testing
     // 
     // it('clicking on an organisation takes you to the organisation', () => {
     //     cy.get('#organisations').contains('Office of Research Strategy and Integrity').click();

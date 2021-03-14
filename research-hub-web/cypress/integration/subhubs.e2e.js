@@ -38,22 +38,11 @@ describe('ResearchHubs SubHub Pages', () => {
         cy.get('#contacts').contains('Staff Service Centre').should('exist');
     });
 
-    // Need to test when a new tab is opened
-    // 
-    // it('displays a list of documents (SSO Protected)', () => {
-    //     cy.get('#documents').contains('Or sign in with one of the following services').should('exist');
-    // });
-
-    // it('clicking on a documents takes you to the documents', () => {
-    //     cy.get('#documents').contains('Health Research Council – Research Impact Guidance').click();
-    //     cy.contains('The Impact of Research');
-    // });
-
     it('displays a list of organisations', () => {
         cy.get('#organisations').contains('Connect').should('exist');
     });
 
-    // Need to test when a new tab is opened
+    // Cypress doesn't dupport multi-tab testing
     // 
     // it('clicking on an organisation takes you to the organisation', () => {
     //     cy.get('#organisations').contains('Connect').click();
