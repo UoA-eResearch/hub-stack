@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
+  public privacyUrl = 'https://www.auckland.ac.nz/en/privacy.html';
 
   public url: Subscription;
   public showBanner: Boolean;
