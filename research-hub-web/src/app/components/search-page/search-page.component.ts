@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { AppComponentService } from '@app/app.component.service';
 
 @Component({
   selector: 'app-search-page',
@@ -32,15 +31,10 @@ export class SearchPageComponent implements OnInit {
 
   constructor(
     public searchBarService: SearchBarService,
-    public appComponentService: AppComponentService,
     public location: Location
     ) { }
 
   async ngOnInit() {
-
-    // Set Title
-    this.appComponentService.setTitle('Search');
-
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
 
