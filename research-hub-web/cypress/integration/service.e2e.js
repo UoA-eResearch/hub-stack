@@ -1,22 +1,22 @@
-describe('ResearchHubs Events Pages', () => {
+describe('ResearchHubs services Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/event/writing-a-data-management-plan-workshop');
+        cy.visit('/service/research-virtual-machines');
     });
 
-    it('can visit an event and display its title', () => {
-        cy.contains('Writing A Data Management Plan Workshop');
+    it('can visit an service and display its title', () => {
+        cy.contains('Research Virtual Machines');
     });
 
-    it('can visit an event and display its subtitle', () => {
-        cy.contains('A two-hour guided session for the creation of your initial data management plan.');
+    it('can visit an service and display its subtitle', () => {
+        cy.contains('Support for virtual machines for computationally intensive research across Windows and Linux operating systems, supporting interactive and long-running workflows.');
     });
 
-    it('event displays body text', () => {
-        cy.contains('If you want to create a data management plan (DMP) and do not know where to start or what to include, the Centre for eResearch in conjunction with Libraries and Learning Services offer a two hour DMP workshop.');
+    it('service displays body text', () => {
+        cy.contains('Many researchers need specialised computing facilities other than their desktop or laptop computer, that support different operating systems, allow interactive use rather than relying on a typical high-performance computing batch scheduler, and run for extended periods of time.');
     });
 
-    it('event displays specifications table', () => {
+    it('service displays specifications table', () => {
         cy.get('#specifications-table').contains('Details').should('exist');
         cy.get('#specifications-table').contains('Description').should('exist');
     });
@@ -26,20 +26,18 @@ describe('ResearchHubs Events Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Guide to Managing Research Artifacts and Data').click();
-        cy.contains('Research artifacts and data encompasses everything that is collected, observed or created for the purposes of analysis that underpins a research output (e.g. publication or creative work).');
+        cy.get('#you-might-be-interested-in').contains('Nectar Research Cloud').click();
+        cy.contains('Nectar Cloud provides a self-service computing infrastructure giving you access to your data and applications at any time, and the ability to collaborate with others from your desktop in a fast and efficient way.');
     });
 
     it('displays a list of contacts', () => {
-        cy.get('#contacts').contains('Dharani Sontam').should('exist');
+        cy.get('#contacts').contains('Jason He').should('exist');
     });
-
+    
     it('displays a list of documents', () => {
-        cy.get('#documents').contains('Data Governance Policy').should('exist');
+        cy.get('#documents').contains('IT Acceptable Use Policy').should('exist');
     });
-
-    // Cypress doesn't dupport multi-tab testing
-    // 
+    
     // it('clicking on a documents takes you to the documents', () => {
     //     cy.get('#documents').contains('Health Research Council – Research Impact Guidance').click();
     //     cy.contains('The Impact of Research');
