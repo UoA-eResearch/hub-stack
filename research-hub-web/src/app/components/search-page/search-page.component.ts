@@ -49,6 +49,17 @@ export class SearchPageComponent implements OnInit {
     this.initialPages();
   }
 
+  // Clear All Filters
+  public clear () {
+    this.categoryFilter = [];
+    this.stageFilter = [];
+    this.organisationFilter = [];
+    this.searchBarService.setCategory([]);
+    this.searchBarService.setStage([]);
+    this.searchBarService.setOrganisation([]);
+    this.searchBarService.createResultsList();
+  }
+
   // Create the initial page lsit
   public async initialPages() {
 
