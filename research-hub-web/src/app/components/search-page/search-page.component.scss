@@ -45,3 +45,10 @@
     @extend .section-2;
     text-align: center;
 }
+
+
+// Filter Chip Indicator
+.mat-chip{
+    background-color: map-get($hub-teal, 500)!important;
+    color: white!important;
+  }
