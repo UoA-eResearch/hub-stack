@@ -85,10 +85,39 @@ div.collection {
     color: map-get($hub-navy, 500)!important;
 }
 
+
+/**
+ * List
+ */
+ ul,
+ ol {
+    all: revert!important;
+ }
+ ul li::before{
+    all: revert!important;
+ }
+ ul li {
+    all: revert!important;
+     p {
+        all: revert!important;
+     }
+ }
+ ol li {
+    all: revert!important;
+     p {
+        all: revert!important;
+     }
+ }
+ ol li::before {
+    all: revert!important;
+ }
+
+
 /**
  * Pagination Controls
  */
 ::ng-deep.ngx-pagination {
+
     .current {
         background: map-get($hub-teal, 500)!important;
     }

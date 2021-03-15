@@ -21,16 +21,6 @@ export class BrowseComponent implements OnInit {
 
   async ngOnInit() {
     this.allCategories$ = this.getAllCategories();
-
-    // Only add the below code if 'Events' is removed from contentful as a category type
-
-    // this.getAllCategories().subscribe(data => {
-    //   this.events = ({
-    //     "name": "Events",
-    //     "description": "See all upcoming events at the ResearchHub."
-    //   }) as unknown as Category;
-    //   data.items.push(this.events);
-    // });
   }
 
   public getAllCategories(): Observable<CategoryCollection> {
