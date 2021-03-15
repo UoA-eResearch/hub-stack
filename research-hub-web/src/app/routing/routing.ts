@@ -27,7 +27,15 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
   },
   {
+    path: 'equipment',
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
+  },
+  {
     path: 'article/:slug',
+    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
+  },
+  {
+    path: 'articles',
     loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {
@@ -35,11 +43,15 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
   },
   {
+    path: 'events',
+    loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
+  },
+  {
     path: 'subhub/:slug',
     loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {
-    path: ':slug',
+    path: 'subhubs',
     loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {
@@ -47,7 +59,15 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
   },
   {
+    path: 'services',
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
+  },
+  {
     path: 'software/:slug',
+    loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+  },
+  {
+    path: 'software',
     loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
   }
 ];
