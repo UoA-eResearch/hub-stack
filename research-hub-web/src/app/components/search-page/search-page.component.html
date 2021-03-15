@@ -47,6 +47,33 @@
         </div>
     </div>
 
+    <!-- Active Filters -->
+    <div class="site-padding-2 section" *ngIf="categoryFilter.length > 0 || stageFilter.length > 0 || organisationFilter.length > 0">
+        <mat-chip-list fxFlex="row wrap" *ngIf="{ allCategories: allCategories$ | async, allStages: allStages$ | async, allOrganisations: allOrganisations$ | async } as i">
+
+            <!-- Categories -->
+            <div *ngFor="let filter of i.allCategories.items">
+                <mat-chip *ngIf="categoryFilter.includes(filter.sys.id)">
+                    {{ filter.name }}
+                </mat-chip>
+            </div>
+
+            <!-- Activities -->
+            <div *ngFor="let filter of i.allStages.items">
+                <mat-chip *ngIf="stageFilter.includes(filter.sys.id)">
+                    {{ filter.name }}
+                </mat-chip>
+            </div>
+
+            <!-- Organisation -->
+            <div *ngFor="let filter of i.allOrganisations.items">
+                <mat-chip *ngIf="organisationFilter.includes(filter.sys.id)">
+                    {{ filter.name }}
+                </mat-chip>
+            </div>
+        </mat-chip-list>
+    </div>
+
     <!-- Search Results -->
     <div ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" *ngIf="allCurrentPages">
         <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-list-filter">

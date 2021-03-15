@@ -14,7 +14,7 @@
     </ng-template>
 
     <ng-template #articleBody>
-        <ngx-contentful-rich-text class="section-2" style="word-break:break-word;" [document]="article.bodyText.json"
+        <ngx-contentful-rich-text id="body" class="section-2" style="word-break:break-word;" [document]="article.bodyText.json"
             [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
     </ng-template>
 
