@@ -49,10 +49,5 @@ export const appRoutes: Routes = [
   {
     path: 'software/:slug',
     loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
-  },
-  {
-    path: '**',
-    redirectTo: '/error/404',
-    pathMatch: 'full'
-  },
+  }
 ];
