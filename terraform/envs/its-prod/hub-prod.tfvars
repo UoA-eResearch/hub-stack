@@ -27,6 +27,9 @@ secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
 acm_arn_secondary             = "TBC"
 
+# 2FAB callback url
+two_fab_url = "https://apigw.prod.amazon.auckland.ac.nz/aws-token-grabber/"
+
 # Route53
 route53_hosted_zone_id = "TBC"
 
@@ -69,7 +72,7 @@ cognito_user_pool_id      = "TBC"
 cognito_user_pool_arn     = "TBC"
 cognito_user_pool_domain  = "TBC"
 cognito_identity_provider = "TBC"
-permitted_group           = "TBC"
+permitted_group           = "staffIntranetUser.ec"
 
 # S3 Contentful Backup Bucket
 create_contentful_backup_bucket = true
