@@ -27,7 +27,7 @@ index_doc_secondary           = "index.html"
 acm_arn_secondary             = "arn:aws:acm:us-east-1:416527880812:certificate/74e9a6bf-78cc-443b-a1dd-2cd9127719d3"
 
 # 2FAB callback url
-two_fab_url = "https://apigw.dev.amazon.auckland.ac.nz/aws-token-grabber/"
+two_fab_url = "https://apigw.sandbox.amazon.auckland.ac.nz/aws-token-grabber/"
 
 # Route53
 route53_hosted_zone_id = "ZMGQD6EYUM762"
