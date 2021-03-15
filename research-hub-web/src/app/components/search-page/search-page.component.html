@@ -11,7 +11,7 @@
             <br>
 
             <!-- Research Category Filters -->
-            <div class="search-filters" fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="2%">
+            <div id="search-filters" class="search-filters" fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="2%">
                 <div fxFlex>
                     <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="categoryFilter" [(value)]="categoryFilter"
                         name="categoryFilter" ngDefaultControl multiple placeholder="Research Category">
