@@ -4,7 +4,7 @@
   <mat-sidenav-container class="sidenav-container">
 
     <!-- Navbar Container -->
-    <mat-sidenav #sidenav mode="over" opened="false">
+    <mat-sidenav id="sidenav"  #sidenav mode="over" opened="false">
 
       <!-- Main Navbar -->
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
@@ -96,7 +96,7 @@
           <div class="banner-container-home" [style]="showBanner ? isMobile ? mobileBackground : desktopBackground : ''">
 
             <!-- Main Navbar -->
-            <div #topbar class="app-toolbar-container">
+            <div id="top-bar" #topbar class="app-toolbar-container">
               <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
               [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #0294a5; box-shadow: 0px -3px 10px black;'">
 
@@ -224,7 +224,7 @@
 
           <!-- Featured Items -->
           <div #featured></div>
-          <div class="featured-container" *ngIf="showBanner" >
+          <div id="featured" class="featured-container" *ngIf="showBanner" >
             <div *ngIf="homepage$ | async as homepage">
               <div class="featured-content">
                 <h2 class="featured-title">Featured</h2>
