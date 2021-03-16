@@ -8,11 +8,11 @@
  */
 .hub-logo {
   height: 30px;
-  & img {
+  img {
     height: 30px;
     @include size(small) { 
       height: 32px;
-      & img {
+      img {
         height: 32px;
       } 
     }
@@ -212,7 +212,7 @@ mat-expansion-panel-header .mat-expanded {
   padding-left: $padding-site;
   padding-right: $padding-site;
   background-color: map-get($hub-teal, 500);
-  & .app-toolbar-row {
+  .app-toolbar-row {
     height:  64px;
   }
 }

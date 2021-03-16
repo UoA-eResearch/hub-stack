@@ -32,6 +32,8 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   };
 
   public isMobile: Boolean;
+  public banner;
+  public background;
   public slug: string;
   public article: Observable<Article>;
   public article$: Subscription;
@@ -49,11 +51,14 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { this.detectDevice(); }
+  ) { }
 
-  // Detect if device is Mobile
+  /**
+   * Detect if device is Mobile
+   */
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
+    this.isMobile ? this.background = `background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('${this.banner}') no-repeat; padding: 72px 0px` : `background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('${this.banner}') no-repeat fixed center; padding: 72px 0px`
   }
 
   async ngOnInit() {
@@ -78,7 +83,8 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     if (!!this.slug) {
       this.article = this.getArticleBySlug(this.slug);
       this.article$ = this.article.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        try { this.banner = data.banner.url; this.detectDevice(); } catch {}
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

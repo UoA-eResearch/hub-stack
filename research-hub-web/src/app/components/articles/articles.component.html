@@ -39,10 +39,7 @@
     </ng-template>
 
         <div>
-            <div class="banner-container" [style]="article.banner ? 
-                        isMobile ? 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat; padding: 72px 0px' 
-                            : 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat fixed center; padding: 72px 0px' 
-                        : ''">
+            <div class="banner-container" [style]="article.banner ? background : ''">
                 <div class="banner-content">
 
                     <!-- Title -->
