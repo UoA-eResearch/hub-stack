@@ -86,7 +86,7 @@
     </div>
 
     <!-- Search Results -->
-    <div ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" *ngIf="allCurrentPages">
+    <div id="search-results" ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" *ngIf="allCurrentPages">
         <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-list-filter">
 
             <!-- Results -->
@@ -99,7 +99,7 @@
             <div fxHide.lt-md fxFlex></div>
 
             <!-- Filtering Options -->
-            <div fxFlexOrder.lt-sm="1" fxFlex>
+            <div id="filtering-options" fxFlexOrder.lt-sm="1" fxFlex>
                 <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
                     placeholder="Order By">
                     <div>
