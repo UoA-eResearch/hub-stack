@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-
 import { CollectionListComponent } from './collection-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../app.shared.module';
+import { SearchBarService } from '../../search-bar/search-bar.service';
+import { HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('CollectionListComponent', () => {
   let component: CollectionListComponent;
@@ -13,9 +15,14 @@ describe('CollectionListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CollectionListComponent],
       imports: [
+        ApolloTestingModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         CommonModule,
-        SharedModule
+        SharedModule,
+        HttpClientModule
+      ],
+      providers: [
+        SearchBarService,
       ]
     })
       .compileComponents();
