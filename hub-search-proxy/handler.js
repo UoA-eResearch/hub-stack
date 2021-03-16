@@ -332,17 +332,16 @@ module.exports.delete = async (event, context) => {
 }
 
 /**
- * Bulk upload handler.
- * Uses client helper: https://www.elastic.co/guide/en/elasticsearch/client/javascript-api/7.x/client-helpers.html
+ * Bulk upload handler
  */
 module.exports.bulk = async () => {
   console.log("Bulk operation initiated.");
   
   let validEntries;
   const validContentTypes = ['article','caseStudy','equipment','event','service','software','subHub'];
-
-  // contentful export and filter entries
+  
   try {
+    // contentful export and filter entries
     console.log('Exporting data from Contentful space id: ' + spaceId);
     const options = {
       spaceId: spaceId,
@@ -358,31 +357,41 @@ module.exports.bulk = async () => {
 
     console.log(`Found ${validEntries.length} entries to upload.`);
 
-    // bulk upload settings
-    const params = {
-      datasource: validEntries,
-      onDocument (doc) {
-        return [
-          { update: { _index: ELASTICSEARCH_INDEX_NAME, _id: doc.sys.id } },
-          { doc: doc, doc_as_upsert: true }
-        ]
-      },
-      onDrop (doc) {  // called everytime a document can’t be indexed and it has reached the maximum amount of retries.
-        console.log(doc);
-      },
-      refreshOnCompletion: true, // Refresh the index after this
-      wait: 3000,   // How much time to wait before retries in milliseconds
-      retries: 3,   // How many times a document will be retried before to call the onDrop callback
-      concurrency: 5,  // How many request will be executed at the same time.
-      flushBytes: 5000000,  // The size of the bulk body in bytes to reach before to send it. Default of 5MB.
-    };
-
     // perform the upload
     console.log(`Uploading documents to index: ${ELASTICSEARCH_INDEX_NAME}`);
-    const result = await esClient.helpers.bulk(params);
+    const bulkBody = validEntries.flatMap((doc) => [
+      { update: { _index: ELASTICSEARCH_INDEX_NAME, _id: doc.sys.id } },
+      { doc: doc, doc_as_upsert: true },
+    ]);
+    const { body: bulkResponse } = await esClient.bulk({ refresh: true, body: bulkBody });
+    const erroredDocuments = []
+    if (bulkResponse.errors) {
+      // The items array has the same order of the dataset we just indexed.
+      // The presence of the `error` key indicates that the operation
+      // that we did for the document has failed.
+      bulkResponse.items.forEach((action, i) => {
+        const operation = Object.keys(action)[0]
+        if (action[operation].error) {
+          erroredDocuments.push({
+            // If the status is 429 it means that you can retry the document,
+            // otherwise it's very likely a mapping error, and you should
+            // fix the document before to try it again.
+            status: action[operation].status,
+            error: action[operation].error,
+            operation: body[i * 2],
+            document: body[i * 2 + 1]
+          })
+        }
+      })
+    }
+    
     return formatResponse(
       200,
-      { result: result }
+      {
+        total: validEntries.length,
+        result: bulkResponse,
+        erroredDocuments: erroredDocuments
+      }
     )
   } catch(error) {
     let statusCode = 500;
