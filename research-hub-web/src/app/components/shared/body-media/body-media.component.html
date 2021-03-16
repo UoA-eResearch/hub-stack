@@ -1,60 +1,39 @@
 
 <span [ngSwitch]="data.nodeType">
+
+
     <!-- Asset Block -->
     <span *ngSwitchCase="'embedded-asset-block'">
         <span [ngSwitch]="contentItem.contentType">
-
             <ng-template #image>
-                <div 
-                    class="embedded-asset-block section-2"
-                    ngClass.xs="embedded-asset-block-mobile">
-                    <a href="{{ contentItem.url }}">
-                        <img *ngIf="contentItem.url" src="{{ contentItem.url }}"/>
-                    </a>
-                    <br>{{ contentItem.title }}
+                <div class="embedded-asset-block section-2" ngClass.xs="embedded-asset-block-mobile">
+                    <a href="{{ contentItem.url }}"><img *ngIf="contentItem.url" src="{{ contentItem.url }}"
+                        alt="{{ contentItem.title }}-img"/></a><br>{{ contentItem.title }}
                     <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
                 </div>
             </ng-template>
         
             <!-- Asset Image -->
-            <span *ngSwitchCase="'image/jpeg'">
-                <ng-container *ngTemplateOutlet="image"></ng-container>
-            </span>
-            <span *ngSwitchCase="'image/png'">
-                <ng-container *ngTemplateOutlet="image"></ng-container>
-            </span>
-            <span *ngSwitchCase="'image/gif'">
-                <ng-container *ngTemplateOutlet="image"></ng-container>
-            </span>
-            <span *ngSwitchCase="'image/webp'">
-                <ng-container *ngTemplateOutlet="image"></ng-container>
-            </span>
+            <span *ngSwitchCase="'image/jpeg'"><ng-container *ngTemplateOutlet="image"></ng-container></span>
+            <span *ngSwitchCase="'image/png'"><ng-container *ngTemplateOutlet="image"></ng-container></span>
+            <span *ngSwitchCase="'image/gif'"><ng-container *ngTemplateOutlet="image"></ng-container></span>
+            <span *ngSwitchCase="'image/webp'"><ng-container *ngTemplateOutlet="image"></ng-container></span>
         
             <!-- Asset File -->
             <span *ngSwitchDefault>
-                <div 
-                    class="embedded-asset-block file"
-                    ngClass.xs="embedded-asset-block-mobile">
+                <div class="embedded-asset-block file" ngClass.xs="embedded-asset-block-mobile">
                     <a href="{{ contentItem.url }}">
                         <mat-card>
                             <mat-card-title class="card-title">
-                                <a href="{{ contentItem.url }}">
-                                    {{ contentItem.title }}
-                                </a>
+                                <a href="{{ contentItem.url }}">{{ contentItem.title }}</a>
                             </mat-card-title>
                             <mat-card-content class="card-summary">
-                                <div>
-                                    {{ contentItem.description }}
-                                </div>
+                                <div>{{ contentItem.description }}</div>
                                 <div class="download">
                                     <a href="{{ contentItem.url }}">
-                                        <img class="download-arrow" style="height: 10px; width: auto" src="assets/components/navy-download.png">
-                                        Download File
-                                    </a>
-                                    &nbsp;
-                                    <span class="file-size">
-                                        {{ contentItem.size }}&nbsp;kB
-                                    </span>
+                                        <img class="download-arrow" style="height: 10px; width: auto"
+                                        src="assets/components/navy-download.png" alt="download-arrow">Download File</a>&nbsp;
+                                    <span class="file-size">{{ contentItem.size }}&nbsp;kB</span>
                                 </div>
                             </mat-card-content>
                         </mat-card>
@@ -64,107 +43,83 @@
         </span>
     </span>
 
+
     <!-- Entry Block -->
     <span *ngSwitchCase="'embedded-entry-block'">
-        <!-- Templates -->
-        <ng-template #image>
-            <img mat-card-image src="{{ contentItem.banner?.url }}">
-        </ng-template>
 
-        <ng-template #noImage>
-            <div style="margin-top: 1.25vh;"></div>
-        </ng-template>
+        <!-- Templates -->
+        <ng-template #image><img mat-card-image src="{{ contentItem.banner?.url }}" alt="{{ contentItem.title }}-banner"></ng-template>
+        <ng-template #noImage><div style="margin-top: 10px;"></div></ng-template>
 
         <!-- Default Entry Block Template -->
         <ng-template #default>
             <mat-card class="embedded-entry-block">
                 <ng-container *ngIf="contentItem.banner; then image; else noImage"></ng-container>
                 <mat-card-title>
-                    <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
-                        {{ contentItem['title'] }}
-                    </a>
+                    <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">{{ contentItem['title'] }}</a>
                 </mat-card-title>
-                <mat-card-content>
-                    <span class="card-summary">
-                        {{ contentItem['summary'] }}
-                    </span>
-                </mat-card-content>
-                <span
-                    *ngIf="contentItem['__typename'] != 'Person'"
-                    class="call-to-action" 
+                <mat-card-content><span class="card-summary">{{ contentItem['summary'] }}</span></mat-card-content>
+                <span *ngIf="contentItem['__typename'] != 'Person'" class="call-to-action" 
                     style="display: flex; align-items: center;max-width: fit-content">
                     <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
-                        View {{ contentItem['__typename'] | humanCase }}&nbsp;&nbsp;
-                    </a>
-                    <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/teal-arrow.png">
+                        View {{ contentItem['__typename'] | humanCase }}&nbsp;&nbsp;</a>
+                    <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png" alt="call-to-action-arrow">
                 </span>
             </mat-card>
         </ng-template>
 
+        <!-- Different Types of Entry Content -->
         <span [ngSwitch]="contentItem.__typename">
 
             <!-- Article -->
-            <span *ngSwitchCase="'Article'">
-                <ng-container *ngTemplateOutlet="default"></ng-container>
-            </span>
+            <span *ngSwitchCase="'Article'"><ng-container *ngTemplateOutlet="default"></ng-container></span>
 
             <!-- Case Study -->
-            <span *ngSwitchCase="'CaseStudy'">
-                <ng-container *ngTemplateOutlet="default"></ng-container>
-            </span>
+            <span *ngSwitchCase="'CaseStudy'"><ng-container *ngTemplateOutlet="default"></ng-container></span>
 
             <!-- Equipment -->
-            <span *ngSwitchCase="'Equipment'">
-                <ng-container *ngTemplateOutlet="default"></ng-container>
-            </span>
+            <span *ngSwitchCase="'Equipment'"><ng-container *ngTemplateOutlet="default"></ng-container></span>
 
             <!-- Event -->
-            <span *ngSwitchCase="'Event'">
-                <ng-container *ngTemplateOutlet="default"></ng-container>
-            </span>
+            <span *ngSwitchCase="'Event'"><ng-container *ngTemplateOutlet="default"></ng-container></span>
 
             <!-- Link Card -->
             <span *ngSwitchCase="'LinkCard'">
                 <div>
-                    <a href="{{contentItem.url}}">
+                    <a href="{{contentItem.url}}" target="_blank">
                         <mat-card class="embedded-entry-block">
-                            <mat-card-title>
-                                <a href="{{contentItem.url}}">{{ contentItem.title }}</a>
-                            </mat-card-title>              
-                            <mat-card-content>
-                                <span class="card-summary">
-                                    {{ contentItem.summary }}
-                                </span>
-                            </mat-card-content> 
-                            <!-- <img class="arrow" style="height: 2.5vh; width: auto" src="assets/components/navy-arrow.png"> -->
+                            <mat-card-title><a href="{{contentItem.url}}" target="_blank">{{ contentItem.title }}</a></mat-card-title>              
+                            <mat-card-content><span class="card-summary">{{ contentItem.summary }}</span></mat-card-content> 
                         </mat-card>
                     </a>
                 </div>
             </span>
 
             <!-- Official Document -->
-            <span *ngSwitchCase="'OfficialDocuments'">
-                <ng-container *ngTemplateOutlet="default"></ng-container>
-            </span>
+            <span *ngSwitchCase="'OfficialDocuments'"><ng-container *ngTemplateOutlet="default"></ng-container></span>
 
             <!-- Organisational Unit -->
-            <span *ngSwitchCase="'OrganisationalUnit'">
-                <ng-container *ngTemplateOutlet="default"></ng-container>
-            </span>
+            <span *ngSwitchCase="'OrganisationalUnit'"><ng-container *ngTemplateOutlet="default"></ng-container></span>
 
             <!-- Service -->
-            <span *ngSwitchCase="'Service'">
-                <ng-container *ngTemplateOutlet="default"></ng-container>
-            </span>
+            <span *ngSwitchCase="'Service'"><ng-container *ngTemplateOutlet="default"></ng-container></span>
 
             <!-- Software -->
-            <span *ngSwitchCase="'Software'">
-                <ng-container *ngTemplateOutlet="default"></ng-container>
-            </span>
+            <span *ngSwitchCase="'Software'"><ng-container *ngTemplateOutlet="default"></ng-container></span>
 
             <!-- Video -->
-            <span *ngSwitchCase="'Video'">
-                <app-video-card [contentItem]="contentItem"></app-video-card>
+            <span *ngSwitchCase="'Video'"><app-video-card [contentItem]="contentItem"></app-video-card></span>
+
+            <!-- Table -->
+            <span *ngSwitchCase="'Table'">
+                <div class="table-container">
+                    <h3>{{ contentItem.name }}</h3>
+                    <table class="body-table">
+                        <tr *ngFor="let row of contentItem.table.tableData">
+                            <td *ngFor="let column of row">{{ column }}</td>
+                        </tr>
+                    </table>
+                </div>
             </span>
         </span>
     </span>
@@ -172,43 +127,25 @@
     <!-- Entry Inline -->
     <span *ngSwitchCase="'embedded-entry-inline'">
         <span>
-            <a 
-                class="embedded-entry-inline" 
-                href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
-                <b>&nbsp;{{ contentItem.title }}&nbsp;&nbsp;</b>
-            </a>
+            <a class="embedded-entry-inline" href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}" target="_blank">
+                <b>&nbsp;{{ contentItem.title }}&nbsp;&nbsp;</b></a>
         </span>
     </span>
 
     <!-- Entry Hyperlink -->
     <span *ngSwitchCase="'entry-hyperlink'">
-        <span>
-            <a href="contentItem.url">
-                <b>{{ contentItem.title }}</b>
-            </a>
-        </span>
+        <span><a href="contentItem.url"><b>{{ contentItem.title }}</b></a></span>
     </span>
 
     <!-- Asset Hyperlink -->
     <span *ngSwitchCase="'asset-hyperlink'">
-        <span>
-            <a href="contentItem.url">
-                <b>{{ contentItem.title }}</b>            
-            </a>
-        </span>
+        <span><a href="contentItem.url"> <b>{{ contentItem.title }}</b></a></span>
     </span>
 
     <!-- Blockquote -->
     <span *ngSwitchCase="'blockquote'">
-        <div
-            class="blockquote-container"
-            ngClass.xs="blockquote-mobile">
-            <span>
-                <span class="blockquote">
-                    <p>{{ contentItem.content[0].value }}</p>
-                </span>
-            </span>
+        <div class="blockquote-container" ngClass.xs="blockquote-mobile">
+            <span><span class="blockquote"><p>{{ contentItem.content[0].value }}</p></span></span>
         </div>
     </span>
-
 </span>

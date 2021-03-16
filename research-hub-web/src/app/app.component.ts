@@ -1,70 +1,31 @@
-import { filter, distinctUntilChanged } from 'rxjs/operators';
-import { 
-  Component, 
-  OnDestroy, 
-  OnInit, 
-  ViewEncapsulation, 
-  ViewChild, 
-  AfterViewInit, 
-  ElementRef, 
-  NgZone 
-} from '@angular/core';
+import { filter, pluck, flatMap } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, fromEvent } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Subscription, Observable, Subscriber } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
 import { format } from 'date-fns';
-import { LoginService } from '@uoa/auth';
+import { LoginService, UserInfoDto } from '@uoa/auth';
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
-import { ScrollDispatcher } from '@angular/cdk/scrolling';
-import { 
-  trigger, 
-  state, 
-  style, 
-  animate, 
-  transition 
-} from '@angular/animations';
 import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
-import { AllEquipmentGQL } from './graphql/schema';
 import { environment } from '@environments/environment';
-import {
-  OptionType,
-  CategoryId,
-  menuOptions,
-  categoryOptionsGQL,
-  researchActivityOptions,
-  CoverImageURL
-} from '@app/global/global-variables';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { GetHomepageGQL, Homepage, AllCategoriesGQL, CategoryCollection, AllStagesGQL, StageCollection } from './graphql/schema';
+import smoothscroll from 'smoothscroll-polyfill';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('contentPushLeft', [
-      state('true', style({
-        marginLeft: '45vh'
-      })),
-      state('false', style({
-        marginLeft: '0'
-      })),
-      transition('false => true', animate('500ms  cubic-bezier(.63,.66,.47,.9)')),
-      transition('true => false', animate('300ms ease-out'))
-    ])
-  ]
+  animations: []
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
-  public coverImageUrl = CoverImageURL
-  public menuOptions = menuOptions;
-  public categoryOptionsGQL = categoryOptionsGQL;
-  public researchActivityOptions = researchActivityOptions;
+export class AppComponent implements OnInit, OnDestroy {
+  public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
+  public aboutUs = "https://www.eresearch.auckland.ac.nz/?_ga=2.69549080.943707055.1614124973-1995817083.1603163706#";
 
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
@@ -77,60 +38,60 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   private mediaChangeSub: Subscription;
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
-  private progressBarVisibilitySub: Subscription;
   private titleSub: Subscription;
-  private contentSidenavVisibilitySub: Subscription;
   private scrollSub: Subscription;
   private winResizeSub: Subscription;
+  public allCategories$: Observable<CategoryCollection>;
+  public homepage$: Observable<Homepage>
+  public allStages$: Observable<StageCollection>;
 
-  public selectedCategory = CategoryId.All;
   public searchText = '';
-  public showFilterButton = false;
-  public showProgressBar = false;
-  public showBackBtn = false;
   public pageTitle = '';
 
   private previousRoute = undefined;
   private currentRoute = undefined;
-  public isContentSidenavFixed = false;
-  public contentSidenavHeight = 0;
-
-  @ViewChild('topbar', { static: true })
-  private topbarElement: ElementRef;
-
-  @ViewChild('topContent', { static: true })
-  private topContentElement: ElementRef;
-
-  @ViewChild('content', { static: true })
-  private contentElement: ElementRef;
-  private contentElementHeight: number;
+  public currentUrl = undefined;
 
   public userInfo;
-  public authenticated;
+  public authenticated: Boolean;
+  public isMobile: Boolean;
+  public onSearchPage: Boolean;
+  public mobileBackground: String;
+  public desktopBackground: String;
 
   constructor(
     private location: Location, 
-    private searchBarService: SearchBarService, 
+    public searchBarService: SearchBarService, 
     private router: Router,
     private titleService: Title,
     public appComponentService: AppComponentService,
-    private scrollDispatcher: ScrollDispatcher,
-    private ngZone: NgZone,
     public loginService: LoginService,
     public apollo: Apollo,
-    public allEquipmentGQL: AllEquipmentGQL,
-    private _bypass: BypassErrorService) {this._bypass.bypassError(environment.cerGraphQLUrl, [500]);}
+    public allCategoriesGQL: AllCategoriesGQL,
+    public getHomepageGQL: GetHomepageGQL,
+    public allStagesGQL: AllStagesGQL,
+    private _bypass: BypassErrorService,
+    private deviceService: DeviceDetectorService) {
+      this.detectDevice();
+      this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
 
-  getSearchQueryParams(item: any) {
-    return item['type'] === OptionType.Category ? { categoryId: item.id } : { researchActivityIds: [item.id] };
+      // Smooth scrolling in IE/Edge
+      smoothscroll.polyfill();
+    }
+
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
   }
 
+  // Get formatted route name
   getRouteName(url: string) {
     this.appComponentService.getRouteSlug(url);
     const routeName = url.replace('?', '/');
     return routeName.split('/')[1];
   }
 
+  // Navigate back from within the ResearchHub
   back() {
     if (this.previousRoute) {
       this.location.back();
@@ -139,8 +100,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  setContentSidenavHasContent(hasContent: boolean) {
-    this.appComponentService.setContentSidenavHasContent(hasContent);
+  // Scroll to element
+  scroll(el: HTMLElement) {
+    el.scrollIntoView({behavior: 'smooth'});
   }
 
   async ngOnInit() {
@@ -152,32 +114,34 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
-    this.progressBarVisibilitySub = this.appComponentService.progressBarVisibilityChange.subscribe((isVisible) => {
-      this.showProgressBar = isVisible;
-    });
+    // Get All Categories
+    this.allCategories$ = this.getAllCategories();
 
-    // Navigate to the search page if user starts typing
-    this.searchTextChangeSub = this.searchBarService.searchTextChange.pipe(distinctUntilChanged()).subscribe(searchText => {
-      const url = this.location.path();
-      if (url && !url.startsWith('/search') && searchText != null && searchText !== '') {
-        this.router.navigate(['/search'], {
-          queryParams: {
-            categoryId: this.searchBarService.category,
-            searchText: this.searchBarService.searchText
-          }
-        });
-      }
+    // Get All Stages
+    this.allStages$ = this.getAllStages();
+
+    // Get Homepage Image
+    this.homepage$ = this.getHomepage();
+    this.homepage$.subscribe(data => {
+
+      // If mobile
+      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
+
+      // If desktop
+      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
+    
     });
+    
 
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
         .subscribe(async event => {
           
-
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
+          this.currentUrl = url;
 
           // Check if the user is logged in now (Cognito redirect)
           this.authenticated = await this.loginService.isAuthenticated();
@@ -201,8 +165,10 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
           if (routeName) {
-            this.showBanner = ['home'].includes(routeName);
-            this.searchBarService.setVisibility(['home', 'search'].includes(routeName));
+            // Show banner if we're on the homepage
+            this.showBanner = ['home', 'home#'].includes(routeName);
+
+            // Set title if we're on the homepage
             if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Welcome to the ResearchHub');
 
             // Update previous and current routes
@@ -210,127 +176,82 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
               this.previousRoute = this.currentRoute;
             }
 
+            // Set current route name
             this.currentRoute = routeName;
-          
-             // Same component navigation
-             if (this.currentRoute == this.previousRoute) {
+
+            // Hide search options if we're on the search page
+            this.onSearchPage = ['search'].includes(routeName);
+            
+            // Same component navigation
+            if (this.currentRoute == this.previousRoute) {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
               this.router.navigate([url]);
             }
-
-            this.showBackBtn = routeName !== 'home';
-
-            this.appComponentService.setProgressBarVisibility(false);
-
-            this.showFilterButton = routeName === 'search';
-            window.scrollTo(0, 0); // TODO: remove or change when this pull request is merged https://github.com/angular/angular/pull/20030
           }
         });
     }
   }
 
-  restyleContentSidenav() {
-    if (!this.appComponentService.isContentSidenavVisible) {
-      // If content sidenav is not visible, don't need to calculate style.
-      return;
-    }
-    const topbar = this.topbarElement.nativeElement,
-      topContent = this.topContentElement.nativeElement,
-      topbarRect = topbar.getBoundingClientRect(),
-      contentHeight = topContent.clientHeight,
-      topbarBottom = topbarRect.bottom,
-      winY = window.pageYOffset,
-      winHeight = window.innerHeight;
-    let newFixedValue, newSidenavHeight;
-    if (topbarBottom < 0) {
-      // The topbar is now scrolled out of view, so we need to affix the
-      // content sidenav if it is not affixed.
-      if (!this.isContentSidenavFixed) {
-        newFixedValue = true;
-      }
-    } else {
-      // The topbar is now in view, so we need to un-affix the content
-      // sidenav if it is affixed.
-      if (this.isContentSidenavFixed) {
-        newFixedValue = false;
-      }
-    }
-    // We calculate the height of the affixed content sidenav so that the sidenav does not
-    // overlap with the footer.
-    newSidenavHeight = Math.min(contentHeight - winY, winHeight);
-
-    if ((newFixedValue === false) || (newFixedValue === undefined && !this.isContentSidenavFixed)) {
-      // If the sidenav is not yet fixed - i.e. some of the topbar is still visible,
-      // remove the visible topbar height from the sidenav height.
-      newSidenavHeight -= topbarBottom;
-    }
-    this.ngZone.runGuarded(() => {
-      setTimeout(() => {
-        if (newFixedValue !== undefined) {
-          this.isContentSidenavFixed = newFixedValue;
-        }
-        if (newSidenavHeight !== undefined) {
-          this.contentSidenavHeight = newSidenavHeight;
-        }
-      }, 0);
-    });
-  }
-
-  setupContentSidenav() {
-    // If not running in a browser, do not do any listener setup.
-    if (!isPlatformBrowser) {
-      return;
-    }
-    this.contentSidenavVisibilitySub = this.appComponentService.contentSidenavVisibility$.subscribe((isVisible) => {
-      // Sets if we pop out the content sidenav.
-      if (isVisible) {
-        // Do a restyle when the filter sidenav opens to initialise the height.
-        this.restyleContentSidenav();
-      }
-    });
-    const restyleFn = () => (this.restyleContentSidenav());
-    this.scrollSub = this.scrollDispatcher.scrolled(150).subscribe(restyleFn);
-    this.winResizeSub = fromEvent(window, 'resize').pipe(debounceTime(150)).subscribe(restyleFn);
-    this.contentElementHeight = this.contentElement.nativeElement.clientHeight;
-  }
-
-  checkContentHeightChanged() {
-    if (!this.appComponentService.isContentSidenavVisible) {
-      // If content sidenav is not visible, don't need to calculate style.
-      return;
-    }
-
-    const contentHeight = this.contentElement.nativeElement.clientHeight;
-    if (contentHeight !== this.contentElementHeight) {
-      // Recompute content sidenav size when the content has changed.
-      this.restyleContentSidenav();
-      setTimeout(() => {
-        this.contentElementHeight = contentHeight;
-      }, 0);
+  // Get Query Parameters
+  getQueryParams(item: any) {
+    switch (item.__typename) {
+      case 'Stage':
+        try { return { researchActivities: [item.displayOrder] }; }
+        catch { break; }
+      case 'Category':
+        try { return { researchCategories: [item.displayOrder] }; }
+        catch { break; }
     }
   }
 
-  ngAfterViewInit() {
-    this.setupContentSidenav();
+  // Get all research categories
+  public getAllCategories(): Observable<CategoryCollection> {
+    try {
+      return this.allCategoriesGQL.fetch()
+        .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
+    } catch (e) { console.error('Error loading all Categories:', e) };
   }
 
-  ngAfterViewChecked() {
-    this.checkContentHeightChanged();
+  // Get all research stages
+  public getAllStages(): Observable<StageCollection> {
+    try {
+      return this.allStagesGQL.fetch()
+        .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
+    } catch (e) { console.error('Error loading all stages:', e) };
+  }
+
+  // Get homepage
+  public getHomepage(): Observable<Homepage> {
+    try {
+      return this.getHomepageGQL.fetch()
+        .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
+    } catch (e) { console.error('Error loading homepage:', e) };
+  }
+
+  // Search
+  search() {
+    this.searchBarService.setSearchText(this.searchText);
+    this.router.navigate(['/search']);
   }
 
   ngOnDestroy() {
     this.mediaChangeSub.unsubscribe();
     this.searchTextChangeSub.unsubscribe();
     this.routerSub.unsubscribe();
-    this.progressBarVisibilitySub.unsubscribe();
     this.titleSub.unsubscribe();
-    this.contentSidenavVisibilitySub.unsubscribe();
     this.scrollSub.unsubscribe();
     this.winResizeSub.unsubscribe();
     this.url.unsubscribe();
   }
 
+  // Get year for footer copyright
   getYear() {
     return format(new Date(), 'yyyy');
+  }
+
+  // Reset Search Bar content
+  clearSearchText() {
+    this.searchText = '';
+    this.searchBarService.setSearchText('');
   }
 }

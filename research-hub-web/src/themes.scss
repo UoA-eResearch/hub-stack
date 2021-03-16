@@ -326,6 +326,7 @@ $hub-app-accent: mat-palette($hub-orange);
 $hub-app-warn: mat-palette($hub-pink);
 $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
 @include angular-material-theme($hub-app-theme);
+$mat-theme-ignore-duplication-warnings: true;
 
 
 /**
@@ -333,9 +334,9 @@ $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn
  */
 $width-page-max: 100vw;
 $offset-gt-xs: 2vw;
-$height-footer: 24vh;
-$height-footer-xs: 32vh;
-$padding-site: 10vh;
+$height-footer: 200px;
+$height-footer-xs: 270px;
+$padding-site: 5vw;
 $padding-site-top: 4vh;
 
 
@@ -350,28 +351,4 @@ $color-icon: #757575;
 $color-background: #fafafa;
 $color-content-header: map-get($hub-navy, 500);
 $color-content-summary-bg: auto;
-$color-browse-tile-bg: $color-pink;
 $color-guide-tile-bg: map-get($hub-teal, 500);
-
-
-/* 
- * Research activity custom material themes:
- * These are used apply custom themes to Angular components (buttons, sliders etc)
- * The research activity colour palettes are defined in research-activity.scss
- */
-$mat-theme-ignore-duplication-warnings: true; // Allow multiple theme declarations
-@mixin research-activity-theme($class-name, $research-activity-palette) {
-  .#{$class-name} {
-    $research-activity-primary: mat-palette($research-activity-palette);
-    $research-activity-accent: mat-palette($research-activity-palette);
-    $research-activity-warn: mat-palette($research-activity-palette);
-    $research-activity-theme: mat-light-theme($research-activity-primary, $research-activity-accent, $research-activity-warn);
-    @include angular-material-theme($research-activity-theme);
-  }
-}
-
-@include research-activity-theme('plan', $research-activity-palette-plan);
-@include research-activity-theme('create', $research-activity-palette-create);
-@include research-activity-theme('analyze', $research-activity-palette-analyze);
-@include research-activity-theme('publish', $research-activity-palette-publish);
-@include research-activity-theme('discover', $research-activity-palette-discover);
