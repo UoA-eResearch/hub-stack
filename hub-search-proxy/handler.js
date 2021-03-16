@@ -197,7 +197,9 @@ module.exports.search = async (event, context) => {
       let queryParts = [
         {
           simple_query_string: {
-            query: formattedQueryString
+            query: formattedQueryString,
+            default_operator: "and",
+            analyzer: "hub_analyzer"
           }
         }
       ]
