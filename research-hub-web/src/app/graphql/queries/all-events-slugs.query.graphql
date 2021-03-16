@@ -1,7 +1,0 @@
-query AllEventsSlugs {
-    eventCollection {
-        items {
-            slug
-        }
-    }
-}

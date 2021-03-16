@@ -40,18 +40,19 @@
 
         <div>
             <div class="banner-container" [style]="article.banner ? 
-                        isMobile ? 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat; padding: 72px 0px' 
-                            : 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat fixed center; padding: 72px 0px' 
-                        : ''">
+                isMobile ?
+                'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat; padding: 72px 0px' 
+                : 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + article.banner.url + ') no-repeat fixed center; padding: 72px 0px' 
+                : ''">
                 <div class="banner-content">
 
                     <!-- Title -->
                     <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
-                        [style]="article.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">{{ article.title }}</h1>
+                        [style]="article.banner ? bannerTextStyling : ''">{{ article.title }}</h1>
 
                     <!-- Summary -->
                     <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
-                        [style]="article.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
+                        [style]="article.banner ? bannerTextStyling : ''">
                         <small>{{ article.summary }}</small></p>
 
                     <!-- Call To Action -->

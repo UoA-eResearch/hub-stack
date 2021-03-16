@@ -6,7 +6,6 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllArticlesGQL,
-  AllArticlesSlugsGQL,
   GetArticleBySlugGQL,
   ArticleCollection,
   Article,
@@ -33,6 +32,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   };
 
   public isMobile: Boolean;
+  public bannerTextStyling;
   public slug: string;
   public article: Observable<Article>;
   public article$: Subscription;
@@ -44,16 +44,17 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
-    public allArticlesSlugsGQL: AllArticlesSlugsGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { this.detectDevice(); }
+  ) { }
 
-  // Detect if device is Mobile
+  /**
+   * Detect if device is Mobile
+   */
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
   }
@@ -67,6 +68,11 @@ export class ArticlesComponent implements OnInit, OnDestroy {
         this.slug = params.slug || this.route.snapshot.data.slug;
         this._loadContent();
       });
+
+      /**
+       * Set styling for text if banner is present
+       */
+      this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   }
 
   /**
@@ -78,12 +84,11 @@ export class ArticlesComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
-      this.getAllArticlesSlugs().subscribe(data => {
-        let slugs = [];
-          data.items.forEach(data => {
-            slugs.push(data.slug)
-          })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      this.article = this.getArticleBySlug(this.slug);
+      this.article$ = this.article.subscribe(data => {
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
       });
       this.article = this.getArticleBySlug(this.slug);
         this.article$ = this.article.subscribe(data => {
@@ -108,20 +113,6 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   public getAllArticles(): Observable<ArticleCollection> {
     try {
       return this.allArticlesGQL.fetch()
-        .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all articles:', e) };
-  }
-
-  /**
-   * Function that returns all articles slugs from the ArticleCollection as an observable
-   * of type ArticleCollection. This is then unwrapped with the async pipe.
-   *
-   * This function called to determine if a valid slug has been searched otherwise redirect
-   *
-   */
-  public getAllArticlesSlugs(): Observable<ArticleCollection> {
-    try {
-      return this.allArticlesSlugsGQL.fetch()
         .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
     } catch (e) { console.error('Error loading all articles:', e) };
   }
