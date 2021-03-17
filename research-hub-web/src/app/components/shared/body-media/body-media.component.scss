@@ -213,8 +213,11 @@
     .body-table {
         text-align: center;
         border-collapse: collapse;
-        tr td {
-            padding: 5px;
+        th {
+            background: $input-grey;
+        }
+        th, td {
+            padding: 8px;
             border: 1px solid map-get($hub-navy, 500);
         }
     }
