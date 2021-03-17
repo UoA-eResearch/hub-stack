@@ -21,7 +21,6 @@ export class SearchPageComponent implements OnInit {
   public resultSub$: Subscription;
   public sortType = this.searchBarService.getSort();
   public allCurrentPages = [];
-  public allCurrentPagesUnsorted = [];
   public categoryFilter = this.searchBarService.getCategory();
   public stageFilter = this.searchBarService.getStage();
   public organisationFilter = this.searchBarService.getOrganisation();
@@ -47,8 +46,7 @@ export class SearchPageComponent implements OnInit {
 
     // Updating results when searched
     this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
-      this.allCurrentPages = data.map((x) => {return { ...x };});
-      this.allCurrentPagesUnsorted = data.map((x) => {return { ...x };});
+      this.allCurrentPages = data.map(x => ({ ...x }));
     });
   }
 

@@ -167,7 +167,7 @@
         .mat-card-title a:hover {
             border-bottom: solid 2px map-get($hub-navy, 500);
         }
-        & .mat-card-title {
+        .mat-card-title {
             span  * {
                 font-size: 18px; 
                 color: map-get($hub-navy, 500);
