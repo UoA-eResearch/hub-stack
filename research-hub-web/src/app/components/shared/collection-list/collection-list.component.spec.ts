@@ -44,11 +44,11 @@ describe('CollectionListComponent', () => {
 
   describe("getDefaultIcon (function)", () => {
 
-    it("Should return the language icon name for a subhub", () => {
+    it("Should return the lnguage icon name for a subhub", () => {
       expect(component.getDefaultTypeIcon('SubHub')).toEqual('language');
     });
 
-    it("Should return the manage accounts icon name for a service", () => {
+    it("Should return the home manage accounts icon name for a service", () => {
       expect(component.getDefaultTypeIcon('Service')).toEqual('manage_accounts');
     });
 

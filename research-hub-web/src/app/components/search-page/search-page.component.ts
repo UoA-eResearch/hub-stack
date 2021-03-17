@@ -36,9 +36,27 @@ export class SearchPageComponent implements OnInit {
   async ngOnInit() {
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
+
+    // Set the eventId for filtering by Event
+    this.allCategories$.subscribe(data => {
+      data.items.forEach(element => {
+        if (element.name == 'Events') this.searchBarService.setEventId(element.sys.id);
+      });
+    })
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
     this.searchBarService.createResultsList();
     this.initialPages();
+  }
+
+  // Clear All Filters
+  public clear () {
+    this.categoryFilter = [];
+    this.stageFilter = [];
+    this.organisationFilter = [];
+    this.searchBarService.setCategory([]);
+    this.searchBarService.setStage([]);
+    this.searchBarService.setOrganisation([]);
+    this.searchBarService.createResultsList();
   }
 
   // Create the initial page lsit

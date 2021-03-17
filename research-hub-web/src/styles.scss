@@ -24,6 +24,47 @@ hr {
 
 
 /**
+ * List
+ */
+#body {
+  ul,
+  ol {
+      list-style: none;
+      counter-reset: ol-counter
+  }
+  ul li::before{
+      position: absolute;
+      content: "\2022";
+      color: map-get($hub-navy, 500);
+      font-weight: bold;
+      display: inline-block;
+      width: 2em;
+  }
+  ul li {
+      position: relative;
+      p {
+          padding-left: 15px;
+      }
+  }
+  ol li {
+      position: relative;
+      counter-increment: ol-counter;
+      p {
+          padding-left: 20px;
+      }
+  }
+  ol li::before {
+      content: counter(ol-counter) ". ";
+      position: absolute;
+      color: map-get($hub-navy, 500);
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+  } 
+}
+
+
+/**
  * Underline for titles and headings
  */
 .main-underline {
