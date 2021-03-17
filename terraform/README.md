@@ -75,12 +75,15 @@ terraform destroy -var-file=var-file --auto-approve
 | index_doc | The root document that users will land on, relative to the base of the S3 Bucket |
 | acm_arn | ARN of certificate in us-east-1 that will be attached to the Website (not created by Terraform due to Hybrid DNS situation) |
 | -----------  | ----------- |
-| **Secondary website (if applicable)** | ----------- |
+| **Preview environment (aka "Secondary website")** | ----------- |
 | create_secondary | Should the second Bucket/CloudFront be setup? |
 | dns_entry_secondary | What will be the main DNS entry for the secondary site |
 | secondary_addresses_secondary | Any other DNS names the secondary site will be accessed via |
 | index_doc_secondary | The root document that users will land on for the second site, relative to the base of the S3 Bucket |
 | acm_arn_secondary | ARN of certificate in us-east-1 that will be attached to the Secondary Website (not created by Terraform due to Hybrid DNS situation) |
+| -----------  | ----------- |
+| **2Fab callback url** | ----------- |
+| two_fab_url | 2fab url, used for integration testing. The url is added to the hub app client callback urls list. |
 | -----------  | ----------- |
 | **Route53 Routing** | ----------- |
 | route53_hosted_zone_id | The ID for the Route53 hosted zone that is used to route traffic from our domain(s) to CloudFront |

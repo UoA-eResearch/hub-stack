@@ -54,12 +54,7 @@ query GetArticleBySlug($slug: String) {
             items { ...PublicFields }
           }
           relatedContactsCollection {
-            items { 
-              ...PublicFields
-              ...on Person {
-                role
-              }
-            }
+            items { ...PublicFields }
           }
         }
     }

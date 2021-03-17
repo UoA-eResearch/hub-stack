@@ -108,6 +108,13 @@ variable "acm_arn_secondary" {
   description = "The AWS ARN for the SSL certificate to be used for the secondary site"
 }
 
+#####################################
+#        2FAB callback url          #
+#####################################
+variable "two_fab_url" {
+  description = "2fab url, used for integration testing. The url is added to the hub app client callback urls list."
+}
+
 ########################
 #        Route53       #
 ########################

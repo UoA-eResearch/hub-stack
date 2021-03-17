@@ -6,7 +6,7 @@ import { SharedModule } from '../app.shared.module';
 import { Routes, RouterModule, RouterLink } from '@angular/router';
 
 @NgModule({
-  declarations: [CollectionListComponent],
+  declarations: [],
   imports: [
     CommonModule,
     SharedModule,

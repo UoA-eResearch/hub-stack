@@ -1,0 +1,15 @@
+query AllStages {
+    stageCollection(order: [displayOrder_ASC]) {
+        items {
+            name
+            description
+            image {
+                url
+            }
+            displayOrder
+            sys {
+                id
+            }
+        }
+    }
+}

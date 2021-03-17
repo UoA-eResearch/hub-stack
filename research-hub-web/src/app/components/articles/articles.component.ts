@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -14,6 +14,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-articles',
@@ -30,6 +31,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
   };
 
+  public isMobile: Boolean;
   public slug: string;
   public article: Observable<Article>;
   public article$: Subscription;
@@ -45,8 +47,14 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
-  ) { }
+    public router: Router,
+    private deviceService: DeviceDetectorService
+  ) { this.detectDevice(); }
+
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   async ngOnInit() {
     /**
