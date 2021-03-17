@@ -5,7 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, Observable, Subscriber } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
-import { LoginService } from '@uoa/auth';
+import { LoginService, UserInfoDto } from '@uoa/auth';
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
@@ -14,7 +14,7 @@ import { Apollo } from 'apollo-angular';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { GetHomepageGQL, Homepage, AllCategoriesGQL, CategoryCollection, AllStagesGQL, StageCollection } from './graphql/schema';
-
+import smoothscroll from 'smoothscroll-polyfill';
 
 @Component({
   selector: 'app-root',
@@ -27,9 +27,11 @@ export class AppComponent implements OnInit, OnDestroy {
   public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public aboutUs = "https://www.eresearch.auckland.ac.nz/?_ga=2.69549080.943707055.1614124973-1995817083.1603163706#";
 
+  public homeUrl = '/home';
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
+  public privacyUrl = 'https://www.auckland.ac.nz/en/privacy.html';
 
   public url: Subscription;
   public showBanner: Boolean;
@@ -50,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private previousRoute = undefined;
   private currentRoute = undefined;
+  public currentUrl = undefined;
 
   public userInfo;
   public authenticated: Boolean;
@@ -73,6 +76,9 @@ export class AppComponent implements OnInit, OnDestroy {
     private deviceService: DeviceDetectorService) {
       this.detectDevice();
       this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
+
+      // Smooth scrolling in IE/Edge
+      smoothscroll.polyfill();
     }
 
   // Detect if device is Mobile
@@ -137,6 +143,7 @@ export class AppComponent implements OnInit, OnDestroy {
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
+          this.currentUrl = url;
 
           // Check if the user is logged in now (Cognito redirect)
           this.authenticated = await this.loginService.isAuthenticated();

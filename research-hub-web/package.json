@@ -48,7 +48,8 @@
     "@apollo/link-context": "^2.0.0-beta.3",
     "@contentful/rich-text-html-renderer": "^14.1.1",
     "@contentful/rich-text-types": "^14.1.1",
-    "@uoa/auth": "^0.2.0",
+    "@ngmodule/material-carousel": "^0.6.0",
+    "@uoa/auth": "^0.4.0",
     "@uoa/error-pages": "0.0.7",
     "apollo-angular": "^2.0.3",
     "apollo-angular-link-http": "^1.11.0",
@@ -69,6 +70,7 @@
     "ngx-take-until-destroy": "^5.4.0",
     "ngx-webstorage-service": "^4.1.0",
     "rxjs": "^6.6.2",
+    "smoothscroll-polyfill": "^0.4.4",
     "tslib": "^2.0.0",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.10.2"

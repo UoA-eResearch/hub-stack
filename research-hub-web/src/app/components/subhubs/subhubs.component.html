@@ -1,3 +1,11 @@
+<!-- If we're displaying a collection of SubHubs-->
+<div
+    *ngIf="allSubHubs$ | async as allSubHubs" 
+    class="site-padding margin-bottom top-padding" 
+    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
+    <app-collection-list [collection]="allSubHubs"></app-collection-list>
+</div>
+
 <div style="overflow-x: hidden" class="results" *ngIf="subHub | async as subhub">
     
     <div>
@@ -27,19 +35,20 @@
                 [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
         </ng-template>
         <div>
-            <div class="banner-container" [style]="subhub.banner ? isMobile ?
-                        'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat'
-                        :'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat fixed center; padding: 72px 0px'
-                    :''">
+            <div class="banner-container" [style]="subhub.banner ?
+                isMobile ?
+                'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat'
+                :'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat fixed center; padding: 72px 0px'
+                :''">
                 <div class="banner-content">
 
                     <!-- Title -->
                     <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
-                        [style]="subhub.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">{{ subhub.title }}</h1>
+                        [style]="subhub.banner ? bannerTextStyling : ''">{{ subhub.title }}</h1>
 
                     <!-- Summary -->
                     <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
-                        [style]="subhub.banner ? 'color: white; text-shadow: 0px 0px 8px #333333;' : ''">
+                        [style]="subhub.banner ? bannerTextStyling : ''">
                         <small>{{ subhub.summary }}</small></p>
                 </div>
             </div>

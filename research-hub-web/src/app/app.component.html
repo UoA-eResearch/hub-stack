@@ -9,8 +9,8 @@
       <!-- Main Navbar -->
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
-          <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
-            <img [src]="'assets/imgs/hub-logo.svg'" alt="logo">
+          <a [routerLink]="homeUrl" class="hub-logo" ngClass.xs="hub-logo-xs">
+            <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
       </div>
@@ -59,10 +59,31 @@
           </div>
         </mat-expansion-panel>
 
+
         <!-- Sign In -->
-        <mat-list-item>
-          <a mat-line (click)="loginService.doLogin()" (keydown.enter)="loginService.doLogin()">Sign In</a>
+        <mat-list-item *ngIf="!authenticated">
+          <a mat-line (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</a>
         </mat-list-item>
+
+
+        <!-- Sign Out -->
+        <mat-expansion-panel *ngIf="authenticated" style="background: #fafafa" hideToggle="true">
+
+          <!-- Sign Out Name -->
+          <mat-expansion-panel-header *ngIf="authenticated"  class="expandable-menu">
+            <mat-list-item>
+              <a mat-line fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon matPrefix style="margin-right: 5px;">person</mat-icon>
+                <span fxHide.gt-sm>{{ userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0) }}</span>
+              </a>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+
+          <!-- Sign Out List -->
+          <div *ngIf="authenticated">
+            <a mat-line (click)="loginService.logout()" (keydown.enter)="loginService.logout()">Sign Out</a>
+          </div>
+        </mat-expansion-panel>
       </mat-nav-list>
     </mat-sidenav>
 
@@ -91,8 +112,8 @@
                   <a 
                     fxFlex.lt-md 
                     class="hub-logo"
-                    routerLink="/home">
-                    <img [src]="'assets/imgs/hub-logo.svg'" alt="logo">
+                    [routerLink]="homeUrl">
+                    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
                   </a>
 
                   <!-- Space Divider -->
@@ -136,13 +157,12 @@
 
                   <!-- Sign In Button -->
                   <button role="button" aria-label="sign-in" *ngIf="!authenticated" fxHide.lt-md
-                    mat-button (click)="loginService.doLogin()" (keydown.enter)="loginService.doLogin()">Sign In</button>
+                    mat-button (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</button>
 
-                  <button role="button" class="button-menu" aria-label="user-info" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
-                    <mat-icon matPrefix style="margin-right: 5px;" fxHide.xs>person</mat-icon>
+                  <button fxHide fxShow.gt-sm role="button" class="button-menu" aria-label="user-info" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
+                    <mat-icon fxHide fxShow.gt-sm matPrefix style="margin-right: 5px;">person</mat-icon>
                     <span fxHide fxShow.gt-md>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</span>
-                    <span fxHide fxShow.md>{{ userInfo?.firstName }}</span>
-                    <span fxHide.gt-sm>{{ userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0) }}</span>
+                    <span fxHide fxShow.lt-lg>{{ userInfo?.firstName }}</span>
                   </button>
 
                   <!-- User Details -->
@@ -164,7 +184,7 @@
                       <!-- Sign Out Button-->
                       <div fxLayout="row" fxLayoutAlign="end">
                         <button role="button" aria-label="sign-out" mat-raised-button class="sign-out-button"
-                          href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">
+                        (click)="loginService.logout()" (keydown.enter)="loginService.logout()">
                           Sign Out
                         </button>
                       </div>
@@ -229,8 +249,9 @@
           <!-- Footer Content -->
           <div class="footer-content" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center" ngClass.lt-md="site-padding-mobile">
 
-            <!-- UoA Footer Logo -->
-            <div style="width: 100%" fxLayoutGap="5%" fxLayout.lt-md="column">
+            <div style="width: 100%" fxLayoutGap="5%" fxLayout="row" fxLayout.lt-md="column">
+
+              <!-- UoA Footer Logo -->
               <div fxFlexOrder.lt-md="1" class="logo-img-container">
                 <a [href]="aucklandUniUrl" target="_blank" >
                   <img class="logo-img" src="assets/imgs/uoa-logo.svg" alt="uoa-logo">
@@ -244,20 +265,16 @@
               <div class="footer-links" fxLayout="row wrap" fxFlexOrder.lt-md="0" fxLayoutGap="2vw" fxLayoutAlign="space-between">
                 <div fxLayout="column">
                   <a class="link-header">About</a>
-                  <a href="https://auckland.ac.nz">The University of Auckland</a>
+                  <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
                 </div>
                 <div fxLayout="column">
                   <a class="link-header">Engage</a>
                   <a href="{{ feedbackLink }}">Feedback</a>
                 </div>
                 <div fxLayout="column">
-                  <a class="link-header">Explore</a>
-                  <a routerLink="/contact">Research Categories</a>
-                  <a routerLink="/contact">Research Activities</a>
-                </div>
-                <div fxLayout="column">
                   <a class="link-header">Helpful Links</a>
                   <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+                  <a [href]="privacyUrl" target="_blank">Privacy</a>
                 </div>
               </div>
             </div>

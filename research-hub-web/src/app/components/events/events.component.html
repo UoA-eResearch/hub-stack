@@ -1,3 +1,11 @@
+<!-- If we're displaying a collection of Events-->
+<div
+    *ngIf="allEvents$ | async as allEvents" 
+    class="site-padding margin-bottom top-padding" 
+    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
+    <app-collection-list [collection]="allEvents"></app-collection-list>
+</div>
+
 <div id="event-container" *ngIf="event | async as event">
 
     <!-- Templates -->
@@ -84,7 +92,7 @@
 
                 <!-- Call To Action -->
                 <div *ngIf="event.callToAction">
-                    <a href="{{ event.callToAction }}">
+                    <a href="{{ event.callToAction }}" target="_blank">
                         <button role="button" mat-flat-button aria-label="view-event" class="standard-button section">
                             <span *ngIf="event.callToActionLabel">{{ event.callToActionLabel }}</span>
                             <span *ngIf="!event.callToActionLabel">View Event</span>

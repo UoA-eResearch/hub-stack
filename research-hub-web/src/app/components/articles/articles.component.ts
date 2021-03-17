@@ -33,6 +33,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   };
 
   public isMobile: Boolean;
+  public bannerTextStyling;
   public slug: string;
   public article: Observable<Article>;
   public article$: Subscription;
@@ -52,8 +53,10 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     public router: Router,
     private deviceService: DeviceDetectorService
   ) { this.detectDevice(); }
-
-  // Detect if device is Mobile
+  
+  /**
+   * Detect if device is Mobile
+   */
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
   }
@@ -67,6 +70,11 @@ export class ArticlesComponent implements OnInit, OnDestroy {
         this.slug = params.slug || this.route.snapshot.data.slug;
         this._loadContent();
       });
+
+      /**
+       * Set styling for text if banner is present
+       */
+      this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   }
 
   /**
@@ -84,6 +92,12 @@ export class ArticlesComponent implements OnInit, OnDestroy {
             slugs.push(data.slug)
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
+      this.article = this.getArticleBySlug(this.slug);
+      this.article$ = this.article.subscribe(data => {
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
       });
       this.article = this.getArticleBySlug(this.slug);
         this.article$ = this.article.subscribe(data => {

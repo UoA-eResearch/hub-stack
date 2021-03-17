@@ -163,17 +163,20 @@
         width: 100%;
         padding-right: 30px;
         background: #fafafa;
-        .mat-card-title a { width: fit-content}
-        .mat-card-title a:hover {
-            border-bottom: solid 2px map-get($hub-navy, 500);
-        }
-        .mat-card-title {
-            span  * {
-                font-size: 18px; 
-                color: map-get($hub-navy, 500);
-            }
-        }
     }
+}
+
+.mat-card-title {
+    span  * {
+        font-size: 18px; 
+        color: map-get($hub-navy, 500);
+    }
+}
+.mat-card-title a {
+    max-width: fit-content!important;
+}
+.mat-card-title a:hover {
+    border-bottom: solid 2px map-get($hub-navy, 500);
 }
 
 .mat-card-content {
@@ -198,4 +201,21 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+}
+
+
+/**
+ * Table
+ */
+.table-container {
+    width: fit-content;
+    margin: 0 auto;
+    .body-table {
+        text-align: center;
+        border-collapse: collapse;
+        tr td {
+            padding: 5px;
+            border: 1px solid map-get($hub-navy, 500);
+        }
+    }
 }
