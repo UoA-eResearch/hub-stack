@@ -4,8 +4,8 @@
     <div class="search-header search-page-container grey-background">
         <div fxLayout="column" ngClass.gt-sm="top-padding site-padding-2" ngClass.lt-md="top-padding site-padding">
 
-            <!-- Search Bar -->
-            <app-search-bar type="search" name="search-bar" ngDefaultControl #searchText role="textbox" placeholder="Search"></app-search-bar>
+            <!-- Search Bar (wrapped in <h1> for WCAG)-->
+            <h1><app-search-bar type="search" name="search-bar" ngDefaultControl #searchText role="textbox" placeholder="Search"></app-search-bar></h1>
 
             <!-- Vertical divider -->
             <br>
@@ -87,25 +87,20 @@
 
     <!-- Search Results -->
     <div id="search-results" ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" *ngIf="allCurrentPages">
+
         <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-list-filter">
 
             <!-- Results -->
             <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
                 <h3 style="margin-bottom: 0" class="search-results-text">{{ this.searchBarService.getTotalPages() }}&nbsp;&nbsp;</h3>
                 <p style="margin-bottom: 0">Results</p>
-
-                <!-- If something was searched -->
-                <span fxLayout="row" fxLayoutAlign="center end" *ngIf="searchBarService.getSearchText()">
-                    <p style="margin-bottom: 0">&nbsp;for</p>
-                    <h1 style="margin-bottom: 0">&nbsp;&nbsp;<i>"{{ searchBarService.getSearchText() }}"</i></h1>
-                </span>
             </span>
 
             <!-- Divider -->
             <div fxHide.lt-md fxFlex></div>
 
             <!-- Filtering Options -->
-            <div id="filtering-options" fxFlexOrder.lt-sm="1" fxFlex>
+            <div id="filtering-options" fxFlexOrder.lt-sm="1" fxFlex="25%">
                 <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
                     placeholder="Order By">
                     <div>
