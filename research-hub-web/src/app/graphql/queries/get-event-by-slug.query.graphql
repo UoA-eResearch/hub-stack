@@ -68,10 +68,6 @@ query GetEventBySlug($slug: String) {
         location {
             json
         }
-        address {
-            lat 
-            lon 
-        }
         }
     }
 }
