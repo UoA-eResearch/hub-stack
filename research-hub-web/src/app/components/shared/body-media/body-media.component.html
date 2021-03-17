@@ -114,9 +114,47 @@
             <span *ngSwitchCase="'Table'">
                 <div class="table-container section">
                     <h3>{{ contentItem.name }}</h3>
-                    <table class="body-table">
-                        <tr *ngFor="let row of contentItem.table.tableData">
-                            <td *ngFor="let column of row">{{ column }}</td>
+
+                    <!-- Horizontal Headers -->
+                    <div *ngIf="contentItem.table.useHorizontalHeaders && !contentItem.table.useVerticalHeaders">
+                        <table class="body-table">
+                            <tr *ngFor="let row of contentItem.table.tableData; let i = index">
+                                <ng-container *ngFor="let column of row; let j = index">
+                                    <th *ngIf="i == 0">{{ column }}</th>
+                                    <td *ngIf="i != 0">{{ column }}</td>
+                                </ng-container>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Vertical Headers -->
+                    <div *ngIf="contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders">
+                        <table class="body-table">
+                            <tr *ngFor="let row of contentItem.table.tableData; let i = index">
+                                <ng-container *ngFor="let column of row; let j = index">
+                                    <th *ngIf="j == 0">{{ column }}</th>
+                                    <td *ngIf="j != 0">{{ column }}</td>
+                                </ng-container>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Horizontal and Vertical Headers -->
+                    <div *ngIf="contentItem.table.useVerticalHeaders && contentItem.table.useHorizontalHeaders">
+                        <table class="body-table">
+                            <tr *ngFor="let row of contentItem.table.tableData; let i = index">
+                                <ng-container *ngFor="let column of row; let j = index">
+                                    <th *ngIf="j == 0 || i == 0">{{ column }}</th>
+                                    <td *ngIf="j != 0 && i != 0">{{ column }}</td>
+                                </ng-container>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!--  No Headers -->
+                    <table *ngIf="!contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders" class="body-table">
+                        <tr *ngFor="let row of contentItem.table.tableData; let i = index">
+                            <td *ngFor="let column of row; let j = index">{{ column }}</td>
                         </tr>
                     </table>
                 </div>
