@@ -49,6 +49,10 @@
                     <td role="cell">Date</td>
                     <td role="cell"> {{ event.date | date:'longDate'}} {{ event.date | date:'shortTime'}}</td>
                 </tr>
+                <tr *ngIf="event.location" role="row">
+                    <td role="cell">Location</td>
+                    <td role="cell" [innerHTML]="event.location.json | richTextToHTML"></td>
+                </tr>
                 <tr *ngIf="event.access" role="row">
                     <td role="cell">Access</td>
                     <td [innerHTML]="event.access" role="cell"></td>
