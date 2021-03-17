@@ -14,6 +14,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-events',
@@ -37,7 +38,8 @@ export class EventsComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allEvents$: Observable<EventCollection>;
   public parentSubHubs;
-
+  public isMobile: Boolean;
+  
   constructor(
     public route: ActivatedRoute,
     public allEventsGQL: AllEventsGQL,
@@ -45,8 +47,14 @@ export class EventsComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
-  ) { }
+    public router: Router,
+    private deviceService: DeviceDetectorService
+  ) { this.detectDevice(); }
+
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   async ngOnInit() {
     /**
