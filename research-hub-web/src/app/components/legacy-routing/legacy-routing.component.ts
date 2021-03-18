@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import legacyRoutes from './legacy-routing.json';
+import legacyRoutes from './legacy-content-ids.json';
 
 @Component({
   selector: 'app-legacy-routing',
-  template:'<p>Redirecting...</p>'
+  template:'<p></p>'
 })
 export class LegacyRoutingComponent implements OnInit {
   constructor(
