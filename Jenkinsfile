@@ -27,6 +27,7 @@ pipeline {
                 script {
                     echo 'Setting environment variables'
                     env.awsRegion = "ap-southeast-2"
+                    env.NODE_OPTIONS="--max_old_space_size=8192"
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
                         env.BRANCH_NAME = 'sandbox'
