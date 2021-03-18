@@ -17,7 +17,7 @@ resource "aws_cognito_user_pool_client" "client" {
   allowed_oauth_scopes                 = concat(aws_cognito_resource_server.research_hub.scope_identifiers, ["openid", "profile"])
   allowed_oauth_flows_user_pool_client = true
   explicit_auth_flows                  = ["ALLOW_CUSTOM_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
-  callback_urls                        = concat(local.scheme_urls, ["http://localhost:4200"])
+  callback_urls                        = concat(local.scheme_urls, ["http://localhost:4200", var.two_fab_url])
   logout_urls                          = concat(local.scheme_urls, ["http://localhost:4200"])
   supported_identity_providers         = [var.cognito_identity_provider]
   refresh_token_validity               = 1
