@@ -121,14 +121,17 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public allEquipmentGQL: AllEquipmentGQL,
     private _bypass: BypassErrorService) {
     this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
+    this.initialiseHashUrlRedirect();
+  }
+
+  private initialiseHashUrlRedirect() {
     //When url change, we check if actual url have # on it, then we redirect to the route without it.
     // Redirect hash-style URLs of the old ResearchHub to the new style.
-    router.events.subscribe((event: RouterEvent): void => {
-      // const url = this.router.routerState.root.queryParamMap.subscribe(map => console.log("Param map is ",map));
+    this.router.events.subscribe((event: RouterEvent): void => {
       if (!this.router.navigated && event instanceof NavigationStart) {
         const url = event.url;  
         if (url.match('^/#/')) {
-          router.navigateByUrl(url.replace('#/', ''), {replaceUrl: true});
+          this.router.navigateByUrl(url.replace('#/', ''), {replaceUrl: true});
         }
       }
     }
