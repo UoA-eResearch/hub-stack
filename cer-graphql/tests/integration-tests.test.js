@@ -7,12 +7,8 @@ const aws = require('aws-sdk');
 const aws4 = require('aws4');
 const fetch = require('node-fetch');
 
-const TIMEOUT_PERIOD = 20000;
+const TIMEOUT_PERIOD = 40000;
 
-const configResult = require('dotenv').config({ path: '../.env' });
-if (configResult.error) {
-    throw configResult.error;
-}
 
 /**
  * This function creates both the ApolloServer and test client
@@ -20,7 +16,8 @@ if (configResult.error) {
  */
 async function createServerAndTestClient() {
     let server = await createServer(getCredentials(true));
-    return createTestClient(new ApolloServer({ ...server, context: () => { } }));
+    let testServer = createTestClient(new ApolloServer({ ...server, context: () => { } }));
+    return testServer;
 }
 
 /**
@@ -34,7 +31,9 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
     if (!useValidToken) {
         tokens['access_token'] = 'Bearer fake token value';
     }
-    return createTestClient(new ApolloServer({
+
+    // creating a new apollo server with authorization baked into the requests
+    let authorizedServer =  createTestClient(new ApolloServer({
         ...server.config,
         context: () => server.config.context({
             req: {
@@ -44,6 +43,7 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
             }
         })
     }));
+    return authorizedServer;
 }
 
 /**
@@ -84,7 +84,6 @@ const getTokens = async () => {
             }
     }
 
-    clg({awsLambdaParams})
 
     // Adding the AWS4 Signature to our request parameters
     let opts = {
@@ -173,7 +172,8 @@ describe('Contentful filters (conditionals)', () => {
 
 describe('Authorization resolvers', () => {
 
-    test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
+    test('Requesting an articleCollection private field with an invalid Authorization header fails', async function () {
+        let server = await createServerAndTestClientWithAuth(false);
         let { query } = await createServerAndTestClientWithAuth(false);
         let message = false;
         try {
@@ -184,23 +184,22 @@ describe('Authorization resolvers', () => {
         expect(message).toBeTruthy();
     }, TIMEOUT_PERIOD);
 
-    test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
+    test('Requesting an articleCollection private field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 
-    test('Requesting an articleCollection non-public field with a valid Authorization header returns data', async function () {
+    test('Requesting an articleCollection private field with a valid Authorization header returns data', async function () {
         let { query } = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
         expect(res.data.articleCollection).toBeTruthy();
     }, TIMEOUT_PERIOD);
 
-    test('Requesting a article single resource non-public field returns an error', async function () {
+    test('Requesting a article single resource private field returns an error', async function () {
         let res = await query({
             query: TQ.GET_ARTICLE_BY_SYS_ID_PRIVATE,
             variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
         });
-
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 
