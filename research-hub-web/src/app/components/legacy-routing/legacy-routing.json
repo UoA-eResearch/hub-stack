@@ -1,0 +1,278 @@
+{
+    "1": {
+        "contentType": "service",
+        "slug": "research-virtual-machines"
+    },
+    "2": {
+        "contentType": "service",
+        "slug": "high-performance-computing"
+    },
+    "3": {
+        "contentType": "article",
+        "slug": "share"
+    },
+    "4": {
+        "contentType": "service",
+        "slug": "biru"
+    },
+    "5": {
+        "contentType": "article",
+        "slug": "backing-up"
+    },
+    "6": {
+        "contentType": "service",
+        "slug": "data-publishing-and-discovery"
+    },
+    "7": {
+        "contentType": "subhub",
+        "slug": "digital-print-centre"
+    },
+    "8": {
+        "contentType": "event",
+        "slug": "hacky-hour"
+    },
+    "9": {
+        "contentType": "event",
+        "slug": "resbaz"
+    },
+    "11": {
+        "contentType": "article",
+        "slug": "software-for-your-home-computer"
+    },
+    "12": {
+        "contentType": "software",
+        "slug": "zoom"
+    },
+    "13": {
+        "contentType": "article",
+        "slug": "tips-for-naming-and-organising-files"
+    },
+    "14": {
+        "contentType": "subhub",
+        "slug": "guide-to-managing-research-data"
+    },
+    "15": {
+        "contentType": "software",
+        "slug": "wordpress-sites"
+    },
+    "16": {
+        "contentType": "subhub",
+        "slug": "network-and-internet"
+    },
+    "17": {
+        "contentType": "subhub",
+        "slug": "network-and-internet"
+    },
+    "18": {
+        "contentType": "service",
+        "slug": "web-dropoff-box"
+    },
+    "19": {
+        "contentType": "article",
+        "slug": "vpn"
+    },
+    "20": {
+        "contentType": "software",
+        "slug": "spss"
+    },
+    "21": {
+        "contentType": "event",
+        "slug": "software-carpentry"
+    },
+    "22": {
+        "contentType": "software",
+        "slug": "skype"
+    },
+    "23": {
+        "contentType": "service",
+        "slug": "research-data-management-consultation"
+    },
+    "24": {
+        "contentType": "qualtrics",
+        "slug": "qualtrics"
+    },
+    "26": {
+        "contentType": "equipment",
+        "slug": "operetta-high-content-imaging-system"
+    },
+    "27": {
+        "contentType": "service",
+        "slug": "media-productions"
+    },
+    "28": {
+        "contentType": "service",
+        "slug": "machine-learning-service"
+    },
+    "29": {
+        "contentType": "article",
+        "slug": "large-scale-visualisation-facility"
+    },
+    "31": {
+        "contentType": "event",
+        "slug": "introduction-to-high-performance-computing"
+    },
+    "32": {
+        "contentType": "event",
+        "slug": "human-participants-ethics"
+    },
+    "33": {
+        "contentType": "article",
+        "slug": "health-and-disability-research"
+    },
+    "34": {
+        "contentType": "software",
+        "slug": "institutional-google-drive"
+    },
+    "35": {
+        "contentType": "software",
+        "slug": "google-apps"
+    },
+    "36": {
+        "contentType": "article",
+        "slug": "software-for-your-univerity-computer"
+    },
+    "37": {
+        "contentType": "article",
+        "slug": "Eduroam"
+    },
+    "38": {
+        "contentType": "service",
+        "slug": "data-transfer-service"
+    },
+    "39": {
+        "contentType": "event",
+        "slug": "data-carpentry"
+    },
+    "40": {
+        "contentType": "event",
+        "slug": "training-for-researchers-using-animals"
+    },
+    "41": {
+        "contentType": "article",
+        "slug": "doi-for-research-data"
+    },
+    "42": {
+        "contentType": "article",
+        "slug": "data-management-plans"
+    },
+    "43": {
+        "contentType": "event",
+        "slug": "writing-a-data-management-plan-workshop"
+    },
+    "44": {
+        "contentType": "event",
+        "slug": "managing-research-data-workshops"
+    },
+    "45": {
+        "contentType": "subhub",
+        "slug": "documenting-your-research-data"
+    },
+    "46": {
+        "contentType": "article",
+        "slug": "version-control"
+    },
+    "47": {
+        "contentType": "software",
+        "slug": "open-refine"
+    },
+    "48": {
+        "contentType": "article",
+        "slug": "tidy-data"
+    },
+    "49": {
+        "contentType": "service",
+        "slug": "research-storage"
+    },
+    "51": {
+        "contentType": "service",
+        "slug": "instrument-data-service"
+    },
+    "52": {
+        "contentType": "subhub",
+        "slug": "store-sync-share"
+    },
+    "53": {
+        "contentType": "article",
+        "slug": "research-data-management-overview"
+    },
+    "54": {
+        "contentType": "software",
+        "slug": "nvivo"
+    },
+    "55": {
+        "contentType": "article",
+        "slug": "choosing-data-storage"
+    },
+    "56": {
+        "contentType": "article",
+        "slug": "orcid"
+    },
+    "57": {
+        "contentType": "software",
+        "slug": "research-outputs"
+    },
+    "58": {
+        "contentType": "article",
+        "slug": "open-access"
+    },
+    "59": {
+        "contentType": "service",
+        "slug": "biblioinformatics"
+    },
+    "60": {
+        "contentType": "article",
+        "slug": "depositing-theses"
+    },
+    "61": {
+        "contentType": "service",
+        "slug": "university-bindery"
+    },
+    "64": {
+        "contentType": "article",
+        "slug": "copyright-advisory"
+    },
+    "65": {
+        "contentType": "article",
+        "slug": "subject-guides"
+    },
+    "66": {
+        "contentType": "subhub",
+        "slug": "geospatial-data"
+    },
+    "67": {
+        "contentType": "service",
+        "slug": "cartographic-and-geospatial-data-repository"
+    },
+    "68": {
+        "contentType": "service",
+        "slug": "research-programming-and-application-development"
+    },
+    "69": {
+        "contentType": "article",
+        "slug": "te-ira-kawai"
+    },
+    "70": {
+        "contentType": "service",
+        "slug": "nectar-research-cloud"
+    },
+    "71": {
+        "contentType": "software",
+        "slug": "dropbox-for-research"
+    },
+    "72": {
+        "contentType": "service",
+        "slug": "cdrh"
+    },
+    "73": {
+        "contentType": "subhub",
+        "slug": "research-impact"
+    },
+    "74": {
+        "contentType": "article",
+        "slug": "mass-spectrometry-hub"
+    },
+    "75": {
+        "contentType": "event",
+        "slug": "introduction-to-nectar-virtual-machines"
+    }
+}

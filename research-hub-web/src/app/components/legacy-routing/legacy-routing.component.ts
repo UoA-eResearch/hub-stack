@@ -1,22 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { pluck, switchMap } from 'rxjs/operators';
-import legacyRoutes from './legacy-routes.json';
+import legacyRoutes from './legacy-routing.json';
 
 @Component({
   selector: 'app-legacy-routing',
-  template:'<p>Redirecting...</p>',
-  styleUrls: ['./legacy-routing.component.scss']
+  template:'<p>Redirecting...</p>'
 })
 export class LegacyRoutingComponent implements OnInit {
-
-  public redirects = {
-    1: {
-      "contentType": "service",
-      "slug": "research-virtual-machines"
-    }
-  };
-
   constructor(
     public route: ActivatedRoute,
     public router: Router
@@ -24,11 +14,17 @@ export class LegacyRoutingComponent implements OnInit {
 
   ngOnInit(): void {
     const legacyId = this.route.snapshot.paramMap.get("id");
-    const redirect = this.redirects[legacyId];
+    const redirect = legacyRoutes[legacyId];
     if (!redirect) {
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl("/error/404");
     } else {
-      this.router.navigateByUrl(`/${redirect.contentType}/${redirect.slug}`,{
+      let url;
+      if (typeof redirect === "string") {
+        url = redirect;
+      } else {
+        url = `/${redirect.contentType}/${redirect.slug}`;
+      }
+      this.router.navigateByUrl(url, {
         replaceUrl: true
       });
     }
