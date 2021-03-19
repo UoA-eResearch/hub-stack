@@ -258,7 +258,7 @@ svg {
 .mat-menu-content, 
 .mat-menu-item {
   color: white;
-  background-color: map-get($hub-teal, 500);
+  background-color: map-get($hub-teal, 700);
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
@@ -365,20 +365,20 @@ svg {
  .standard-button {
   color: white!important;
   padding-bottom: 2.4px!important;
-  border: 3px solid map-get($hub-teal, 500)!important;
+  border: 3px solid map-get($hub-teal, 700)!important;
   border-radius: 50px!important;
-  background-color: map-get($hub-teal, 500)!important;
+  background-color: map-get($hub-teal, 700)!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .standard-button:hover {
-  color: map-get($hub-teal, 500)!important;
+  color: map-get($hub-teal, 700)!important;
   border-radius: 50px!important;
   background-color: white!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .alternate-button {
   padding-bottom: 2.4px!important;
-  color: map-get($hub-teal, 500)!important;
+  color: map-get($hub-teal, 700)!important;
   border: 3px solid white!important;
   border-radius: 50px!important;
   background-color: white!important;
@@ -387,7 +387,7 @@ svg {
 .alternate-button:hover {
   color: white!important;
   border-radius: 50px!important;
-  background-color: map-get($hub-teal, 500)!important;
+  background-color: map-get($hub-teal, 700)!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 
