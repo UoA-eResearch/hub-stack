@@ -24,7 +24,7 @@
         </mat-list-item>
 
         <!-- Browse -->
-        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
+        <mat-expansion-panel style="background: #FFFFFF" hideToggle="true">
 
           <!-- Browse Title -->
           <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
@@ -41,7 +41,7 @@
         </mat-expansion-panel>
 
         <!-- Research Activites -->
-        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
+        <mat-expansion-panel style="background: #FFFFFF" hideToggle="true">
 
           <!-- Research Activities Name -->
           <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
@@ -59,7 +59,6 @@
           </div>
         </mat-expansion-panel>
 
-
         <!-- Sign In -->
         <mat-list-item *ngIf="!authenticated">
           <a mat-line (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</a>
@@ -67,7 +66,7 @@
 
 
         <!-- Sign Out -->
-        <mat-expansion-panel *ngIf="authenticated" style="background: #fafafa" hideToggle="true">
+        <mat-expansion-panel *ngIf="authenticated" style="background: #FFFFFF" hideToggle="true">
 
           <!-- Sign Out Name -->
           <mat-expansion-panel-header *ngIf="authenticated"  class="expandable-menu">
@@ -98,7 +97,7 @@
             <!-- Main Navbar -->
             <div #topbar class="app-toolbar-container">
               <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
-              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #0294a5; box-shadow: 0px -3px 10px black;'">
+              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: 0px -3px 10px black;'">
 
                 <!-- Main Navbar Content -->
                 <div fxLayout="row" class="app-toolbar-row" fxLayoutAlign="center center">
@@ -138,7 +137,7 @@
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allCategories$ | async as allCategories">
                       <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items"
-                        [style.background]="showBanner ? '' : '#0294a5'" [routerLink]="['/search']"
+                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
                         (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">{{item.name}}</button>
                     </div>
                   </mat-menu>
@@ -150,7 +149,7 @@
                     <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allStages$ | async as allStages">
                       <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items"
-                        [style.background]="showBanner ? '' : '#0294a5'" [routerLink]="['/search']"
+                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
                         (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">{{ item.name }}</button>
                     </div>
                   </mat-menu>
@@ -216,7 +215,7 @@
                 <br><br>
                 <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
                   <p class="page-summary">Explore</p>
-                  <img class="explore-arrow" src="assets/components/white-arrow.png" width="25">
+                  <img class="explore-arrow" src="assets/components/white-arrow.png" width="25" alt="explore-arrow">
                 </span>
               </div>
             </div>

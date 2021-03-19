@@ -18,7 +18,7 @@ div.collection {
     }
     $avatar-size:  64px;
 
-    #item-avatar {
+    .item-avatar {
         width: $avatar-size;
         height: $avatar-size;
         margin-right: $avatar-size * 0.15;
@@ -28,10 +28,10 @@ div.collection {
             height: $avatar-size;
         }
     }
-    #item-avatar-icon {
+    .item-avatar-icon {
         padding: 16px 0;
         font-size: $avatar-size!important;
-        color: $color-primary;
+        color: map-get($hub-navy, 500)!important;
     }
 }
 
@@ -76,11 +76,4 @@ div.collection {
         font-size: 14px!important;
         vertical-align: middle;
     }
-}
-
-/**
- * Card Result Icon
- */
-#item-avatar-icon {
-    color: map-get($hub-navy, 500)!important;
 }
