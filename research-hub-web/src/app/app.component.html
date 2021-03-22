@@ -211,15 +211,13 @@
                     <!-- Search Bar -->
                     <input role="textbox" autofocus matInput (keydown.enter)="search()"
                       [(ngModel)]="searchText" placeholder="Search">
-                      <button matSuffix role="button" aria-label="search" (click)="clearSearchText();this.searchBarService.createResultsList()"
-                    (keydown.enter)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()"(click)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()" mat-icon-button>
-                      <mat-icon>search</mat-icon>
-                    </button>
-
-                    
                     <button role="button" matSuffix *ngIf="searchText" (click)="clearSearchText()" 
                       (keydown.enter)="clearSearchText()"  mat-icon-button>
                       <mat-icon>close</mat-icon>
+                    </button>
+                    <button matSuffix role="button" aria-label="search" (click)="clearSearchText();this.searchBarService.createResultsList()"
+                      (keydown.enter)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()"(click)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()" mat-icon-button>
+                      <mat-icon>search</mat-icon>
                     </button>
                   </mat-form-field>
                 </div>
