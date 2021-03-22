@@ -44,7 +44,7 @@
             </ng-template>
 
             <ng-template #contact>
-                <mat-card>
+                <mat-card role="listitem">
                     <ng-container *ngIf="content.banner; then image; else noImage"></ng-container>
                     <span *ngIf="content.__typename == 'Person'" class="card-label">Contact</span>
                     <span *ngIf="content.__typename == 'OrgUnit'" class="card-label">Unit</span>

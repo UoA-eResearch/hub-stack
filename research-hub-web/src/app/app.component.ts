@@ -44,7 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private scrollSub: Subscription;
   private winResizeSub: Subscription;
   public allCategories$: Observable<CategoryCollection>;
-  public homepage$: Observable<Homepage>
+  public homepage$: Observable<Homepage>;
   public allStages$: Observable<StageCollection>;
 
   public searchText = '';
