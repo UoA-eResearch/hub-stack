@@ -14,7 +14,7 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
     it('can visit /research-impact and load a SubHub', () => {
         cy.visit('/research-impact');
         cy.contains('Research Impact');
-        cy.contains('Impact is the contribution that research and creative practice make to society, the environment and the economy, and the benefits to individuals, whānau, communities, organisations, New Zealand and the world');
+        cy.contains('These pages contain tools and resources to support you in generating impact from your research.');
     });
 
     it('can visit /research-impact/support-for-impactful-research and load an Article', () => {
@@ -24,9 +24,7 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
     });
 
     it('will update a content item\'s URL when it is visited from outside the SubHub', () => {
-        cy.visit('/articles');
-        cy.get('mat-nav-list > mat-card')
-            .contains('Support for impactful research').click();
+        cy.visit('/article/support-for-impactful-research');
         cy.url().should('include', '/research-impact/');
     })
 });
