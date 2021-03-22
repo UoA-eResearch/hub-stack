@@ -37,18 +37,26 @@ pipeline {
                         env.awsAccountId = '416527880812'
                         env.awsRole = 'devops'
                         env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
+                        env.s3BucketName = "research-hub-web"
+                        env.previewS3BucketName = "research-hub-web-preview"
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
                         env.awsProfile = 'uoa-its-nonprod'
-                        env.awsAccountId = 'uoa-nonprod-account-id'
+                        env.awsAccountId = '518380838815'
+                        env.awsRole = 'devops'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service'
+                        env.s3BucketName = "research-hub.connect.test.amazon.auckland.ac.nz"
+                        env.previewS3BucketName = "research-hub-preview.connect.test.amazon.auckland.ac.nz"
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
                         env.awsCredentialsId = 'uoa-its-prod-access'
                         env.awsTokenId = 'uoa-its-prod-token'
                         env.awsProfile = 'uoa-its-prod'
                         env.awsAccountId = 'uoa-prod-account-id'
+                        env.s3BucketName = "s3-bucket-name-prod"
+                        env.previewS3BucketName = "preview-s3-bucket-name-prod"
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         BRANCH_NAME = 'sandbox'
@@ -59,6 +67,8 @@ pipeline {
                         env.awsProfile = 'uoa-sandbox'
                         env.awsRole = 'devops'
                         env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
+                        env.s3BucketName = "research-hub-web"
+                        env.previewS3BucketName = "research-hub-web-preview"
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
@@ -216,9 +226,6 @@ pipeline {
                             steps {
                                 script {
                                     echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
-                                    def s3BucketName = 'research-hub-web'
-                                    def previewS3BucketName = 'research-hub-web-preview'
-
                                     dir("research-hub-web") {
                                         sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
                                         echo "Sync complete"
@@ -274,8 +281,8 @@ pipeline {
                         sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
 
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
-                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
-                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-preview-service --task-definition cer-graphql-preview-task --force-new-deployment --region ${awsRegion}"
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql --force-new-deployment --region ${awsRegion}"
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-preview-service --task-definition cer-graphql-preview --force-new-deployment --region ${awsRegion}"
 
                     }
                 }
