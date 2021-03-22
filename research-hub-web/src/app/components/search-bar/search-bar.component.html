@@ -8,5 +8,9 @@
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
+      <button matSuffix role="button" aria-label="search" (click)="clearSearchText();this.searchBarService.createResultsList()"
+      (keydown.enter)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()"(click)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()" mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
     </div>
 </div>
