@@ -143,7 +143,6 @@ async function createServer(config) {
                     'slug',
                     'banner',
                     'icon',
-                    'viewType',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 

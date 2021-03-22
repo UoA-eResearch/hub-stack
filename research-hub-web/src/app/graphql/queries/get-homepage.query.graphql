@@ -9,6 +9,9 @@ query GetHomepage {
                     ...PublicFields
                 }
             }
+            featuredItemsDescription
+            researchCategories
+            researchActivities
         }
     }
 }

@@ -9,8 +9,8 @@
       <!-- Main Navbar -->
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
-          <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
-            <img [src]="'assets/images/hub-logo.svg'" alt="logo">
+          <a [routerLink]="homeUrl" class="hub-logo" ngClass.xs="hub-logo-xs">
+            <img [src]="'assets/images/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
       </div>
@@ -24,7 +24,7 @@
         </mat-list-item>
 
         <!-- Browse -->
-        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
+        <mat-expansion-panel style="background: #FFFFFF" hideToggle="true">
 
           <!-- Browse Title -->
           <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
@@ -41,7 +41,7 @@
         </mat-expansion-panel>
 
         <!-- Research Activites -->
-        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
+        <mat-expansion-panel style="background: #FFFFFF" hideToggle="true">
 
           <!-- Research Activities Name -->
           <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
@@ -59,7 +59,6 @@
           </div>
         </mat-expansion-panel>
 
-
         <!-- Sign In -->
         <mat-list-item *ngIf="!authenticated">
           <a mat-line (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</a>
@@ -67,7 +66,7 @@
 
 
         <!-- Sign Out -->
-        <mat-expansion-panel *ngIf="authenticated" style="background: #fafafa" hideToggle="true">
+        <mat-expansion-panel *ngIf="authenticated" style="background: #FFFFFF" hideToggle="true">
 
           <!-- Sign Out Name -->
           <mat-expansion-panel-header *ngIf="authenticated"  class="expandable-menu">
@@ -98,7 +97,7 @@
             <!-- Main Navbar -->
             <div #topbar class="app-toolbar-container">
               <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
-              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #0294a5; box-shadow: 0px -3px 10px black;'">
+              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: 0px -3px 10px black;'">
 
                 <!-- Main Navbar Content -->
                 <div fxLayout="row" class="app-toolbar-row" fxLayoutAlign="center center">
@@ -112,8 +111,8 @@
                   <a 
                     fxFlex.lt-md 
                     class="hub-logo"
-                    routerLink="/home">
-                    <img [src]="'assets/images/hub-logo.svg'" alt="logo">
+                    [routerLink]="homeUrl">
+                    <img [src]="'assets/images/hub-logo.svg'" alt="hub-logo">
                   </a>
 
                   <!-- Space Divider -->
@@ -138,7 +137,7 @@
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allCategories$ | async as allCategories">
                       <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items"
-                        [style.background]="showBanner ? '' : '#0294a5'" [routerLink]="['/search']"
+                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
                         (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">{{item.name}}</button>
                     </div>
                   </mat-menu>
@@ -150,7 +149,7 @@
                     <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allStages$ | async as allStages">
                       <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items"
-                        [style.background]="showBanner ? '' : '#0294a5'" [routerLink]="['/search']"
+                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
                         (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">{{ item.name }}</button>
                     </div>
                   </mat-menu>
@@ -202,7 +201,7 @@
               <div class="banner-text">
 
                 <!-- Title & Summary -->
-                <h1 class="page-title" role="heading" aria-level="1"><b>Research</b>Hub</h1>
+                <h1 class="page-title" role="heading" aria-level="1" style="font-weight: 100!important"><b>Research</b>Hub</h1>
                 <p class="page-summary">{{ summary }}</p>
                 <br>
                 <div class="initial-search-outer">
@@ -216,7 +215,7 @@
                 <br><br>
                 <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
                   <p class="page-summary">Explore</p>
-                  <img class="explore-arrow" src="assets/components/white-arrow.png" width="25">
+                  <img class="explore-arrow" src="assets/components/white-arrow.png" width="25" alt="explore-arrow">
                 </span>
               </div>
             </div>
@@ -228,7 +227,7 @@
             <div *ngIf="homepage$ | async as homepage">
               <div class="featured-content">
                 <h2 class="featured-title">Featured</h2>
-                <p class="featured-summary">The thing you learn about learning is that there's always more to learn! Here are the highlights of what we are all learning together in the research community at the University of Auckland</p>
+                <p class="featured-summary">{{ homepage.featuredItemsDescription }}</p>
                 <div class="main-underline-white"></div>
                 <app-cards [flex]="'row'" [contentItem]="homepage.featuredItemsCollection"></app-cards>
               </div>
@@ -261,7 +260,7 @@
               <div class="footer-links" fxLayout="row wrap" fxFlexOrder.lt-md="0" fxLayoutGap="2vw" fxLayoutAlign="space-between">
                 <div fxLayout="column">
                   <a class="link-header">About</a>
-                  <a href="https://auckland.ac.nz">The University of Auckland</a>
+                  <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
                 </div>
                 <div fxLayout="column">
                   <a class="link-header">Engage</a>
@@ -270,6 +269,7 @@
                 <div fxLayout="column">
                   <a class="link-header">Helpful Links</a>
                   <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+                  <a [href]="privacyUrl" target="_blank">Privacy</a>
                 </div>
               </div>
             </div>

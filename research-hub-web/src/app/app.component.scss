@@ -8,11 +8,11 @@
  */
 .hub-logo {
   height: 30px;
-  & img {
+  img {
     height: 30px;
     @include size(small) { 
       height: 32px;
-      & img {
+      img {
         height: 32px;
       } 
     }
@@ -45,7 +45,7 @@
         @include size(medium) { width: 45vw!important; }
       }
       .page-title {
-        color: #FAFAFA;
+        color: #FFFFFF;
         margin-bottom: 32px;
         font-size: 48px;
         @include size(medium) { font-size: 92px; }
@@ -159,7 +159,7 @@ mat-expansion-panel-header .mat-expanded {
   height:  64px !important;
 }
 .expandable-menu {
-  background-color: #fafafa !important;
+  background-color: #FFFFFF !important;
   padding-left: 0 !important;
   height:  64px !important;
 }
@@ -211,8 +211,8 @@ mat-expansion-panel-header .mat-expanded {
 .app-toolbar {
   padding-left: $padding-site;
   padding-right: $padding-site;
-  background-color: map-get($hub-teal, 500);
-  & .app-toolbar-row {
+  background-color: map-get($hub-teal, 700);
+  .app-toolbar-row {
     height:  64px;
   }
 }
@@ -297,7 +297,7 @@ mat-expansion-panel-header .mat-expanded {
 .featured-container {
   z-index: 1;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)!important;
-  background: map-get($hub-teal, 500);
+  background: map-get($hub-teal, 700);
   .featured-content {
     width: 95vw;
     margin: 60px auto;
@@ -368,7 +368,7 @@ footer {
     }
   }
   .divider {
-    color: #fafafa;
+    color: #FFFFFF;
     padding-left: 5px;
     margin-left: 3px;
     border-left: 1.5px solid;

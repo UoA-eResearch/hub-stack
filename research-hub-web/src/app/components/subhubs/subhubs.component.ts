@@ -39,6 +39,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   public allSubHubs$: Observable<SubHubCollection>;
   public parentSubHubs;
   public isMobile: Boolean;
+  public bannerTextStyling;
 
   constructor(
     public route: ActivatedRoute,
@@ -49,7 +50,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { this.detectDevice(); }
+  ) { }
 
   // Detect if device is Mobile
   detectDevice() {
@@ -65,6 +66,11 @@ export class SubhubsComponent implements OnInit, OnDestroy {
         this.slug = params.slug || this.route.snapshot.data.slug;
         this._loadContent();
       });
+
+    /**
+     * Set styling for text if banner is present
+     */
+      this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   }
 
   /**
@@ -78,6 +84,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     if (!!this.slug) {
       this.subHub = this.getSubHubBySlug(this.slug);
       this.subHub$ = this.subHub.subscribe(data => {
+          this.detectDevice();
           this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });

@@ -19,7 +19,7 @@
                 <mat-card-header>
                     <div 
                         mat-card-avatar 
-                        id="item-avatar">
+                        class="item-avatar">
                         <div *ngIf="content.icon; else avatarIcon">
                             <img
                                 src="{{content?.icon?.url}}"
@@ -30,7 +30,7 @@
                         </div>
                         <ng-template #avatarIcon>
                             <mat-icon  
-                                id="item-avatar-icon"
+                                class="item-avatar-icon"
                                 [innerHTML]="getDefaultTypeIcon(content.__typename)">
                             </mat-icon>
                         </ng-template>

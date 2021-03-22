@@ -228,11 +228,11 @@ h1,
 h2,
 h3,
 h4 {
-  font-weight: bold;
+  font-weight: bold!important;
 }
 
 $body-light-bg-font-color:  black;
-$link-light-bg-color: map-get($hub-teal, 500);
+$link-light-bg-color: map-get($hub-teal, 700);
 
 $breadcrumb-previous-color: map-get($hub-teal, A100);
 $breadcrumb-current-color: $color-icon;

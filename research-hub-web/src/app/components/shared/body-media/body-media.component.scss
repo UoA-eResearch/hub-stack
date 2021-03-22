@@ -144,7 +144,7 @@
  *  Entry Inline
  */
  .embedded-entry-inline {
-    color: #0294a5;
+    color: #018193;
     display: inline-block !important;
 }
 
@@ -162,18 +162,21 @@
         margin: 15px auto;
         width: 100%;
         padding-right: 30px;
-        background: #fafafa;
-        .mat-card-title a { width: fit-content}
-        .mat-card-title a:hover {
-            border-bottom: solid 2px map-get($hub-navy, 500);
-        }
-        & .mat-card-title {
-            span  * {
-                font-size: 18px; 
-                color: map-get($hub-navy, 500);
-            }
-        }
+        background: #FFFFFF;
     }
+}
+
+.mat-card-title {
+    span  * {
+        font-size: 18px; 
+        color: map-get($hub-navy, 500);
+    }
+}
+.mat-card-title a {
+    max-width: fit-content!important;
+}
+.mat-card-title a:hover {
+    border-bottom: solid 2px map-get($hub-navy, 500);
 }
 
 .mat-card-content {
@@ -206,12 +209,15 @@
  */
 .table-container {
     width: fit-content;
-    margin: 0 auto;
+    margin: 40px auto;
     .body-table {
         text-align: center;
         border-collapse: collapse;
-        tr td {
-            padding: 5px;
+        th {
+            background: $input-grey;
+        }
+        th, td {
+            padding: 8px;
             border: 1px solid map-get($hub-navy, 500);
         }
     }
