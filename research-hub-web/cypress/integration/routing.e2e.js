@@ -1,7 +1,7 @@
 describe('ResearchHubs Static Routing', () => {
-    it('can visit /articles and load a list of Articles', () => {
-        cy.visit('/articles');
-        cy.contains('Article Collection');
+    it('can visit /search and load a list of Articles', () => {
+        cy.visit('/search');
+        cy.contains('Results found');
     });
 
     it('can visit /article/first-article and load the correct content item', () => {
@@ -25,9 +25,9 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
     });
 
     it('will update a content item\'s URL when it is visited from outside the SubHub', () => {
-        cy.visit('/articles');
+        cy.visit('/article/support-for-impactful-research');
         cy.get('mat-nav-list > mat-card')
-            .contains('Capturing your Impact').click();
+            .contains('Planning for Impact').click();
         cy.url().should('include', '/research-impact/');
     })
 });

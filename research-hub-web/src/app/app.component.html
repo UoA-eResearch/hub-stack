@@ -10,7 +10,7 @@
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
           <a [routerLink]="homeUrl" class="hub-logo" ngClass.xs="hub-logo-xs">
-            <img [src]="'assets/images/hub-logo.svg'" alt="hub-logo">
+            <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
       </div>
@@ -24,7 +24,7 @@
         </mat-list-item>
 
         <!-- Browse -->
-        <mat-expansion-panel style="background: #FFFFFF" hideToggle="true">
+        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
 
           <!-- Browse Title -->
           <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
@@ -41,7 +41,7 @@
         </mat-expansion-panel>
 
         <!-- Research Activites -->
-        <mat-expansion-panel style="background: #FFFFFF" hideToggle="true">
+        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
 
           <!-- Research Activities Name -->
           <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
@@ -59,6 +59,7 @@
           </div>
         </mat-expansion-panel>
 
+
         <!-- Sign In -->
         <mat-list-item *ngIf="!authenticated">
           <a mat-line (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</a>
@@ -66,7 +67,7 @@
 
 
         <!-- Sign Out -->
-        <mat-expansion-panel *ngIf="authenticated" style="background: #FFFFFF" hideToggle="true">
+        <mat-expansion-panel *ngIf="authenticated" style="background: #fafafa" hideToggle="true">
 
           <!-- Sign Out Name -->
           <mat-expansion-panel-header *ngIf="authenticated"  class="expandable-menu">
@@ -97,7 +98,7 @@
             <!-- Main Navbar -->
             <div #topbar class="app-toolbar-container">
               <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
-              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: 0px -3px 10px black;'">
+              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #0294a5; box-shadow: 0px -3px 10px black;'">
 
                 <!-- Main Navbar Content -->
                 <div fxLayout="row" class="app-toolbar-row" fxLayoutAlign="center center">
@@ -112,7 +113,7 @@
                     fxFlex.lt-md 
                     class="hub-logo"
                     [routerLink]="homeUrl">
-                    <img [src]="'assets/images/hub-logo.svg'" alt="hub-logo">
+                    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
                   </a>
 
                   <!-- Space Divider -->
@@ -137,7 +138,7 @@
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allCategories$ | async as allCategories">
                       <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items"
-                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
+                        [style.background]="showBanner ? '' : '#0294a5'" [routerLink]="['/search']"
                         (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">{{item.name}}</button>
                     </div>
                   </mat-menu>
@@ -149,7 +150,7 @@
                     <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allStages$ | async as allStages">
                       <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items"
-                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
+                        [style.background]="showBanner ? '' : '#0294a5'" [routerLink]="['/search']"
                         (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">{{ item.name }}</button>
                     </div>
                   </mat-menu>
@@ -167,7 +168,7 @@
                   <!-- User Details -->
                   <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
                     <div class="user-detail-dropdown">
-                      <img src="assets/images/uoa-logo-blue.svg" alt="uoa-logo-blue">
+                      <img src="assets/imgs/uoa-logo-blue.svg" alt="uoa-logo-blue">
 
                       <mat-list class="user-menu-list">
                         <mat-list-item>
@@ -201,21 +202,25 @@
               <div class="banner-text">
 
                 <!-- Title & Summary -->
-                <h1 class="page-title" role="heading" aria-level="1" style="font-weight: 100!important"><b>Research</b>Hub</h1>
+                <h1 class="page-title" role="heading" aria-level="1"><b>Research</b>Hub</h1>
                 <p class="page-summary">{{ summary }}</p>
                 <br>
                 <div class="initial-search-outer">
-                  <input
-                      type="search"
-                      #searchTextInput
-                      class="initial-search" 
-                      [(ngModel)]="searchText"
-                      placeholder="Search">
-                  </div>
+                  <mat-form-field class="initial-search">
+
+                    <!-- Search Bar -->
+                    <input role="textbox" autofocus matInput (keydown.enter)="search()"
+                      [(ngModel)]="searchText" placeholder="Search">
+                    <button role="button" matSuffix *ngIf="searchText" (click)="clearSearchText()" 
+                      (keydown.enter)="clearSearchText()"  mat-icon-button>
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
                 <br><br>
                 <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
                   <p class="page-summary">Explore</p>
-                  <img class="explore-arrow" src="assets/components/white-arrow.png" width="25" alt="explore-arrow">
+                  <img class="explore-arrow" src="assets/components/white-arrow.png" width="25">
                 </span>
               </div>
             </div>
@@ -227,7 +232,7 @@
             <div *ngIf="homepage$ | async as homepage">
               <div class="featured-content">
                 <h2 class="featured-title">Featured</h2>
-                <p class="featured-summary">{{ homepage.featuredItemsDescription }}</p>
+                <p class="featured-summary">The thing you learn about learning is that there's always more to learn! Here are the highlights of what we are all learning together in the research community at the University of Auckland</p>
                 <div class="main-underline-white"></div>
                 <app-cards [flex]="'row'" [contentItem]="homepage.featuredItemsCollection"></app-cards>
               </div>
@@ -249,7 +254,7 @@
               <!-- UoA Footer Logo -->
               <div fxFlexOrder.lt-md="1" class="logo-img-container">
                 <a [href]="aucklandUniUrl" target="_blank" >
-                  <img class="logo-img" src="assets/images/uoa-logo.svg" alt="uoa-logo">
+                  <img class="logo-img" src="assets/imgs/uoa-logo.svg" alt="uoa-logo">
                 </a>
               </div>
 

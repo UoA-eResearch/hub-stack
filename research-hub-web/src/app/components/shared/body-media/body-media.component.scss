@@ -144,7 +144,7 @@
  *  Entry Inline
  */
  .embedded-entry-inline {
-    color: #018193;
+    color: #0294a5;
     display: inline-block !important;
 }
 
@@ -162,7 +162,7 @@
         margin: 15px auto;
         width: 100%;
         padding-right: 30px;
-        background: #FFFFFF;
+        background: #fafafa;
     }
 }
 
@@ -209,15 +209,12 @@
  */
 .table-container {
     width: fit-content;
-    margin: 40px auto;
+    margin: 0 auto;
     .body-table {
         text-align: center;
         border-collapse: collapse;
-        th {
-            background: $input-grey;
-        }
-        th, td {
-            padding: 8px;
+        tr td {
+            padding: 5px;
             border: 1px solid map-get($hub-navy, 500);
         }
     }

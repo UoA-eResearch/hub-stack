@@ -129,7 +129,9 @@ async function createServer(config) {
                     '__Field',
                     '__InputValue',
                     '__EnumValue',
-                    '__Directive'
+                    '__Directive',
+                    'sys',
+                    'id',
                 ];
 
                 // Check whether the user has requested only public fields
@@ -143,6 +145,9 @@ async function createServer(config) {
                     'slug',
                     'banner',
                     'icon',
+                    'viewType',
+                    'id',
+                    'sys',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
@@ -222,6 +227,7 @@ async function createServer(config) {
             context,
             info
         });
+
     // Merge all schemas (remote and local) here
     const schema = mergeSchemas({
         schemas: [

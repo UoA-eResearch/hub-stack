@@ -18,7 +18,7 @@ div.collection {
     }
     $avatar-size:  64px;
 
-    .item-avatar {
+    #item-avatar {
         width: $avatar-size;
         height: $avatar-size;
         margin-right: $avatar-size * 0.15;
@@ -28,10 +28,10 @@ div.collection {
             height: $avatar-size;
         }
     }
-    .item-avatar-icon {
+    #item-avatar-icon {
         padding: 16px 0;
         font-size: $avatar-size!important;
-        color: map-get($hub-navy, 500)!important;
+        color: $color-primary;
     }
 }
 
@@ -75,5 +75,29 @@ div.collection {
         color: $dark-grey!important;
         font-size: 14px!important;
         vertical-align: middle;
+    }
+}
+
+/**
+ * Card Result Icon
+ */
+#item-avatar-icon {
+    color: map-get($hub-navy, 500)!important;
+}
+
+/**
+ * Pagination Controls
+ */
+::ng-deep.ngx-pagination {
+
+    .current {
+        background: map-get($hub-teal, 500)!important;
+    }
+    text-align: center;
+    padding: 0;
+
+    a:focus, a:active, a.active, a:hover{
+        background: #fafafa!important;
+        outline: none!important
     }
 }
