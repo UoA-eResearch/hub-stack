@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -77,11 +77,11 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
      */
     if (!!this.slug) {
       this.software = this.getSoftwareBySlug(this.slug);
-      this.software$ = this.software.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+        this.software$ = this.software.subscribe(data => {
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.appComponentService.setTitle(data.title);
+        });
+        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Software');
       this.allSoftware$ = this.getAllSoftware();
@@ -115,7 +115,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   public getSoftwareBySlug(slug: string): Observable<Software> {
     try {
       return this.getSoftwareBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.softwareCollection.items)) as Observable<Software>;
+        .pipe(flatMap(x => x.data.softwareCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Software>;
     } catch (e) { console.error(`Error loading Software ${slug}:`, e); }
   }
 

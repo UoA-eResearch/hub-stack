@@ -64,8 +64,12 @@
  * Notification Bar
  */
 .notification-bar-container {
+  a {
+    text-decoration: underline;
+  }
+  text-align: center;
   * { color: white; }
-  background: map-get($hub-pink, 700);
+  background: map-get($hub-pink, 500);
   .notification-bar-content {
     @extend .site-padding;
     padding-top: 15px;
@@ -74,40 +78,21 @@
   mat-icon {
     cursor: pointer;
   }
+  transition: all 0.1s ease-in-out;
 }
 
 /*
  * Initial Search
  */ 
- .initial-search {
+.initial-search {
+  padding: 0px 1em;
   width: 60vw;
-  padding: 4px;
   margin: 0 auto;
-  font-size: 16px;
-  font-style: italic;
-  color: white;
-  text-align: center;
-  &::placeholder {
-    text-align: center;
-    color: rgba(204, 204, 204, 0.7);
-  }
-  &:active,
-  &:focus {
-    text-decoration: none;
-    outline: none;
-  }
-  &::-webkit-search-cancel-button{
-    -webkit-appearance: none;
-    height: 1em;
-    width: 1em;
-    background-size: contain;
-    background-image: url('../assets/components/image.png');
-    opacity: 0.8;
-    cursor: pointer;
-  }
+  font-size: 20px;
+  color: #FAFAFA;
+  border: 1px solid rgba(78, 78, 78, 0.6);
   @include size(medium) { width: 30vw; }
-  background-color: rgba(150, 150, 150, 0.7);
-  border: 0.8px solid rgba(216, 216, 216, 0.7);
+  background-color: rgba(202, 202, 202, 0.4);
 }
 
 

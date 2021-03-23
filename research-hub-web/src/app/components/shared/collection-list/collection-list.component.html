@@ -1,5 +1,48 @@
 <ng-container *ngIf="collection">
-    <div>
+
+    <!-- Search Result Collection -->
+    <div *ngIf="type == 'search'">
+
+        <!-- Collection Container -->
+        <mat-nav-list role="list">
+            <a *ngFor="let content of collection | paginate: { itemsPerPage: itemsPerPage , currentPage: pageNumber, totalItems: searchBarService.getTotalPages() }"
+                [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" class="result-item"
+                [ngClass]="{'ssoProtected': content.ssoProtected }">
+
+                <!-- Collection Item -->
+                <mat-card fxLayout="row" role="listitem">
+                    <span mat-card-avatar id="item-avatar">
+                        <div *ngIf="content.icon; else avatarIcon">
+                            <img src="{{content?.icon?.url}}" alt="{{content?.icon?.description}}"
+                                class="item-avatar" width="100%" height="100%" />
+                        </div>
+                        <ng-template #avatarIcon>
+                            <mat-icon id="item-avatar-icon" [innerHTML]="getDefaultTypeIcon(content.__typename)"></mat-icon>
+                        </ng-template>
+                    </span>
+                    <span class="card-content">
+                        <h4 class="card-title">{{ content.title }}</h4>&nbsp;
+                        <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
+                        <p class="card-summary">{{ content.summary }}</p>
+                    </span>
+                </mat-card>
+            </a>
+        </mat-nav-list>
+        <div class="section-2">
+
+            <!-- Paginator -->
+            <div id="pagination">
+                <pagination-controls class="page-control" responsive="true" (pageChange)="nextPage($event)" 
+                    (pageBoundsCorrection)="resetPage()" screenReaderPaginationLabel="Pagination"
+                    screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Content Page Collection -->
+    <div *ngIf="type == 'content'">
         <h1 id="title">
             {{ collection.__typename | humanCase }}
         </h1>Found
@@ -10,8 +53,9 @@
             {{ collection.__typename | humanCase }}
         </span>
     
+        <!-- Content Collection -->
         <mat-nav-list>
-            <mat-card *ngFor="let content of collection.items">
+            <mat-card *ngFor="let content of collection.items | paginate: { itemsPerPage: itemsPerPage , currentPage: pageNumber, totalItems: collection.items.length }">
                 <a
                 [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" 
                 class="result-item"
@@ -45,5 +89,12 @@
                 </a>
             </mat-card>
         </mat-nav-list>
+
+        <!-- Paginator -->
+        <div id="pagination">
+            <pagination-controls class="page-control" responsive="true" (pageChange)="pageNumber = $event; scrollToTop()" screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+        </div>
     </div>
 </ng-container>
