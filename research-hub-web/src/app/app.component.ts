@@ -127,6 +127,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.homepage$ = this.getHomepage();
     this.homepage$.subscribe(data => {
 
+      if (data.notification) {
+
+        // Show notification if we're on the homepage
+        this.showNotification = ['home', 'home#'].includes(this.currentRoute);
+      }
+
       // If mobile
       this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
 
@@ -153,9 +159,6 @@ export class AppComponent implements OnInit, OnDestroy {
           if (routeName) {
             // Show banner if we're on the homepage
             this.showBanner = ['home', 'home#'].includes(routeName);
-
-            // Show notification if we're on the homepage
-            this.showNotification = ['home', 'home#'].includes(routeName);
 
             // Set title if we're on the homepage
             if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Welcome to the ResearchHub');
