@@ -10,7 +10,7 @@
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
           <a [routerLink]="homeUrl" class="hub-logo" ngClass.xs="hub-logo-xs">
-            <img [src]="'assets/images/hub-logo.svg'" alt="hub-logo">
+            <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
       </div>
@@ -90,11 +90,10 @@
     <mat-sidenav-content>
 
       <!-- Notification Bar -->
-      <div *ngIf="showNotification" class="notification-bar-container">
+      <div *ngIf="showNotification" class="notification-bar-container" fxLayout="row">
         <div class="notification-bar-content" *ngIf="homepage$ | async as homepage">
           <div [innerHTML]="homepage.notification.json | richTextToHTML"></div>
         </div>
-        <div fxFlex></div>
         <mat-icon (click)="showNotification = false">close</mat-icon>
       </div>
 
@@ -122,7 +121,7 @@
                     fxFlex.lt-md 
                     class="hub-logo"
                     [routerLink]="homeUrl">
-                    <img [src]="'assets/images/hub-logo.svg'" alt="hub-logo">
+                    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
                   </a>
 
                   <!-- Space Divider -->
@@ -177,7 +176,7 @@
                   <!-- User Details -->
                   <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
                     <div class="user-detail-dropdown">
-                      <img src="assets/images/uoa-logo-blue.svg" alt="uoa-logo-blue">
+                      <img src="assets/imgs/uoa-logo-blue.svg" alt="uoa-logo-blue">
 
                       <mat-list class="user-menu-list">
                         <mat-list-item>
@@ -215,13 +214,17 @@
                 <p class="page-summary">{{ summary }}</p>
                 <br>
                 <div class="initial-search-outer">
-                  <input
-                      type="search"
-                      #searchTextInput
-                      class="initial-search" 
-                      [(ngModel)]="searchText"
-                      placeholder="Search">
-                  </div>
+                  <mat-form-field class="initial-search">
+
+                    <!-- Search Bar -->
+                    <input role="textbox" autofocus matInput (keydown.enter)="search()"
+                      [(ngModel)]="searchText" placeholder="Search">
+                    <button role="button" matSuffix *ngIf="searchText" (click)="clearSearchText()" 
+                      (keydown.enter)="clearSearchText()"  mat-icon-button>
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
                 <br><br>
                 <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
                   <p class="page-summary">Explore</p>
@@ -259,7 +262,7 @@
               <!-- UoA Footer Logo -->
               <div fxFlexOrder.lt-md="1" class="logo-img-container">
                 <a [href]="aucklandUniUrl" target="_blank" >
-                  <img class="logo-img" src="assets/images/uoa-logo.svg" alt="uoa-logo">
+                  <img class="logo-img" src="assets/imgs/uoa-logo.svg" alt="uoa-logo">
                 </a>
               </div>
 

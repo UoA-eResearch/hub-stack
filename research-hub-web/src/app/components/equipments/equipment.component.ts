@@ -15,6 +15,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-equipment',
@@ -48,7 +49,8 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public location: Location
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -77,11 +79,11 @@ export class EquipmentComponent implements OnInit, OnDestroy {
      */
     if (!!this.slug) {
       this.equipment = this.getEquipmentBySlug(this.slug);
-      this.equipment$ = this.equipment.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+        this.equipment$ = this.equipment.subscribe(data => {
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.appComponentService.setTitle(data.title);
+        });
+        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Equipment');
       this.allEquipment$ = this.getAllEquipment();
@@ -115,7 +117,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
     try {
       return this.getEquipmentBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.equipmentCollection.items)) as Observable<Equipment>;
+        .pipe(flatMap(x => x.data.equipmentCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Equipment>;
     } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
   }
 

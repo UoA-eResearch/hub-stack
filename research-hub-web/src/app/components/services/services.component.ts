@@ -6,6 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllServicesGQL,
+  AllServicesSlugsGQL,
   GetServiceBySlugGQL,
   ServiceCollection,
   Service,
@@ -43,6 +44,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allServicesGQL: AllServicesGQL,
+    public allServicesSlugsGQL: AllServicesSlugsGQL,
     public getServiceBySlugGQL: GetServiceBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -76,6 +78,13 @@ export class ServicesComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Services.
      */
     if (!!this.slug) {
+      this.getAllServicesSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
       this.service = this.getServiceBySlug(this.slug);
       this.service$ = this.service.subscribe(data => {
 
@@ -85,8 +94,8 @@ export class ServicesComponent implements OnInit, OnDestroy {
           }
           
           this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
-      });
+          this.appComponentService.setTitle(data.title);
+        });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Services');
@@ -110,6 +119,20 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Function that returns all Equipments slugs from the ServiceCollection as an observable
+   * of type ServiceCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllServicesSlugs(): Observable<ServiceCollection> {
+    try {
+      return this.allServicesSlugsGQL.fetch()
+        .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
+    } catch (e) { console.error('Error loading all Equipments:', e) };
+  }
+
+  /**
    * Function that returns an individual Service from the ServiceCollection by it's slug
    * as an observable of type Service. This is then unwrapped with the async pipe.
    *
@@ -121,7 +144,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   public getServiceBySlug(slug: string): Observable<Service> {
     try {
       return this.getServiceBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.serviceCollection.items)) as Observable<Service>;
+        .pipe(flatMap(x => x.data.serviceCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Service>;
     } catch (e) { console.error(`Error loading Service ${slug}:`, e); }
   }
 
