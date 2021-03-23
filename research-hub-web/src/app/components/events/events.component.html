@@ -3,7 +3,7 @@
     *ngIf="allEvents$ | async as allEvents" 
     class="site-padding margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allEvents"></app-collection-list>
+    <app-collection-list [type]="'content'" [collection]="allEvents"></app-collection-list>
 </div>
 
 <div id="event-container" *ngIf="event | async as event">
@@ -104,7 +104,7 @@
 
             <!-- Event Body -->
             <div>
-                <ngx-contentful-rich-text style="word-break:break-word;" [document]="event.bodyText.json"
+                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="event.bodyText.json"
                     [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
             </div>
 
