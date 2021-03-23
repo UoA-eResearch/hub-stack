@@ -9,8 +9,8 @@
       <!-- Main Navbar -->
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
-          <a routerLink="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
-            <img [src]="'assets/imgs/hub-logo.svg'" alt="logo">
+          <a [routerLink]="homeUrl" class="hub-logo" ngClass.xs="hub-logo-xs">
+            <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
       </div>
@@ -111,8 +111,8 @@
                   <a 
                     fxFlex.lt-md 
                     class="hub-logo"
-                    routerLink="/home">
-                    <img [src]="'assets/imgs/hub-logo.svg'" alt="logo">
+                    [routerLink]="homeUrl">
+                    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
                   </a>
 
                   <!-- Space Divider -->
@@ -213,10 +213,6 @@
                     <button role="button" matSuffix *ngIf="searchText" (click)="clearSearchText()" 
                       (keydown.enter)="clearSearchText()"  mat-icon-button>
                       <mat-icon>close</mat-icon>
-                    </button>
-                    <button matSuffix role="button" aria-label="search" (click)="search()"
-                      (keydown.enter)="search()" mat-icon-button>
-                      <mat-icon>search</mat-icon>
                     </button>
                   </mat-form-field>
                 </div>

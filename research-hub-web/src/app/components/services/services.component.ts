@@ -6,6 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllServicesGQL,
+  AllServicesSlugsGQL,
   GetServiceBySlugGQL,
   ServiceCollection,
   Service,
@@ -43,6 +44,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allServicesGQL: AllServicesGQL,
+    public allServicesSlugsGQL: AllServicesSlugsGQL,
     public getServiceBySlugGQL: GetServiceBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -76,6 +78,13 @@ export class ServicesComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Services.
      */
     if (!!this.slug) {
+      this.getAllServicesSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
       this.service = this.getServiceBySlug(this.slug);
         this.service$ = this.service.subscribe(data => {
 
@@ -107,6 +116,20 @@ export class ServicesComponent implements OnInit, OnDestroy {
       return this.allServicesGQL.fetch()
         .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
     } catch (e) { console.error('Error loading all Services:', e) };
+  }
+
+  /**
+   * Function that returns all Equipments slugs from the ServiceCollection as an observable
+   * of type ServiceCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllServicesSlugs(): Observable<ServiceCollection> {
+    try {
+      return this.allServicesSlugsGQL.fetch()
+        .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
+    } catch (e) { console.error('Error loading all Equipments:', e) };
   }
 
   /**
