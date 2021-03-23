@@ -59,6 +59,7 @@ query GetEventBySlug($slug: String) {
             items { ...PublicFields }
         }
         callToAction
+        callToActionLabel
         audience
         mode
         availability
@@ -66,10 +67,6 @@ query GetEventBySlug($slug: String) {
         access
         location {
             json
-        }
-        address {
-            lat 
-            lon 
         }
         }
     }
