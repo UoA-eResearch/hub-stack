@@ -36,9 +36,4 @@ describe('ResearchHubs Homepage', () => {
         cy.get('#top-bar').contains('Sign In').click();
         cy.contains('Or sign in with one of the following services');
     })
-
-    it('clicking Sign In takes you to SSO', () => {
-        cy.get('#featured').contains('Research Impact').click();
-        cy.contains('Impact is the contribution that research and creative practice make to society, the environment and the economy, and the benefits to individuals, whānau, communities, organisations, New Zealand and the world');
-    })
 });
