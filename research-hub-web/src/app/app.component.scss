@@ -60,6 +60,21 @@
   }
 }
 
+/*
+ * Notification Bar
+ */
+.notification-bar-container {
+  * { color: white; }
+  background: map-get($hub-pink, 700);
+  .notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+}
 
 /*
  * Initial Search

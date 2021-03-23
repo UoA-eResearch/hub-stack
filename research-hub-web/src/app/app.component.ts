@@ -34,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public privacyUrl = 'https://www.auckland.ac.nz/en/privacy.html';
 
   public url: Subscription;
+  public showNotification: Boolean;
   public showBanner: Boolean;
   public title: String;
   public summary: String;
@@ -125,6 +126,10 @@ export class AppComponent implements OnInit, OnDestroy {
     // Get Homepage Image
     this.homepage$ = this.getHomepage();
     this.homepage$.subscribe(data => {
+      console.log(data);
+
+      // If Notification
+      data.notification ? this.showNotification = true : this.showNotification = false;
 
       // If mobile
       this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
