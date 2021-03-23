@@ -6,7 +6,7 @@
     <!-- Items List -->
     <div fxLayout="{{ flex }}" fxLayout.lt-md="column wrap" fxLayoutGap="1%">
         <mat-nav-list role="list" fxFlex="19%" *ngFor="let content of contentItem.items" class="collection">
-
+            
             <!-- Templates -->
             <ng-template #image><img mat-card-image src="{{ content.banner?.url }}" alt="{{ content.title }}-banner"></ng-template>
             <ng-template #noImage><div style="margin-top: 12px;"></div></ng-template>
@@ -44,7 +44,7 @@
             </ng-template>
 
             <ng-template #contact>
-                <mat-card>
+                <mat-card role="listitem">
                     <ng-container *ngIf="content.banner; then image; else noImage"></ng-container>
                     <span *ngIf="content.__typename == 'Person'" class="card-label">Contact</span>
                     <span *ngIf="content.__typename == 'OrgUnit'" class="card-label">Unit</span>

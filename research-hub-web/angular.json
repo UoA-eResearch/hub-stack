@@ -21,7 +21,8 @@
               "./src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/app/components/error-routing/error-routing.scss"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [

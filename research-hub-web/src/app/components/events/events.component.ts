@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -14,6 +14,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-events',
@@ -37,7 +38,8 @@ export class EventsComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allEvents$: Observable<EventCollection>;
   public parentSubHubs;
-
+  public isMobile: Boolean;
+  
   constructor(
     public route: ActivatedRoute,
     public allEventsGQL: AllEventsGQL,
@@ -45,8 +47,14 @@ export class EventsComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
-  ) { }
+    public router: Router,
+    private deviceService: DeviceDetectorService
+  ) { this.detectDevice(); }
+
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   async ngOnInit() {
     /**
@@ -69,15 +77,16 @@ export class EventsComponent implements OnInit, OnDestroy {
      */
     if (!!this.slug) {
       this.event = this.getEventBySlug(this.slug);
-      this.event$ = this.event.subscribe(data => {
+        this.event$ = this.event.subscribe(data => {
 
-        // If Call To Action is an email address
-        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          data['callToAction'] = 'mailto:' + data['callToAction'];
-        }
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
-      });
+          // If Call To Action is an email address
+          if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            data['callToAction'] = 'mailto:' + data['callToAction'];
+          }
+          
+          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.appComponentService.setTitle(data.title);
+        });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Events');
@@ -112,7 +121,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   public getEventBySlug(slug: string): Observable<Event> {
     try {
       return this.getEventBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.eventCollection.items)) as Observable<Event>;
+        .pipe(flatMap(x => x.data.eventCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Event>;
     } catch (e) { console.error(`Error loading Event ${slug}:`, e); }
   }
 

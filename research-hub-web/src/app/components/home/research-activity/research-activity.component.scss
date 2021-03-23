@@ -20,7 +20,7 @@
  * Research Activity Container
  */
 .research-activity-content {
-  & .outer-panel {
+  .outer-panel {
     width: 100%;
     height: 240px;
     text-align: center;
@@ -35,7 +35,7 @@
       outline: none;
       text-decoration: none;
     }
-    & .inner-panel {
+    .inner-panel {
 
       margin-right: 20px; /* Set to 0 if you don't want shadow at the right side */
       margin-left: 0px; /* Set to 20px if you want shadow at the left side */
@@ -60,10 +60,10 @@
         margin-left: -5vw;
         transform: skew(30deg);
       }
-      & * {
+      * {
         color: #fafafa;
       }
-      & div {
+      div {
         width: 100%;
         transform: skew(0deg); 
         @include size(large) {
@@ -75,7 +75,7 @@
           outline: none;
         }
       }
-      & h3 {
+      h3 {
         width: 90vw;
         line-height: 1.05;
         margin: 5px auto;
@@ -87,7 +87,7 @@
           width: 100%;
           font-size: 40px; }
       }
-      & p {
+      p {
         width: 90vw;
         font-size: 16px;
         margin: 0 auto;
@@ -103,7 +103,7 @@
         background: #fafafa;
         border: 4px solid map-get($hub-teal, 500);
         transition: background 0.11s ease-in-out;
-        & * {
+        * {
           transition: background 0.11s ease-in-out;
           color: map-get($hub-teal, 500)!important;
         }

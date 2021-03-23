@@ -24,15 +24,15 @@
   text-align: center;
   text-decoration: none;
   background-color: white;
-  & .title-text {
+  .title-text {
     font-size: 24px;
     color: map-get($hub-navy, 500);
   }
-  & .tile-button {
+  .tile-button {
     color: map-get($hub-navy, 500);
     font-size: 16px!important;
   }
-  & .standard-button {
+  .standard-button {
     @extend .standard-button;
     margin-bottom: 16px;
     border: 3px solid map-get($hub-navy, 500)!important;

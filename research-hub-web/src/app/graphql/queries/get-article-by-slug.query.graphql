@@ -9,6 +9,8 @@ query GetArticleBySlug($slug: String) {
           slug
           ssoProtected
           searchable
+          callToAction
+          callToActionLabel
           banner {
             title
             description
