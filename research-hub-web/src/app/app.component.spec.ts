@@ -9,7 +9,7 @@ import { AppComponentService } from './app.component.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SearchBarService } from './components/search-bar/search-bar.service';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterTestingModule, SpyNgModuleFactoryLoader } from '@angular/router/testing';
 import { MatMenuModule } from '@angular/material/menu'
 
 describe('AppComponent', () => {
@@ -32,7 +32,6 @@ describe('AppComponent', () => {
           Title,
           LoginService,
           Apollo,
-          BypassErrorService,
           DeviceDetectorService
       ]
     })
