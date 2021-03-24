@@ -14,7 +14,7 @@
     "prebuild": "npm run generate",
     "postinstall": "ngcc",
     "test": "ng test",
-    "test-ci": "ng test --watch=false",
+    "test-ci": "ng test --watch=false --source-map=false",
     "test-watch": "ng test --watch=true",
     "lint": "ng lint",
     "bundle-report": "ng build --stats-json && webpack-bundle-analyzer www/stats.json",
