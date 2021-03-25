@@ -101,3 +101,15 @@ div.collection {
         outline: none!important
     }
 }
+
+/**
+ * Loading Transition
+ */
+.loading {
+    opacity: 0.5;
+    transition: opacity 0.1s ease-in-out;
+}
+.loaded {
+    opacity: 1;
+    transition: opacity 0.1s ease-in-out;
+}
