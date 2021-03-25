@@ -25,8 +25,6 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
 
     it('will update a content item\'s URL when it is visited from outside the SubHub', () => {
         cy.visit('/article/support-for-impactful-research');
-        cy.get('mat-nav-list > mat-card')
-            .contains('Planning for Impact').click();
         cy.url().should('include', '/research-impact/');
     })
 });

@@ -88,6 +88,15 @@
 
     <!-- Main Screen -->
     <mat-sidenav-content>
+
+      <!-- Notification Bar -->
+      <div *ngIf="showNotification" class="notification-bar-container" fxLayout="row">
+        <div class="notification-bar-content" *ngIf="homepage$ | async as homepage">
+          <div [innerHTML]="homepage.notification.json | richTextToHTML"></div>
+        </div>
+        <mat-icon (click)="showNotification = false">close</mat-icon>
+      </div>
+
       <div class="sidenav-content-wrapper">
         <div #topContent fxLayout="column" class="sidenav-content">
 
@@ -229,7 +238,7 @@
           <div #featured></div>
           <div class="featured-container" *ngIf="showBanner" >
             <div *ngIf="homepage$ | async as homepage">
-              <div class="featured-content">
+              <div class="featured-content" *ngIf="homepage.featuredItemsCollection.items.length > 0">
                 <h2 class="featured-title">Featured</h2>
                 <p class="featured-summary">{{ homepage.featuredItemsDescription }}</p>
                 <div class="main-underline-white"></div>
