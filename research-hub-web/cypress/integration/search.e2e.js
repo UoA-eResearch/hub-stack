@@ -15,13 +15,13 @@ describe('ResearchHubs Search Page from Homepage', () => {
 
     it('displays search content', () => {
         cy.get('input').type('{enter}');
-        cy.contains('Results found');
+        cy.contains('Results');
     });
 
-    it('displays number of results found', () => {
+    it('displays number of results', () => {
         cy.get('input').type('ffffffffff');
         cy.get('input').type('{enter}');
-        cy.contains('Results found');
+        cy.contains('Results');
     });
 
     it('Clicking a research category navigates to the search page', () => {
