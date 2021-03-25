@@ -238,7 +238,7 @@
           <div #featured></div>
           <div class="featured-container" *ngIf="showBanner" >
             <div *ngIf="homepage$ | async as homepage">
-              <div class="featured-content">
+              <div class="featured-content" *ngIf="homepage.featuredItemsCollection.items.length > 0">
                 <h2 class="featured-title">Featured</h2>
                 <p class="featured-summary">{{ homepage.featuredItemsDescription }}</p>
                 <div class="main-underline-white"></div>
