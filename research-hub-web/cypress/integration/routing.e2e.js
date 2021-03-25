@@ -1,7 +1,7 @@
 describe('ResearchHubs Static Routing', () => {
     it('can visit /search and load a list of Articles', () => {
         cy.visit('/search');
-        cy.contains('Results found');
+        cy.contains('Results');
     });
 
     it('can visit /article/first-article and load the correct content item', () => {
