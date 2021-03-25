@@ -56,10 +56,10 @@ describe('ResearchHubs Equipment  Pages', () => {
     //     cy.get('#organisations').contains('Centre for eResearch').should('exist');
     // });
 
-    // Cypress doesn't dupport multi-tab testing
-    // 
-    // it('clicking on an organisation takes you to the organisation', () => {
-    //     cy.get('#organisations').contains('Office of Research Strategy and Integrity').click();
-    //     cy.contains("The Office of Research Strategy and Integrity (ORSI) was established in 2018 to support the work of the Deputy Vice Chancellor Research and the University's Research Committee in: ");
-    // });
+    it('clicking on an organisation takes you to the organisation', () => {
+        cy.get('#organisations').contains('Office of Research Strategy and Integrity').then(link => {
+            cy.request(link.prop('href')).its('status').should('eq', 200);
+        })
+        cy.contains("The Office of Research Strategy and Integrity (ORSI) was established in 2018 to support the work of the Deputy Vice Chancellor Research and the University's Research Committee in: ");
+    });
 });
