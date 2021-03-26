@@ -252,7 +252,8 @@ export class SearchBarService {
               "summary" : element._source.fields.summary["en-US"],
               "slug" : element._source.fields.slug["en-US"],
               "ssoProtected" : element._source.fields.ssoProtected["en-US"],
-              "__typename" : element._source.sys.contentType.sys.id
+              "__typename" : element._source.sys.contentType.sys.id,
+              "icon": element._source.fields.icon?.["en-US"]["url"]
             }
             array.push(result);
           });
