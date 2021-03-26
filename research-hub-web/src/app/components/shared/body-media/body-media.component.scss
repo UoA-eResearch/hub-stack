@@ -213,7 +213,7 @@
     .body-table {
         text-align: center;
         border-collapse: collapse;
-        font-size: 2.5vw;
+        font-size: 2vw;
         @include size(small) {font-size: initial}
         th {
             white-space: nowrap;
@@ -221,6 +221,7 @@
         }
         th, td {
             padding: 8px;
+            word-break: keep-all;
             border: 1px solid map-get($hub-navy, 500);
         }
     }
