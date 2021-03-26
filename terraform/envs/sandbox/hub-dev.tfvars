@@ -26,6 +26,9 @@ secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
 acm_arn_secondary             = "arn:aws:acm:us-east-1:416527880812:certificate/74e9a6bf-78cc-443b-a1dd-2cd9127719d3"
 
+# 2FAB callback url
+two_fab_url = "https://apigw.sandbox.amazon.auckland.ac.nz/aws-token-grabber/"
+
 # Route53
 route53_hosted_zone_id = "ZMGQD6EYUM762"
 
@@ -68,7 +71,7 @@ cognito_user_pool_id      = "ap-southeast-2_pgErjyL4O"
 cognito_user_pool_arn     = "arn:aws:cognito-idp:ap-southeast-2:416527880812:userpool/ap-southeast-2_pgErjyL4O"
 cognito_user_pool_domain  = "uoapool-sandbox"
 cognito_identity_provider = "UoATestIDP"
-permitted_group           = "Postgraduate.psrwi|staffIntranetUser.ec"
+permitted_group           = "staffIntranetUser.ec"
 
 # S3 Contentful Backup Bucket
 create_contentful_backup_bucket = false

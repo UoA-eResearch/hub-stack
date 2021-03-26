@@ -14,6 +14,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-subhubs',
@@ -37,6 +38,8 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allSubHubs$: Observable<SubHubCollection>;
   public parentSubHubs;
+  public isMobile: Boolean;
+  public bannerTextStyling;
 
   constructor(
     public route: ActivatedRoute,
@@ -45,9 +48,15 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
+    public router: Router,
+    private deviceService: DeviceDetectorService
   ) { }
 
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
+  
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
@@ -57,6 +66,11 @@ export class SubhubsComponent implements OnInit, OnDestroy {
         this.slug = params.slug || this.route.snapshot.data.slug;
         this._loadContent();
       });
+
+    /**
+     * Set styling for text if banner is present
+     */
+      this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   }
 
   /**
@@ -70,6 +84,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     if (!!this.slug) {
       this.subHub = this.getSubHubBySlug(this.slug);
       this.subHub$ = this.subHub.subscribe(data => {
+          this.detectDevice();
           this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
@@ -107,7 +122,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   public getSubHubBySlug(slug: string): Observable<SubHub> {
     try {
       return this.getSubHubBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.subHubCollection.items)) as Observable<SubHub>;
+        .pipe(flatMap(x => x.data.subHubCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<SubHub>;
     } catch (e) { console.error(`Error loading SubHub ${slug}:`, e); }
   }
 

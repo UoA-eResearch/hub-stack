@@ -42,12 +42,7 @@ query GetSoftwareBySlug($slug: String) {
               }
             }
           relatedContactsCollection {
-            items { 
-              ...PublicFields
-              ...on Person {
-              email
-            }
-            }
+            items { ...PublicFields }
           }
           relatedItemsCollection {
             items { ...PublicFields }

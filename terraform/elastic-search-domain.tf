@@ -3,7 +3,7 @@ resource "aws_elasticsearch_domain" "elasticsearch_domain" {
   domain_name = "${var.prefix}-${var.lifecycle_state}-domain"
   elasticsearch_version = var.es_version
   cluster_config {
-    instance_type = "t3.small.elasticsearch"
+    instance_type = "m5.large.elasticsearch"
     instance_count = 2
     dedicated_master_enabled = false
     zone_awareness_config {
@@ -14,7 +14,7 @@ resource "aws_elasticsearch_domain" "elasticsearch_domain" {
 
   ebs_options {
     ebs_enabled = true
-    volume_size = "10"  # for a total of 20GB (2 x instances)
+    volume_size = "50"  # for a total of 100GB (2 x instances)
   }
 
   domain_endpoint_options {

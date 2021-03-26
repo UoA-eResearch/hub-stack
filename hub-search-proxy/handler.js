@@ -3,10 +3,18 @@ const { Client } = require('@elastic/elasticsearch');
 const AWS = require('aws-sdk');
 const createAwsElasticsearchConnector = require('aws-elasticsearch-connector');
 const contentfulExport = require('contentful-export');
+const contentful = require('contentful')
 
-const token = process.env.CONTENTFUL_ACCESS_TOKEN;
+
+const mgmtToken = process.env.CONTENTFUL_MGMT_ACCESS_TOKEN;  // Contentful Management API Token
+const token = process.env.CONTENTFUL_ACCESS_TOKEN;  // Contentful Delivery API Token
 const spaceId = process.env.CONTENTFUL_SPACE_ID;
 const region = 'ap-southeast-2';
+
+const deliveryApiClient = contentful.createClient({
+  space: spaceId,
+  accessToken: token
+})
 
 let credentials;
 try {
@@ -94,6 +102,7 @@ module.exports.search = async (event, context) => {
             "fields.ssoProtected",
             "fields.searchable",
             "fields.keywords",
+            "fields.icon",
             "sys.contentType"
           ]
         },
@@ -147,6 +156,7 @@ module.exports.search = async (event, context) => {
             "fields.ssoProtected",
             "fields.searchable",
             "fields.keywords",
+            "fields.icon",
             "sys.contentType"
           ]
         },
@@ -227,6 +237,7 @@ module.exports.search = async (event, context) => {
             "fields.ssoProtected",
             "fields.searchable",
             "fields.keywords",
+            "fields.icon",
             "sys.contentType"
           ]
         },
@@ -281,6 +292,12 @@ module.exports.search = async (event, context) => {
 
 module.exports.update = async (event, context) => {
   let doc = JSON.parse(event.body);
+
+  // add icon url
+  if (doc.fields.hasOwnProperty('icon')) {
+    const iconUrl = await getIconUrl(doc.fields.icon['en-US'].sys.id);
+    doc.fields.icon['en-US']['url'] = iconUrl;
+  }
 
   const params = {
     id: event.pathParameters.id,
@@ -349,7 +366,7 @@ module.exports.bulk = async () => {
     console.log('Exporting data from Contentful space id: ' + spaceId);
     const options = {
       spaceId: spaceId,
-      managementToken: token,
+      managementToken: mgmtToken,
       contentOnly: true,
       downloadAssets: false,
       saveFile: false
@@ -360,6 +377,14 @@ module.exports.bulk = async () => {
     );
 
     console.log(`Found ${validEntries.length} entries to upload.`);
+
+    // add icon urls
+    for(var i = 0; i < validEntries.length; i++) {
+      if (validEntries[i].fields.hasOwnProperty('icon')) {
+        const iconUrl = await getIconUrl(validEntries[i].fields.icon['en-US'].sys.id);
+        validEntries[i].fields.icon['en-US']['url'] = iconUrl;
+      }
+    };
 
     // perform the upload
     console.log(`Uploading documents to index: ${ELASTICSEARCH_INDEX_NAME}`);
@@ -418,5 +443,14 @@ function formatResponse(status, body) {
           "Access-Control-Allow-Origin": process.env.CORS_ACCESS_CONTROL_ALLOW_ORIGINS,
           "Content-Type": "application/json"
       }
+  }
+}
+
+async function getIconUrl (iconId) {
+  try {
+    const asset = await deliveryApiClient.getAsset(iconId);
+    return asset.fields.file.url
+  } catch(error) {
+    console.log(error);
   }
 }
