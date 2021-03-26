@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { flatMap, pluck } from 'rxjs/operators';
 import {
   AllStagesGQL,
-  StageCollection
+  StageCollection,
+  GetHomepageGQL,
+  Homepage
 } from '@graphql/schema';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 
@@ -14,17 +16,28 @@ import { SearchBarService } from '@app/components/search-bar/search-bar.service'
 })
 export class ResearchActivityComponent implements OnInit {
   public title = 'Research Activities';
-  public description = 'The research lifecycle describes the research journey from project inception to completion. It highlights five project stages. Below you can explore what the University of Auckland provides to support you according to where you are in your research journey.';
+  public description = '';
   public allStages$: Observable<StageCollection>;
   
   constructor(
     public allStagesGQL: AllStagesGQL,
-    public searchBarService: SearchBarService
+    public searchBarService: SearchBarService,
+    public getHomepageGQL: GetHomepageGQL
     ) {}
 
   async ngOnInit() {
-    // Get All Categories
     this.allStages$ = this.getAllStages();
+    this.getHomepage().subscribe(data => {
+      this.description = data.researchActivities;
+    })
+  }
+
+  // Get homepage data
+  public getHomepage(): Observable<Homepage> {
+    try {
+      return this.getHomepageGQL.fetch()
+        .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
+    } catch (e) { console.error('Error loading homepage:', e) };
   }
 
   // Get all research stages

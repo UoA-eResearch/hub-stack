@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -15,6 +15,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-services',
@@ -38,6 +39,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allServices$: Observable<ServiceCollection>;
   public parentSubHubs;
+  public isMobile: Boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -47,8 +49,14 @@ export class ServicesComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
-  ) { }
+    public router: Router,
+    private deviceService: DeviceDetectorService
+  ) { this.detectDevice(); }
+
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   async ngOnInit() {
     /**
@@ -78,7 +86,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
       this.service = this.getServiceBySlug(this.slug);
-      this.service$ = this.service.subscribe(data => {
+        this.service$ = this.service.subscribe(data => {
 
           // If Call To Action is an email address
           if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {

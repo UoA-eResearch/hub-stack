@@ -144,7 +144,7 @@
  *  Entry Inline
  */
  .embedded-entry-inline {
-    color: #0294a5;
+    color: #018193;
     display: inline-block !important;
 }
 
@@ -162,7 +162,7 @@
         margin: 15px auto;
         width: 100%;
         padding-right: 30px;
-        background: #fafafa;
+        background: #FFFFFF;
     }
 }
 
@@ -208,13 +208,20 @@
  * Table
  */
 .table-container {
-    width: fit-content;
-    margin: 0 auto;
+    min-width: 100%;
+    margin: 40px auto;
     .body-table {
         text-align: center;
         border-collapse: collapse;
-        tr td {
-            padding: 5px;
+        font-size: 2vw;
+        @include size(small) {font-size: initial}
+        th {
+            white-space: nowrap;
+            background: $input-grey;
+        }
+        th, td {
+            padding: 8px;
+            word-break: keep-all;
             border: 1px solid map-get($hub-navy, 500);
         }
     }
