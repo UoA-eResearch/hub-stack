@@ -1,167 +1,121 @@
 <!-- If we're displaying a collection of caseStudys-->
 <div
     *ngIf="allCaseStudies$ | async as allCaseStudies" 
-    class="site-padding-2 margin-bottom top-padding" 
+    class="site-padding margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allCaseStudies"></app-collection-list>
+    <app-collection-list [type]="'content'" [collection]="allCaseStudies"></app-collection-list>
 </div>
 
-
-<!-- If we're displaying an individual caseStudy -->
-<div 
-    id="caseStudy-container" 
-    *ngIf="caseStudy | async as caseStudy">
+<div id="caseStudy-container" *ngIf="caseStudy | async as caseStudy">
     
     <!-- Templates -->
     <ng-template #breadcrumbs>
-        <app-breadcrumbs 
-            [contentItem]="parentSubHubs" 
-            [title]="caseStudy.title">
-        </app-breadcrumbs>
-    </ng-template>
-
-    <ng-template #titleSummary>
-        <h1 
-            class="content-title" 
-            ngClass.lt-md="content-title-mobile"
-            [style.color]="caseStudy.banner ? caseStudy.viewType == 'View 1' ? 'white' : '' : ''">
-            {{ caseStudy.title }}
-        </h1>
-
-        <h3 
-            class="content-summary" 
-            ngClass.lt-sm="content-summary-sm"
-            [style.color]="caseStudy.banner ? caseStudy.viewType == 'View 1' ? 'white' : '' : ''">
-            {{ caseStudy.summary }}
-        </h3>
+        <app-breadcrumbs [contentItem]="parentSubHubs" [title]="caseStudy.title"></app-breadcrumbs>
     </ng-template>
 
     <ng-template #caseStudyBody>
-        <ngx-contentful-rich-text
-            class="section-2 body-text"
-            style="word-break:break-word;" 
-            [document]="caseStudy.bodyText.json"
-            [nodeRenderers]="nodeRenderers">
-        </ngx-contentful-rich-text>
+        <ngx-contentful-rich-text id="body" class="section-2" style="word-break:break-word;" [document]="caseStudy.bodyText.json"
+            [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
     </ng-template>
 
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards 
-            [flex]="flex"
-            id="you-might-be-interested-in"
-            [hideImage]="hide"
-            [title]="'Explore Related'" 
-            [contentItem]="caseStudy.relatedItemsCollection">
-        </app-cards>
+        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" 
+            [contentItem]="caseStudy.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards 
-            [flex]="flex"
-            [hideImage]="hide"
-            [title]="'Organisations'" 
-            [contentItem]="caseStudy.relatedOrgsCollection">
-        </app-cards>
+        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
+            [contentItem]="caseStudy.relatedOrgsCollection"></app-cards>
     </ng-template>
     
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards
-            [flex]="flex"
-            [hideImage]="hide"
-            [title]="'Contacts'" 
-            [contentItem]="caseStudy.relatedContactsCollection">
-        </app-cards>
+        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
+            [contentItem]="caseStudy.relatedContactsCollection"></app-cards>
     </ng-template>
 
     <ng-template #officialDocuments let-hide="hideImage" let-flex="flex">
-        <app-cards
-            [flex]="flex"
-            [hideImage]="hide"
-            [title]="'Documents'" 
-            [contentItem]="caseStudy.relatedDocsCollection">
-        </app-cards>
+        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
+            [contentItem]="caseStudy.relatedDocsCollection"></app-cards>
     </ng-template>
 
         <div>
-
-            <!-- Dynamic Banner -->
-            <div
-            class="banner-container"
-            [style]="caseStudy.banner ? 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + caseStudy.banner.url + ') no-repeat fixed center; padding: 72px 0px' : ''">
+            <div class="banner-container" [style]="caseStudy.banner ? 
+                isMobile ?
+                'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + caseStudy.banner.url + ') no-repeat; padding: 72px 0px' 
+                : 'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + caseStudy.banner.url + ') no-repeat fixed center; padding: 72px 0px' 
+                : ''">
                 <div class="banner-content">
 
                     <!-- Title -->
-                    <h1 
-                        class="content-title" 
-                        ngClass.lt-md="content-title-mobile"
-                        [style.color]="caseStudy.banner ? 'white' : ''">
-                            {{ caseStudy.title }}
-                    </h1>
+                    <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
+                        [style]="caseStudy.banner ? bannerTextStyling : ''">{{ caseStudy.title }}</h1>
+
+                    <!-- Maori Proverb -->
+                    <h2 aria-level="2" *ngIf="caseStudy.maoriProverb" class="maori-proverb"
+                    [style]="caseStudy.banner ? bannerTextStyling : ''"><hr>{{ caseStudy.maoriProverb}}<hr></h2>
 
                     <!-- Summary -->
-                    <p
-                        class="content-summary" 
-                        ngClass.sm="content-summary-sm" 
-                        ngClass.xs="content-summary-xs"
-                        [style.color]="caseStudy.banner ? 'white' : ''">
-                            <small>{{ caseStudy.summary }}</small>
-                    </p>
+                    <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
+                        [style]="caseStudy.banner ? bannerTextStyling : ''">
+                        <small>{{ caseStudy.summary }}</small></p>
+
+                    <!-- Call To Action -->
+                    <div class="section" *ngIf="caseStudy.callToAction">
+                        <div *ngIf="caseStudy.banner">
+                            <a href="{{ caseStudy.callToAction }}" target="_blank">
+                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button-banner">
+                                    <span *ngIf="caseStudy.callToActionLabel">{{ caseStudy.callToActionLabel }}</span>
+                                    <span *ngIf="!caseStudy.callToActionLabel">View Equipment</span>
+                                </button>
+                            </a>
+                        </div>
+                        <div *ngIf="!caseStudy.banner">
+                            <a href="{{ caseStudy.callToAction }}" target="_blank">
+                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button">
+                                    <span *ngIf="caseStudy.callToActionLabel">{{ caseStudy.callToActionLabel }}</span>
+                                    <span *ngIf="!caseStudy.callToActionLabel">View Equipment</span>
+                                </button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div 
-                class="site-padding top-padding" 
-                ngClass.lt-md="site-padding-mobile top-padding">
+            <div class="site-padding" ngClass.lt-md="site-padding-mobile">
 
                 <!-- Breadcrumbs -->
                 <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
 
-                <div 
-                    fxLayout="row wrap" 
-                    fxLayout.lt-md="column wrap"
-                    fxLayoutGap="5%">
+                <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column wrap" fxLayoutGap="5%">
 
                     <!-- caseStudy Body -->
-                    <div 
-                        fxFlex
-                        fxFlexOrder="2"
-                        fxFlexOrder.xs="1">
+                    <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
                         <ng-container *ngTemplateOutlet="caseStudyBody"></ng-container>
                     </div>
 
                     <!-- Extra Links -->
-                    <div 
-                        *ngIf="
+                    <div *ngIf="
                             caseStudy.relatedDocsCollection.items.length > 0 ||
                             caseStudy.relatedContactsCollection.items.length > 0 ||
                             caseStudy.relatedOrgsCollection.items.length > 0"
-                        fxLayout="column" 
-                        fxFlex="20%"
-                        fxFlexOrder="1"
-                        fxFlexOrder.lt-md="2">
+                        fxLayout="column" fxFlex="20%" fxFlexOrder="1" fxFlexOrder.lt-md="2">
 
                         <!-- Contacts -->
-                        <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: 'true', flex: 'column wrap'}"></ng-container>
+                        <ng-container *ngTemplateOutlet="relatedContacts; context: { flex: 'column', hide: 'true' }"></ng-container>
 
                         <!-- Official Documents -->
-                        <ng-container *ngTemplateOutlet="officialDocuments; context: { hideImage: 'true', flex: 'column wrap'}"></ng-container>
+                        <ng-container *ngTemplateOutlet="officialDocuments; context: { flex: 'column', hide: 'true'}"></ng-container>
 
                         <!-- Organizations -->
-                        <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: 'true', flex: 'column wrap'}"></ng-container>
+                        <ng-container *ngTemplateOutlet="relatedOrganisations; context: { flex: 'column', hide: 'true'}"></ng-container>
 
                     </div>
 
                     <!-- Related items -->
-                    <div 
-                        id="you-might-be-interested-in"
-                        *ngIf="caseStudy.relatedItemsCollection.items.length > 0"
-                        fxLayout="column" 
-                        fxFlex="20%"
-                        fxFlexOrder="3">
-                        <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: 'true', flex: 'column wrap'}"></ng-container>
-                    </div>
+                    <div *ngIf="caseStudy.relatedItemsCollection.items.length > 0" fxLayout="column" fxFlex="20%" fxFlexOrder="3">
+                        <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column', hide: 'true'}"></ng-container></div>
                 </div>
             </div>
-        </div>            
+        </div>
     <div class="section"></div>
 </div>

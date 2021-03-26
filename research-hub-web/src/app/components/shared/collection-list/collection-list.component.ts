@@ -78,6 +78,6 @@ export class CollectionListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this.searchTextSub.unsubscribe();
+    try { this.searchTextSub.unsubscribe(); } catch {};
   }
 }
