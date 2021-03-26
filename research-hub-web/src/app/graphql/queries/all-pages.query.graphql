@@ -1,0 +1,37 @@
+query AllPages {
+  articleCollection {
+    items {
+      ...PublicFields
+    }
+  }
+  equipmentCollection {
+    items {
+      ...PublicFields
+    }
+  }
+  subHubCollection {
+    items {
+      ...PublicFields
+    }
+  }
+  eventCollection {
+    items {
+      ...PublicFields
+    }
+  }
+  serviceCollection {
+    items {
+      ...PublicFields
+    }
+  }
+  softwareCollection {
+    items {
+      ...PublicFields
+    }
+  }
+  caseStudyCollection {
+    items {
+      ...PublicFields
+    }
+  }
+}

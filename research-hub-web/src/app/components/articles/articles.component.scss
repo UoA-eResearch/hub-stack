@@ -4,5 +4,37 @@
 
 mat-expansion-panel,
 mat-card  {
-    margin: 1vh 0;
+    margin: 8px 0;
+}
+
+
+/**
+ * Custom Button Styles
+ */
+ .standard-button {
+    @extend .standard-button;
+   border: 3px solid map-get($hub-navy, 500)!important;
+   background-color: map-get($hub-navy, 500)!important;
+}
+.standard-button:hover {
+   color: map-get($hub-navy, 500)!important;
+   border-radius: 50px!important;
+   background-color: white!important;
+   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+/**
+ * Custom Button Styles
+ */
+ .standard-button-banner {
+    @extend .standard-button;
+    color: rgba(0, 0, 0, 0.3)!important;
+    border: 3px solid white!important;
+    background-color: white!important;
+}
+.standard-button-banner:hover {
+   color: white!important;
+   border-radius: 50px!important;
+   background-color: rgba(0, 0, 0, 0.3)!important;
+   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }

@@ -7,6 +7,16 @@
  * National Fonts
  */ 
  @font-face {
+  font-family: 'National Light';
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.eot');
+  /* IE9 Compat Modes */
+  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.woff2') format('woff2'),
+    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.woff') format('woff');
+  /* Pretty Modern Browsers */
+  font-weight: 100;
+}
+
+ @font-face {
   font-family: 'National';
   src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.eot');
   /* IE9 Compat Modes */
@@ -163,124 +173,66 @@ ion-title {
 
 $font-family: 'National';
 
-// All typography
+/**
+ * All typography
+ */
 $app-base-typography: mat-typography-config(
   $font-family:   $font-family,
-  $display-4:     mat-typography-level(14vh, 14vh, 300),
-  $display-3:     mat-typography-level(7vh, 7vh, 400),
-  $display-2:     mat-typography-level(5.7vh, 6vh, 400),
-  $display-1:     mat-typography-level(3vh, 5vh, 400),
-  $headline:      mat-typography-level(3.5vh, 4vh, 400), // <h1>
-  $title:         mat-typography-level(3vh, 3.5vh, 500), // <h2>
-  $subheading-2:  mat-typography-level(2.5vh, 3vh, 400), // <h3>
-  $subheading-1:  mat-typography-level(2vh, 2.5vh, 400), // <h4>
-  $body-2:        mat-typography-level(2vh, 3vh, 500), // bolder body text
-  $body-1:        mat-typography-level(2vh, 3vh, 400), // base body text <p> ?
-  $caption:       mat-typography-level(1.5vh, 2.5vh, 400), // smaller body and hint text
-  $button:        mat-typography-level(2vh, 3vh, 500),
-  $input:         mat-typography-level(2vh, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
+  $display-4:     mat-typography-level(112px, 112px, 300),
+  $display-3:     mat-typography-level(56px, 56px, 400),
+  $display-2:     mat-typography-level(45px, 48px, 400),
+  $display-1:     mat-typography-level(34px, 40px, 400),
+  $headline:      mat-typography-level(28px, 32px, 400), // <h1>
+  $title:         mat-typography-level(24px, 28px, 500), // <h2>
+  $subheading-2:  mat-typography-level(20px, 24px, 400), // <h3>
+  $subheading-1:  mat-typography-level(16px, 20px, 400), // <h4>
+  $body-2:        mat-typography-level(16px, 24px, 500), // bolder body text
+  $body-1:        mat-typography-level(16px, 22px, 400), // base body text <p> ?
+  $caption:       mat-typography-level(12px, 20px, 400), // smaller body and hint text
+  $button:        mat-typography-level(14px, 14px, 500),
+  $input:         mat-typography-level(16px, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
 );
 
-// Override typography for all Angular Material, including mat-base-typography and all components.
+
+/**
+ * Override typography for all Angular Material, including mat-base-typography and all components.
+ */
 @include angular-material-typography($app-base-typography);
 
-/*
-Sidenav
- */
 
+/**
+ * Sidenav
+ */
 $app-sidenav-list-typography: mat-typography-config(
-  $body-1:        mat-typography-level(2vh, 2.5vh, 400), // text
-  $body-2:        mat-typography-level(3vh, 3vh, 500) // icon
+  $body-1:        mat-typography-level(16px, 20px, 400), // text
+  $body-2:        mat-typography-level(24px, 24px, 500) // icon
 );
 
-$app-sidenav-toolbar-typography: mat-typography-config(
-  $body-1:      mat-typography-level(3vh, 2.5vh, 500), // 'ResearchHub' text
-  $button:        mat-typography-level(3vh, 2.5vh, 400) // icon
-);
-
-/*
-Search
+/**
+ * Mat Chip
  */
-
-$app-search-bar-select-typography: mat-typography-config(
-  $title:         mat-typography-level(2vh, 2.5vh, 500), // current selected text
-  $body-1:      mat-typography-level(2vh, 2.5vh, 400) // option text
-);
-
-$app-search-bar-typography: mat-typography-config(
-  $body-1:        mat-typography-level(3vh, 3vh, 500), // icon
-  $input:         mat-typography-level(2vh, 1.125, 400) // input
-);
-
-/*
-Header/crumbs
- */
-
-$app-primary-header-typography: mat-typography-config(
-  $headline:      mat-typography-level(1.75vh, 4vh, 400)
-);
-
-/*
-Featured
- */
-
-$app-featured-mat-card-typography: mat-typography-config(
-  $body-1:      mat-typography-level(2.25vh, 2.5vh, 400), // text
-  $button:        mat-typography-level(1.75vh, 2.5vh, 400) // icon
-);
-
-/*
-Browse Grid / Results
- */
-
-$app-browse-grid-typography: mat-typography-config(
-  $font-family:   $font-family,
-  $body-1:        mat-typography-level(2.25vh, 2.5vh, 400), // text
-  $body-2:        mat-typography-level(4vh, 4vh, 500) // icon
-);
-
-
-// NO LONGER NEEDED
-//$app-result-list-typography: mat-typography-config(
-//  $body-1:      mat-typography-level(2vh, 2.5vh, 400), // text
-//  $subheading-2: mat-typography-level(2.5vh, 2.5vh, 400), // h3 e.g. Managing Research Data
-//  $subheading-1: mat-typography-level(3.5vh, 2.5vh, 400) // we use this for the section subheadings e.g. Guides, Policies
-//);
-
 $app-chips-typography: mat-typography-config(
-  $button:      mat-typography-level(2vh, 2.5vh, 400) // text
+  $button:      mat-typography-level(16px, 20px, 400) // text
 );
 
 
-/*
-Colors
+/**
+ * Colors
  */
+$heading-1-font-color: map-get($hub-navy, 500);
+$heading-2-font-color: map-get($hub-navy, 500);
+$heading-3-font-color: $dark-grey;
+$heading-4-font-color: $dark-grey;
 
-$heading-1-font-color: map-get($hub-pink, 500);
-$heading-2-font-color: map-get($hub-pink, 500);
-$heading-3-font-color: map-get($hub-pink, 500);
-$heading-4-font-color: map-get($hub-navy, 500);
-
-.body-text h1,
-.body-text h2,
-.body-text h3,
-.body-text h4 {
-  color: map-get($hub-navy, 500);
+h1,
+h2,
+h3,
+h4 {
+  font-weight: bold!important;
 }
-
-$subheading-font-color: map-get($hub-pink, 500); // used in results list
 
 $body-light-bg-font-color:  black;
 $link-light-bg-color: map-get($hub-teal, 500);
 
-$body-dark-bg-font-color:  white;
-$link-dark-bg-color-1: map-get($hub-teal, A100);
-$link-dark-bg-color-2: $body-dark-bg-font-color;
-
 $breadcrumb-previous-color: map-get($hub-teal, A100);
 $breadcrumb-current-color: $color-icon;
-
-$browse-tile-font-color: $body-dark-bg-font-color;
-
-$markdown-heading-color: $heading-2-font-color;
-$markdown-subheading-color: $heading-3-font-color;

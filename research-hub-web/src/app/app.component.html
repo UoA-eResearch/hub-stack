@@ -1,301 +1,287 @@
 <section class="mat-typography">
+
+  <!-- Landing Page -->
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav 
-      #sidenav 
-      mode="over" 
-      opened="false">
-      <div 
-        class="app-toolbar" 
-        ngClass.xs="app-toolbar-xs">
-        <div 
-          class="app-toolbar-row" 
-          fxLayout="row" 
-          fxLayoutAlign="start center" 
-          color="primary">
-          <a 
-            routerLink="/home" 
-            class="hub-logo" 
-            ngClass.xs="hub-logo-xs">
-            <img [src]="'assets/images/hub-logo.svg'">
+
+    <!-- Navbar Container -->
+    <mat-sidenav #sidenav mode="over" opened="false">
+
+      <!-- Main Navbar -->
+      <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
+        <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
+          <a [routerLink]="homeUrl" class="hub-logo" ngClass.xs="hub-logo-xs">
+            <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
       </div>
 
+      <!-- Mobile Drawer -->
       <mat-nav-list>
-          <ng-container *ngFor="let menuOption of menuOptions;">
-            <ng-container *ngIf="menuOption.sublist === undefined">
-              <mat-list-item
-                [routerLink]="menuOption.routerLink" 
-                (click)="sidenav.close()">
-                <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
-                <a mat-line>{{menuOption.name}}</a>
-            </mat-list-item>
-            </ng-container>
-            <ng-container *ngIf="menuOption.sublist !== undefined">
-              <mat-expansion-panel>
-                <mat-expansion-panel-header class="expandable-menu">
-                  <mat-list-item>
-                    <mat-icon mat-list-icon>{{menuOption.icon}}</mat-icon>
-                    <a mat-line>{{menuOption.name}}</a>
-                  </mat-list-item>
-                </mat-expansion-panel-header>
 
-                <mat-list-item 
-                  *ngFor="let item of menuOption.sublist;" 
-                  (click)="sidenav.close()"
-                  [routerLink]="['/search']" 
-                  [queryParams]="getSearchQueryParams(item)">
-                  <a mat-line>{{item.name}}</a>
-                </mat-list-item>
-              </mat-expansion-panel>
-            </ng-container>
-          </ng-container>
+        <!-- Search -->
+        <mat-list-item  *ngIf="!onSearchPage" [routerLink]="['/search']" (click)="clearSearchText()"
+          (keydown.enter)="clearSearchText()"><a mat-line>Search</a>
+        </mat-list-item>
+
+        <!-- Browse -->
+        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
+
+          <!-- Browse Title -->
+          <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
+            <mat-list-item><a mat-line>Research Categories</a></mat-list-item>
+          </mat-expansion-panel-header>
+
+          <!-- Browse Options -->
+          <mat-nav-list *ngIf="allCategories$ | async as allCategories">
+            <mat-list-item *ngFor="let item of allCategories.items" [routerLink]="['/search']"
+            (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">
+              <a mat-line>{{ item.name }}</a>
+            </mat-list-item>
+          </mat-nav-list>
+        </mat-expansion-panel>
+
+        <!-- Research Activites -->
+        <mat-expansion-panel style="background: #fafafa" hideToggle="true">
+
+          <!-- Research Activities Name -->
+          <mat-expansion-panel-header *ngIf="!onSearchPage" class="expandable-menu">
+            <mat-list-item>
+              <a mat-line>Research Activities</a>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+
+          <!-- Research Activities List -->
+          <div *ngIf="allStages$ | async as allStages">
+            <mat-list-item *ngFor="let item of allStages.items" [routerLink]="['/search']"
+            (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">
+              <a mat-line>{{ item.name }}</a>
+            </mat-list-item>
+          </div>
+        </mat-expansion-panel>
+
+
+        <!-- Sign In -->
+        <mat-list-item *ngIf="!authenticated">
+          <a mat-line (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</a>
+        </mat-list-item>
+
+
+        <!-- Sign Out -->
+        <mat-expansion-panel *ngIf="authenticated" style="background: #fafafa" hideToggle="true">
+
+          <!-- Sign Out Name -->
+          <mat-expansion-panel-header *ngIf="authenticated"  class="expandable-menu">
+            <mat-list-item>
+              <a mat-line fxLayout="row" fxLayoutAlign="start center">
+                <mat-icon matPrefix style="margin-right: 5px;">person</mat-icon>
+                <span fxHide.gt-sm>{{ userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0) }}</span>
+              </a>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+
+          <!-- Sign Out List -->
+          <div *ngIf="authenticated">
+            <a mat-line (click)="loginService.logout()" (keydown.enter)="loginService.logout()">Sign Out</a>
+          </div>
+        </mat-expansion-panel>
       </mat-nav-list>
     </mat-sidenav>
 
+    <!-- Main Screen -->
     <mat-sidenav-content>
       <div class="sidenav-content-wrapper">
-        <div 
-          #topContent 
-          class="sidenav-content" 
-          fxLayout="column" 
-          ngClass.xs="sidenav-content-xs">
-          <div 
-            #topbar 
-            class="app-toolbar-container">
-            <div 
-              ngClass.gt-md="site-content app-toolbar" 
-              ngClass.lt-lg="site-content app-toolbar-xs">
-              <div 
-                class="app-toolbar-row" 
-                fxLayout="row" 
-                fxLayoutAlign="center center" 
-                color="primary">
-                <button 
-                  style="margin-right: 1vh;" 
-                  fxHide.gt-sm 
-                  mat-icon-button 
-                  (click)="sidenav.toggle()"
-                  matTooltip="Menu">
-                  <mat-icon>menu</mat-icon>
-                </button>
-                <a 
-                  routerLink="/home" 
-                  class="hub-logo" 
-                  ngClass.xs="hub-logo-xs">
-                  <img [src]="'assets/images/hub-logo.svg'">
-                </a>
+        <div #topContent fxLayout="column" class="sidenav-content">
 
-                <span style="flex: 1 1 auto;"></span>
+          <!-- Banner -->
+          <div class="banner-container-home" [style]="showBanner ? isMobile ? mobileBackground : desktopBackground : ''">
 
-                <button 
-                  mat-icon-button 
-                  fxHide.gt-sm 
-                  routerLink="/search" 
-                  matTooltip="Search">
-                  <mat-icon>search</mat-icon>
-                </button>
+            <!-- Main Navbar -->
+            <div #topbar class="app-toolbar-container">
+              <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
+              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #0294a5; box-shadow: 0px -3px 10px black;'">
 
-                <button 
-                  mat-button 
-                  fxHide.lt-md 
-                  routerLink="/search">
-                    Search
-                </button>
+                <!-- Main Navbar Content -->
+                <div fxLayout="row" class="app-toolbar-row" fxLayoutAlign="center center">
 
-                <button 
-                  class="button-menu" 
-                  fxHide.lt-md 
-                  mat-button 
-                  [matMenuTriggerFor]="browseMenu">
-                    Browse
-                  <mat-icon matPrefix>expand_more</mat-icon>
-                </button>
-
-                <mat-menu 
-                  #browseMenu="matMenu" 
-                  [overlapTrigger]="false">
-                  <button 
-                    mat-menu-item
-                    [routerLink]="['/search']">
+                  <!-- Mobile Menu Toggle -->
+                  <button role="button" aria-label="menu" fxHide.gt-sm mat-icon-button style="margin-right: 6px;"
+                    (click)="sidenav.toggle()" matTooltip="Menu"><mat-icon>menu</mat-icon>
                   </button>
-                </mat-menu>
 
-                <button 
-                  class="button-menu" 
-                  fxHide.lt-md mat-button 
-                  [matMenuTriggerFor]="researchActivityMenu">
-                  Research Activities
-                    <mat-icon matPrefix>expand_more</mat-icon>
-                </button>
+                  <!-- Logo/Home -->
+                  <a 
+                    fxFlex.lt-md 
+                    class="hub-logo"
+                    [routerLink]="homeUrl">
+                    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
+                  </a>
 
-                <mat-menu 
-                  #researchActivityMenu="matMenu" 
-                  [overlapTrigger]="false">
-                  <button 
-                    mat-menu-item 
-                    *ngFor="let item of researchActivityOptions"
-                    [routerLink]="['/search']" 
-                    [queryParams]="getSearchQueryParams(item)">
-                      {{item.name}}
+                  <!-- Space Divider -->
+                  <span fxHide.lt-md style="flex: 1 1 auto;"></span>
+
+                  <!-- Search Icon (Mobile)-->
+                  <button role="button" aria-label="search" *ngIf="!onSearchPage" (click)="clearSearchText()"
+                    (keydown.enter)="clearSearchText()" mat-icon-button
+                    fxHide.gt-sm routerLink="/search" matTooltip="Search">
+                    <mat-icon>search</mat-icon>
                   </button>
-                </mat-menu>
 
-                <button 
-                  mat-button 
-                  fxHide.lt-md 
-                  routerLink="/userStudy">
-                    User Study
-                </button>
+                  <!-- Search Button -->
+                  <button role="button" aria-label="search" *ngIf="!onSearchPage" mat-button 
+                  fxHide.lt-md routerLink="/search" (click)="clearSearchText()" 
+                  (keydown.enter)="clearSearchText()">Search</button>
 
-                <button 
-                  mat-button 
-                  fxHide.lt-md 
-                  routerLink="/feedback">
-                    Feedback
-                </button>
+                  <!-- Research Categories Button -->
+                  <button role="button" aria-label="categories" *ngIf="!onSearchPage" 
+                    mat-button fxHide.lt-md class="button-menu" [matMenuTriggerFor]="browseMenu">Research Categories</button>
 
-                <button 
-                  *ngIf="!authenticated"
-                  fxHide.lt-md 
-                  mat-button 
-                  (click)="loginService.doLogin()">
-                    Sign In
-                </button>
-
-                <button 
-                  class="button-menu" 
-                  *ngIf="authenticated" 
-                  mat-button 
-                  [matMenuTriggerFor]="userMenu">
-                  <mat-icon 
-                    matPrefix 
-                    style="margin-right: 1vh;" 
-                    fxHide.xs>
-                      person
-                  </mat-icon>
-                  <span 
-                    fxHide 
-                    fxShow.gt-md>
-                      {{ userInfo?.firstName + ' ' + userInfo?.lastName }}
-                  </span>
-                  <span 
-                    fxHide 
-                    fxShow.md>
-                      {{ userInfo?.firstName }}
-                  </span>
-                  <span fxHide.gt-sm>
-                      {{ userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0) }}
-                  </span>
-                </button>
-
-                <mat-menu 
-                  #userMenu="matMenu" 
-                  [overlapTrigger]="false">
-                  <div class="user-detail-dropdown">
-                    <img src="assets/images/uoa-logo-blue.svg">
-
-                    <mat-list class="user-menu-list">
-                      <mat-list-item>
-                        <mat-icon mat-list-icon>person</mat-icon>
-                        <p mat-line>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</p>
-                      </mat-list-item>
-                      <mat-list-item>
-                        <mat-icon mat-list-icon>note</mat-icon>
-                        <p mat-line>{{ userInfo?.email }}</p>
-                      </mat-list-item>
-                    </mat-list>
-
-                    <div 
-                      fxLayout="row" 
-                      fxLayoutAlign="end">
-                      <button 
-                        mat-raised-button 
-                        class="sign-out-button"
-                        href="https://www.auckland.ac.nz/en/about-us/about-the-university/identity-and-access-management/single-sign-on/details.html">
-                          Sign Out
-                      </button>
+                  <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
+                    <div *ngIf="allCategories$ | async as allCategories">
+                      <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items"
+                        [style.background]="showBanner ? '' : '#0294a5'" [routerLink]="['/search']"
+                        (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">{{item.name}}</button>
                     </div>
-                  </div>
-                </mat-menu>
+                  </mat-menu>
 
+                  <!-- Research Activities Button -->
+                  <button role="button" aria-label="activities" *ngIf="!onSearchPage" class="button-menu" 
+                    fxHide.lt-md mat-button [matMenuTriggerFor]="researchActivityMenu">Research Activities</button>
+
+                    <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
+                    <div *ngIf="allStages$ | async as allStages">
+                      <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items"
+                        [style.background]="showBanner ? '' : '#0294a5'" [routerLink]="['/search']"
+                        (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">{{ item.name }}</button>
+                    </div>
+                  </mat-menu>
+
+                  <!-- Sign In Button -->
+                  <button role="button" aria-label="sign-in" *ngIf="!authenticated" fxHide.lt-md
+                    mat-button (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</button>
+
+                  <button fxHide fxShow.gt-sm role="button" class="button-menu" aria-label="user-info" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
+                    <mat-icon fxHide fxShow.gt-sm matPrefix style="margin-right: 5px;">person</mat-icon>
+                    <span fxHide fxShow.gt-md>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</span>
+                    <span fxHide fxShow.lt-lg>{{ userInfo?.firstName }}</span>
+                  </button>
+
+                  <!-- User Details -->
+                  <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+                    <div class="user-detail-dropdown">
+                      <img src="assets/imgs/uoa-logo-blue.svg" alt="uoa-logo-blue">
+
+                      <mat-list class="user-menu-list">
+                        <mat-list-item>
+                          <mat-icon mat-list-icon>person</mat-icon>
+                          <p mat-line>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</p>
+                        </mat-list-item>
+                        <mat-list-item>
+                          <mat-icon mat-list-icon>note</mat-icon>
+                          <p mat-line>{{ userInfo?.email }}</p>
+                        </mat-list-item>
+                      </mat-list>
+
+                      <!-- Sign Out Button-->
+                      <div fxLayout="row" fxLayoutAlign="end">
+                        <button role="button" aria-label="sign-out" mat-raised-button class="sign-out-button"
+                        (click)="loginService.logout()" (keydown.enter)="loginService.logout()">
+                          Sign Out
+                        </button>
+                      </div>
+                    </div>
+                  </mat-menu>
+
+                </div>
               </div>
             </div>
-            <mat-progress-bar 
-              class="app-progress-bar" 
-              mode="indeterminate" 
-              color="accent"
-              [style.visibility]="showProgressBar ? 'visible' : 'hidden'">
-            </mat-progress-bar>
+
+            <!-- Homepage Banner -->
+            <div
+              class="banner-content-home"
+              [style.display]="showBanner ? '' : 'none'">
+              <div class="banner-text">
+
+                <!-- Title & Summary -->
+                <h1 class="page-title" role="heading" aria-level="1"><b>Research</b>Hub</h1>
+                <p class="page-summary">{{ summary }}</p>
+                <br>
+                <div class="initial-search-outer">
+                  <mat-form-field class="initial-search">
+
+                    <!-- Search Bar -->
+                    <input role="textbox" autofocus matInput (keydown.enter)="search()"
+                      [(ngModel)]="searchText" placeholder="Search">
+                    <button role="button" matSuffix *ngIf="searchText" (click)="clearSearchText()" 
+                      (keydown.enter)="clearSearchText()"  mat-icon-button>
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+                <br><br>
+                <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
+                  <p class="page-summary">Explore</p>
+                  <img class="explore-arrow" src="assets/components/white-arrow.png" width="25">
+                </span>
+              </div>
+            </div>
           </div>
 
-          <!-- <mat-drawer-container> -->
-          <mat-sidenav-container fxFlex="noshrink">
-
-          <!-- Content sidenav -->
-          <mat-sidenav class="content-sidenav" mode="side" disableClose
-          [opened]="appComponentService.isContentSidenavVisible" [fixedInViewport]="isContentSidenavFixed"
-          [ngStyle]="{'height':contentSidenavHeight + 'px'}" [@.disabled]="true">
-          <router-outlet name="contentSidenav" (activate)="setContentSidenavHasContent(true)"
-            (deactivate)="setContentSidenavHasContent(false)"></router-outlet>
-          </mat-sidenav>
-
-            <!-- Search bar  -->
-            <mat-sidenav-content [@contentPushLeft]="appComponentService.isContentSidenavVisible">
-              <div #content> 
-
-                 <!-- Banner -->
-                 <div 
-                  class="banner-container site-padding-2"
-                  ngClass.lt-lg="site-padding-mobile"
-                  [ngStyle]="{ 'background-image': coverImageUrl }"
-                  *ngIf="showBanner">
-                  <div 
-                    class="banner-content-default">
-                    <h1>{{ title }}</h1>
-                    <h4>{{ summary }}</h4>
-                  </div>
-                </div>  
-                <app-search-bar 
-                  [searchText]="searchText">
-                </app-search-bar>
-
-                <!-- Page content -->
-                <router-outlet></router-outlet>
+          <!-- Featured Items -->
+          <div #featured></div>
+          <div class="featured-container" *ngIf="showBanner" >
+            <div *ngIf="homepage$ | async as homepage">
+              <div class="featured-content">
+                <h2 class="featured-title">Featured</h2>
+                <p class="featured-summary">The thing you learn about learning is that there's always more to learn! Here are the highlights of what we are all learning together in the research community at the University of Auckland</p>
+                <div class="main-underline-white"></div>
+                <app-cards [flex]="'row'" [contentItem]="homepage.featuredItemsCollection"></app-cards>
               </div>
-            </mat-sidenav-content>
-          </mat-sidenav-container>
-        </div>
-        <footer>
-          <div 
-            class="footer-content"
-            fxLayout="column" 
-            fxLayoutGap="1vh"
-            fxLayoutAlign="center center">
-            <div>
-              <a 
-                [href]="aucklandUniUrl" 
-                target="_blank" >
-                <img 
-                  ngClass.gt-xs="logo-img" 
-                  ngClass.lt-sm="logo-img-xs"
-                  src="assets/images/uoa-logo.svg">
-              </a>
             </div>
+          </div>
 
-            <div fxLayout="row" fxLayout.lt-sm="column">
-              <a routerLink="/userStudy">Join User Study</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a routerLink="/feedback">Provide Feedback</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a routerLink="/contact">Contact</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a routerLink="/about">About</a>
-              <span fxHide.xs class="footer-divider"></span>
-              <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+          <!-- Page Content -->
+          <router-outlet></router-outlet>
+        </div>
+
+        <!-- Footer Container-->
+        <footer>
+
+          <!-- Footer Content -->
+          <div class="footer-content" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center" ngClass.lt-md="site-padding-mobile">
+
+            <div style="width: 100%" fxLayoutGap="5%" fxLayout="row" fxLayout.lt-md="column">
+
+              <!-- UoA Footer Logo -->
+              <div fxFlexOrder.lt-md="1" class="logo-img-container">
+                <a [href]="aucklandUniUrl" target="_blank" >
+                  <img class="logo-img" src="assets/imgs/uoa-logo.svg" alt="uoa-logo">
+                </a>
+              </div>
+
+              <!-- Spacer between footer content -->
+              <div fxFlex fxHide.lt-md></div>
+
+              <!-- Footer Links -->
+              <div class="footer-links" fxLayout="row wrap" fxFlexOrder.lt-md="0" fxLayoutGap="2vw" fxLayoutAlign="space-between">
+                <div fxLayout="column">
+                  <a class="link-header">About</a>
+                  <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
+                </div>
+                <div fxLayout="column">
+                  <a class="link-header">Engage</a>
+                  <a href="{{ feedbackLink }}">Feedback</a>
+                </div>
+                <div fxLayout="column">
+                  <a class="link-header">Helpful Links</a>
+                  <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+                  <a [href]="privacyUrl" target="_blank">Privacy</a>
+                </div>
+              </div>
             </div>
-            <div>
-              <a 
+            
+            <!-- Copyright -->
+            <div class="copyright">
+              <a
               [href]="eResearchUrl" 
               target="_blank">
                   Copyright © {{ getYear() }} Centre for eResearch

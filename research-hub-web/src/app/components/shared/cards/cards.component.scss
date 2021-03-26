@@ -1,14 +1,22 @@
 @import '../../../../themes.scss';
+@import '../../../../typography.scss';
 @import '../../../../styles.scss';
 
+
+/**
+ * Mat Card
+ */
+ mat-card {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.27)!important;
+}
 
 /**
  * Card Image
  */ 
  .mat-card-image {
-    min-height: 10vh;
-    max-height: 19vh;
-    margin-bottom: 0.625vh;
+    min-height: 80px;
+    max-height: 152px;
+    margin-bottom: 5px;
     object-fit: cover;
   }
 
@@ -16,17 +24,14 @@
 /**
   * Mat-Card Title
   */
-.mat-card-title a:hover {
-  border-bottom: solid 0.25vh map-get($hub-navy, 500);
+.mat-card-title {
+  a:hover {
+    border-bottom: solid 2px $dark-grey;
+  }
 }
 
-
-/**
- * Call To Action
- */
-a {
-    margin: 0.625vh 0px;
-    color: map-get($hub-teal, 500);
+.mat-card a {
+  color: $dark-grey!important;
 }
 
 
@@ -36,8 +41,26 @@ a {
  .card-label {
   background: map-get($hub-teal, 500);
   color: rgb(255, 255, 255);
-  position:absolute;
+  position: absolute;
+  font-size: 14px;
   left:0;
   top:0;
-  padding: 0px 1.875vh;
+  padding: 0px 15px;
  }
+
+.contact-card-summary  {
+  a {
+    color: #0294A5!important;
+    display: inline-block;
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+   }
+   mat-icon {
+     font-size: 12px!important;
+     color: $body-grey!important;
+     width: 16px!important;
+     vertical-align: middle;   
+    }
+}

@@ -19,47 +19,55 @@ export const appRoutes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'equipment',
-    loadChildren: () => import('@components/equipment/equipment.module').then(m => m.EquipmentModule)
+    path: 'search',
+    loadChildren: () => import('@app/components/search-page/search-page.module').then((m) => m.SearchPageModule),
   },
   {
     path: 'equipment/:slug',
-    loadChildren: () => import('@components/equipment/equipment.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
   },
   {
-    path: 'case-studies',
-    loadChildren: () => import('@components/case-study/case-study.module').then(m => m.CaseStudyModule)
-  },
-  {
-    path: 'case-study/:slug',
-    loadChildren: () => import('@components/case-study/case-study.module').then(m => m.CaseStudyModule)
-  },
-  {
-    path: 'articles',
-    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
+    path: 'equipment',
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
   },
   {
     path: 'article/:slug',
     loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {
-    path: 'subhubs',
-    loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+    path: 'articles',
+    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
+  },
+  {
+    path: 'event/:slug',
+    loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
+  },
+  {
+    path: 'events',
+    loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
   },
   {
     path: 'subhub/:slug',
     loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
   },
   {
-    path: 'software',
-    loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+    path: 'subhubs',
+    loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+  },
+  {
+    path: 'services',
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
+  },
+  {
+    path: 'service/:slug',
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
   },
   {
     path: 'software/:slug',
     loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
   },
   {
-    path: 'all',
-    loadChildren: () => import('@components/all/all.module').then(m => m.AllModule)
-  },
+    path: 'software',
+    loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+  }
 ];
