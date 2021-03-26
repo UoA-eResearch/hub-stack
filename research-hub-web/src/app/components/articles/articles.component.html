@@ -19,22 +19,22 @@
     </ng-template>
 
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" id="you-might-be-interested-in" [hideImage]="hide" [title]="'Explore Related'" 
+        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" 
             [contentItem]="article.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
+        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
             [contentItem]="article.relatedOrgsCollection"></app-cards>
     </ng-template>
     
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
+        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
             [contentItem]="article.relatedContactsCollection"></app-cards>
     </ng-template>
 
     <ng-template #officialDocuments let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
+        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
             [contentItem]="article.relatedDocsCollection"></app-cards>
     </ng-template>
 
@@ -52,7 +52,7 @@
 
                     <!-- Maori Proverb -->
                     <h2 aria-level="2" *ngIf="article.maoriProverb" class="maori-proverb"
-                    [style]="article.banner ? bannerTextStyling : ''"><hr>{{ subhub.maoriProverb}}<hr></h2>
+                    [style]="article.banner ? bannerTextStyling : ''"><hr>{{ article.maoriProverb}}<hr></h2>
 
                     <!-- Summary -->
                     <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
