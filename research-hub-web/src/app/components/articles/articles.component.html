@@ -50,6 +50,10 @@
                     <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
                         [style]="article.banner ? bannerTextStyling : ''">{{ article.title }}</h1>
 
+                    <!-- Maori Proverb -->
+                    <h2 aria-level="2" *ngIf="article.maoriProverb" class="maori-proverb"
+                    [style]="article.banner ? bannerTextStyling : ''"><hr>{{ subhub.maoriProverb}}<hr></h2>
+
                     <!-- Summary -->
                     <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
                         [style]="article.banner ? bannerTextStyling : ''">
