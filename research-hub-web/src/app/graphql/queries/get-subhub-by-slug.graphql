@@ -3,6 +3,7 @@ query GetSubHubBySlug($slug: String) {
         items {
             slug
             title
+            maoriProverb
             summary
             ssoProtected
             searchable
