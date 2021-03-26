@@ -15,7 +15,6 @@ export class CollectionListComponent implements OnInit, OnDestroy {
   public searchTextSub: Subscription;
 
   @Input() collection;
-
   @Input() type;
 
   constructor(public searchBarService: SearchBarService) {  }
@@ -79,6 +78,6 @@ export class CollectionListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this.searchTextSub.unsubscribe();
+    try { this.searchTextSub.unsubscribe(); } catch {};
   }
 }
