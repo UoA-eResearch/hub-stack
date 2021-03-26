@@ -1,15 +1,18 @@
-import { SimpleChanges } from '@angular/core';
+import { OnDestroy, SimpleChanges } from '@angular/core';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Component, OnInit, Input } from '@angular/core'
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-collection-list',
   templateUrl: './collection-list.component.html',
   styleUrls: ['./collection-list.component.scss']
 })
-export class CollectionListComponent implements OnInit {
+export class CollectionListComponent implements OnInit, OnDestroy {
   public pageNumber;
+  public loading: Boolean = false;
   public itemsPerPage = 10;
+  public searchTextSub: Subscription;
 
   @Input() collection;
 
@@ -17,11 +20,15 @@ export class CollectionListComponent implements OnInit {
 
   constructor(public searchBarService: SearchBarService) {  }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {
+    this.searchBarService.totalPagesChange.subscribe(() => {
+      this.loading = true;
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.pageNumber = this.searchBarService.getCurrentPage()
-    try { this.collection = changes['collection'].currentValue } catch {}
+    this.pageNumber = this.searchBarService.getCurrentPage();
+    try { this.collection = changes['collection'].currentValue; this.loading = false } catch {}
   }
 
 
@@ -69,5 +76,9 @@ export class CollectionListComponent implements OnInit {
       case 'CaseStudy': return 'cases';
       default: return 'article'
     }
+  }
+
+  public ngOnDestroy() {
+    this.searchTextSub.unsubscribe();
   }
 }

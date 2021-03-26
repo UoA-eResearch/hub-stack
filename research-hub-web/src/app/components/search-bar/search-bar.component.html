@@ -2,11 +2,15 @@
     <div class="search-bar-inner" fxFlex="100" fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="space-between center">
       <mat-form-field fxFlex floatLabel="never">
         <input role="textbox" #searchTextInput matInput placeholder="Search" [(ngModel)]="searchText"
-          (ngModelChange)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()">
+          (keydown.enter)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()">
         <button matSuffix role="button" aria-label="close" *ngIf="searchText" (click)="clearSearchText();this.searchBarService.createResultsList()"
           (keydown.enter)="clearSearchText();this.searchBarService.createResultsList()" mat-icon-button>
           <mat-icon>close</mat-icon>
         </button>
       </mat-form-field>
+      <button matSuffix role="button" aria-label="search" (click)="clearSearchText();this.searchBarService.createResultsList()"
+      (keydown.enter)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()"(click)="searchBarService.setCurrentPage(1); searchBarService.createResultsList()" mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
     </div>
 </div>

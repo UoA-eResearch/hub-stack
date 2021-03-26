@@ -14,7 +14,7 @@
  * SubHub Card
  */
 .subhub-card {
-    background: map-get($hub-teal, 500);
+    background: map-get($hub-teal, 700);
 }
 .subhub-card .card-title a {
     display: inline;
@@ -38,7 +38,7 @@
     max-height: 200px;
 }
 .card-label {
-    color: map-get($hub-teal, 500);
+    color: map-get($hub-teal, 700);
     background: rgb(255, 255, 255);
     position:absolute;
     left:0;

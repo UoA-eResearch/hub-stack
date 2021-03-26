@@ -12,10 +12,10 @@
     <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="service.title"></app-breadcrumbs></ng-template>
 
     <ng-template #dynamicBanner>
-        <div class="banner-container" [style]="service.banner ?
-        'background: url(' + service.banner.url + ') no-repeat fixed center' 
-        : 'display: none'"></div>  
-    </ng-template>
+        <div class="banner-container" [style]="service.banner ? isMobile ?
+                        'background: url(' + service.banner.url + ') no-repeat; padding: 20vh 0px'
+                        : 'background: url(' + service.banner.url + ') no-repeat fixed center; padding: 20vh 0px'
+                    : 'display: none;'"></div></ng-template>
 
     <ng-template #specificationsTable>
         <div class="specifications" *ngIf="service.audience ||
