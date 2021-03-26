@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -14,6 +14,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-software',
@@ -37,6 +38,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allSoftware$: Observable<SoftwareCollection>;
   public parentSubHubs;
+  public isMobile: Boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -45,8 +47,14 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
-  ) { }
+    public router: Router,
+    private deviceService: DeviceDetectorService
+  ) { this.detectDevice(); }
+
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   async ngOnInit() {
     /**
@@ -69,11 +77,11 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
      */
     if (!!this.slug) {
       this.software = this.getSoftwareBySlug(this.slug);
-      this.software$ = this.software.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+        this.software$ = this.software.subscribe(data => {
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.appComponentService.setTitle(data.title);
+        });
+        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Software');
       this.allSoftware$ = this.getAllSoftware();
@@ -107,7 +115,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   public getSoftwareBySlug(slug: string): Observable<Software> {
     try {
       return this.getSoftwareBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.softwareCollection.items)) as Observable<Software>;
+        .pipe(flatMap(x => x.data.softwareCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Software>;
     } catch (e) { console.error(`Error loading Software ${slug}:`, e); }
   }
 

@@ -17,6 +17,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public categoriesValue = [];
   public isFilterBtnVisible = false;
   private searchTextValue = '';
+  private createResultsList;
   private categoryValue = '';
   @Output() searchTextChange = new EventEmitter();
   @Output() categoryChange = new EventEmitter();
@@ -24,15 +25,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @Output() focusOnInitChange = new EventEmitter();
   @ViewChild('searchTextInput', { read: MatInput }) searchTextInput: MatInput;
 
-  private searchBarVisibilityChangeSub: Subscription;
   private searchCategoryChangeSub: Subscription;
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
-
-  constructor(private searchBarService: SearchBarService, private router: Router) {
+  constructor(public searchBarService: SearchBarService, private router: Router) {
   }
 
   ngOnInit() {
+    this.searchTextValue = this.searchBarService.getSearchText();
+
     this.searchCategoryChangeSub = this.searchBarService.searchCategoryChange.subscribe(searchCategory => {
       this.categoryValue = searchCategory;
     });
@@ -40,25 +41,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.searchTextChangeSub = this.searchBarService.searchTextChange.subscribe(searchText => {
       this.searchTextValue = searchText;
     });
-
-    this.searchBarVisibilityChangeSub = this.searchBarService.searchBarVisibilityChange.subscribe(isVisible => {
-      this.isVisible = isVisible;
-    });
-
-    this.routerSub = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd))
-      .subscribe(event => {
-        /**
-         * Padding Class
-         */
-        this.isFilterBtnVisible = !event['urlAfterRedirects'].startsWith('/home');
-      });
   }
 
   ngOnDestroy() {
     this.searchCategoryChangeSub.unsubscribe();
     this.searchTextChangeSub.unsubscribe();
-    this.routerSub.unsubscribe();
   }
 
   @Input()
@@ -83,11 +70,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.searchBarService.setCategory(val);
   }
 
-  openSearchFilter() {
-    this.searchBarService.setFilterButtonClicked();
-  }
-
   clearSearchText() {
     this.searchText = '';
+    this.searchBarService.setSearchText('')
   }
 }

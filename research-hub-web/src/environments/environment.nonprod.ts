@@ -15,6 +15,7 @@ export const environment = {
     codeChallengeMethod: 'S256',
     logout_uri: ''
   },
+  searchUrl: 'https://apigw.test.amazon.auckland.ac.nz/hub-search-proxy',
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
       return [

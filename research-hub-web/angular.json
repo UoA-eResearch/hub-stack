@@ -21,7 +21,8 @@
               "./src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/app/components/error-routing/error-routing.scss"
             ],
             "scripts": [],
             "allowedCommonJsDependencies": [
@@ -35,7 +36,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "6mb"
                 }
               ]
             },
@@ -43,7 +44,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "6mb"
                 }
               ],
               "optimization": true,
@@ -65,7 +66,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "6mb"
                 }
               ],
               "optimization": true,
@@ -87,7 +88,7 @@
               "budgets": [
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "6mb"
                 }
               ],
               "optimization": true,

@@ -1,0 +1,12 @@
+query AllCategories {
+    categoryCollection(order: [displayOrder_ASC]){
+        items {
+            name
+            description
+            displayOrder
+            sys {
+                id
+            }
+        }
+    }
+}

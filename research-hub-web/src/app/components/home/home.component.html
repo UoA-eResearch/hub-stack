@@ -1,20 +1,43 @@
-<div 
-  class="site-padding-2 margin-bottom"
-  ngClass.lt-lg="site-padding-mobile margin-bottom"
-  fxLayout="column" 
-  fxLayoutGap="2vh">
-  <app-research-activity></app-research-activity>
-  <div 
-    fxFlex="noshrink" 
-    fxLayout="row" 
-    fxLayout.lt-sm="column">
-    <div 
-      fxFlex
-      fxFlex.xs="noshrink">
-      <app-browse 
-        [embedded]="true" 
-        [maxCols]="3">
-      </app-browse>
+<div>
+  <div fxFlex="noshrink" fxLayout="column">
+
+    <!-- Browse Categories Component -->
+    <div fxFlex class="grey-background" fxFlex.xs="noshrink">
+      <app-browse #categories></app-browse>
+    </div>
+
+    <!-- Research Activity Component -->
+    <div><app-research-activity></app-research-activity></div>
+
+    <!-- Contact -->
+    <div class="grey-background contact-container">
+      <div class="site-padding contact content-container" ngClass.lt-md="site-padding-mobile">
+
+        <!-- Title -->
+        <div class="text site-padding" ngClass.lt-md="site-padding-mobile">
+          <h2>{{ title }}</h2>
+          <p>{{ description }}</p>
+          <div class="main-underline"></div>
+        </div>
+
+        
+        <!-- Contact Content -->
+        <div class="contact-content section-2 site-padding margin-bottom">
+
+          <!-- Feedback -->
+          <div class="feedback-container">
+            <div class="feedback-content">
+              <p>We are developing the ResearchHub further and would be grateful for your feedback. This will give us pointers for user-led refinement and further development of the interface content displayed in the ResearchHub.</p>
+              <br>
+              <a href="{{ feedbackLink }}">
+                <button role="button" mat-flat-button aria-label="provide-feedback" class="standard-button">
+                    <span>Provide Feedback</span>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
