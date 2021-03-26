@@ -90,7 +90,6 @@ query GetCaseStudyBySlug($slug: String) {
               }
             }
           }
-          viewType
         }
     }
 }
