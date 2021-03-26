@@ -116,7 +116,7 @@
                     <h3>{{ contentItem.name }}</h3>
 
                     <!-- Horizontal Headers -->
-                    <div *ngIf="contentItem.table.useHorizontalHeaders && !contentItem.table.useVerticalHeaders">
+                    <ng-container *ngIf="contentItem.table.useHorizontalHeaders && !contentItem.table.useVerticalHeaders">
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
@@ -125,10 +125,10 @@
                                 </ng-container>
                             </tr>
                         </table>
-                    </div>
+                    </ng-container>
 
                     <!-- Vertical Headers -->
-                    <div *ngIf="contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders">
+                    <ng-container *ngIf="contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders">
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
@@ -137,10 +137,10 @@
                                 </ng-container>
                             </tr>
                         </table>
-                    </div>
+                    </ng-container>
 
                     <!-- Horizontal and Vertical Headers -->
-                    <div *ngIf="contentItem.table.useVerticalHeaders && contentItem.table.useHorizontalHeaders">
+                    <ng-container *ngIf="contentItem.table.useVerticalHeaders && contentItem.table.useHorizontalHeaders">
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
@@ -149,14 +149,16 @@
                                 </ng-container>
                             </tr>
                         </table>
-                    </div>
+                    </ng-container>
 
                     <!--  No Headers -->
-                    <table *ngIf="!contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders" class="body-table">
-                        <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
-                            <td role="cell" *ngFor="let column of row; let j = index">{{ column }}</td>
-                        </tr>
-                    </table>
+                    <ng-container *ngIf="!contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders">
+                        <table class="body-table">
+                            <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
+                                <td role="cell" *ngFor="let column of row; let j = index">{{ column }}</td>
+                            </tr>
+                        </table>
+                    </ng-container>
                 </div>
             </span>
         </span>
