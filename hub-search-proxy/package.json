@@ -1,0 +1,33 @@
+{
+  "name": "hub-search-proxy",
+  "version": "1.0.0",
+  "description": "Serverless Framework Lambda functions to interact with AWS ElasticSearch Service.",
+  "main": "handler.js",
+  "scripts": {
+    "start": "sls offline",
+    "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/sls offline",
+    "test": "sls invoke test",
+    "testw": "nodemon --watch . --exec 'sls invoke test || true'",
+    "deploy": "sls deploy"
+  },
+  "keywords": [
+    "Lambda",
+    "ElasticsSearch",
+    "Serverless",
+    "Framework"
+  ],
+  "author": "Rose McColl",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.3",
+    "serverless-domain-manager": "^4.1.1",
+    "serverless-mocha-plugin": "^1.12.0",
+    "serverless-offline": "^6.1.4"
+  },
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.11.0",
+    "aws-elasticsearch-connector": "^9.0.3",
+    "aws-sdk": "^2.841.0",
+    "contentful-export": "^7.11.7"
+  }
+}
