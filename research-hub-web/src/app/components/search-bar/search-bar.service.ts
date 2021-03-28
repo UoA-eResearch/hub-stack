@@ -221,11 +221,15 @@ export class SearchBarService {
 
       // Create deep copy of category array to handle events manually
       let categories = this.getCategory().map(x => { return  x });
+      console.log("Page types before event: ", categories);
+      console.log("Categories before event: ", pageTypes);
 
       // If event is selected, remove it from search parameters (will be manually handled below)
       if (this.getCategory().includes(this.getEventId())) {
         categories.splice(this.getCategory().indexOf(this.getEventId()), 1)
         pageTypes = ["event"]
+        console.log("Page types event: ", pageTypes);
+        console.log("Categories after event: ", categories);
       }
 
       // Create the search query
