@@ -1,0 +1,13 @@
+{
+    "awsAccountId": "TBD",
+    "infra": {
+        "awsApiGatewayCustomDomainName": "apigw.prod.amazon.auckland.ac.nz"
+    },
+    "elasticsearchDomainName": "researchhub-prod-domain",
+    "ELASTICSEARCH_ENDPOINT": "TBD - add endpoint to parameter store",
+    "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "https://research-hub.auckland.ac.nz",
+    "CONTENTFUL_SPACE_ID": "${ssm:/prod/research-hub/contentful-space-id~true}",
+    "CONTENTFUL_ACCESS_TOKEN": "${ssm:/prod/research-hub/contentful-mgmt-access-token~true}",
+    "resourceKey": "180f8f50-c1f3-4b9a-b793-0fca514ab708",
+    "PROFILE": "uoa-its-prod"
+}
