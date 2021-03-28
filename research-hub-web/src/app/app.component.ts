@@ -119,6 +119,13 @@ export class AppComponent implements OnInit, OnDestroy {
     // Get All Categories
     this.allCategories$ = this.getAllCategories();
 
+    // Set Event Id used for search filtering
+    this.allCategories$.subscribe(data => {
+      data.items.forEach(element => {
+        if (element.name == 'Events') this.searchBarService.setEventId(element.sys.id);
+      });
+    })
+
     // Get All Stages
     this.allStages$ = this.getAllStages();
 
