@@ -120,8 +120,8 @@
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
-                                    <th role="columnheader" *ngIf="i == 0" [innerHTML]="column | richTextToHTML"></th>
-                                    <td role="cell" *ngIf="i != 0" [innerHTML]="column | richTextToHTML"></td>
+                                    <th role="columnheader" *ngIf="i == 0" [innerHTML]="column | MarkdownToHtml"></th>
+                                    <td role="cell" *ngIf="i != 0" [innerHTML]="column | MarkdownToHtml"></td>
                                 </ng-container>
                             </tr>
                         </table>
@@ -132,8 +132,8 @@
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
-                                    <th role="columnheader" *ngIf="j == 0" [innerHTML]="column | richTextToHTML"></th>
-                                    <td role="cell" *ngIf="j != 0" [innerHTML]="column | richTextToHTML"></td>
+                                    <th role="columnheader" *ngIf="j == 0" [innerHTML]="column | MarkdownToHtml"></th>
+                                    <td role="cell" *ngIf="j != 0" [innerHTML]="column | MarkdownToHtml"></td>
                                 </ng-container>
                             </tr>
                         </table>
@@ -144,8 +144,8 @@
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
-                                    <th role="columnheader" *ngIf="j == 0 || i == 0" [innerHTML]="column | richTextToHTML"></th>
-                                    <td role="cell" *ngIf="j != 0 && i != 0" [innerHTML]="column | richTextToHTML"></td>
+                                    <th role="columnheader" *ngIf="j == 0 || i == 0" [innerHTML]="column | MarkdownToHtml"></th>
+                                    <td role="cell" *ngIf="j != 0 && i != 0" [innerHTML]="column | MarkdownToHtml"></td>
                                 </ng-container>
                             </tr>
                         </table>
@@ -155,7 +155,7 @@
                     <ng-container *ngIf="!contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders">
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
-                                <td role="cell" *ngFor="let column of row; let j = index" [innerHTML]="column | richTextToHTML"></td>
+                                <td role="cell" *ngFor="let column of row; let j = index" [innerHTML]="column | MarkdownToHtml"></td>
                             </tr>
                         </table>
                     </ng-container>
