@@ -15,6 +15,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
 import { VideoCardComponent } from './video-card/video-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
+
 
 @NgModule({
   imports: [
@@ -24,7 +26,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     MaterialModule,
     RouterModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MarkdownToHtmlModule
   ],
   declarations: [
     ErrorDialogComponent,
@@ -51,7 +54,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     BreadcrumbsComponent,
     LargeCardsComponent,
     VideoCardComponent,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MarkdownToHtmlModule
   ],
   providers: [],
 })
