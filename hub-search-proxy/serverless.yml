@@ -1,0 +1,176 @@
+service: hub-search-proxy
+custom:
+  bucketBaseName: serverless-shared-bucket
+  ResearchHub: ${self:service}
+  BusinessService: Faculty of Science
+  Department: Centre for eResearch
+  ProjectCode: N/A
+  WikiLink: https://wiki.auckland.ac.nz/display/APPLCTN/Research+Hub
+  Application: ${self:service}
+  CostCentre: N/A
+  Faculty: Science
+  customDomain:
+    domainName: ${file(env/${self:provider.stage}.json):infra.awsApiGatewayCustomDomainName}
+    basePath: ${self:service}
+    stage: ${self:provider.stage}
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${opt:stage, 'dev'} # Deploy with sls deploy --stage STAGE (default dev)
+  region: ap-southeast-2
+  endpointType: regional
+  role: myDefaultRole
+  timeout: 30
+  tags:
+    ResearchHub: ${self:custom.ResearchHub}
+    BusinessService: ${self:custom.BusinessService}
+    Department: ${self:custom.Department}
+    ProjectCode: ${self:custom.ProjectCode}
+    WikiLink: ${self:custom.WikiLink}
+    Application: ${self:custom.Application}
+    CostCentre: ${self:custom.CostCentre}
+    Faculty: ${self:custom.Faculty}
+  stackTags:
+    ResearchHub: ${self:custom.ResearchHub}
+    BusinessService: ${self:custom.BusinessService}
+    Department: ${self:custom.Department}
+    ProjectCode: ${self:custom.ProjectCode}
+    WikiLink: ${self:custom.WikiLink}
+    Application: ${self:custom.Application}
+    CostCentre: ${self:custom.CostCentre}
+    Faculty: ${self:custom.Faculty}
+  deploymentBucket:
+    name: ${self:custom.bucketBaseName}-${self:provider.stage}
+  environment:
+    # Environment variables available to all functions in this service
+    ELASTICSEARCH_ENDPOINT: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_ENDPOINT}
+    CORS_ACCESS_CONTROL_ALLOW_ORIGINS: ${file(env/${self:provider.stage}.json):CORS_ACCESS_CONTROL_ALLOW_ORIGINS}
+    CONTENTFUL_SPACE_ID: ${file(env/${self:provider.stage}.json):CONTENTFUL_SPACE_ID}
+    CONTENTFUL_ACCESS_TOKEN: ${file(env/${self:provider.stage}.json):CONTENTFUL_ACCESS_TOKEN}
+    PROFILE: ${file(env/${self:provider.stage}.json):PROFILE}
+  apiGateway:
+    apiKeySourceType: HEADER
+  apiKeys:
+    - name: ${self:service}-${self:provider.stage}-apiKey
+    
+package:
+  exclude:
+    - .git/**
+    - .vscode/*
+    - test/*
+    - package.json
+    - package-lock.json
+    - README.md
+    - serverless.yml
+functions:
+  search:
+    handler: handler.search
+    events:
+      - http:
+          path: /
+          method: post
+          cors:
+            origin: "${file(env/${self:provider.stage}.json):CORS_ACCESS_CONTROL_ALLOW_ORIGINS}"
+            headers:
+              - Content-Type
+              - Authorization
+            allowCredentials: false
+  update:
+    handler: handler.update
+    events:
+      - http:
+          path: doc/{id}
+          method: put
+          cors:
+            true
+          private: true
+  delete:
+    handler: handler.delete
+    events:
+      - http:
+          path: doc/{id}
+          method: delete
+          cors:
+            true
+          private: true
+  bulk:
+    handler: handler.bulk
+    events:
+      - http:
+          path: bulk
+          method: get
+          cors:
+            true
+          private: true
+            
+plugins:
+  - serverless-offline
+  - serverless-mocha-plugin
+  - serverless-domain-manager
+
+resources:
+  Resources:
+    myDefaultRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        Path: /
+        RoleName: ${self:service}-lambda-role
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: "sts:AssumeRole"
+        ManagedPolicyArns:
+          - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+        Policies:
+          - PolicyName: myPolicyName
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "logs:CreateLogGroup"
+                    - "logs:CreateLogStream"
+                    - "logs:PutLogEvents"
+                  Resource:
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:logs"
+                          - Ref: "AWS::Region"
+                          - Ref: "AWS::AccountId"
+                          - "log-group:/aws/lambda/*:*:*"
+                - Effect: Allow
+                  Action:
+                    - ssm:GetParameter
+                    - ssm:GetParameters
+                  Resource:
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:ssm"
+                          - Ref: "AWS::Region"
+                          - Ref: "AWS::AccountId"
+                          - "parameter/${self:provider.stage}/research-hub/*"
+                - Effect: Allow
+                  Action:
+                    - kms:Decrypt
+                  Resource:
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:kms"
+                          - Ref: "AWS::Region"
+                          - Ref: "AWS::AccountId"
+                          - "key/${file(env/${self:provider.stage}.json):resourceKey}"
+                - Effect: Allow
+                  Action:
+                    - es:ESHttp*
+                  Resource:
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:es"
+                          - Ref: "AWS::Region"
+                          - "518380838815"
+                          - "domain/${file(env/${self:provider.stage}.json):elasticsearchDomainName}/*"
+                          # NOTE: hardcoded account id of the es domain - change to prod account id once es is deployed to prod
