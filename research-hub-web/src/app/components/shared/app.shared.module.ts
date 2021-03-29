@@ -16,6 +16,7 @@ import { LargeCardsComponent } from './large-cards/large-cards.component';
 import { VideoCardComponent } from './video-card/video-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
     MaterialModule,
     RouterModule,
     NgxPaginationModule,
-    MarkdownToHtmlModule
+    MarkdownToHtmlModule,
+    NgxSkeletonLoaderModule,
   ],
   declarations: [
     ErrorDialogComponent,
@@ -55,7 +57,8 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
     LargeCardsComponent,
     VideoCardComponent,
     NgxPaginationModule,
-    MarkdownToHtmlModule
+    MarkdownToHtmlModule,
+    NgxSkeletonLoaderModule,
   ],
   providers: [],
 })
