@@ -34,7 +34,8 @@
           <!-- Browse Options -->
           <mat-nav-list *ngIf="allCategories$ | async as allCategories">
             <mat-list-item *ngFor="let item of allCategories.items" [routerLink]="['/search']"
-            (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">
+            (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id]); sidenav.close()"
+            (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id]); sidenav.close()">
               <a mat-line>{{ item.name }}</a>
             </mat-list-item>
           </mat-nav-list>
@@ -53,7 +54,8 @@
           <!-- Research Activities List -->
           <div *ngIf="allStages$ | async as allStages">
             <mat-list-item *ngFor="let item of allStages.items" [routerLink]="['/search']"
-            (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">
+            (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id]); sidenav.close()"
+            (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id]); sidenav.close()">
               <a mat-line>{{ item.name }}</a>
             </mat-list-item>
           </div>
@@ -139,47 +141,29 @@
                   fxHide.lt-md routerLink="/search" (click)="clearSearchText()" 
                   (keydown.enter)="clearSearchText()">Search</button>
 
-
-                  <!-- 
-                    Research Categories Button if we are on the homepage. This will scroll down to the homepage section that displays
-                    the Research Categories
-                   -->
-                  <button role="button" aria-label="categories" *ngIf="!onSearchPage && onHomePage" mat-button
-                  fxHide.lt-md class="button-menu" (click)="this.homeScrollService.scrollTo('Categories')">Research Categories</button>
-                  <!--
-                    Research Categories Button if we're not on the homepage. This will render an expansion panel dropdown list 
-                    of all the Research Categories
-                  -->
-                  <button role="button" aria-label="categories" *ngIf="!onSearchPage && !onHomePage" mat-button
-                  fxHide.lt-md class="button-menu" [matMenuTriggerFor]="browseMenu">Research Categories</button>
+                  <!-- Research Categories Button -->
+                  <button role="button" aria-label="categories" *ngIf="!onSearchPage" 
+                    mat-button fxHide.lt-md class="button-menu" [matMenuTriggerFor]="browseMenu">Research Categories</button>
 
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allCategories$ | async as allCategories">
                       <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items"
                         [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
-                        (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">{{item.name}}</button>
+                        (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
+                        (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">{{item.name}}</button>
                     </div>
                   </mat-menu>
 
-
-                  <!-- 
-                    Research Activities Button if we are on the homepage. This will scroll down to the homepage section that displays
-                    the Research Activities
-                   -->
-                  <button role="button" aria-label="activities" *ngIf="!onSearchPage && onHomePage" mat-button
-                  fxHide.lt-md class="button-menu" (click)="this.homeScrollService.scrollTo('Activities')">Research Activities</button>
-                  <!--
-                    Research Activites Button if we're not on the homepage. This will render an expansion panel dropdown list 
-                    of all the Research Activities
-                  -->
-                  <button role="button" aria-label="activities" *ngIf="!onSearchPage && !onHomePage" mat-button
-                    fxHide.lt-md  class="button-menu" [matMenuTriggerFor]="researchActivityMenu">Research Activities</button>
+                  <!-- Research Activities Button -->
+                  <button role="button" aria-label="activities" *ngIf="!onSearchPage" class="button-menu" 
+                    fxHide.lt-md mat-button [matMenuTriggerFor]="researchActivityMenu">Research Activities</button>
 
                     <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allStages$ | async as allStages">
                       <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items"
                         [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
-                        (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">{{ item.name }}</button>
+                        (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])"
+                        (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])">{{ item.name }}</button>
                     </div>
                   </mat-menu>
 
@@ -230,7 +214,7 @@
               <div class="banner-text">
 
                 <!-- Title & Summary -->
-                <h1 class="page-title" role="heading" aria-level="1"><b>Research</b><span style="font-weight: 100!important">Hub</span></h1>
+                <h1 class="page-title" role="heading" aria-level="1" style="font-weight: 100!important"><b>Research</b>Hub</h1>
                 <p class="page-summary">{{ summary }}</p>
                 <br>
                 <div class="initial-search-outer">
@@ -246,10 +230,23 @@
                   </mat-form-field>
                 </div>
                 <br><br>
-                <span class="explore" (click)="this.homeScrollService.scrollTo('Featured')" (keydown.enter)="scroll(featured)">
+                <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
                   <p class="page-summary">Explore</p>
                   <img class="explore-arrow" src="assets/components/white-arrow.png" width="25" alt="explore-arrow">
                 </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Items -->
+          <div #featured></div>
+          <div class="featured-container" *ngIf="showBanner" >
+            <div *ngIf="homepage$ | async as homepage">
+              <div class="featured-content" *ngIf="homepage.featuredItemsCollection.items.length > 0">
+                <h2 class="featured-title">Featured</h2>
+                <p class="featured-summary">{{ homepage.featuredItemsDescription }}</p>
+                <div class="main-underline-white"></div>
+                <app-cards [flex]="'row'" [contentItem]="homepage.featuredItemsCollection"></app-cards>
               </div>
             </div>
           </div>
