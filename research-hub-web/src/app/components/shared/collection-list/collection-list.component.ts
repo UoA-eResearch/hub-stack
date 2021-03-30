@@ -20,7 +20,7 @@ export class CollectionListComponent implements OnInit, OnDestroy {
   constructor(public searchBarService: SearchBarService) {  }
 
   ngOnInit(): void {
-    this.searchBarService.totalPagesChange.subscribe(() => {
+    this.searchTextSub = this.searchBarService.totalPagesChange.subscribe(() => {
       this.loading = true;
     });
   }
