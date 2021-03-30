@@ -34,7 +34,8 @@
           <!-- Browse Options -->
           <mat-nav-list *ngIf="allCategories$ | async as allCategories">
             <mat-list-item *ngFor="let item of allCategories.items" [routerLink]="['/search']"
-            (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">
+            (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id]); sidenav.close()"
+            (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id]); sidenav.close()">
               <a mat-line>{{ item.name }}</a>
             </mat-list-item>
           </mat-nav-list>
@@ -53,7 +54,8 @@
           <!-- Research Activities List -->
           <div *ngIf="allStages$ | async as allStages">
             <mat-list-item *ngFor="let item of allStages.items" [routerLink]="['/search']"
-            (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">
+            (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id]); sidenav.close()"
+            (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id]); sidenav.close()">
               <a mat-line>{{ item.name }}</a>
             </mat-list-item>
           </div>
@@ -147,7 +149,8 @@
                     <div *ngIf="allCategories$ | async as allCategories">
                       <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items"
                         [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
-                        (click)="searchBarService.setCategory([item.sys.id]); sidenav.close()">{{item.name}}</button>
+                        (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
+                        (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">{{item.name}}</button>
                     </div>
                   </mat-menu>
 
@@ -159,7 +162,8 @@
                     <div *ngIf="allStages$ | async as allStages">
                       <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items"
                         [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
-                        (click)="searchBarService.setStage([item.sys.id]); sidenav.close()">{{ item.name }}</button>
+                        (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])"
+                        (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])">{{ item.name }}</button>
                     </div>
                   </mat-menu>
 
