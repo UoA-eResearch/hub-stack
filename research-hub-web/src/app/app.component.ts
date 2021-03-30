@@ -1,7 +1,7 @@
 import { filter, pluck, flatMap, catchError } from 'rxjs/operators';
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
@@ -15,6 +15,7 @@ import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { GetHomepageGQL, Homepage, AllCategoriesGQL, CategoryCollection, AllStagesGQL, StageCollection } from './graphql/schema';
 import smoothscroll from 'smoothscroll-polyfill';
+import { HomeScrollService } from '@services/home-scroll.service';
 
 @Component({
   selector: 'app-root',
@@ -58,8 +59,11 @@ export class AppComponent implements OnInit, OnDestroy {
   public authenticated: Boolean;
   public isMobile: Boolean;
   public onSearchPage: Boolean;
+  public onHomePage: Boolean;
   public mobileBackground: String;
   public desktopBackground: String;
+
+  @ContentChildren(RouterOutlet) outlet;
 
   constructor(
     private location: Location, 
@@ -73,7 +77,8 @@ export class AppComponent implements OnInit, OnDestroy {
     public getHomepageGQL: GetHomepageGQL,
     public allStagesGQL: AllStagesGQL,
     private _bypass: BypassErrorService,
-    private deviceService: DeviceDetectorService) {
+    private deviceService: DeviceDetectorService,
+    public homeScrollService: HomeScrollService) {
       this.detectDevice();
       this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
 
@@ -163,11 +168,9 @@ export class AppComponent implements OnInit, OnDestroy {
           this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
-            // Show banner if we're on the homepage
-            this.showBanner = ['home', 'home#'].includes(routeName);
 
             // Set title if we're on the homepage
-            if (['home', 'search'].includes(routeName)) this.appComponentService.setTitle('Welcome to the ResearchHub');
+            if (['home'].includes(routeName)) this.appComponentService.setTitle('Welcome to the ResearchHub');
 
             // Update previous and current routes
             if (this.currentRoute) {
@@ -179,7 +182,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
             // Hide search options if we're on the search page
             this.onSearchPage = ['search'].includes(routeName);
+
+            // Change navbar links 'Research Categories' and 'Research Activities' to scroll if on homepage otherwise expansion panel
+            this.onHomePage = ['home', 'home#'].includes(routeName);
             
+            // Show banner if we're on the homepage
+            this.showBanner = this.onHomePage == true;
+
             // Same component navigation
             if (this.currentRoute == this.previousRoute) {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;
