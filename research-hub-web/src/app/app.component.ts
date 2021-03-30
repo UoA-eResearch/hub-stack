@@ -2,10 +2,10 @@ import { filter, pluck, flatMap, catchError } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, Observable, Subscriber } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
-import { LoginService, UserInfoDto } from '@uoa/auth';
+import { LoginService } from '@uoa/auth';
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
@@ -139,10 +139,10 @@ export class AppComponent implements OnInit, OnDestroy {
         this.showNotification = ['home', 'home#'].includes(this.currentRoute);
       }
 
-      // If mobile
+      // Set background for mobile devices
       this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
 
-      // If desktop
+      // Set background for desktop devices
       this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
     
     });

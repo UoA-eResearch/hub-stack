@@ -60,6 +60,7 @@
   }
 }
 
+
 /*
  * Notification Bar
  */
@@ -81,6 +82,7 @@
   transition: all 0.1s ease-in-out;
 }
 
+
 /*
  * Initial Search
  */ 
@@ -96,6 +98,9 @@
 }
 
 
+/**
+ * Explore arrow animation
+ */
 @keyframes explore {
   0%   { margin-top: 5px;}
   50%  { margin-top: 16px; }
@@ -106,9 +111,8 @@
   50%  { margin-top: 3px; }
   100% { margin-top: 0px; }
 }
-
 /*
- * Explore
+ * Explore Arrow
  */
 .explore {
     cursor: pointer;
@@ -290,6 +294,7 @@ mat-expansion-panel-header .mat-expanded {
       }
   }
 }
+
 
 /*
  * Featured Container
