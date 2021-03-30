@@ -11,7 +11,7 @@ mat-card  {
 /**
  * Custom Button Styles
  */
- .standard-button {
+.standard-button {
     @extend .standard-button;
    border: 3px solid map-get($hub-navy, 500)!important;
    background-color: map-get($hub-navy, 500)!important;
@@ -22,11 +22,7 @@ mat-card  {
    background-color: white!important;
    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
-
-/**
- * Custom Button Styles
- */
- .standard-button-banner {
+.standard-button-banner {
     @extend .standard-button;
     color: white!important;
     border: 3px solid white!important;
