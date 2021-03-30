@@ -128,7 +128,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     try {
       return this.allEquipmentSlugsGQL.fetch()
         .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
-    } catch (e) { console.error('Error loading all articles:', e) };
+    } catch (e) { console.error('Error loading all equipment', e) };
   }
 
   /**
