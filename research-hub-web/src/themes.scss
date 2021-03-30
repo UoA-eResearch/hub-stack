@@ -30,7 +30,7 @@ $hub-teal: (
   200 : #81cad2,
   300 : #4eb4c0,
   400 : #28a4b3,
-  500 : #018193,
+  500 : #0294A5,
   600 : #028c9d,
   700 : #018193,
   800 : #01778a,
@@ -348,7 +348,7 @@ $color-accent: map-get($hub-app-accent, A200);
 $color-pink: map-get($hub-pink, 500);
 $color-orange: map-get($hub-orange, 500);
 $color-icon: #757575;
-$color-background: #FFFFFF;
+$color-background: #fafafa;
 $color-content-header: map-get($hub-navy, 500);
 $color-content-summary-bg: auto;
-$color-guide-tile-bg: map-get($hub-teal, 700);
+$color-guide-tile-bg: map-get($hub-teal, 500);
