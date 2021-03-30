@@ -1,13 +1,20 @@
 <div>
   <div fxFlex="noshrink" fxLayout="column">
 
+    <!-- Featured Component -->
+    <div fxFlex class="featured teal-background shadow">
+      <app-featured #featured></app-featured>
+    </div>
+
     <!-- Browse Categories Component -->
     <div fxFlex class="grey-background" fxFlex.xs="noshrink">
       <app-browse #categories></app-browse>
     </div>
 
     <!-- Research Activity Component -->
-    <div><app-research-activity></app-research-activity></div>
+    <div>
+      <app-research-activity #stages></app-research-activity>
+    </div>
 
     <!-- Contact -->
     <div class="grey-background contact-container">

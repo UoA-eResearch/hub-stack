@@ -218,23 +218,10 @@
                   </mat-form-field>
                 </div>
                 <br><br>
-                <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
+                <span class="explore">
                   <p class="page-summary">Explore</p>
                   <img class="explore-arrow" src="assets/components/white-arrow.png" width="25">
                 </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Featured Items -->
-          <div #featured></div>
-          <div class="featured-container" *ngIf="showBanner" >
-            <div *ngIf="homepage$ | async as homepage">
-              <div class="featured-content">
-                <h2 class="featured-title">Featured</h2>
-                <p class="featured-summary">The thing you learn about learning is that there's always more to learn! Here are the highlights of what we are all learning together in the research community at the University of Auckland</p>
-                <div class="main-underline-white"></div>
-                <app-cards [flex]="'row'" [contentItem]="homepage.featuredItemsCollection"></app-cards>
               </div>
             </div>
           </div>
