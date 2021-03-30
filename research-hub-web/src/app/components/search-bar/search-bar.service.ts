@@ -225,7 +225,7 @@ export class SearchBarService {
       // Create deep copy of category array to handle events manually
       let categories = this.getCategory().map(x => { return  x });
 
-      // If event is selected, remove it from search parameters (will be manually handled below)
+      // If event is selected, remove it from search parameters, event is a content model so must be handled differently
       if (this.getCategory().includes(this.getEventId())) {
         categories.splice(this.getCategory().indexOf(this.getEventId()), 1)
         pageTypes = ["event"]
@@ -234,7 +234,7 @@ export class SearchBarService {
       // Create the search query
         let query = {
           query: this.getSearchText(),
-          size: 10, // Maximum return result size from Elastic.co
+          size: 10,
           from: (this.getCurrentPage() - 1) * 10,
           sort: this.getSort(),
           filters: {
@@ -260,7 +260,7 @@ export class SearchBarService {
             array.push(result);
           });
             
-          // Create the results array
+          // Create the results
           this.setResults(array);
           this.setTotalPages(data["result"]["hits"]["total"]["value"]);
         })
