@@ -233,7 +233,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public getHomepage(): Observable<Homepage> {
     try {
       return this.getHomepageGQL.fetch()
-        .pipe(flatMap(x => x.data.homepageCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Homepage>
+        .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
     } catch (e) { console.error('Error loading homepage:', e) };
   }
 
