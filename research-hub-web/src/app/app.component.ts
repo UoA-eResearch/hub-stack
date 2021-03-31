@@ -25,6 +25,7 @@ import { HomeScrollService } from '@services/home-scroll.service';
   animations: []
 })
 export class AppComponent implements OnInit, OnDestroy {
+  public viewIsLoaded: Boolean = false;
   public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public aboutUs = "https://www.eresearch.auckland.ac.nz/?_ga=2.69549080.943707055.1614124973-1995817083.1603163706#";
 
@@ -149,7 +150,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
       // Set background for desktop devices
       this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
-    
+
+      this.viewIsLoaded = true;
     });
     
 
