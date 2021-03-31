@@ -119,7 +119,7 @@
                 </mat-select>
             </div>
         </div>
-        <app-collection-list *ngIf="searchBarService.getTotalPages() != 0" [type]="'search'" [collection]="allCurrentPages"></app-collection-list>
+        <app-collection-list [type]="'search'" [collection]="allCurrentPages"></app-collection-list>
     </div>
 
     <!-- No results message -->
