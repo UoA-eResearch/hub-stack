@@ -19,7 +19,7 @@
       <!-- Main Navbar -->
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
-          <a href="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
+          <a [routerLink]="homeUrl" (click)="clearSearchText()" class="hub-logo" ngClass.xs="hub-logo-xs">
             <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
@@ -132,7 +132,8 @@
                   <a 
                     fxFlex.lt-md 
                     class="hub-logo"
-                    href="/home">
+                    [routerLink]="homeUrl"
+                    (click)="clearSearchText()">
                     <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
                   </a>
 
