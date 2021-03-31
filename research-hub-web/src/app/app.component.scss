@@ -157,13 +157,14 @@ mat-list-base {
 }
 mat-expansion-panel {
   width: 70vw;
+  background-color: #FAFAFA!important;
   box-shadow: none !important;
 }
 mat-expansion-panel-header .mat-expanded {
   height:  64px !important;
 }
 .expandable-menu {
-  background-color: #FFFFFF !important;
+  background-color: #FAFAFA!important;
   padding-left: 0 !important;
   height:  64px !important;
 }
