@@ -218,6 +218,7 @@ export class SearchBarService {
 
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
+      this.setTotalPages(this.getTotalPages());
 
       // Triggers loading animation on collection page
       this.setTotalPages(this.getTotalPages());
