@@ -3,7 +3,7 @@
     *ngIf="allEquipment$ | async as allEquipment" 
     class="site-padding margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allEquipment"></app-collection-list>
+    <app-collection-list [type]="'content'" [collection]="allEquipment"></app-collection-list>
 </div>
 
 <div id="equipment-container" *ngIf="equipment | async as equipment">
@@ -129,7 +129,7 @@
 
             <!-- Equipment Body -->
             <div>
-                <ngx-contentful-rich-text style="word-break:break-word;" [document]="equipment.bodyText.json"
+                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="equipment.bodyText.json"
                     [nodeRenderers]="nodeRenderers"> </ngx-contentful-rich-text></div>
 
             <div class="section-2" fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column wrap" fxLayoutAlign="space-between">
