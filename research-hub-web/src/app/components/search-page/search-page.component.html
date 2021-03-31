@@ -87,7 +87,7 @@
 
     <!-- Skeleton Loader -->
     <div
-        *ngIf="0 >= allCurrentPages.length"
+        *ngIf="0 >= allCurrentPages.length && searchBarService.getTotalPages() != 0"
         ngClass.gt-sm="search-content site-padding-2 section"
         ngClass.lt-md="site-padding search-content section">
         <ngx-skeleton-loader
@@ -119,17 +119,17 @@
                 </mat-select>
             </div>
         </div>
-
-        <!-- No results message -->
-        <div *ngIf="searchBarService.getTotalPages() == 0" class="no-results">
-            <p>Sorry, your search for "<i><b>{{ searchBarService.getSearchText() }}</b></i>" in All Categories, did not match anything on the ResearchHub.</p>
-            <p>
-                <br><b>Suggestions:</b><br>
-                Widen your filters<br>
-                Let us know what you were looking for via our <a href="{{ feedbackUrl }}">Feedback page</a><br>
-                You can try the Staff Service Centre in the <a href="{{ staffIntranet }}">Staff Intranet</a><br>
-            </p>
-        </div>
         <app-collection-list *ngIf="searchBarService.getTotalPages() != 0" [type]="'search'" [collection]="allCurrentPages"></app-collection-list>
+    </div>
+
+    <!-- No results message -->
+    <div *ngIf="searchBarService.getTotalPages() == 0" class="no-results">
+        <p>Sorry, your search for "<i><b>{{ searchBarService.getSearchText() }}</b></i>" in All Categories, did not match anything on the ResearchHub.</p>
+        <p>
+            <br><b>Suggestions:</b><br>
+            Widen your filters<br>
+            Let us know what you were looking for via our <a href="{{ feedbackUrl }}">Feedback page</a><br>
+            You can try the Staff Service Centre in the <a href="{{ staffIntranet }}">Staff Intranet</a><br>
+        </p>
     </div>
 </div>
