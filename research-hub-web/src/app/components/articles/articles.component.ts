@@ -151,7 +151,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   public getArticleBySlug(slug: string): Observable<Article> {
     try {
       return this.getArticleBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.articleCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Article>;
+        .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
   }
 
