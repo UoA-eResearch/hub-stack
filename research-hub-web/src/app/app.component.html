@@ -118,7 +118,7 @@
             <!-- Main Navbar -->
             <div #topbar class="app-toolbar-container">
               <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
-              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: 0px -3px 10px black;'">
+              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: grey 0px 3px 15px'">
 
                 <!-- Main Navbar Content -->
                 <div fxLayout="row" class="app-toolbar-row" fxLayoutAlign="center center">
@@ -167,8 +167,7 @@
 
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allCategories$ | async as allCategories">
-                      <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items"
-                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
+                      <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items" [routerLink]="['/search']"
                         (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
                         (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">{{item.name}}</button>
                     </div>
@@ -190,8 +189,7 @@
 
                     <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allStages$ | async as allStages">
-                      <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items"
-                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
+                      <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items" [routerLink]="['/search']"
                         (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])"
                         (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])">{{ item.name }}</button>
                     </div>
