@@ -21,8 +21,8 @@
 
             <!-- Panel Button -->
             <div class="inner-panel">
-              <div selected [routerLink]="['/search']" (click)="searchBarService.setStage([item.sys.id])"
-                (keydown.enter)="searchBarService.setStage([item.sys.id])">
+              <div selected [routerLink]="['/search']" (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])"
+                (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])">
                 <h3>{{ item.name }}</h3>
                 <p>{{ item.description }}</p>
               </div>

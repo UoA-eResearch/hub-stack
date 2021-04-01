@@ -1,19 +1,19 @@
 describe('ResearchHubs Events Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/event/writing-a-data-management-plan-workshop');
+        cy.visit('/event/resbaz');
     });
 
     it('can visit an event and display its title', () => {
-        cy.contains('Writing A Data Management Plan Workshop');
+        cy.contains('Research Bazaar');
     });
 
     it('can visit an event and display its subtitle', () => {
-        cy.contains('A two-hour guided session for the creation of your initial data management plan.');
+        cy.contains('The Research Bazaar is a short intensive festival and conference held annually where researchers come together to up-skill in next generation digital research tools and scholarship.');
     });
 
     it('event displays body text', () => {
-        cy.contains('If you want to create a data management plan (DMP) and do not know where to start or what to include, the Centre for eResearch in conjunction with Libraries and Learning Services offer a two hour DMP workshop.');
+        cy.contains('The Research Bazaar (ResBaz) is an intensive festival and conference held over a few days each year where researchers come together to up-skill in next generation digital research tools and scholarship. In the spirit of a marketplace or bazaar, ResBaz is a highly participatory event where researchers from many different disciplines can learn, share knowledge and skills, and have fun!');
     });
 
     it('event displays specifications table', () => {
@@ -26,16 +26,16 @@ describe('ResearchHubs Events Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Guide to Managing Research Artifacts and Data').click();
-        cy.contains('Research artifacts and data encompasses everything that is collected, observed or created for the purposes of analysis that underpins a research output (e.g. publication or creative work).');
+        cy.get('#you-might-be-interested-in').contains('Data Carpentry').click();
+        cy.contains('Data Carpentry workshops teach core skills for working with data effectively and reproducibly');
     });
 
     it('displays a list of contacts', () => {
-        cy.get('#contacts').contains('Dharani Sontam').should('exist');
+        cy.get('#contacts').contains('Sina Masoud-Ansari').should('exist');
     });
 
     it('displays a list of documents', () => {
-        cy.get('#documents').contains('Data Governance Policy').should('exist');
+        cy.get('#documents').contains('Code of Conduct').should('exist');
     });
 
     // Cypress doesn't dupport multi-tab testing

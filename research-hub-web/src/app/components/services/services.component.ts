@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -15,6 +15,8 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-services',
@@ -32,12 +34,13 @@ export class ServicesComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public service: Observable<Service>;
+  public service;
   public service$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
   public allServices$: Observable<ServiceCollection>;
   public parentSubHubs;
+  public isMobile: Boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -47,8 +50,15 @@ export class ServicesComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
-  ) { }
+    public router: Router,
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
+  ) { this.detectDevice(); }
+
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   async ngOnInit() {
     /**
@@ -70,6 +80,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Services.
      */
     if (!!this.slug) {
+      // Check if the article slug is valid otherwise redirect to 404
       this.getAllServicesSlugs().subscribe(data => {
         let slugs = [];
           data.items.forEach(data => {
@@ -77,17 +88,29 @@ export class ServicesComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      this.service = this.getServiceBySlug(this.slug);
-      this.service$ = this.service.subscribe(data => {
 
-          // If Call To Action is an email address
-          if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-            data['callToAction'] = 'mailto:' + data['callToAction'];
-          }
-          
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
-          this.appComponentService.setTitle(data.title);
-        });
+      /**
+       * If the page is SSO Protected then check if the user is authenticated
+       */
+      this.service$ = this.getServiceBySlug(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.service = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.service = data;
+        }
+
+        // If Call To Action is an email address
+        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+          data['callToAction'] = 'mailto:' + data['callToAction'];
+        }
+        
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Services');
@@ -111,7 +134,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function that returns all Equipments slugs from the ServiceCollection as an observable
+   * Function that returns all services slugs from the ServiceCollection as an observable
    * of type ServiceCollection. This is then unwrapped with the async pipe.
    *
    * This function called to determine if a valid slug has been searched otherwise redirect
@@ -121,7 +144,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
     try {
       return this.allServicesSlugsGQL.fetch()
         .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
-    } catch (e) { console.error('Error loading all Equipments:', e) };
+    } catch (e) { console.error('Error loading all services:', e) };
   }
 
   /**
@@ -136,7 +159,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   public getServiceBySlug(slug: string): Observable<Service> {
     try {
       return this.getServiceBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.serviceCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Service>;
+        .pipe(flatMap(x => x.data.serviceCollection.items)) as Observable<Service>;
     } catch (e) { console.error(`Error loading Service ${slug}:`, e); }
   }
 

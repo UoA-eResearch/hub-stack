@@ -6,7 +6,7 @@
     <app-collection-list [type]="'content'" [collection]="allArticles"></app-collection-list>
 </div>
 
-<div id="article-container" *ngIf="article | async as article">
+<div id="article-container" *ngIf="article">
     
     <!-- Templates -->
     <ng-template #breadcrumbs>
@@ -49,6 +49,10 @@
                     <!-- Title -->
                     <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
                         [style]="article.banner ? bannerTextStyling : ''">{{ article.title }}</h1>
+
+                    <!-- Maori Proverb -->
+                    <h2 aria-level="2" *ngIf="article.maoriProverb" class="maori-proverb"
+                    [style]="article.banner ? bannerTextStyling : ''"><hr>{{ article.maoriProverb}}<hr></h2>
 
                     <!-- Summary -->
                     <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
@@ -108,8 +112,7 @@
                     </div>
 
                     <!-- Related items -->
-                    <div id="you-might-be-interested-in" *ngIf="article.relatedItemsCollection.items.length > 0" fxLayout="column" 
-                        fxFlex="20%" fxFlexOrder="3">
+                    <div *ngIf="article.relatedItemsCollection.items.length > 0" fxLayout="column" fxFlex="20%" fxFlexOrder="3">
                         <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column', hide: 'true'}"></ng-container></div>
                 </div>
             </div>

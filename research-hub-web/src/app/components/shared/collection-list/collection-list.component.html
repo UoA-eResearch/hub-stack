@@ -1,7 +1,7 @@
 <ng-container *ngIf="collection">
 
     <!-- Search Result Collection -->
-    <div *ngIf="type == 'search'">
+    <div *ngIf="type == 'search'" [ngClass]="{'loading': loading, 'loaded': !loading}">
 
         <!-- Collection Container -->
         <mat-nav-list role="list">
@@ -11,13 +11,13 @@
 
                 <!-- Collection Item -->
                 <mat-card fxLayout="row" role="listitem">
-                    <span mat-card-avatar id="item-avatar">
+                    <span mat-card-avatar class="item-avatar">
                         <div *ngIf="content.icon; else avatarIcon">
-                            <img src="{{content?.icon?.url}}" alt="{{content?.icon?.description}}"
+                            <img src="{{ content.icon }}" alt="{{ content.title }}"
                                 class="item-avatar" width="100%" height="100%" />
                         </div>
                         <ng-template #avatarIcon>
-                            <mat-icon id="item-avatar-icon" [innerHTML]="getDefaultTypeIcon(content.__typename)"></mat-icon>
+                            <mat-icon class="item-avatar-icon" [innerHTML]="getDefaultTypeIcon(content.__typename)"></mat-icon>
                         </ng-template>
                     </span>
                     <span class="card-content">
@@ -63,7 +63,7 @@
                 <mat-card-header>
                     <div 
                         mat-card-avatar 
-                        id="item-avatar">
+                        class="item-avatar">
                         <div *ngIf="content.icon; else avatarIcon">
                             <img
                                 src="{{content?.icon?.url}}"
@@ -74,7 +74,7 @@
                         </div>
                         <ng-template #avatarIcon>
                             <mat-icon  
-                                id="item-avatar-icon"
+                                class="item-avatar-icon"
                                 [innerHTML]="getDefaultTypeIcon(content.__typename)">
                             </mat-icon>
                         </ng-template>

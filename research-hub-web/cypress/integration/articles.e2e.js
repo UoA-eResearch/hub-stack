@@ -1,19 +1,19 @@
 describe('ResearchHubs Article Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/article/choosing-data-storage');
+        cy.visit('/article/open-access');
     });
 
     it('can visit an article and display its title', () => {
-        cy.contains('Choosing Data Storage');
+        cy.contains('Open Access');
     });
 
     it('can visit an article and display its subtitle', () => {
-        cy.contains('The University of Auckland provides a range of data storage options for research data, based on researcher requirements. This quick guide helps you select the appropriate storage for your data.');
+        cy.contains('Open Access brings increased visibility, usage and impact to researchers and institutions. It benefits researchers, institutions, nations and society as a whole.');
     });
 
     it('article displays body text', () => {
-        cy.contains('The University of Auckland provides a range of data storage options for research data, based on researcher requirements. These include:');
+        cy.contains('Open access is making published research freely available on the internet. Open access material includes journal articles, artwork, books and book chapters, conference proceedings, theses, data and images.');
     });
 
     it('displays a list of related items', () => {
@@ -21,16 +21,16 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('File store, sync and share').click();
-        cy.contains('University staff, doctoral and postgraduate students have several options to choose from for syncing and sharing data');
+        cy.get('#you-might-be-interested-in').contains('Research Outputs').click();
+        cy.contains('Publications and creative works in Research Outputs populate University Directory profiles and the Academic Performance Review (APR). For information on access and general use of the Research Outputs system, please see Research Outputs support.');
     });
 
-    it('displays a list of contacts', () => {
-        cy.get('#contacts').contains('Dharani Sontam').should('exist');
-    });
+    // it('displays a list of contacts', () => {
+    //     cy.get('#contacts').contains('Dharani Sontam').should('exist');
+    // });
 
     it('displays a list of documents', () => {
-        cy.get('#documents').contains('IT Acceptable Use Guidelines').should('exist');
+        cy.get('#documents').contains('Open Access Guidelines').should('exist');
     });
 
     // Cypress doesn't support multi-tabs
@@ -41,7 +41,7 @@ describe('ResearchHubs Article Pages', () => {
     // });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations').contains('Centre for eResearch').should('exist');
+        cy.get('#organisations').contains('Libraries and Learning Services').should('exist');
     });
 
     // Cypress doesn't dupport multi-tab testing

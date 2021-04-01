@@ -3,6 +3,7 @@ query GetSubHubBySlug($slug: String) {
         items {
             slug
             title
+            maoriProverb
             summary
             ssoProtected
             searchable
@@ -42,7 +43,6 @@ query GetSubHubBySlug($slug: String) {
                 }
             }
             }
-            keywords
             internalPagesCollection {
                 items { ...PublicFields }
             }
