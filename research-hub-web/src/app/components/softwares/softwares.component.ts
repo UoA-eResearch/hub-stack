@@ -16,6 +16,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-software',
@@ -33,7 +34,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public software: Observable<Software>;
+  public software;
   public software$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -50,7 +51,8 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -78,7 +80,6 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Software.
      */
     if (!!this.slug) {
-
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllSoftwareSlugs().subscribe(data => {
         let slugs = [];
@@ -88,12 +89,24 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
 
-      this.software = this.getSoftwareBySlug(this.slug);
-        this.software$ = this.software.subscribe(data => {
-            this.bodyMediaService.setBodyMedia(data.bodyText.links);
-          this.appComponentService.setTitle(data.title);
-        });
-        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+      /**
+       * If the page is SSO Protected then check if the user is authenticated
+       */
+      this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.software = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.software = data;
+        }
+
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
+      });
+      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Software');
       this.allSoftware$ = this.getAllSoftware();

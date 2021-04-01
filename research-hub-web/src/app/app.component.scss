@@ -60,6 +60,48 @@
   }
 }
 
+/*
+ * Notification Bar
+ */
+.notification-bar-container {
+  a {
+    text-decoration: underline;
+  }
+  text-align: center;
+  * { color: white; }
+  background: map-get($hub-pink, 500);
+  .notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+  transition: all 0.1s ease-in-out;
+}
+
+/*
+ * Notification Bar
+ */
+.notification-bar-container {
+  a {
+    text-decoration: underline;
+  }
+  text-align: center;
+  * { color: white; }
+  background: map-get($hub-pink, 500);
+  .notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+  transition: all 0.1s ease-in-out;
+}
+
 
 /*
  * Notification Bar

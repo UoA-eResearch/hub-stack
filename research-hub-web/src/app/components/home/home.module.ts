@@ -6,7 +6,6 @@ import { HomeComponent } from './home.component';
 import { BrowseComponent } from './browse/browse.component';
 import { FeaturedComponent } from './featured/featured.component';
 import { ResearchActivityComponent } from './research-activity/research-activity.component';
-import { FeaturedComponent } from './featured/featured.component';
 import { SharedModule } from '@components/shared/app.shared.module';
 
 
