@@ -256,6 +256,10 @@
                       (keydown.enter)="clearSearchText()"  mat-icon-button>
                       <mat-icon>close</mat-icon>
                     </button>
+                    <button matSuffix role="button" aria-label="search" (keydown.enter)="search()"
+                    (click)="search()" mat-icon-button>
+                      <mat-icon>search</mat-icon>
+                    </button>
                   </mat-form-field>
                 </div>
                 <br><br>

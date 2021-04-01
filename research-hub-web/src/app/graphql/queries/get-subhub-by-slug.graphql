@@ -43,7 +43,6 @@ query GetSubHubBySlug($slug: String) {
                 }
             }
             }
-            keywords
             internalPagesCollection {
                 items { ...PublicFields }
             }
