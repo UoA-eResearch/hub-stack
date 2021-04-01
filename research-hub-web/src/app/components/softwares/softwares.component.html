@@ -25,7 +25,7 @@
     </ng-template>
 
     <ng-template #specificationsTable>
-        <div class="specifications">
+        <div id="specifications-table" class="specifications">
             <table class="specifications-table" role="table">
                 <tr role="row">
                 <th role="columnheader">Details</th>
@@ -52,22 +52,22 @@
     </ng-template>
     
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Explore Related'" 
+        <app-cards id="you-might-be-interested-in" [hideImage]="hide" [flex]="flex" [title]="'Explore Related'" 
             [contentItem]="software.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Organisations'" 
+        <app-cards id="organisations" [hideImage]="hide" [flex]="flex" [title]="'Organisations'" 
             [contentItem]="software.relatedOrgsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
-        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Docs'" 
+        <app-cards id="documents"  [hideImage]="hide" [flex]="flex" [title]="'Docs'" 
             [contentItem]="software.relatedDocsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Contacts'" 
+        <app-cards id="contacts"  [hideImage]="hide" [flex]="flex" [title]="'Contacts'" 
             [contentItem]="software.relatedContactsCollection"></app-cards>
     </ng-template>
 

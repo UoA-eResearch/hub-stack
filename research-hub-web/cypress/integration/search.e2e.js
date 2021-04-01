@@ -19,9 +19,15 @@ describe('ResearchHubs Search Page from Homepage', () => {
     });
 
     it('displays number of results', () => {
-        cy.get('input').type('ffffffffff');
+        cy.get('input').type('vision');
         cy.get('input').type('{enter}');
         cy.contains('Results');
+    });
+
+    it('displays no results', () => {
+        cy.get('input').type('fffffffff');
+        cy.get('input').type('{enter}');
+        cy.contains('Sorry, your search for "fffffffff" in All Categories, did not match anything on the ResearchHub.');
     });
 
     it('Clicking a research category navigates to the search page', () => {

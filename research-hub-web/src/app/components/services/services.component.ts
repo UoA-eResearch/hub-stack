@@ -92,7 +92,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
       /**
        * If the page is SSO Protected then check if the user is authenticated
        */
-      this.service$ = this.service.subscribe(data => {
+      this.service$ = this.getServiceBySlug(this.slug).subscribe(data => {
         if (data.ssoProtected == true) {
           this.loginService.isAuthenticated().then((isAuthenticated) => {
             isAuthenticated ? this.service = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
