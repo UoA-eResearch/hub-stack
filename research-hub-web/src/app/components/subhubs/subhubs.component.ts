@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -15,6 +15,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-subhubs',
@@ -32,7 +33,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public subHub: Observable<SubHub>;
+  public subHub;
   public subHub$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -49,7 +50,8 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { }
 
   // Detect if device is Mobile
@@ -82,10 +84,21 @@ export class SubhubsComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all SubHub.
      */
     if (!!this.slug) {
-      this.subHub = this.getSubHubBySlug(this.slug);
-      this.subHub$ = this.subHub.subscribe(data => {
-          this.detectDevice();
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+      /**
+       * If the page is SSO Protected then check if the user is authenticated
+       */
+      this.subHub$ = this.getSubHubBySlug(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.subHub = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.subHub = data;
+        }
+
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
@@ -122,7 +135,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   public getSubHubBySlug(slug: string): Observable<SubHub> {
     try {
       return this.getSubHubBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.subHubCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<SubHub>;
+        .pipe(flatMap(x => x.data.subHubCollection.items)) as Observable<SubHub>;
     } catch (e) { console.error(`Error loading SubHub ${slug}:`, e); }
   }
 

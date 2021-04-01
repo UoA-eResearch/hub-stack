@@ -6,7 +6,7 @@
     <app-collection-list [type]="'content'" [collection]="allEvents"></app-collection-list>
 </div>
 
-<div id="event-container" *ngIf="event | async as event">
+<div id="event-container" *ngIf="event">
 
     <!-- Templates -->
     <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="event.title"></app-breadcrumbs></ng-template>

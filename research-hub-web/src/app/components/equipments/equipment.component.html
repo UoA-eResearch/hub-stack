@@ -6,7 +6,7 @@
     <app-collection-list [type]="'content'" [collection]="allEquipment"></app-collection-list>
 </div>
 
-<div id="equipment-container" *ngIf="equipment | async as equipment">
+<div id="equipment-container" *ngIf="equipment">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>

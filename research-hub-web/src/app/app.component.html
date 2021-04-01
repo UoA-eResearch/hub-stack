@@ -1,4 +1,14 @@
-<section class="mat-typography">
+<!-- Logo Spinner-->
+<div *ngIf="!viewIsLoaded" class="app-loading">
+  <div class="logo"></div>
+  <svg class="spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" role="img" aria-label="app-spinner">
+    <title>Logo</title>
+    <desc>Loading SVG replaced by app after startup</desc>
+    <path class="path" d="M14.77,0A14.77,14.77,0,1,0,29.55,14.77,14.77,14.77,0,0,0,14.77,0Zm9.51,20.83A9.37,9.37,0,0,1,22,23.67a10.34,10.34,0,0,1-4.34,2.2,11,11,0,0,1-5.95-.11,11.42,11.42,0,0,1-3.41-1.66,11.31,11.31,0,0,1-2.62-2.54,11.54,11.54,0,0,1-1.89-4,10.14,10.14,0,0,1-.29-2,11.33,11.33,0,0,1,.25-3.46A11.73,11.73,0,0,1,6,7.68a11.49,11.49,0,0,1,4.72-3.51,10.08,10.08,0,0,1,3-.76l.7-.1A12.51,12.51,0,0,0,10,6.63a11.06,11.06,0,0,0-2.33,4.44,10.68,10.68,0,0,0-.23,3.67,8.31,8.31,0,0,0,2.82,5.54A7.25,7.25,0,0,0,14.13,22a6.14,6.14,0,0,0,4.48-.83,5.29,5.29,0,0,0,2.46-3.59,4.25,4.25,0,0,0-1.46-4.33,3.3,3.3,0,0,0-3.8-.3,2.41,2.41,0,0,0-1.16,3,1.77,1.77,0,0,0,2.31,1,1.34,1.34,0,0,0,.67-1.57.9.9,0,0,0-.9-.52.66.66,0,0,0-.44.86c0-.12,0-.2.1-.25s.32-.33.41-.3a.7.7,0,0,1,.41.41.6.6,0,0,1-.32.7,1,1,0,0,1-1-.11,1.25,1.25,0,0,1,.34-2,1.84,1.84,0,0,1,2.56,1.09,2.35,2.35,0,0,1-.39,2.3A2.65,2.65,0,0,1,16,18.91a4.25,4.25,0,0,1-2.61-1.13,3.84,3.84,0,0,1-1.24-3.45,6.09,6.09,0,0,1,1.57-3.41,5.22,5.22,0,0,1,3.49-1.8,7.32,7.32,0,0,1,6,2.31,7.81,7.81,0,0,1,2,4.34A8.39,8.39,0,0,1,24.28,20.83Z" />
+  </svg>
+</div>
+
+<section *ngIf="viewIsLoaded" class="mat-typography">
 
   <!-- Landing Page -->
   <mat-sidenav-container class="sidenav-container">
@@ -9,7 +19,7 @@
       <!-- Main Navbar -->
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
-          <a href="/home" class="hub-logo" ngClass.xs="hub-logo-xs">
+          <a [routerLink]="homeUrl" (click)="clearSearchText()" class="hub-logo" ngClass.xs="hub-logo-xs">
             <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
@@ -108,7 +118,7 @@
             <!-- Main Navbar -->
             <div #topbar class="app-toolbar-container">
               <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
-              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: 0px -3px 10px black;'">
+              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: grey 0px 3px 15px'">
 
                 <!-- Main Navbar Content -->
                 <div fxLayout="row" class="app-toolbar-row" fxLayoutAlign="center center">
@@ -122,7 +132,8 @@
                   <a 
                     fxFlex.lt-md 
                     class="hub-logo"
-                    href="/home">
+                    [routerLink]="homeUrl"
+                    (click)="clearSearchText()">
                     <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
                   </a>
 
@@ -141,27 +152,45 @@
                   fxHide.lt-md routerLink="/search" (click)="clearSearchText()" 
                   (keydown.enter)="clearSearchText()">Search</button>
 
-                  <!-- Research Categories Button -->
-                  <button role="button" aria-label="categories" *ngIf="!onSearchPage" 
-                    mat-button fxHide.lt-md class="button-menu" [matMenuTriggerFor]="browseMenu">Research Categories</button>
+
+                  <!-- 
+                    Research Categories Button if we are on the homepage. This will scroll down to the homepage section that displays
+                    the Research Categories
+                   -->
+                  <button role="button" aria-label="categories" *ngIf="!onSearchPage && onHomePage" mat-button
+                  fxHide.lt-md class="button-menu" (click)="this.homeScrollService.scrollTo('Categories')">Research Categories</button>
+                  <!--
+                    Research Categories Button if we're not on the homepage. This will render an expansion panel dropdown list 
+                    of all the Research Categories
+                  -->
+                  <button role="button" aria-label="categories" *ngIf="!onSearchPage && !onHomePage" mat-button
+                  fxHide.lt-md class="button-menu" [matMenuTriggerFor]="browseMenu">Research Categories</button>
 
                   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allCategories$ | async as allCategories">
-                      <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items"
-                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
+                      <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items" [routerLink]="['/search']"
                         (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
                         (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">{{item.name}}</button>
                     </div>
                   </mat-menu>
 
-                  <!-- Research Activities Button -->
-                  <button role="button" aria-label="activities" *ngIf="!onSearchPage" class="button-menu" 
-                    fxHide.lt-md mat-button [matMenuTriggerFor]="researchActivityMenu">Research Activities</button>
+
+                  <!-- 
+                    Research Activities Button if we are on the homepage. This will scroll down to the homepage section that displays
+                    the Research Activities
+                   -->
+                  <button role="button" aria-label="activities" *ngIf="!onSearchPage && onHomePage" mat-button
+                  fxHide.lt-md class="button-menu" (click)="this.homeScrollService.scrollTo('Activities')">Research Activities</button>
+                  <!--
+                    Research Activites Button if we're not on the homepage. This will render an expansion panel dropdown list 
+                    of all the Research Activities
+                  -->
+                  <button role="button" aria-label="activities" *ngIf="!onSearchPage && !onHomePage" mat-button
+                    fxHide.lt-md  class="button-menu" [matMenuTriggerFor]="researchActivityMenu">Research Activities</button>
 
                     <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
                     <div *ngIf="allStages$ | async as allStages">
-                      <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items"
-                        [style.background]="showBanner ? '' : '#018193'" [routerLink]="['/search']"
+                      <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items" [routerLink]="['/search']"
                         (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])"
                         (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])">{{ item.name }}</button>
                     </div>
@@ -214,7 +243,7 @@
               <div class="banner-text">
 
                 <!-- Title & Summary -->
-                <h1 class="page-title" role="heading" aria-level="1" style="font-weight: 100!important"><b>Research</b>Hub</h1>
+                <h1 class="page-title" role="heading" aria-level="1"><b>Research</b><span style="font-weight: 100!important">Hub</span></h1>
                 <p class="page-summary">{{ summary }}</p>
                 <br>
                 <div class="initial-search-outer">
@@ -234,23 +263,10 @@
                   </mat-form-field>
                 </div>
                 <br><br>
-                <span class="explore" (click)="scroll(featured)" (keydown.enter)="scroll(featured)">
+                <span class="explore" (click)="this.homeScrollService.scrollTo('Featured')" (keydown.enter)="this.homeScrollService.scrollTo('Featured')">
                   <p class="page-summary">Explore</p>
                   <img class="explore-arrow" src="assets/components/white-arrow.png" width="25" alt="explore-arrow">
                 </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Featured Items -->
-          <div #featured></div>
-          <div class="featured-container" *ngIf="showBanner" >
-            <div *ngIf="homepage$ | async as homepage">
-              <div class="featured-content" *ngIf="homepage.featuredItemsCollection.items.length > 0">
-                <h2 class="featured-title">Featured</h2>
-                <p class="featured-summary">{{ homepage.featuredItemsDescription }}</p>
-                <div class="main-underline-white"></div>
-                <app-cards [flex]="'row'" [contentItem]="homepage.featuredItemsCollection"></app-cards>
               </div>
             </div>
           </div>
