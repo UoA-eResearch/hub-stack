@@ -6,6 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEventsGQL,
+  AllEventsSlugsGQL,
   GetEventBySlugGQL,
   EventCollection,
   Event,
@@ -15,6 +16,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-events',
@@ -32,7 +34,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public event: Observable<Event>;
+  public event;
   public event$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -43,12 +45,14 @@ export class EventsComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allEventsGQL: AllEventsGQL,
+    public allEventSlugsGQL: AllEventsSlugsGQL,
     public getEventBySlugGQL: GetEventBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -76,17 +80,37 @@ export class EventsComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Events.
      */
     if (!!this.slug) {
-      this.event = this.getEventBySlug(this.slug);
-        this.event$ = this.event.subscribe(data => {
+      // Check if the article slug is valid otherwise redirect to 404
+      this.getAllEventSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
 
-          // If Call To Action is an email address
-          if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-            data['callToAction'] = 'mailto:' + data['callToAction'];
-          }
-          
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
-          this.appComponentService.setTitle(data.title);
-        });
+      /**
+       * If the page is SSO Protected then check if the user is authenticated
+       */
+      this.getEventBySlug(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.event = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.event = data;
+        }
+
+        // If Call To Action is an email address
+        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+          data['callToAction'] = 'mailto:' + data['callToAction'];
+        }
+        
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Events');
@@ -110,6 +134,20 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Function that returns all event slugs from the EventCollection as an observable
+   * of type EventCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllEventSlugs(): Observable<EventCollection> {
+    try {
+      return this.allEventSlugsGQL.fetch()
+        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
+    } catch (e) { console.error('Error loading all events:', e) };
+  }
+
+  /**
    * Function that returns an individual Event from the EventCollection by it's slug
    * as an observable of type Event. This is then unwrapped with the async pipe.
    *
@@ -121,7 +159,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   public getEventBySlug(slug: string): Observable<Event> {
     try {
       return this.getEventBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.eventCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Event>;
+        .pipe(flatMap(x => x.data.eventCollection.items)) as Observable<Event>;
     } catch (e) { console.error(`Error loading Event ${slug}:`, e); }
   }
 

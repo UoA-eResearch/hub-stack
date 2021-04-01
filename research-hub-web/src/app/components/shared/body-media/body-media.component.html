@@ -1,7 +1,6 @@
 
 <span [ngSwitch]="data.nodeType">
 
-
     <!-- Asset Block -->
     <span *ngSwitchCase="'embedded-asset-block'">
         <span [ngSwitch]="contentItem.contentType">
@@ -86,9 +85,9 @@
             <!-- Link Card -->
             <span *ngSwitchCase="'LinkCard'">
                 <div>
-                    <a href="{{contentItem.url}}" target="_blank">
+                    <a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">
                         <mat-card class="embedded-entry-block">
-                            <mat-card-title><a href="{{contentItem.url}}" target="_blank">{{ contentItem.title }}</a></mat-card-title>              
+                            <mat-card-title><a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">{{ contentItem.title }}</a></mat-card-title>              
                             <mat-card-content><span class="card-summary">{{ contentItem.summary }}</span></mat-card-content> 
                         </mat-card>
                     </a>
