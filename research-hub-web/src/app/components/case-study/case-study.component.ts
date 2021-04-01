@@ -16,6 +16,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-case-study',
@@ -35,7 +36,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
   public isMobile: Boolean;
   public bannerTextStyling;
   public slug: string;
-  public caseStudy: Observable<CaseStudy>;
+  public caseStudy;
   public caseStudy$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -51,7 +52,8 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { this.detectDevice(); }
   
   /**
@@ -93,9 +95,20 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      this.caseStudy = this.getCaseStudyBySlug(this.slug);
-      this.caseStudy$ = this.caseStudy.subscribe(data => {
-        console.log(data);
+
+      /**
+       * If the page is SSO Protected then check if the user is authenticated
+       */
+      this.caseStudy$ = this.getCaseStudyBySlug(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.caseStudy = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.caseStudy = data;
+        }
+
         this.detectDevice();
         this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);

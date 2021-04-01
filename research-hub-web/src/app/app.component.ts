@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public aboutUs = "https://www.eresearch.auckland.ac.nz/?_ga=2.69549080.943707055.1614124973-1995817083.1603163706#";
 
-  public homeUrl = '/home';
+  public homeUrl = '/';
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
@@ -45,7 +45,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private routerSub: Subscription;
   private titleSub: Subscription;
   private scrollSub: Subscription;
-  private winResizeSub: Subscription;
   public allCategories$: Observable<CategoryCollection>;
   public homepage$: Observable<Homepage>;
   public allStages$: Observable<StageCollection>;
@@ -137,26 +136,6 @@ export class AppComponent implements OnInit, OnDestroy {
     // Get All Stages
     this.allStages$ = this.getAllStages();
 
-    // Get Homepage Image
-    this.homepage$ = this.getHomepage();
-    this.homepage$.subscribe(data => {
-
-      if (data.notification) {
-
-        // Show notification if we're on the homepage
-        this.showNotification = ['home', 'home#'].includes(this.currentRoute);
-      }
-
-      // Set background for mobile devices
-      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
-
-      // Set background for desktop devices
-      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
-
-      this.viewIsLoaded = true;
-    });
-    
-
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
@@ -168,7 +147,10 @@ export class AppComponent implements OnInit, OnDestroy {
           this.currentUrl = url;
 
           // Check if the user is logged in now (Cognito redirect)
-          this.authenticated = await this.loginService.isAuthenticated();
+          this.loginService.isAuthenticated().then(data => {
+            this.authenticated = data;
+            this.getHomepageData();
+          });
           this.userInfo = await this.loginService.getUserInfo();
 
           if (routeName) {
@@ -201,6 +183,30 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  /**
+   * Get Homepage data from Contetnful after checking if the user is logged in
+   */
+  getHomepageData() {
+    // Get Homepage Image
+    this.homepage$ = this.getHomepage();
+    this.homepage$.subscribe(data => {
+
+      if (data.notification) {
+
+        // Show notification if we're on the homepage
+        this.showNotification = ['home', 'home#'].includes(this.currentRoute);
+      }
+
+      // Set background for mobile devices
+      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
+
+      // Set background for desktop devices
+      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
+
+      this.viewIsLoaded = true;
+    });
   }
 
   // Get Query Parameters
@@ -242,6 +248,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // Search
   search() {
     this.searchBarService.setSearchText(this.searchText);
+    this.searchBarService.setCurrentPage(1);
     this.router.navigate(['/search']);
   }
 
@@ -251,7 +258,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routerSub.unsubscribe();
     this.titleSub.unsubscribe();
     this.scrollSub.unsubscribe();
-    this.winResizeSub.unsubscribe();
     this.url.unsubscribe();
   }
 

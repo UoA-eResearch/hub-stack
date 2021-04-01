@@ -15,6 +15,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-subhubs',
@@ -32,7 +33,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public subHub: Observable<SubHub>;
+  public subHub;
   public subHub$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -49,7 +50,8 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { }
 
   // Detect if device is Mobile
@@ -82,10 +84,21 @@ export class SubhubsComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all SubHub.
      */
     if (!!this.slug) {
-      this.subHub = this.getSubHubBySlug(this.slug);
-      this.subHub$ = this.subHub.subscribe(data => {
-          this.detectDevice();
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+      /**
+       * If the page is SSO Protected then check if the user is authenticated
+       */
+      this.subHub$ = this.getSubHubBySlug(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.subHub = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.subHub = data;
+        }
+
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

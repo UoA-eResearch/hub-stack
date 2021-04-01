@@ -16,6 +16,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-events',
@@ -33,7 +34,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public event: Observable<Event>;
+  public event;
   public event$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -50,7 +51,8 @@ export class EventsComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -78,7 +80,6 @@ export class EventsComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Events.
      */
     if (!!this.slug) {
-
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllEventSlugs().subscribe(data => {
         let slugs = [];
@@ -88,17 +89,28 @@ export class EventsComponent implements OnInit, OnDestroy {
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
 
-      this.event = this.getEventBySlug(this.slug);
-        this.event$ = this.event.subscribe(data => {
+      /**
+       * If the page is SSO Protected then check if the user is authenticated
+       */
+      this.getEventBySlug(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.event = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.event = data;
+        }
 
-          // If Call To Action is an email address
-          if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-            data['callToAction'] = 'mailto:' + data['callToAction'];
-          }
-          
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
-          this.appComponentService.setTitle(data.title);
-        });
+        // If Call To Action is an email address
+        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+          data['callToAction'] = 'mailto:' + data['callToAction'];
+        }
+        
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
+      });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Events');

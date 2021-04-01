@@ -111,6 +111,12 @@ module.exports.search = async (event, context) => {
             must: {
               match_all: {}
             },
+            should: {
+              multi_match: {
+                query : "subhub",
+                fields : [ "sys.contentType.sys.id^2"]  // boost match score for entries that are subhubs
+              }
+            },
             filter: [
               {
                 term: {
@@ -163,6 +169,12 @@ module.exports.search = async (event, context) => {
         query: { 
           bool: {
             must: queryParts,
+            should: {
+              multi_match: {
+                query : "subhub",
+                fields : [ "sys.contentType.sys.id^2"]  // boost match score for entries that are subhubs
+              }
+            },
             filter: [
               {
                 term: {
