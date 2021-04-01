@@ -13,7 +13,7 @@ export class AppComponentService {
     this.url.next(url.substring(1));
   }
 
-  // Set title of page window
+  // Set title of the current page
   setTitle(title: string) {
     this.titleChange.next(title);
   }

@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEquipmentGQL,
+  AllEquipmentSlugsGQL,
   GetEquipmentBySlugGQL,
   EquipmentCollection,
   Equipment,
@@ -44,6 +45,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allEquipmentGQL: AllEquipmentGQL,
+    public allEquipmentSlugsGQL: AllEquipmentSlugsGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -78,6 +80,16 @@ export class EquipmentComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Equipment.
      */
     if (!!this.slug) {
+
+      // Check if the article slug is valid otherwise redirect to 404
+      this.getAllEquipmentSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
+
       this.equipment = this.getEquipmentBySlug(this.slug);
         this.equipment$ = this.equipment.subscribe(data => {
             this.bodyMediaService.setBodyMedia(data.bodyText.links);
@@ -106,6 +118,20 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Function that returns all equipment slugs from the EquipmentCollection as an observable
+   * of type EquipmentCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllEquipmentSlugs(): Observable<EquipmentCollection> {
+    try {
+      return this.allEquipmentSlugsGQL.fetch()
+        .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
+    } catch (e) { console.error('Error loading all equipment', e) };
+  }
+
+  /**
    * Function that returns an individual Equipment from the EquipmentCollection by it's slug
    * as an observable of type Equipment. This is then unwrapped with the async pipe.
    *
@@ -117,7 +143,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
     try {
       return this.getEquipmentBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.equipmentCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Equipment>;
+        .pipe(flatMap(x => x.data.equipmentCollection.items)) as Observable<Equipment>;
     } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
   }
 

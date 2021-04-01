@@ -110,6 +110,9 @@ fragment PublicFields on Entry {
       title
       summary
       url
+      document {
+        url
+      }
   }
   ... on Person {
       __typename

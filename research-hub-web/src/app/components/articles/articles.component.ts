@@ -86,6 +86,8 @@ export class ArticlesComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
+
+      // Check if the article slug is valid otherwise redirect to 404
       this.getAllArticlesSlugs().subscribe(data => {
         let slugs = [];
           data.items.forEach(data => {
@@ -93,18 +95,15 @@ export class ArticlesComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
+
+      // If the slug is valid, load the article
       this.article = this.getArticleBySlug(this.slug);
       this.article$ = this.article.subscribe(data => {
         this.detectDevice();
         this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
-      this.article = this.getArticleBySlug(this.slug);
-        this.article$ = this.article.subscribe(data => {
-            this.bodyMediaService.setBodyMedia(data.bodyText.links);
-          this.appComponentService.setTitle(data.title);
-        });
-        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Articles');
       this.allArticles$ = this.getAllArticles();
@@ -152,7 +151,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   public getArticleBySlug(slug: string): Observable<Article> {
     try {
       return this.getArticleBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.articleCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Article>;
+        .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
   }
 
