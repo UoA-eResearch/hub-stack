@@ -291,41 +291,6 @@ mat-expansion-panel-header .mat-expanded {
   }
 }
 
-/*
- * Featured Container
- */
-.featured-container {
-  z-index: 1;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)!important;
-  background: map-get($hub-teal, 700);
-  .featured-content {
-    width: 95vw;
-    margin: 60px auto;
-    @extend .site-padding;
-  }
-    .featured-title {
-      color: white;
-      font-size: 36px;
-      text-align: center;
-      @include size(medium) { 
-        text-align: left;
-        font-size: 48px;
-      }
-    }
-    .featured-summary {
-      color: white;
-      font-size: 16px;
-      position: relative;
-      word-wrap: break-word;
-      margin: 0 auto;
-      text-align: center;
-      @include size(medium) { 
-        text-align: left;
-        font-size: 20px;
-      }
-    }
-}
-
 
 /*
  * Footer
