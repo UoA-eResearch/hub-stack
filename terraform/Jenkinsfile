@@ -1,0 +1,116 @@
+// Common Variables
+slackChannel = 'research-hub'
+slackCredentials = 'UoA-Slack-Access-Research-Hub'
+
+pipeline {
+
+    parameters {
+        booleanParam(name: "FORCE_REDEPLOY_TERRAFORM", defaultValue: false, description: 'Force re-run terraform even if there are no code changes.' )
+    }
+
+    agent  {
+        label("uoa-buildtools-ionic")
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#D4DADF", message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+            }
+        }
+
+        stage('Set environment variables') {
+            steps {
+                script {
+                    echo 'Setting environment variables'
+                    env.awsRegion = "ap-southeast-2"
+                    env.awsRole = 'devops'
+                    if (BRANCH_NAME == 'terraform-sandbox-deploy') {
+                        echo 'Setting variables for sandbox terraform deployment'
+                        env.awsEnv = 'sandbox'
+                        env.awsCredentialsId = 'aws-sandbox-user'
+                        env.awsTokenId = 'aws-sandbox-token'
+                        env.awsProfile = 'uoa-sandbox'
+                        env.awsAccountId = '416527880812'
+                    } else if (BRANCH_NAME == 'terraform-nonprod-deploy') {
+                        echo 'Setting variables for nonprod terraform deployment'
+                        env.awsEnv = 'nonprod'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+                        env.awsAccountId = '518380838815'
+                    } else if (BRANCH_NAME == 'terraform-prod-deploy') {
+                        echo 'Setting variables for prod terraform deployment'
+                        env.awsEnv = 'prod'
+                        env.awsCredentialsId = 'uoa-its-prod-access'
+                        env.awsTokenId = 'uoa-its-prod-token'
+                        env.awsProfile = 'uoa-its-prod'
+                        env.awsAccountId = 'TBC'
+                    } else {
+                        echo 'You are not on an environment branch, defaulting to sandbox'
+                        BRANCH_NAME = 'terraform-sandbox-deploy'
+                        env.awsCredentialsId = 'aws-sandbox-user'
+                        env.awsTokenId = 'aws-sandbox-token'
+                        env.awsProfile = 'uoa-sandbox'
+                        env.awsAccountId = '416527880812'
+                    }
+                }
+            }
+        }
+
+        stage('AWS Credential Grab') {
+            steps{
+                script {
+                    echo "☯ Authenticating with AWS"
+
+                    withCredentials([
+                        usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
+                        string(credentialsId: "${awsTokenId}", variable: 'awsToken')
+                    ]) {
+                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile} --role ${awsRole}"
+                    }
+                }
+            }
+        }
+            
+        stage('Terraform Create/Update Infrastructure') {
+            when {
+                anyOf {
+                    changeset "**/terraform/**/*.*"
+                    equals expected: true, actual: params.FORCE_REDEPLOY_TERRAFORM
+                }
+            }
+            stages {
+                stage ('Create Plan') {
+                    // terraform plan
+                    steps {
+                        
+                    }
+                }
+                stage ('Await approval.. ') {
+                    steps {
+                        
+                    }
+                }
+                stage ('Apply changes') {
+                    steps {
+                        
+                    }
+                }
+            }              
+        }
+    }
+    
+    post {
+        success {
+            echo 'Hub Stack deployed to ' + BRANCH_NAME
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).")
+        }
+        failure {
+            echo 'Jenkins job failed :('
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#FF9FA1", message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+        }
+    }
+}
