@@ -23,11 +23,11 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@app/components/search-page/search-page.module').then((m) => m.SearchPageModule),
   },
   {
-    path: 'equipment/:slug',
+    path: 'equipment',
     loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
   },
   {
-    path: 'equipment',
+    path: 'equipment/:slug',
     loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
   },
   {

@@ -36,13 +36,6 @@ export class SearchPageComponent implements OnInit {
   async ngOnInit() {
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
-
-    // Set the eventId for filtering by Event
-    this.allCategories$.subscribe(data => {
-      data.items.forEach(element => {
-        if (element.name == 'Events') this.searchBarService.setEventId(element.sys.id);
-      });
-    })
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
     this.searchBarService.createResultsList();
     this.initialPages();
@@ -79,5 +72,8 @@ export class SearchPageComponent implements OnInit {
     this.initialPages();
   }
 
-  ngOnDestroy() { this.resultSub$.unsubscribe()}
+  ngOnDestroy() {
+    this.resultSub$.unsubscribe();
+    this.allCurrentPages = [];
+  }
 }
