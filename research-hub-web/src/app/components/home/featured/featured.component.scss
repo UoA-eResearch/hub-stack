@@ -1,7 +1,6 @@
-@import "../../../../typography.scss";
-@import "../../../../themes.scss";
-@import "../../../../styles.scss";
-@import '../../../app.component.scss';
+@import '../../../../styles.scss';
+@import '../../../../themes.scss';
+@import '../../../../typography.scss';
 
 
 /*
@@ -9,6 +8,7 @@
  */
  .featured-container {
     z-index: 1;
+    background: map-get($hub-teal, 700);
     .featured-content {
       width: 95vw;
       margin: 60px auto;

@@ -2,18 +2,18 @@
   <div fxFlex="noshrink" fxLayout="column">
 
     <!-- Featured Component -->
-    <div fxFlex class="featured teal-background shadow">
-      <app-featured #featured></app-featured>
+    <div #featured class="featured teal-background shadow">
+      <app-featured></app-featured>
     </div>
 
     <!-- Browse Categories Component -->
-    <div fxFlex class="grey-background" fxFlex.xs="noshrink">
-      <app-browse #categories></app-browse>
+    <div #categories fxFlex class="grey-background" fxFlex.xs="noshrink">
+      <app-browse></app-browse>
     </div>
 
     <!-- Research Activity Component -->
-    <div>
-      <app-research-activity #stages></app-research-activity>
+    <div #activities>
+      <app-research-activity></app-research-activity>
     </div>
 
     <!-- Contact -->

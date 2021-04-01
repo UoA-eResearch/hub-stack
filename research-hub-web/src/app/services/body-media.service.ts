@@ -11,13 +11,16 @@ export class BodyMediaService {
   constructor() { }
 
   /**
-   * Set current content body assets
+   * Set current content body asset ID's
    * @param assets 
    */
   setBodyMedia(bodyMedia) {
     this.bodyMedia.next(bodyMedia)
   }
 
+  /**
+   * Get current content body asset ID's
+   */
   getBodyMedia() {
     return this.bodyMedia.value;
   }

@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { GetHomepageGQL, Homepage } from '@graphql/schema';
-import { flatMap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-
+import { Observable } from 'rxjs';
+import { flatMap, catchError } from 'rxjs/operators';
+import { GetHomepageGQL, Homepage } from '@graphql/schema';
 
 @Component({
   selector: 'app-featured',
@@ -11,14 +10,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./featured.component.scss']
 })
 export class FeaturedComponent implements OnInit {
-  public homepage$: Observable<Homepage>
+  public homepage$: Observable<Homepage>;
 
   constructor(
     public getHomepageGQL: GetHomepageGQL,
-    private router: Router
-    ) { }
+    public router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(){
+    // Get Homepage Image
     this.homepage$ = this.getHomepage();
   }
 
@@ -26,8 +25,7 @@ export class FeaturedComponent implements OnInit {
   public getHomepage(): Observable<Homepage> {
     try {
       return this.getHomepageGQL.fetch()
-        .pipe(flatMap(x => x.data.homepageCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Homepage>
+        .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
     } catch (e) { console.error('Error loading homepage:', e) };
   }
-
 }

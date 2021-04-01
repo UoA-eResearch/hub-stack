@@ -220,10 +220,13 @@ export class SearchBarService {
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
       this.setTotalPages(this.getTotalPages());
 
+      // Triggers loading animation on collection page
+      this.setTotalPages(this.getTotalPages());
+
       // Create deep copy of category array to handle events manually
       let categories = this.getCategory().map(x => { return  x });
 
-      // If event is selected, remove it from search parameters (will be manually handled below)
+      // If event is selected, remove it from search parameters, event is a content model so must be handled differently
       if (this.getCategory().includes(this.getEventId())) {
         categories.splice(this.getCategory().indexOf(this.getEventId()), 1)
         pageTypes = ["event"]
@@ -232,7 +235,7 @@ export class SearchBarService {
       // Create the search query
         let query = {
           query: this.getSearchText(),
-          size: 10, // Maximum return result size from Elastic.co
+          size: 10,
           from: (this.getCurrentPage() - 1) * 10,
           sort: this.getSort(),
           filters: {
@@ -252,12 +255,13 @@ export class SearchBarService {
               "summary" : element._source.fields.summary["en-US"],
               "slug" : element._source.fields.slug["en-US"],
               "ssoProtected" : element._source.fields.ssoProtected["en-US"],
-              "__typename" : element._source.sys.contentType.sys.id
+              "__typename" : element._source.sys.contentType.sys.id,
+              "icon": element._source.fields.icon?.["en-US"]["url"]
             }
             array.push(result);
           });
             
-          // Create the results array
+          // Create the results
           this.setResults(array);
           this.setTotalPages(data["result"]["hits"]["total"]["value"]);
         })

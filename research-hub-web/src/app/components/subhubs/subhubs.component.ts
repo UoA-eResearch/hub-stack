@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -122,7 +122,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   public getSubHubBySlug(slug: string): Observable<SubHub> {
     try {
       return this.getSubHubBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.subHubCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<SubHub>;
+        .pipe(flatMap(x => x.data.subHubCollection.items)) as Observable<SubHub>;
     } catch (e) { console.error(`Error loading SubHub ${slug}:`, e); }
   }
 

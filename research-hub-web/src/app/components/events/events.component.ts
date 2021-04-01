@@ -6,6 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEventsGQL,
+  AllEventsSlugsGQL,
   GetEventBySlugGQL,
   EventCollection,
   Event,
@@ -43,6 +44,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allEventsGQL: AllEventsGQL,
+    public allEventSlugsGQL: AllEventsSlugsGQL,
     public getEventBySlugGQL: GetEventBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -76,6 +78,16 @@ export class EventsComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Events.
      */
     if (!!this.slug) {
+
+      // Check if the article slug is valid otherwise redirect to 404
+      this.getAllEventSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
+
       this.event = this.getEventBySlug(this.slug);
         this.event$ = this.event.subscribe(data => {
 
@@ -110,6 +122,20 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Function that returns all event slugs from the EventCollection as an observable
+   * of type EventCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllEventSlugs(): Observable<EventCollection> {
+    try {
+      return this.allEventSlugsGQL.fetch()
+        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
+    } catch (e) { console.error('Error loading all events:', e) };
+  }
+
+  /**
    * Function that returns an individual Event from the EventCollection by it's slug
    * as an observable of type Event. This is then unwrapped with the async pipe.
    *
@@ -121,7 +147,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   public getEventBySlug(slug: string): Observable<Event> {
     try {
       return this.getEventBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.eventCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Event>;
+        .pipe(flatMap(x => x.data.eventCollection.items)) as Observable<Event>;
     } catch (e) { console.error(`Error loading Event ${slug}:`, e); }
   }
 

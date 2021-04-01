@@ -60,6 +60,7 @@
   }
 }
 
+
 /*
  * Notification Bar
  */
@@ -81,6 +82,7 @@
   transition: all 0.1s ease-in-out;
 }
 
+
 /*
  * Initial Search
  */ 
@@ -96,6 +98,9 @@
 }
 
 
+/**
+ * Explore arrow animation
+ */
 @keyframes explore {
   0%   { margin-top: 5px;}
   50%  { margin-top: 16px; }
@@ -106,9 +111,8 @@
   50%  { margin-top: 3px; }
   100% { margin-top: 0px; }
 }
-
 /*
- * Explore
+ * Explore Arrow
  */
 .explore {
     cursor: pointer;
@@ -153,13 +157,14 @@ mat-list-base {
 }
 mat-expansion-panel {
   width: 70vw;
+  background-color: #FAFAFA!important;
   box-shadow: none !important;
 }
 mat-expansion-panel-header .mat-expanded {
   height:  64px !important;
 }
 .expandable-menu {
-  background-color: #FFFFFF !important;
+  background-color: #FAFAFA!important;
   padding-left: 0 !important;
   height:  64px !important;
 }
@@ -224,7 +229,6 @@ mat-expansion-panel-header .mat-expanded {
 .mat-menu-panel,
 .mat-menu-content {
   min-width: fit-content!important;
-  background: rgba(10, 10, 10, 0.6);
 }
 .mat-menu-item {
   color: white!important;
