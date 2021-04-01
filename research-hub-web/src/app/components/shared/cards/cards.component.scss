@@ -39,7 +39,7 @@
  * Card Label
  */
  .card-label {
-  background: map-get($hub-teal, 500);
+  background: map-get($hub-teal, 700);
   color: rgb(255, 255, 255);
   position: absolute;
   font-size: 14px;
@@ -50,7 +50,7 @@
 
 .contact-card-summary  {
   a {
-    color: #0294A5!important;
+    color: #018193!important;
     display: inline-block;
     width: 100%;
     overflow: hidden;
