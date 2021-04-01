@@ -72,5 +72,8 @@ export class SearchPageComponent implements OnInit {
     this.initialPages();
   }
 
-  ngOnDestroy() { this.resultSub$.unsubscribe()}
+  ngOnDestroy() {
+    this.resultSub$.unsubscribe();
+    this.allCurrentPages = [];
+  }
 }

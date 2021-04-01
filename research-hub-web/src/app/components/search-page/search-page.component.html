@@ -113,13 +113,13 @@
                 <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
                     placeholder="Order By">
                     <div>
-                        <mat-option value="">Default</mat-option>
+                        <mat-option value="">Relevance</mat-option>
                         <mat-option value="A-Z">Alphabetical</mat-option>
                     </div>
                 </mat-select>
             </div>
         </div>
-        <app-collection-list *ngIf="searchBarService.getTotalPages() != 0" [type]="'search'" [collection]="allCurrentPages"></app-collection-list>
+        <app-collection-list [type]="'search'" [collection]="allCurrentPages"></app-collection-list>
     </div>
 
     <!-- No results message -->
