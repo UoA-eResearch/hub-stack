@@ -85,7 +85,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
       this.subHub = this.getSubHubBySlug(this.slug);
       this.subHub$ = this.subHub.subscribe(data => {
           this.detectDevice();
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
