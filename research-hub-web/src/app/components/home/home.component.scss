@@ -16,8 +16,30 @@
 }
 
 
+/**
+ * Colored backgrounds
+ */
 .grey-background {
     background-color: #eeeeee;
+}
+.teal-background {
+    background: map-get($hub-teal, 700);
+}
+
+
+/**
+ * Section shadows
+ */
+.shadow {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)!important;
+}
+
+
+/**
+ * Featured Section
+ */
+.featured {
+    z-index: 1
 }
 
 
@@ -26,7 +48,6 @@
  */
 .contact-container {
     z-index: 2;
-    box-shadow: 0px 5px 10px -2px #242323!important;
     .contact {
         margin: 0 auto;
         text-align: center;

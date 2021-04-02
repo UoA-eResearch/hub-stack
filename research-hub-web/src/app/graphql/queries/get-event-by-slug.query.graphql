@@ -45,7 +45,6 @@ query GetEventBySlug($slug: String) {
             }
             }
         }
-        keywords
         relatedContactsCollection {
             items { ...PublicFields }
         }
