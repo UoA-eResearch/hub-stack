@@ -45,7 +45,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private routerSub: Subscription;
   private titleSub: Subscription;
   private scrollSub: Subscription;
-  private winResizeSub: Subscription;
   public allCategories$: Observable<CategoryCollection>;
   public homepage$: Observable<Homepage>;
   public allStages$: Observable<StageCollection>;
@@ -249,6 +248,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // Search
   search() {
     this.searchBarService.setSearchText(this.searchText);
+    this.searchBarService.setCurrentPage(1);
     this.router.navigate(['/search']);
   }
 
@@ -258,7 +258,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.routerSub.unsubscribe();
     this.titleSub.unsubscribe();
     this.scrollSub.unsubscribe();
-    this.winResizeSub.unsubscribe();
     this.url.unsubscribe();
   }
 
