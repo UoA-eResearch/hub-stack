@@ -116,10 +116,6 @@ async function createServer(config) {
             if (context.user) { // If the user is signed in, simply forward request
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
-
-                if (IS_PREVIEW_ENV) {
-                    throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
-                }
                 // GraphQL introspection fields, these are used by GraphQL to query metadata
                 const GRAPHQL_INTROSPECTION_FIELDS = [
                     '__Schema',
@@ -244,9 +240,30 @@ async function createServer(config) {
                 console.log('\n===== Query Recieved: ======\n', req.body.query)
 
             // Verify the requestor's token and return their user info, or return null for unauthenticated users
+            // In preview environment, always stop further query as we require sign in first.
+                const authorization = req.headers.authorization;
+                if (!authorization || 
+                    (typeof authorization === "string" && 
+                    !authorization.startsWith("Bearer "))) {
+                    // Check if the authorization header exists and has a bearer token.
+                    // If not, return null
+                    if (IS_PREVIEW_ENV) {
+                        // Reject all non-logged in queries in preview environment
+                        console.log("No bearer token sent. In preview environment, so returning AuthenticationError.");
+                        throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
+                    }
+                    return null;
+                }
             try {
-                return { user: verifyJwt(req.headers.authorization.substring('Bearer '.length), cognitoPublicKeys) }
+                return { user: verifyJwt(authorization.substring('Bearer '.length), cognitoPublicKeys) }
             } catch (e) { 
+                // Could not verify the user.
+                console.error("Error while verifying JWT", e);
+                if (IS_PREVIEW_ENV) {
+                    // Reject all non-logged in queries in preview environment
+                    console.log("Exception thrown while verifying user token. In preview environment, so returning AuthenticationError.\n", e)
+                    throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
+                }
                 return null;
             }
         }, formatResponse: (res, context) => {
@@ -266,7 +283,12 @@ async function createServer(config) {
                 if (JSON.stringify(res).includes('\"ssoProtected\":true'))
                     throw new AuthenticationError('SSO authentication required to view this content.')
             }
-        },
+        },  formatError: (err) => {
+            // Print out errors so they can be searched in logs.
+            console.error(err);
+            return err;
+          },
+        
     });
 };
 

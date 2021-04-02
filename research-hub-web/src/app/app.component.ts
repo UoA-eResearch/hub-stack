@@ -62,8 +62,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public desktopBackground: String;
 
   constructor(
-    private location: Location, 
-    public searchBarService: SearchBarService, 
+    private location: Location,
+    public searchBarService: SearchBarService,
     private router: Router,
     private titleService: Title,
     public appComponentService: AppComponentService,
@@ -74,12 +74,11 @@ export class AppComponent implements OnInit, OnDestroy {
     public allStagesGQL: AllStagesGQL,
     private _bypass: BypassErrorService,
     private deviceService: DeviceDetectorService) {
-      this.detectDevice();
-      this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
-
-      // Smooth scrolling in IE/Edge
-      smoothscroll.polyfill();
-    }
+    this.detectDevice();
+    this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
+    // Smooth scrolling in IE/Edge
+    smoothscroll.polyfill();
+  }
 
   // Detect if device is Mobile
   detectDevice() {
@@ -104,7 +103,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   // Scroll to element
   scroll(el: HTMLElement) {
-    el.scrollIntoView({behavior: 'smooth'});
+    el.scrollIntoView({ behavior: 'smooth' });
   }
 
   async ngOnInit() {
@@ -116,30 +115,33 @@ export class AppComponent implements OnInit, OnDestroy {
       this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
-    // Get All Categories
-    this.allCategories$ = this.getAllCategories();
-
-    // Get All Stages
-    this.allStages$ = this.getAllStages();
-
-    // Get Homepage Image
-    this.homepage$ = this.getHomepage();
-    this.homepage$.subscribe(data => {
-
-      // If mobile
-      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
-
-      // If desktop
-      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
-    
-    });
-    
-
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
         .subscribe(async event => {
-          
+
+          if (!this.allCategories$) {
+            // Get All Categories
+            this.allCategories$ = this.getAllCategories();
+          }
+
+          if (!this.allStages$) {
+            // Get All Stages
+            this.allStages$ = this.getAllStages();
+          }
+          if (!this.homepage$) {
+            // Get Homepage Image
+            this.homepage$ = this.getHomepage();
+
+            this.homepage$.subscribe(data => {
+              // If mobile
+              this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${data.image?.url}) no-repeat; height: 100vh`;
+        
+              // If desktop
+              this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${data.image?.url}) no-repeat fixed center; height: 100vh`;
+        
+            });
+          }
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
@@ -166,7 +168,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
             // Hide search options if we're on the search page
             this.onSearchPage = ['search'].includes(routeName);
-            
             // Same component navigation
             if (this.currentRoute == this.previousRoute) {
               this.router.routeReuseStrategy.shouldReuseRoute = () => false;

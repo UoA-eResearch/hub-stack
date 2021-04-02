@@ -8,7 +8,7 @@ environment.privateUrlKeyWords = {
   get whoNeedBearerToken() {
     return [
       { url: 'apigw.sandbox.amazon.auckland.ac.nz', optional: false },
-      { url: environment.cerGraphQLUrl, optional: false }
+      { url: "localhost:4000", optional: true }
     ]
   },
   get whoNeedIdToken() {

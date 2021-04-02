@@ -96,12 +96,12 @@ export class ArticlesComponent implements OnInit, OnDestroy {
       this.article = this.getArticleBySlug(this.slug);
       this.article$ = this.article.subscribe(data => {
         this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.article = this.getArticleBySlug(this.slug);
         this.article$ = this.article.subscribe(data => {
-            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+            this.bodyMediaService.setBodyMedia(data.bodyText?.links);
           this.appComponentService.setTitle(data.title);
         });
         this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
