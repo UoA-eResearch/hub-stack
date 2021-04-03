@@ -12,6 +12,9 @@ query GetHomepage {
             featuredItemsDescription
             researchCategories
             researchActivities
+            notification {
+                json
+            }
         }
     }
 }

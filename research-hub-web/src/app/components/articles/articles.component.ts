@@ -16,6 +16,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-articles',
@@ -35,7 +36,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   public isMobile: Boolean;
   public bannerTextStyling;
   public slug: string;
-  public article: Observable<Article>;
+  public article;
   public article$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -51,7 +52,8 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { this.detectDevice(); }
   
   /**
@@ -86,6 +88,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
+      // Check if the article slug is valid otherwise redirect to 404
       this.getAllArticlesSlugs().subscribe(data => {
         let slugs = [];
           data.items.forEach(data => {
@@ -93,18 +96,25 @@ export class ArticlesComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      this.article = this.getArticleBySlug(this.slug);
-      this.article$ = this.article.subscribe(data => {
+
+      /**
+       * If the page is SSO Protected then check if the user is authenticated
+       */
+      this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.article = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.article = data;
+        }
+
         this.detectDevice();
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
-      this.article = this.getArticleBySlug(this.slug);
-        this.article$ = this.article.subscribe(data => {
-            this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-          this.appComponentService.setTitle(data.title);
-        });
-        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Articles');
       this.allArticles$ = this.getAllArticles();
@@ -152,7 +162,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   public getArticleBySlug(slug: string): Observable<Article> {
     try {
       return this.getArticleBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.articleCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Article>;
+        .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
     } catch (e) { console.error(`Error loading article ${slug}:`, e); }
   }
 

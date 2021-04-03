@@ -55,6 +55,7 @@ query GetSoftwareBySlug($slug: String) {
           }
           searchable
           callToAction
+          callToActionLabel
           licencing
           cost
           access

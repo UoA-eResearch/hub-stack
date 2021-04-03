@@ -196,7 +196,7 @@ describe('List item to router link : pipe', () => {
 
     const expectedHtmlOutput = '<h2>Welcome to the Hub</h2><p>This is the first article. Sam&#39;s writing some random text here to pad out space.</p><h3>Smaller Heading</h3><p>I&#39;m just testing how the HTML rendering works.</p><ul><li><p>I&#39;m just testing how a bullet point list works.</p></li><li><p>Wow, it has bullets.</p></li><li><p>Run out of generic text <i>ideas </i>so I&#39;ll stop now.</p></li></ul><h4>An Even Smaller Heading</h4><p>Last thing I&#39;ll check is how a link works, have you heard of <a href="https://google.com/">Google</a>?</p><p></p>';
 
-    it('Should return a human case string', () => {
+    it('Should return expected HTML', () => {
         expect(pipe.transform(mockRichText)).toEqual(expectedHtmlOutput);
     });
 });
