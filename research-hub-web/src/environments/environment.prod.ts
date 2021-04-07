@@ -2,6 +2,7 @@
 export const environment = {
   production: true,
   cerGraphQLUrl: '',
+  cerGraphQLPreviewUrl: '',
   analyticsCode: '',
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
