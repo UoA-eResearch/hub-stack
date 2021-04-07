@@ -27,7 +27,6 @@ export class SearchPageComponent implements OnInit {
   public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
 
-
   constructor(
     public searchBarService: SearchBarService,
     public location: Location
