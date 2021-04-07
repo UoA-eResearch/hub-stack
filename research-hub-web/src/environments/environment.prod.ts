@@ -1,8 +1,6 @@
 // TODO: Insert prod values
 export const environment = {
   production: true,
-  researchHubApiUrl: '',
-  cerApiUrl: '',
   cerGraphQLUrl: '',
   analyticsCode: '',
   auth: {
@@ -10,15 +8,16 @@ export const environment = {
     cognitoUserPoolId: '',
     cognitoDomain: '',
     cognitoClientId: '',
-    redirectUri: '',
+    redirectUri: 'https://research-hub.auckland.ac.nz',
     scopes: '',
     codeChallengeMethod: 'S256',
-    logout_uri: ''
+    logout_uri: 'https://research-hub.auckland.ac.nz'
   },
+  searchUrl: 'https://apigw.prod.amazon.auckland.ac.nz/hub-search-proxy',
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
       return [
-        { url: 'apigw.sandbox.amazon.auckland.ac.nz', optional: false },
+        { url: 'apigw.prod.amazon.auckland.ac.nz', optional: false },
         { url: environment.cerGraphQLUrl, optional: true }
       ]
     },

@@ -18,7 +18,6 @@ dns_entry              = "research-hub.prod.amazon.auckland.ac.nz"
 secondary_addresses    = []
 index_doc              = "index.html"
 acm_arn                = "TBC"
-route53_hosted_zone_id = "TBC"
 
 # Secondary website (if applicable)
 create_secondary              = false
@@ -47,7 +46,7 @@ lb_subnets = [
 ecs_lb_acm_arn   = "TBC"
 r53_hosted_zone  = "prod.amazon.auckland.ac.nz"
 lb_dns_name      = "rhubcpapi.prod.amazon.auckland.ac.nz"
-create_dns_entry = false # prob true?
+create_dns_entry = true
 
 # ECS Environment
 ecs_cluster_name = "cer-graphql-cluster"
