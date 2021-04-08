@@ -26,8 +26,10 @@ const getCredentials = (isFromFile) => {
 
         deleteEnvironmentVariables();
 
+        console.warn(process.env.stage);
+
         let path;
-        switch(process.env.awsProfile) {
+        switch(process.env.stage) {
             case 'dev':
                 path = '../.env';
                 break;
