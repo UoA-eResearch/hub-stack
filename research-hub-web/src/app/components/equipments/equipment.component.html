@@ -6,7 +6,7 @@
     <app-collection-list [type]="'content'" [collection]="allEquipment"></app-collection-list>
 </div>
 
-<div id="equipment-container" *ngIf="equipment">
+<div id="equipment-container" *ngIf="equipment | async as equipment">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
@@ -21,7 +21,7 @@
                     : 'display: none;'"></div></ng-template>
 
     <ng-template #specificationsTable>
-        <div class="specifications">
+        <div id="specifications-table" class="specifications">
             <h4>Equipment</h4>
             <table class="specifications-table" role="table">
                 <tr role="row">
@@ -45,7 +45,7 @@
     </ng-template>
 
     <ng-template #specificationsTable2>
-        <div class="specifications">
+        <div id="specifications-table2" class="specifications">
             <h4>User</h4>
             <table class="specifications-table" role="table">
                 <tr role="row">
@@ -74,22 +74,22 @@
     </ng-template>
     
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Explore Related'"
+        <app-cards id="you-might-be-interested-in" [hideImage]="hide" [flex]="flex" [title]="'Explore Related'"
             [contentItem]="equipment.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Organisations'" 
+        <app-cards id="organisations" [hideImage]="hide" [flex]="flex" [title]="'Organisations'" 
             [contentItem]="equipment.relatedOrgsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
-        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Documents'" 
+        <app-cards id="documents" [hideImage]="hide" [flex]="flex" [title]="'Documents'" 
             [contentItem]="equipment.relatedDocsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards [hideImage]="hide" [flex]="flex" [title]="'Contacts'" 
+        <app-cards id="contacts" [hideImage]="hide" [flex]="flex" [title]="'Contacts'" 
             [contentItem]="equipment.relatedContactsCollection"></app-cards>
     </ng-template>
 

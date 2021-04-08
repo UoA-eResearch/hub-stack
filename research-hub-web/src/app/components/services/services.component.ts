@@ -16,7 +16,6 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-services',
@@ -51,8 +50,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService,
-    public loginService: LoginService
+    private deviceService: DeviceDetectorService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -88,19 +86,8 @@ export class ServicesComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-
-      /**
-       * If the page is SSO Protected then check if the user is authenticated
-       */
-      this.service$ = this.service.subscribe(data => {
-        if (data.ssoProtected == true) {
-          this.loginService.isAuthenticated().then((isAuthenticated) => {
-            isAuthenticated ? this.service = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
-          });
-        }
-        else {
-          this.service = data;
-        }
+      this.service = this.getServiceBySlug(this.slug);
+      this.service$ = this.getServiceBySlug(this.slug).subscribe(data => {
 
         // If Call To Action is an email address
         if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {

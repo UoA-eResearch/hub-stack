@@ -14,7 +14,7 @@
   <mat-sidenav-container class="sidenav-container">
 
     <!-- Navbar Container -->
-    <mat-sidenav #sidenav mode="over" opened="false">
+    <mat-sidenav id="sidenav"  #sidenav mode="over" opened="false">
 
       <!-- Main Navbar -->
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
@@ -116,9 +116,9 @@
           <div class="banner-container-home" [style]="showBanner ? isMobile ? mobileBackground : desktopBackground : ''">
 
             <!-- Main Navbar -->
-            <div #topbar class="app-toolbar-container">
+            <div id="top-bar" #topbar class="app-toolbar-container">
               <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
-              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: grey 0px 3px 15px'">
+              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 15px'">
 
                 <!-- Main Navbar Content -->
                 <div fxLayout="row" class="app-toolbar-row" fxLayoutAlign="center center">

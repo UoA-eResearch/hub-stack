@@ -6,54 +6,54 @@
     <app-collection-list [type]="'content'" [collection]="allSubHubs"></app-collection-list>
 </div>
 
-<div style="overflow-x: hidden" class="results" *ngIf="subHub | async as subhub">
+<div style="overflow-x: hidden" class="results" *ngIf="subHub | async as subHub">
     
     <div>
 
         <!-- Templates -->
-        <ng-template #subHubChildren><app-large-cards [contentItem]="subhub"></app-large-cards></ng-template>
-        <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="subhub.title"></app-breadcrumbs></ng-template>
+        <ng-template #subHubChildren><app-large-cards id="subHub-children" [contentItem]="subHub"></app-large-cards></ng-template>
+        <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="subHub.title"></app-breadcrumbs></ng-template>
 
         <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-            <app-cards [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" [contentItem]="subhub.relatedItemsCollection"></app-cards>
+            <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" [contentItem]="subHub.relatedItemsCollection"></app-cards>
         </ng-template>
 
         <ng-template #relatedOrganisations>
-            <app-cards [title]="'Organisations'" [contentItem]="subhub.relatedOrgsCollection"></app-cards>
+            <app-cards id="organisations" [title]="'Organisations'" [contentItem]="subHub.relatedOrgsCollection"></app-cards>
         </ng-template>
     
         <ng-template #relatedDocuments>
-            <app-cards [title]="'Documents'" [contentItem]="subhub.relatedDocsCollection"></app-cards>
+            <app-cards id="documents" [title]="'Documents'" [contentItem]="subHub.relatedDocsCollection"></app-cards>
         </ng-template>
     
         <ng-template #relatedContacts>
-            <app-cards [title]="'Contacts'" [contentItem]="subhub.relatedContactsCollection"></app-cards>
+            <app-cards id="contacts" [title]="'Contacts'" [contentItem]="subHub.relatedContactsCollection"></app-cards>
         </ng-template>
 
         <ng-template #body>
-            <ngx-contentful-rich-text id="body" class="section-2" style="word-break:break-word;" [document]="subhub.bodyText.json"
+            <ngx-contentful-rich-text id="body" class="section-2" style="word-break:break-word;" [document]="subHub.bodyText.json"
                 [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
         </ng-template>
         <div>
-            <div class="banner-container" [style]="subhub.banner ?
+            <div class="banner-container" [style]="subHub.banner ?
                 isMobile ?
-                'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat'
-                :'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subhub.banner.url + ') no-repeat fixed center; padding: 72px 0px'
+                'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subHub.banner.url + ') no-repeat'
+                :'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subHub.banner.url + ') no-repeat fixed center; padding: 72px 0px'
                 :''">
                 <div class="banner-content">
 
                     <!-- Title -->
                     <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
-                        [style]="subhub.banner ? bannerTextStyling : ''">{{ subhub.title }}</h1>
+                        [style]="subHub.banner ? bannerTextStyling : ''">{{ subHub.title }}</h1>
 
                     <!-- Maori Proverb -->
-                    <h2 aria-level="2" *ngIf="subhub.maoriProverb" class="maori-proverb"
-                    [style]="subhub.banner ? bannerTextStyling : ''"><hr>{{ subhub.maoriProverb}}<hr></h2>
+                    <h2 aria-level="2" *ngIf="subHub.maoriProverb" class="maori-proverb"
+                    [style]="subHub.banner ? bannerTextStyling : ''"><hr>{{ subHub.maoriProverb}}<hr></h2>
 
                     <!-- Summary -->
                     <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
-                        [style]="subhub.banner ? bannerTextStyling : ''">
-                        <small>{{ subhub.summary }}</small></p>
+                        [style]="subHub.banner ? bannerTextStyling : ''">
+                        <small>{{ subHub.summary }}</small></p>
                 </div>
             </div>
 
@@ -71,17 +71,17 @@
             </div>
 
             <!-- SubHub Children -->
-            <div *ngIf="subhub.internalPagesCollection.items.length > 0 || subhub.externalPagesCollection.items.length > 0" class="subhub-children section-2">
+            <div *ngIf="subHub.internalPagesCollection.items.length > 0 || subHub.externalPagesCollection.items.length > 0" class="subHub-children section-2">
                 <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
             </div>
         
             <!-- Extra Links -->
             <div class="site-padding" ngClass.lt-md="site-padding-mobile"
                 *ngIf="
-                    subhub.relatedDocsCollection.items.length > 0 ||
-                    subhub.relatedContactsCollection.items.length > 0 ||
-                    subhub.relatedOrgsCollection.items.length > 0 ||
-                    subhub.relatedItemsCollection.items.length > 0"
+                    subHub.relatedDocsCollection.items.length > 0 ||
+                    subHub.relatedContactsCollection.items.length > 0 ||
+                    subHub.relatedOrgsCollection.items.length > 0 ||
+                    subHub.relatedItemsCollection.items.length > 0"
                 fxLayout="column">
 
                 <!-- Related Items -->
