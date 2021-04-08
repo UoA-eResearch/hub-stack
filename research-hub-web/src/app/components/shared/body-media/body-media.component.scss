@@ -107,6 +107,17 @@
     transition: background-color 0.2s ease-in-out
 }
 
+
+/**
+ * Lock Icon
+ */
+mat-icon {
+    color: $dark-grey!important;
+    font-size: 14px!important;
+    vertical-align: middle;
+}
+
+
 /**
  * If viewed on a mobile device
  */
