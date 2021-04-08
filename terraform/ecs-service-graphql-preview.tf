@@ -6,6 +6,12 @@ resource "aws_ecs_task_definition" "graphql_preview" {
   cpu                      = 256
   memory                   = 512
   execution_role_arn       = aws_iam_role.ecs_task_assume.arn
+  tags = merge(
+    local.common_tags,
+    {
+      "Name" = "graphql_preview ecs_task_definition"
+    },
+  )
 
   container_definitions = <<DEFINITION
 [
