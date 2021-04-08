@@ -215,7 +215,8 @@ pipeline {
                             
                             dir("cer-graphql") {
                                 sh "npm run install"
-                                sh "npm run test -- --aws-profile ${awsProfile} --stage ${stage}"
+                                sh "export stage=${stage}"
+                                sh "npm run test"
                             }
                         }
                     }

@@ -18,16 +18,17 @@ const deleteEnvironmentVariables = () => {
     delete process.env.COGNITO_REGION; 
 }
 
+/**
+ * Conditionally loads environment variables from an environment file returns object with env values.
+ * @param {*} isFromFile Whether or not to load the .env file
+ * @returns void
+ */
 const getCredentials = (isFromFile) => {
     // isFromFile determines where we load the credentials from.
     // If true we load from the .env file in the folder. 
     // If false, we load from environment variables.
     if (isFromFile) {
-
         deleteEnvironmentVariables();
-
-        console.warn(process.env.stage);
-
         let path;
         switch(process.env.stage) {
             case 'dev':
