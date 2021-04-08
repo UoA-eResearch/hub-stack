@@ -33,7 +33,7 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
     }
 
     // creating a new apollo server with authorization baked into the requests
-    let authorizedServer =  createTestClient(new ApolloServer({
+    let authorizedServer = createTestClient(new ApolloServer({
         ...server.config,
         context: () => server.config.context({
             req: {
@@ -75,7 +75,7 @@ const getTokens = async () => {
                 service: "execute-api"
             }
             break;
-        case 'uoa-its-sandbox':
+        case 'uoa-its-nonprod':
         case 'test':
             awsLambdaParams = {
                 host: "apigw.test.amazon.auckland.ac.nz",
@@ -83,10 +83,11 @@ const getTokens = async () => {
                 region: "ap-southeast-2",
                 service: "execute-api"
             }
-        case 'uoa-its-nonprod':
-        case 'nonprod':
+        case 'uoa-its-prod':
+        case 'prod':
+            console.warn('Testing in production may not yet be implemented. Assigning nonprod OAuth 2.0 token endpoint for now.')
             awsLambdaParams = {
-                host: "apigw.test.amazon.auckland.ac.nz",
+                host: "apigw.prod.amazon.auckland.ac.nz",
                 path: "/aws-token-grabber/",
                 region: "ap-southeast-2",
                 service: "execute-api"
