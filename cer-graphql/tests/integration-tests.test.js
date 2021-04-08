@@ -51,21 +51,20 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
  */
 const getTokens = async () => {
     console.warn('stage: ', process.env.stage);
-    let awsProfile = process.env.stage;
+    let deployStage = process.env.stage;
     let awsCreds = new aws.SharedIniFileCredentials({
-        profile: awsProfile
+        profile: deployStage
     });
     if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
-        console.warn(`Couldn't find aws profile matching environment variable awsProfile: ${awsProfile}. Falling back to sandbox profile for local development.`);
-        awsProfile = 'sandbox';
+        deployStage = 'sandbox';
         awsCreds = new aws.SharedIniFileCredentials({
             profile: 'sandbox',
         });
     }
 
     let awsLambdaParams = null;
-    switch (awsProfile) {
+    switch (deployStage) {
         case 'uoa-sandbox':
         case 'sandbox':
             awsLambdaParams = {
@@ -83,15 +82,17 @@ const getTokens = async () => {
                 region: "ap-southeast-2",
                 service: "execute-api"
             }
+            break;
         case 'uoa-its-prod':
         case 'prod':
-            console.warn('Testing in production may not yet be implemented. Assigning nonprod OAuth 2.0 token endpoint for now.')
+            console.warn('Prod integration testing may not work as 2fab has not been deployed to production environment yet.');
             awsLambdaParams = {
                 host: "apigw.prod.amazon.auckland.ac.nz",
                 path: "/aws-token-grabber/",
                 region: "ap-southeast-2",
                 service: "execute-api"
             }
+            break;
     }
 
 
