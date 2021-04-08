@@ -206,9 +206,17 @@ pipeline {
                     }
                     steps {
                         echo 'Testing cer-graphql project'
-                        dir('cer-graphql') {
-                            sh "npm install"
-                            sh "npm run test"
+                        script {
+                            def stage = (
+                                BRANCH_NAME == 'prod' ? 'prod' : 
+                                BRANCH_NAME == 'nonprod' ? 'test' : 
+                                'dev'
+                            )
+                            
+                            dir("cer-graphql") {
+                                sh "npm run install"
+                                sh "npm run test -- --aws-profile ${awsProfile} --stage ${stage}"
+                            }
                         }
                     }
                 }

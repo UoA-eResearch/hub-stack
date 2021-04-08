@@ -50,7 +50,8 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
  * Gets OAuth tokens from 2FAB Lambda
  */
 const getTokens = async () => {
-    let awsProfile = process.env.awsProfile;
+    console.warn('stage: ', process.env.stage);
+    let awsProfile = process.env.stage;
     let awsCreds = new aws.SharedIniFileCredentials({
         profile: awsProfile
     });
@@ -76,6 +77,14 @@ const getTokens = async () => {
             break;
         case 'uoa-its-sandbox':
         case 'test':
+            awsLambdaParams = {
+                host: "apigw.test.amazon.auckland.ac.nz",
+                path: "/aws-token-grabber/",
+                region: "ap-southeast-2",
+                service: "execute-api"
+            }
+        case 'uoa-its-nonprod':
+        case 'nonprod':
             awsLambdaParams = {
                 host: "apigw.test.amazon.auckland.ac.nz",
                 path: "/aws-token-grabber/",

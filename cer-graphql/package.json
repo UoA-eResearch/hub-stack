@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "test-dev": "export awsProfile='dev' && npm run test",
-    "test-nonprod": "export awsProfile='test' && npm run test",
+    "test-nonprod": "export awsProfile='test' && npm run test --stage test",
     "dev": "nodemon ./index.js --config-from-file --watch=./**/*"
   },
   "repository": {

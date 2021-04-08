@@ -89,20 +89,6 @@ exports.GET_ARTICLE_BY_SYS_ID_PRIVATE = gql`
             } 
         }
     }
-
-    # query {
-	# articleCollection ( where: {
-    #     AND:[
-    #     { ssoProtected:true}
-    #     ]
-    # })
-    # {
-    #     items{
-    #     title 
-    #     ssoProtected
-    #     }
-    # }
-    # }
 `;
 
 exports.GET_ARTICLE_BY_WHERE = gql`
