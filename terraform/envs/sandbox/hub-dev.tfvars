@@ -34,7 +34,6 @@ route53_hosted_zone_id = "ZMGQD6EYUM762"
 
 # Network
 vpc_id           = "vpc-1e77d279"  # uoa-sandbox  10.0.12.0/22
-subnets = ["subnet-90752ef7", "subnet-4feb9106", "subnet-968e59ce"]
 
 # Loadbalancer for ECS
 lb_name = "research-hub-public-lb"   # arn:aws:elasticloadbalancing:ap-southeast-2:416527880812:loadbalancer/app/research-hub-public-lb/9db900eab79d1dd7
