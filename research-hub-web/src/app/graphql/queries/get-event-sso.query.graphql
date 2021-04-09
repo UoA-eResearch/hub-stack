@@ -1,0 +1,9 @@
+query GetEventSSO($slug: String) {
+    eventCollection(limit: 1, where: {slug: $slug}) {
+        items {
+          __typename
+          slug
+          ssoProtected
+        }
+    }
+}

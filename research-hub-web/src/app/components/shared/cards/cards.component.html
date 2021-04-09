@@ -25,8 +25,8 @@
                                 {{ content['title'] }}</a></h4>
                         <h4 *ngIf="content.__typename == 'OfficialDocuments'"><a class="card-title" href="{{ content.url ? content.url : content.document?.url }}" target="_blank">
                             {{ content['title'] }}</a></h4>
-                    </mat-card-title>&nbsp;
-                    <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
+                    </mat-card-title>
+                    <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
                     <mat-card-content><span class="card-summary"><p>{{ content['summary'] }}</p></span></mat-card-content>
                     
                     <span *ngIf="content.__typename != 'OfficialDocuments'" class="call-to-action"
@@ -55,8 +55,8 @@
                             <a class="card-title" *ngIf="content.maoriName" href="{{ content.link }}" target="_blank">{{ content['maoriName'] }}<br></a>
                             <a class="card-title" href="{{ content.link }}" target="_blank">{{ content['name'] }}</a>
                         </h4>
-                    </mat-card-title>&nbsp;
-                    <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
+                    </mat-card-title>
+                    <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
                     <mat-card-content>
                         <span *ngIf="content.__typename == 'Person'" class="card-summary contact-card-summary">
                             <p style="word-wrap: break-word">{{ content['role'] }}</p>

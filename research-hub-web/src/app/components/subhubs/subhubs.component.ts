@@ -6,6 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllSubHubGQL,
+  GetSubHubSsoGQL,
   GetSubHubBySlugGQL,
   SubHubCollection,
   SubHub,
@@ -45,6 +46,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allSubHubGQL: AllSubHubGQL,
+    public getSubHubSsoGQL: GetSubHubSsoGQL,
     public getSubHubBySlugGQL: GetSubHubBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -84,22 +86,24 @@ export class SubhubsComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all SubHub.
      */
     if (!!this.slug) {
+
       /**
-       * If the page is SSO Protected then check if the user is authenticated
+       * Check if SubHub is SSO Protected
        */
-      this.subHub$ = this.getSubHubBySlug(this.slug).subscribe(data => {
+      this.getSubHubSSO(this.slug).subscribe(data => {
         if (data.ssoProtected == true) {
           this.loginService.isAuthenticated().then((isAuthenticated) => {
-            isAuthenticated ? this.subHub = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+            isAuthenticated ? this.subHub = this.getSubHubBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
           });
         }
         else {
-          this.subHub = data;
+          this.subHub = this.getSubHubBySlug(this.slug);
+          this.subHub$ = this.subHub.subscribe(data => {
+            this.detectDevice();
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+            this.appComponentService.setTitle(data.title);
+          });
         }
-
-        this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -121,6 +125,18 @@ export class SubhubsComponent implements OnInit, OnDestroy {
       return this.allSubHubGQL.fetch()
         .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>
     } catch (e) { console.error('Error loading all SubHub:', e) };
+  }
+
+  /**
+   * Function that checks the ssoProtected field of a SubHub
+   *
+   * @param slug The subhub's slug. Retrieved from the route parameter of the same name.
+   */
+  public getSubHubSSO(slug: string): Observable<SubHub> {
+    try {
+      return this.getSubHubSsoGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.subHubCollection.items)) as Observable<SubHub>;
+    } catch (e) { console.error(`Error loading subhub ${slug}:`, e); }
   }
 
   /**

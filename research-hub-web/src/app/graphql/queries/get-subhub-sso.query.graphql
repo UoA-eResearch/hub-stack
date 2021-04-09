@@ -1,0 +1,9 @@
+query GetSubHubSSO($slug: String) {
+    subHubCollection(limit: 1, where: {slug: $slug}) {
+        items {
+          __typename
+          slug
+          ssoProtected
+        }
+    }
+}
