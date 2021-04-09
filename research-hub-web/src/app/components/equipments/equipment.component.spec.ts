@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { LoginService } from '@uoa/auth';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
@@ -48,6 +50,7 @@ describe('EquipmentComponent', () => {
         EquipmentComponent
       ],
       imports: [
+        HttpClientModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
@@ -55,6 +58,7 @@ describe('EquipmentComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
+        LoginService,
         AppComponentService,
         AllEquipmentGQL
       ]

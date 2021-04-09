@@ -11,6 +11,8 @@ import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LoginService } from '@uoa/auth';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
@@ -267,6 +269,7 @@ describe('ArticlesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ArticlesComponent],
       imports: [
+        HttpClientModule,
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
@@ -274,6 +277,7 @@ describe('ArticlesComponent', () => {
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([])
       ], providers: [
+        LoginService,
         AppComponentService,
         AllArticlesGQL
       ]

@@ -19,6 +19,8 @@ import {
   SubHubOrder,
 } from "@graphql/schema";
 import { AppComponentService } from '@app/app.component.service';
+import { LoginService } from '@uoa/auth';
+import { HttpClientModule } from '@angular/common/http';
 
 
 describe('SubhubsComponent', () => {
@@ -504,6 +506,7 @@ describe('SubhubsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SubhubsComponent],
       imports: [
+        HttpClientModule,
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
@@ -511,6 +514,7 @@ describe('SubhubsComponent', () => {
         BrowserAnimationsModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
       ], providers: [
+        LoginService,
         AllSubHubGQL,
         AppComponentService,
         AllContentItemParentSubHubsGQL
@@ -552,14 +556,14 @@ describe('SubhubsComponent', () => {
       fixture.detectChanges();
     })
 
-    it('Should get all SubHubs', async () => {
+    it('should get all SubHubs', async () => {
       spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);
       component.getAllSubHubs().subscribe(res => {
         expect(res).toBeTruthy();
       });
     })
 
-    it('Should get a single SubHub', async () => {
+    it('should get a single SubHub', async () => {
       spyOn(component, 'getSubHubBySlug').and.returnValue(singleSubHub$);
       component.getSubHubBySlug(component.slug).subscribe(res => {
         expect(res).toBeTruthy();
