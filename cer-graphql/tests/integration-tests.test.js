@@ -57,7 +57,7 @@ const getTokens = async () => {
     });
     if (awsCreds.sessionToken === undefined) {
         // falling back to local def profile.
-        deployStage = 'sandbox';
+        deployStage = 'dev';
         awsCreds = new aws.SharedIniFileCredentials({
             profile: 'sandbox',
         });
@@ -66,7 +66,7 @@ const getTokens = async () => {
     let awsLambdaParams = null;
     switch (deployStage) {
         case 'uoa-sandbox':
-        case 'sandbox':
+        case 'dev':
             awsLambdaParams = {
                 host: "ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com",
                 path: "/sandbox/",
