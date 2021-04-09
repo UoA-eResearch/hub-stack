@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
+  GetArticleSsoGQL,
   AllArticlesGQL,
   AllArticlesSlugsGQL,
   GetArticleBySlugGQL,
@@ -16,6 +17,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-articles',
@@ -46,12 +48,14 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
     public allArticlesSlugsGQL: AllArticlesSlugsGQL,
+    public getArticleSsoGQL: GetArticleSsoGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService,
+    public loginService: LoginService,
   ) { this.detectDevice(); }
   
   /**
@@ -94,11 +98,24 @@ export class ArticlesComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      this.article = this.getArticleBySlug(this.slug);
-      this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
-        this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
+
+      /**
+       * Check if Article is SSO Protected
+       */
+      this.getArticleSSO(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.article = this.getArticleBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.article = this.getArticleBySlug(this.slug);
+          this.article$ = this.article.subscribe(data => {
+            this.detectDevice();
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+            this.appComponentService.setTitle(data.title);
+          });
+        }
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -137,11 +154,20 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Function that checks the ssoProtected field of an Article
+   *
+   * @param slug The article's slug. Retrieved from the route parameter of the same name.
+   */
+  public getArticleSSO(slug: string): Observable<Article> {
+    try {
+      return this.getArticleSsoGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
+    } catch (e) { console.error(`Error loading article ${slug}:`, e); }
+  }
+
+  /**
    * Function that returns an individual article from the ArticleCollection by it's slug
    * as an observable of type Article. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /articles.
    *
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */

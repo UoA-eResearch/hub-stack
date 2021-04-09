@@ -1,0 +1,9 @@
+query GetEquipmentSSO($slug: String) {
+    equipmentCollection(limit: 1, where: {slug: $slug}) {
+        items {
+          __typename
+          slug
+          ssoProtected
+        }
+    }
+}

@@ -7,6 +7,7 @@ import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEventsGQL,
   AllEventsSlugsGQL,
+  GetEventSsoGQL,
   GetEventBySlugGQL,
   EventCollection,
   Event,
@@ -16,6 +17,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-events',
@@ -45,12 +47,14 @@ export class EventsComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public allEventsGQL: AllEventsGQL,
     public allEventSlugsGQL: AllEventsSlugsGQL,
+    public getEventSsoGQL: GetEventSsoGQL,
     public getEventBySlugGQL: GetEventBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -86,17 +90,30 @@ export class EventsComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      this.event = this.getEventBySlug(this.slug);
-      this.getEventBySlug(this.slug).subscribe(data => {
-
-        // If Call To Action is an email address
-        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          data['callToAction'] = 'mailto:' + data['callToAction'];
+      
+      /**
+       * Check if Event is SSO Protected
+       */
+      this.getEventSSO(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.event = this.getEventBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
         }
-        
-        this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
+        else {
+          this.event = this.getEventBySlug(this.slug);
+          this.event$ = this.event.subscribe(data => {
+            
+            // If Call To Action is an email address
+            if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+              data['callToAction'] = 'mailto:' + data['callToAction'];
+            }
+
+            this.detectDevice();
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+            this.appComponentService.setTitle(data.title);
+          });
+        }
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -132,6 +149,18 @@ export class EventsComponent implements OnInit, OnDestroy {
       return this.allEventSlugsGQL.fetch()
         .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
     } catch (e) { console.error('Error loading all events:', e) };
+  }
+
+  /**
+   * Function that checks the ssoProtected field of an Event
+   *
+   * @param slug The event's slug. Retrieved from the route parameter of the same name.
+   */
+  public getEventSSO(slug: string): Observable<Event> {
+    try {
+      return this.getEventSsoGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.eventCollection.items)) as Observable<Event>;
+    } catch (e) { console.error(`Error loading event ${slug}:`, e); }
   }
 
   /**

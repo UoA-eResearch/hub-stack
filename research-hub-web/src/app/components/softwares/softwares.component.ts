@@ -7,6 +7,7 @@ import { BodyMediaService } from '@services/body-media.service';
 import {
   AllSoftwareGQL,
   AllSoftwareSlugsGQL,
+  GetSoftwareSsoGQL,
   GetSoftwareBySlugGQL,
   SoftwareCollection,
   Software,
@@ -16,6 +17,8 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { LoginService } from '@uoa/auth';
+
 @Component({
   selector: 'app-software',
   templateUrl: './softwares.component.html',
@@ -44,12 +47,14 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public allSoftwareGQL: AllSoftwareGQL,
     public allSoftwareSlugsGQL: AllSoftwareSlugsGQL,
+    public getSoftwareSsoGQL: GetSoftwareSsoGQL,
     public getSoftwareBySlugGQL: GetSoftwareBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public loginService: LoginService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -85,12 +90,26 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      this.software = this.getSoftwareBySlug(this.slug);
-      this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
-        this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
+      
+      /**
+       * Check if Software is SSO Protected
+       */
+      this.getSoftwareSSO(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.software= this.getSoftwareBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.software= this.getSoftwareBySlug(this.slug);
+          this.software$ = this.software.subscribe(data => {
+            this.detectDevice();
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+            this.appComponentService.setTitle(data.title);
+          });
+        }
       });
+
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Software');
@@ -125,6 +144,18 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
       return this.allSoftwareSlugsGQL.fetch()
         .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
     } catch (e) { console.error('Error loading all software:', e) };
+  }
+
+  /**
+   * Function that checks the ssoProtected field of a Software
+   *
+   * @param slug The software's slug. Retrieved from the route parameter of the same name.
+   */
+  public getSoftwareSSO(slug: string): Observable<Software> {
+    try {
+      return this.getSoftwareSsoGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.softwareCollection.items)) as Observable<Software>;
+    } catch (e) { console.error(`Error loading software ${slug}:`, e); }
   }
 
   /**

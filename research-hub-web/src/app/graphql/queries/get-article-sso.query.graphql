@@ -1,0 +1,9 @@
+query GetArticleSSO($slug: String) {
+    articleCollection(limit: 1, where: {slug: $slug}) {
+        items {
+          __typename
+          slug
+          ssoProtected
+        }
+    }
+}

@@ -7,6 +7,7 @@ import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEquipmentGQL,
   AllEquipmentSlugsGQL,
+  GetEquipmentSsoGQL,
   GetEquipmentBySlugGQL,
   EquipmentCollection,
   Equipment,
@@ -17,6 +18,7 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Location } from '@angular/common';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-equipment',
@@ -46,13 +48,15 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public allEquipmentGQL: AllEquipmentGQL,
     public allEquipmentSlugsGQL: AllEquipmentSlugsGQL,
+    public getEquipmentSsoGQL: GetEquipmentSsoGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService,
-    public location: Location
+    public location: Location,
+    public loginService: LoginService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -88,11 +92,24 @@ export class EquipmentComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      this.equipment = this.getEquipmentBySlug(this.slug);
-      this.equipment$ = this.getEquipmentBySlug(this.slug).subscribe(data => {
-        this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.appComponentService.setTitle(data.title);
+
+      /**
+       * Check if Equipment is SSO Protected
+       */
+      this.getEquipmentSSO(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.equipment = this.getEquipmentBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.equipment = this.getEquipmentBySlug(this.slug);
+          this.equipment$ = this.equipment.subscribe(data => {
+            this.detectDevice();
+            this.bodyMediaService.setBodyMedia(data.bodyText.links);
+            this.appComponentService.setTitle(data.title);
+          });
+        }
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -128,6 +145,18 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       return this.allEquipmentSlugsGQL.fetch()
         .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
     } catch (e) { console.error('Error loading all equipment', e) };
+  }
+
+  /**
+   * Function that checks the ssoProtected field of an Equipment
+   *
+   * @param slug The equipment's slug. Retrieved from the route parameter of the same name.
+   */
+  public getEquipmentSSO(slug: string): Observable<Equipment> {
+    try {
+      return this.getEquipmentSsoGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.equipmentCollection.items)) as Observable<Equipment>;
+    } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
   }
 
   /**
