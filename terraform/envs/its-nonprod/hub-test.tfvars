@@ -34,7 +34,6 @@ route53_hosted_zone_id = "Z165SO9T1OX8VZ"
 
 # Network
 vpc_id           = "vpc-05ace6f7251ef59c3" # uoa-connect-nonprod  10.0.64.0/18
-subnets = ["subnet-0d0a68988c480b3a4", "subnet-0b56849cba433ce13", "subnet-0fc970830487f2323"]
 
 # Loadbalancer for ECS
 lb_name = "rhubcpapi-lb-test"
@@ -74,7 +73,7 @@ cognito_identity_provider = "UoATestIDP"
 permitted_group           = "staffIntranetUser.ec"
 
 # S3 Contentful Backup Bucket
-create_contentful_backup_bucket = false
+create_contentful_backup_bucket = true
 
 # ElasticSearch Service
 create_elasticsearch_domain = true

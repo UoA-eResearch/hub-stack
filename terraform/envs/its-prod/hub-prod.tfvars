@@ -2,7 +2,7 @@
 aws_region      = "ap-southeast-2"
 aws_profile     = "uoa-its-nonprod"
 lifecycle_state = "prod"
-aws_account_id = "TBC"
+aws_account_id = "291148375163"
 
 # Tags
 application      = "Research Hub"
@@ -14,14 +14,14 @@ faculty          = "Science"
 business_service = "eResearch Services"
 
 # Website specific
-dns_entry              = "research-hub.prod.amazon.auckland.ac.nz"
+dns_entry              = "research-hub.auckland.ac.nz"
 secondary_addresses    = []
 index_doc              = "index.html"
 acm_arn                = "TBC"
 
 # Secondary website (if applicable)
-create_secondary              = false
-dns_entry_secondary           = "research-hub-preview.prod.amazon.auckland.ac.nz"
+create_secondary              = true
+dns_entry_secondary           = "research-hub-preview.auckland.ac.nz"
 secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
 acm_arn_secondary             = "TBC"
@@ -33,15 +33,14 @@ two_fab_url = ""
 route53_hosted_zone_id = "TBC"
 
 # Network
-vpc_id           = "TBC"
-subnets = ["TBC", "TBC", "TBC"]
+vpc_id           = "vpc-0b478c527a885336d"
 
 # Loadbalancer for ECS
 lb_name = "rhubcpapi-lb-prod"
 lb_subnets = [
-  "TBC",
-  "TBC",
-  "TBC"
+  "subnet-097a1e115544b6973",  # uoa-connect-prod-public-alb-a
+  "subnet-0b3c069a3631aba32",  # uoa-connect-prod-public-alb-b
+  "subnet-0643e4f2882512a33"   # uoa-connect-prod-public-alb-c
 ]
 ecs_lb_acm_arn   = "TBC"
 r53_hosted_zone  = "prod.amazon.auckland.ac.nz"
@@ -55,9 +54,9 @@ kms_uoa_central_key_id = "180f8f50-c1f3-4b9a-b793-0fca514ab708"
 
 # ECS Services
 private_subnets = [
-  "TBC",
-  "TBC",
-  "TBC"
+  "subnet-008ef14c8a3818b31", 
+  "subnet-09489834fe62d8b27", 
+  "subnet-09a1e1f3a0d8166c2"
 ]
 service_container_count = 2
 service_container_count_preview = 1
@@ -67,10 +66,10 @@ fargate_spot_weight     = 100
 fargate_spot_count      = 1
 
 #Cognito
-cognito_user_pool_id      = "TBC"
-cognito_user_pool_arn     = "TBC"
-cognito_user_pool_domain  = "TBC"
-cognito_identity_provider = "TBC"
+cognito_user_pool_id      = "ap-southeast-2_B3Lx9B4bL"
+cognito_user_pool_arn     = "arn:aws:cognito-idp:ap-southeast-2:291148375163:userpool/ap-southeast-2_B3Lx9B4bL"
+cognito_user_pool_domain  = "uoapool"
+cognito_identity_provider = "UoAProdIDP"
 permitted_group           = "staffIntranetUser.ec"
 
 # S3 Contentful Backup Bucket
@@ -82,12 +81,12 @@ es_version = 7.9
 prefix = "researchhub"
 
 #Id for Managed User pool 'uoa-pool'
-user_pool_id = "TBC"
+user_pool_id = "ap-southeast-2_B3Lx9B4bL"
 #Id for Managed Identity pool 'uoa_identity_pool'
-identity_pool_id = "TBC"
+identity_pool_id = "ap-southeast-2:81153c18-d3d7-416d-8e3e-9fa77b722eae"
 #ARN for IAM role 'CognitoAccessForAmazonES'
-cognito_iam_role_arn = "TBC"
+cognito_iam_role_arn = "arn:aws:iam::291148375163:role/service-role/CognitoAccessForAmazonES"
 #ARN for IAM role 'Authenticated-ES-Access'
-master_user_iam_role_arn = "TBC"
+master_user_iam_role_arn = "arn:aws:iam::291148375163:role/Authenticated-ES-Access"
 #Name for Identity Provider
-enabled_identity_providers = ["TBC"]
+enabled_identity_providers = ["UoAProdIDP"]
