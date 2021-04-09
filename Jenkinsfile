@@ -212,12 +212,11 @@ pipeline {
                                 BRANCH_NAME == 'nonprod' ? 'test' : 
                                 'dev'
                             )
-                            sh "export stage=${stage}"
-                            
-                        }
-                        dir("cer-graphql") {
-                            sh "npm install"
-                            sh "npm run test"
+                            dir("cer-graphql") {
+                                sh "export stage=${stage}"
+                                sh "npm install"
+                                sh "npm run test"
+                            }
                         }
                     }
                 }
