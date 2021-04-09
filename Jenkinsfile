@@ -212,8 +212,8 @@ pipeline {
                                 BRANCH_NAME == 'nonprod' ? 'test' : 
                                 'dev'
                             )
+                            env.stage = "${stage}";
                             dir("cer-graphql") {
-                                sh "export stage=${stage}"
                                 sh "npm install"
                                 sh "npm run test"
                             }
