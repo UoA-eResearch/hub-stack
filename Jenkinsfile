@@ -214,7 +214,7 @@ pipeline {
                             )
                             
                             dir("cer-graphql") {
-                                sh "npm install"
+                                // sh "npm install"
                                 sh "export stage=${stage}"
                                 sh "npm run test"
                             }
