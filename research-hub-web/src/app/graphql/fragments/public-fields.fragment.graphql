@@ -94,28 +94,41 @@ fragment PublicFields on Entry {
       __typename
       title
       summary
-      url
       document {
         url
       }
+      url
     }
     ... on OrgUnit {
       __typename
       name
+      maoriName
+      description
       link
     }
   ... on LinkCard {
       title
       summary
       url
+      document {
+        url
+      }
   }
   ... on Person {
       __typename
       name
+      role 
+      email
+      phone
+      link
   }
   ... on Video {
       title
       description
       url
     }
+  ... on Table {
+    name
+    table
+  }
 }

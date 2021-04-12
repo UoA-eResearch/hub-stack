@@ -7,16 +7,141 @@
  * Hub Logo
  */
 .hub-logo {
-  height: 4vh;
+  height: 30px;
+  img {
+    height: 30px;
+    @include size(small) { 
+      height: 32px;
+      img {
+        height: 32px;
+      } 
+    }
+  }
 }
-.hub-logo img {
-  @extend .hub-logo;
+
+
+/*
+ * Banner Styling
+ */
+ .banner-container-home {
+  text-align: center;
+  max-height: auto;
+  background-size: cover!important;
+  .banner-content-home {  
+    margin: 20vh 2.5vh;
+    display: inline-block;  
+    @include size(medium) {
+      margin: 25vh 10vh;
+      display: inline-block;
+    }
+    .banner-text {
+      width: auto!important;
+      .page-summary, 
+      .page-title {
+        text-shadow: 0px 0px 8px $dark-grey;
+        margin: 0 auto;
+        font-weight: lighter;
+        color: white!important;
+        @include size(medium) { width: 45vw!important; }
+      }
+      .page-title {
+        color: #FFFFFF;
+        margin-bottom: 32px;
+        font-size: 48px;
+        @include size(medium) { font-size: 92px; }
+      }
+      .page-summary {
+        font-size: 20px;
+        word-wrap: break-word;
+        color: $light-grey;
+        line-height: 100%;
+      }
+    }
+  }
 }
-.hub-logo-xs {
-  height: 2.7vh;
+
+/*
+ * Notification Bar
+ */
+.notification-bar-container {
+  a {
+    text-decoration: underline;
+  }
+  text-align: center;
+  * { color: white; }
+  background: map-get($hub-pink, 500);
+  .notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+  transition: all 0.1s ease-in-out;
 }
-.hub-logo-xs img {
-  @extend .hub-logo-xs;
+
+/*
+ * Notification Bar
+ */
+.notification-bar-container {
+  a {
+    text-decoration: underline;
+  }
+  text-align: center;
+  * { color: white; }
+  background: map-get($hub-pink, 500);
+  .notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+  transition: all 0.1s ease-in-out;
+}
+
+
+/*
+ * Initial Search
+ */ 
+.initial-search {
+  padding: 0px 1em;
+  width: 60vw;
+  margin: 0 auto;
+  font-size: 20px;
+  color: #FAFAFA;
+  border: 1px solid rgba(78, 78, 78, 0.6);
+  @include size(medium) { width: 30vw; }
+  background-color: rgba(202, 202, 202, 0.4);
+}
+
+
+/**
+ * Explore arrow animation
+ */
+@keyframes explore {
+  0%   { margin-top: 5px;}
+  50%  { margin-top: 16px; }
+  100% { margin-top: 5px; }
+}
+@keyframes explore2 {
+  0%   { margin-top: 0px;}
+  50%  { margin-top: 3px; }
+  100% { margin-top: 0px; }
+}
+/*
+ * Explore Arrow
+ */
+.explore {
+    cursor: pointer;
+  p {
+    animation: explore2 1.5s infinite;
+  }
+  .explore-arrow {
+    animation: explore 1.5s infinite;
+  }
 }
 
 
@@ -24,39 +149,62 @@
  * Button styles
  */
 .menu-button {
+  top: 4.8px;
+  right: 10.5px;
   color: white !important;
-  top: 0.6vh;
-  right: 1.3vh;
 }
 .menu-button-xs {
   @extend .menu-button;
-  top: 0.3vh;
-  right: 1.3vh;
+  top: 2.4px;
+  right: 10.5px;
 }
 .mat-button {
-  line-height: 8vh!important;
-  padding: 0 2vh!important;
-  min-width: 8vh!important;
+  line-height:  64px!important;
+  padding: 0 16px!important;
+  min-width:  64px!important;
+  font-weight: 100;
 }
+
+
+/*
+ * Mobile sidenav drawer
+ */
 mat-list-item.mat-list-item {
-  height: 7.6vh!important;
-  padding: 0 2vh!important;
+  height: 60.8px!important;
+}
+mat-list-base {
+  padding: 0 16px;
+}
+mat-expansion-panel {
+  width: 70vw;
+  background-color: #FAFAFA!important;
+  box-shadow: none !important;
+}
+mat-expansion-panel-header .mat-expanded {
+  height:  64px !important;
+}
+.expandable-menu {
+  background-color: #FAFAFA!important;
+  padding-left: 0 !important;
+  height:  64px !important;
 }
 
 
 /*
  * Navigation list
  */
-.sidenav-container mat-sidenav mat-list-item mat-icon {
-  width: 100%;
-  height: 100%;
-  color: $color-icon;
-  font-size: mat-font-size($app-sidenav-list-typography, body-2) !important;
-  font-weight: mat-font-weight($app-sidenav-list-typography, body-2) !important;
-}
-.sidenav-container mat-sidenav mat-list-item .mat-line {
-  font-size: mat-font-size($app-sidenav-list-typography, body-1) !important;
-  font-weight: mat-font-weight($app-sidenav-list-typography, body-1) !important;
+.sidenav-container mat-sidenav mat-list-item {
+  mat-icon {
+    width: 100%;
+    height: 100%;
+    color: $color-icon;
+    font-size: mat-font-size($app-sidenav-list-typography, body-2) !important;
+    font-weight: mat-font-weight($app-sidenav-list-typography, body-2) !important;
+  }
+  .mat-line {
+    font-size: mat-font-size($app-sidenav-list-typography, body-1) !important;
+    font-weight: mat-font-weight($app-sidenav-list-typography, body-1) !important;
+  }
 }
 
 
@@ -64,103 +212,107 @@ mat-list-item.mat-list-item {
  * User Menu
  */
 .user-menu-list {
-  margin-bottom: 1.3vh;
-}
-.user-menu-list mat-list-item mat-icon {
-  color: white;
-}
-.user-menu-list mat-list-item p {
-  font-size: 0.7em !important;
-  color: white;
-}
-.app-toolbar-container {
-  position: relative;
-  background: map-get($hub-teal, 500);
-  color: white;
-}
-.app-toolbar {
-  background-color: map-get($hub-teal, 500);
-  padding-left: $padding-site;
-  padding-right: $padding-site;
-}
-.app-toolbar-xs {
-  @extend .site-padding-mobile;
-}
-.app-toolbar .app-toolbar-row {
-  height: 8vh;
-}
-.app-toolbar-xs .app-toolbar-row {
-  height: 8vh;
+  margin-bottom: 10.5px;
+  mat-list-item {
+    mat-icon {
+      color: white;
+    }
+    p {
+      font-size: 0.7em !important;
+      color: white;
+    }
+  }
 }
 
 
 /*
- * SideNav
+ * Navigation Toolbar
  */
-.sidenav-home {
-  padding: 0 !important;
+ .app-toolbar-container {
+  color: white;
+  position: relative;
+  background-color: rgba(0,0,0,0);  
 }
-.sidenav-home mat-nav-list {
-  width: 100% !important;
+.app-toolbar {
+  padding-left: $padding-site;
+  padding-right: $padding-site;
+  background-color: map-get($hub-teal, 700);
+  .app-toolbar-row {
+    height:  64px;
+  }
 }
-mat-list-base {
-  padding: 0 2vh;
+.app-toolbar-xs {
+  .app-toolbar-row {
+    height:  64px;
+  }
 }
-mat-expansion-panel {
-  box-shadow: none !important;
-}
-mat-expansion-panel-header .mat-expanded {
-  height: 8vh !important;
-}
-.mat-menu-panel {
+.mat-menu-panel,
+.mat-menu-content {
   min-width: fit-content!important;
 }
 .mat-menu-item {
   color: white!important;
-  padding: 0 2vh!important;
+  padding: 0 16px!important;
   height: fit-content!important;
-  line-height: 6vh!important;
+  line-height: 48px!important;
+  background: rgba(10, 10, 10, 0);
+  font-size: mat-font-size($app-base-typography, body-1);
 }
 .mat-expansion-panel-body {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
-.mat-expansion-panel-body .mat-list-item-content {
-  padding-left: 6.7vh !important;
-}
-.expandable-menu {
-  background-color: #FAFAFA !important;
-  padding-left: 0 !important;
-  height: 8vh !important;
-}
 .sidenav-container {
   min-height: calc(100vh);
 }
-.sidenav-container mat-sidenav {
-  box-shadow: 0.5vh 0 1vh rgba(0, 0, 0, .24);
-  background-color: $color-background;
+.sidenav-container {
+  mat-sidenav {
+    background-color: $color-background;
+  }
 }
-.sidenav-container mat-sidenav mat-list {
-  padding-left: 1em;
-  padding-top: 1em;
+.sidenav-container {
+  mat-sidenav mat-list {
+    padding-left: 1em;
+    padding-top: 1em;
+  }
 }
 .sidenav-content-wrapper {
   display: flex;
   flex-direction: column;
 }
 .sidenav-content {
-  flex: 1 0 auto; // So that content takes up space correctly in IE11 (pushing sticky footer out of the way)
-  min-height: calc(100vh - #{$height-footer});
+  flex: 1 0 auto;
   background-color: $color-background;
-}
-.sidenav-content-xs {
-  @extend .sidenav-content;
   min-height: calc(100vh - #{$height-footer-xs});
+  @include size(medium) {
+    min-height: calc(100vh - #{$height-footer});
+  }
 }
-.app-progress-bar {
-  position: absolute !important;
-  left: 0 !important;
-  bottom: -0.8vh !important; // Offset height of progress bar from bottom of tool
+
+
+/**
+ * Section Header Text
+ */
+ .text {
+  width: 100%;
+  margin: 40px auto;
+  @include size(medium) { 
+      width: 60%;
+      margin: 40px auto;
+      }
+  > h2 {
+    color: #333333;
+    font-size: 36px;
+    @include size(medium) { 
+      font-size: 48px;
+      }
+  }
+  > p {
+    font-size: 16px;
+    @include size(medium) { 
+      font-size: 20px;
+      }
+  }
 }
 
 
@@ -168,111 +320,62 @@ mat-expansion-panel-header .mat-expanded {
  * Footer
  */
 footer {
-  background: linear-gradient(360deg, rgba(2,148,165,1) 0%,  rgba(4,132,147,1) 62%);
-  height: fit-content;
-  padding-left: $padding-site;
-  padding-right: $padding-site;
   z-index: 1;
-}
-.footer-content {
-  @extend .site-content;
-  min-height: fit-content !important;
-  padding: 2vh 0;
-  display: grid;
-  grid-auto-flow: row;
-}
-footer a {
-  text-align: left;
-  text-decoration: none;
-  color: white;
-  font-size: mat-font-size($app-base-typography, button) !important;
-  font-weight: mat-font-weight($app-base-typography, caption) !important;
-}
-footer.footer-xs a {
-  text-align: center;
+  min-height: $height-footer-xs;
+  @include size(medium) { min-height: $height-footer; }
+  background: $dark-grey;
+  .footer-content {
+    @extend .top-padding;
+    @extend .site-padding;
+    @extend .site-content;
+    min-height: $height-footer-xs;
+    @include size(medium) { min-height: $height-footer; }
+  }
+  a {
+    color: #a1a1a1;
+    text-align: left;
+    text-decoration: none;
+    font-size: mat-font-size($app-base-typography, button);
+    font-weight: mat-font-weight($app-base-typography, caption);
+  }
+  .footer-xs a {
+    text-align: center;
+  }
+  .footer-links {
+    text-align: left;
+    .link-header {
+      font-size: 16px;
+      color: white;
+    }
+  }
+  .copyright {
+    margin-bottom: 8px;
+    @include size(small) { padding-top: $padding-site-top; }
+    a {
+      color: white;
+      font-size: 13.6px;
+    }
+  }
+  .divider {
+    color: #FFFFFF;
+    padding-left: 5px;
+    margin-left: 3px;
+    border-left: 1.5px solid;
+  }
 }
 .footer-divider {
   color: white;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
-.logo-img {
-  display: block;
-  height: 10vh;
-  width: auto;
-}
-.logo-img-xs {
-  height: 6vh;
-  display: block;
-  width: auto;
-}
-
-
-/*
- * Breadcrumb styling
- */
-.breadcrumb span {
-  color: $breadcrumb-current-color;
-}
-.breadcrumb a {
-  color: $breadcrumb-previous-color;
-}
-.breadcrumb ul {
-  padding-left: 0;
-}
-.breadcrumb ul > li {
-  display: inline-block;
-  zoom:1;
-  *display:inline;   /* a fix needed for IE7- */
-  cursor: pointer;
-}
-.breadcrumb li:not(:first-child):before {
-  padding-left: 0.5em;
-  padding-right: 0.4em;
-  content: ">";
-  cursor: default;
-}
-
-
-/*
- * Re arrange footer / content on small screens
- */
-.primary-toolbar {
-  position: relative !important; // Needed so we can absolutely position progress bar inside it
-}
-app-search-bar {
-  height: inherit;
-  width: 100%;
-}
-.beta-bar{
-  cursor:pointer;
-  background-color: $color-orange;
-  color:$body-dark-bg-font-color;
-  text-align: center;
-}
-.beta-bar a {
-  color:$body-dark-bg-font-color;
-}
-
-
-/*
- * Github fork ribbon styling
- */
-.github-fork-ribbon.left-bottom:before {
-  background-color: $color-orange;
-}
-.github-fork-ribbon.left-bottom {
-  box-sizing: unset;
-}
-.button-menu {
-  padding-left: 1.6vh !important;
-  padding-right: 0.8vh !important;
-  min-width: 0 !important;
-}
-.content-sidenav {
-  width: 50vh;
-  box-shadow: 0.5vh 0 1vh rgba(0, 0, 0, .24);
-  background-color: $color-background;
+.logo-img-container {
+  margin: 0 auto;
+  .logo-img {
+    height:  64px;
+    width: auto;
+    display: block;
+    @include size(small) { height: 80px; }
+  }
 }
 
 
@@ -280,8 +383,8 @@ app-search-bar {
  * User Detail Dropdown
  */
 .user-detail-dropdown {
-  margin-right: 1vh; 
-  margin-left: 1vh;
+  margin-right: 8px; 
+  margin-left: 8px;
 }
 
 

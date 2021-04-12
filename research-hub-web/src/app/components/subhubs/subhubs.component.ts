@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
@@ -14,6 +14,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-subhubs',
@@ -31,12 +32,14 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public subHub: Observable<SubHub>;
+  public subHub;
   public subHub$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
   public allSubHubs$: Observable<SubHubCollection>;
   public parentSubHubs;
+  public isMobile: Boolean;
+  public bannerTextStyling;
 
   constructor(
     public route: ActivatedRoute,
@@ -45,9 +48,15 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
+    public router: Router,
+    private deviceService: DeviceDetectorService
   ) { }
 
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
+  
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
@@ -57,6 +66,11 @@ export class SubhubsComponent implements OnInit, OnDestroy {
         this.slug = params.slug || this.route.snapshot.data.slug;
         this._loadContent();
       });
+
+    /**
+     * Set styling for text if banner is present
+     */
+      this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   }
 
   /**
@@ -69,8 +83,9 @@ export class SubhubsComponent implements OnInit, OnDestroy {
      */
     if (!!this.slug) {
       this.subHub = this.getSubHubBySlug(this.slug);
-      this.subHub$ = this.subHub.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+      this.subHub$ = this.getSubHubBySlug(this.slug).subscribe(data => {
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

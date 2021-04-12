@@ -111,12 +111,15 @@ async function createServer(config) {
                     '__Field',
                     '__InputValue',
                     '__EnumValue',
-                    '__Directive'
+                    '__Directive',
+                    'sys',
+                    'id',
                 ];
 
                 // Check whether the user has requested only public fields
                 const ALWAYS_PUBLIC_FIELDS = [
                     'title',
+                    'maoriProverb',
                     'summary',
                     'name',
                     'ssoProtected',
@@ -125,7 +128,6 @@ async function createServer(config) {
                     'slug',
                     'banner',
                     'icon',
-                    'viewType',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 

@@ -6,9 +6,12 @@ query GetArticleBySlug($slug: String) {
             id
           }
           title
+          maoriProverb
           slug
           ssoProtected
           searchable
+          callToAction
+          callToActionLabel
           banner {
             title
             description
@@ -54,12 +57,7 @@ query GetArticleBySlug($slug: String) {
             items { ...PublicFields }
           }
           relatedContactsCollection {
-            items { 
-              ...PublicFields
-              ...on Person {
-                role
-              }
-            }
+            items { ...PublicFields }
           }
         }
     }
