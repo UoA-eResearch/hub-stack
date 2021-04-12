@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HumanCasePipe } from '../../../pipes/human-case.pipe';
 import { LargeCardsComponent } from './large-cards.component';
+import { cleanStylesFromDOM } from './../../../../test-helpers';
 
 describe('LargeCardsComponent', () => {
   let pipe: HumanCasePipe;
@@ -23,6 +24,10 @@ describe('LargeCardsComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

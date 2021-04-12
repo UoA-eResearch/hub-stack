@@ -11,6 +11,7 @@ import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from '@uoa/auth';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 describe('EventsComponent', () => {
   let component: EventsComponent;
@@ -77,6 +78,10 @@ describe('EventsComponent', () => {
     fixture.destroy();
   });
 
+  afterAll(() => {
+    cleanStylesFromDOM();
+  });
+
   it('Should create', () => {
     expect(component).toBeTruthy();
   });
@@ -101,6 +106,10 @@ describe('EventsComponent', () => {
 
     afterEach(() => {
       fixture.destroy();
+    });
+
+    afterAll(() => {
+      cleanStylesFromDOM();
     });
 
     it('Should get a single Event data by Slug', () => {

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BreadcrumbsComponent } from './breadcrumbs.component';
+import { cleanStylesFromDOM } from './../../../../test-helpers';
 
 describe('BreadcrumbsComponent', () => {
   let component: BreadcrumbsComponent;
@@ -35,6 +36,10 @@ describe('BreadcrumbsComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

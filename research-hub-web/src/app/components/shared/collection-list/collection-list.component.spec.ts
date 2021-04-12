@@ -6,6 +6,7 @@ import { SharedModule } from '../app.shared.module';
 import { SearchBarService } from '../../search-bar/search-bar.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
+import { cleanStylesFromDOM } from './../../../../test-helpers';
 
 describe('CollectionListComponent', () => {
   let component: CollectionListComponent;
@@ -38,6 +39,10 @@ describe('CollectionListComponent', () => {
     fixture.destroy();
   });
 
+  afterAll(() => {
+    cleanStylesFromDOM();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -46,6 +51,10 @@ describe('CollectionListComponent', () => {
 
     afterEach(() => {
       fixture.destroy();
+    });
+
+    afterAll(() => {
+      cleanStylesFromDOM();
     });
 
     it("Should return the lnguage icon name for a subhub", () => {

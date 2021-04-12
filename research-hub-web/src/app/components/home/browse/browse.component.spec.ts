@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { cleanStylesFromDOM } from './../../../../test-helpers';
 
 describe('BrowseComponent', () => {
   let component: BrowseComponent;
@@ -111,6 +112,10 @@ describe('BrowseComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

@@ -21,6 +21,7 @@ import {
 import { AppComponentService } from '@app/app.component.service';
 import { LoginService } from '@uoa/auth';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 
 describe('SubhubsComponent', () => {
@@ -534,6 +535,10 @@ describe('SubhubsComponent', () => {
     fixture.destroy();
   });
 
+  afterAll(() => {
+    cleanStylesFromDOM();
+  });
+
   it('Should create', () => {
     expect(component).toBeTruthy();
   });
@@ -558,6 +563,10 @@ describe('SubhubsComponent', () => {
 
     afterEach(() => {
       fixture.destroy();
+    });
+
+    afterAll(() => {
+      cleanStylesFromDOM();
     });
 
     it('should get all SubHubs', async () => {

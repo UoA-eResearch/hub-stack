@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SearchBarService } from '../search-bar/search-bar.service';
 import { SearchPageComponent } from './search-page.component';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
@@ -30,6 +31,10 @@ describe('SearchPageComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

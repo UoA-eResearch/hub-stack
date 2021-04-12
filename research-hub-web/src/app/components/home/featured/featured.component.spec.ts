@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FeaturedComponent } from './featured.component';
+import { cleanStylesFromDOM } from './../../../../test-helpers';
 
 describe('FeaturedComponent', () => {
   let component: FeaturedComponent;
@@ -22,6 +23,10 @@ describe('FeaturedComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

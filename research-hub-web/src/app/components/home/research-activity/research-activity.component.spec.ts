@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { cleanStylesFromDOM } from './../../../../test-helpers';
 
 describe('ResearchActivityComponent', () => {
   let component: ResearchActivityComponent;
@@ -56,6 +57,10 @@ describe('ResearchActivityComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SearchBarComponent } from './search-bar.component';
 import { SearchBarService } from './search-bar.service';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -26,6 +27,10 @@ describe('SearchBarComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

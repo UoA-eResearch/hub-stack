@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginService } from '@uoa/auth';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
@@ -289,9 +290,12 @@ describe('ArticlesComponent', () => {
     fixture.detectChanges();
   });
 
-
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('Should create', () => {

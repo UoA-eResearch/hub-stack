@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 import {} from 'jasmine';
 
 describe('HomeComponent', () => {
@@ -21,6 +22,10 @@ describe('HomeComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

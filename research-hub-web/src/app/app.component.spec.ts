@@ -9,7 +9,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatMenuModule } from '@angular/material/menu'
+import { MatMenuModule } from '@angular/material/menu';
+import { cleanStylesFromDOM } from './../test-helpers';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -45,6 +46,10 @@ describe('AppComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

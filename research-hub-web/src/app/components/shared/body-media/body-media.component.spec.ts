@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BodyMediaComponent } from './body-media.component';
 import { BodyMediaService } from '@services/body-media.service';
 import { BLOCKS } from '@contentful/rich-text-types';
+import { cleanStylesFromDOM } from './../../../../test-helpers';
 
 describe('BodyMediaComponent', () => {
   let component: BodyMediaComponent;
@@ -24,6 +25,10 @@ describe('BodyMediaComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {
