@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CollectionListComponent } from './collection-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../app.shared.module';
 import { SearchBarService } from '../../search-bar/search-bar.service';
-import { HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('CollectionListComponent', () => {
   let component: CollectionListComponent;
   let fixture: ComponentFixture<CollectionListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [CollectionListComponent],
       imports: [
@@ -19,7 +19,7 @@ describe('CollectionListComponent', () => {
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         CommonModule,
         SharedModule,
-        HttpClientModule
+        HttpClientTestingModule
       ],
       providers: [
         SearchBarService,
@@ -36,13 +36,17 @@ describe('CollectionListComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
-  })
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   describe("getDefaultIcon (function)", () => {
+
+    afterEach(() => {
+      fixture.destroy();
+    });
 
     it("Should return the lnguage icon name for a subhub", () => {
       expect(component.getDefaultTypeIcon('SubHub')).toEqual('language');

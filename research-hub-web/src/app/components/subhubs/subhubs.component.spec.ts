@@ -20,7 +20,7 @@ import {
 } from "@graphql/schema";
 import { AppComponentService } from '@app/app.component.service';
 import { LoginService } from '@uoa/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 
 describe('SubhubsComponent', () => {
@@ -506,7 +506,7 @@ describe('SubhubsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SubhubsComponent],
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
@@ -555,6 +555,10 @@ describe('SubhubsComponent', () => {
       });
       fixture.detectChanges();
     })
+
+    afterEach(() => {
+      fixture.destroy();
+    });
 
     it('should get all SubHubs', async () => {
       spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);

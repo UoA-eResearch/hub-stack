@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowseComponent } from './browse.component';
 import { SearchBarService } from '../../search-bar/search-bar.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
@@ -97,7 +97,7 @@ describe('BrowseComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ BrowseComponent ],
-      imports: [ HttpClientModule, ApolloTestingModule, ],
+      imports: [ HttpClientTestingModule, ApolloTestingModule, ],
       providers: [ SearchBarService ]
     })
     .compileComponents();
@@ -107,6 +107,10 @@ describe('BrowseComponent', () => {
     fixture = TestBed.createComponent(BrowseComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   it('should create', () => {

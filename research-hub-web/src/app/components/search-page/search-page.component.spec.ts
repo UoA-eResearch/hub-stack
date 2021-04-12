@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SearchBarService } from '../search-bar/search-bar.service';
@@ -13,7 +13,7 @@ describe('SearchPageComponent', () => {
       declarations: [ SearchPageComponent ],
       imports: [
         ApolloTestingModule,
-        HttpClientModule],
+        HttpClientTestingModule],
       providers: [
         SearchBarService,
         Location
@@ -26,6 +26,10 @@ describe('SearchPageComponent', () => {
     fixture = TestBed.createComponent(SearchPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
   });
 
   it('should create', () => {

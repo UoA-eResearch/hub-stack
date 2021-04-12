@@ -8,9 +8,9 @@ import { SoftwareCollection, AllSoftwareGQL, Software } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from '@uoa/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SoftwaresComponent', () => {
   let component: SoftwaresComponent;
@@ -50,7 +50,7 @@ describe('SoftwaresComponent', () => {
         SoftwaresComponent
       ],
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
@@ -98,6 +98,10 @@ describe('SoftwaresComponent', () => {
       });
       fixture.detectChanges();
     })
+
+    afterEach(() => {
+      fixture.destroy();
+    });
 
     it('Should get a single software data by Slug', () => {
       spyOn(component, 'getSoftwareBySlug').and.returnValue(mockSoftware$);

@@ -8,9 +8,9 @@ import { EquipmentCollection, AllEquipmentGQL, Equipment } from '@graphql/schema
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from '@uoa/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
@@ -50,7 +50,7 @@ describe('EquipmentComponent', () => {
         EquipmentComponent
       ],
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
@@ -58,8 +58,8 @@ describe('EquipmentComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
-        LoginService,
         AppComponentService,
+        LoginService,
         AllEquipmentGQL
       ]
     })
@@ -98,6 +98,10 @@ describe('EquipmentComponent', () => {
       });
       fixture.detectChanges();
     })
+
+    afterEach(() => {
+      fixture.destroy();
+    });
 
     it('Should get a single equipment data by Slug', () => {
       spyOn(component, 'getEquipmentBySlug').and.returnValue(mockEquipment$);

@@ -2,8 +2,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponentService } from '../../app.component.service';
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterModule, ActivatedRoute, convertToParamMap, Router } from '@angular/router';
-import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { ArticleCollection, AllArticlesGQL, Article } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
@@ -12,11 +11,10 @@ import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginService } from '@uoa/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
-  let appComponentService: AppComponentService;
   let fixture: ComponentFixture<ArticlesComponent>;
   let controller: ApolloTestingController;
   const mockAllArticles$: Observable<ArticleCollection> = of({
@@ -269,7 +267,7 @@ describe('ArticlesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ArticlesComponent],
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
@@ -277,8 +275,8 @@ describe('ArticlesComponent', () => {
         BrowserAnimationsModule,
         RouterTestingModule.withRoutes([])
       ], providers: [
-        LoginService,
         AppComponentService,
+        LoginService,
         AllArticlesGQL
       ]
     }).compileComponents();
@@ -316,6 +314,10 @@ describe('ArticlesComponent', () => {
         slug: 'first-article'
       });
       fixture.detectChanges();
+    });
+
+    afterEach(() => {
+      fixture.destroy();
     });
 
     it('Should get a single article data', () => {

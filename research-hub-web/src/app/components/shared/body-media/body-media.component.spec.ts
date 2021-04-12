@@ -22,6 +22,10 @@ describe('BodyMediaComponent', () => {
     component.node = { "data": { "target": { "sys": { "id": "51CsS9cFmuRN2s0wOcWuuF", "type": "Link", "linkType": "Entry" } } }, "content": [], "nodeType": BLOCKS.EMBEDDED_ENTRY };
   });
 
+  afterEach(() => {
+    fixture.destroy();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

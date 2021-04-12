@@ -8,9 +8,9 @@ import { ServiceCollection, AllServicesGQL, Service } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from '@uoa/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ServicesComponent', () => {
   let component: ServicesComponent;
@@ -50,7 +50,7 @@ describe('ServicesComponent', () => {
         ServicesComponent
       ],
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
@@ -58,8 +58,8 @@ describe('ServicesComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
-        LoginService,
         AppComponentService,
+        LoginService,
         AllServicesGQL
       ]
     })
@@ -98,6 +98,10 @@ describe('ServicesComponent', () => {
       });
       fixture.detectChanges();
     })
+
+    afterEach(() => {
+      fixture.destroy();
+    });
 
     it('Should get a single service data by Slug', () => {
       spyOn(component, 'getServiceBySlug').and.returnValue(mockService$);

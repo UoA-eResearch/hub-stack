@@ -8,9 +8,9 @@ import { EventCollection, AllEventsGQL, Event } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginService } from '@uoa/auth';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EventsComponent', () => {
   let component: EventsComponent;
@@ -50,7 +50,7 @@ describe('EventsComponent', () => {
         EventsComponent
       ],
       imports: [
-        HttpClientModule,
+        HttpClientTestingModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
@@ -58,8 +58,8 @@ describe('EventsComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
-        LoginService,
         AppComponentService,
+        LoginService,
         AllEventsGQL
       ]
     })
@@ -98,6 +98,10 @@ describe('EventsComponent', () => {
       });
       fixture.detectChanges();
     })
+
+    afterEach(() => {
+      fixture.destroy();
+    });
 
     it('Should get a single Event data by Slug', () => {
       spyOn(component, 'getEventBySlug').and.returnValue(mockEvent$);
