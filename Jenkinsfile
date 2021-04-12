@@ -28,6 +28,7 @@ pipeline {
                 script {
                     echo 'Setting environment variables'
                     env.awsRegion = "ap-southeast-2"
+                    env.NODE_OPTIONS="--max_old_space_size=8192"
                     env.awsRole = 'devops'
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
@@ -36,7 +37,6 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
-                        env.awsRole = 'devops'
                         env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     } else if (BRANCH_NAME == 'nonprod') {
                         echo 'Setting variables for nonprod deployment'
@@ -58,7 +58,6 @@ pipeline {
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
-                        env.awsRole = 'devops'
                         env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     }
                     echo "Copying in credentials file"
@@ -108,6 +107,7 @@ pipeline {
                             steps {
                                 echo 'Installing research-hub-web dependencies.'
                                 dir("research-hub-web") {
+                                    sh "node --version"
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
                                     sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
