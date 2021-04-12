@@ -8,7 +8,10 @@ import { EquipmentCollection, AllEquipmentGQL, Equipment } from '@graphql/schema
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginService } from '@uoa/auth';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
@@ -48,6 +51,7 @@ describe('EquipmentComponent', () => {
         EquipmentComponent
       ],
       imports: [
+        HttpClientTestingModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
@@ -56,6 +60,7 @@ describe('EquipmentComponent', () => {
         BrowserAnimationsModule
       ], providers: [
         AppComponentService,
+        LoginService,
         AllEquipmentGQL
       ]
     })
@@ -71,6 +76,10 @@ describe('EquipmentComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('Should create', () => {
@@ -94,6 +103,14 @@ describe('EquipmentComponent', () => {
       });
       fixture.detectChanges();
     })
+
+    afterEach(() => {
+      fixture.destroy();
+    });
+
+    afterAll(() => {
+      cleanStylesFromDOM();
+    });
 
     it('Should get a single equipment data by Slug', () => {
       spyOn(component, 'getEquipmentBySlug').and.returnValue(mockEquipment$);

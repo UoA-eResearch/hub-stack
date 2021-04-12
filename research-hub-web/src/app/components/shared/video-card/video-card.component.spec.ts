@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VideoCardComponent } from './video-card.component';
+import { cleanStylesFromDOM } from './../../../../test-helpers';
 
 describe('VideoCardComponent', () => {
   let component: VideoCardComponent;
@@ -21,6 +22,14 @@ describe('VideoCardComponent', () => {
     component = fixture.componentInstance;
     component.contentItem = mockVideo;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('should create', () => {

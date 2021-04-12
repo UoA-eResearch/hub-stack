@@ -14,6 +14,7 @@
                 <mat-card-title class="card-title">
                     <h4><a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">{{ subHub.title }}</a></h4>
                 </mat-card-title>
+                <mat-icon *ngIf="subHub.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
                 <mat-card-content class="content-item-summary"><p>{{ subHub.summary }}</p></mat-card-content>
                 <br>
                 <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">

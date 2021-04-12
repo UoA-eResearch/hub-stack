@@ -8,7 +8,10 @@ import { EventCollection, AllEventsGQL, Event } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginService } from '@uoa/auth';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 describe('EventsComponent', () => {
   let component: EventsComponent;
@@ -48,6 +51,7 @@ describe('EventsComponent', () => {
         EventsComponent
       ],
       imports: [
+        HttpClientTestingModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
@@ -56,6 +60,7 @@ describe('EventsComponent', () => {
         BrowserAnimationsModule
       ], providers: [
         AppComponentService,
+        LoginService,
         AllEventsGQL
       ]
     })
@@ -73,11 +78,15 @@ describe('EventsComponent', () => {
     fixture.destroy();
   });
 
+  afterAll(() => {
+    cleanStylesFromDOM();
+  });
+
   it('Should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all Event', () => {
+  it('should get all events', () => {
     spyOn(component, 'getAllEvents').and.returnValue(mockAllEvent$);
     component.getAllEvents().subscribe(res => {
       expect(res).toBeTruthy();
@@ -94,6 +103,14 @@ describe('EventsComponent', () => {
       });
       fixture.detectChanges();
     })
+
+    afterEach(() => {
+      fixture.destroy();
+    });
+
+    afterAll(() => {
+      cleanStylesFromDOM();
+    });
 
     it('Should get a single Event data by Slug', () => {
       spyOn(component, 'getEventBySlug').and.returnValue(mockEvent$);

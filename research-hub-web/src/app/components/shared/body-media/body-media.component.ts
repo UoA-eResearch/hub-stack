@@ -19,6 +19,9 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
   { super(); }
 
   ngOnInit() {
+    /**
+     * Inherit data passed from the 'super' content page
+     */
     this.data = this.node;
 
     /**

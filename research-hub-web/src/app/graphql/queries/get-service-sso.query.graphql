@@ -1,0 +1,9 @@
+query GetServiceSSO($slug: String) {
+    serviceCollection(limit: 1, where: {slug: $slug}) {
+        items {
+          __typename
+          slug
+          ssoProtected
+        }
+    }
+}

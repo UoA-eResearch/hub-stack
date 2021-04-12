@@ -52,8 +52,8 @@
       text-align: center;
       align-items: center;
       justify-content: center;
-      background: map-get($hub-teal, 500);
-      border: 4px solid map-get($hub-teal, 500);
+      background: map-get($hub-teal, 700);
+      border: 4px solid map-get($hub-teal, 700);
       transition: background 0.11s ease-in-out, color 0.1s ease-in-out;
       @include size(large) {
         width: 55%;
@@ -61,7 +61,7 @@
         transform: skew(30deg);
       }
       * {
-        color: #fafafa;
+        color: #FFFFFF;
       }
       div {
         width: 100%;
@@ -100,12 +100,12 @@
       }
       &:hover {
         cursor: pointer;
-        background: #fafafa;
-        border: 4px solid map-get($hub-teal, 500);
+        background: #FFFFFF;
+        border: 4px solid map-get($hub-teal, 700);
         transition: background 0.11s ease-in-out;
         * {
           transition: background 0.11s ease-in-out;
-          color: map-get($hub-teal, 500)!important;
+          color: map-get($hub-teal, 700)!important;
         }
       }
     }

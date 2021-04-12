@@ -119,6 +119,7 @@ async function createServer(config) {
                 // Check whether the user has requested only public fields
                 const ALWAYS_PUBLIC_FIELDS = [
                     'title',
+                    'maoriProverb',
                     'summary',
                     'name',
                     'ssoProtected',
@@ -127,9 +128,6 @@ async function createServer(config) {
                     'slug',
                     'banner',
                     'icon',
-                    'viewType',
-                    'id',
-                    'sys',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 

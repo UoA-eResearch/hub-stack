@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEquipmentGQL,
+  AllEquipmentSlugsGQL,
+  GetEquipmentSsoGQL,
   GetEquipmentBySlugGQL,
   EquipmentCollection,
   Equipment,
@@ -16,6 +18,7 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Location } from '@angular/common';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-equipment',
@@ -33,7 +36,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public equipment: Observable<Equipment>;
+  public equipment;
   public equipment$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -44,13 +47,16 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allEquipmentGQL: AllEquipmentGQL,
+    public allEquipmentSlugsGQL: AllEquipmentSlugsGQL,
+    public getEquipmentSsoGQL: GetEquipmentSsoGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService,
-    public location: Location
+    public location: Location,
+    public loginService: LoginService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -78,12 +84,34 @@ export class EquipmentComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Equipment.
      */
     if (!!this.slug) {
-      this.equipment = this.getEquipmentBySlug(this.slug);
-        this.equipment$ = this.equipment.subscribe(data => {
+      // Check if the equipment slug is valid otherwise redirect to 404
+      this.getAllEquipmentSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
+
+      /**
+       * Check if Equipment is SSO Protected
+       */
+      this.getEquipmentSSO(this.slug).subscribe(data => {
+        if (data.ssoProtected == true) {
+          this.loginService.isAuthenticated().then((isAuthenticated) => {
+            isAuthenticated ? this.equipment = this.getEquipmentBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
+          });
+        }
+        else {
+          this.equipment = this.getEquipmentBySlug(this.slug);
+          this.equipment$ = this.equipment.subscribe(data => {
+            this.detectDevice();
             this.bodyMediaService.setBodyMedia(data.bodyText.links);
-          this.appComponentService.setTitle(data.title);
-        });
-        this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+            this.appComponentService.setTitle(data.title);
+          });
+        }
+      });
+      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Equipment');
       this.allEquipment$ = this.getAllEquipment();
@@ -106,6 +134,32 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Function that returns all equipment slugs from the EquipmentCollection as an observable
+   * of type EquipmentCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllEquipmentSlugs(): Observable<EquipmentCollection> {
+    try {
+      return this.allEquipmentSlugsGQL.fetch()
+        .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
+    } catch (e) { console.error('Error loading all equipment', e) };
+  }
+
+  /**
+   * Function that checks the ssoProtected field of an Equipment
+   *
+   * @param slug The equipment's slug. Retrieved from the route parameter of the same name.
+   */
+  public getEquipmentSSO(slug: string): Observable<Equipment> {
+    try {
+      return this.getEquipmentSsoGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.equipmentCollection.items)) as Observable<Equipment>;
+    } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
+  }
+
+  /**
    * Function that returns an individual Equipment from the EquipmentCollection by it's slug
    * as an observable of type Equipment. This is then unwrapped with the async pipe.
    *
@@ -117,7 +171,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
     try {
       return this.getEquipmentBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.equipmentCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<Equipment>;
+        .pipe(flatMap(x => x.data.equipmentCollection.items)) as Observable<Equipment>;
     } catch (e) { console.error(`Error loading equipment ${slug}:`, e); }
   }
 

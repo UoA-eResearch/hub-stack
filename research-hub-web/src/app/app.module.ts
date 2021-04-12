@@ -28,11 +28,13 @@ import { onError } from 'apollo-link-error';
 import { environment } from '@environments/environment';
 import { AppStorageService } from './services/app-storage.service';
 
+
 /**
  * Dynamic Routing
  */
 import { APP_INITIALIZER } from '@angular/core';
 import { CerGraphqlService } from './services/cer-graphql.service';
+
 
 /**
  * Generated from Fragment matcher graphql-code-generator plugi
@@ -105,7 +107,6 @@ export class AppModule {
 
     // Join the primary link and the error handler link
     // const link = error.concat(http);
-
     // Create the default (global) Apollo client
     const client = apollo.create({
       cache: new InMemoryCache({ fragmentMatcher }) as InMemoryCache,

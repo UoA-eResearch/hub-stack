@@ -8,7 +8,10 @@ import { SoftwareCollection, AllSoftwareGQL, Software } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginService } from '@uoa/auth';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 describe('SoftwaresComponent', () => {
   let component: SoftwaresComponent;
@@ -48,6 +51,7 @@ describe('SoftwaresComponent', () => {
         SoftwaresComponent
       ],
       imports: [
+        HttpClientTestingModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         ApolloTestingModule,
         CommonModule,
@@ -55,6 +59,7 @@ describe('SoftwaresComponent', () => {
         SharedModule,
         BrowserAnimationsModule
       ], providers: [
+        LoginService,
         AppComponentService,
         AllSoftwareGQL
       ]
@@ -71,6 +76,10 @@ describe('SoftwaresComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('Should create', () => {
@@ -94,6 +103,14 @@ describe('SoftwaresComponent', () => {
       });
       fixture.detectChanges();
     })
+
+    afterEach(() => {
+      fixture.destroy();
+    });
+
+    afterAll(() => {
+      cleanStylesFromDOM();
+    });
 
     it('Should get a single software data by Slug', () => {
       spyOn(component, 'getSoftwareBySlug').and.returnValue(mockSoftware$);

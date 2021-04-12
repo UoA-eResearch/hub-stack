@@ -1,0 +1,9 @@
+query GetSoftwareSSO($slug: String) {
+    softwareCollection(limit: 1, where: {slug: $slug}) {
+        items {
+          __typename
+          slug
+          ssoProtected
+        }
+    }
+}

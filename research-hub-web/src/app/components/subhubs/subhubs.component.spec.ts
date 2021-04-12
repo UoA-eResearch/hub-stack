@@ -19,6 +19,9 @@ import {
   SubHubOrder,
 } from "@graphql/schema";
 import { AppComponentService } from '@app/app.component.service';
+import { LoginService } from '@uoa/auth';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { cleanStylesFromDOM } from './../../../test-helpers';
 
 
 describe('SubhubsComponent', () => {
@@ -504,6 +507,7 @@ describe('SubhubsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SubhubsComponent],
       imports: [
+        HttpClientTestingModule,
         ApolloTestingModule,
         CommonModule,
         MaterialModule,
@@ -511,6 +515,7 @@ describe('SubhubsComponent', () => {
         BrowserAnimationsModule,
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
       ], providers: [
+        LoginService,
         AllSubHubGQL,
         AppComponentService,
         AllContentItemParentSubHubsGQL
@@ -528,6 +533,10 @@ describe('SubhubsComponent', () => {
 
   afterEach(() => {
     fixture.destroy();
+  });
+
+  afterAll(() => {
+    cleanStylesFromDOM();
   });
 
   it('Should create', () => {
@@ -552,14 +561,22 @@ describe('SubhubsComponent', () => {
       fixture.detectChanges();
     })
 
-    it('Should get all SubHubs', async () => {
+    afterEach(() => {
+      fixture.destroy();
+    });
+
+    afterAll(() => {
+      cleanStylesFromDOM();
+    });
+
+    it('should get all SubHubs', async () => {
       spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);
       component.getAllSubHubs().subscribe(res => {
         expect(res).toBeTruthy();
       });
     })
 
-    it('Should get a single SubHub', async () => {
+    it('should get a single SubHub', async () => {
       spyOn(component, 'getSubHubBySlug').and.returnValue(singleSubHub$);
       component.getSubHubBySlug(component.slug).subscribe(res => {
         expect(res).toBeTruthy();
