@@ -7,7 +7,7 @@ div.mat-card-avatar mat-icon {
 }
 
 div.collection {
-    margin: 3vh 0 3vh 0;
+    margin: 24px 0 24px 0;
 }
 
 .result-item {
@@ -16,54 +16,100 @@ div.collection {
     &.ssoProtected {
         
     }
+    $avatar-size:  64px;
 
-    &:hover {
-        border: 0.125vh solid map-get($hub-teal, 50);
-    }
-
-    $avatar-size: 8vh;
-
-    #item-avatar {
+    .item-avatar {
         width: $avatar-size;
         height: $avatar-size;
-
-        margin-right: $avatar-size * 0.1;
-
+        margin-right: $avatar-size * 0.15;
         img {
             object-fit: cover;
             width: $avatar-size;
             height: $avatar-size;
         }
     }
-    #item-avatar-icon {
-        padding: 2vh 0;
+    .item-avatar-icon {
+        padding: 16px 0;
         font-size: $avatar-size!important;
-        color: $color-primary;
+        color: map-get($hub-navy, 500)!important;
     }
 }
+
+
+/**
+ * Mat Card
+ */
+ mat-card {
+    box-shadow: 0px 0px 15px #cfcfcf!important;
+ }
 
 
 /**
  * Material Overrides
  */
-mat-card-title .card-title {
-    @extend .card-title;
-    font-size: 2.2vh!important;
-    border-bottom: 0.25vh solid rgba(0, 0, 0, 0);
-    &:hover {
-        border-bottom: 0.25vh solid map-get($hub-navy, 500);
+.card-content {
+    width: 90%;
+    p {
+        @include size(medium) {
+            display: inline-block;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+    .card-title {
+        @extend .card-title;
+        width: fit-content;
+        display: inline-block;
+        margin-bottom: 0!important;
+        border-bottom: 2px solid rgba(0, 0, 0, 0);
+        &:hover {
+            border-bottom: 2px solid $body-grey;
+        }
+    }
+    /**
+    * Lock Icon
+    */
+    mat-icon {
+        color: $dark-grey!important;
+        font-size: 14px!important;
+        vertical-align: middle;
     }
 }
-mat-expansion-panel-header {
-    @extend .card-summary;
-    height: fit-content!important;
-}
-
 
 /**
- * Lock Icon
+ * Card Result Icon
  */
- .mat-icon {
-    color: $color-icon;
-    font-size: 2vh;
+.item-avatar-icon {
+    color: map-get($hub-navy, 500)!important;
+}
+
+/**
+ * Pagination Controls
+ */
+::ng-deep.ngx-pagination {
+
+    .current {
+        background: map-get($hub-teal, 500)!important;
+    }
+    text-align: center;
+    padding: 0;
+
+    a:focus, a:active, a.active, a:hover{
+        background: #fafafa!important;
+        outline: none!important
+    }
+}
+
+/**
+ * Loading Transition
+ */
+.loading {
+    opacity: 0.5;
+    transition: opacity 0.1s ease-in-out;
+}
+.loaded {
+    opacity: 1;
+    transition: opacity 0.1s ease-in-out;
 }

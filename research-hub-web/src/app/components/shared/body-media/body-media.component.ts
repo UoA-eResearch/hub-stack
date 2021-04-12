@@ -11,12 +11,17 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
   public data;
   public returnVal$;
   public contentItem;
+  public orderedList = [];
+  public unorderedList = [];
 
   constructor(
     public bodyMediaService: BodyMediaService)
   { super(); }
 
   ngOnInit() {
+    /**
+     * Inherit data passed from the 'super' content page
+     */
     this.data = this.node;
 
     /**
@@ -40,6 +45,14 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
           break;
         case 'asset-hyperlink':
           this.contentItem = this.returnVal$.assets['hyperlink'].find(x => x.sys.id == this.data.data.target.sys.id);
+          break;
+        case 'unordered-list':
+          this.contentItem = {__typename: '', items: []};
+          this.contentItem['items'] = this.data.content;
+          break;
+        case 'ordered-list':
+          this.contentItem = {__typename: '', items: []};
+          this.contentItem['items'] = this.data.content;
           break;
         case 'blockquote':
           this.contentItem = this.data.content[0];

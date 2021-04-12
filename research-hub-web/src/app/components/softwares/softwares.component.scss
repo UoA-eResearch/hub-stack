@@ -4,7 +4,7 @@
 
 mat-expansion-panel,
 mat-card  {
-    margin: 1vh 0;
+    margin: 8px 0;
 }
 
 
@@ -22,7 +22,9 @@ mat-card  {
 .specifications-table {
     width: 100%;
     border-collapse: collapse;
-    @include size(large) { width: 50%; }
+    @include size(large) { 
+        width: 50%;
+        margin: 0 auto;}
     td, th {
         border: 1px solid #ddd;
         padding: 8px;
@@ -32,7 +34,7 @@ mat-card  {
         padding-top: 12px;
         margin-bottom: 12px;
         color: $color-background;
-        background-color: map-get($hub-teal, 500);
+        background-color: map-get($hub-teal, 700);
     }
     tr:nth-child(even) {
         background-color: #f2f2f2;
@@ -41,4 +43,19 @@ mat-card  {
         font-weight: bold;
         width: 25%;
     }
+}
+
+/**
+ * Custom Button Styles
+ */
+ .standard-button {
+    @extend .standard-button;
+   border: 3px solid map-get($hub-navy, 500)!important;
+   background-color: map-get($hub-navy, 500)!important;
+}
+.standard-button:hover {
+   color: map-get($hub-navy, 500)!important;
+   border-radius: 50px!important;
+   background-color: white!important;
+   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }

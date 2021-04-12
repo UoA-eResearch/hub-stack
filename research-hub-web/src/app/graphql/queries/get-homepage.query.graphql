@@ -1,0 +1,20 @@
+query GetHomepage {
+    homepageCollection(limit: 1) {
+        items {
+            image {
+                url
+            }
+            featuredItemsCollection {
+                items {
+                    ...PublicFields
+                }
+            }
+            featuredItemsDescription
+            researchCategories
+            researchActivities
+            notification {
+                json
+            }
+        }
+    }
+}

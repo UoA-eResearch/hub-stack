@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllSoftwareGQL,
+  AllSoftwareSlugsGQL,
   GetSoftwareBySlugGQL,
   SoftwareCollection,
   Software,
@@ -14,7 +15,7 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 @Component({
   selector: 'app-software',
   templateUrl: './softwares.component.html',
@@ -31,22 +32,30 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public software: Observable<Software>;
+  public software;
   public software$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
   public allSoftware$: Observable<SoftwareCollection>;
   public parentSubHubs;
+  public isMobile: Boolean;
 
   constructor(
     public route: ActivatedRoute,
     public allSoftwareGQL: AllSoftwareGQL,
+    public allSoftwareSlugsGQL: AllSoftwareSlugsGQL,
     public getSoftwareBySlugGQL: GetSoftwareBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public router: Router
-  ) { }
+    public router: Router,
+    private deviceService: DeviceDetectorService
+  ) { this.detectDevice(); }
+
+  // Detect if device is Mobile
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
   async ngOnInit() {
     /**
@@ -68,9 +77,18 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Software.
      */
     if (!!this.slug) {
+      // Check if the article slug is valid otherwise redirect to 404
+      this.getAllSoftwareSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
       this.software = this.getSoftwareBySlug(this.slug);
-      this.software$ = this.software.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+      this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
@@ -93,6 +111,20 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
       return this.allSoftwareGQL.fetch()
         .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
     } catch (e) { console.error('Error loading all Software:', e) };
+  }
+
+  /**
+   * Function that returns all software slugs from the SoftwareCollection as an observable
+   * of type SoftwareCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllSoftwareSlugs(): Observable<SoftwareCollection> {
+    try {
+      return this.allSoftwareSlugsGQL.fetch()
+        .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
+    } catch (e) { console.error('Error loading all software:', e) };
   }
 
   /**

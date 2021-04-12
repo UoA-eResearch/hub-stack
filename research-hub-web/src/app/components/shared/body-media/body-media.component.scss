@@ -107,6 +107,17 @@
     transition: background-color 0.2s ease-in-out
 }
 
+
+/**
+ * Lock Icon
+ */
+mat-icon {
+    color: $dark-grey!important;
+    font-size: 14px!important;
+    vertical-align: middle;
+}
+
+
 /**
  * If viewed on a mobile device
  */
@@ -144,7 +155,7 @@
  *  Entry Inline
  */
  .embedded-entry-inline {
-    color: #0294a5;
+    color: #018193;
     display: inline-block !important;
 }
 
@@ -153,7 +164,7 @@
  * Entry Block
  */
 .embedded-entry-block {
-    @include size(large) { width: 50% ; margin-left: auto; margin-right: auto; }
+    @extend .section;
     a {
         display: flex;
         align-items: center;
@@ -162,18 +173,21 @@
         margin: 15px auto;
         width: 100%;
         padding-right: 30px;
-        background: #fafafa;
-        .mat-card-title a { width: fit-content}
-        .mat-card-title a:hover {
-            border-bottom: solid 2px map-get($hub-navy, 500);
-        }
-        & .mat-card-title {
-            span  * {
-                font-size: 18px; 
-                color: map-get($hub-navy, 500);
-            }
-        }
+        background: #FFFFFF;
     }
+}
+
+.mat-card-title {
+    span  * {
+        font-size: 18px; 
+        color: map-get($hub-navy, 500);
+    }
+}
+.mat-card-title a {
+    max-width: fit-content!important;
+}
+.mat-card-title a:hover {
+    border-bottom: solid 2px map-get($hub-navy, 500);
 }
 
 .mat-card-content {
@@ -198,4 +212,28 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+}
+
+
+/**
+ * Table
+ */
+.table-container {
+    min-width: 100%;
+    margin: 40px auto;
+    .body-table {
+        text-align: center;
+        border-collapse: collapse;
+        font-size: 2vw;
+        @include size(small) {font-size: initial}
+        th {
+            white-space: nowrap;
+            background: $input-grey;
+        }
+        th, td {
+            padding: 8px;
+            word-break: keep-all;
+            border: 1px solid map-get($hub-navy, 500);
+        }
+    }
 }

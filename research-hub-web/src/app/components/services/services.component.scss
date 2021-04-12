@@ -42,6 +42,21 @@ mat-card  {
     padding-top: 1.5vh;
     margin-bottom: 1.5vh;
     text-align: left;
-    background-color: map-get($hub-teal, 500);
+    background-color: map-get($hub-teal, 700);
     color: $color-background;
+}
+
+/**
+ * Custom Button Styles
+ */
+ .standard-button {
+    @extend .standard-button;
+   border: 3px solid map-get($hub-navy, 500)!important;
+   background-color: map-get($hub-navy, 500)!important;
+}
+.standard-button:hover {
+   color: map-get($hub-navy, 500)!important;
+   border-radius: 50px!important;
+   background-color: white!important;
+   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }

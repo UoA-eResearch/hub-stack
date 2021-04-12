@@ -1,23 +1,40 @@
-<div class="section">
-  <h2>Explore research activities</h2>
-  <mat-chip-list>
-    <div 
-      fxLayout="row wrap" 
-      fxLayout.lt-sm="column" 
-      fxLayoutAlign="space-between stretch"
-      style="width:100%">
-      <div 
-        *ngFor="let activity of researchActivityOptions" 
-        [ngClass]="activity.className">
-        <mat-chip 
-          selected [routerLink]="['/search']" 
-          [queryParams]="getQueryParams(activity)"
-          [ngClass]="[activity.className, 'ra-chip']" 
-          [ngClass.lt-md]="[activity.className, 'ra-chip', 'tablet-view']"
-          [ngClass.lt-sm]="[activity.className, 'ra-chip', 'mobile-view']">
-            {{activity.name}}
-        </mat-chip>
+<div id="research-activities">
+  <div class="content-container">
+    <div class="text site-padding" ngClass.lt-md="site-padding-mobile">
+      <h2>{{ title }}</h2>
+      <p>{{ description }}</p>
+      <div class="main-underline"></div>
+    </div>
+  </div>
+
+  <div *ngIf="allStages$ | async as allStages">
+
+    <!-- Research Acitivities Container -->
+    <div class="research-activity-container">
+
+      <!-- Research Activities Content -->
+      <div fxLayout="column" fxLayoutGap="8px" class="research-activity-content">
+        <div *ngFor="let item of allStages.items">
+
+          <!-- Panel Container -->
+          <div class="outer-panel" fxLayout="row">
+
+            <!-- Panel Button -->
+            <div class="inner-panel">
+              <div selected [routerLink]="['/search']" (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])"
+                (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])">
+                <h3>{{ item.name }}</h3>
+                <p>{{ item.description }}</p>
+              </div>
+            </div>
+
+            <!-- Panel Image -->
+            <div fxHide.lt-lg class="research-category-img">
+                <img src="{{ item.image?.url }}" alt="{{ item.name }}-image">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </mat-chip-list>
+  </div>
 </div>
