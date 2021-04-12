@@ -52,12 +52,13 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
 const getTokens = async () => {
     console.warn('stage: ', process.env.stage);
     let deployStage = process.env.stage;
+    let awsProfile = process.env.awsProfile;
     let awsCreds = new aws.SharedIniFileCredentials({
-        profile: deployStage
+        profile: awsProfile
     });
     if (awsCreds.sessionToken === undefined) {
+        console.warn('AWS Profile not found, defaulting to sandbox');
         // falling back to local def profile.
-        deployStage = 'dev';
         awsCreds = new aws.SharedIniFileCredentials({
             profile: 'sandbox',
         });
@@ -114,6 +115,7 @@ const getTokens = async () => {
     // Making request to 2FAB Lambda using 
     let res = await fetch(`https://${opts.host}${opts.path}`, opts);
     const resJson = await res.json();
+    console.warn({resJson});
     try {
         if (!resJson['access_token']) {
             throw 'Fetching response for OAuth2.0 tokens does not contain access token. You may need to renew locally stored AWS credentials.';
