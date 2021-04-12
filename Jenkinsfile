@@ -28,7 +28,6 @@ pipeline {
                 script {
                     echo 'Setting environment variables'
                     env.awsRegion = "ap-southeast-2"
-                    env.NODE_OPTIONS="--max_old_space_size=8192"
                     env.awsRole = 'devops'
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
@@ -189,8 +188,8 @@ pipeline {
                         echo 'Testing research-hub-web project'
 
                         dir("research-hub-web") {
-                            echo 'Running research-hub-web unit tests'
-                            sh 'npm run test-ci'
+                            //echo 'Running research-hub-web unit tests'
+                            //sh 'npm run test-ci'
 
                             echo 'Running research-hub-web e2e tests'
                             sh "npm run e2e-ci"
