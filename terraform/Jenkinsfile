@@ -45,7 +45,7 @@ pipeline {
                         env.awsAccountId = '518380838815'
                         env.envPath = 'its-nonprod'
                         env.varFile = 'hub-dev'
-                    else if (params.DEPLOY_ENV == 'test') {
+                    } else if (params.DEPLOY_ENV == 'test') {
                         echo 'Setting variables for nonprod test terraform deployment'
                         env.awsEnv = 'nonprod'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
