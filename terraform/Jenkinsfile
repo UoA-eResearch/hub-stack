@@ -5,7 +5,9 @@ slackCredentials = 'UoA-Slack-Access-Research-Hub'
 pipeline {
 
     parameters {
-        booleanParam(name: "FORCE_REDEPLOY_TERRAFORM", defaultValue: false, description: 'Force re-run terraform even if there are no code changes.' )
+        choice(choices: ['dev', 'test', 'prod'], description: 'What environment?', name: 'DEPLOY_ENV')
+        choice(choices: ['create', 'destroy'], description: 'Create or destroy infra?', name: 'TERRAFORM_ACTION')
+        gitParameter name: 'BRANCH', type: 'PT_BRANCH', defaultValue: 'master', description: 'What Git branch you want to checkout?'
     }
 
     agent  {
@@ -16,8 +18,15 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                checkout scm
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#D4DADF", message: "Build Started - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
+                echo "Checking out.."
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: "${params.BRANCH}"]], 
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [], 
+                    gitTool: 'Default', 
+                    submoduleCfg: [], 
+                    userRemoteConfigs: [[credentialsId: 'github-user', url: 'https://github.com/UoA-eResearch/hub-stack.git']]
+                ])                
             }
         }
 
@@ -27,34 +36,42 @@ pipeline {
                     echo 'Setting environment variables'
                     env.awsRegion = "ap-southeast-2"
                     env.awsRole = 'devops'
-                    if (BRANCH_NAME == 'terraform-sandbox-deploy') {
-                        echo 'Setting variables for sandbox terraform deployment'
-                        env.awsEnv = 'sandbox'
-                        env.awsCredentialsId = 'aws-sandbox-user'
-                        env.awsTokenId = 'aws-sandbox-token'
-                        env.awsProfile = 'uoa-sandbox'
-                        env.awsAccountId = '416527880812'
-                    } else if (BRANCH_NAME == 'terraform-nonprod-deploy') {
-                        echo 'Setting variables for nonprod terraform deployment'
+                    if (params.DEPLOY_ENV == 'dev') {
+                        echo 'Setting variables for nonprod dev terraform deployment'
                         env.awsEnv = 'nonprod'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
                         env.awsProfile = 'uoa-its-nonprod'
                         env.awsAccountId = '518380838815'
-                    } else if (BRANCH_NAME == 'terraform-prod-deploy') {
+                        env.envPath = 'its-nonprod'
+                        env.varFile = 'hub-dev'
+                    else if (params.DEPLOY_ENV == 'test') {
+                        echo 'Setting variables for nonprod test terraform deployment'
+                        env.awsEnv = 'nonprod'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+                        env.awsAccountId = '518380838815'
+                        env.envPath = 'its-nonprod'
+                        env.varFile = 'hub-test'
+                    } else if (params.DEPLOY_ENV == 'prod') {
                         echo 'Setting variables for prod terraform deployment'
                         env.awsEnv = 'prod'
                         env.awsCredentialsId = 'uoa-its-prod-access'
                         env.awsTokenId = 'uoa-its-prod-token'
                         env.awsProfile = 'uoa-its-prod'
-                        env.awsAccountId = 'TBC'
+                        env.awsAccountId = '291148375163'
+                        env.envPath = 'its-prod'
+                        env.varFile = 'hub-prod'
                     } else {
-                        echo 'You are not on an environment branch, defaulting to sandbox'
-                        BRANCH_NAME = 'terraform-sandbox-deploy'
-                        env.awsCredentialsId = 'aws-sandbox-user'
-                        env.awsTokenId = 'aws-sandbox-token'
-                        env.awsProfile = 'uoa-sandbox'
-                        env.awsAccountId = '416527880812'
+                        echo 'You are not on a valid environment, defaulting to dev'
+                        env.awsEnv = 'nonprod'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+                        env.awsAccountId = '518380838815'
+                        env.envPath = 'its-nonprod'
+                        env.varFile = 'hub-dev'
                     }
                 }
             }
@@ -75,37 +92,56 @@ pipeline {
             }
         }
             
-        stage('Terraform Create/Update Infrastructure') {
-            when {
-                anyOf {
-                    changeset "**/terraform/**/*.*"
-                    equals expected: true, actual: params.FORCE_REDEPLOY_TERRAFORM
+        stage('Planning') {
+            steps{
+                echo("Planning Terraform for ${params.DEPLOY_ENV} environment")
+                echo("Terraform action = ${params.TERRAFORM_ACTION}")
+
+                dir('terraform') {
+                    script{
+                        sh "terraform init -input=false -backend-config=envs/${env.envPath}/backend.conf"
+
+                        if(params.TERRAFORM_ACTION == 'create'){
+                            sh "terraform plan -input=false -var-file=envs/${env.envPath}/${env.varFile}.tfvars -out tfplan"
+                        } else {
+                            sh "terraform plan -input=false -var-file=envs/${env.envPath}/${env.varFile}.tfvars -destroy -out tfplan"
+                        }
+                    }
                 }
             }
-            stages {
-                stage ('Create Plan') {
-                    // terraform plan
-                    steps {
-                        
+        }
+
+        stage('Approval') {
+            steps {
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: 'danger', message: "${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - Is awaiting approval."
+                timeout(time: 15, unit: 'MINUTES') {
+                    input 'Approve the above plan?'
+                }
+            }
+        }
+
+        stage('Create/Destroy Infrastructure') {
+            steps {
+                echo("Terraform action = ${params.TERRAFORM_ACTION}")
+                dir('terraform') {
+                    script{
+                        if(params.TERRAFORM_ACTION == 'create') {
+                            sh "terraform apply -input=false -var-file=envs/${env.envPath}/${env.varFile}.tfvars -auto-approve"
+                        } else {
+                            timeout(time: 15, unit: 'MINUTES') {
+                                input 'Do you really want to destroy?'
+                            }
+                            sh "terraform destroy -input=false -var-file=envs/${env.envPath}/${env.varFile}.tfvars -auto-approve"
+                        }
                     }
                 }
-                stage ('Await approval.. ') {
-                    steps {
-                        
-                    }
-                }
-                stage ('Apply changes') {
-                    steps {
-                        
-                    }
-                }
-            }              
+            }
         }
     }
     
     post {
         success {
-            echo 'Hub Stack deployed to ' + BRANCH_NAME
+            echo 'Hub Stack Infrastructure updated in ' + params.DEPLOY_ENV
             slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>).")
         }
         failure {
