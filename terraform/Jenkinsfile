@@ -113,7 +113,7 @@ pipeline {
 
         stage('Approval') {
             steps {
-                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: 'danger', message: "${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - Is awaiting approval."
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: 'danger', message: "${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>) - Is awaiting approval.")
                 timeout(time: 15, unit: 'MINUTES') {
                     input 'Approve the above plan?'
                 }
