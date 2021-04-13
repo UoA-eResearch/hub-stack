@@ -5,7 +5,7 @@ terraform {
       version = ">= 3.0.0"
     }
   }
-  required_version = ">= 0.13.3"
+  required_version = ">= 0.12.0"
   backend "s3" {
     key     = "researchhub/terraform.tfstate"
   }
