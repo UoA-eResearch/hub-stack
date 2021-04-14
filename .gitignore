@@ -36,9 +36,3 @@ research-hub-web/typings
 
 # Ignore config file so secrets are not automatically checked in
 .env
-
-
-# ====================== serverless-now ================ #
-serverless-now/.serverless/
-serverless-now/env/local.env
-
