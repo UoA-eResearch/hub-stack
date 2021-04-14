@@ -15,7 +15,7 @@ This solution will provision the core requirements of the ResearchHub environmen
 5. View output values in the console. 
 6. Use the outputs:
   - Update/create required parameter store values
-  - Update the relevant environment variables in hub-stack, research-hub-web, and serverless-now env files etc
+  - Update the relevant environment variables in hub-stack, research-hub-web, and hub-search-proxy env files etc
   - Update Jenkinsfile with S3 bucket names and Cloudfront distribution IDs (for main and secondary (preview) websites)
 7. Deploy static website files and cer-graphql by triggering the appropriate Jenkins CI/CD pipeline.
 
@@ -51,6 +51,10 @@ terraform output
 terraform plan -destroy -var-file=var-file
 2. destroy:
 terraform destroy -var-file=var-file --auto-approve
+
+**CI/CD in Jenkins**
+
+A Jenkins pipeline can be used to invoke the Terraform actions to either create or destroy infrastructure. For the prod environment, changes can ONLY be done via Jenkins. The pipeline is called [hub-infrastructure-deploy](https://prod.jenkins-new.auckland.ac.nz/job/Centre%20for%20eResearch%20(CeR)/job/hub-infrastructure-deploy/). To trigger the pipeline, go to 'Build with Parameters' and enter the deployment env (dev, test or prod), whether you want to create or destroy, and which branch to take the Terraform scripts from (generally should be master).
 
 ## Explanation of variables used
 
