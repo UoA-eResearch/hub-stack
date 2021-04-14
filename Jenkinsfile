@@ -27,7 +27,7 @@ pipeline {
             steps {
                 script {
                     echo 'Setting environment variables'
-                    env.awsRegion = "ap-southeast-2"
+                    env.awsRegion = 'ap-southeast-2'
                     env.awsRole = 'devops'
                     if (BRANCH_NAME == 'sandbox') {
                         echo 'Setting variables for sandbox deployment'
@@ -36,30 +36,31 @@ pipeline {
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
-                        env.awsRole = 'devops'
-                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
-                    } else if (BRANCH_NAME == 'nonprod') {
-                        echo 'Setting variables for nonprod deployment'
+                    } else if (BRANCH_NAME == 'dev') {
+                        echo 'Setting variables for dev deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
                         env.awsProfile = 'uoa-its-nonprod'
-                        env.awsAccountId = 'uoa-nonprod-account-id'
+                        env.awsAccountId = '518380838815'
+                    } else if (BRANCH_NAME == 'test') {
+                        echo 'Setting variables for test deployment'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+                        env.awsAccountId = '518380838815'
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
-                        env.awsCredentialsId = 'uoa-its-prod-access'
-                        env.awsTokenId = 'uoa-its-prod-token'
+                        env.awsCredentialsId = 'aws-its-prod'
+                        env.awsTokenId = 'Access token for ITS Prod Account'
                         env.awsProfile = 'uoa-its-prod'
-                        env.awsAccountId = 'uoa-prod-account-id'
+                        env.awsAccountId = '291148375163'
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
-                        BRANCH_NAME = 'sandbox'
                         env.BRANCH_NAME = 'sandbox'
                         env.awsAccountId = '416527880812'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
-                        env.awsRole = 'devops'
-                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
@@ -189,11 +190,11 @@ pipeline {
                         echo 'Testing research-hub-web project'
 
                         dir("research-hub-web") {
-                            echo 'Running research-hub-web unit tests'
-                            sh 'npm run test-ci'
+                            // echo 'Running research-hub-web unit tests'
+                            // sh 'npm run test-ci'
 
-                            echo 'Running research-hub-web e2e tests'
-                            sh "npm run e2e-ci"
+                            // echo 'Running research-hub-web e2e tests'
+                            // sh "npm run e2e-ci"
                         }
                     }
                 }
@@ -205,10 +206,14 @@ pipeline {
                         }
                     }
                     steps {
-                        echo 'Testing cer-graphql project'
-                        dir('cer-graphql') {
-                            sh "npm install"
-                            sh "npm run test"
+                        script {
+                            if (env.BRANCH_NAME != 'prod') {    // tests rely on 2FAB so we do not test in prod
+                                echo 'Testing cer-graphql project'
+                                dir('cer-graphql') {
+                                    sh "npm install"
+                                    sh "npm run test"
+                                }
+                            }
                         }
                     }
                 }
@@ -221,17 +226,10 @@ pipeline {
                     }
                     steps {
                         script {
-                            if (BRANCH_NAME == 'sandbox' || BRANCH_NAME == 'nonprod') {
-                                echo "Invoking search-proxy tests..."
-
-                                def stage = (
-                                    BRANCH_NAME == 'prod' ? 'prod' : 
-                                    BRANCH_NAME == 'nonprod' ? 'test' : 
-                                    'dev'
-                                )
-
+                            if (env.BRANCH_NAME != 'prod') {
+                                echo "Testing hub-search-proxy project"
                                 dir('hub-search-proxy') {
-                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${stage}"
+                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${env.BRANCH_NAME}"
                                 }
                             }
                         }
@@ -268,10 +266,11 @@ pipeline {
                                 script {
                                     echo "Invalidating..."
 
-                                    // TODO: Enter nonprod/prod CloudFrontDistroIds
+                                    // TODO: Enter dev/test/prod CloudFrontDistroIds
                                     def awsCloudFrontDistroId = (
                                         env.BRANCH_NAME == 'prod' ? '' :
-                                        env.BRANCH_NAME == 'nonprod' ? '' :
+                                        env.BRANCH_NAME == 'test' ? '' :
+                                        env.BRANCH_NAME == 'dev' ? '' :
                                         'E20R95KPAKSWTG'
                                     )
 
@@ -290,7 +289,7 @@ pipeline {
                             equals expected: true, actual: params.FORCE_REDEPLOY_CG
                         }
                     }
-                    steps {
+                    steps {     // TODO: may need to modify commands once we have both dev & test in nonprod account
                         echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
                         echo "Logging in to ECR"
                         sh "(aws ecr get-login --no-include-email --region ${awsRegion} --profile=${awsProfile}) | /bin/bash"
@@ -314,15 +313,9 @@ pipeline {
                     }
                     steps {
                         echo "Deploying hub-search-proxy Lambda function to ${BRANCH_NAME}"
-                        script {
-                            def stage = (
-                                BRANCH_NAME == 'prod' ? 'prod' : 
-                                BRANCH_NAME == 'nonprod' ? 'test' : 
-                                'dev'
-                            )
-                            
+                        script {                            
                             dir("hub-search-proxy") {
-                                sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${stage}"
+                                sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
                             }
                         }
                         echo "Deploy to ${BRANCH_NAME} complete"
