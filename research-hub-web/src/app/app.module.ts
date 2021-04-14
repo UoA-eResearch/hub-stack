@@ -97,12 +97,18 @@ export class AppModule {
     const http = httpLink.create({ uri: environment.cerGraphQLUrl });
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
-    const error = onError(({ networkError, graphQLErrors }) => {
+    const error = onError(({ response, networkError, graphQLErrors }) => {
       if (networkError) {
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
           this.loginService.doLogin(this.router.url);
         }
       }
+
+      // Disregard any other errors.
+      response.errors = null;
+      // if (graphQLErrors) {
+      //   response.errors = graphQLErrors.filter(error => error.message !== "Did not fetch typename for object, unable to resolve interface.")
+      // }
     });
 
     // Join the primary link and the error handler link
