@@ -57,8 +57,8 @@ pipeline {
                     } else if (params.DEPLOY_ENV == 'prod') {
                         echo 'Setting variables for prod terraform deployment'
                         env.awsEnv = 'prod'
-                        env.awsCredentialsId = 'uoa-its-prod-access'
-                        env.awsTokenId = 'uoa-its-prod-token'
+                        env.awsCredentialsId = 'aws-its-prod'
+                        env.awsTokenId = 'Access token for ITS Prod Account'
                         env.awsProfile = 'uoa-its-prod'
                         env.awsAccountId = '291148375163'
                         env.envPath = 'its-prod'
