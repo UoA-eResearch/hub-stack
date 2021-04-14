@@ -1,19 +1,19 @@
 describe('ResearchHubs Events Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/event/resbaz');
+        cy.visit('/event/orientation-and-welcome-events');
     });
 
     it('can visit an event and display its title', () => {
-        cy.contains('Research Bazaar');
+        cy.contains('Orientation and Welcome Events');
     });
 
     it('can visit an event and display its subtitle', () => {
-        cy.contains('The Research Bazaar is a short intensive festival and conference held annually where researchers come together to up-skill in next generation digital research tools and scholarship.');
+        cy.contains('The Orientation and Welcome Events curriculum is a package of events that are designed to help welcome new staff to the University');
     });
 
     it('event displays body text', () => {
-        cy.contains('The Research Bazaar (ResBaz) is an intensive festival and conference held over a few days each year where researchers come together to up-skill in next generation digital research tools and scholarship. In the spirit of a marketplace or bazaar, ResBaz is a highly participatory event where researchers from many different disciplines can learn, share knowledge and skills, and have fun!');
+        cy.contains('The Orientation and Welcome Events curriculum is a package of events that are designed to help welcome new staff to the University.');
     });
 
     it('event displays specifications table', () => {
@@ -21,22 +21,22 @@ describe('ResearchHubs Events Pages', () => {
         cy.get('#specifications-table').contains('Description').should('exist');
     });
 
-    it('displays a list of related items', () => {
-        cy.get('#you-might-be-interested-in').should('exist');
-    });
+    // it('displays a list of related items', () => {
+    //     cy.get('#you-might-be-interested-in').should('exist');
+    // });
 
-    it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Data Carpentry').click();
-        cy.contains('Data Carpentry workshops teach core skills for working with data effectively and reproducibly');
-    });
+    // it('clicking a related item takes you to its page', () => {
+    //     cy.get('#you-might-be-interested-in').contains('Data Carpentry').click();
+    //     cy.contains('Data Carpentry workshops teach core skills for working with data effectively and reproducibly');
+    // });
 
     it('displays a list of contacts', () => {
-        cy.get('#contacts').contains('Sina Masoud-Ansari').should('exist');
+        cy.get('#contacts').contains('Organisational Development (OD)').should('exist');
     });
 
-    it('displays a list of documents', () => {
-        cy.get('#documents').contains('Code of Conduct').should('exist');
-    });
+    // it('displays a list of documents', () => {
+    //     cy.get('#documents').contains('Code of Conduct').should('exist');
+    // });
 
     // Cypress doesn't dupport multi-tab testing
     // 
@@ -46,7 +46,7 @@ describe('ResearchHubs Events Pages', () => {
     // });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations').contains('Centre for eResearch').should('exist');
+        cy.get('#organisations').contains('Organisational Development (OD)').should('exist');
     });
 
     // Cypress doesn't dupport multi-tab testing

@@ -6,7 +6,7 @@
     <app-collection-list [type]="'content'" [collection]="allSoftware"></app-collection-list>
 </div>
 
-<div id="software-container" *ngIf="software">
+<div id="software-container" *ngIf="software | async as software">
 
     <!-- Templates -->
     <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="software.title"></app-breadcrumbs></ng-template>
@@ -62,7 +62,7 @@
     </ng-template>
 
     <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
-        <app-cards id="documents"  [hideImage]="hide" [flex]="flex" [title]="'Docs'" 
+        <app-cards id="documents"  [hideImage]="hide" [flex]="flex" [title]="'Documents'" 
             [contentItem]="software.relatedDocsCollection"></app-cards>
     </ng-template>
 
