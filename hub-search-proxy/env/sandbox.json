@@ -1,0 +1,16 @@
+{
+    "awsAccountId": "416527880812",
+    "infra": {
+        "awsApiGatewayCustomDomainName": "apigw.sandbox.amazon.auckland.ac.nz",
+        "deploymentBucketStage": "dev"
+    },
+    "elasticsearchDomainName": "researchhub-test-domain",
+    "ELASTICSEARCH_ENDPOINT": "${ssm:/dev/research-hub/elasticsearch_endpoint~true}",
+    "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "*",
+    "CONTENTFUL_SPACE_ID": "${ssm:/dev/research-hub/contentful-space-id~true}",
+    "CONTENTFUL_MGMT_ACCESS_TOKEN": "${ssm:/dev/research-hub/contentful-mgmt-access-token~true}",
+    "CONTENTFUL_ACCESS_TOKEN": "${ssm:/dev/research-hub/contentful-access-token~true}",
+    "CONTENTFUL_ENVIRONMENT": "dev",
+    "resourceKey": "3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d",
+    "PROFILE": "uoa-sandbox"
+}
