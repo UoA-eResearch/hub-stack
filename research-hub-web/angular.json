@@ -62,7 +62,7 @@
                 }
               ]
             },
-            "nonprod": {
+            "test": {
               "budgets": [
                 {
                   "type": "anyComponentStyle",
@@ -80,7 +80,29 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.nonprod.ts"
+                  "with": "src/environments/environment.test.ts"
+                }
+              ]
+            },
+            "dev": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6mb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
                 }
               ]
             },
@@ -120,8 +142,11 @@
             "sandbox": {
               "browserTarget": "research-hub-web:build:sandbox"
             },
-            "nonprod": {
-              "browserTarget": "research-hub-web:build:nonprod"
+            "dev": {
+              "browserTarget": "research-hub-web:build:dev"
+            },
+            "test": {
+              "browserTarget": "research-hub-web:build:test"
             },
             "prod": {
               "browserTarget": "research-hub-web:build:prod"
