@@ -11,7 +11,7 @@ custom:
   Faculty: Science
   customDomain:
     domainName: ${file(env/${self:provider.stage}.json):infra.awsApiGatewayCustomDomainName}
-    basePath: ${self:service}
+    basePath: ${self:service}-${self:provider.stage}
     stage: ${self:provider.stage}
 provider:
   name: aws
@@ -40,7 +40,7 @@ provider:
     CostCentre: ${self:custom.CostCentre}
     Faculty: ${self:custom.Faculty}
   deploymentBucket:
-    name: ${self:custom.bucketBaseName}-${self:provider.stage}
+    name: ${self:custom.bucketBaseName}-${file(env/${self:provider.stage}.json):infra.deploymentBucketStage}  # Required because dev and test go into same bucket in nonprod
   environment:
     # Environment variables available to all functions in this service
     ELASTICSEARCH_ENDPOINT: ${file(env/${self:provider.stage}.json):ELASTICSEARCH_ENDPOINT}
@@ -48,6 +48,7 @@ provider:
     CONTENTFUL_SPACE_ID: ${file(env/${self:provider.stage}.json):CONTENTFUL_SPACE_ID}
     CONTENTFUL_MGMT_ACCESS_TOKEN: ${file(env/${self:provider.stage}.json):CONTENTFUL_MGMT_ACCESS_TOKEN}
     CONTENTFUL_ACCESS_TOKEN: ${file(env/${self:provider.stage}.json):CONTENTFUL_ACCESS_TOKEN}
+    CONTENTFUL_ENVIRONMENT: ${file(env/${self:provider.stage}.json):CONTENTFUL_ENVIRONMENT}
     PROFILE: ${file(env/${self:provider.stage}.json):PROFILE}
   apiGateway:
     apiKeySourceType: HEADER

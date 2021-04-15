@@ -9,6 +9,8 @@ const contentful = require('contentful')
 const mgmtToken = process.env.CONTENTFUL_MGMT_ACCESS_TOKEN;  // Contentful Management API Token
 const token = process.env.CONTENTFUL_ACCESS_TOKEN;  // Contentful Delivery API Token
 const spaceId = process.env.CONTENTFUL_SPACE_ID;
+const contentfulEnv = process.env.CONTENTFUL_ENVIRONMENT;
+
 const region = 'ap-southeast-2';
 
 const deliveryApiClient = contentful.createClient({
@@ -42,7 +44,7 @@ const esClient = new Client({
     node: process.env.ELASTICSEARCH_ENDPOINT
 });
 
-const ELASTICSEARCH_INDEX_NAME = 'contentful';
+const ELASTICSEARCH_INDEX_NAME = contentfulEnv;
 
 module.exports.search = async (event, context) => {
   try {
@@ -379,6 +381,7 @@ module.exports.bulk = async () => {
     const options = {
       spaceId: spaceId,
       managementToken: mgmtToken,
+      environmentId: contentfulEnv,
       contentOnly: true,
       downloadAssets: false,
       saveFile: false
