@@ -252,7 +252,12 @@ pipeline {
                             steps {
                                 script {
                                     echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
-                                    def s3BucketName = 'research-hub-web'
+                                    def s3BucketName = (
+                                        env.BRANCH_NAME == 'prod' ? 'research-hub.auckland.ac.nz' : 
+                                        env.BRANCH_NAME == 'test' ? 'research-hub.connect.test.amazon.auckland.ac.nz' : 
+                                        env.BRANCH_NAME == 'dev' ? 'research-hub-dev.connect.test.amazon.auckland.ac.nz' : 
+                                        'research-hub-web'
+                                    )
 
                                     dir("research-hub-web") {
                                         sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"

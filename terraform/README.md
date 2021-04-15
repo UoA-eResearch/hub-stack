@@ -4,7 +4,7 @@ This solution will provision the core requirements of the ResearchHub environmen
 
 ## Prerequisites
 1. Download and install the Terraform command line tool: https://www.terraform.io/downloads.html
-2. Create AWS temporary credentials for the AWS account you are deploying to. Instructions for accessing the credentials are on the [Auckland Uni wiki](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI). Make sure you name the credentials profile according to what is defined in the backend.conf definition for the env you are deploying to (e.g. for nonprod, the profile should be 'uoa-its-nonprod').
+2. Create AWS temporary credentials for the AWS account you are deploying to. Instructions for accessing the credentials are on the [Auckland Uni wiki](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI). Make sure you name the credentials profile according to what is defined in the backend.conf definition for the AWS account you are deploying to (e.g. for deploying the test env to nonprod, the profile should be 'uoa-its-nonprod').
 
 ## Usage
 
@@ -27,19 +27,19 @@ For more commands see the [CLI reference](https://www.terraform.io/docs/commands
 - Before running this command, ensure you have created the AWS temporary credentials for the AWS account you are deploying to.
 
 terraform init -backend-config=envs/env-name/backend.conf
-e.g. `terraform init -backend-config=envs/its-nonprod/backend.conf`
+e.g. `terraform init -backend-config=envs/test/backend.conf`
 
 You can check the backend s3 bucket defined in [main.tf](main.tf) to ensure the state has been stored. This 'remote state' can then be used by other team members in order to create, read, update, or destroy the current resources. Read more [here](https://www.terraform.io/docs/language/settings/backends/index.html).
 
 **Check the plan for what infrastructure will be created/updated**
 
 terraform plan -var-file=var-file -out=tfplan
-e.g. `terraform plan -var-file=envs/its-nonprod/hub-test.tfvars -out=tfplan`
+e.g. `terraform plan -var-file=envs/test/hub-test.tfvars -out=tfplan`
 
 **Apply (create/update) infrastructure**
 
 terraform apply -var-file=var-file
-e.g. `terraform apply -var-file=envs/its-nonprod/hub-test.tfvars`
+e.g. `terraform apply -var-file=envs/test/hub-test.tfvars`
 
 **Query output variables**
 

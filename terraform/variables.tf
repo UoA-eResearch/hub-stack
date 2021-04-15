@@ -130,12 +130,6 @@ variable "vpc_id" {
   description = "What is the ID of the VPC this will reside within"
 }
 
-variable "subnets" {
-  description = "Private subnets within the VPC"
-  type        = list(string)
-}
-
-
 ########################
 # Loadbalancer for ECS #
 ########################
@@ -237,13 +231,6 @@ variable "cognito_identity_provider" {
 
 variable "permitted_group" {
   description = "What groups will be permitted access (in standard UoA syntax, i.e {group1}|{group2}|{group3})"
-}
-
-#######################
-#   Contentful S3     #
-#######################
-variable "create_contentful_backup_bucket" {
-  description = "Should the Contentful backup bucket be created."
 }
 
 ###############################
