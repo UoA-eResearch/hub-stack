@@ -72,9 +72,6 @@ cognito_user_pool_domain  = "uoapool"
 cognito_identity_provider = "UoAProdIDP"
 permitted_group           = "staffIntranetUser.ec"
 
-# S3 Contentful Backup Bucket
-create_contentful_backup_bucket = true
-
 # ElasticSearch Service
 create_elasticsearch_domain = true
 es_version = 7.9
