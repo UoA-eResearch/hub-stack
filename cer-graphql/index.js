@@ -67,6 +67,9 @@ const fetchCognitoPublicKeys = async (jwkUrl) => {
 
 const verifyJwt = (token, jwk) => {
     const decodedJwt = jwt.decode(token, { complete: true });
+    if (!decodedJwt) {
+        throw new Error("Invalid token.");
+    }
     const key = jwk.keys.find(key => {
         return key.kid === decodedJwt.header.kid
     });
