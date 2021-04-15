@@ -77,7 +77,7 @@ describe('EventsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all Event', () => {
+  it('should get all events', () => {
     spyOn(component, 'getAllEvents').and.returnValue(mockAllEvent$);
     component.getAllEvents().subscribe(res => {
       expect(res).toBeTruthy();

@@ -17,7 +17,6 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Location } from '@angular/common';
-import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-equipment',
@@ -53,8 +52,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService,
-    public location: Location,
-    public loginService: LoginService
+    public location: Location
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -90,20 +88,8 @@ export class EquipmentComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-
-      /**
-       * If the page is SSO Protected then check if the user is authenticated
-       */
+      this.equipment = this.getEquipmentBySlug(this.slug);
       this.equipment$ = this.getEquipmentBySlug(this.slug).subscribe(data => {
-        if (data.ssoProtected == true) {
-          this.loginService.isAuthenticated().then((isAuthenticated) => {
-            isAuthenticated ? this.equipment = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
-          });
-        }
-        else {
-          this.equipment = data;
-        }
-
         this.detectDevice();
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);

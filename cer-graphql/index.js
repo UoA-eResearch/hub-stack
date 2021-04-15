@@ -24,6 +24,7 @@ const getCredentials = (isFromFile) => {
     }
     return {
         CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
+        CONTENTFUL_ENVIRONMENT_ID: process.env.CONTENTFUL_ENVIRONMENT_ID,
         CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
         COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
         COGNITO_REGION: process.env.COGNITO_REGION,
@@ -66,6 +67,9 @@ const fetchCognitoPublicKeys = async (jwkUrl) => {
 
 const verifyJwt = (token, jwk) => {
     const decodedJwt = jwt.decode(token, { complete: true });
+    if (!decodedJwt) {
+        throw new Error("Invalid token.");
+    }
     const key = jwk.keys.find(key => {
         return key.kid === decodedJwt.header.kid
     });
@@ -80,6 +84,7 @@ const verifyJwt = (token, jwk) => {
 async function createServer(config) {
 
     const { CONTENTFUL_ACCESS_TOKEN,
+            CONTENTFUL_ENVIRONMENT_ID,
             CONTENTFUL_SPACE_ID,
             COGNITO_REGION,
             COGNITO_USER_POOL,
@@ -88,7 +93,7 @@ async function createServer(config) {
 
     // Load remote schemas here
     contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
-        `/environments/master?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
+        `/environments/${CONTENTFUL_ENVIRONMENT_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
 
     // Load Cognito public keys in order to verify tokens.
     const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
@@ -116,6 +121,7 @@ async function createServer(config) {
             if (context.user) { // If the user is signed in, simply forward request
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
+
                 // GraphQL introspection fields, these are used by GraphQL to query metadata
                 const GRAPHQL_INTROSPECTION_FIELDS = [
                     '__Schema',
@@ -133,52 +139,15 @@ async function createServer(config) {
                 // Check whether the user has requested only public fields
                 const ALWAYS_PUBLIC_FIELDS = [
                     'title',
-                    'summary',
-                    'description',
                     'maoriProverb',
-                    'bodyText',
-                    'json',
-                    'links',
-                    'entries',
-                    'assets',
-                    'entries',
-                    'block',
-                    'inline',
-                    'hyperlink',
-                    'internalPagesCollection',
-                    'externalPagesCollection',
-                    'relatedItemsCollection',
-                    'relatedContactsCollection',
-                    'relatedDocsCollection',
-                    'relatedOrgsCollection',
+                    'summary',
                     'name',
                     'ssoProtected',
                     'searchable',
                     'linkedFrom',
                     'slug',
                     'banner',
-                    'url',
                     'icon',
-                    'callToAction',
-                    'callToActionLabel',
-                    'licencing',
-                    'cost',
-                    'access',
-                    'limitations',
-                    'audience',
-                    'availability',
-                    'items',
-                    'featuredItemsCollection',
-                    'featuredItemsDescription',
-                    'researchCategories',
-                    'researchActivities',
-                    'notification',
-                    'mode',
-                    'date',
-                    'location',
-                    'manufacturer',
-                    'model',
-                    'yearOfManufacture',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
@@ -345,9 +314,9 @@ if (require.main === module) {
         }
         // Check if access token and space ID are supplied.
         if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
-            !config.COGNITO_REGION || !config.COGNITO_USER_POOL) {
-            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN," +
-                "CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
+            !config.COGNITO_REGION || !config.COGNITO_USER_POOL || !config.CONTENTFUL_ENVIRONMENT_ID) {
+            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN, " +
+                "CONTENTFUL_SPACE_ID, CONTENTFUL_ENVIRONMENT_ID, COGNITO_REGION and COGNITO_USER_POOL.");
             process.exit(1);
         }
 
