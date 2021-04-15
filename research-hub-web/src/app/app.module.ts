@@ -95,11 +95,13 @@ export class AppModule {
     const error = onError(({ networkError, graphQLErrors }) => {
       if (networkError) {
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
+          console.log("Hello!");
           this.loginService.doLogin(this.router.url);
         }
       }
       if (graphQLErrors) {
         if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
+          console.log("Hello!");
           this.loginService.doLogin(this.router.url);
         }
       }
