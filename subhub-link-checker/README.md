@@ -7,7 +7,6 @@ The replacement editor behaves and looks the same as the built-in one. To use it
 It checks whether the pages that the author wishes to add to the Internal Pages field already belong to another SubHub's Internal Pages field. If so, it will
 display an error. If not, it will add the pages to the field.
 
-
 Written with React/TypeScript/Contentful App Framework.
 
 Part of the Hub Expansion project. This is required due to SubHub routing logic in the frontend.
@@ -41,7 +40,7 @@ The App is hosted on GitHub Pages, and deployed as an private App in Contentful.
 
     Open a SubHub to verify the Internal Pages field is still editable. If it is, then the App setup is complete!
 
-Subsequent deployments only require running `npm run deploy`. This will update the GitHub Pages branch with the latest changes.
+Subsequent deployment is automated in the monorepo [Jenkinsfile](../Jenkinsfile). Run `npm run deploy` if you'd like to do an ad-hoc manual deployment.
 ## Development
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
 
