@@ -47,11 +47,17 @@ const getCredentials = (isFromFile) => {
             throw configResult.error;
         }
     }
+    let isPreviewEnv = false;
+    if (process.env.IS_PREVIEW_ENV !== undefined) {
+        isPreviewEnv = process.env.IS_PREVIEW_ENV === "true";
+    }
     return {
         CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
+        CONTENTFUL_ENVIRONMENT_ID: process.env.CONTENTFUL_ENVIRONMENT_ID,
         CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
         COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
-        COGNITO_REGION: process.env.COGNITO_REGION
+        COGNITO_REGION: process.env.COGNITO_REGION,
+        IS_PREVIEW_ENV: isPreviewEnv
     };
 };
 
@@ -90,6 +96,9 @@ const fetchCognitoPublicKeys = async (jwkUrl) => {
 
 const verifyJwt = (token, jwk) => {
     const decodedJwt = jwt.decode(token, { complete: true });
+    if (!decodedJwt) {
+        throw new Error("Invalid token.");
+    }
     const key = jwk.keys.find(key => {
         return key.kid === decodedJwt.header.kid
     });
@@ -103,11 +112,17 @@ const verifyJwt = (token, jwk) => {
 // Set up the schemas and initialize the server
 async function createServer(config) {
 
-    const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION, COGNITO_USER_POOL } = config;
+    const { CONTENTFUL_ACCESS_TOKEN,
+            CONTENTFUL_ENVIRONMENT_ID,
+            CONTENTFUL_SPACE_ID,
+            COGNITO_REGION,
+            COGNITO_USER_POOL,
+            IS_PREVIEW_ENV
+        } = config;
 
     // Load remote schemas here
     contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
-        `/environments/master?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
+        `/environments/${CONTENTFUL_ENVIRONMENT_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
 
     // Load Cognito public keys in order to verify tokens.
     const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
@@ -127,6 +142,11 @@ async function createServer(config) {
     // Loop over the protected types and create custom resolvers for them
     protectedTypes.forEach(type => {
         customQueryResolvers[type] = (root, args, context, info) => {
+            if (IS_PREVIEW_ENV) {
+                // Add preview as a query argument if we are in a preview
+                // environment.
+                args.preview = true;
+            }
             if (context.user) { // If the user is signed in, simply forward request
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
@@ -148,6 +168,7 @@ async function createServer(config) {
                 // Check whether the user has requested only public fields
                 const ALWAYS_PUBLIC_FIELDS = [
                     'title',
+                    'maoriProverb',
                     'summary',
                     'name',
                     'ssoProtected',
@@ -156,9 +177,6 @@ async function createServer(config) {
                     'slug',
                     'banner',
                     'icon',
-                    'viewType',
-                    'id',
-                    'sys',
                     ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
@@ -255,10 +273,30 @@ async function createServer(config) {
                 console.log('\n===== Query Recieved: ======\n', req.body.query)
 
             // Verify the requestor's token and return their user info, or return null for unauthenticated users
+            // In preview environment, always stop further query as we require sign in first.
+                const authorization = req.headers.authorization;
+                if (!authorization || 
+                    (typeof authorization === "string" && 
+                    !authorization.startsWith("Bearer "))) {
+                    // Check if the authorization header exists and has a bearer token.
+                    // If not, return null
+                    if (IS_PREVIEW_ENV) {
+                        // Reject all non-logged in queries in preview environment
+                        console.log("No bearer token sent. In preview environment, so returning AuthenticationError.");
+                        throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
+                    }
+                    return null;
+                }
             try {
-                return { user: verifyJwt(req.headers.authorization.substring('Bearer '.length), cognitoPublicKeys) }
+                return { user: verifyJwt(authorization.substring('Bearer '.length), cognitoPublicKeys) }
             } catch (e) { 
-                console.error(e);
+                // Could not verify the user.
+                console.error("Error while verifying JWT", e);
+                if (IS_PREVIEW_ENV) {
+                    // Reject all non-logged in queries in preview environment
+                    console.log("Exception thrown while verifying user token. In preview environment, so returning AuthenticationError.\n", e)
+                    throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
+                }
                 return null;
             }
         }, formatResponse: (res, context) => {
@@ -278,7 +316,12 @@ async function createServer(config) {
                 if (JSON.stringify(res).includes('\"ssoProtected\":true'))
                     throw new AuthenticationError('SSO authentication required to view this content.')
             }
-        },
+        },  formatError: (err) => {
+            // Print out errors so they can be searched in logs.
+            console.error(err);
+            return err;
+          },
+        
     });
 };
 
@@ -295,11 +338,14 @@ if (require.main === module) {
                 "or try running the server without --config-from-file.");
             process.exit(1);
         }
+        if (config.IS_PREVIEW_ENV) {
+            console.log("Running in preview environment, will request draft content from Contentful.");
+        }
         // Check if access token and space ID are supplied.
         if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
-            !config.COGNITO_REGION || !config.COGNITO_USER_POOL) {
-            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN," +
-                "CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
+            !config.COGNITO_REGION || !config.COGNITO_USER_POOL || !config.CONTENTFUL_ENVIRONMENT_ID) {
+            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN, " +
+                "CONTENTFUL_SPACE_ID, CONTENTFUL_ENVIRONMENT_ID, COGNITO_REGION and COGNITO_USER_POOL.");
             process.exit(1);
         }
 

@@ -17,7 +17,7 @@ resource "aws_ecs_task_definition" "graphql" {
     "logConfiguration": {
       "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cer-graphql-task",
+          "awslogs-group": "/ecs/cer-graphql",
           "awslogs-region": "${var.aws_region}",
           "awslogs-create-group": "true",
           "awslogs-stream-prefix": "ecs"
@@ -44,6 +44,10 @@ resource "aws_ecs_task_definition" "graphql" {
       {
         "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-user-pool",
         "name": "COGNITO_USER_POOL"
+      },
+      {
+        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-environment-id",
+        "name": "CONTENTFUL_ENVIRONMENT_ID"
       }
     ]
   }

@@ -8,6 +8,14 @@ import * as localforage from 'localforage';
 })
 export class AppStorageService implements StorageService {
 
+    constructor() {
+        /**
+         * Due to a bug in Firefox with the IndexedDB driver (see https://github.com/localForage/localForage/issues/920),
+         * change driver to use localstorage instead.
+         */
+        localforage.setDriver(localforage.LOCALSTORAGE);
+    }
+
     getItem(key: string): Promise<any> {
         return localforage.getItem(key);
     }

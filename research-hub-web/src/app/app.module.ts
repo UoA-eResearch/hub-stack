@@ -12,7 +12,7 @@ import { AppComponentService } from './app.component.service';
 
 import { AuthModule, CognitoConfigService, StorageService, LoginService } from '@uoa/auth';
 import { AppAuthConfigService } from './services/app-auth-config.service';
-import { ErrorPagesModule } from '@uoa/error-pages';
+import { ErrorPagesModule, BypassErrorService } from '@uoa/error-pages';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { StorageServiceModule } from 'ngx-webstorage-service';
@@ -28,11 +28,13 @@ import { onError } from 'apollo-link-error';
 import { environment } from '@environments/environment';
 import { AppStorageService } from './services/app-storage.service';
 
+
 /**
  * Dynamic Routing
  */
 import { APP_INITIALIZER } from '@angular/core';
 import { CerGraphqlService } from './services/cer-graphql.service';
+
 
 /**
  * Generated from Fragment matcher graphql-code-generator plugi
@@ -47,12 +49,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     __schema: result.__schema
   }
 });
-
-export function initializeApp(cerGraphqlService: CerGraphqlService) {
-  return (): Promise<any> => {
-    return cerGraphqlService.pushSubHubRoutes();
-  }
-}
 
 @NgModule({
   declarations: [AppComponent],
@@ -75,12 +71,6 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
   ],
   providers: [
     CerGraphqlService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeApp,
-      multi: true,
-      deps: [CerGraphqlService]
-    },
     SearchBarService,
     AppComponentService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
@@ -89,10 +79,17 @@ export function initializeApp(cerGraphqlService: CerGraphqlService) {
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(httpLink: HttpLink, apollo: Apollo, public loginService: LoginService, public router: Router) {
+  constructor(httpLink: HttpLink, apollo: Apollo, public loginService: LoginService, public router: Router, private _bypass: BypassErrorService) {
 
     // The httpLink between Apollo and the GraphQL server
     const http = httpLink.create({ uri: environment.cerGraphQLUrl });
+      // @uoa/error-pages automatically shows an error page when it
+      // sees an error in fetch requests through an http interceptor.
+      // Because some authentication errors from cer-graphql
+      // are returned with a 400 status code, we want error-pages to ignore those
+      // errors so they can be handled by our onError handler.
+      this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
+
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
     const error = onError(({ networkError, graphQLErrors }) => {
@@ -101,11 +98,17 @@ export class AppModule {
           this.loginService.doLogin(this.router.url);
         }
       }
+      if (graphQLErrors) {
+        if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
+          this.loginService.doLogin(this.router.url);
+        }
+      }
     });
+
+
 
     // Join the primary link and the error handler link
     // const link = error.concat(http);
-
     // Create the default (global) Apollo client
     const client = apollo.create({
       cache: new InMemoryCache({ fragmentMatcher }) as InMemoryCache,
