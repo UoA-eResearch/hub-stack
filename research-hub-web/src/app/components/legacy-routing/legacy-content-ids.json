@@ -14,7 +14,7 @@
         "slug": "share"
     },
     "4": {
-        "contentType": "service",
+        "contentType": "article",
         "slug": "biru"
     },
     "5": {
@@ -90,7 +90,7 @@
         "slug": "research-data-management-consultation"
     },
     "24": {
-        "contentType": "qualtrics",
+        "contentType": "software",
         "slug": "qualtrics"
     },
     "26": {
