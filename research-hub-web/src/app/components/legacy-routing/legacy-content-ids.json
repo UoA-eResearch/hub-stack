@@ -1,4 +1,6 @@
 {
+    "requestVm": "https://eresearch-dashboard.auckland.ac.nz/service/research-vm/request",
+    "requestStorage": "https://eresearch-dashboard.auckland.ac.nz/service/research-storage/request",
     "1": {
         "contentType": "service",
         "slug": "research-virtual-machines"

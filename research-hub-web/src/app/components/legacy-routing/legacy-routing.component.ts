@@ -13,14 +13,27 @@ export class LegacyRoutingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const legacyId = this.route.snapshot.paramMap.get("id");
+    let legacyId;
+    const contentType = this.router.url.split('/')[1];
+    switch(contentType) {
+      case "content":
+        legacyId = this.route.snapshot.paramMap.get("id");
+        break;
+      case "requestVm":
+        legacyId = "requestVm";
+        break;
+      case "requestStorage":
+        legacyId = "requestStorage";
+        break;
+    }
     const redirect = legacyRoutes[legacyId];
     if (!redirect) {
       this.router.navigateByUrl("/error/404");
     } else {
       let url;
       if (typeof redirect === "string") {
-        url = redirect;
+        window.location.replace(redirect);
+        return;
       } else {
         url = `/${redirect.contentType}/${redirect.slug}`;
       }

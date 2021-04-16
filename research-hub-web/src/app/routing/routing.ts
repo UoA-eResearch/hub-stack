@@ -10,6 +10,14 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then((m) => m.LegacyRoutingModule)
   },
   {
+    path: 'requestVm',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
+  },
+  {
+    path: 'requestStorage',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
