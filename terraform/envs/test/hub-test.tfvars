@@ -48,8 +48,8 @@ lb_dns_name      = "rhubcpapi.connect.test.amazon.auckland.ac.nz"
 create_dns_entry = true
 
 # ECS Environment
-ecs_cluster_name = "cer-graphql-cluster"
-repository_name  = "research-hub/cer-graphql"
+ecs_cluster_name = "cer-graphql-cluster-test"
+repository_name  = "research-hub/cer-graphql-test"
 kms_uoa_central_key_id = "891f7417-3a6e-4152-b6d5-c37433acae54"
 
 # ECS Services

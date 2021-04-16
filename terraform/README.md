@@ -28,6 +28,7 @@ For more commands see the [CLI reference](https://www.terraform.io/docs/commands
 
 terraform init -backend-config=envs/env-name/backend.conf
 e.g. `terraform init -backend-config=envs/test/backend.conf`
+e.g. `terraform init -backend-config=envs/dev/backend.conf`
 
 You can check the backend s3 bucket defined in [main.tf](main.tf) to ensure the state has been stored. This 'remote state' can then be used by other team members in order to create, read, update, or destroy the current resources. Read more [here](https://www.terraform.io/docs/language/settings/backends/index.html).
 
@@ -35,6 +36,7 @@ You can check the backend s3 bucket defined in [main.tf](main.tf) to ensure the 
 
 terraform plan -var-file=var-file -out=tfplan
 e.g. `terraform plan -var-file=envs/test/hub-test.tfvars -out=tfplan`
+e.g. `terraform plan -var-file=envs/dev/hub-dev.tfvars -out=tfplan`
 
 A human-readable plan is output to the console. The tfplan file is in a binary format and can be used later to apply the exact changes specified in the plan.
 To view a JSON representation of the tfplan file, use `terraform show -json <FILE>`.
@@ -43,6 +45,7 @@ To view a JSON representation of the tfplan file, use `terraform show -json <FIL
 
 terraform apply -var-file=var-file
 e.g. `terraform apply -var-file=envs/test/hub-test.tfvars`
+e.g. `terraform apply -var-file=envs/dev/hub-dev.tfvars`
 
 **Query output variables**
 

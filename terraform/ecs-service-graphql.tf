@@ -72,7 +72,7 @@ data "aws_ecs_task_definition" "graphql" {
 }
 
 resource "aws_ecs_service" "this" {
-  name                    = "cer-graphql-service"
+  name                    = "cer-graphql-service-${var.lifecycle_state}"
   cluster                 = aws_ecs_cluster.cer.id
   enable_ecs_managed_tags = true
   propagate_tags          = "SERVICE"
@@ -131,7 +131,7 @@ resource "aws_ecs_service" "this" {
 # Configure the TG the Service will attach to.
 # IP is the setting needed for Fargate
 resource "aws_alb_target_group" "ecs-cer-graphql" {
-  name        = "ecs-cer-graphql"
+  name        = "ecs-cer-graphql-${var.lifecycle_state}"
   port        = "80"
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
