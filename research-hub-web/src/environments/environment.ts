@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   cerGraphQLUrl: 'http://localhost:4000/',
-  analyticsCode: 'UA-77710107-3',
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
     cognitoUserPoolId: 'ap-southeast-2_pgErjyL4O',

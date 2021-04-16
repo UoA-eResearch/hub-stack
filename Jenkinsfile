@@ -255,11 +255,19 @@ pipeline {
                             steps {
                                 script {
                                     echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
+                                    
                                     def s3BucketName = (
                                         env.BRANCH_NAME == 'prod' ? 'research-hub.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'test' ? 'research-hub.connect.test.amazon.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'dev' ? 'research-hub-dev.connect.test.amazon.auckland.ac.nz' : 
                                         'research-hub-web'
+                                    )
+
+                                    def previewS3BucketName = (
+                                        env.BRANCH_NAME == 'prod' ? 'research-hub-preview.auckland.ac.nz' : 
+                                        env.BRANCH_NAME == 'test' ? 'research-hub-preview.connect.test.amazon.auckland.ac.nz' : 
+                                        env.BRANCH_NAME == 'dev' ? 'research-hub-dev-preview.connect.test.amazon.auckland.ac.nz' : 
+                                        'research-hub-web-preview'
                                     )
 
                                     dir("research-hub-web") {
@@ -279,15 +287,17 @@ pipeline {
                                     // TODO: Enter dev/test/prod CloudFrontDistroIds
                                     def awsCloudFrontDistroId = (
                                         env.BRANCH_NAME == 'prod' ? '' :
-                                        env.BRANCH_NAME == 'test' ? '' :
+                                        env.BRANCH_NAME == 'test' ? 'E1HU1AQ31JKDT9' :
                                         env.BRANCH_NAME == 'dev' ? '' :
                                         'E20R95KPAKSWTG'
                                     )
 
                                     def previewAwsCloudFrontDistroId = (
                                         env.BRANCH_NAME == 'prod' ? '' :
-                                        env.BRANCH_NAME == 'nonprod' ? 'E1V3EOI1YKYNGI' :
-                                        'E2GBENCKM7YT9Q'                                    )
+                                        env.BRANCH_NAME == 'test' ? 'E1U7DUEU5EBP41' :
+                                        env.BRANCH_NAME == 'dev' ? '' :
+                                        'E2GBENCKM7YT9Q'
+                                    )
 
                                     echo "Cloudfront distro id: ${awsCloudFrontDistroId}"
                                     sh "aws cloudfront create-invalidation --distribution-id ${awsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
