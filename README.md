@@ -21,7 +21,7 @@ CI/CD is achieved via the monorepo's [Jenkinsfile](Jenkinsfile) which is trigger
 Pushing to any branch prefixed with `sandbox-`, e.g. `sandbox-sam` will also trigger a deploy to `sandbox`.
 
 ## Architecture Overview
-![Architecture Overview](Architecture.png)
+![Architecture Overview](Architecture.drawio.svg)
 
 ## Development Journey
 ![Development Journey](Development-Journey.png)

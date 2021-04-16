@@ -21,7 +21,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Research Outputs System').click();
+        cy.get('#you-might-be-interested-in').contains('Research Outputs').click();
         cy.contains('Research Outputs is the research management system used by University staff and doctoral candidates to record their research publications and activities.');
     });
 
