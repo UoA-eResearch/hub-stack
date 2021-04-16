@@ -2,7 +2,6 @@ export const environment = {
   production: true,
   cerGraphQLUrl: 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/',
   cerGraphQLPreviewUrl: 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/cer-graphql-preview-service/',
-  analyticsCode: '', // TODO: Add Google Analytics
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
     cognitoUserPoolId: 'ap-southeast-2_pgErjyL4O',
