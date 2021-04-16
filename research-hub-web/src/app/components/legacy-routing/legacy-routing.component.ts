@@ -13,34 +13,54 @@ export class LegacyRoutingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    let legacyId;
-    const contentType = this.router.url.split('/')[1];
+    this.redirectLegacyRoute();
+  }
+  
+  private getLegacyContentType(): string {
+    return this.router.url.split('/')[1];
+  }
+
+  private getLegacyContentId(contentType: string): string {
     switch(contentType) {
       case "content":
-        legacyId = this.route.snapshot.paramMap.get("id");
-        break;
+        return this.route.snapshot.paramMap.get("id");
       case "requestVm":
-        legacyId = "requestVm";
-        break;
+        return "requestVm";
       case "requestStorage":
-        legacyId = "requestStorage";
-        break;
-    }
-    const redirect = legacyRoutes[legacyId];
-    if (!redirect) {
-      this.router.navigateByUrl("/error/404");
-    } else {
-      let url;
-      if (typeof redirect === "string") {
-        window.location.replace(redirect);
-        return;
-      } else {
-        url = `/${redirect.contentType}/${redirect.slug}`;
-      }
-      this.router.navigateByUrl(url, {
-        replaceUrl: true
-      });
+        return "requestStorage";
     }
   }
 
+  private redirectLegacyRoute(): void {
+    try {
+      const contentType = this.getLegacyContentType();
+      const legacyId = this.getLegacyContentId(contentType);
+      const redirect = legacyRoutes[legacyId];
+      if (!redirect) {
+        this.router.navigateByUrl("/error/404", {
+          skipLocationChange: true,
+          replaceUrl: true
+        });
+      } else {
+        let url;
+        if (typeof redirect === "string") {
+          window.location.replace(redirect);
+          return;
+        } else {
+          url = `/${redirect.contentType}/${redirect.slug}`;
+          this.router.navigateByUrl(url, {
+            skipLocationChange: true,
+            replaceUrl: true
+          });  
+        }
+      }
+    } catch (e) {
+      // We handle any errors with getting legacy routes by
+      // redirecting to not found route.
+      this.router.navigateByUrl("/error/404", {
+        skipLocationChange: true,
+        replaceUrl: true
+      });  
+    }
+  }
 }
