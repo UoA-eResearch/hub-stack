@@ -69,5 +69,13 @@ export const appRoutes: Routes = [
   {
     path: 'software',
     loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+  },
+  /**
+   * SubHub routes loader module:
+   * Wildcard route that loads a component module that checks if the route is a subhub friendly URL.
+   */
+  {
+    path: '**',
+    loadChildren: () =>  import("@app/components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
   }
 ];

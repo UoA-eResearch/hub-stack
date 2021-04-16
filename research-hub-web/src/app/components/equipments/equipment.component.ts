@@ -91,7 +91,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       this.equipment = this.getEquipmentBySlug(this.slug);
       this.equipment$ = this.getEquipmentBySlug(this.slug).subscribe(data => {
         this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
