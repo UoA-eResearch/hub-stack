@@ -1,7 +1,7 @@
 import { filter, pluck, flatMap, catchError } from 'rxjs/operators';
 import { Component, ContentChildren, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
@@ -120,6 +120,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
+    this.initialiseHashUrlRedirect();
+
     if (isPlatformBrowser) {
       this.routerSub = this.router.events.pipe(
         filter(event => event instanceof NavigationEnd))
@@ -181,6 +183,20 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+
+  private initialiseHashUrlRedirect() {
+    //When the url changes, we check if actual url has a "#" in it, then we redirect to the route without it.
+    // Redirect hash-style URLs of the old ResearchHub to the new style.
+    this.router.events.subscribe((event: RouterEvent): void => {
+      if (!this.router.navigated && event instanceof NavigationStart) {
+        const url = event.url;  
+        if (url.match('^/#/')) {
+          this.router.navigateByUrl(url.replace('#/', ''), {replaceUrl: true});
+        }
+      }
+    });
   }
 
   /**
