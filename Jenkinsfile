@@ -391,6 +391,8 @@ pipeline {
                         dir("subhub-link-checker") {
                             echo "Deploying to GitHub pages..."
                             sh "npm run deploy"
+                        }
+                    }
                 }
             }
         }
