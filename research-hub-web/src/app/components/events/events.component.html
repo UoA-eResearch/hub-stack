@@ -3,7 +3,7 @@
     *ngIf="allEvents$ | async as allEvents" 
     class="site-padding margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allEvents"></app-collection-list>
+    <app-collection-list [type]="'content'" [collection]="allEvents"></app-collection-list>
 </div>
 
 <div id="event-container" *ngIf="event | async as event">
@@ -12,9 +12,10 @@
     <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="event.title"></app-breadcrumbs></ng-template>
 
     <ng-template #dynamicBanner>
-        <div class="banner-container" [style]="event.banner ?
-            'background: url(' + event.banner.url + ') no-repeat fixed center;' 
-            : 'display: none;'"></div>  
+        <div class="banner-container" [style]="event.banner ? isMobile ?
+                        'background: url(' + event.banner.url + ') no-repeat; padding: 20vh 0px'
+                        : 'background: url(' + event.banner.url + ') no-repeat fixed center; padding: 20vh 0px'
+                    : 'display: none;'"></div>
     </ng-template>
 
     <ng-template #titleSummary>
@@ -26,6 +27,7 @@
 
     <ng-template #specificationsTable>
         <div 
+            id="specifications-table"
             class="specifications section">
             <table class="specifications-table" role="table">
                 <tr role="row">
@@ -48,6 +50,10 @@
                     <td role="cell">Date</td>
                     <td role="cell"> {{ event.date | date:'longDate'}} {{ event.date | date:'shortTime'}}</td>
                 </tr>
+                <tr *ngIf="event.location" role="row">
+                    <td role="cell">Location</td>
+                    <td role="cell" [innerHTML]="event.location.json | richTextToHTML"></td>
+                </tr>
                 <tr *ngIf="event.access" role="row">
                     <td role="cell">Access</td>
                     <td [innerHTML]="event.access" role="cell"></td>
@@ -57,22 +63,22 @@
     </ng-template>
     
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" 
+        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" 
             [contentItem]="event.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
+        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
             [contentItem]="event.relatedOrgsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
+        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
             [contentItem]="event.relatedDocsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
+        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
             [contentItem]="event.relatedContactsCollection"></app-cards>
     </ng-template>
 
@@ -104,7 +110,7 @@
 
             <!-- Event Body -->
             <div>
-                <ngx-contentful-rich-text style="word-break:break-word;" [document]="event.bodyText.json"
+                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="event.bodyText.json"
                     [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
             </div>
 

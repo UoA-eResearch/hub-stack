@@ -8,11 +8,11 @@
  */
 .hub-logo {
   height: 30px;
-  & img {
+  img {
     height: 30px;
     @include size(small) { 
       height: 32px;
-      & img {
+      img {
         height: 32px;
       } 
     }
@@ -45,7 +45,7 @@
         @include size(medium) { width: 45vw!important; }
       }
       .page-title {
-        color: #FAFAFA;
+        color: #FFFFFF;
         margin-bottom: 32px;
         font-size: 48px;
         @include size(medium) { font-size: 92px; }
@@ -60,42 +60,67 @@
   }
 }
 
+/*
+ * Notification Bar
+ */
+.notification-bar-container {
+  a {
+    text-decoration: underline;
+  }
+  text-align: center;
+  * { color: white; }
+  background: map-get($hub-pink, 500);
+  .notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+  transition: all 0.1s ease-in-out;
+}
+
+/*
+ * Notification Bar
+ */
+.notification-bar-container {
+  a {
+    text-decoration: underline;
+  }
+  text-align: center;
+  * { color: white; }
+  background: map-get($hub-pink, 500);
+  .notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+  transition: all 0.1s ease-in-out;
+}
+
 
 /*
  * Initial Search
  */ 
- .initial-search {
+.initial-search {
+  padding: 0px 1em;
   width: 60vw;
-  padding: 4px;
   margin: 0 auto;
-  font-size: 16px;
-  font-style: italic;
-  color: white;
-  text-align: center;
-  &::placeholder {
-    text-align: center;
-    color: rgba(204, 204, 204, 0.7);
-  }
-  &:active,
-  &:focus {
-    text-decoration: none;
-    outline: none;
-  }
-  &::-webkit-search-cancel-button{
-    -webkit-appearance: none;
-    height: 1em;
-    width: 1em;
-    background-size: contain;
-    background-image: url('../assets/components/image.png');
-    opacity: 0.8;
-    cursor: pointer;
-  }
+  font-size: 20px;
+  color: #FAFAFA;
+  border: 1px solid rgba(78, 78, 78, 0.6);
   @include size(medium) { width: 30vw; }
-  background-color: rgba(150, 150, 150, 0.7);
-  border: 0.8px solid rgba(216, 216, 216, 0.7);
+  background-color: rgba(202, 202, 202, 0.4);
 }
 
 
+/**
+ * Explore arrow animation
+ */
 @keyframes explore {
   0%   { margin-top: 5px;}
   50%  { margin-top: 16px; }
@@ -106,9 +131,8 @@
   50%  { margin-top: 3px; }
   100% { margin-top: 0px; }
 }
-
 /*
- * Explore
+ * Explore Arrow
  */
 .explore {
     cursor: pointer;
@@ -153,13 +177,14 @@ mat-list-base {
 }
 mat-expansion-panel {
   width: 70vw;
+  background-color: #FAFAFA!important;
   box-shadow: none !important;
 }
 mat-expansion-panel-header .mat-expanded {
   height:  64px !important;
 }
 .expandable-menu {
-  background-color: #fafafa !important;
+  background-color: #FAFAFA!important;
   padding-left: 0 !important;
   height:  64px !important;
 }
@@ -211,8 +236,8 @@ mat-expansion-panel-header .mat-expanded {
 .app-toolbar {
   padding-left: $padding-site;
   padding-right: $padding-site;
-  background-color: map-get($hub-teal, 500);
-  & .app-toolbar-row {
+  background-color: map-get($hub-teal, 700);
+  .app-toolbar-row {
     height:  64px;
   }
 }
@@ -224,7 +249,6 @@ mat-expansion-panel-header .mat-expanded {
 .mat-menu-panel,
 .mat-menu-content {
   min-width: fit-content!important;
-  background: rgba(10, 10, 10, 0.6);
 }
 .mat-menu-item {
   color: white!important;
@@ -291,41 +315,6 @@ mat-expansion-panel-header .mat-expanded {
   }
 }
 
-/*
- * Featured Container
- */
-.featured-container {
-  z-index: 1;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)!important;
-  background: map-get($hub-teal, 500);
-  .featured-content {
-    width: 95vw;
-    margin: 60px auto;
-    @extend .site-padding;
-  }
-    .featured-title {
-      color: white;
-      font-size: 36px;
-      text-align: center;
-      @include size(medium) { 
-        text-align: left;
-        font-size: 48px;
-      }
-    }
-    .featured-summary {
-      color: white;
-      font-size: 16px;
-      position: relative;
-      word-wrap: break-word;
-      margin: 0 auto;
-      text-align: center;
-      @include size(medium) { 
-        text-align: left;
-        font-size: 20px;
-      }
-    }
-}
-
 
 /*
  * Footer
@@ -368,7 +357,7 @@ footer {
     }
   }
   .divider {
-    color: #fafafa;
+    color: #FFFFFF;
     padding-left: 5px;
     margin-left: 3px;
     border-left: 1.5px solid;

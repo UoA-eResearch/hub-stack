@@ -21,43 +21,47 @@ hr {
   border: none;
   background-color: $input-grey;
 }
+
+
 /**
  * List
  */
- ul,
- ol {
-     list-style: none;
-     counter-reset: ol-counter
- }
- ul li::before{
-     position: absolute;
-     content: "\2022";
-     color: map-get($hub-navy, 500);
-     font-weight: bold;
-     display: inline-block;
-     width: 2em;
- }
- ul li {
-     position: relative;
-     p {
-         padding-left: 15px;
-     }
- }
- ol li {
-     position: relative;
-     counter-increment: ol-counter;
-     p {
-         padding-left: 20px;
-     }
- }
- ol li::before {
-     content: counter(ol-counter) ". ";
-     position: absolute;
-     color: map-get($hub-navy, 500);
-     font-weight: bold;
-     display: inline-block;
-     width: 1em;
- }
+#body {
+  ul,
+  ol {
+      list-style: none;
+      counter-reset: ol-counter
+  }
+  ul li::before{
+      position: absolute;
+      content: "\2022";
+      color: map-get($hub-navy, 500);
+      font-weight: bold;
+      display: inline-block;
+      width: 2em;
+  }
+  ul li {
+      position: relative;
+      p {
+          padding-left: 15px;
+      }
+  }
+  ol li {
+      position: relative;
+      counter-increment: ol-counter;
+      p {
+          padding-left: 20px;
+      }
+  }
+  ol li::before {
+      content: counter(ol-counter) ". ";
+      position: absolute;
+      color: map-get($hub-navy, 500);
+      font-weight: bold;
+      display: inline-block;
+      width: 1em;
+  } 
+}
 
 
 /**
@@ -258,7 +262,7 @@ svg {
 .mat-menu-content, 
 .mat-menu-item {
   color: white;
-  background-color: map-get($hub-teal, 500);
+  background-color: map-get($hub-teal, 700);
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
@@ -340,6 +344,16 @@ svg {
 
 
 /**
+ * Maori Proverb
+ */
+ .maori-proverb {
+  font-weight: 400!important;
+  font-size: 30px!important;
+  font-style: italic;
+}
+
+
+/**
  * Card Text
  */
 .card-title {
@@ -365,20 +379,20 @@ svg {
  .standard-button {
   color: white!important;
   padding-bottom: 2.4px!important;
-  border: 3px solid map-get($hub-teal, 500)!important;
+  border: 3px solid map-get($hub-teal, 700)!important;
   border-radius: 50px!important;
-  background-color: map-get($hub-teal, 500)!important;
+  background-color: map-get($hub-teal, 700)!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .standard-button:hover {
-  color: map-get($hub-teal, 500)!important;
+  color: map-get($hub-teal, 700)!important;
   border-radius: 50px!important;
   background-color: white!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .alternate-button {
   padding-bottom: 2.4px!important;
-  color: map-get($hub-teal, 500)!important;
+  color: map-get($hub-teal, 700)!important;
   border: 3px solid white!important;
   border-radius: 50px!important;
   background-color: white!important;
@@ -387,7 +401,7 @@ svg {
 .alternate-button:hover {
   color: white!important;
   border-radius: 50px!important;
-  background-color: map-get($hub-teal, 500)!important;
+  background-color: map-get($hub-teal, 700)!important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 

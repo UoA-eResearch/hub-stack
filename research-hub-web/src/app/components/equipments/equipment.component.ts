@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { pluck, map, flatMap, catchError } from 'rxjs/operators';
+import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEquipmentGQL,
+  AllEquipmentSlugsGQL,
   GetEquipmentBySlugGQL,
   EquipmentCollection,
   Equipment,
@@ -15,6 +16,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-equipment',
@@ -32,7 +34,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public equipment: Observable<Equipment>;
+  public equipment;
   public equipment$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -43,12 +45,14 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   constructor(
     public route: ActivatedRoute,
     public allEquipmentGQL: AllEquipmentGQL,
+    public allEquipmentSlugsGQL: AllEquipmentSlugsGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
+    public location: Location
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -76,9 +80,18 @@ export class EquipmentComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Equipment.
      */
     if (!!this.slug) {
+      // Check if the equipment slug is valid otherwise redirect to 404
+      this.getAllEquipmentSlugs().subscribe(data => {
+        let slugs = [];
+          data.items.forEach(data => {
+            slugs.push(data.slug)
+          })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+      });
       this.equipment = this.getEquipmentBySlug(this.slug);
-      this.equipment$ = this.equipment.subscribe(data => {
-          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+      this.equipment$ = this.getEquipmentBySlug(this.slug).subscribe(data => {
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
@@ -101,6 +114,20 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       return this.allEquipmentGQL.fetch()
         .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
     } catch (e) { console.error('Error loading all Equipment:', e) };
+  }
+
+  /**
+   * Function that returns all equipment slugs from the EquipmentCollection as an observable
+   * of type EquipmentCollection. This is then unwrapped with the async pipe.
+   *
+   * This function called to determine if a valid slug has been searched otherwise redirect
+   *
+   */
+  public getAllEquipmentSlugs(): Observable<EquipmentCollection> {
+    try {
+      return this.allEquipmentSlugsGQL.fetch()
+        .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
+    } catch (e) { console.error('Error loading all equipment', e) };
   }
 
   /**

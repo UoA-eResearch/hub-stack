@@ -3,8 +3,7 @@
     *ngIf="allServices$ | async as allServices" 
     class="site-padding margin-bottom top-padding" 
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allServices"></app-collection-list>
-</div>
+    <app-collection-list [type]="'content'" [collection]="allServices"></app-collection-list></div>
 
 <!-- If we're displaying an individual service -->
 <div id="service-container" *ngIf="service | async as service">
@@ -13,13 +12,13 @@
     <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="service.title"></app-breadcrumbs></ng-template>
 
     <ng-template #dynamicBanner>
-        <div class="banner-container" [style]="service.banner ?
-        'background: url(' + service.banner.url + ') no-repeat fixed center' 
-        : 'display: none'"></div>  
-    </ng-template>
+        <div class="banner-container" [style]="service.banner ? isMobile ?
+                        'background: url(' + service.banner.url + ') no-repeat; padding: 20vh 0px'
+                        : 'background: url(' + service.banner.url + ') no-repeat fixed center; padding: 20vh 0px'
+                    : 'display: none;'"></div></ng-template>
 
     <ng-template #specificationsTable>
-        <div class="specifications" *ngIf="service.audience ||
+        <div id="specifications-table" class="specifications" *ngIf="service.audience ||
                    service.cost ||
                    service.access ||
                    service.availability">
@@ -49,22 +48,22 @@
     </ng-template>
     
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" 
+        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" 
             [contentItem]="service.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
+        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
             [contentItem]="service.relatedOrgsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedDocuments let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
+        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
             [contentItem]="service.relatedDocsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
+        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
             [contentItem]="service.relatedContactsCollection"></app-cards>
     </ng-template>
 
@@ -100,7 +99,7 @@
             </div>
 
             <!-- Service Body -->
-            <div><ngx-contentful-rich-text style="word-break:break-word" [document]="service.bodyText.json"
+            <div><ngx-contentful-rich-text id="body" style="word-break:break-word" [document]="service.bodyText.json"
                     [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text></div>
 
             <!-- Specifications Table -->

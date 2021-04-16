@@ -16,43 +16,62 @@
 }
 
 
+/**
+ * Colored backgrounds
+ */
 .grey-background {
-    padding-bottom: 40px;
     background-color: #eeeeee;
 }
-
 .teal-background {
-    padding-bottom: 40px;
-    background-color: map-get($hub-teal, 500);
+    background: map-get($hub-teal, 700);
+}
+
+
+/**
+ * Section shadows
+ */
+.shadow {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)!important;
+}
+
+
+/**
+ * Featured Section
+ */
+.featured {
+    z-index: 1
 }
 
 
 /**
  * Contact Section
  */
-.contact {
-    margin: 0 auto;
-    text-align: center;
-    @include size(large) { text-align: left; }
-    .text {
-        width: 100%;
-        @extend .text;
-        @include size(large) { 
-        text-align: left;
+.contact-container {
+    z-index: 2;
+    .contact {
+        margin: 0 auto;
+        text-align: center;
+        @include size(large) { text-align: left; }
+        .text {
+            width: 100%;
+            @extend .text;
+            @include size(large) { 
+            text-align: left;
+            }
         }
-    }
-    .standard-button {
-        color: #eeeeee!important;
-        padding-bottom: 2.4px!important;
-        border: 3px solid $dark-grey!important;
-        border-radius: 50px!important;
-        background-color: $dark-grey!important;
-        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-    }
-    .standard-button:hover {
-        color: $dark-grey!important;
-        border-radius: 50px!important;
-        background-color: #eeeeee!important;
-        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+        .standard-button {
+            color: #eeeeee!important;
+            padding-bottom: 2.4px!important;
+            border: 3px solid $dark-grey!important;
+            border-radius: 50px!important;
+            background-color: $dark-grey!important;
+            transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+        }
+        .standard-button:hover {
+            color: $dark-grey!important;
+            border-radius: 50px!important;
+            background-color: #eeeeee!important;
+            transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+        }
     }
 }

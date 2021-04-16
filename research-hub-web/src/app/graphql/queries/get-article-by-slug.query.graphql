@@ -6,9 +6,12 @@ query GetArticleBySlug($slug: String) {
             id
           }
           title
+          maoriProverb
           slug
           ssoProtected
           searchable
+          callToAction
+          callToActionLabel
           banner {
             title
             description

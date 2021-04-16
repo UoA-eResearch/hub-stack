@@ -3,19 +3,6 @@
 
 // https://material.angular.io/guide/typography
 
-/**
- * National Fonts
- */ 
- @font-face {
-  font-family: 'National Light';
-  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.eot');
-  /* IE9 Compat Modes */
-  src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.woff2') format('woff2'),
-    url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Light.woff') format('woff');
-  /* Pretty Modern Browsers */
-  font-weight: 100;
-}
-
  @font-face {
   font-family: 'National';
   src: url('https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.eot');
@@ -228,11 +215,11 @@ h1,
 h2,
 h3,
 h4 {
-  font-weight: bold;
+  font-weight: bold!important;
 }
 
 $body-light-bg-font-color:  black;
-$link-light-bg-color: map-get($hub-teal, 500);
+$link-light-bg-color: map-get($hub-teal, 700);
 
 $breadcrumb-previous-color: map-get($hub-teal, A100);
 $breadcrumb-current-color: $color-icon;

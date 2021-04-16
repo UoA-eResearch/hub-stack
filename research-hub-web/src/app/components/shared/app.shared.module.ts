@@ -14,6 +14,10 @@ import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
 import { VideoCardComponent } from './video-card/video-card.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+
 
 @NgModule({
   imports: [
@@ -23,6 +27,9 @@ import { VideoCardComponent } from './video-card/video-card.component';
     ReactiveFormsModule,
     MaterialModule,
     RouterModule,
+    NgxPaginationModule,
+    MarkdownToHtmlModule,
+    NgxSkeletonLoaderModule,
   ],
   declarations: [
     ErrorDialogComponent,
@@ -49,6 +56,9 @@ import { VideoCardComponent } from './video-card/video-card.component';
     BreadcrumbsComponent,
     LargeCardsComponent,
     VideoCardComponent,
+    NgxPaginationModule,
+    MarkdownToHtmlModule,
+    NgxSkeletonLoaderModule,
   ],
   providers: [],
 })
