@@ -377,7 +377,7 @@ module.exports.bulk = async () => {
   
   try {
     // contentful export and filter entries
-    console.log('Exporting data from Contentful space id: ' + spaceId);
+    console.log('Exporting data from Contentful space id: ' + spaceId + ', environment: ' + contentfulEnv);
     const options = {
       spaceId: spaceId,
       managementToken: mgmtToken,

@@ -36,6 +36,9 @@ You can check the backend s3 bucket defined in [main.tf](main.tf) to ensure the 
 terraform plan -var-file=var-file -out=tfplan
 e.g. `terraform plan -var-file=envs/test/hub-test.tfvars -out=tfplan`
 
+A human-readable plan is output to the console. The tfplan file is in a binary format and can be used later to apply the exact changes specified in the plan.
+To view a JSON representation of the tfplan file, use `terraform show -json <FILE>`.
+
 **Apply (create/update) infrastructure**
 
 terraform apply -var-file=var-file
