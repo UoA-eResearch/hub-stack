@@ -24,8 +24,26 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
         cy.get('#article-container').should('exist')
     });
 
+    it('can visit /research-software-and-computing/advanced-compute/research-virtual-machines and load a Service', () => {
+        cy.visit('/research-software-and-computing/advanced-compute/research-virtual-machines');
+        cy.contains("View Service");
+    })
+
     it('will update a content item\'s URL when it is visited from outside the SubHub', () => {
         cy.visit('/article/support-for-impactful-research');
         cy.url().should('include', '/research-impact/');
+    })
+});
+
+describe("ResearchHubs legacy routing", () => {
+
+    it('can visit an old-style content route and be redirected to right page', () => {
+        cy.visit('/#/content/1');
+        cy.contains("View Service"); // Button for view service should exist.
+    });
+
+    it('should redirect invalid content route to not found page', () => {
+        cy.visit('/#/content/thisdoesntexist');
+        cy.contains("Page Not Found");
     })
 });
