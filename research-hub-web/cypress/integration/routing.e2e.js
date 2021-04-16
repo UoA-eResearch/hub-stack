@@ -14,7 +14,8 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
     it('can visit /research-impact and load a SubHub', () => {
         cy.visit('/research-impact');
         cy.contains('Research Impact');
-        cy.contains('These pages contain tools and resources to support you in generating impact from your research.');
+        // SubHub should contain links to other pages, which includes a "View Page" button.
+        cy.contains("button", "View").should("exist");
     });
 
     it('can visit /research-impact/support-for-impactful-research and load an Article', () => {
