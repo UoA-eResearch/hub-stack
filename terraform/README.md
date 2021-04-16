@@ -82,7 +82,7 @@ A Jenkins pipeline can be used to invoke the Terraform actions to either create 
 | index_doc | The root document that users will land on, relative to the base of the S3 Bucket |
 | acm_arn | ARN of certificate in us-east-1 that will be attached to the Website (not created by Terraform due to Hybrid DNS situation) |
 | -----------  | ----------- |
-| **Secondary website (if applicable)** | ----------- |
+| **Preview environment (aka "Secondary website")** | ----------- |
 | create_secondary | Should the second Bucket/CloudFront be setup? |
 | dns_entry_secondary | What will be the main DNS entry for the secondary site |
 | secondary_addresses_secondary | Any other DNS names the secondary site will be accessed via |

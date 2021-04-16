@@ -24,7 +24,7 @@ Pushing to any branch prefixed with `sandbox-`, e.g. `sandbox-sam` will also tri
 NOTE: The sandbox account is only for temporary usage. All resources created in sandbox should be destroyed when no longer needed.
 
 ## Architecture Overview
-![Architecture Overview](Architecture.png)
+![Architecture Overview](Architecture.drawio.svg)
 
 ## Development Journey
 ![Development Journey](Development-Journey.png)

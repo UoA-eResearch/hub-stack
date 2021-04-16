@@ -140,6 +140,8 @@ pipeline {
                                 dir("research-hub-web") {
                                     echo 'Building for production'
                                     sh "npm run build -- -c ${BRANCH_NAME}"
+                                    echo 'Building preview for production'
+                                    sh "npm run build -- -c ${BRANCH_NAME}-preview --output-path www-preview"
                                 }
                             }
                         }
@@ -190,6 +192,7 @@ pipeline {
                         echo 'Testing research-hub-web project'
 
                         dir("research-hub-web") {
+                            // TODO Disable tests for now, make them work in Jenkins!
                             // echo 'Running research-hub-web unit tests'
                             // sh 'npm run test-ci'
 
@@ -262,6 +265,8 @@ pipeline {
                                     dir("research-hub-web") {
                                         sh "aws s3 sync www s3://${s3BucketName} --delete --profile ${awsProfile}"
                                         echo "Sync complete"
+                                        sh "aws s3 sync www-preview s3://${previewS3BucketName} --delete --profile ${awsProfile}"
+                                        echo "Preview sync complete"
                                     }
                                 }
                             }
@@ -279,9 +284,16 @@ pipeline {
                                         'E20R95KPAKSWTG'
                                     )
 
+                                    def previewAwsCloudFrontDistroId = (
+                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'nonprod' ? 'E1V3EOI1YKYNGI' :
+                                        'E2GBENCKM7YT9Q'                                    )
+
                                     echo "Cloudfront distro id: ${awsCloudFrontDistroId}"
                                     sh "aws cloudfront create-invalidation --distribution-id ${awsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
                                     echo "Invalidation started"
+                                    sh "aws cloudfront create-invalidation --distribution-id ${previewAwsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
+                                    echo "Preview invalidation started"
                                 }
                             }
                         }
@@ -306,7 +318,8 @@ pipeline {
                         sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql:latest"
 
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
-                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql-task --force-new-deployment --region ${awsRegion}"
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-service --task-definition cer-graphql --force-new-deployment --region ${awsRegion}"
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster --service cer-graphql-preview-service --task-definition cer-graphql-preview --force-new-deployment --region ${awsRegion}"
                     }
                 }
                 stage('Deploy search-proxy') {

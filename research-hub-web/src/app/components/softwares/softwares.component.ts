@@ -88,7 +88,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
       this.software = this.getSoftwareBySlug(this.slug);
       this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
         this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
