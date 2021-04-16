@@ -9,7 +9,6 @@ import { LoginService } from '@uoa/auth';
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
-import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -77,11 +76,9 @@ export class AppComponent implements OnInit, OnDestroy {
     public allCategoriesGQL: AllCategoriesGQL,
     public getHomepageGQL: GetHomepageGQL,
     public allStagesGQL: AllStagesGQL,
-    private _bypass: BypassErrorService,
     private deviceService: DeviceDetectorService,
     public homeScrollService: HomeScrollService) {
       this.detectDevice();
-      this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
 
       // Smooth scrolling in IE/Edge
       smoothscroll.polyfill();
@@ -123,7 +120,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
+    if (isPlatformBrowser) {
+      this.routerSub = this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd))
+        .subscribe(async event => {
     // Get All Categories
+    if (!this.allCategories$) {
     this.allCategories$ = this.getAllCategories();
 
     // Set Event Id used for search filtering
@@ -132,15 +134,11 @@ export class AppComponent implements OnInit, OnDestroy {
         if (element.name == 'Events') this.searchBarService.setEventId(element.sys.id);
       });
     })
-
+    }
     // Get All Stages
-    this.allStages$ = this.getAllStages();
-
-    if (isPlatformBrowser) {
-      this.routerSub = this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd))
-        .subscribe(async event => {
-          
+    if (!this.allStages$) {
+        this.allStages$ = this.getAllStages();
+    }
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);

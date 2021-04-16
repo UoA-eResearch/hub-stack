@@ -23,7 +23,7 @@ resource "aws_ecs_task_definition" "graphql" {
     "logConfiguration": {
       "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cer-graphql-task",
+          "awslogs-group": "/ecs/cer-graphql",
           "awslogs-region": "${var.aws_region}",
           "awslogs-create-group": "true",
           "awslogs-stream-prefix": "ecs"
