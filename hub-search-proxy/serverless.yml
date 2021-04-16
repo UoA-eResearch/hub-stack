@@ -116,7 +116,7 @@ resources:
       Type: "AWS::IAM::Role"
       Properties:
         Path: /
-        RoleName: ${self:service}-lambda-role
+        RoleName: ${self:service}-lambda-role-${self:provider.stage}
         AssumeRolePolicyDocument:
           Version: "2012-10-17"
           Statement:
@@ -173,6 +173,5 @@ resources:
                         - ":"
                         - - "arn:aws:es"
                           - Ref: "AWS::Region"
-                          - "518380838815"
+                          - "${file(env/${self:provider.stage}.json):elasticsearchDomainAccount}"
                           - "domain/${file(env/${self:provider.stage}.json):elasticsearchDomainName}/*"
-                          # NOTE: hardcoded account id of the es domain - change to prod account id once es is deployed to prod
