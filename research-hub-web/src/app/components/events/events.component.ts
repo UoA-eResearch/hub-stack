@@ -95,7 +95,7 @@ export class EventsComponent implements OnInit, OnDestroy {
         }
         
         this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
