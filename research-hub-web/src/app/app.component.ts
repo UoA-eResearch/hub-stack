@@ -187,7 +187,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   private initialiseHashUrlRedirect() {
-    //When url change, we check if actual url have # on it, then we redirect to the route without it.
+    //When the url changes, we check if actual url has a "#" in it, then we redirect to the route without it.
     // Redirect hash-style URLs of the old ResearchHub to the new style.
     this.router.events.subscribe((event: RouterEvent): void => {
       if (!this.router.navigated && event instanceof NavigationStart) {

@@ -15,4 +15,4 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     NgxContentfulRichTextModule
   ]
 })
-export class ServiceModule { }
+export class ServicesModule { }
