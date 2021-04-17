@@ -1,6 +1,6 @@
 
 resource "aws_ecs_task_definition" "graphql" {
-  family                   = "cer-graphql"
+  family                   = "cer-graphql-${var.lifecycle_state}"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 512
@@ -19,11 +19,11 @@ resource "aws_ecs_task_definition" "graphql" {
     "essential": true,
     "image": "${aws_ecr_repository.graphql.repository_url}:latest",
     "networkMode": "awsvpc",
-    "name": "cer-graphql",
+    "name": "cer-graphql-${var.lifecycle_state}",
     "logConfiguration": {
       "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cer-graphql",
+          "awslogs-group": "/ecs/cer-graphql-${var.lifecycle_state}",
           "awslogs-region": "${var.aws_region}",
           "awslogs-create-group": "true",
           "awslogs-stream-prefix": "ecs"
