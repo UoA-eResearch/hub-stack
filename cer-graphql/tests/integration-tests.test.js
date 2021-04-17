@@ -84,6 +84,14 @@ const getTokens = async () => {
                 service: "execute-api"
             }
             break;
+        case 'dev':
+            awsLambdaParams = {
+                host: "apigw.test.amazon.auckland.ac.nz",
+                path: "/aws-token-grabber/",
+                region: "ap-southeast-2",
+                service: "execute-api"
+            }
+            break;
         case 'uoa-its-prod':
         case 'prod':
             console.warn('Prod integration testing may not work as 2fab has not been deployed to production environment yet.');
