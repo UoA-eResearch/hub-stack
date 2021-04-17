@@ -29,14 +29,15 @@ pipeline {
                     echo 'Setting environment variables'
                     env.awsRegion = 'ap-southeast-2'
                     env.awsRole = 'devops'
-                    if (BRANCH_NAME == 'sandbox') {
+                    if (BRANCH_NAME.matches('sandbox(.*)') {
                         echo 'Setting variables for sandbox deployment'
                         env.BRANCH_NAME = 'sandbox'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
                         env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
-                    } else if (BRANCH_NAME == 'dev') {
+                    } else if (BRANCH_NAME.matches('dev(.*)') {
+                        env.BRANCH_NAME = 'dev'
                         echo 'Setting variables for dev deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
