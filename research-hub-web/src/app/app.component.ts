@@ -284,12 +284,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mediaChangeSub.unsubscribe();
-    this.searchTextChangeSub.unsubscribe();
-    this.routerSub.unsubscribe();
-    this.titleSub.unsubscribe();
-    this.scrollSub.unsubscribe();
-    this.url.unsubscribe();
+    try {
+      this.mediaChangeSub.unsubscribe();
+      this.searchTextChangeSub.unsubscribe();
+      this.routerSub.unsubscribe();
+      this.titleSub.unsubscribe();
+      this.scrollSub.unsubscribe();
+      this.url.unsubscribe();
+    } catch {}   
   }
 
   // Get year for footer copyright
