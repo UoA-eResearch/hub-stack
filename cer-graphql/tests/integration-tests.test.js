@@ -56,9 +56,6 @@ const getTokens = async () => {
         profile: awsProfile
     });
 
-    console.log(awsCreds.accessKeyId)
-    console.log(awsCreds.expired)
-
     if (awsCreds.sessionToken === undefined) {
         console.warn('AWS Profile not found, defaulting to saml');
         // falling back to local default profile.
