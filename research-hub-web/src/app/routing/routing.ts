@@ -1,9 +1,22 @@
 import { Routes } from '@angular/router';
 import { LoginSuccessGuard } from '@uoa/auth';
 import { HomeComponent } from '@components/home/home.component';
+import { LegacyRoutingComponent } from "@components/legacy-routing/legacy-routing.component";
 
 
 export const appRoutes: Routes = [
+  {
+    path: 'content/:id',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then((m) => m.LegacyRoutingModule)
+  },
+  {
+    path: 'requestVm',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
+  },
+  {
+    path: 'requestStorage',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
+  },
   {
     path: '',
     redirectTo: 'home',
@@ -24,11 +37,11 @@ export const appRoutes: Routes = [
   },
   {
     path: 'equipment',
-    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
   },
   {
     path: 'equipment/:slug',
-    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
   },
   {
     path: 'article/:slug',
@@ -56,11 +69,11 @@ export const appRoutes: Routes = [
   },
   {
     path: 'services',
-    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServicesModule)
   },
   {
     path: 'service/:slug',
-    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServicesModule)
   },
   {
     path: 'software/:slug',
