@@ -7,7 +7,6 @@ import { BodyMediaService } from '@services/body-media.service';
 import {
   AllSoftwareGQL,
   AllSoftwareSlugsGQL,
-  GetSoftwareSsoGQL,
   GetSoftwareBySlugGQL,
   SoftwareCollection,
   Software,
@@ -47,7 +46,6 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public allSoftwareGQL: AllSoftwareGQL,
     public allSoftwareSlugsGQL: AllSoftwareSlugsGQL,
-    public getSoftwareSsoGQL: GetSoftwareSsoGQL,
     public getSoftwareBySlugGQL: GetSoftwareBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -90,24 +88,11 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-      
-      /**
-       * Check if Software is SSO Protected
-       */
-      this.getSoftwareSSO(this.slug).subscribe(data => {
-        if (data.ssoProtected == true) {
-          this.loginService.isAuthenticated().then((isAuthenticated) => {
-            isAuthenticated ? this.software= this.getSoftwareBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
-          });
-        }
-        else {
-          this.software= this.getSoftwareBySlug(this.slug);
-          this.software$ = this.software.subscribe(data => {
-            this.detectDevice();
-            this.bodyMediaService.setBodyMedia(data.bodyText.links);
-            this.appComponentService.setTitle(data.title);
-          });
-        }
+      this.software = this.getSoftwareBySlug(this.slug);
+      this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        this.appComponentService.setTitle(data.title);
       });
 
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
@@ -144,18 +129,6 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
       return this.allSoftwareSlugsGQL.fetch()
         .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
     } catch (e) { console.error('Error loading all software:', e) };
-  }
-
-  /**
-   * Function that checks the ssoProtected field of a Software
-   *
-   * @param slug The software's slug. Retrieved from the route parameter of the same name.
-   */
-  public getSoftwareSSO(slug: string): Observable<Software> {
-    try {
-      return this.getSoftwareSsoGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.softwareCollection.items)) as Observable<Software>;
-    } catch (e) { console.error(`Error loading software ${slug}:`, e); }
   }
 
   /**

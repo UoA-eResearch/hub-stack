@@ -7,7 +7,6 @@ import { BodyMediaService } from '@services/body-media.service';
 import {
   AllServicesGQL,
   AllServicesSlugsGQL,
-  GetServiceSsoGQL,
   GetServiceBySlugGQL,
   ServiceCollection,
   Service,
@@ -53,7 +52,6 @@ export class ServicesComponent implements OnInit, OnDestroy {
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService,
-    public getServiceSsoGQL: GetServiceSsoGQL,
     public loginService: LoginService
   ) { this.detectDevice(); }
 
@@ -91,30 +89,19 @@ export class ServicesComponent implements OnInit, OnDestroy {
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
       
-      /**
-       * Check if Service is SSO Protected
-       */
-      this.getServiceSSO(this.slug).subscribe(data => {
-        if (data.ssoProtected == true) {
-          this.loginService.isAuthenticated().then((isAuthenticated) => {
-            isAuthenticated ? this.service = this.getServiceBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
-          });
+      this.service = this.getServiceBySlug(this.slug);
+      this.service$ = this.service.subscribe(data => {
+        
+        // If Call To Action is an email address
+        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+          data['callToAction'] = 'mailto:' + data['callToAction'];
         }
-        else {
-          this.service = this.getServiceBySlug(this.slug);
-          this.service$ = this.service.subscribe(data => {
-            
-            // If Call To Action is an email address
-            if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-              data['callToAction'] = 'mailto:' + data['callToAction'];
-            }
 
-            this.detectDevice();
-            this.bodyMediaService.setBodyMedia(data.bodyText.links);
-            this.appComponentService.setTitle(data.title);
-          });
-        }
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        this.appComponentService.setTitle(data.title);
       });
+
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
       this.appComponentService.setTitle('Services');
@@ -149,18 +136,6 @@ export class ServicesComponent implements OnInit, OnDestroy {
       return this.allServicesSlugsGQL.fetch()
         .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
     } catch (e) { console.error('Error loading all services:', e) };
-  }
-
-  /**
-   * Function that checks the ssoProtected field of a service
-   *
-   * @param slug The service's slug. Retrieved from the route parameter of the same name.
-   */
-  public getServiceSSO(slug: string): Observable<Service> {
-    try {
-      return this.getServiceSsoGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.serviceCollection.items)) as Observable<Service>;
-    } catch (e) { console.error(`Error loading service ${slug}:`, e); }
   }
 
   /**

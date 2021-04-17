@@ -1,6 +1,5 @@
 {
     "chromeWebSecurity": false,
     "baseUrl": "http://localhost:4200/",
-    "numTestsKeptInMemory": 0,
-    "video": false
+    "defaultCommandTimeout": 20000
 }

@@ -1,0 +1,114 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "research-hub-web/",
+			"label": "research-hub-web - start",
+			"group": "build",
+			"dependsOrder": "sequence",
+			"dependsOn": ["research-hub-web - run GraphQL server"],
+			"presentation": {
+				"group": "web"
+			},
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "custom",
+				"fileLocation": ["relative", "${workspaceFolder}"],
+				"pattern":[{
+					// TODO Stub pattern, doesn't actually match problems.
+					// Added as it's required
+					"regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
+					"file": 1,
+					"location": 2,
+					"message": 3
+				}],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^.*Generating browser application bundles",
+					"endsPattern": "^.*Angular Live Development Server is listening on.*"
+				}
+			},
+		},
+		{
+			"type": "npm",
+			"script": "graphql-server-watch",
+			"path": "research-hub-web/",
+			"problemMatcher": {
+				"owner": "custom",
+				"fileLocation": ["relative", "${workspaceFolder}"],
+				"pattern":[{
+					// TODO Stub pattern, doesn't actually match problems.
+					// Added as it's required
+					"regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
+					"file": 1,
+					"location": 2,
+					"message": 3
+				}],
+				"background": {
+					"beginsPattern": "Loading remote schema...",
+					"endsPattern": "^.*Content API server ready.*$"
+				}
+			},
+			"label": "research-hub-web - run GraphQL server",
+			"presentation": {
+				"group": "web"
+			},
+			"isBackground": true
+		},
+		{
+			"type": "npm",
+			"script": "generate-watch",
+			"path": "research-hub-web/",
+			"problemMatcher": {
+				"owner": "custom",
+				"fileLocation": ["relative", "${workspaceFolder}"],
+				"pattern":[{
+					// TODO Stub pattern, doesn't actually match problems.
+					// Added as it's required
+					"regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
+					"file": 1,
+					"location": 2,
+					"message": 3
+				}],
+				"background": {
+					"beginsPattern": "^.*Parse configuration",
+					"endsPattern": "^.*Watching for changes..."
+				}
+			},
+			"label": "research-hub-web - generate GraphQL types",
+			"presentation": {
+				"group": "web"
+			},
+			"isBackground": true
+		},
+		{
+			"type": "npm",
+			"script": "test-watch",
+			"path": "research-hub-web/",
+			"problemMatcher": {
+				"owner": "custom",
+				"fileLocation": ["relative", "${workspaceFolder}"],
+				"pattern":[{
+					// TODO Stub pattern, doesn't actually match problems.
+					// Added as it's required
+					"regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
+					"file": 1,
+					"location": 2,
+					"message": 3
+				}],
+				"background": {
+					"beginsPattern": "^.*Generating browser application bundles",
+					"endsPattern": "^.*Coverage summary"
+				}
+			},
+			"label": "research-hub-web - test",
+			"presentation": {
+				"group": "web"
+			},
+			"isBackground": true
+		}
+
+	]
+}

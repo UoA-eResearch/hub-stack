@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
-  GetArticleSsoGQL,
   AllArticlesGQL,
   AllArticlesSlugsGQL,
   GetArticleBySlugGQL,
@@ -48,7 +47,6 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     public allArticlesGQL: AllArticlesGQL,
     public allArticlesSlugsGQL: AllArticlesSlugsGQL,
-    public getArticleSsoGQL: GetArticleSsoGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
@@ -98,24 +96,11 @@ export class ArticlesComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-
-      /**
-       * Check if Article is SSO Protected
-       */
-      this.getArticleSSO(this.slug).subscribe(data => {
-        if (data.ssoProtected == true) {
-          this.loginService.isAuthenticated().then((isAuthenticated) => {
-            isAuthenticated ? this.article = this.getArticleBySlug(this.slug) : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
-          });
-        }
-        else {
-          this.article = this.getArticleBySlug(this.slug);
-          this.article$ = this.article.subscribe(data => {
-            this.detectDevice();
-            this.bodyMediaService.setBodyMedia(data.bodyText.links);
-            this.appComponentService.setTitle(data.title);
-          });
-        }
+      this.article = this.getArticleBySlug(this.slug);
+      this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
+        this.detectDevice();
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -151,18 +136,6 @@ export class ArticlesComponent implements OnInit, OnDestroy {
       return this.allArticlesSlugsGQL.fetch()
         .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
     } catch (e) { console.error('Error loading all articles:', e) };
-  }
-
-  /**
-   * Function that checks the ssoProtected field of an Article
-   *
-   * @param slug The article's slug. Retrieved from the route parameter of the same name.
-   */
-  public getArticleSSO(slug: string): Observable<Article> {
-    try {
-      return this.getArticleSsoGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
-    } catch (e) { console.error(`Error loading article ${slug}:`, e); }
   }
 
   /**

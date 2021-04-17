@@ -14,6 +14,7 @@ npm-debug.log*
 
 # ==================== research-hub-web ================ #
 research-hub-web/www/
+research-hub-web/www-preview/
 research-hub-web/dist/
 research-hub-web/documentation/
 research-hub-web/cypress/videos/
@@ -36,9 +37,3 @@ research-hub-web/typings
 
 # Ignore config file so secrets are not automatically checked in
 .env
-
-
-# ====================== serverless-now ================ #
-serverless-now/.serverless/
-serverless-now/env/local.env
-

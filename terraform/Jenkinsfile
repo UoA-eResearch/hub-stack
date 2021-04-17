@@ -1,0 +1,144 @@
+// Common Variables
+slackChannel = 'research-hub'
+slackCredentials = 'UoA-Slack-Access-Research-Hub'
+
+pipeline {
+
+    parameters {
+        choice(choices: ['dev', 'test', 'prod'], description: 'What environment?', name: 'DEPLOY_ENV')
+        choice(choices: ['create', 'destroy'], description: 'Create or destroy infra?', name: 'TERRAFORM_ACTION')
+        gitParameter name: 'BRANCH', type: 'PT_BRANCH', defaultValue: 'master', description: 'What Git branch you want to checkout?'
+    }
+
+    agent  {
+        label("uoa-buildtools-ionic")
+    }
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo "Checking out.."
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: "${params.BRANCH}"]], 
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [], 
+                    gitTool: 'Default', 
+                    submoduleCfg: [], 
+                    userRemoteConfigs: [[credentialsId: 'github-user', url: 'https://github.com/UoA-eResearch/hub-stack.git']]
+                ])                
+            }
+        }
+
+        stage('Set environment variables') {
+            steps {
+                script {
+                    echo 'Setting environment variables'
+                    env.awsRegion = "ap-southeast-2"
+                    env.awsRole = 'devops'
+                    if (params.DEPLOY_ENV == 'dev') {
+                        echo 'Setting variables for nonprod dev terraform deployment'
+                        env.awsEnv = 'nonprod'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+                        env.awsAccountId = '518380838815'
+                    } else if (params.DEPLOY_ENV == 'test') {
+                        echo 'Setting variables for nonprod test terraform deployment'
+                        env.awsEnv = 'nonprod'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+                        env.awsAccountId = '518380838815'
+                    } else if (params.DEPLOY_ENV == 'prod') {
+                        echo 'Setting variables for prod terraform deployment'
+                        env.awsEnv = 'prod'
+                        env.awsCredentialsId = 'aws-its-prod'
+                        env.awsTokenId = 'Access token for ITS Prod Account'
+                        env.awsProfile = 'uoa-its-prod'
+                        env.awsAccountId = '291148375163'
+                    } else {
+                        echo 'You are not on a valid environment, defaulting to dev'
+                        env.awsEnv = 'nonprod'
+                        env.awsCredentialsId = 'aws-its-nonprod-access'
+                        env.awsTokenId = 'aws-its-nonprod-token'
+                        env.awsProfile = 'uoa-its-nonprod'
+                        env.awsAccountId = '518380838815'
+                    }
+                }
+            }
+        }
+
+        stage('AWS Credential Grab') {
+            steps{
+                script {
+                    echo "☯ Authenticating with AWS"
+
+                    withCredentials([
+                        usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
+                        string(credentialsId: "${awsTokenId}", variable: 'awsToken')
+                    ]) {
+                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile} --role ${awsRole}"
+                    }
+                }
+            }
+        }
+            
+        stage('Planning') {
+            steps{
+                echo("Planning Terraform for ${params.DEPLOY_ENV} environment")
+                echo("Terraform action = ${params.TERRAFORM_ACTION}")
+
+                dir('terraform') {
+                    script{
+                        sh "terraform init -input=false -backend-config=envs/${params.DEPLOY_ENV}/backend.conf"
+
+                        if(params.TERRAFORM_ACTION == 'create'){
+                            sh "terraform plan -input=false -var-file=envs/${params.DEPLOY_ENV}/hub-${params.DEPLOY_ENV}.tfvars -out tfplan"
+                        } else {
+                            sh "terraform plan -input=false -var-file=envs/${params.DEPLOY_ENV}/hub-${params.DEPLOY_ENV}.tfvars -destroy -out tfplan"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Approval') {
+            steps {
+                slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: 'danger', message: "${env.JOB_NAME} ${env.BUILD_NUMBER} ${params.DEPLOY_ENV} (<${env.BUILD_URL}|Open>) - Is awaiting approval.")
+                timeout(time: 15, unit: 'MINUTES') {
+                    input 'Approve the above plan?'
+                }
+            }
+        }
+
+        stage('Create/Destroy Infrastructure') {
+            steps {
+                echo("Terraform action = ${params.TERRAFORM_ACTION}")
+                dir('terraform') {
+                    script{
+                        if(params.TERRAFORM_ACTION == 'create') {
+                            sh "terraform apply -input=false -var-file=envs/${params.DEPLOY_ENV}/hub-${params.DEPLOY_ENV}.tfvars -auto-approve"
+                        } else {
+                            timeout(time: 15, unit: 'MINUTES') {
+                                input 'Do you really want to destroy?'
+                            }
+                            sh "terraform destroy -input=false -var-file=envs/${params.DEPLOY_ENV}/hub-${params.DEPLOY_ENV}.tfvars -auto-approve"
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Hub Stack Infrastructure updated in ' + params.DEPLOY_ENV
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#5eff00", message: "🚀 Deploy successful - ${env.JOB_NAME} ${env.BUILD_NUMBER} ${params.DEPLOY_ENV} (<${env.BUILD_URL}|Open>).")
+        }
+        failure {
+            echo 'Jenkins job failed :('
+            slackSend(channel: slackChannel, tokenCredentialId: slackCredentials, color: "#FF9FA1", message: "🔥 Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} ${params.DEPLOY_ENV} (<${env.BUILD_URL}|Open>)")
+        }
+    }
+}

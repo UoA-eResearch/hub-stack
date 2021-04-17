@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs-service-role" {
-  name               = "researchhub-ecs-service-role"
+  name               = "researchhub-ecs-service-role-${var.lifecycle_state}"
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.ecs-service-policy.json
   tags               = local.common_tags
@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "ecs-service-policy" {
 }
 
 resource "aws_iam_role" "ecs_task_assume" {
-  name               = "researchhub-ecs_task_assume"
+  name               = "researchhub-ecs_task_assume-${var.lifecycle_state}"
   tags               = local.common_tags
   assume_role_policy = <<EOF
 {
