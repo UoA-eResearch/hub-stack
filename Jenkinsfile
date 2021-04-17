@@ -214,7 +214,7 @@ pipeline {
                                 echo 'Testing cer-graphql project'
                                 dir('cer-graphql') {
                                     sh "npm install"
-                                    sh "npm run test"
+                                    sh "export stage=${BRANCH_NAME} && npm run test -- --aws-profile=${awsProfile}"
                                 }
                             }
                         }
@@ -328,8 +328,8 @@ pipeline {
                         sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql-${BRANCH_NAME}:latest"
 
                         echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
-                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster-${BRANCH_NAME} --service cer-graphql-service-${BRANCH_NAME} --task-definition cer-graphql --force-new-deployment --region ${awsRegion}"
-                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster-${BRANCH_NAME} --service cer-graphql-preview-service-${BRANCH_NAME} --task-definition cer-graphql-preview --force-new-deployment --region ${awsRegion}"
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster-${BRANCH_NAME} --service cer-graphql-service-${BRANCH_NAME} --task-definition cer-graphql-${BRANCH_NAME} --force-new-deployment --region ${awsRegion}"
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster-${BRANCH_NAME} --service cer-graphql-preview-service-${BRANCH_NAME} --task-definition cer-graphql-preview-${BRANCH_NAME} --force-new-deployment --region ${awsRegion}"
                     }
                 }
                 stage('Deploy search-proxy') {
