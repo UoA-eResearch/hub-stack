@@ -214,7 +214,7 @@ pipeline {
                                 echo 'Testing cer-graphql project'
                                 dir('cer-graphql') {
                                     sh "npm install"
-                                    sh "npm run test"
+                                    sh "export stage=${BRANCH_NAME} && npm run test -- --aws-profile=${awsProfile}"
                                 }
                             }
                         }
