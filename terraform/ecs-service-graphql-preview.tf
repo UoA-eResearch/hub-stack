@@ -19,7 +19,7 @@ resource "aws_ecs_task_definition" "graphql_preview" {
     "essential": true,
     "image": "${aws_ecr_repository.graphql.repository_url}:latest",
     "networkMode": "awsvpc",
-    "name": "cer-graphql-${var.lifecycle_state}",
+    "name": "cer-graphql",
     "logConfiguration": {
       "logDriver": "awslogs",
         "options": {
