@@ -8,7 +8,7 @@ const aws4 = require('aws4');
 const fetch = require('node-fetch');
 
 const TIMEOUT_PERIOD = 40000;
-
+let awsProfile = 'saml';
 
 /**
  * This function creates both the ApolloServer and test client
@@ -50,60 +50,40 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
  * Gets OAuth tokens from 2FAB Lambda
  */
 const getTokens = async () => {
-    console.warn('stage: ', process.env.stage);
-    let deployStage = process.env.stage;
-    let awsProfile = process.env.awsProfile;
+    let deployStage = process.env.stage.trim();
+    console.log('Getting AWS credentials for profile ' + awsProfile)
     let awsCreds = new aws.SharedIniFileCredentials({
         profile: awsProfile
     });
+
+    console.log(awsCreds.accessKeyId)
+    console.log(awsCreds.expired)
+
     if (awsCreds.sessionToken === undefined) {
-        console.warn('AWS Profile not found, defaulting to sandbox');
-        // falling back to local def profile.
+        console.warn('AWS Profile not found, defaulting to saml');
+        // falling back to local default profile.
         awsCreds = new aws.SharedIniFileCredentials({
-            profile: 'sandbox',
+            profile: 'saml',
         });
     }
 
-    let awsLambdaParams = null;
-    switch (deployStage) {
-        case 'uoa-sandbox':
-        case 'dev':
-            awsLambdaParams = {
-                host: "ef54vsv71a.execute-api.ap-southeast-2.amazonaws.com",
-                path: "/sandbox/",
-                region: "ap-southeast-2",
-                service: "execute-api"
-            }
-            break;
-        case 'uoa-its-nonprod':
-        case 'test':
-            awsLambdaParams = {
-                host: "apigw.test.amazon.auckland.ac.nz",
-                path: "/aws-token-grabber/",
-                region: "ap-southeast-2",
-                service: "execute-api"
-            }
-            break;
-        case 'dev':
-            awsLambdaParams = {
-                host: "apigw.test.amazon.auckland.ac.nz",
-                path: "/aws-token-grabber/",
-                region: "ap-southeast-2",
-                service: "execute-api"
-            }
-            break;
-        case 'uoa-its-prod':
-        case 'prod':
-            console.warn('Prod integration testing may not work as 2fab has not been deployed to production environment yet.');
-            awsLambdaParams = {
-                host: "apigw.prod.amazon.auckland.ac.nz",
-                path: "/aws-token-grabber/",
-                region: "ap-southeast-2",
-                service: "execute-api"
-            }
-            break;
+    let awsLambdaParams;
+    console.log('setting 2FAB parameters for ' + deployStage);
+    if (deployStage === 'test' || deployStage === 'dev') {
+        awsLambdaParams = {
+            host: "apigw.test.amazon.auckland.ac.nz",
+            path: "/aws-token-grabber/",
+            region: "ap-southeast-2",
+            service: "execute-api"
+        }
+    } else {
+        awsLambdaParams = {
+            host: "apigw.sandbox.amazon.auckland.ac.nz",
+            path: "/aws-token-grabber/",
+            region: "ap-southeast-2",
+            service: "execute-api"
+        }
     }
-
 
     // Adding the AWS4 Signature to our request parameters
     let opts = {
@@ -136,10 +116,19 @@ const getTokens = async () => {
 }
 
 /**
- * Before any of the tests run create the query function and make
+ * Before any of the tests run, set the aws-profile, and create the query function and make
  * it available within all tests.
  */
 beforeAll(async () => {
+    // set the aws profile based on the argument passed in
+    process.argv.forEach(arg => {
+        if (arg.indexOf('--aws-profile') > -1) {
+            awsProfile = arg.split('=')[1];
+        }
+    });
+
+    console.log('AWS Profile set to ' + awsProfile);
+
     try {
         return { query } = await createServerAndTestClient();
     } catch (error) {
@@ -194,7 +183,6 @@ describe('Contentful filters (conditionals)', () => {
 describe('Authorization resolvers', () => {
 
     test('Requesting an articleCollection private field with an invalid Authorization header fails', async function () {
-        let server = await createServerAndTestClientWithAuth(false);
         let { query } = await createServerAndTestClientWithAuth(false);
         let message = false;
         try {
