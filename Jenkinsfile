@@ -130,7 +130,7 @@ pipeline {
                             steps {
                                 echo 'Building research-hub-web project from stored dependencies.'
                                 dir("research-hub-web") {
-                                    copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox' , selector: lastWithArtifacts()
+                                    copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: "Centre for eResearch (CeR)/hub-stack-pipeline/${BRANCH_NAME}" , selector: lastWithArtifacts()
                                     sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
                                     sh "npm install"
                                 }
