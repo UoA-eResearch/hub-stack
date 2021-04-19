@@ -85,6 +85,7 @@ A Jenkins pipeline can be used to invoke the Terraform actions to either create 
 | index_doc | The root document that users will land on, relative to the base of the S3 Bucket |
 | acm_arn | ARN of certificate in us-east-1 that will be attached to the Website (not created by Terraform due to Hybrid DNS situation) |
 | create_route53_entry | Should a route53 entry be created. If on-prem DNS is used, then don't create an entry in Route53. |
+| create_route53_zone | Should a route53 zone be created. If on-prem DNS is used, then create a zone in Route53. TBC - not sure if this is required. |
 | -----------  | ----------- |
 | **Preview environment (aka "Secondary website")** | ----------- |
 | create_secondary | Should the second Bucket/CloudFront be setup? |

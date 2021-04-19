@@ -85,6 +85,11 @@ variable "create_route53_entry" {
   description = "Should a route53 entry be created. If on-prem DNS is used, then don't create an entry in Route53."
 }
 
+variable "create_route53_zone" {
+  default     = false
+  description = "Should a route53 zone be created. If on-prem DNS is used, then create a zone in Route53."
+}
+
 #####################################
 # Secondary website (if applicable) #
 #####################################
