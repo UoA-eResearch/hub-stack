@@ -19,6 +19,9 @@ export class LargeCardsComponent implements OnInit {
         ... this.contentItem.externalPagesCollection.items];
     }
 
+    // Remove empty items.
+    this.contentItem['items'] = this.contentItem['items'].filter(item => item);
+
     // If you want to hide image when displayed
     if (this.hideImage) {
       this.contentItem.items.forEach(element => {
