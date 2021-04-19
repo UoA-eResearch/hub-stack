@@ -390,7 +390,7 @@ pipeline {
                     steps {
                         dir("subhub-link-checker") {
                             echo "Deploying to GitHub pages..."
-                            sh "git config user.email 'ci@jenkins.com' && git config --global user.name 'ci-auto'"
+                            sh "git config user.name cerci-user"
                             sh "git config credential.helper '/bin/bash credentials-helper-ci.sh'"
                             sh "npm run deploy"
                         }
