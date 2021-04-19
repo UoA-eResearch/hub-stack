@@ -1,6 +1,7 @@
 // Common Variables
 slackChannel = 'research-hub'
 slackCredentials = 'UoA-Slack-Access-Research-Hub'
+awsProfile = ''
 
 pipeline {
 
@@ -28,40 +29,44 @@ pipeline {
                 script {
                     echo 'Setting environment variables'
                     env.awsRegion = 'ap-southeast-2'
-                    env.awsRole = 'devops'
                     if (BRANCH_NAME.matches('sandbox(.*)')) {
                         echo 'Setting variables for sandbox deployment'
                         env.BRANCH_NAME = 'sandbox'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
-                        env.awsProfile = 'uoa-sandbox'
+                        awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     } else if (BRANCH_NAME.matches('dev(.*)')) {
                         env.BRANCH_NAME = 'dev'
                         echo 'Setting variables for dev deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
-                        env.awsProfile = 'uoa-its-nonprod'
+                        awsProfile = 'uoa-its-nonprod'
                         env.awsAccountId = '518380838815'
+                        env.SCHEMA_PATH = 'https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/'
                     } else if (BRANCH_NAME == 'test') {
                         echo 'Setting variables for test deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
-                        env.awsProfile = 'uoa-its-nonprod'
+                        awsProfile = 'uoa-its-nonprod'
                         env.awsAccountId = '518380838815'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/'
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
                         env.awsCredentialsId = 'aws-its-prod'
                         env.awsTokenId = 'Access token for ITS Prod Account'
-                        env.awsProfile = 'uoa-its-prod'
+                        awsProfile = 'uoa-its-prod'
                         env.awsAccountId = '291148375163'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.auckland.ac.nz/'
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         env.BRANCH_NAME = 'sandbox'
                         env.awsAccountId = '416527880812'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
-                        env.awsProfile = 'uoa-sandbox'
+                        awsProfile = 'uoa-sandbox'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
@@ -84,7 +89,7 @@ pipeline {
                         usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
                         string(credentialsId: "${awsTokenId}", variable: 'awsToken')
                     ]) {
-                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile} --role ${awsRole}"
+                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --role devops --profile " + awsProfile
                     }
                 }
             }
