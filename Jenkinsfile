@@ -144,7 +144,7 @@ pipeline {
                                     // sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                     // script {
                                     //     archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
-                                    }
+                                    // }
                                 }
                             }
                         }
