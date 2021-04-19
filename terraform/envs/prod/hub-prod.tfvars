@@ -18,6 +18,7 @@ dns_entry              = "research-hub.auckland.ac.nz"
 secondary_addresses    = []
 index_doc              = "index.html"
 acm_arn                = "TBC"
+create_route53_entry   = false
 
 # Secondary website (if applicable)
 create_secondary              = true
@@ -30,7 +31,7 @@ acm_arn_secondary             = "TBC"
 two_fab_url = ""
 
 # Route53
-route53_hosted_zone_id = "TBC"
+route53_hosted_zone_id = "N/A"  # Prod uses on-prem DNS
 
 # Network
 vpc_id           = "vpc-0b478c527a885336d"
@@ -43,9 +44,9 @@ lb_subnets = [
   "subnet-0643e4f2882512a33"   # uoa-connect-prod-public-alb-c
 ]
 ecs_lb_acm_arn   = "TBC"
-r53_hosted_zone  = "prod.amazon.auckland.ac.nz"
-lb_dns_name      = "rhubcpapi.prod.amazon.auckland.ac.nz"
-create_dns_entry = true
+r53_hosted_zone  = "N/A"
+lb_dns_name      = "rhubcpapi.auckland.ac.nz"
+create_dns_entry = false
 
 # ECS Environment
 ecs_cluster_name = "cer-graphql-cluster-prod"

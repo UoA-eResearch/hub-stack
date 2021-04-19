@@ -1,6 +1,7 @@
 // Common Variables
 slackChannel = 'research-hub'
 slackCredentials = 'UoA-Slack-Access-Research-Hub'
+awsProfile = ''
 
 pipeline {
 
@@ -28,39 +29,44 @@ pipeline {
                 script {
                     echo 'Setting environment variables'
                     env.awsRegion = 'ap-southeast-2'
-                    env.awsRole = 'devops'
-                    if (BRANCH_NAME == 'sandbox') {
+                    if (BRANCH_NAME.matches('sandbox(.*)')) {
                         echo 'Setting variables for sandbox deployment'
                         env.BRANCH_NAME = 'sandbox'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
-                        env.awsProfile = 'uoa-sandbox'
                         env.awsAccountId = '416527880812'
-                    } else if (BRANCH_NAME == 'dev') {
+                        awsProfile = 'uoa-sandbox'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
+                    } else if (BRANCH_NAME.matches('dev(.*)')) {
                         echo 'Setting variables for dev deployment'
+                        env.BRANCH_NAME = 'dev'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
-                        env.awsProfile = 'uoa-its-nonprod'
                         env.awsAccountId = '518380838815'
+                        awsProfile = 'uoa-its-nonprod'
+                        env.SCHEMA_PATH = 'https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/'
                     } else if (BRANCH_NAME == 'test') {
                         echo 'Setting variables for test deployment'
                         env.awsCredentialsId = 'aws-its-nonprod-access'
                         env.awsTokenId = 'aws-its-nonprod-token'
-                        env.awsProfile = 'uoa-its-nonprod'
                         env.awsAccountId = '518380838815'
+                        awsProfile = 'uoa-its-nonprod'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/'
                     } else if (BRANCH_NAME == 'prod') {
                         echo 'Setting variables for prod deployment'
                         env.awsCredentialsId = 'aws-its-prod'
                         env.awsTokenId = 'Access token for ITS Prod Account'
-                        env.awsProfile = 'uoa-its-prod'
                         env.awsAccountId = '291148375163'
+                        awsProfile = 'uoa-its-prod'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.auckland.ac.nz/cer-graphql-service/'
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         env.BRANCH_NAME = 'sandbox'
-                        env.awsAccountId = '416527880812'
                         env.awsCredentialsId = 'aws-sandbox-user'
                         env.awsTokenId = 'aws-sandbox-token'
-                        env.awsProfile = 'uoa-sandbox'
+                        env.awsAccountId = '416527880812'
+                        awsProfile = 'uoa-sandbox'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/'
                     }
                     echo "Copying in credentials file"
                     // Copy in secrets file from Jenkins so build and test
@@ -83,67 +89,25 @@ pipeline {
                         usernamePassword(credentialsId: "${awsCredentialsId}", passwordVariable: 'awsPassword', usernameVariable: 'awsUsername'),
                         string(credentialsId: "${awsTokenId}", variable: 'awsToken')
                     ]) {
-                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --profile ${awsProfile} --role ${awsRole}"
+                        sh "python3 /home/jenkins/aws_saml_login.py --idp iam.auckland.ac.nz --user $awsUsername --password $awsPassword --token $awsToken --role devops --profile " + awsProfile
                     }
                 }
             }
         }
 
         stage('Build projects') {
-            parallel {
-                stage('Build research-hub-web') {
+            stages {
+                stage('Build search-proxy') {
                     when {
                         anyOf {
-                            changeset "**/research-hub-web/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                            changeset "**/hub-search-proxy/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
                         }
                     }
-                    stages {
-                        stage ('Building and caching new node_modules') {
-                            when {
-                                anyOf {
-                                    changeset "**/research-hub-web/package.json"
-                                    equals expected: true, actual: params.FORCE_REDEPLOY_WEB
-                                }
-                            }
-                            steps {
-                                echo 'Installing research-hub-web dependencies.'
-                                dir("research-hub-web") {
-                                    sh "npm install"
-                                    sh "mkdir -p ${HOME}/research-hub-web/"
-                                    sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
-                                    script {
-                                        archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
-                                    }
-                                }
-                            }
-                        }
-                        stage ('Using cached node_modules from archive') {
-                            when {
-                                not {
-                                    anyOf {
-                                        changeset "**/research-hub-web/package.json"
-                                    }
-                                }
-                            }
-                            steps {
-                                echo 'Building research-hub-web project from stored dependencies.'
-                                dir("research-hub-web") {
-                                    copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: 'Centre for eResearch (CeR)/hub-stack-pipeline/sandbox' , selector: lastWithArtifacts()
-                                    sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
-                                    sh "npm install"
-                                }
-                            }
-                        }
-                        stage ('Building for production') {
-                            steps {
-                                dir("research-hub-web") {
-                                    echo 'Building for production'
-                                    sh "npm run build -- -c ${BRANCH_NAME}"
-                                    echo 'Building preview for production'
-                                    sh "npm run build -- -c ${BRANCH_NAME}-preview --output-path www-preview"
-                                }
-                            }
+                    steps {
+                        dir("hub-search-proxy") {
+                            echo 'Installing search-proxy dependencies...'
+                            sh "npm install"
                         }
                     }
                 }
@@ -162,17 +126,59 @@ pipeline {
                         }
                     }
                 }
-                stage('Build search-proxy') {
+                stage('Build research-hub-web') {
                     when {
                         anyOf {
-                            changeset "**/hub-search-proxy/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
+                            changeset "**/research-hub-web/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                         }
                     }
-                    steps {
-                        dir("hub-search-proxy") {
-                            echo 'Installing search-proxy dependencies...'
-                            sh "npm install"
+                    stages {
+                        stage ('Building and caching new node_modules') {
+                            // when {
+                            //     anyOf {
+                            //         changeset "**/research-hub-web/package.json"
+                            //         equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                            //     }
+                            // }
+                            steps {
+                                echo 'Installing research-hub-web dependencies.'
+                                dir("research-hub-web") {
+                                    sh "npm install"
+                                    sh "mkdir -p ${HOME}/research-hub-web/"
+                                    // sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                    // script {
+                                    //     archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
+                                    // }
+                                }
+                            }
+                        }
+                        // stage ('Using cached node_modules from archive') {
+                        //     when {
+                        //         not {
+                        //             anyOf {
+                        //                 changeset "**/research-hub-web/package.json"
+                        //             }
+                        //         }
+                        //     }
+                        //     steps {
+                        //         echo 'Building research-hub-web project from stored dependencies.'
+                        //         dir("research-hub-web") {
+                        //             copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: "Centre for eResearch (CeR)/hub-stack-pipeline/${BRANCH_NAME}" , selector: lastWithArtifacts()
+                        //             sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
+                        //             sh "npm install"
+                        //         }
+                        //     }
+                        // }
+                        stage ('Building for production') {
+                            steps {
+                                dir("research-hub-web") {
+                                    echo 'Building for production'
+                                    sh "npm run build -- -c ${BRANCH_NAME}"
+                                    echo 'Building preview for production'
+                                    sh "npm run build -- -c ${BRANCH_NAME}-preview --output-path www-preview"
+                                }
+                            }
                         }
                     }
                 }
