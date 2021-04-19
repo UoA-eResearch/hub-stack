@@ -1,4 +1,5 @@
 resource "aws_route53_record" "main_website" {
+  count = var.create_route53_entry ? 1 : 0
   zone_id = var.route53_hosted_zone_id
   name    = var.dns_entry
   type    = "CNAME"
@@ -7,7 +8,7 @@ resource "aws_route53_record" "main_website" {
 }
 
 resource "aws_route53_record" "secondary_website" {
-  count  = var.create_secondary ? 1 : 0
+  count  = var.create_route53_entry ? 1 : 0
   zone_id = var.route53_hosted_zone_id
   name    = var.dns_entry_secondary
   type    = "CNAME"

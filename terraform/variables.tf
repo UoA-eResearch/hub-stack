@@ -80,6 +80,11 @@ variable "acm_arn" {
   description = "The AWS ARN for the SSL certificate to be used. This is mandatory, but must be created before this step due to our hybrid DNS configuration"
 }
 
+variable "create_route53_entry" {
+  default     = false
+  description = "Should a route53 entry be created. If on-prem DNS is used, then don't create an entry in Route53."
+}
+
 #####################################
 # Secondary website (if applicable) #
 #####################################

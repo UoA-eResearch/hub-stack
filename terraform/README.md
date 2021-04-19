@@ -84,6 +84,7 @@ A Jenkins pipeline can be used to invoke the Terraform actions to either create 
 | secondary_addresses | Any (if existing) Secondary DNS names the site will be accessible via |
 | index_doc | The root document that users will land on, relative to the base of the S3 Bucket |
 | acm_arn | ARN of certificate in us-east-1 that will be attached to the Website (not created by Terraform due to Hybrid DNS situation) |
+| create_route53_entry | Should a route53 entry be created. If on-prem DNS is used, then don't create an entry in Route53. |
 | -----------  | ----------- |
 | **Preview environment (aka "Secondary website")** | ----------- |
 | create_secondary | Should the second Bucket/CloudFront be setup? |
@@ -103,7 +104,7 @@ A Jenkins pipeline can be used to invoke the Terraform actions to either create 
 | lb_subnets | List of subnets the LB will be running in |
 | vpc_id | ID of the VPC we are running from |
 | ecs_lb_acm_arn | ARN of the certificate that is attached to the loadbalancer (not created by Terraform due to Hybrid DNS situation) |
-| r53_hosted_zone | Hosted Zone in R53 to create the DNS entry for the LB (if possible, TBC) |
+| r53_hosted_zone | Hosted Zone in R53 to create the DNS entry for the LB |
 | lb_dns_name | DNS Name that will be created in above hosted zone |
 | -----------  | ----------- |
 | **ECS Environment** | ----------- |
