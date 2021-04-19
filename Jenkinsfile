@@ -130,41 +130,41 @@ pipeline {
                     }
                     stages {
                         stage ('Building and caching new node_modules') {
-                            when {
-                                anyOf {
-                                    changeset "**/research-hub-web/package.json"
-                                    equals expected: true, actual: params.FORCE_REDEPLOY_WEB
-                                }
-                            }
+                            // when {
+                            //     anyOf {
+                            //         changeset "**/research-hub-web/package.json"
+                            //         equals expected: true, actual: params.FORCE_REDEPLOY_WEB
+                            //     }
+                            // }
                             steps {
                                 echo 'Installing research-hub-web dependencies.'
                                 dir("research-hub-web") {
                                     sh "npm install"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
-                                    sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
-                                    script {
-                                        archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
+                                    // sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
+                                    // script {
+                                    //     archiveArtifacts artifacts: "node_modules.tar.gz", onlyIfSuccessful: true
                                     }
                                 }
                             }
                         }
-                        stage ('Using cached node_modules from archive') {
-                            when {
-                                not {
-                                    anyOf {
-                                        changeset "**/research-hub-web/package.json"
-                                    }
-                                }
-                            }
-                            steps {
-                                echo 'Building research-hub-web project from stored dependencies.'
-                                dir("research-hub-web") {
-                                    copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: "Centre for eResearch (CeR)/hub-stack-pipeline/${BRANCH_NAME}" , selector: lastWithArtifacts()
-                                    sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
-                                    sh "npm install"
-                                }
-                            }
-                        }
+                        // stage ('Using cached node_modules from archive') {
+                        //     when {
+                        //         not {
+                        //             anyOf {
+                        //                 changeset "**/research-hub-web/package.json"
+                        //             }
+                        //         }
+                        //     }
+                        //     steps {
+                        //         echo 'Building research-hub-web project from stored dependencies.'
+                        //         dir("research-hub-web") {
+                        //             copyArtifacts filter: 'node_modules.tar.gz', fingerprintArtifacts: true, optional: true, projectName: "Centre for eResearch (CeR)/hub-stack-pipeline/${BRANCH_NAME}" , selector: lastWithArtifacts()
+                        //             sh "tar xf ./node_modules.tar.gz" // Unzip cached node_modules/ folder
+                        //             sh "npm install"
+                        //         }
+                        //     }
+                        // }
                         stage ('Building for production') {
                             steps {
                                 dir("research-hub-web") {
