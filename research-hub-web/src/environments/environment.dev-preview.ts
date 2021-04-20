@@ -1,4 +1,4 @@
-import { environment } from "./environment.test";
+import { environment } from "./environment.dev";
 
 environment.cerGraphQLUrl = environment.cerGraphQLPreviewUrl;
 environment.auth.redirectUri = "https://research-hub-dev-preview.connect.test.amazon.auckland.ac.nz";
