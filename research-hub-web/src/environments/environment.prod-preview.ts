@@ -1,15 +1,13 @@
-// TODO: Fill in prod preview values.
-
-import { environment } from "./environment.nonprod";
+import { environment } from "./environment.prod";
 
 environment.cerGraphQLUrl = environment.cerGraphQLPreviewUrl;
-environment.auth.redirectUri = "";
-environment.auth.logout_uri = "";
+environment.auth.redirectUri = "https://research-hub-preview.auckland.ac.nz";
+environment.auth.logout_uri = "https://research-hub-preview.auckland.ac.nz";
 
 environment.privateUrlKeyWords = {
   get whoNeedBearerToken() {
     return [
-      { url: 'apigw.test.amazon.auckland.ac.nz', optional: false },
+      { url: 'apigw.prod.amazon.auckland.ac.nz', optional: false },
       { url: environment.cerGraphQLUrl, optional: true }
     ]
   },
