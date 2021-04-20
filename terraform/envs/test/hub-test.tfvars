@@ -19,7 +19,7 @@ secondary_addresses    = []
 index_doc              = "index.html"
 acm_arn                = "arn:aws:acm:us-east-1:518380838815:certificate/ca2097b7-29ae-456d-a0f5-3bdf9c7d8b66"
 create_route53_entry   = true
-create_route53_zone    = false
+# create_route53_zone    = false
 
 # Secondary website (if applicable)
 create_secondary              = true
