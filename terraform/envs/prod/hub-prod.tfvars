@@ -19,7 +19,7 @@ secondary_addresses    = []
 index_doc              = "index.html"
 acm_arn                = "TBC"
 create_route53_entry   = false    # Prod uses on-prem DNS. see https://wiki.auckland.ac.nz/display/ITCB/AWS+Host+S3+Static+Web+Content#CreateDistribution
-create_route53_zone    = false    # TBC - not sure if this is required. 
+# create_route53_zone    = true    # TBC - not sure if this is required. 
 
 # Secondary website (if applicable)
 create_secondary              = true
