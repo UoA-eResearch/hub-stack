@@ -27,31 +27,29 @@ resource "aws_route53_zone" "main" {
 }
 
 # Create IPv4 alias route53 record in hosted zone
-resource "aws_route53_record" "main_website" {
+resource "aws_route53_record" "main_website_ipv4" {
   count = var.create_route53_zone ? 1 : 0
   zone_id = aws_route53_zone.main[0].id
   name    = var.dns_entry
   type    = "A"
-  ttl     = "300"
 
   alias {
-    name = "${aws_cloudfront_distribution.main_website.domain_name}"
-    zone_id = "${aws_cloudfront_distribution.main_website.hosted_zone_id}"
+    name = aws_cloudfront_distribution.main_website.domain_name
+    zone_id = aws_cloudfront_distribution.main_website.hosted_zone_id
     evaluate_target_health = false
   }
 }
 
 # Create IPv6 alias route53 record in hosted zone
-resource "aws_route53_record" "main_website" {
+resource "aws_route53_record" "main_website_ipv6" {
   count = var.create_route53_zone ? 1 : 0
   zone_id = aws_route53_zone.main[0].id
   name    = var.dns_entry
   type    = "AAAA"
-  ttl     = "300"
 
   alias {
-    name = "${aws_cloudfront_distribution.main_website.domain_name}"
-    zone_id = "${aws_cloudfront_distribution.main_website.hosted_zone_id}"
+    name = aws_cloudfront_distribution.main_website.domain_name
+    zone_id = aws_cloudfront_distribution.main_website.hosted_zone_id
     evaluate_target_health = false
   }
 }
@@ -66,31 +64,29 @@ resource "aws_route53_zone" "secondary" {
 }
 
 # Create IPv4 alias route53 record in hosted zone
-resource "aws_route53_record" "secondary_website" {
+resource "aws_route53_record" "secondary_website_ipv4" {
   count = var.create_route53_zone ? 1 : 0
   zone_id = aws_route53_zone.secondary[0].id
   name    = var.dns_entry_secondary
   type    = "A"
-  ttl     = "300"
 
   alias {
-    name = "${aws_cloudfront_distribution.secondary_website[0].domain_name}"
-    zone_id = "${aws_cloudfront_distribution.secondary_website[0].hosted_zone_id}"
+    name = aws_cloudfront_distribution.secondary_website[0].domain_name
+    zone_id = aws_cloudfront_distribution.secondary_website[0].hosted_zone_id
     evaluate_target_health = false
   }
 }
 
 # Create IPv6 alias route53 record in hosted zone
-resource "aws_route53_record" "secondary_website" {
+resource "aws_route53_record" "secondary_website_ipv6" {
   count = var.create_route53_zone ? 1 : 0
   zone_id = aws_route53_zone.secondary[0].id
   name    = var.dns_entry_secondary
   type    = "AAAA"
-  ttl     = "300"
 
   alias {
-    name = "${aws_cloudfront_distribution.secondary_website[0].domain_name}"
-    zone_id = "${aws_cloudfront_distribution.secondary_website[0].hosted_zone_id}"
+    name = aws_cloudfront_distribution.secondary_website[0].domain_name
+    zone_id = aws_cloudfront_distribution.secondary_website[0].hosted_zone_id
     evaluate_target_health = false
   }
 }
