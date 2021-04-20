@@ -20,6 +20,8 @@ Terraform infrastructure as code to create the Research Hub AWS infrastructure.
 CI/CD is achieved via the monorepo's [Jenkinsfile](Jenkinsfile) which is triggered when code is pushed to one of 4 Git branches (`sandbox`, `dev`, `test`, `prod`) corresponding to environments across the three [UoA AWS accounts](http://aws.auckland.ac.nz/) (`sandbox`, `nonprod`, `prod`). 
 
 Pushing to any branch prefixed with `sandbox-`, e.g. `sandbox-sam` will also trigger a deploy to `sandbox`.
+Pushing to any branch prefixed with `dev-`, e.g. `dev-sam` will also trigger a deploy to `dev`.
+However, test and prod deploys will ONLY be triggered by a push to the test or prod branch respectively.
 
 NOTE: The sandbox account is only for temporary usage. All resources created in sandbox should be destroyed when no longer needed.
 
