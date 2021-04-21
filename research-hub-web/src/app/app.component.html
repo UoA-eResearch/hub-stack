@@ -295,29 +295,27 @@
 
               <!-- Footer Links -->
               <div class="footer-links" fxLayout="row wrap" fxFlexOrder.lt-md="0" fxLayoutGap="2vw" fxLayoutAlign="space-between">
-                <div fxLayout="column">
-                  <a class="link-header">About</a>
-                  <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
-                </div>
-                <div fxLayout="column">
-                  <a class="link-header">Engage</a>
-                  <a href="{{ feedbackLink }}">Feedback</a>
-                </div>
-                <div fxLayout="column">
-                  <a class="link-header">Helpful Links</a>
-                  <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
-                  <a [href]="privacyUrl" target="_blank">Privacy</a>
-                </div>
+                <ul class='footer-content'>
+                  <li>
+                    <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
+                  </li>
+                  <li>
+                    <a [href]="eResearchUrl" target="_blank">Centre for eResearch</a>
+                  </li>
+                  <li>
+                    Copyright © {{ getYear() }}
+                  </li>
+                  <li>
+                    <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+                  </li>
+                  <li>
+                    <a [href]="privacyUrl" target="_blank">Privacy</a>
+                  </li>
+                  <li>
+                    <a href="{{ feedbackLink }}">Feedback</a>
+                  </li>
+                </ul>
               </div>
-            </div>
-            
-            <!-- Copyright -->
-            <div class="copyright">
-              <a
-              [href]="eResearchUrl" 
-              target="_blank">
-                  Copyright © {{ getYear() }} Centre for eResearch
-              </a>
             </div>
           </div>
         </footer>
