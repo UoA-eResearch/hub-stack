@@ -16,8 +16,7 @@ describe('LegacyRoutingComponent', () => {
             path: "error/:errorCode",
             redirectTo: "",
           }
-        ]),
-        // ApolloTestingModule
+        ])
       ]
     })
     .compileComponents();
