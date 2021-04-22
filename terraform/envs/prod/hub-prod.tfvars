@@ -14,25 +14,25 @@ faculty          = "Science"
 business_service = "eResearch Services"
 
 # Website specific
-dns_entry              = "research-hub.auckland.ac.nz"
+dns_entry              = "research-hub.connect.amazon.auckland.ac.nz"  # research-hub.auckland.ac.nz
 secondary_addresses    = []
 index_doc              = "index.html"
-acm_arn                = "TBC"
-create_route53_entry   = false    # Prod uses on-prem DNS. see https://wiki.auckland.ac.nz/display/ITCB/AWS+Host+S3+Static+Web+Content#CreateDistribution
+acm_arn                = "arn:aws:acm:us-east-1:291148375163:certificate/6e6d93c0-7bbe-4cf9-95b9-ca4790e08aed"   # UPDATE WHEN WE GET REAL CERT
+create_route53_entry   = true    # UPDATE - Change to false for real launch - Prod uses on-prem DNS. see https://wiki.auckland.ac.nz/display/ITCB/AWS+Host+S3+Static+Web+Content#CreateDistribution
 # create_route53_zone    = true    # TBC - not sure if this is required. 
 
 # Secondary website (if applicable)
 create_secondary              = true
-dns_entry_secondary           = "research-hub-preview.auckland.ac.nz"
+dns_entry_secondary           = "research-hub-preview.connect.amazon.auckland.ac.nz"  # research-hub-preview.auckland.ac.nz
 secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
-acm_arn_secondary             = "TBC"
+acm_arn_secondary             = "arn:aws:acm:us-east-1:291148375163:certificate/6e6d93c0-7bbe-4cf9-95b9-ca4790e08aed"   # UPDATE WHEN WE GET REAL CERT
 
 # 2FAB callback url - not used in prod
 two_fab_url = ""
 
 # Route53
-route53_hosted_zone_id = "N/A"  # Prod uses on-prem DNS
+route53_hosted_zone_id = "ZLHJUA7WC63E9"  # Prod uses on-prem DNS
 
 # Network
 vpc_id           = "vpc-0b478c527a885336d"
@@ -44,9 +44,9 @@ lb_subnets = [
   "subnet-0b3c069a3631aba32",  # uoa-connect-prod-public-alb-b
   "subnet-0643e4f2882512a33"   # uoa-connect-prod-public-alb-c
 ]
-ecs_lb_acm_arn   = "TBC"
-r53_hosted_zone  = "N/A"
-lb_dns_name      = "rhubcpapi.auckland.ac.nz"
+ecs_lb_acm_arn   = "arn:aws:acm:ap-southeast-2:291148375163:certificate/c684f425-56ac-46bf-a11c-aed645507a11" # UPDATE WHEN WE GET REAL CERT
+r53_hosted_zone  = "connect.amazon.auckland.ac.nz"
+lb_dns_name      = "rhubcpapi.connect.amazon.auckland.ac.nz"  # rhubcpapi.auckland.ac.nz
 create_dns_entry = false
 
 # ECS Environment
