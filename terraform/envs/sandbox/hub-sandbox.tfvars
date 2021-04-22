@@ -3,6 +3,7 @@ aws_region      = "ap-southeast-2"
 aws_profile     = "uoa-sandbox"
 lifecycle_state = "dev"
 aws_account_id = "416527880812"
+aws_account_alias = "uoa-sandbox"
 
 # Tags
 application      = "Research Hub"
