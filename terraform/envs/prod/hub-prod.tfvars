@@ -52,7 +52,7 @@ create_dns_entry = false
 # ECS Environment
 ecs_cluster_name = "cer-graphql-cluster-prod"
 repository_name  = "research-hub/cer-graphql-prod"
-kms_uoa_central_key_id = "180f8f50-c1f3-4b9a-b793-0fca514ab708"
+kms_uoa_central_key_id = "457b5e68-e513-4b70-adf9-70eca8298d83"
 
 # ECS Services
 private_subnets = [
