@@ -29,8 +29,8 @@ secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
 acm_arn_secondary             = "arn:aws:acm:us-east-1:291148375163:certificate/6e6d93c0-7bbe-4cf9-95b9-ca4790e08aed"   # UPDATE WHEN WE GET REAL CERT
 
-# 2FAB callback url - not used in prod
-two_fab_url = ""
+# 2FAB callback url - not used in prod, just here as placeholder
+two_fab_url = "https://apigw.prod.amazon.auckland.ac.nz/aws-token-grabber/"
 
 # Route53
 route53_hosted_zone_id = "ZLHJUA7WC63E9"  # Prod uses on-prem DNS
