@@ -58,7 +58,7 @@ pipeline {
                         env.awsTokenId = 'Access token for ITS Prod Account'
                         env.awsAccountId = '291148375163'
                         awsProfile = 'uoa-its-prod'
-                        env.SCHEMA_PATH = 'https://rhubcpapi.auckland.ac.nz/cer-graphql-service/'
+                        env.SCHEMA_PATH = 'https://rhubcpapi.connect.amazon.auckland.ac.nz/cer-graphql-service/'  // https://rhubcpapi.auckland.ac.nz/cer-graphql-service/
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         env.BRANCH_NAME = 'sandbox'
@@ -263,14 +263,14 @@ pipeline {
                                     echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
                                     
                                     def s3BucketName = (
-                                        env.BRANCH_NAME == 'prod' ? 'research-hub.auckland.ac.nz' : 
+                                        env.BRANCH_NAME == 'prod' ? 'research-hub.connect.amazon.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'test' ? 'research-hub.connect.test.amazon.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'dev' ? 'research-hub-dev.connect.test.amazon.auckland.ac.nz' : 
                                         'research-hub-web'
                                     )
 
                                     def previewS3BucketName = (
-                                        env.BRANCH_NAME == 'prod' ? 'research-hub-preview.auckland.ac.nz' : 
+                                        env.BRANCH_NAME == 'prod' ? 'research-hub-preview.connect.amazon.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'test' ? 'research-hub-preview.connect.test.amazon.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'dev' ? 'research-hub-dev-preview.connect.test.amazon.auckland.ac.nz' : 
                                         'research-hub-web-preview'
@@ -292,14 +292,14 @@ pipeline {
 
                                     // TODO: Enter dev/test/prod CloudFrontDistroIds
                                     def awsCloudFrontDistroId = (
-                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'prod' ? 'E3P3Z3YL0II0MW' :
                                         env.BRANCH_NAME == 'test' ? 'E1HU1AQ31JKDT9' :
                                         env.BRANCH_NAME == 'dev' ? 'E35ROORLYFFYM4' :
                                         'E20R95KPAKSWTG'
                                     )
 
                                     def previewAwsCloudFrontDistroId = (
-                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'prod' ? 'E1PEITWMDUR8EF' :
                                         env.BRANCH_NAME == 'test' ? 'E1U7DUEU5EBP41' :
                                         env.BRANCH_NAME == 'dev' ? 'E2MW26HILK658J' :
                                         'E2GBENCKM7YT9Q'
