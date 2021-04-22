@@ -1,6 +1,6 @@
 # General
 aws_region      = "ap-southeast-2"
-aws_profile     = "uoa-its-nonprod"
+aws_profile     = "uoa-its-prod"
 lifecycle_state = "prod"
 aws_account_id = "291148375163"
 
@@ -28,8 +28,8 @@ secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
 acm_arn_secondary             = "TBC"
 
-# 2FAB callback url - not used in prod
-two_fab_url = ""
+# 2FAB callback url - not used in prod, just here as placeholder
+two_fab_url = "https://apigw.prod.amazon.auckland.ac.nz/aws-token-grabber/"
 
 # Route53
 route53_hosted_zone_id = "N/A"  # Prod uses on-prem DNS
@@ -52,7 +52,7 @@ create_dns_entry = false
 # ECS Environment
 ecs_cluster_name = "cer-graphql-cluster-prod"
 repository_name  = "research-hub/cer-graphql-prod"
-kms_uoa_central_key_id = "180f8f50-c1f3-4b9a-b793-0fca514ab708"
+kms_uoa_central_key_id = "457b5e68-e513-4b70-adf9-70eca8298d83"
 
 # ECS Services
 private_subnets = [
