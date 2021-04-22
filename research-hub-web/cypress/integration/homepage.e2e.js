@@ -27,7 +27,7 @@ describe('ResearchHubs Homepage', () => {
     })
 
     it('displays contact section', () => {
-        cy.contains(`We are developing the ResearchHub further and would be grateful for your feedback. This will give us pointers for user-led refinement and further development of the interface content displayed in the ResearchHub.`);
+        cy.contains(`We are developing the ResearchHub further and would be grateful for your feedback.`);
     })
 
     it('displays footer', () => {
