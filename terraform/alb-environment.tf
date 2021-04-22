@@ -6,7 +6,7 @@ resource "aws_alb" "ecs-load-balancer" {
 
   access_logs {
     bucket  = "uoa-security-loadbalancer-access-logs"
-    prefix  = "${var.aws_account_alias}/${var.lb_name}"
+    prefix  = "${data.aws_iam_account_alias.current.account_alias}/${var.lb_name}"
     enabled = true
   }
 
