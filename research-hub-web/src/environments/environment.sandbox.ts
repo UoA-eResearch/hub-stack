@@ -1,20 +1,27 @@
 export const environment = {
   production: true,
-  researchHubApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/api/',
-  cerApiUrl: 'https://dev.research-hub.cer.auckland.ac.nz/cer-api/', // TODO: Remove cer-api logic
-  analyticsCode: '', // TODO: Add Google Analytics
+  cerGraphQLUrl: 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/',
+  cerGraphQLPreviewUrl: 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/cer-graphql-preview-service/',
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
     cognitoUserPoolId: 'ap-southeast-2_pgErjyL4O',
     cognitoDomain: 'uoapool-sandbox',
     cognitoClientId: '53nj363gumskeibdir61nu1cs5',
-    redirectUri: 'http://localhost:4200', // TODO: Fix callback URLs
+    redirectUri: 'https://research-hub.sandbox.amazon.auckland.ac.nz',
     scopes: 'openid profile https://test-domain.auckland.ac.nz/lambda-hello-world',
     codeChallengeMethod: 'S256',
-    logout_uri: 'http://localhost:4200'
+    logout_uri: 'https://research-hub.sandbox.amazon.auckland.ac.nz'
   },
+  searchUrl: 'https://apigw.test.amazon.auckland.ac.nz/hub-search-proxy-dev',
   privateUrlKeyWords: {
-    whoNeedBearerToken: ['apigw.sandbox.amazon.auckland.ac.nz', 'some-other-api'],
-    whoNeedIdToken: []
-  }
+    get whoNeedBearerToken() {
+      return [
+        { url: 'apigw.sandbox.amazon.auckland.ac.nz', optional: false },
+        { url: environment.cerGraphQLUrl, optional: true }
+      ]
+    },
+    get whoNeedIdToken() {
+      return []
+    }
+  },
 };

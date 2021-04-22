@@ -1,0 +1,26 @@
+@import '../../../themes.scss';
+@import '../../../typography.scss';
+@import '../../../styles.scss';
+
+
+mat-expansion-panel,
+mat-card  {
+    margin: 8px 0;
+}
+
+div.mat-card-avatar mat-icon {
+    color: map-get($hub-teal, 800);
+}
+
+.related-item-summary {
+    color: gray;
+}
+
+.mat-card-actions {
+    padding: 12px 6px 0px 6px;
+}
+
+// SubHub Children
+.subhub-children {
+    background: $light-grey;
+}

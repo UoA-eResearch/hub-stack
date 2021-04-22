@@ -14,8 +14,14 @@ npm-debug.log*
 
 # ==================== research-hub-web ================ #
 research-hub-web/www/
+research-hub-web/www-preview/
 research-hub-web/dist/
 research-hub-web/documentation/
+research-hub-web/cypress/videos/
+research-hub-web/cypress/screenshots/
+
+research-hub-web/src/app/graphql/possible-types.ts
+research-hub-web/src/app/graphql/schema.ts
 
 # Custom environment file - use it in special local development situations
 research-hub-web/src/environments/environment.custom.ts
@@ -29,10 +35,5 @@ research-hub-web/npm-debug.log
 research-hub-web/testem.log
 research-hub-web/typings
 
-# ====================== cer-graphql =================== #
-
-
-
-# ====================== serverless-now ================ #
-serverless-now/.serverless/
-
+# Ignore config file so secrets are not automatically checked in
+.env

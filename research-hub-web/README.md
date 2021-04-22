@@ -1,78 +1,80 @@
 # Research Hub Web
-The front end for the [Research Hub](https://research-hub.auckland.ac.nz/), built with [Angular](https://angular.io/) and [Angular Material](https://material.angular.io/).
 
-## Developing
+## Overview
+The front end for the [Research Hub](https://research-hub.auckland.ac.nz/). Deployed on AWS via [Jenkins Pipeline](../Jenkinsfile).
 
-Follow steps 1 and 2 in the [research-hub-deploy README](https://github.com/UoA-eResearch/research-hub-deploy#research-hub-deploy).
+### Languages/Frameworks:
+* [Angular](https://angular.io/)
+* [Angular Material](https://material.angular.io/)
+* [Apollo GraphQL](http://apollographql.com/)
 
-To experience the full functionality of the app, you also need to run research-hub-api and research-hub-db whilst developing. 
-Follow the instructions on the following pages:
+### Other Technologies:
+* [AWS S3](https://aws.amazon.com/s3/): Bucket contains static build files
+* [AWS CloudFront](https://aws.amazon.com/cloudfront/): S3 assets are distributed via this CDN
+* [AWS Cognito](https://aws.amazon.com/cognito/): Used for user authentication
+* [Contentful](https://contentful.com/): Headless Content Management System where the site's content is hosted
 
-* [research-hub-db](https://github.com/UoA-eResearch/research-hub-db#research-hub-db): run the database using Docker
-* [research-hub-api](https://github.com/UoA-eResearch/research-hub-api#research-hub-api): run the api directly with Maven or via the IntelliJ IDE
+## Local Development
 
-Navigate to the research-hub-web folder (this command assumes you're in the `research-hub-deploy` folder):
-```bash
-cd build/research-hub-web
-```
+For local development run `npm run dev`. This will concurrently:
 
-Install dependencies:
-```bash
-npm install
-```
+1. Boot up the `cer-graphql` server locally
+2. Generate the [schema types/GraphQL services file](./src/app/graphql/schema.ts) by introspecting the locally running `cer-graphql` instance
+3. Monitor any changes to the `research-hub-web/src/app/graphql/` folder and automatically regenerate the schema types file if any changes are detected
+4. Serve the web project locally on port `4200`, querying the locally running GraphQL server
+5. Run the unit tests, with test-coverage reporting enabled. These unit tests are re-run whenever any files are changed
 
-Then run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you 
-change any of the source files.
+Alternatively, if you are using VS Code/[VSCodium](https://vscodium.com/), press F5 to run the above tasks in separate terminals with debugging support enabled, or go to `Terminal > Run Task...` to see all available tasks.
 
-To test run the app in production mode, run `npm run test-prod`.
+## Testing
+This project includes both [unit](#unit-tests) and [e2e](#end-to-end-tests) tests, which can either be run manually, or with an [interactive CLI test runner](./test.sh) included with the project. Further detail is provided in the corresponding sections below.
 
-## Code scaffolding
+### Unit Tests
+Unit tests are stored in `.spec.ts` files throughout the project. These can be run with [Karma](https://karma-runner) using headless-Chrome in several different ways:
 
-Run `npm run ng generate component component-name` to generate a new component. You can also use `npm run ng generate directive|pipe|service|class|module`.
+* `npm run test`/`ng test`: Runs the unit tests **once**. The unit test-coverage report **is** displayed in the CLI
+* `npm run test-ci`: Runs the unit tests **once**. The unit test-coverage report **IS NOT** displayed in the CLI. Used in Jenkins
+* `npm run test-watch`: Runs the unit tests **continuously** (re-runs whenever any files are updated). The unit test-coverage report **IS** displayed in the CLI
+* `npm run dev`: As mentioned [above](#local-development), this command also executes `npm run test-watch`
+* `./test.sh`: The unit tests can also be executed via the [Interactive Test Runner](#interactive-test-runner)
 
-## Build
+### End-to-End Tests
+E2E tests are stored in `.e2e.js` files in `/cypress/integration/`.
 
-Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory. 
+* The tests themselves can be executed against a locally compiled version, or against a remote URL. 
 
-## Build production and use webpack bundle analyzer
+The recommended way to execute these tests is via the [Interactive Test Runner](#interactive-test-runner).
 
-Run `npm run build-prod` to build the project in production mode.
+### Interactive Test Runner
+This project comes bundled with an interactive bash CLI test runner capable of launching your:
+ * [Unit tests](#unit-tests)
+ * [e2e tests](#end-to-end-tests)
+    * Using Cypress
 
-You can also visualise the size of the webpack output files with [webpack bundle analyzer](https://www.npmjs.com/package/webpack-bundle-analyzer), 
-an interactive zoomable treemap. To do this, once the build has finished, run `npm run bundle-report`.
+Simply run `./test.sh` to specify what sort of testing you would like to do.
 
-## Test runner
+### Preview environment
+Aside from the main site, a preview version of the site is also built for content authors to view draft articles before they're published. The preview version is identical to the main site aside from content query endpoints. There is a preview environment configuration file for each deployment environment. The files are kept in the `src/environments` folder, named `environment.[DEPLOYMENT ENVIRONMENT]-preview.ts`. The files determine where the frontend sends GraphQL content queries, and which requests require authentication.
 
-This project comes bundled with an interactive test runner capable of launching your:
- - Unit tests
- - e2e tests
-    - Using Protractor+Angular's built in Selenium server
-    - Using BrowserStack's automation API/Selenium server, including BrowserStack-local (allowing you to run BrowserStack against local hosts)
+The monorepo [Jenkinsfile](../Jenkinsfile) runs `ng build` to build the preview version of the site at the same time as the main site. The script passes the preview configuration file name to build the preview site. Search "preview" in the `Jenkinsfile` to understand how it's being built in the Continuous Integration process.
 
- Simply run `./test.sh` to specify the sort of testing you would like to do.
- 
- Note: if you wish to use BrowserStack automated e2e testing you must store your BrowserStack credentials in a file `./e2e/browserstack-credentials.json` in the format:
+See also the README.md files in `cer-graphql` and `terraform` folders, and also the monorepo README.md.
 
-```
- {
-    "USER": "BrowserStack-username-here",
-    "KEY": "BrowserStack-api-key-here"
- }
-```
+## GraphQL Schema Types & Services
+This project contains an automatically generated [schema types/GraphQL services file](./src/app/graphql/schema.ts). This is generated by introspecting a running `cer-graphql` instance (by default it looks for a locally running instance). This is done with the [GraphQL Code Generate Tool](http://graphql-code-generator.com/).
 
-## Running unit tests
+This generated file contains both:
+* TypeScript `types` corresponding to the GraphQL server's schema
+* Angular `services` automatically generated from any `.query.graphql` files located in the [queries](./src/app/graphql/queries/) folder.
 
-Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### GraphQL Generator Settings
+The GraphQL Generator Tool's settings are controlled via the [codegen.yml](./codegen.yml). Documentation for which can be found [here](https://graphql-code-generator.com/docs/plugins/typescript-apollo-angular).
 
-## Running end-to-end tests
+### Generate new GraphQL schema types
 
-Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `npm run start`.
+The generator can be executed in several ways:
 
-## Documentation
+* `npm run generate`: Regenerates **once** and then exits
+* `npm run generate-watch`: Regenerates once, then watches for any changes to `.graphql` files in the [queries](./src/app/graphql/queries/) folder
+* `npm run dev`: As mentioned in the [Local Development Section](#local-development), this command also executes `npm run generate-watch`
 
-Run `npm run compodoc` to generate new documentation via [Compodoc](https://compodoc.app/).
-
-## Further help
-
-To get more help on the Angular CLI use `npm run ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md)
