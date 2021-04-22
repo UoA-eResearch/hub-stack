@@ -1,9 +1,22 @@
 import { Routes } from '@angular/router';
-import { AuthGuard, LoginSuccessGuard } from 'uoa-auth-angular';
-import { HomeComponent } from '../components/home/home.component';
+import { LoginSuccessGuard } from '@uoa/auth';
+import { HomeComponent } from '@components/home/home.component';
+import { LegacyRoutingComponent } from "@components/legacy-routing/legacy-routing.component";
 
 
 export const appRoutes: Routes = [
+  {
+    path: 'content/:id',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then((m) => m.LegacyRoutingModule)
+  },
+  {
+    path: 'requestVm',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
+  },
+  {
+    path: 'requestStorage',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
+  },
   {
     path: '',
     redirectTo: 'home',
@@ -11,77 +24,71 @@ export const appRoutes: Routes = [
   },
   {
     path: 'error/:errorCode',
-    loadChildren: () => import('../components/error-routing/error-routing.module').then((m) => m.ErrorRoutingModule),
+    loadChildren: () => import('@components/error-routing/error-routing.module').then((m) => m.ErrorRoutingModule),
   },
   {
     path: 'home',
     canActivate: [LoginSuccessGuard],
     component: HomeComponent,
-    // loadChildren: () => import('../components/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'search',
-    loadChildren: () => import('../components/search-results/search-results.module').then(m => m.SearchResultsModule)
+    loadChildren: () => import('@app/components/search-page/search-page.module').then((m) => m.SearchPageModule),
   },
   {
-    path: 'feedback',
-    loadChildren: () => import('../components/feedback/feedback.module').then(m => m.FeedbackModule), canActivate: [AuthGuard]
+    path: 'equipment',
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
   },
   {
-    path: 'userStudy',
-    loadChildren: () => import('../components/user-study/user-study.module').then(m => m.UserStudyModule)
+    path: 'equipment/:slug',
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
   },
   {
-    path: 'about',
-    loadChildren: () => import('../components/about/about.module').then(m => m.AboutModule)
+    path: 'article/:slug',
+    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {
-    path: 'contact',
-    loadChildren: () => import('../components/contact/contact.module').then(m => m.ContactModule)
-  },
-
-  {
-    path: 'orgUnit/:orgUnitId',
-    loadChildren: () => import('../components/org-unit-details/org-unit-details.module').then(m => m.OrgUnitDetailsModule)
+    path: 'articles',
+    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {
-    path: 'person/:personId',
-    loadChildren: () => import('../components/person-details/person-details.module').then(m => m.PersonDetailsModule)
+    path: 'event/:slug',
+    loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
   },
-
+  {
+    path: 'events',
+    loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
+  },
+  {
+    path: 'subhub/:slug',
+    loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+  },
+  {
+    path: 'subhubs',
+    loadChildren: () => import('@components/subhubs/subhubs.module').then(m => m.SubhubsModule)
+  },
+  {
+    path: 'services',
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServicesModule)
+  },
+  {
+    path: 'service/:slug',
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServicesModule)
+  },
+  {
+    path: 'software/:slug',
+    loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+  },
+  {
+    path: 'software',
+    loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+  },
   /**
-   * Custom Route Redirects:
-   * Define routes here where you would rather display a custom URL than the standard content/id
-   * Note: This is the redirect rule for the content page, a separate route also needs to be defined below to handle this redirect.
+   * SubHub routes loader module:
+   * Wildcard route that loads a component module that checks if the route is a subhub friendly URL.
    */
-  {
-    path: 'content/73',
-    redirectTo: '/researchimpact',
-    pathMatch: 'full'
-  },
-
-  {
-    path: 'content/:contentId',
-    loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule)
-  },
-  {
-    path: 'guideCategory/:guideCategoryId',
-    loadChildren: () => import('../components/guide-category/guide-category.module').then(m => m.GuideCategoryModule)
-  },
-
-  /**
-   * Custom Route Handlers:
-   * TODO: More generalizable solution (rather than hard-coding ID)
-   * Note: This is the route handler, a separate redirect route also needs to be defined above if you don't want this page to be accessible
-   * by its content/id route.
-   */
-  {
-    path: 'researchimpact',
-    loadChildren: () => import('../components/content-details/content-details.module').then(m => m.ContentDetailsModule),
-    data: { contentId: 73 }
-  },
   {
     path: '**',
-    redirectTo: 'home'
+    loadChildren: () =>  import("@app/components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
   }
 ];

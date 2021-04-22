@@ -1,0 +1,66 @@
+query GetSubHubBySlug($slug: String) {
+    subHubCollection(limit: 1, where: {slug: $slug}) {
+        items {
+            slug
+            title
+            maoriProverb
+            summary
+            ssoProtected
+            searchable
+            banner {
+            url
+            }
+            bodyText {
+            json
+            links {
+                entries {
+                    block { 
+                    ...PublicFields
+                    sys {
+                        id
+                    }
+                    }
+                    inline { 
+                    ...PublicFields
+                    sys {
+                        id
+                    } 
+                    }
+                    hyperlink { 
+                    ...PublicFields 
+                    sys {
+                        id
+                    }
+                    }
+                }
+                assets {
+                block {
+                    ...AssetFields
+                }
+                hyperlink {
+                    ...AssetFields
+                }
+                }
+            }
+            }
+            internalPagesCollection {
+                items { ...PublicFields }
+            }
+            externalPagesCollection {
+                items { ...PublicFields }
+            }
+            relatedItemsCollection {
+                items { ...PublicFields }
+            }
+            relatedContactsCollection {
+                items { ...PublicFields }
+            }
+            relatedOrgsCollection {
+                items { ...PublicFields }
+            }
+            relatedDocsCollection {
+                items { ...PublicFields }
+            }
+        }
+    }
+}

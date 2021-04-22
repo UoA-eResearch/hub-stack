@@ -1,0 +1,62 @@
+@import '../../../themes.scss';
+@import '../../../typography.scss';
+@import '../../../styles.scss';
+
+mat-expansion-panel,
+mat-card  {
+    margin: 1vh 0;
+}
+
+
+/**
+ * Service Image
+ */
+.service-image {
+    margin: 0 auto;
+}
+
+
+/**
+ * Specifications Table
+ */
+ .specifications-table {
+    border-collapse: collapse; 
+    width: 100%;
+    @include size(medium) { 
+        margin: 0 auto;
+        width: 50% 
+    }
+}
+.specifications-table td, 
+.specifications-table th {
+    border: 0.125vh solid #ddd;
+    padding: 1vh;
+}
+.specifications-table tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+.specifications-table td:nth-child(odd){
+    font-weight: bold;
+    width: 25%}
+.specifications-table th {
+    padding-top: 1.5vh;
+    margin-bottom: 1.5vh;
+    text-align: left;
+    background-color: map-get($hub-teal, 700);
+    color: $color-background;
+}
+
+/**
+ * Custom Button Styles
+ */
+ .standard-button {
+    @extend .standard-button;
+   border: 3px solid map-get($hub-navy, 500)!important;
+   background-color: map-get($hub-navy, 500)!important;
+}
+.standard-button:hover {
+   color: map-get($hub-navy, 500)!important;
+   border-radius: 50px!important;
+   background-color: white!important;
+   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}

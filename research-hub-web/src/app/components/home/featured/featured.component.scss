@@ -1,26 +1,38 @@
-@import "../../../../styles";
+@import '../../../../styles.scss';
+@import '../../../../themes.scss';
+@import '../../../../typography.scss';
 
 
-.card-gt-xs {
-  flex: 1 0 250px;
-  -webkit-flex: 1 0 250px;
-
-}
-
-//
-//mat-card mat-card-content.mat-card-content{
-//  font-size: mat-font-size($app-featured-mat-card-typography, body-1);
-//  font-weight: mat-font-weight($app-featured-mat-card-typography, body-1);
-//  color: $heading-2-font-color;
-//}
-//
-//mat-card mat-card-actions button{
-//  font-size: mat-font-size($app-featured-mat-card-typography, button);
-//  font-weight: mat-font-weight($app-featured-mat-card-typography, button);
-//}
-//
-//mat-card mat-card-actions a{
-//  font-size: mat-font-size($app-featured-mat-card-typography, button);
-//  font-weight: mat-font-weight($app-featured-mat-card-typography, button);
-//  color: $body-light-bg-font-color;
-//}
+/*
+ * Featured Container
+ */
+ .featured-container {
+    z-index: 1;
+    background: map-get($hub-teal, 700);
+    .featured-content {
+      width: 95vw;
+      margin: 60px auto;
+      @extend .site-padding;
+    }
+      .featured-title {
+        color: white;
+        font-size: 36px;
+        text-align: center;
+        @include size(medium) { 
+          text-align: left;
+          font-size: 48px;
+        }
+      }
+      .featured-summary {
+        color: white;
+        font-size: 16px;
+        position: relative;
+        word-wrap: break-word;
+        margin: 0 auto;
+        text-align: center;
+        @include size(medium) { 
+          text-align: left;
+          font-size: 20px;
+        }
+      }
+  }

@@ -6,22 +6,37 @@ const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
 
 // Measure server startup time
-var startTime = new Date().getTime();
+var startTime = new Date().getTime(); 
 
-// Contentful settings
-const CONTENTFUL_ACCESS_TOKEN = process.env.CONTENTFUL_ACCESS_TOKEN;
-const CONTENTFUL_SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
-const COGNITO_USER_POOL = process.env.COGNITO_USER_POOL;
-const COGNITO_REGION = process.env.COGNITO_REGION;
-
-// Cognito public key URL
-const COGNITO_PUBLIC_KEYS_URL = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}/.well-known/jwks.json`;
+const getCredentials = (isFromFile) => {
+    // isFromFile determines where we load the credentials from.
+    // If true we load from the .env file in the folder. 
+    // If false, we load from environment variables.
+    if (isFromFile) {
+        const configResult = require('dotenv').config({path: '../.env'});
+        if (configResult.error) {
+            throw configResult.error;
+        }
+    }
+    let isPreviewEnv = false;
+    if (process.env.IS_PREVIEW_ENV !== undefined) {
+        isPreviewEnv = process.env.IS_PREVIEW_ENV === "true";
+    }
+    return {
+        CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
+        CONTENTFUL_ENVIRONMENT_ID: process.env.CONTENTFUL_ENVIRONMENT_ID,
+        CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
+        COGNITO_USER_POOL: process.env.COGNITO_USER_POOL,
+        COGNITO_REGION: process.env.COGNITO_REGION,
+        IS_PREVIEW_ENV: isPreviewEnv
+    };
+};
 
 // Set up remote schemas
 // Load a remote schema and set up the http-link
 getRemoteSchema = async (remoteUri) => {
     try {
-        console.log('Loading remote schema:', remoteUri)
+        console.log('Loading remote schema...')
         const link = new HttpLink({ uri: remoteUri, fetch });
         const schema = await introspectSchema(link);
 
@@ -52,6 +67,9 @@ const fetchCognitoPublicKeys = async (jwkUrl) => {
 
 const verifyJwt = (token, jwk) => {
     const decodedJwt = jwt.decode(token, { complete: true });
+    if (!decodedJwt) {
+        throw new Error("Invalid token.");
+    }
     const key = jwk.keys.find(key => {
         return key.kid === decodedJwt.header.kid
     });
@@ -63,20 +81,29 @@ const verifyJwt = (token, jwk) => {
 };
 
 // Set up the schemas and initialize the server
-(async () => {
-    // Check if access token and space ID are supplied.
-    if (!CONTENTFUL_ACCESS_TOKEN || !CONTENTFUL_SPACE_ID ||
-        !COGNITO_REGION || !COGNITO_USER_POOL) {
-        console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, COGNITO_REGION and COGNITO_USER_POOL.");
-        process.exit(1);
-    }
+async function createServer(config) {
+
+    const { CONTENTFUL_ACCESS_TOKEN,
+            CONTENTFUL_ENVIRONMENT_ID,
+            CONTENTFUL_SPACE_ID,
+            COGNITO_REGION,
+            COGNITO_USER_POOL,
+            IS_PREVIEW_ENV
+        } = config;
 
     // Load remote schemas here
-    contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
+    contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
+        `/environments/${CONTENTFUL_ENVIRONMENT_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
+
+    // Load Cognito public keys in order to verify tokens.
+    const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
+        "/.well-known/jwks.json",
+        cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl); 
 
     // Get a list of the types that have the ssoProtected field
     let protectedTypes = Object.keys(contentfulSchema._typeMap)
         .filter(x => x.includes('Filter')) // Get all the filters
+        .filter(x => !x.startsWith('cf')) // Filter out Contentful's special cf* filters
         .filter(y => contentfulSchema._typeMap[y]._fields.ssoProtected) // Filter by those with an ssoProtected field
         .flatMap(z => [z.replace('Filter', ''), z.replace('Filter', 'Collection')]) // Replace 'xfilter' with 'x' and 'xCollection'
         .map(a => a[0].toLowerCase() + a.substring(1)); // Make first char lower case
@@ -86,30 +113,93 @@ const verifyJwt = (token, jwk) => {
     // Loop over the protected types and create custom resolvers for them
     protectedTypes.forEach(type => {
         customQueryResolvers[type] = (root, args, context, info) => {
+            if (IS_PREVIEW_ENV) {
+                // Add preview as a query argument if we are in a preview
+                // environment.
+                args.preview = true;
+            }
             if (context.user) { // If the user is signed in, simply forward request
                 return forwardReqToContentful(args, context, info);
             } else { // If the user is not signed, do further request checking
 
-                /**
-                 * Get list of requested fields. The location of these differs depending on whether
-                 * this is the resolver for a collection or a single resource.
-                 */
-                let requestedFields = (info.fieldName.endsWith('Collection') ?
-                    info.fieldNodes[0].selectionSet.selections[0].selectionSet.selections :
-                    info.fieldNodes[0].selectionSet.selections)
-                    .map(x => x.name.value);
+                // GraphQL introspection fields, these are used by GraphQL to query metadata
+                const GRAPHQL_INTROSPECTION_FIELDS = [
+                    '__Schema',
+                    '__Type',
+                    '__TypeKind',
+                    '__typename',
+                    '__Field',
+                    '__InputValue',
+                    '__EnumValue',
+                    '__Directive',
+                    'sys',
+                    'id',
+                ];
 
                 // Check whether the user has requested only public fields
                 const ALWAYS_PUBLIC_FIELDS = [
                     'title',
+                    'maoriProverb',
                     'summary',
                     'name',
-                    'ssoProtected'
+                    'ssoProtected',
+                    'searchable',
+                    'linkedFrom',
+                    'slug',
+                    'banner',
+                    'icon',
+                    ...GRAPHQL_INTROSPECTION_FIELDS
                 ];
 
-                let userOnlyQueryingPublicFields = requestedFields
-                    .every(y => ALWAYS_PUBLIC_FIELDS.includes(y));
+                var requestedFields = []; // List of fields requested, populated in the recursive function below
 
+                let recursive_iteration_count = 0; // Tracks the number of recursive iterations
+                const MAX_RECURSIVE_ITERATIONS = 2000; // The maximum allowed number of recursive iterations
+                var getRequestedFields = function (obj) {
+                    recursive_iteration_count++;
+                    if (recursive_iteration_count > MAX_RECURSIVE_ITERATIONS) {
+                        throw new Error('Max recursive iterations exceeded when checking for field names.');
+                    }
+                    if (Array.isArray(obj)) { // If the object is an array
+                        for (let x of obj) {
+                            getRequestedFields(x); // Call the function recursively only each element in the array
+                        }
+                    } else { // Else it's an object
+                        if (obj.kind && obj.kind == 'Field' && obj.name.value != 'items' && !obj.name.value.includes('Collection')) {
+                            //  Throw an error if they have tried to alias the ssoProtected result
+                            if (obj.name.value === 'ssoProtected' && !!obj.alias) {
+                                throw new AuthenticationError('Aliasing the ssoProtected field is forbidden');
+                            }
+                            requestedFields.push(obj.name.value); // *Add it to the array if it's valid (and not a collection/items)
+                        }
+                        for (let key in obj) { // Loop over all the properties in this object
+                            if (Array.isArray(obj[key]) && obj[key].length != 0) { // If this property is an array, return it
+                                getRequestedFields(obj[key]);
+                            } else { // Else this property is an object, check if it's valid
+                                if (!Array.isArray(obj[key]) && !!obj[key] && typeof (obj[key]) == 'object' && obj[key] != {}) {
+                                    if (obj[key].kind && obj[key].kind != 'Name') {
+                                        getRequestedFields(obj[key]); // If so, call the function recursively on it
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                getRequestedFields(info.fieldNodes[0].selectionSet.selections); // Call the recursive function, populating the requestedFields array.
+                console.log({ requestedFields: requestedFields })
+
+                userOnlyQueryingPublicFields = requestedFields.every(y => ALWAYS_PUBLIC_FIELDS.includes(y));
+                console.log('User only querying public fields?', userOnlyQueryingPublicFields);
+
+                // Log any non-public fields the user is requesting
+                if (!userOnlyQueryingPublicFields) {
+                    console.log('User requested non-public field(s):',
+                        requestedFields
+                            .filter(y => !ALWAYS_PUBLIC_FIELDS.includes(y)));
+                }
+
+                // If the user is only querying public fields, forward the request on to Contentful
                 if (userOnlyQueryingPublicFields) return forwardReqToContentful(args, context, info);
 
                 /**
@@ -146,30 +236,45 @@ const verifyJwt = (token, jwk) => {
         resolvers: [{ Query: customQueryResolvers }],
     });
 
-    const server = new ApolloServer({
+    return new ApolloServer({
         schema,
         context: ({ req }) => {
-            let user;
+            // Log incoming queries
+            if (req && req.body && (req.body.operationName != 'IntrospectionQuery'))
+                console.log('\n===== Query Recieved: ======\n', req.body.query)
 
-            const authHeader = req.headers.authorization || '';
-            if (!authHeader || authHeader.indexOf('Bearer ') !== 0) {
-                return null;
-            }
-            // Trim off the leading "Bearer"
-            const token = authHeader.substring('Bearer '.length);
+            // Verify the requestor's token and return their user info, or return null for unauthenticated users
+            // In preview environment, always stop further query as we require sign in first.
+                const authorization = req.headers.authorization;
+                if (!authorization || 
+                    (typeof authorization === "string" && 
+                    !authorization.startsWith("Bearer "))) {
+                    // Check if the authorization header exists and has a bearer token.
+                    // If not, return null
+                    if (IS_PREVIEW_ENV) {
+                        // Reject all non-logged in queries in preview environment
+                        console.log("No bearer token sent. In preview environment, so returning AuthenticationError.");
+                        throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
+                    }
+                    return null;
+                }
             try {
-                user = verifyJwt(token, cognitoPublicKeys);
-            } catch (e) {
-                // TODO: Handle TokenExpiredError: jwt expired
-                console.log("Token failed verification.", e);
+                return { user: verifyJwt(authorization.substring('Bearer '.length), cognitoPublicKeys) }
+            } catch (e) { 
+                // Could not verify the user.
+                console.error("Error while verifying JWT", e);
+                if (IS_PREVIEW_ENV) {
+                    // Reject all non-logged in queries in preview environment
+                    console.log("Exception thrown while verifying user token. In preview environment, so returning AuthenticationError.\n", e)
+                    throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
+                }
                 return null;
             }
-            if (user) {
-                console.log("Authenticated as user ", user.name)
-            }
-            return { user };
         }, formatResponse: (res, context) => {
 
+            // Log the requestor's username or 'Unauthenticated'
+            if (context.operationName != 'IntrospectionQuery')
+                console.log(`User: ${context.context.user ? context.context.user.username.split('_')[1] : 'Unauthenticated'}`)
             /**
              * If the user is not signed in and the responseVerificationRequired flag is
              * true (i.e. they requested potentially non-public information), check the response
@@ -182,12 +287,50 @@ const verifyJwt = (token, jwk) => {
                 if (JSON.stringify(res).includes('\"ssoProtected\":true'))
                     throw new AuthenticationError('SSO authentication required to view this content.')
             }
-        },
+        },  formatError: (err) => {
+            // Print out errors so they can be searched in logs.
+            console.error(err);
+            return err;
+          },
+        
     });
+};
 
-    // The 'listen' method launches a web server.
-    server.listen().then(({ url }) => {
-        console.log(`🚀  Server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
-    });
+// If the file is being called directly instead of being required as a module.
+if (require.main === module) {
+    (async () => {
+        // Create the ApolloServer object
+        const isConfigFromFile = process.argv.includes("--config-from-file")
+        let config;
+        try {
+            config = getCredentials(isConfigFromFile);
+        } catch (error) {
+            console.error("Could not load credentials from file. Make sure you have filled in credentials in the .env file," +
+                "or try running the server without --config-from-file.");
+            process.exit(1);
+        }
+        if (config.IS_PREVIEW_ENV) {
+            console.log("Running in preview environment, will request draft content from Contentful.");
+        }
+        // Check if access token and space ID are supplied.
+        if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
+            !config.COGNITO_REGION || !config.COGNITO_USER_POOL || !config.CONTENTFUL_ENVIRONMENT_ID) {
+            console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN, " +
+                "CONTENTFUL_SPACE_ID, CONTENTFUL_ENVIRONMENT_ID, COGNITO_REGION and COGNITO_USER_POOL.");
+            process.exit(1);
+        }
 
-})();
+        try {
+            let server = await createServer(config);
+
+            // The 'listen' method launches a web server.
+            server.listen().then(({ url }) => {
+                console.log(`🚀  Content API server ready at ${url}. Server started in: ${new Date().getTime() - startTime}ms.`);
+            });
+        } catch(error) { console.log('Error creating server object and getting it to listen: ', error) }
+    })();
+}
+
+// Export the createServer function to be used in e2e tests
+exports.createServer = createServer;
+exports.getCredentials = getCredentials;

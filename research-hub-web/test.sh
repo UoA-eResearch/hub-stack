@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # Specify host_urls here
-host_urls[1]='https://research-hub.auckland.ac.nz/'
-host_urls[2]='https://test.research-hub.cer.auckland.ac.nz/'
-host_urls[3]='https://dev.research-hub.cer.auckland.ac.nz/'
-host_urls[4]='http://localhost:4200/'
+host_urls[1]='http://localhost:4200'
+host_urls[2]='https://research-hub.sandbox.amazon.auckland.ac.nz'
 
 echo "======================================================"
 echo "=        Welcome to the ResearchHub Test Runner      ="
@@ -25,34 +23,43 @@ fi
 
 # E2E Testing Functionality
 echo -e "\nWhich host would you like to test?"
-echo "[1] Prod"
-echo "[2] Test"
-echo "[3] Dev"
-echo "[4] Local"
+echo "[1] Local"
+echo "[2] Sandbox"
 read -p "Choice: " host
 
-echo -e "\nWhich Selenium server would you like to use for testing?"
-echo "[1] BrowserStack's"
-echo "[2] Local"
-read -p "Choice: " seleniumServer
+echo -e "\nHow would you like to run your e2e tests?"
+echo "[1] Headless"
+echo "[2] Graphical"
+read -p "Choice: " e2eTestType
 
 echo
-# Accepts URL argument
-run_protractor() {
-    if [ "$seleniumServer" = 1 ]; then
-        if [ "$host" = 1 ]; then
-            echo "Running BrowserStack tests against remote host: $1"
-            ./node_modules/.bin/protractor protractor.conf.browserstack-remote --baseUrl "$1"
+
+run_cypress() {
+    if [ "$host" = 1 ]; then
+        echo "Running headless Cypress e2e tests against local host: $1"
+        read -p "Are you already serving the site locally? (Y/N): " alreadyServing
+        if [ "$alreadyServing" = "y" ] || [ "$alreadyServing" = "Y"  ]; then
+            if [ "$e2eTestType" = 1 ]; then
+                npm run e2e
+            else
+                npm run e2e-gui
+            fi
         else
-            echo "Running BrowserStack tests against local host: $1"
-            echo "Safari testing only supported on remote hosts, see https://www.browserstack.com/question/664"
-            ./node_modules/.bin/protractor protractor.conf.browserstack-local --baseUrl "$1"
+            if [ "$e2eTestType" = 1 ]; then
+                npm run e2e-serve
+            else
+                npm run e2e-serve-gui
+            fi
 
         fi
     else
-        echo "Running Local Selenium tests against host: $1"
-        ng e2e
+        echo "Running headless Cypress e2e tests against sandbox: $1"
+        if [ "$e2eTestType" = 1 ]; then
+            CYPRESS_BASE_URL="$1" npm run e2e
+        else
+            CYPRESS_BASE_URL="$1" npm run e2e-gui
+        fi
     fi
 }
 
-run_protractor ${host_urls[$host]}
+run_cypress ${host_urls[$host]}
