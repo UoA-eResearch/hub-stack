@@ -53,7 +53,7 @@ resource "aws_cloudfront_distribution" "main_website" {
   logging_config {
     include_cookies = false
     bucket          = "uoa-security-cloudfront-access-logs.s3.amazonaws.com"
-    prefix          = "${data.aws_iam_account_alias.current.account_alias}/${var.dns_entry}/"
+    prefix          = "${var.aws_account_alias}/${var.dns_entry}/"
   }
 
   price_class = "PriceClass_All"

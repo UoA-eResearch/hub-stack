@@ -3,6 +3,7 @@ aws_region      = "ap-southeast-2"
 aws_profile     = "uoa-its-nonprod"
 lifecycle_state = "prod"
 aws_account_id = "291148375163"
+aws_account_alias = "uoa-its-prod"
 
 # Tags
 application      = "Research Hub"

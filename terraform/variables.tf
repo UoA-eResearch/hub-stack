@@ -20,6 +20,11 @@ variable "aws_account_id" {
   description = "Account id of the AWS account where the task is run"
 }
 
+variable "aws_account_alias" {
+  type = string
+  description = "Account alias of the AWS account where the task is run"
+}
+
 #######################
 #       Tags          #
 #######################
