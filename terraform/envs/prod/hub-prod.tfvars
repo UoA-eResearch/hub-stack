@@ -47,7 +47,7 @@ lb_subnets = [
 ecs_lb_acm_arn   = "arn:aws:acm:ap-southeast-2:291148375163:certificate/c684f425-56ac-46bf-a11c-aed645507a11" # UPDATE WHEN WE GET REAL CERT
 r53_hosted_zone  = "connect.amazon.auckland.ac.nz"
 lb_dns_name      = "rhubcpapi.connect.amazon.auckland.ac.nz"  # rhubcpapi.auckland.ac.nz
-create_dns_entry = false
+create_dns_entry = true  # UPDATE - Change to false for real launch
 
 # ECS Environment
 ecs_cluster_name = "cer-graphql-cluster-prod"
