@@ -1,5 +1,4 @@
-
-<span [ngSwitch]="data.nodeType">
+<span [ngSwitch]="data.nodeType" *ngIf="contentItem">
 
     <!-- Asset Block -->
     <span *ngSwitchCase="'embedded-asset-block'">
