@@ -91,6 +91,11 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       this.equipment = this.getEquipmentBySlug(this.slug);
       this.equipment$ = this.getEquipmentBySlug(this.slug).subscribe(data => {
         this.detectDevice();
+        // Strip nulls from related collection data.
+        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });

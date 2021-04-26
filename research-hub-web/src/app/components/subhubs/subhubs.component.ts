@@ -84,6 +84,9 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     if (!!this.slug) {
       this.subHub = this.getSubHubBySlug(this.slug);
       this.subHub$ = this.getSubHubBySlug(this.slug).subscribe(data => {
+        // Remove nulls from server in case of error.
+        data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
+        data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
         this.detectDevice();
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
