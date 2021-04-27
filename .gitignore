@@ -38,6 +38,7 @@ research-hub-web/typings
 # Ignore config file so secrets are not automatically checked in
 .env
 .test.env
+.prod.env
 
 
 # ====================== serverless-now ================ #
