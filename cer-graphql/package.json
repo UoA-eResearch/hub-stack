@@ -25,7 +25,6 @@
     "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
     "jsonwebtoken": "^8.5.1",
-    "graphql": "15.5.0",
     "jwk-to-pem": "^2.0.4"
   },
   "devDependencies": {

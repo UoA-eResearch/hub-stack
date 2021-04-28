@@ -1,6 +1,6 @@
 resource "aws_cognito_resource_server" "research_hub" {
-  identifier = "https://research-hub.auckland.ac.nz"
-  name       = "research-hub"
+  identifier = "https://research-hub-${var.lifecycle_state}.auckland.ac.nz"
+  name       = "research-hub-${var.lifecycle_state}"
 
   scope {
     scope_name        = "spa"
