@@ -34,14 +34,20 @@ exports.GET_ARTICLE_COLLECTION_PRIVATE = gql`
 `;
 
 exports.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO = gql`
-{ 
-    articleCollection {
-        items {
-            ssoProtected
-            bodyText {
-                json
-            }
+query {
+	articleCollection ( where:{
+    AND:[
+        { ssoProtected:true}
+    ]
+    })
+    {
+    items{
+        title 
+        ssoProtected
+        owner {
+        name
         }
+    }
     }
 }
 `;

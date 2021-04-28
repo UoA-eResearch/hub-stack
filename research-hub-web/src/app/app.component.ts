@@ -153,6 +153,23 @@ export class AppComponent implements OnInit, OnDestroy {
           });
           this.userInfo = await this.loginService.getUserInfo();
 
+          window.dataLayer.push({
+            'user': JSON.stringify(this.userInfo),
+            ...this.userInfo,
+          });
+
+          // pushing an individual usergroupss to google analytics
+          if (this.userInfo.groups) {
+            this.userInfo.groups.trim().replace('\"', '').replace(']', '').replace('[', '').split(',').map(group => {
+              let groupObj = {};
+              group = group.trim().split('.')[0];
+              groupObj[group] = group;
+              window.dataLayer.push(groupObj);
+            })
+          }
+
+
+
           if (routeName) {
 
             // Set title if we're on the homepage
@@ -267,12 +284,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mediaChangeSub.unsubscribe();
-    this.searchTextChangeSub.unsubscribe();
-    this.routerSub.unsubscribe();
-    this.titleSub.unsubscribe();
-    this.scrollSub.unsubscribe();
-    this.url.unsubscribe();
+    try {
+      this.mediaChangeSub.unsubscribe();
+      this.searchTextChangeSub.unsubscribe();
+      this.routerSub.unsubscribe();
+      this.titleSub.unsubscribe();
+      this.scrollSub.unsubscribe();
+      this.url.unsubscribe();
+    } catch {}   
   }
 
   // Get year for footer copyright
