@@ -55,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private currentRoute = undefined;
   public currentUrl = undefined;
 
+  public userInfo;
   public isMobile: Boolean;
   public onSearchPage: Boolean;
   public onHomePage: Boolean;
@@ -148,6 +149,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.loginService.isAuthenticated().then(data => {
             this.getHomepageData();
           });
+          this.userInfo = await this.loginService.getUserInfo();
 
           window.dataLayer.push({
             'user': JSON.stringify(this.userInfo),
@@ -163,8 +165,6 @@ export class AppComponent implements OnInit, OnDestroy {
               window.dataLayer.push(groupObj);
             })
           }
-
-
 
           if (routeName) {
 
