@@ -31,7 +31,9 @@ See also the README.md files in `research-hub-web` and `terraform` folders, and 
 This project includes `integration tests` written for the [Jest](https://jestjs.io/) testing framework. These tests are contained in the file [integration-tests.test.js](./tests/integration-tests.test.js). These tests can make use of predefined `GraphQL queries` which are stored in the file [test-queries.js](./tests/test-queries.js).
 
 ### Executing Tests
-To execute the integration tests execute `npm run test`.
+To execute the integration tests execute `npm run test-local`. You must have valid AWS credentials stored locally under the 'saml' profile for the tests to work. 
+
+If you wish to use a different AWS profile, use the following command and pass in the profile name, e.g.: `export stage='test' && npm run test -- --aws-profile=<profile-name>`
 
 ## Startup Process
 ![Architecture Overview](./documentation/cer-graphql-startup.png)

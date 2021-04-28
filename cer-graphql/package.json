@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test-local": "export stage='test' && npm run test",
+    "test-local-windows": "set stage='test' && npm run test",
     "dev": "nodemon ./index.js --config-from-file --watch=./**/*"
   },
   "repository": {
