@@ -74,7 +74,12 @@ pipeline {
                     withCredentials([
                         file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
                     ]) {
-                        sh "cp $credentialsfile .env"
+                        def filename = (
+                            env.BRANCH_NAME == 'prod' ? '.prod.env' :
+                            env.BRANCH_NAME == 'test' ? '.test.env' :
+                            '.env'
+                        )
+                        sh "cp $credentialsfile ${filename}"
                     }
                 }
             }
