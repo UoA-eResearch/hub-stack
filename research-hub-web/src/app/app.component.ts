@@ -55,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private currentRoute = undefined;
   public currentUrl = undefined;
 
+  public userInfo;
   public isMobile: Boolean;
   public onSearchPage: Boolean;
   public onHomePage: Boolean;
@@ -148,6 +149,22 @@ export class AppComponent implements OnInit, OnDestroy {
           this.loginService.isAuthenticated().then(data => {
             this.getHomepageData();
           });
+          this.userInfo = await this.loginService.getUserInfo();
+
+          window.dataLayer.push({
+            'user': JSON.stringify(this.userInfo),
+            ...this.userInfo,
+          });
+
+          // pushing an individual usergroupss to google analytics
+          if (this.userInfo.groups) {
+            this.userInfo.groups.trim().replace('\"', '').replace(']', '').replace('[', '').split(',').map(group => {
+              let groupObj = {};
+              group = group.trim().split('.')[0];
+              groupObj[group] = group;
+              window.dataLayer.push(groupObj);
+            })
+          }
 
           if (routeName) {
 
@@ -263,12 +280,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mediaChangeSub.unsubscribe();
-    this.searchTextChangeSub.unsubscribe();
-    this.routerSub.unsubscribe();
-    this.titleSub.unsubscribe();
-    this.scrollSub.unsubscribe();
-    this.url.unsubscribe();
+    try {
+      this.mediaChangeSub.unsubscribe();
+      this.searchTextChangeSub.unsubscribe();
+      this.routerSub.unsubscribe();
+      this.titleSub.unsubscribe();
+      this.scrollSub.unsubscribe();
+      this.url.unsubscribe();
+    } catch {}   
   }
 
   // Get year for footer copyright

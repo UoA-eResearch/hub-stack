@@ -8,12 +8,41 @@ const jwkToPem = require('jwk-to-pem');
 // Measure server startup time
 var startTime = new Date().getTime(); 
 
+/**
+ * Deletes environment variables we expect to use as existing env vars dont get overwritten.
+ */
+const deleteEnvironmentVariables = () => {
+    delete process.env.CONTENTFUL_ACCESS_TOKEN;
+    delete process.env.CONTENTFUL_SPACE_ID;
+    delete process.env.COGNITO_USER_POOL; 
+    delete process.env.COGNITO_REGION; 
+}
+
+/**
+ * Conditionally loads environment variables from an environment file returns object with env values.
+ * @param {*} isFromFile Whether or not to load the .env file
+ * @returns void
+ */
 const getCredentials = (isFromFile) => {
     // isFromFile determines where we load the credentials from.
     // If true we load from the .env file in the folder. 
     // If false, we load from environment variables.
     if (isFromFile) {
-        const configResult = require('dotenv').config({path: '../.env'});
+        deleteEnvironmentVariables();
+        let path;
+        switch(process.env.stage) {
+            case 'dev':
+                path = '../.env';
+                break;
+            case 'test':
+                path = '../.test.env';
+                break;
+            default:
+                path = '../.env';
+                break;
+        }
+
+        const configResult = require('dotenv').config({path});
         if (configResult.error) {
             throw configResult.error;
         }
