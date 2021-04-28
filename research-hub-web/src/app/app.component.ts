@@ -56,7 +56,6 @@ export class AppComponent implements OnInit, OnDestroy {
   public currentUrl = undefined;
 
   public userInfo;
-  public authenticated: Boolean;
   public isMobile: Boolean;
   public onSearchPage: Boolean;
   public onHomePage: Boolean;
@@ -148,7 +147,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
           // Check if the user is logged in now (Cognito redirect)
           this.loginService.isAuthenticated().then(data => {
-            this.authenticated = data;
             this.getHomepageData();
           });
           this.userInfo = await this.loginService.getUserInfo();
@@ -167,8 +165,6 @@ export class AppComponent implements OnInit, OnDestroy {
               window.dataLayer.push(groupObj);
             })
           }
-
-
 
           if (routeName) {
 
