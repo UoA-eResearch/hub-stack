@@ -66,16 +66,16 @@ const getTokens = async () => {
 
     let awsLambdaParams;
     console.log('setting 2FAB parameters for ' + deployStage);
-    if (deployStage === 'test' || deployStage === 'dev') {
+    if (deployStage === 'sandbox') {
         awsLambdaParams = {
-            host: "apigw.test.amazon.auckland.ac.nz",
+            host: "apigw.sandbox.amazon.auckland.ac.nz",
             path: "/aws-token-grabber/",
             region: "ap-southeast-2",
             service: "execute-api"
         }
     } else {
         awsLambdaParams = {
-            host: "apigw.sandbox.amazon.auckland.ac.nz",
+            host: "apigw.test.amazon.auckland.ac.nz",
             path: "/aws-token-grabber/",
             region: "ap-southeast-2",
             service: "execute-api"
