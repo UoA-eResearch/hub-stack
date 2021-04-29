@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../app.shared.module';
 import { SearchBarService } from '../../search-bar/search-bar.service';
-import { HttpClient, HttpClientModule, HttpHandler} from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('CollectionListComponent', () => {
@@ -19,7 +19,7 @@ describe('CollectionListComponent', () => {
         RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
         CommonModule,
         SharedModule,
-        HttpClientModule
+        HttpClientTestingModule
       ],
       providers: [
         SearchBarService,
