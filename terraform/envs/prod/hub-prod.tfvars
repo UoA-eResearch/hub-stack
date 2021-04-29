@@ -17,7 +17,7 @@ business_service = "eResearch Services"
 dns_entry              = "research-hub.auckland.ac.nz"
 secondary_addresses    = []
 index_doc              = "index.html"
-acm_arn                = "TBC"
+acm_arn                = "arn:aws:acm:us-east-1:291148375163:certificate/c6705781-1c22-44c2-8621-67651509300a"
 create_route53_entry   = false    # Prod uses on-prem DNS. see https://wiki.auckland.ac.nz/display/ITCB/AWS+Host+S3+Static+Web+Content#CreateDistribution
 # create_route53_zone    = true    # TBC - not sure if this is required. 
 
@@ -26,7 +26,7 @@ create_secondary              = true
 dns_entry_secondary           = "research-hub-preview.auckland.ac.nz"
 secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
-acm_arn_secondary             = "TBC"
+acm_arn_secondary             = "arn:aws:acm:us-east-1:291148375163:certificate/be64d589-aecc-4495-b4c5-d9b23e622ef6"
 
 # 2FAB callback url - not used in prod, just here as placeholder
 two_fab_url = "https://apigw.prod.amazon.auckland.ac.nz/aws-token-grabber/"
@@ -44,7 +44,7 @@ lb_subnets = [
   "subnet-0b3c069a3631aba32",  # uoa-connect-prod-public-alb-b
   "subnet-0643e4f2882512a33"   # uoa-connect-prod-public-alb-c
 ]
-ecs_lb_acm_arn   = "TBC"
+ecs_lb_acm_arn   = "arn:aws:acm:ap-southeast-2:291148375163:certificate/554e7247-187b-4a67-917a-570f7500cd83"
 r53_hosted_zone  = "N/A"
 lb_dns_name      = "rhubcpapi.auckland.ac.nz"
 create_dns_entry = false
