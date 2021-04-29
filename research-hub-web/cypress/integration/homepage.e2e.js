@@ -19,19 +19,19 @@ describe('ResearchHubs Homepage', () => {
     // })
 
     it('displays research categories', () => {
-        cy.contains(`ResearchHub is your gateway`);
+        cy.contains(`Research Categories`);
     })
 
     it('displays research activities', () => {
-        cy.contains(`From project inception to completion`);
+        cy.contains(`Research Activities`);
     })
 
     it('displays contact section', () => {
-        cy.contains(`We are developing the ResearchHub further and would be grateful for your feedback.`);
+        cy.contains(`We are developing the ResearchHub further and would be grateful for your feedback. This will give us pointers for user-led refinement and further development of the interface content displayed in the ResearchHub.`);
     })
 
     it('displays footer', () => {
-        cy.contains(`Copyright © 2021 Centre for eResearch`);
+        cy.contains(`Centre for eResearch`);
     })
 
     it('clicking Sign In takes you to SSO', () => {

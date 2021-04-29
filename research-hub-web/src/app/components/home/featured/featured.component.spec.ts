@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 import { FeaturedComponent } from './featured.component';
 
 describe('FeaturedComponent', () => {
@@ -9,7 +10,7 @@ describe('FeaturedComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ FeaturedComponent ],
-      imports: [RouterTestingModule.withRoutes([])]
+      imports: [RouterTestingModule.withRoutes([]), ApolloTestingModule]
     })
     .compileComponents();
   });

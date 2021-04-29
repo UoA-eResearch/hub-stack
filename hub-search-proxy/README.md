@@ -77,9 +77,9 @@ sls invoke -f hub-search-proxy
 # Local Development
 * npm deploy and npm test will not run successfully without AWS credentials. These can be accessed on the Auckland Uni wiki [here](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI)
 * Make sure that the credentials are located in `~/.aws/credentials` and take note of the profile for the credentials. Currently `saml` is the default profile at the time of writing this.
-* If you wish to test with non-`dev` configurations you will also need to specify the ```--stage``` option as either `dev` (sandbox), `test` (nonprod) or `prod`.
+* If you wish to test with non-`dev` configurations you will also need to specify the ```--stage``` option as either `sandbox` (sandbox account), `dev`, `test` (nonprod account) or `prod` (prod account).
 * Passing in the aws credentials to the deploy and test commands can be done by adding arguments after a double dash to the run/test commands. This applies to any npm command.
-* Deploying with the default sandbox stage and saml profile:
+* Deploying with the default dev stage and saml profile:
 ```npm run deploy -- --aws-profile saml```
 * Running tests with non-prod stage environment variables. ```npm run test -- --aws-profile saml --stage test```
   * Environmental variables can be set in ```env/``` which is used by serverless when deploying/testing lambda function.

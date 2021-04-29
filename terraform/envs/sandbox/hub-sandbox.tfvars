@@ -18,6 +18,8 @@ dns_entry              = "research-hub.sandbox.amazon.auckland.ac.nz"
 secondary_addresses    = []
 index_doc              = "index.html"
 acm_arn                = "arn:aws:acm:us-east-1:416527880812:certificate/74e9a6bf-78cc-443b-a1dd-2cd9127719d3"
+create_route53_entry   = true
+# create_route53_zone    = false
 
 # Secondary website (if applicable)
 create_secondary              = false
@@ -34,7 +36,6 @@ route53_hosted_zone_id = "ZMGQD6EYUM762"
 
 # Network
 vpc_id           = "vpc-1e77d279"  # uoa-sandbox  10.0.12.0/22
-subnets = ["subnet-90752ef7", "subnet-4feb9106", "subnet-968e59ce"]
 
 # Loadbalancer for ECS
 lb_name = "research-hub-public-lb"   # arn:aws:elasticloadbalancing:ap-southeast-2:416527880812:loadbalancer/app/research-hub-public-lb/9db900eab79d1dd7
@@ -49,8 +50,8 @@ lb_dns_name      = "rhubcpapi.sandbox.amazon.auckland.ac.nz" # research-hub-publ
 create_dns_entry = true
 
 # ECS Environment
-ecs_cluster_name = "cer-graphql-cluster"
-repository_name  = "research-hub/cer-graphql"
+ecs_cluster_name = "cer-graphql-cluster-sandbox"
+repository_name  = "research-hub/cer-graphql-sandbox"
 kms_uoa_central_key_id = "3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d"
 
 # ECS Services
@@ -72,9 +73,6 @@ cognito_user_pool_arn     = "arn:aws:cognito-idp:ap-southeast-2:416527880812:use
 cognito_user_pool_domain  = "uoapool-sandbox"
 cognito_identity_provider = "UoATestIDP"
 permitted_group           = "staffIntranetUser.ec"
-
-# S3 Contentful Backup Bucket
-create_contentful_backup_bucket = false
 
 # ElasticSearch Service
 create_elasticsearch_domain = false
