@@ -74,7 +74,12 @@ pipeline {
                     withCredentials([
                         file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
                     ]) {
-                        sh "cp $credentialsfile .env"
+                        def filename = (
+                            env.BRANCH_NAME == 'prod' ? '.prod.env' :
+                            env.BRANCH_NAME == 'test' ? '.test.env' :
+                            '.env'
+                        )
+                        sh "cp $credentialsfile ${filename}"
                     }
                 }
             }
@@ -263,14 +268,14 @@ pipeline {
                                     echo 'Deploying research-hub-web to S3 on ' + BRANCH_NAME
                                     
                                     def s3BucketName = (
-                                        env.BRANCH_NAME == 'prod' ? 'research-hub.connect.amazon.auckland.ac.nz' : 
+                                        env.BRANCH_NAME == 'prod' ? 'research-hub.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'test' ? 'research-hub.connect.test.amazon.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'dev' ? 'research-hub-dev.connect.test.amazon.auckland.ac.nz' : 
                                         'research-hub-web'
                                     )
 
                                     def previewS3BucketName = (
-                                        env.BRANCH_NAME == 'prod' ? 'research-hub-preview.connect.amazon.auckland.ac.nz' : 
+                                        env.BRANCH_NAME == 'prod' ? 'research-hub-preview.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'test' ? 'research-hub-preview.connect.test.amazon.auckland.ac.nz' : 
                                         env.BRANCH_NAME == 'dev' ? 'research-hub-dev-preview.connect.test.amazon.auckland.ac.nz' : 
                                         'research-hub-web-preview'
