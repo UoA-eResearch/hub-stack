@@ -17,6 +17,7 @@ export const environment = {
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
       return [
+        { url: 'apigw.test.amazon.auckland.ac.nz', optional: false },
         { url: environment.cerGraphQLUrl, optional: true }
       ]
     },

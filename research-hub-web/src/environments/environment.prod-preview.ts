@@ -7,6 +7,7 @@ environment.auth.logout_uri = "https://research-hub-preview.connect.amazon.auckl
 environment.privateUrlKeyWords = {
   get whoNeedBearerToken() {
     return [
+      { url: 'apigw.prod.amazon.auckland.ac.nz', optional: false },
       { url: environment.cerGraphQLUrl, optional: true }
     ]
   },
