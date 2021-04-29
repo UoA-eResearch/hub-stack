@@ -297,14 +297,14 @@ pipeline {
 
                                     // TODO: Enter dev/test/prod CloudFrontDistroIds
                                     def awsCloudFrontDistroId = (
-                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'prod' ? 'E3P3Z3YL0II0MW' :
                                         env.BRANCH_NAME == 'test' ? 'E1HU1AQ31JKDT9' :
                                         env.BRANCH_NAME == 'dev' ? 'E35ROORLYFFYM4' :
                                         'E20R95KPAKSWTG'
                                     )
 
                                     def previewAwsCloudFrontDistroId = (
-                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'prod' ? 'E1PEITWMDUR8EF' :
                                         env.BRANCH_NAME == 'test' ? 'E1U7DUEU5EBP41' :
                                         env.BRANCH_NAME == 'dev' ? 'E2MW26HILK658J' :
                                         'E2GBENCKM7YT9Q'
