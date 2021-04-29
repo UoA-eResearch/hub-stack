@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ResearchActivityComponent } from './research-activity.component';
 import { SearchBarService } from '../../search-bar/search-bar.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
@@ -42,7 +42,7 @@ describe('ResearchActivityComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ResearchActivityComponent ],
-      imports: [ HttpClientModule, ApolloTestingModule, ],
+      imports: [ HttpClientTestingModule, ApolloTestingModule, ],
       providers: [ SearchBarService ]
     })
     .compileComponents();
