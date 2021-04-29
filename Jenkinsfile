@@ -58,7 +58,7 @@ pipeline {
                         env.awsTokenId = 'Access token for ITS Prod Account'
                         env.awsAccountId = '291148375163'
                         awsProfile = 'uoa-its-prod'
-                        env.SCHEMA_PATH = 'https://rhubcpapi.connect.amazon.auckland.ac.nz/cer-graphql-service/'  // https://rhubcpapi.auckland.ac.nz/cer-graphql-service/
+                        env.SCHEMA_PATH = 'https://rhubcpapi.auckland.ac.nz/cer-graphql-service/'  // https://rhubcpapi.auckland.ac.nz/cer-graphql-service/
                     } else {
                         echo 'You are not on an environment branch, defaulting to sandbox'
                         env.BRANCH_NAME = 'sandbox'
