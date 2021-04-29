@@ -93,6 +93,12 @@ export class EventsComponent implements OnInit, OnDestroy {
         if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           data['callToAction'] = 'mailto:' + data['callToAction'];
         }
+
+        // Strip nulls from related collection data.
+        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
         
         this.detectDevice();
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);

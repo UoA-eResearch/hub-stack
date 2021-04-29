@@ -1,4 +1,4 @@
-import { environment } from "./environment.nonprod";
+import { environment } from "./environment.test";
 
 environment.cerGraphQLUrl = environment.cerGraphQLPreviewUrl;
 environment.auth.redirectUri = "https://research-hub-preview.connect.test.amazon.auckland.ac.nz";
@@ -7,7 +7,6 @@ environment.auth.logout_uri = "https://research-hub-preview.connect.test.amazon.
 environment.privateUrlKeyWords = {
   get whoNeedBearerToken() {
     return [
-      { url: 'apigw.test.amazon.auckland.ac.nz', optional: false },
       { url: environment.cerGraphQLUrl, optional: true }
     ]
   },

@@ -13,9 +13,9 @@ echo "Executing integration tests..."
 cd ./cer-graphql;
 npm run test -- --silent
 
-header "ServerlessNow"
+header "HubSearchProxy"
 echo "Executing unit tests..."
-cd  ../serverless-now
+cd  ../hub-search-proxy
 npm run test 
 
 header "Research-Hub-Web"
