@@ -31,7 +31,7 @@ describe('ResearchHubs Homepage', () => {
     })
 
     it('displays footer', () => {
-        cy.contains(`Copyright © 2021 Centre for eResearch`);
+        cy.contains(`Centre for eResearch`);
     })
 
     it('clicking Sign In takes you to SSO', () => {
