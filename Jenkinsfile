@@ -208,7 +208,7 @@ pipeline {
                             // sh 'npm run test-ci'
 
                             // echo 'Running research-hub-web e2e tests'
-                            // sh "npm run e2e-ci"
+                            sh "npm run e2e-ci"
                         }
                     }
                 }
