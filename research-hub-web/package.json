@@ -63,7 +63,7 @@
     "jasmine": "^2.99.0",
     "localforage": "^1.7.4",
     "markdown-to-html-pipe": "^1.2.5",
-    "marked": "~1.1.0",
+    "marked": "^2.0.3",
     "ngx-contentful-rich-text": "^0.4.0",
     "ngx-device-detector": "^2.0.6",
     "ngx-pagination": "^5.0.0",
