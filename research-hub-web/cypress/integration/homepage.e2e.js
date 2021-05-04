@@ -8,15 +8,24 @@ describe('ResearchHubs Homepage', () => {
         cy.visit('/');
     });
 
-    it('has title', () => {
-        cy.contains('ResearchHub');
-    });
+    // not sure what use this is?
+    // it('has title', () => {
+    //     cy.contains('ResearchHub');
+    // });
 
     // Only enable if featured items are enabled
-    //
-    // it('displays featured items', () => {
-    //     cy.contains(`The thing you learn about learning is that there's always more to learn! Here are the highlights of what we are all learning together in the research community at the University of Auckland`);
-    // })
+
+    // fragile testing approach
+    it('displays featured items (old way)', () => {
+        cy.contains(`The thing you learn about learning is that there's always more to learn! Here are the highlights of what we are all learning together in the research community at the University of Auckland`);
+    })
+
+    // more resiliant approach
+    it('displays featured articles (better way)', () => {
+        cy.expect('h2.featured-title').not.to.be.empty;
+        cy.expect('.featured-content app-cards mat-nav-list:first-child').not.to.be.empty;
+    })
+
 
     it('displays research categories', () => {
         cy.contains(`Research Categories`);
