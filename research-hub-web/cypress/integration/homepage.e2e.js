@@ -43,8 +43,8 @@ describe('ResearchHubs Homepage', () => {
         cy.contains(`Centre for eResearch`);
     })
 
-    it('clicking Sign In takes you to SSO', () => {
-        cy.get('#top-bar').contains('Sign In').click();
-        cy.contains('Or sign in with one of the following services');
-    })
+    // it('clicking Sign In takes you to SSO', () => {
+    //     cy.get('#top-bar').contains('Sign In').click();
+    //     cy.contains('Or sign in with one of the following services');
+    // })
 });
