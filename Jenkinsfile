@@ -191,61 +191,59 @@ pipeline {
         }
 
         stage('Run tests') {
-            parallel {
-                stage('Run research-hub-web tests') {
-                    when {
-                        anyOf {
-                            changeset "**/research-hub-web/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_WEB
-                        }
-                    }
-                    steps {
-                        echo 'Testing research-hub-web project'
-
-                        dir("research-hub-web") {
-                            // TODO Disable tests for now, make them work in Jenkins!
-                            // echo 'Running research-hub-web unit tests'
-                            // sh 'npm run test-ci'
-
-                            // echo 'Running research-hub-web e2e tests'
-                            sh "export HOME=${env.WORKSPACE}"
-                            sh "npm run e2e-ci"
-                        }
+            stage('Run research-hub-web tests') {
+                when {
+                    anyOf {
+                        changeset "**/research-hub-web/**/*.*"
+                        equals expected: true, actual: params.FORCE_REDEPLOY_WEB
                     }
                 }
-                stage('Run cer-graphql tests') {
-                    when {
-                        anyOf {
-                            changeset "**/cer-graphql/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
-                        }
+                steps {
+                    echo 'Testing research-hub-web project'
+
+                    dir("research-hub-web") {
+                        // TODO Disable tests for now, make them work in Jenkins!
+                        // echo 'Running research-hub-web unit tests'
+                        // sh 'npm run test-ci'
+
+                        // echo 'Running research-hub-web e2e tests'
+                        sh "export HOME=${env.WORKSPACE}"
+                        sh "npm run e2e-ci"
                     }
-                    steps {
-                        script {
-                            if (env.BRANCH_NAME != 'prod') {    // tests rely on 2FAB so we do not test in prod
-                                echo 'Testing cer-graphql project'
-                                dir('cer-graphql') {
-                                    sh "npm install"
-                                    sh "export stage=${BRANCH_NAME} && npm run test -- --aws-profile=${awsProfile}"
-                                }
+                }
+            }
+            stage('Run cer-graphql tests') {
+                when {
+                    anyOf {
+                        changeset "**/cer-graphql/**/*.*"
+                        equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                    }
+                }
+                steps {
+                    script {
+                        if (env.BRANCH_NAME != 'prod') {    // tests rely on 2FAB so we do not test in prod
+                            echo 'Testing cer-graphql project'
+                            dir('cer-graphql') {
+                                sh "npm install"
+                                sh "export stage=${BRANCH_NAME} && npm run test -- --aws-profile=${awsProfile}"
                             }
                         }
                     }
                 }
-                stage('Run search-proxy tests') {
-                    when {
-                        anyOf {
-                            changeset "**/hub-search-proxy/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
-                        }
+            }
+            stage('Run search-proxy tests') {
+                when {
+                    anyOf {
+                        changeset "**/hub-search-proxy/**/*.*"
+                        equals expected: true, actual: params.FORCE_REDEPLOY_SP
                     }
-                    steps {
-                        script {
-                            if (env.BRANCH_NAME != 'prod') {
-                                echo "Testing hub-search-proxy project"
-                                dir('hub-search-proxy') {
-                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${env.BRANCH_NAME}"
-                                }
+                }
+                steps {
+                    script {
+                        if (env.BRANCH_NAME != 'prod') {
+                            echo "Testing hub-search-proxy project"
+                            dir('hub-search-proxy') {
+                                sh "npm run test -- --aws-profile ${awsProfile} --stage ${env.BRANCH_NAME}"
                             }
                         }
                     }
