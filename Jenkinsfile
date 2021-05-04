@@ -208,6 +208,7 @@ pipeline {
                             // sh 'npm run test-ci'
 
                             // echo 'Running research-hub-web e2e tests'
+                            sh "export HOME=${env.WORKSPACE}"
                             sh "npm run e2e-ci"
                         }
                     }
