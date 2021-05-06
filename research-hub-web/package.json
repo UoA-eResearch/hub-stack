@@ -56,14 +56,14 @@
     "apollo-link": "^1.2.14",
     "apollo-link-error": "^1.1.13",
     "classlist.js": "^1.1.20150312",
-    "contentful": "^7.14.6",
+    "contentful": "^8.3.2",
     "date-fns": "~2.14.0",
     "graphql": "^15.3.0",
     "graphql-tag": "^2.10.4",
     "jasmine": "^2.99.0",
     "localforage": "^1.7.4",
     "markdown-to-html-pipe": "^1.2.5",
-    "marked": "~1.1.0",
+    "marked": "^2.0.3",
     "ngx-contentful-rich-text": "^0.4.0",
     "ngx-device-detector": "^2.0.6",
     "ngx-pagination": "^5.0.0",
@@ -85,7 +85,7 @@
     "@graphql-codegen/fragment-matcher": "^1.17.0",
     "@graphql-codegen/introspection": "^1.17.0",
     "@graphql-codegen/typescript": "^1.17.0",
-    "@graphql-codegen/typescript-apollo-angular": "^1.17.0",
+    "@graphql-codegen/typescript-apollo-angular": "^2.3.3",
     "@graphql-codegen/typescript-operations": "^1.17.0",
     "@graphql-codegen/typescript-resolvers": "^1.17.0",
     "@types/jasmine": "~3.6.0",
@@ -119,5 +119,4 @@
   "browser": {
     "crypto": false
   }
-  
 }
