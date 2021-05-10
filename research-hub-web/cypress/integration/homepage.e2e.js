@@ -20,7 +20,9 @@ describe('ResearchHubs Homepage', () => {
     })
 
     it('displays research activities', () => {
-        cy.contains(`Research Activities`);
+        cy.expect('#research-activities h2').not.to.be.empty;
+        cy.expect('#research-activities .inner-panel h3').not.to.be.empty;
+        cy.expect('#research-activities .inner-panel p').not.to.be.empty;
     })
 
     it('displays contact section', () => {
