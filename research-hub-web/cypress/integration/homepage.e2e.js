@@ -14,9 +14,9 @@ describe('ResearchHubs Homepage', () => {
         cy.expect('.featured-content app-cards mat-nav-list:first-child').not.to.be.empty;
     })
 
-
     it('displays research categories', () => {
-        cy.contains(`Research Categories`);
+        cy.expect('#research-categories h2').not.to.be.empty;
+        cy.expect('#research-categories mat-card').not.to.be.empty;
     })
 
     it('displays research activities', () => {
