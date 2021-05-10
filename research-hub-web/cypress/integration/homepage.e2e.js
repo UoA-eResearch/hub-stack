@@ -32,7 +32,7 @@ describe('ResearchHubs Homepage', () => {
     })
 
     it('displays footer', () => {
-        cy.contains(`Centre for eResearch`);
+        cy.expect('footer .footer-content li:first-child').not.to.be.empty;
     })
 
     // it('clicking Sign In takes you to SSO', () => {
