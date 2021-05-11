@@ -44,10 +44,8 @@ describe('ResearchHubs Article Pages', () => {
         cy.get('#organisations').contains('Libraries and Learning Services').should('exist');
     });
 
-    // Cypress doesn't dupport multi-tab testing
-    // 
-    // it('clicking on an organisation takes you to the organisation', () => {
-    //     cy.get('#organisations').contains('Centre for eResearch').click();
-    //     cy.contains("The Office of Research Strategy and Integrity (ORSI) was established in 2018 to support the work of the Deputy Vice Chancellor Research and the University's Research Committee in: ");
-    // });
+    it('clicking on an organisation takes you to the organisation', () => {
+        cy.get('#organisations').contains('Te Tumu Herenga').click();
+        cy.expect('#page-title').not.to.be.empty;
+    });
 });
