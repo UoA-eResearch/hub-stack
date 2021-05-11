@@ -13,7 +13,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('article displays body text', () => {
-        cy.contains('Open access is making published research freely available on the internet. Open access material includes journal articles, artwork, books and book chapters, conference proceedings, theses, data and images.');
+        cy.expect('app-articles ng-component.ng-star-inserted').not.to.be.empty;
     });
 
     it('displays a list of related items', () => {
