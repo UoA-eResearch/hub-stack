@@ -9,7 +9,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('can visit an article and display its subtitle', () => {
-        cy.contains('Open Access brings increased visibility, usage and impact to researchers and institutions. It benefits researchers, institutions, nations and society as a whole.');
+        cy.expect('app-articles .content-summary').not.to.be.empty;
     });
 
     it('article displays body text', () => {
