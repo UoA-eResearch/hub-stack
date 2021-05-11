@@ -5,7 +5,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('can visit an article and display its title', () => {
-        cy.contains('Open Access');
+        cy.expect('h1.content-title').not.to.be.empty;
     });
 
     it('can visit an article and display its subtitle', () => {
