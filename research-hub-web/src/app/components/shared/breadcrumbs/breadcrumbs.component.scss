@@ -1,5 +1,4 @@
-@import '../../../../typography.scss';
-@import '../../../../themes.scss';
+// import 'variables';
 
 
 /**
@@ -9,7 +8,7 @@
     font-size: 14px;
     margin: 16px auto;
     margin-bottom: 42px;
-  
+
     .breadcrumb-subhub {
         &::after {
             color: $breadcrumb-current-color;
@@ -17,7 +16,7 @@
             content: '/'
         }
     }
-  
+
     #breadcrumb-current-page {
         color: $breadcrumb-current-color;
     }

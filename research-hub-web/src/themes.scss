@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import 'variables';
 
 
 /**
@@ -7,348 +8,38 @@
 @include mat-core();
 
 
-/**
- * University of Auckland colors from Web Style Guide 
- */ 
-$dark-blue: #00467F;
-$light-blue: #009AC7;
-$silver: #8D9091;
-$dark-grey: #333333;
-$mid-grey: #404040;
-$body-grey: #4A4A4C;
-$silver-lining: #BEC3C4;
-$input-grey: #D9D9D9;
-$light-grey: #F2F2F2;
+
+
+
 
 
 /**
- * Material design colors generated with: http://mcg.mbitson.com/
- */ 
-$hub-teal: (
-  50 : #e1f2f4,
-  100 : #b3dfe4,
-  200 : #81cad2,
-  300 : #4eb4c0,
-  400 : #28a4b3,
-  500 : #018193,
-  600 : #028c9d,
-  700 : #018193,
-  800 : #01778a,
-  900 : #016579,
-  A100 : #a7edff,
-  A200 : #74e3ff,
-  A400 : #41d9ff,
-  A700 : #27d4ff,
-  contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #000000,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #000000,
-  )
-);
-$hub-orange: (
-  50 : #fff0e0,
-  100 : #ffdab3,
-  200 : #ffc180,
-  300 : #ffa84d,
-  400 : #ff9626,
-  500 : #ff8300,
-  600 : #ff7b00,
-  700 : #ff7000,
-  800 : #ff6600,
-  900 : #ff5300,
-  A100 : #ffffff,
-  A200 : #fff6f2,
-  A400 : #ffd0bf,
-  A700 : #ffbda6,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: white,
-    400: white,
-    500: white,
-    600: $white-87-opacity,
-    700: $white-87-opacity,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
-    A100: $black-87-opacity,
-    A200: white,
-    A400: white,
-    A700: $white-87-opacity,
-  )
-);
-$hub-pink: (
-  50 : #f6e7ec,
-  100 : #e8c2d0,
-  200 : #d89ab1,
-  300 : #c87191,
-  400 : #bd527a,
-  500 : #b13462,
-  600 : #aa2f5a,
-  700 : #a12750,
-  800 : #982146,
-  900 : #881534,
-  A100 : #ffbdcd,
-  A200 : #ff8aa6,
-  A400 : #ff577f,
-  A700 : #ff3d6c,
-  contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #000000,
-    400 : #ffffff,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #000000,
-    A700 : #ffffff,
-  )
-);
-$hub-navy: (
-  50 : #e0e8eb,
-  100 : #b3c6cd,
-  200 : #80a0ac,
-  300 : #4d798b,
-  400 : #265d72,
-  500 : #004059,
-  600 : #003a51,
-  700 : #003248,
-  800 : #002a3e,
-  900 : #001c2e,
-  A100 : #67b5ff,
-  A200 : #349dff,
-  A400 : #0184ff,
-  A700 : #0077e6,
-  contrast: (
-    50 : #000000,
-    100 : #000000,
-    200 : #000000,
-    300 : #ffffff,
-    400 : #ffffff,
-    500 : #ffffff,
-    600 : #ffffff,
-    700 : #ffffff,
-    800 : #ffffff,
-    900 : #ffffff,
-    A100 : #000000,
-    A200 : #000000,
-    A400 : #ffffff,
-    A700 : #ffffff,
-  )
-);
-
-
-/**
- * Research Activity Themes
- */  
- $research-activity-palette-plan:  (
-  50 : #ece7f1,
-  100 : #d0c3dd,
-  200 : #b19cc7,
-  300 : #9174b0,
-  400 : #7a569f,
-  500 : #62388e,
-  600 : #5a3286,
-  700 : #502b7b,
-  800 : #462471,
-  900 : #34175f,
-  A100 : #c09aff,
-  A200 : #a067ff,
-  A400 : #8034ff,
-  A700 : #701aff,
-  contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #ffffff,
-      500 : #ffffff,
-      600 : #ffffff,
-      700 : #ffffff,
-      800 : #ffffff,
-      900 : #ffffff,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #ffffff,
-      A700 : #ffffff,
-  )
-);
-$research-activity-palette-create:  (
-    50 : #e6f3f9,
-    100 : #c1e0f0,
-    200 : #97cce6,
-    300 : #6db8db,
-    400 : #4ea8d4,
-    500 : #2f99cc,
-    600 : #2a91c7,
-    700 : #2386c0,
-    800 : #1d7cb9,
-    900 : #126bad,
-    A100 : #def0ff,
-    A200 : #abd8ff,
-    A400 : #78c0ff,
-    A700 : #5eb4ff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);
-$research-activity-palette-analyze:  (
-  50 : #e6f3e7,
-  100 : #c2e1c3,
-  200 : #99cd9b,
-  300 : #70b873,
-  400 : #51a955,
-  500 : #329a37,
-  600 : #2d9231,
-  700 : #26882a,
-  800 : #1f7e23,
-  900 : #136c16,
-  A100 : #a3ffa5,
-  A200 : #70ff74,
-  A400 : #3dff42,
-  A700 : #24ff29,
-  contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #000000,
-      500 : #ffffff,
-      600 : #ffffff,
-      700 : #ffffff,
-      800 : #ffffff,
-      900 : #ffffff,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #000000,
-      A700 : #000000,
-  )
-);
-$research-activity-palette-publish:  (
-  50 : #fef3e3,
-  100 : #fce0b9,
-  200 : #facb8b,
-  300 : #f7b65d,
-  400 : #f6a73a,
-  500 : #f49717,
-  600 : #f38f14,
-  700 : #f18411,
-  800 : #ef7a0d,
-  900 : #ec6907,
-  A100 : #ffffff,
-  A200 : #ffece1,
-  A400 : #ffcdae,
-  A700 : #ffbd95,
-  contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #000000,
-      500 : #000000,
-      600 : #000000,
-      700 : #000000,
-      800 : #000000,
-      900 : #000000,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #000000,
-      A700 : #000000,
-  )
-);
-$research-activity-palette-discover:  (
-  50 : #f9e6e7,
-  100 : #f0c2c2,
-  200 : #e6999a,
-  300 : #dc7071,
-  400 : #d55152,
-  500 : #cd3234,
-  600 : #c82d2f,
-  700 : #c12627,
-  800 : #ba1f21,
-  900 : #ae1315,
-  A100 : #ffe0e0,
-  A200 : #ffadad,
-  A400 : #ff7a7a,
-  A700 : #ff6061,
-  contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #ffffff,
-      500 : #ffffff,
-      600 : #ffffff,
-      700 : #ffffff,
-      800 : #ffffff,
-      900 : #ffffff,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #000000,
-      A700 : #000000,
-  )
-);
-
-/**
- * Create the hub app theme
- */ 
+* generate theme colors
+*/
 $hub-app-primary: mat-palette($hub-teal);
 $hub-app-accent: mat-palette($hub-orange);
 $hub-app-warn: mat-palette($hub-pink);
+
+
+
+  /**
+  * Site wide colors
+  */
+  $color-primary: map-get($hub-app-primary, 500);
+  $color-accent: map-get($hub-app-accent, A200);
+  $color-pink: map-get($hub-pink, 500);
+  $color-orange: map-get($hub-orange, 500);
+  $color-icon: #757575;
+  $color-background: #FFFFFF;
+  $color-content-header: map-get($hub-navy, 500);
+  $color-content-summary-bg: auto;
+  $color-guide-tile-bg: map-get($hub-teal, 700);
+
+
+
+/**
+ * Create the hub app theme
+*/
 $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
 @include angular-material-theme($hub-app-theme);
 $mat-theme-ignore-duplication-warnings: true;
-
-
-/**
- * Site wide measurements
- */
-$width-page-max: 100vw;
-$offset-gt-xs: 2vw;
-$height-footer: 200px;
-$height-footer-xs: 270px;
-$padding-site: 5vw;
-$padding-site-top: 4vh;
-
-
-/**
- * Site wide colors
- */
-$color-primary: map-get($hub-app-primary, 500);
-$color-accent: map-get($hub-app-accent, A200);
-$color-pink: map-get($hub-pink, 500);
-$color-orange: map-get($hub-orange, 500);
-$color-icon: #757575;
-$color-background: #FFFFFF;
-$color-content-header: map-get($hub-navy, 500);
-$color-content-summary-bg: auto;
-$color-guide-tile-bg: map-get($hub-teal, 700);

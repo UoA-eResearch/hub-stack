@@ -1,5 +1,4 @@
-@import '../../../../themes.scss';
-@import '../../../../styles.scss';
+// import 'variables';
 
 
 div.mat-card-avatar mat-icon {
@@ -14,7 +13,7 @@ div.collection {
     cursor: pointer;
 
     &.ssoProtected {
-        
+
     }
     $avatar-size:  64px;
 

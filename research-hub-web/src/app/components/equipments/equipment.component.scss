@@ -1,6 +1,4 @@
-@import '../../../themes.scss';
-@import '../../../typography.scss';
-@import '../../../styles.scss';
+// import 'variables';
 
 mat-expansion-panel,
 mat-card  {
@@ -20,10 +18,10 @@ mat-card  {
  * Specifications Table
  */
  .specifications-table {
-    border-collapse: collapse; 
+    border-collapse: collapse;
     width: 100%;
 }
-.specifications-table td, 
+.specifications-table td,
 .specifications-table th {
     border: 1px solid #ddd;
     padding: 8px;

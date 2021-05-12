@@ -29,7 +29,12 @@
               "graphql-tag",
               "crypto-js",
               "zen-observable"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            }
           },
           "configurations": {
             "local": {

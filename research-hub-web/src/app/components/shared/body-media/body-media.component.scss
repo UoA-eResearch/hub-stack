@@ -1,6 +1,4 @@
-@import '../../../../styles.scss';
-@import '../../../../themes.scss';
-@import '../../../../typography.scss';
+// import 'variables';
 
 /**
  * Blockquote
@@ -26,7 +24,7 @@
  * If viewed on a mobile device
  */
 .blockquote-mobile {
-    width: 100%; 
+    width: 100%;
 }
 
 
@@ -34,11 +32,11 @@
  * Asset Block
  */
  .embedded-asset-block {
-    max-width: 100%; 
-    text-align: center; 
+    max-width: 100%;
+    text-align: center;
 }
 .embedded-asset-block img {
-    width: 70%; 
+    width: 70%;
     object-fit: cover
 }
 .asset-summary {
@@ -123,13 +121,13 @@ mat-icon {
  */
  .embedded-asset-block-mobile img,
  .embedded-asset-block-mobile .mat-card  {
-     width: 100%; 
+     width: 100%;
  }
 
 
 /**
  * Card Image
- */ 
+ */
  .mat-card-image {
     min-height: 80px;
     max-height: 152px;
@@ -139,7 +137,7 @@ mat-icon {
 }
 
 .embedded-entry-block .mat-card-title a {
-    font-size: 18px; 
+    font-size: 18px;
     color: map-get($hub-navy, 500);
 }
 .embedded-entry-block .mat-card-title a:hover {
@@ -179,7 +177,7 @@ mat-icon {
 
 .mat-card-title {
     span  * {
-        font-size: 18px; 
+        font-size: 18px;
         color: map-get($hub-navy, 500);
     }
 }
@@ -205,7 +203,7 @@ mat-icon {
     position: relative;
     padding-top: 56.25%;
 }
-  
+
 .youtube {
     position: absolute;
     top: 0;
