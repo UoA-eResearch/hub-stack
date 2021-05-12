@@ -1,6 +1,4 @@
-@import '../../../../styles.scss';
-@import '../../../../themes.scss';
-@import '../../../../typography.scss';
+// import 'variables';
 
 
 /*
@@ -18,7 +16,7 @@
         color: white;
         font-size: 36px;
         text-align: center;
-        @include size(medium) { 
+        @include size(medium) {
           text-align: left;
           font-size: 48px;
         }
@@ -30,7 +28,7 @@
         word-wrap: break-word;
         margin: 0 auto;
         text-align: center;
-        @include size(medium) { 
+        @include size(medium) {
           text-align: left;
           font-size: 20px;
         }

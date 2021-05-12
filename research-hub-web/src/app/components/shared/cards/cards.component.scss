@@ -1,6 +1,4 @@
-@import '../../../../themes.scss';
-@import '../../../../typography.scss';
-@import '../../../../styles.scss';
+// import 'variables';
 
 
 /**
@@ -12,7 +10,7 @@ mat-card {
 
 /**
  * Card Image
- */ 
+ */
 .mat-card-image {
   min-height: 80px;
   max-height: 152px;
@@ -71,6 +69,6 @@ mat-card {
      font-size: 12px!important;
      color: $body-grey!important;
      width: 16px!important;
-     vertical-align: middle;   
+     vertical-align: middle;
     }
 }

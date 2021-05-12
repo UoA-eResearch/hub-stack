@@ -1,6 +1,4 @@
-@import '../../../styles.scss';
-@import '../../../typography.scss';
-@import '../../../themes.scss';
+// import 'variables';
 
 
 // Grey bakground for a section of homepage content
@@ -30,7 +28,7 @@
 // Results controls container
 .result-list-filter {
     width: 100%;
-    @include size(medium) { 
+    @include size(medium) {
         width: 100%;
     }
     mat-select {

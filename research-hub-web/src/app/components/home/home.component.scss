@@ -1,7 +1,5 @@
-@import "../../../typography.scss";
-@import "../../../themes.scss";
-@import "../../../styles.scss";
-@import '../../app.component.scss';
+// import 'variables';
+@import '../../app.component.scss'; // this should not be imported anywhere; fix
 
 
 /**
@@ -55,7 +53,7 @@
         .text {
             width: 100%;
             @extend .text;
-            @include size(large) { 
+            @include size(large) {
             text-align: left;
             }
         }

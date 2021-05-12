@@ -1,7 +1,5 @@
-@import '../../../../styles.scss';
-@import '../../../../themes.scss';
-@import '../../../../typography.scss';
-@import '../home.component.scss';
+// import 'variables';
+@import '../home.component.scss'; //should not be imported here
 
 /**
  * Custom Text
@@ -9,7 +7,7 @@
 .text {
   width: 100%;
   @extend .text;
-  @include size(large) { 
+  @include size(large) {
     text-align: left;
   }
 }
