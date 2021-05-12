@@ -256,7 +256,7 @@
 
                     <!-- Search Bar -->
                     <input role="textbox" autofocus matInput (keydown.enter)="search()"
-                      [(ngModel)]="searchText" placeholder="Search">
+                      [(ngModel)]="searchText" placeholder="Search" id="searchTextInput">
                     <button role="button" matSuffix *ngIf="searchText" (click)="clearSearchText()" 
                       (keydown.enter)="clearSearchText()"  mat-icon-button>
                       <mat-icon>close</mat-icon>
