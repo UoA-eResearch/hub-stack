@@ -232,6 +232,8 @@ export class SearchBarService {
         pageTypes = ["event"]
       }
 
+      // TODO send search query to GA dataLayer
+
       // Create the search query
         let query = {
           query: this.getSearchText(),
