@@ -9,6 +9,7 @@ pipeline {
         booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend even if there are no code changes.' )
         booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API even if there are no code changes.')
         booleanParam(name: "FORCE_REDEPLOY_SP", defaultValue: false, description: 'Force redeploy the search-proxy Lambda  even if there are no code changes.')
+        booleanParam(name: "FORCE_REDEPLOY_LINK_CHECKER", defaultValue: false, description: "Force redeploy the SubHub link checker Contentful app even if there are no code changes.")
     }
 
     agent  {
@@ -74,7 +75,12 @@ pipeline {
                     withCredentials([
                         file(credentialsId: "credentials-${BRANCH_NAME}",variable:"credentialsfile")
                     ]) {
-                        sh "cp $credentialsfile .env"
+                        def filename = (
+                            env.BRANCH_NAME == 'prod' ? '.prod.env' :
+                            env.BRANCH_NAME == 'test' ? '.test.env' :
+                            '.env'
+                        )
+                        sh "cp $credentialsfile ${filename}"
                     }
                 }
             }
@@ -123,6 +129,20 @@ pipeline {
                         dir("cer-graphql") {
                             echo "Building the docker image and tag it as latest"
                             sh "docker build . -t cer-graphql:latest"
+                        }
+                    }
+                }
+                stage('Build subhub-link-checker') {
+                    when {
+                        anyOf {
+                            changeset "**/subhub-link-checker/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_LINK_CHECKER
+                        }
+                    }
+                    steps {
+                        dir("subhub-link-checker") {
+                            echo "Installing link-checker dependencies..."
+                            sh "npm install"
                         }
                     }
                 }
@@ -244,6 +264,21 @@ pipeline {
                         }
                     }
                 }
+        //        stage('Run link-checker tests') {
+        //            when {
+        //                anyOf {
+        //                   changeset "**/subhub-link-checker/**/*.*"
+        //                    equals expected: true, actual: params.FORCE_REDEPLOY_LINK_CHECKER
+        //                }
+        //            }
+        //            steps {
+        //                echo 'Testing link-checker project'
+        //                dir('subhub-link-checker') {
+        //                   sh "npm install"
+        //                    sh "npm run test"
+        //                }
+        //            }
+        //        }
             }
         }
 
@@ -292,14 +327,14 @@ pipeline {
 
                                     // TODO: Enter dev/test/prod CloudFrontDistroIds
                                     def awsCloudFrontDistroId = (
-                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'prod' ? 'E3P3Z3YL0II0MW' :
                                         env.BRANCH_NAME == 'test' ? 'E1HU1AQ31JKDT9' :
                                         env.BRANCH_NAME == 'dev' ? 'E35ROORLYFFYM4' :
                                         'E20R95KPAKSWTG'
                                     )
 
                                     def previewAwsCloudFrontDistroId = (
-                                        env.BRANCH_NAME == 'prod' ? '' :
+                                        env.BRANCH_NAME == 'prod' ? 'E1PEITWMDUR8EF' :
                                         env.BRANCH_NAME == 'test' ? 'E1U7DUEU5EBP41' :
                                         env.BRANCH_NAME == 'dev' ? 'E2MW26HILK658J' :
                                         'E2GBENCKM7YT9Q'
@@ -354,6 +389,22 @@ pipeline {
                         }
                         echo "Deploy to ${BRANCH_NAME} complete"
                         
+                    }
+                }
+                stage('Deploy link-checker') {
+                    when {
+                        anyOf {
+                            changeset "**/subhub-link-checker/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_LINK_CHECKER
+                        }
+                    }
+                    steps {
+                        dir("subhub-link-checker") {
+                            echo "Deploying to GitHub pages..."
+                            sh "git config user.name cerci-user"
+                            sh "git config credential.helper '/bin/bash credentials-helper-ci.sh'"
+                            sh "npm run deploy"
+                        }
                     }
                 }
             }

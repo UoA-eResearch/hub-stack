@@ -13,7 +13,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('article displays body text', () => {
-        cy.contains('Open access is making published research freely available on the internet. Open access material includes journal articles, artwork, books and book chapters, conference proceedings, theses, data and images.');
+        cy.contains('Open access is making published research');
     });
 
     it('displays a list of related items', () => {
@@ -21,8 +21,8 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Research Outputs').click();
-        cy.contains('Research Outputs is the research management system used by University staff and doctoral candidates to record their research publications and activities.');
+        cy.get('#you-might-be-interested-in').contains('Creative Commons').click();
+        cy.contains('Open Content');
     });
 
     // it('displays a list of contacts', () => {

@@ -168,6 +168,6 @@ describe('CerGraphqlService', () => {
     service['_subHubCollectionWithChildPagesSlugs'] = circularMock_subHubCollectionWithChildPagesSlugs;
 
     const entrySlug = 'first-article';
-    await expectAsync(service.getParentSubHubs(entrySlug)).toBeRejectedWithError('Error loading breadcrumbs');
+    await expectAsync(service.getParentSubHubs(entrySlug)).toBeRejectedWithError();
   });
 });
