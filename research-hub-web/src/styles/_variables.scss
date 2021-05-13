@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 /**
  * University of Auckland colors from Web Style Guide
  */
@@ -22,6 +24,8 @@
   $height-footer-xs: 270px;
   $padding-site: 5vw;
   $padding-site-top: 4vh;
+
+
 
   /**
   * Material design colors generated with: http://mcg.mbitson.com/
@@ -74,20 +78,20 @@
     A400 : #ffd0bf,
     A700 : #ffbda6,
     contrast: (
-      50: $black-87-opacity,
-      100: $black-87-opacity,
-      200: $black-87-opacity,
+      50: white,
+      100: white,
+      200: white,
       300: white,
       400: white,
       500: white,
-      600: $white-87-opacity,
-      700: $white-87-opacity,
-      800: $white-87-opacity,
-      900: $white-87-opacity,
-      A100: $black-87-opacity,
+      600: white,
+      700: white,
+      800: white,
+      900: white,
+      A100: white,
       A200: white,
       A400: white,
-      A700: $white-87-opacity,
+      A700: white,
     )
   );
 
@@ -322,3 +326,76 @@ $research-activity-palette-discover:  (
 );
 
 
+/**
+* generate theme colors
+*/
+$hub-app-primary: mat-palette($hub-teal);
+$hub-app-accent: mat-palette($hub-orange);
+$hub-app-warn: mat-palette($hub-pink);
+
+
+/**
+* Site wide colors
+*/
+$color-primary: map-get($hub-app-primary, 500);
+$color-accent: map-get($hub-app-accent, A200);
+$color-pink: map-get($hub-pink, 500);
+$color-orange: map-get($hub-orange, 500);
+$color-icon: #757575;
+$color-background: #FFFFFF;
+$color-content-header: map-get($hub-navy, 500);
+$color-content-summary-bg: auto;
+$color-guide-tile-bg: map-get($hub-teal, 700);
+
+/**
+* All typography
+*/
+
+$font-family: 'National';
+
+$body-light-bg-font-color:  black;
+$link-light-bg-color: map-get($hub-teal, 700);
+
+$breadcrumb-previous-color: map-get($hub-teal, A100);
+$breadcrumb-current-color: $color-icon;
+
+$app-base-typography: mat-typography-config(
+  $font-family:   $font-family,
+  $display-4:     mat-typography-level(112px, 112px, 300),
+  $display-3:     mat-typography-level(56px, 56px, 400),
+  $display-2:     mat-typography-level(45px, 48px, 400),
+  $display-1:     mat-typography-level(34px, 40px, 400),
+  $headline:      mat-typography-level(28px, 32px, 400), // <h1>
+  $title:         mat-typography-level(24px, 28px, 500), // <h2>
+  $subheading-2:  mat-typography-level(20px, 24px, 400), // <h3>
+  $subheading-1:  mat-typography-level(16px, 20px, 400), // <h4>
+  $body-2:        mat-typography-level(16px, 24px, 500), // bolder body text
+  $body-1:        mat-typography-level(16px, 22px, 400), // base body text <p> ?
+  $caption:       mat-typography-level(12px, 20px, 400), // smaller body and hint text
+  $button:        mat-typography-level(14px, 14px, 500),
+  $input:         mat-typography-level(16px, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
+);
+
+/**
+ * Sidenav
+ */
+ $app-sidenav-list-typography: mat-typography-config(
+  $body-1:        mat-typography-level(16px, 20px, 400), // text
+  $body-2:        mat-typography-level(24px, 24px, 500) // icon
+);
+
+/**
+ * Mat Chip
+ */
+$app-chips-typography: mat-typography-config(
+  $button:      mat-typography-level(16px, 20px, 400) // text
+);
+
+
+/**
+ * Colors
+ */
+$heading-1-font-color: map-get($hub-navy, 500);
+$heading-2-font-color: map-get($hub-navy, 500);
+$heading-3-font-color: $dark-grey;
+$heading-4-font-color: $dark-grey;

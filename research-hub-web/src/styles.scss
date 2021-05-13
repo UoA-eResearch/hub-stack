@@ -1,16 +1,16 @@
 @import 'themes';
 @import 'typography';
-
+@import 'variables';
 
 /**
  * Native Elements
  */
-* { 
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-   box-sizing: border-box; 
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+   box-sizing: border-box;
 }
-html, 
+html,
 body {
   margin: 0;
   padding: 0;
@@ -60,7 +60,7 @@ hr {
       font-weight: bold;
       display: inline-block;
       width: 1em;
-  } 
+  }
 }
 
 
@@ -144,7 +144,7 @@ span {
 }
 
 
-/* 
+/*
  * app-markdown related styles
  */
 @mixin headings {
@@ -259,7 +259,7 @@ svg {
 /*
  * Top menu drop-down style
  */
-.mat-menu-content, 
+.mat-menu-content,
 .mat-menu-item {
   color: white;
   background-color: map-get($hub-teal, 700);
@@ -275,7 +275,7 @@ svg {
  ::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple {
   /*change color of underline*/
   background-color: rgba(200, 200, 200, 0.6) !important;
-} 
+}
 
 ::ng-deep.mat-form-field-ripple {
  /*change color of underline when focused*/
@@ -327,7 +327,7 @@ svg {
 .content-title {
   color: map-get($hub-navy, 500);
   font-size: 52px;
-  font-weight: bold; 
+  font-weight: bold;
   line-height: 110%;
 }
 .content-title-mobile {
@@ -335,11 +335,11 @@ svg {
 }
 .content-summary {
   color: $color-icon;
-  font-size: 24px; 
+  font-size: 24px;
   line-height: 110%;
 }
 .content-summary-mobile {
-  font-size: 20px; 
+  font-size: 20px;
 }
 
 
@@ -425,33 +425,4 @@ svg {
 }
 
 
-/**
- * Size/Media Query Mixins
- */
-@mixin size($size) {
 
-  /* Extra small devices (phones, 600px and down) */
-  @if $size == extra-small {
-      @media only screen and (max-width: 599px) { @content; }
-  }
-
-  /* Small devices (portrait tablets and large phones, 640px and up) */
-  @if $size == small {
-      @media only screen and (min-width: 600px) { @content; }
-  }
-
-  /* Medium devices (landscape tablets, 768px and up) */
-  @if $size == medium {
-      @media only screen and (min-width: 960px) { @content; }
-  }
-
-  /* Large devices (laptops/desktops, 992px and up) */
-  @if $size == large {
-      @media only screen and (min-width: 1280px) { @content; }
-  }
-
-  /* Extra large devices (large laptops and desktops, 1200px and up) */
-  @if $size == extra-large {
-      @media only screen and (min-width: 1920px) { @content; }
-  }
-}

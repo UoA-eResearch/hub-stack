@@ -1,5 +1,5 @@
-// import 'variables';
-
+@import 'variables';
+@import 'mixins';
 
 div.mat-card-avatar mat-icon {
     color: map-get($hub-teal, 800);
