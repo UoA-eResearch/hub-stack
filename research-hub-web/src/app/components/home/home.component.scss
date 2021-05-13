@@ -7,7 +7,7 @@
  * Content Container
  */
  .content-container {
-    @extend .margin-bottom;
+    @extend .margin-bottom !optional; // this needs to be fixed properly
     padding: 16px 0;
     width: 95vw;
     margin: 0 auto;
