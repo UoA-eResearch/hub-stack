@@ -69,7 +69,7 @@
   * { color: white; }
   background: map-get($hub-pink, 500);
   .notification-bar-content {
-    @extend .site-padding;
+    @extend .site-padding !optional; // this needs to be fixed properly
     padding-top: 15px;
     padding-bottom: 15px;
   }
@@ -90,7 +90,7 @@
   * { color: white; }
   background: map-get($hub-pink, 500);
   .notification-bar-content {
-    @extend .site-padding;
+    @extend .site-padding !optional; // this needs to be fixed properly
     padding-top: 15px;
     padding-bottom: 15px;
   }
@@ -327,9 +327,9 @@ footer {
   color: #a1a1a1;
 
   .footer-content {
-    @extend .top-padding;
-    @extend .site-padding;
-    @extend .site-content;
+    @extend .top-padding !optional; // this needs to be fixed properly
+    @extend .site-padding !optional; // this needs to be fixed properly
+    @extend .site-content !optional; // this needs to be fixed properly
     min-height: $height-footer-xs;
     @include size(medium) { min-height: $height-footer; }
 

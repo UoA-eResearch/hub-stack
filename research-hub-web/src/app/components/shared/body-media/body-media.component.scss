@@ -41,7 +41,7 @@
     object-fit: cover
 }
 .asset-summary {
-    @extend .card-summary;
+    @extend .card-summary !optional; // this needs to be fixed properly
     font-size: 12px;
 }
 
@@ -50,7 +50,7 @@
   * Download Card
   */
  .file {
-     @extend .section;
+     @extend .section !optional; // this needs to be fixed properly
  }
  .file .mat-card {
      width: 35%;
@@ -163,7 +163,7 @@ mat-icon {
  * Entry Block
  */
 .embedded-entry-block {
-    @extend .section;
+    @extend .section !optional; // this needs to be fixed properly
     a {
         display: flex;
         align-items: center;

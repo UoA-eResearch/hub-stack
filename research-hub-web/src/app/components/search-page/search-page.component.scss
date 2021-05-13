@@ -44,7 +44,7 @@
 }
 
 .no-results {
-    @extend .section-2;
+    @extend .section-2 !optional; // this needs to be fixed properly
     text-align: center;
 }
 
