@@ -1,31 +1,32 @@
 {
   "name": "cer-graphql",
   "version": "1.0.0",
-  "description": "An Apollo GraphQL server used to proxy and authorise requests to external data sources.",
+  "description": "A GraphQL server used to proxy and authorise requests to external data sources.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "test-local": "export stage='test' && npm run test",
     "test-local-windows": "set stage='test' && npm run test",
-    "dev": "nodemon ./index.js --config-from-file --watch=./**/*"
+    "dev": "nodemon ./server.js --config-from-file --watch=./**/*"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/UoA-eResearch/cer-graphql.git"
   },
-  "author": "Sam Kavanagh",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/UoA-eResearch/cer-graphql/issues"
   },
   "homepage": "https://github.com/UoA-eResearch/cer-graphql#readme",
   "dependencies": {
-    "apollo-link-http": "^1.5.17",
-    "apollo-server": "^2.17.0",
     "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
     "graphql": "^15.5.0",
+    "graphql-tools": "^7.0.4",
     "jsonwebtoken": "^8.5.1",
-    "jwk-to-pem": "^2.0.4"
+    "jwk-to-pem": "^2.0.4",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "apollo-server-testing": "^2.17.0",
