@@ -1,37 +1,36 @@
-@import 'variables';
-@import 'mixins';
-
+@import "variables";
+@import "mixins";
 
 /*
  * Featured Container
  */
- .featured-container {
-    z-index: 1;
-    background: map-get($hub-teal, 700);
-    .featured-content {
-      width: 95vw;
-      margin: 60px auto;
-      @extend .site-padding !optional; // this needs to be fixed properly
-    }
-      .featured-title {
-        color: white;
-        font-size: 36px;
-        text-align: center;
-        @include size(medium) {
-          text-align: left;
-          font-size: 48px;
-        }
-      }
-      .featured-summary {
-        color: white;
-        font-size: 16px;
-        position: relative;
-        word-wrap: break-word;
-        margin: 0 auto;
-        text-align: center;
-        @include size(medium) {
-          text-align: left;
-          font-size: 20px;
-        }
-      }
+.featured-container {
+  z-index: 1;
+  background: map-get($hub-teal, 700);
+  .featured-content {
+    width: 95vw;
+    margin: 60px auto;
+    @extend .site-padding !optional; // this needs to be fixed properly
   }
+  .featured-title {
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    @include size(medium) {
+      text-align: left;
+      font-size: 48px;
+    }
+  }
+  .featured-summary {
+    color: white;
+    font-size: 16px;
+    position: relative;
+    word-wrap: break-word;
+    margin: 0 auto;
+    text-align: center;
+    @include size(medium) {
+      text-align: left;
+      font-size: 20px;
+    }
+  }
+}
