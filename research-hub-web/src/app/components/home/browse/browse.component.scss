@@ -1,5 +1,5 @@
-@import 'variables';
-@import 'mixins';
+@import "variables";
+@import "mixins";
 // @import '../home.component.scss'; //should not be imported here
 
 /**
@@ -12,7 +12,6 @@
     text-align: left;
   }
 }
-
 
 /**
  * Browse and guide tiles
@@ -29,21 +28,21 @@
   }
   .tile-button {
     color: map-get($hub-navy, 500);
-    font-size: 16px!important;
+    font-size: 16px !important;
   }
   .standard-button {
     @extend .standard-button;
     margin-bottom: 16px;
-    border: 3px solid map-get($hub-navy, 500)!important;
-    background-color: map-get($hub-navy, 500)!important;
+    border: 3px solid map-get($hub-navy, 500) !important;
+    background-color: map-get($hub-navy, 500) !important;
     &:hover {
       @extend .standard-button;
-      background-color: white!important;
-      color: map-get($hub-navy, 500)!important;
+      background-color: white !important;
+      color: map-get($hub-navy, 500) !important;
     }
   }
 }
 
 mat-card {
-  box-shadow: 0px 0px 10px #cfcfcf!important;
+  box-shadow: 0px 0px 10px #cfcfcf !important;
 }
