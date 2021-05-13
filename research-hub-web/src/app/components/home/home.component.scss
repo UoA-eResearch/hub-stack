@@ -1,4 +1,5 @@
-// import 'variables';
+@import 'variables';
+@import 'mixins';
 @import '../../app.component.scss'; // this should not be imported anywhere; fix
 
 

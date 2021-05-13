@@ -14,30 +14,6 @@
 
 
 /**
-* generate theme colors
-*/
-$hub-app-primary: mat-palette($hub-teal);
-$hub-app-accent: mat-palette($hub-orange);
-$hub-app-warn: mat-palette($hub-pink);
-
-
-
-  /**
-  * Site wide colors
-  */
-  $color-primary: map-get($hub-app-primary, 500);
-  $color-accent: map-get($hub-app-accent, A200);
-  $color-pink: map-get($hub-pink, 500);
-  $color-orange: map-get($hub-orange, 500);
-  $color-icon: #757575;
-  $color-background: #FFFFFF;
-  $color-content-header: map-get($hub-navy, 500);
-  $color-content-summary-bg: auto;
-  $color-guide-tile-bg: map-get($hub-teal, 700);
-
-
-
-/**
  * Create the hub app theme
 */
 $hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
