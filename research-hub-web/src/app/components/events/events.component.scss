@@ -3,58 +3,58 @@
 
 mat-expansion-panel,
 mat-card {
-    margin: 1vh 0;
+  margin: 1vh 0;
 }
 
 /**
  * event Image
  */
 .event-image {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 /**
  * Specifications Table
  */
 .specifications-table {
-    width: 100%;
-    border-collapse: collapse;
-    @include size(large) {
-        width: 50%;
-        margin: 0 auto;
-    }
-    td,
-    th {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-    th {
-        text-align: left;
-        padding-top: 12px;
-        margin-bottom: 12px;
-        color: $color-background;
-        background-color: map-get($hub-teal, 700);
-    }
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    td:nth-child(odd) {
-        font-weight: bold;
-        width: 25%;
-    }
+  width: 100%;
+  border-collapse: collapse;
+  @include size(large) {
+    width: 50%;
+    margin: 0 auto;
+  }
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  th {
+    text-align: left;
+    padding-top: 12px;
+    margin-bottom: 12px;
+    color: $color-background;
+    background-color: map-get($hub-teal, 700);
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  td:nth-child(odd) {
+    font-weight: bold;
+    width: 25%;
+  }
 }
 
 /**
  * Custom Button Styles
  */
 .standard-button {
-    @extend .standard-button;
-    border: 3px solid map-get($hub-navy, 500) !important;
-    background-color: map-get($hub-navy, 500) !important;
+  @extend .standard-button;
+  border: 3px solid map-get($hub-navy, 500) !important;
+  background-color: map-get($hub-navy, 500) !important;
 }
 .standard-button:hover {
-    color: map-get($hub-navy, 500) !important;
-    border-radius: 50px !important;
-    background-color: white !important;
-    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+  color: map-get($hub-navy, 500) !important;
+  border-radius: 50px !important;
+  background-color: white !important;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
