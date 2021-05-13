@@ -1,33 +1,33 @@
 @import "variables";
 
 .content-wrapper {
-  text-align: center !important;
-  h1 {
-    color: $dark-blue !important;
-    font-weight: bold !important;
-  }
-  a div {
-    p {
-      font-weight: bold;
-      margin-bottom: 5px;
-      color: white !important;
-      transition: color 0.1s ease-in-out, color 0.1s ease-in-out;
+    text-align: center !important;
+    h1 {
+        color: $dark-blue !important;
+        font-weight: bold !important;
     }
-    display: inline-block;
-    padding: 5px 10px 5px 10px;
-    border: 3px solid $dark-blue !important;
-    border-radius: 50px !important;
-    background-color: $dark-blue !important;
-    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-  }
-  a div:hover {
-    color: $dark-blue !important;
-    border-radius: 50px !important;
-    background-color: white !important;
-    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-    p {
-      margin-bottom: 5px;
-      color: $dark-blue !important;
+    a div {
+        p {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: white !important;
+            transition: color 0.1s ease-in-out, color 0.1s ease-in-out;
+        }
+        display: inline-block;
+        padding: 5px 10px 5px 10px;
+        border: 3px solid $dark-blue !important;
+        border-radius: 50px !important;
+        background-color: $dark-blue !important;
+        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
     }
-  }
+    a div:hover {
+        color: $dark-blue !important;
+        border-radius: 50px !important;
+        background-color: white !important;
+        transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+        p {
+            margin-bottom: 5px;
+            color: $dark-blue !important;
+        }
+    }
 }
