@@ -92,15 +92,29 @@ export class AppModule {
 
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
-    const error = onError(({ networkError, graphQLErrors }) => {
+    const error = onError(({ response, networkError, graphQLErrors }) => {
+      const hasErrors = networkError || graphQLErrors;
       if (networkError) {
+        console.log("API returned networkError", networkError);
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
           this.loginService.doLogin(this.router.url);
+          return;
         }
       }
       if (graphQLErrors) {
+        console.log("API returned graphQLErrors", graphQLErrors);
         if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
           this.loginService.doLogin(this.router.url);
+          return;
+        }
+      }
+
+      if (hasErrors) {
+        // If there is any data, disregard any errors.
+        // This will mean the page will render as usual.
+        if (response.data) {
+          console.log("Ignoring errors as there is partial data to render.");
+          response.errors = null;
         }
       }
     });

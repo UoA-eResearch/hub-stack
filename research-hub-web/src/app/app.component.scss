@@ -324,19 +324,41 @@ footer {
   min-height: $height-footer-xs;
   @include size(medium) { min-height: $height-footer; }
   background: $dark-grey;
+  font-size: mat-font-size($app-base-typography, button);
+  font-weight: mat-font-weight($app-base-typography, caption);
+  color: #a1a1a1;
+
   .footer-content {
     @extend .top-padding;
     @extend .site-padding;
     @extend .site-content;
     min-height: $height-footer-xs;
     @include size(medium) { min-height: $height-footer; }
+
+    ul {
+      list-style-type: none;
+    }
+
+    li {
+      float: left;
+    }
+
+    li:after {
+      content: "|";
+      display: inline-block;
+      margin: 0 .5rem 0 .5rem;
+    }
+    
+    li:last-child:after {
+      content: "";
+    }
   }
   a {
-    color: #a1a1a1;
     text-align: left;
     text-decoration: none;
     font-size: mat-font-size($app-base-typography, button);
     font-weight: mat-font-weight($app-base-typography, caption);
+    color: #a1a1a1;
   }
   .footer-xs a {
     text-align: center;
