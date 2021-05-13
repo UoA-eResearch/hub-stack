@@ -95,7 +95,7 @@ export class CerGraphqlService {
       }
 
       return breadCrumbsArray;
-    } catch (e) { throw new Error('Error loading breadcrumbs') }
+    } catch (e) { throw new Error('Error loading breadcrumbs\n' + e) }
   }
 
   /**
@@ -110,6 +110,9 @@ export class CerGraphqlService {
   private _getBreadCrumbsArray(entrySlug: string, breadcrumbsArray) {
     for (const item of this._subHubCollectionWithChildPagesSlugs) {
       item.internalPagesCollection.items.forEach(subPage => {
+        if (!subPage) {
+          return;
+        }
         if (subPage.slug === entrySlug) { // The SubHub's childPages contains the current entry we're searching for
           for (const subHub of breadcrumbsArray) { // Check it's not already known
             if (subHub.slug === item.slug) {
@@ -226,6 +229,9 @@ class SubHubMap {
     parentSubHub[subHub.slug] = new Content(subHub.slug, subHub.__typename); // Add to the right parent subhub
 
     for (const subHubChildPage of subHub.internalPagesCollection.items) { // Then loop through its child pages
+      if (!subHubChildPage) {
+        continue;
+      }
       if (subHubChildPage.__typename === 'SubHub') { // If the child page is a SubHub, check if its known
         const subHubChildPageExistingParentSubHub = this.findParentSubHub(subHubChildPage.slug, this.map);
         if (subHubChildPageExistingParentSubHub) { // The child SubHub is known, so move it here

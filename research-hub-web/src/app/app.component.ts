@@ -33,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
   public privacyUrl = 'https://www.auckland.ac.nz/en/privacy.html';
+  public accessibilityUrl = 'https://www.auckland.ac.nz/en/accessibility.html';
 
   public url: Subscription;
   public showNotification: Boolean;
@@ -56,7 +57,6 @@ export class AppComponent implements OnInit, OnDestroy {
   public currentUrl = undefined;
 
   public userInfo;
-  public authenticated: Boolean;
   public isMobile: Boolean;
   public onSearchPage: Boolean;
   public onHomePage: Boolean;
@@ -148,10 +148,24 @@ export class AppComponent implements OnInit, OnDestroy {
 
           // Check if the user is logged in now (Cognito redirect)
           this.loginService.isAuthenticated().then(data => {
-            this.authenticated = data;
             this.getHomepageData();
           });
           this.userInfo = await this.loginService.getUserInfo();
+
+          window.dataLayer.push({
+            'user': JSON.stringify(this.userInfo),
+            ...this.userInfo,
+          });
+
+          // pushing an individual usergroupss to google analytics
+          if (this.userInfo.groups) {
+            this.userInfo.groups.trim().replace('\"', '').replace(']', '').replace('[', '').split(',').map(group => {
+              let groupObj = {};
+              group = group.trim().split('.')[0];
+              groupObj[group] = group;
+              window.dataLayer.push(groupObj);
+            })
+          }
 
           if (routeName) {
 
@@ -267,12 +281,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mediaChangeSub.unsubscribe();
-    this.searchTextChangeSub.unsubscribe();
-    this.routerSub.unsubscribe();
-    this.titleSub.unsubscribe();
-    this.scrollSub.unsubscribe();
-    this.url.unsubscribe();
+    try {
+      this.mediaChangeSub.unsubscribe();
+      this.searchTextChangeSub.unsubscribe();
+      this.routerSub.unsubscribe();
+      this.titleSub.unsubscribe();
+      this.scrollSub.unsubscribe();
+      this.url.unsubscribe();
+    } catch {}   
   }
 
   // Get year for footer copyright

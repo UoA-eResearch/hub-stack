@@ -1,19 +1,17 @@
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
+// TODO: Insert nonprod values
 export const environment = {
-  production: false,
-  cerGraphQLUrl: 'http://localhost:4000/',
+  production: true,
+  cerGraphQLUrl: 'https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service',
+  cerGraphQLPreviewUrl: 'https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-preview-service/',
   auth: {
     cognitoAwsRegion: 'ap-southeast-2',
     cognitoUserPoolId: 'ap-southeast-2_gtuqqgIIq',
     cognitoDomain: 'uoapool-nonprod',
     cognitoClientId: '1bdp52mqg3gm7kf4hqsgg3oks7',
-    redirectUri: 'http://localhost:4200',
+    redirectUri: 'https://research-hub-dev.connect.test.amazon.auckland.ac.nz',
     scopes: 'openid profile https://research-hub-dev.auckland.ac.nz/spa',
     codeChallengeMethod: 'S256',
-    logout_uri: 'http://localhost:4200'
+    logout_uri: 'https://research-hub-dev.connect.test.amazon.auckland.ac.nz'
   },
   searchUrl: 'https://apigw.test.amazon.auckland.ac.nz/hub-search-proxy-dev',
   privateUrlKeyWords: {
@@ -24,7 +22,6 @@ export const environment = {
     },
     get whoNeedIdToken() {
       return []
-    },
+    }
   },
-  
-}
+};

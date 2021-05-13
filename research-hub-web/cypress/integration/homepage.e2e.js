@@ -19,19 +19,19 @@ describe('ResearchHubs Homepage', () => {
     // })
 
     it('displays research categories', () => {
-        cy.contains(`The University of Auckland provides top-quality support to our research community. The ResearchHub is your gateway to research support at the University of Auckland. Here you can explore what's on offer by topic.`);
+        cy.contains(`Research Categories`);
     })
 
     it('displays research activities', () => {
-        cy.contains(`The research lifecycle describes the research journey from project inception to completion. Below you can explore what the University of Auckland provides to support you according to where you are in your research journey.`);
+        cy.contains(`Research Activities`);
     })
 
     it('displays contact section', () => {
-        cy.contains(`We are developing the ResearchHub further and would be grateful for your feedback. This will give us pointers for user-led refinement and further development of the interface content displayed in the ResearchHub.`);
+        cy.contains(`We are developing the ResearchHub further`);
     })
 
     it('displays footer', () => {
-        cy.contains(`Copyright © 2021 Centre for eResearch`);
+        cy.contains(`Centre for eResearch`);
     })
 
     it('clicking Sign In takes you to SSO', () => {
