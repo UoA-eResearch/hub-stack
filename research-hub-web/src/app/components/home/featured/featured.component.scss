@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "styles-common";
 
 /*
  * Featured Container
@@ -10,7 +11,7 @@
   .featured-content {
     width: 95vw;
     margin: 60px auto;
-    @extend .site-padding !optional; // this needs to be fixed properly
+    @extend .site-padding;
   }
   .featured-title {
     color: white;

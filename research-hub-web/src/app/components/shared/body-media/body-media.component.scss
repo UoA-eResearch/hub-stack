@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "styles-common";
 
 /**
  * Blockquote
@@ -40,7 +41,7 @@
   object-fit: cover;
 }
 .asset-summary {
-  @extend .card-summary !optional; // this needs to be fixed properly
+  @extend .card-summary;
   font-size: 12px;
 }
 
@@ -48,7 +49,7 @@
   * Download Card
   */
 .file {
-  @extend .section !optional; // this needs to be fixed properly
+  @extend .section;
 }
 .file .mat-card {
   width: 35%;
@@ -168,7 +169,7 @@ small {
  * Entry Block
  */
 .embedded-entry-block {
-  @extend .section !optional; // this needs to be fixed properly
+  @extend .section;
   a {
     display: flex;
     align-items: center;
