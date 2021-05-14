@@ -2,12 +2,12 @@
   "name": "cer-graphql",
   "version": "1.0.0",
   "description": "A GraphQL server used to proxy and authorise requests to external data sources.",
-  "main": "server.ts",
   "scripts": {
     "test": "jest",
     "test-local": "export stage='test' && npm run test",
     "test-local-windows": "set stage='test' && npm run test",
-    "dev": "nodemon ./server.ts --config-from-file --watch=./**/*"
+    "dev": "nodemon ./server.ts --config-from-file --watch=./**/*",
+    "build": "tsc --project ./"
   },
   "repository": {
     "type": "git",
