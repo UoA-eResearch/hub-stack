@@ -1,6 +1,7 @@
 @import "themes";
 @import "typography";
 @import "variables";
+@import "styles-common";
 
 /**
  * Native Elements
@@ -99,9 +100,6 @@ hr {
 .section {
   margin: 12px 0px;
 }
-.section-2 {
-  margin: 45px 0px;
-}
 
 /*
  * Text styles
@@ -191,9 +189,7 @@ svg {
   width: 56px;
   height: 56px;
 }
-.site-content {
-  margin: 0 auto;
-}
+
 .search-results-text {
   color: map-get($hub-navy, 500) !important;
   font-weight: 500;
@@ -207,25 +203,17 @@ svg {
 /**
  * Browser Settings
  */
-.site-padding {
-  @extend .site-content;
-  padding-left: $padding-site;
-  padding-right: $padding-site;
-}
+
 .site-padding-2 {
   @extend .site-content;
   padding-left: 18vw;
   padding-right: 18vw;
 }
-.top-padding {
-  padding-top: $padding-site-top;
-}
+
 .top-padding-2 {
   padding-top: 10vh;
 }
-.margin-bottom {
-  margin-bottom: $padding-site-top;
-}
+
 .margin-bottom-2 {
   margin-bottom: 10vh;
 }
@@ -347,17 +335,6 @@ svg {
  */
 .card-title {
   font-size: 16px;
-}
-.card-summary {
-  font-size: 14px;
-  color: $color-icon;
-}
-
-/**
- * Section Padding
- */
-.section {
-  margin: 32px 0px;
 }
 
 /**

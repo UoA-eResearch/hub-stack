@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "styles-common";
 
 // Grey bakground for a section of homepage content
 .grey-background {
@@ -45,7 +46,7 @@
 }
 
 .no-results {
-  @extend .section-2 !optional; // this needs to be fixed properly
+  @extend .section-2;
   text-align: center;
 }
 

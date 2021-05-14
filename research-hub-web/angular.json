@@ -32,7 +32,7 @@
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/styles"
+                "src/partial-styles/"
               ]
             }
           },
@@ -323,7 +323,12 @@
             ],
             "assets": [
               "src/assets"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/partial-styles/"
+              ]
+            }
           }
         },
         "lint": {

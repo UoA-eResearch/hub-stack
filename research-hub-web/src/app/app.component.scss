@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "styles-common";
 
 /*
  * Hub Logo
@@ -74,7 +75,7 @@
   }
   background: map-get($hub-pink, 500);
   .notification-bar-content {
-    @extend .site-padding !optional; // this needs to be fixed properly
+    @extend .site-padding;
     padding-top: 15px;
     padding-bottom: 15px;
   }
@@ -97,7 +98,7 @@
   }
   background: map-get($hub-pink, 500);
   .notification-bar-content {
-    @extend .site-padding !optional; // this needs to be fixed properly
+    @extend .site-padding;
     padding-top: 15px;
     padding-bottom: 15px;
   }
@@ -341,9 +342,9 @@ footer {
   color: #a1a1a1;
 
   .footer-content {
-    @extend .top-padding !optional; // this needs to be fixed properly
-    @extend .site-padding !optional; // this needs to be fixed properly
-    @extend .site-content !optional; // this needs to be fixed properly
+    @extend .top-padding;
+    @extend .site-padding;
+    @extend .site-content;
     min-height: $height-footer-xs;
     @include size(medium) {
       min-height: $height-footer;
