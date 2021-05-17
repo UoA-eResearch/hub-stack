@@ -40,6 +40,13 @@ const ALWAYS_PUBLIC_FIELDS = new Set([
   ...GRAPHQL_INTROSPECTION_FIELDS
 ]);
 
+/**
+ * Given a GraphQL query document, return all the fields the query asked for, keyed by
+ * the type they belong to.
+ * @param schema The schema to look up definitions in
+ * @param document The query document
+ * @returns A Record/object with the type names as keys, and array of field names the query asked for as values.
+ */
 function getFieldsByType(schema: GraphQLSchema, document: ASTNode) {
   const fieldsByType: Record<string, string[]> = {};
   const typeInfo = new TypeInfo(schema);
@@ -58,24 +65,28 @@ function getFieldsByType(schema: GraphQLSchema, document: ASTNode) {
 
 const findVerificationRequiredFields = (fieldsByType: Record<string, string[]>, protectedTypes: string[]) => {
   const typesRequiringVerification = Object.keys(fieldsByType).filter(typeName => {
-    const typeIsCollection = typeName.includes("Collection");
+    const typeIsCollection = typeName.endsWith("Collection");
+    const fieldIsCollection = typeName.endsWith("Collection");
     const upperCaseName = typeName[0].toLowerCase() + typeName.substring(1);
     if (!protectedTypes.includes(upperCaseName)) {
       // This type isn't protected, no need to verify its fields.
       return false;
     }
+    // Protected fields are fields that:
+    // 1. aren't in the ALWAYS_PUBLIC_FIELDS set,
+    // 2. isn't a Contentful "items" field for collection items,
+    // 3. isn't a collection field itself.
     const protectedFields = fieldsByType[typeName].filter(field =>
       !ALWAYS_PUBLIC_FIELDS.has(field) &&
-      !(typeIsCollection && field === "items")
+      !(typeIsCollection && field === "items") &&
+      !fieldIsCollection
     );
     if (protectedFields.length > 0) {
       // Log any non-public fields the user is requesting
-      console.log(`Marking type ${typeName} as requiring verification, because of requested field(s): ${protectedFields}`)
+      console.log(`Type ${typeName} requires verification, because of requested non-public field(s): ${protectedFields}`)
     }
     return protectedFields.length > 0;
   });
-
-  console.log("Finished visiting.");
   return typesRequiringVerification;
 };
 
@@ -132,13 +143,14 @@ function  executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: strin
 }
 
 export default function executeAndVerify(args: ExecutionArgs, protectedTypes: string[]) {
+  // express-graphql passes in the express Request as context value by default.
   const context = args.contextValue as Request;
 
-  if (args.operationName != 'IntrospectionQuery')
+  if (args.operationName !== 'IntrospectionQuery') {
     console.log(`User: ${context.user ? context.user.username.split('_')[1] : 'Unauthenticated'}`)
-
-  // Log incoming queries
-  console.log('\n===== Query Recieved: ======\n', print(args.document));
+    // Log incoming queries
+    console.log('\n===== Query Recieved: ======\n', print(args.document));
+  }
 
   if (!context.user && args.operationName !== "IntrospectionQuery") {
     return executeUnauthenticatedQuery(args, protectedTypes)

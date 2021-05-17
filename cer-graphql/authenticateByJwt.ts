@@ -8,7 +8,8 @@ interface CognitoPublicKeys {
     keys: Array<JWK & JwtHeader>
 }
 
-type User = {
+type UserToken = {
+    // The token has more information than this, add them to type definition as required.
     username: string
 }
 
@@ -16,7 +17,7 @@ type User = {
 declare global {
     namespace Express {
       interface Request {
-        user?: User
+        user?: UserToken
       }
     }
 }
@@ -63,9 +64,9 @@ export default async function authenticateByJwt(jwkUrl: string, isPreviewEnv: bo
     const cognitoPublicKeys = await fetchCognitoPublicKeys(jwkUrl);
     return (req: Request, res: Response, next: NextFunction) => {
         const token = getJwtToken(req.headers.authorization);
+        // Check if the authorization header exists and has a bearer token.
+        // If not, return null
         if (!token) {
-            // Check if the authorization header exists and has a bearer token.
-            // If not, return null
             if (isPreviewEnv) {
                 // Reject all non-logged in queries in preview environment
                 console.log("No bearer token sent. In preview environment, so returning AuthenticationError.");
@@ -75,12 +76,13 @@ export default async function authenticateByJwt(jwkUrl: string, isPreviewEnv: bo
             next();
         } else {
             try {
-                req.user = verifyJwt(token, cognitoPublicKeys) as User;
+                req.user = verifyJwt(token, cognitoPublicKeys) as UserToken;
                 next();
             } catch (e) {
+                console.log("Exception thrown while verifying user", e);
                 if (isPreviewEnv) {
                     // Reject all non-logged in queries in preview environment
-                    console.log("Exception thrown while verifying user token. In preview environment, so returning AuthenticationError.\n", e)
+                    console.log("In preview environment, so returning AuthenticationError.\n", e)
                     next(new AuthenticationError('You must sign in to SSO before accessing preview API.'));
                     return;
                 }
