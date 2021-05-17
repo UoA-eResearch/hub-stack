@@ -8,9 +8,9 @@ describe('ResearchHubs Article Pages', () => {
         cy.contains('Open Access');
     });
 
-    it('can visit an article and display its subtitle', () => {
-        cy.contains('Open Access brings increased visibility, usage and impact to researchers and institutions. It benefits researchers, institutions, nations and society as a whole.');
-    });
+    // it('can visit an article and display its subtitle', () => {
+    //     cy.contains('Open Access brings increased visibility, usage and impact to researchers and institutions. It benefits researchers, institutions, nations and society as a whole.');
+    // });
 
     it('article displays body text', () => {
         cy.contains('Open access is making published research');

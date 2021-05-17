@@ -29,7 +29,12 @@
               "graphql-tag",
               "crypto-js",
               "zen-observable"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/partial-styles/"
+              ]
+            }
           },
           "configurations": {
             "local": {
@@ -318,7 +323,12 @@
             ],
             "assets": [
               "src/assets"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/partial-styles/"
+              ]
+            }
           }
         },
         "lint": {
