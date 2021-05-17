@@ -14,8 +14,7 @@ import express, { Response, Request } from "express";
 import { graphqlHTTP } from "express-graphql";
 import fetch from "node-fetch";
 import executeAndVerify from "./executeAndVerify";
-import jwt, { JwtHeader } from "jsonwebtoken";
-import jwkToPem, { JWK } from "jwk-to-pem";
+import authenticateByJwt from "./authenticateByJwt";
 
 // Measure server startup time
 var startTime = new Date().getTime(); 
@@ -107,39 +106,6 @@ async function getRemoteSchema (remoteUri: string) {
   });
 }
 
-async function fetchCognitoPublicKeys(jwkUrl: string) {
-  try {
-      return fetch(jwkUrl).then((response) => {
-          if (!response.ok) {
-              throw new Error("Could not reach Cognito public keys URL.");
-          }
-          const jwk = response.json();
-          console.log("Cognito public keys loaded successfully.");
-          return jwk;
-      });
-  } catch (e) {
-      console.error(e);
-  }
-}
-
-interface CognitoPublicKeys {
-  keys: Array<JWK & JwtHeader>
-}
-
-const verifyJwt = (token: string, jwk: CognitoPublicKeys) => {
-  const decodedJwt = jwt.decode(token, { complete: true });
-  if (!decodedJwt) {
-      throw new Error("Invalid token.");
-  }
-  const key = jwk.keys.find(key => {
-      return key.kid === decodedJwt.header.kid
-  });
-  if (!key) {
-      throw new Error("Signing key for token not found in Cognito public keys.");
-  }
-  const pem = jwkToPem(key);
-  return jwt.verify(token, pem);
-};
 
 
 function getProtectedTypes(schema: GraphQLSchema) {
@@ -171,8 +137,7 @@ export async function createServer (config: CerGraphqlServerConfig) {
 
   // Load Cognito public keys in order to verify tokens.
   const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
-    "/.well-known/jwks.json",
-    cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl);
+    "/.well-known/jwks.json";
 
 
   // Get a list of the types that have the ssoProtected field
@@ -180,7 +145,12 @@ export async function createServer (config: CerGraphqlServerConfig) {
 
   const customQueryResolvers : IResolvers = Object.fromEntries(protectedTypes.map(
     type => [type, (root, args, context, info)  => {
-    console.log(`${type} resolver called.`);
+      if (IS_PREVIEW_ENV) {
+        // Add preview as a query argument if we are in a preview
+        // environment.
+        args.preview = true;
+    }
+    
     
     return delegateToSchema({
       schema: contentfulSchema,
@@ -208,12 +178,17 @@ export async function createServer (config: CerGraphqlServerConfig) {
     graphqlHTTP({
       schema,
       graphiql: true,
-      // validationRules: [PrintAllFields],
-      context: {
-        user: "noel"
+      customFormatErrorFn: err => {
+        console.error(err);
+        return err;
       },
+      // validationRules: [PrintAllFields],
       customExecuteFn: (args) => executeAndVerify(args, protectedTypes)
     })
+  );
+
+  app.use(
+    await authenticateByJwt(cognitoPublicKeysUrl, IS_PREVIEW_ENV)
   );
 
   return app;
