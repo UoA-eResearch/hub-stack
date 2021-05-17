@@ -3,6 +3,14 @@
 @import "styles-common";
 
 /**
+* Make first div flex container
+*/
+:host > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
+
+/**
  * Content Container
  */
 .content-container {
