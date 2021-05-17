@@ -1,27 +1,26 @@
-@import 'variables';
-
+@import "variables";
 
 /**
  * Breadcrums Styling
  */
- #breadcrumbs {
-    font-size: 14px;
-    margin: 16px auto;
-    margin-bottom: 42px;
+#breadcrumbs {
+  font-size: 14px;
+  margin: 16px auto;
+  margin-bottom: 42px;
 
-    .breadcrumb-subhub {
-        &::after {
-            color: $breadcrumb-current-color;
-            margin: 0 0.5em 0 0.5em;
-            content: '/'
-        }
+  .breadcrumb-subhub {
+    &::after {
+      color: $breadcrumb-current-color;
+      margin: 0 0.5em 0 0.5em;
+      content: "/";
     }
-
-    #breadcrumb-current-page {
-        color: $breadcrumb-current-color;
-    }
-}
-  .breadcrumbs-mobile * {
-    font-size: 12px;
-    margin-bottom: 28px;
   }
+
+  #breadcrumb-current-page {
+    color: $breadcrumb-current-color;
+  }
+}
+.breadcrumbs-mobile * {
+  font-size: 12px;
+  margin-bottom: 28px;
+}

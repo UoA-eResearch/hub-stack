@@ -1,17 +1,10 @@
-@import '~@angular/material/theming';
-@import 'variables';
-
+@import "~@angular/material/theming";
+@import "variables";
 
 /**
  * Include the common styles for Angular Material. Be sure that you only ever include this mixin once!
  */
 @include mat-core();
-
-
-
-
-
-
 
 /**
  * Create the hub app theme
