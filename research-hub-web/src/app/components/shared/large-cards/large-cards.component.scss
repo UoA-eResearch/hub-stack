@@ -1,57 +1,55 @@
-@import 'variables';
-
+@import "variables";
 
 /**
  * Mat Card
  */
- mat-card {
-    box-shadow: 0px 0px 15px #a5a5a5!important;
- }
+mat-card {
+  box-shadow: 0px 0px 15px #a5a5a5 !important;
+}
 
 /**
  * SubHub Card
  */
 .subhub-card {
-    background: map-get($hub-teal, 700);
-    img {
-        object-fit: cover;
-        max-height: 200px;
+  background: map-get($hub-teal, 700);
+  img {
+    object-fit: cover;
+    max-height: 200px;
+  }
+  .card-title {
+    display: inline-block;
+    a {
+      display: inline;
+      font-size: 20px;
+      color: white;
+      border-bottom: solid 2px transparent;
     }
-    .card-title {
-        display: inline-block;
-        a {
-            display: inline;
-            font-size: 20px;
-            color: white;
-            border-bottom: solid 2px transparent;
-        }
-        a:hover {
-            border-bottom: solid 2px white;
-            cursor: pointer;
-        }
+    a:hover {
+      border-bottom: solid 2px white;
+      cursor: pointer;
     }
+  }
 }
 .content-item-summary * {
-    font-size: 16px;
-    color: white;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 16px;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .card-label {
-    color: map-get($hub-teal, 700);
-    background: rgb(255, 255, 255);
-    position:absolute;
-    left:0;
-    top:0;
-    padding: 0px 12px;
+  color: map-get($hub-teal, 700);
+  background: rgb(255, 255, 255);
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0px 12px;
 }
-
 
 /**
  * Lock Icon
  */
 mat-icon {
-    color: white!important;
-    font-size: 16px!important;
-    vertical-align: middle;
+  color: white !important;
+  font-size: 16px !important;
+  vertical-align: middle;
 }
