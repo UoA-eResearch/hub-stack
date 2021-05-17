@@ -1,24 +1,25 @@
 import { 
-  ASTNode, 
   GraphQLSchema,
   print,
-  visit,
-  TypeInfo,
-  visitWithTypeInfo,
-  execute
  } from "graphql";
 import { 
   wrapSchema, 
   mergeSchemas, 
   delegateToSchema, 
   introspectSchema, 
-  visitResult, 
   ExecutionParams,
   IResolvers
 } from "graphql-tools";
 import express, { Response, Request } from "express";
 import { graphqlHTTP } from "express-graphql";
 import fetch from "node-fetch";
+import executeAndVerify from "./executeAndVerify";
+import jwt, { JwtHeader } from "jsonwebtoken";
+import jwkToPem, { JWK } from "jwk-to-pem";
+
+// Measure server startup time
+var startTime = new Date().getTime(); 
+
 
 /**
  * Deletes environment variables we expect to use as existing env vars dont get overwritten.
@@ -30,12 +31,21 @@ import fetch from "node-fetch";
   delete process.env.COGNITO_REGION; 
 }
 
+export type CerGraphqlServerConfig = {
+  CONTENTFUL_ACCESS_TOKEN: string | undefined,
+  CONTENTFUL_ENVIRONMENT_ID: string | undefined,
+  CONTENTFUL_SPACE_ID: string | undefined,
+  COGNITO_USER_POOL: string | undefined,
+  COGNITO_REGION: string | undefined,
+  IS_PREVIEW_ENV: boolean
+}
+
 /**
  * Conditionally loads environment variables from an environment file returns object with env values.
  * @param {boolean} isFromFile Whether or not to load the .env file
- * @returns void
+ * @returns A config object with server parameters. CerGraphqlServerConfig
  */
- const getCredentials = (isFromFile: boolean) => {
+export const getCredentials = (isFromFile: boolean): CerGraphqlServerConfig => {
   // isFromFile determines where we load the credentials from.
   // If true we load from the .env file in the folder. 
   // If false, we load from environment variables.
@@ -73,34 +83,64 @@ import fetch from "node-fetch";
   };
 };
 
+// Set up remote schemas
+// Load a remote schema and set up the http-link
+async function getRemoteSchema (remoteUri: string) {
+  // Fetch remote schema.
+  const executor = async ({ document, variables }: ExecutionParams) => {
+    const query = print(document);
+    const fetchResult = await fetch(remoteUri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query, variables })
+    });
+    return fetchResult.json();
+  };
+  console.log('Loading remote schema...')
+  const schema = await introspectSchema(executor);
+  console.log('Remote schema loaded successfully.')
+  return wrapSchema({
+    schema,
+    executor
+  });
+}
 
-const GRAPHQL_INTROSPECTION_FIELDS = [
-  '__Schema',
-  '__Type',
-  '__TypeKind',
-  '__typename',
-  '__Field',
-  '__InputValue',
-  '__EnumValue',
-  '__Directive',
-  'sys',
-  'id',
-];
+async function fetchCognitoPublicKeys(jwkUrl: string) {
+  try {
+      return fetch(jwkUrl).then((response) => {
+          if (!response.ok) {
+              throw new Error("Could not reach Cognito public keys URL.");
+          }
+          const jwk = response.json();
+          console.log("Cognito public keys loaded successfully.");
+          return jwk;
+      });
+  } catch (e) {
+      console.error(e);
+  }
+}
 
-// Check whether the user has requested only public fields
-const ALWAYS_PUBLIC_FIELDS = new Set([
-  'title',
-  'maoriProverb',
-  'summary',
-  'name',
-  'ssoProtected',
-  'searchable',
-  'linkedFrom',
-  'slug',
-  'banner',
-  'icon',
-  ...GRAPHQL_INTROSPECTION_FIELDS
-]);
+interface CognitoPublicKeys {
+  keys: Array<JWK & JwtHeader>
+}
+
+const verifyJwt = (token: string, jwk: CognitoPublicKeys) => {
+  const decodedJwt = jwt.decode(token, { complete: true });
+  if (!decodedJwt) {
+      throw new Error("Invalid token.");
+  }
+  const key = jwk.keys.find(key => {
+      return key.kid === decodedJwt.header.kid
+  });
+  if (!key) {
+      throw new Error("Signing key for token not found in Cognito public keys.");
+  }
+  const pem = jwkToPem(key);
+  return jwt.verify(token, pem);
+};
+
 
 function getProtectedTypes(schema: GraphQLSchema) {
   const typeMap = schema.getTypeMap();
@@ -117,47 +157,26 @@ function getProtectedTypes(schema: GraphQLSchema) {
       .map(a => a[0].toLowerCase() + a.substring(1)); // Make first char lower case
 }
 
-// Fetch remote schema.
-const executor = async ({ document, variables }: ExecutionParams) => {
-  const query = print(document);
-  const fetchResult = await fetch(`https://graphql.contentful.com/content/v1/spaces/`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ query, variables })
-  });
-  return fetchResult.json();
-};
-async function runServer () {
-  const contentfulSchema = wrapSchema({
-    schema: await introspectSchema(executor),
-    executor
-  });
+export async function createServer (config: CerGraphqlServerConfig) {
+  const { CONTENTFUL_ACCESS_TOKEN,
+    CONTENTFUL_ENVIRONMENT_ID,
+    CONTENTFUL_SPACE_ID,
+    COGNITO_REGION,
+    COGNITO_USER_POOL,
+    IS_PREVIEW_ENV
+} = config;
+
+  const contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
+  `/environments/${CONTENTFUL_ENVIRONMENT_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
+
+  // Load Cognito public keys in order to verify tokens.
+  const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
+    "/.well-known/jwks.json",
+    cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl);
+
 
   // Get a list of the types that have the ssoProtected field
   let protectedTypes = getProtectedTypes(contentfulSchema);
-
-  const findVerificationRequiredFields = (schema: GraphQLSchema, document: ASTNode) => {
-    const typesRequiringVerification: string[] = [];
-    const typeInfo = new TypeInfo(schema);
-    visit(document, visitWithTypeInfo(typeInfo, {
-        Field(node) {
-          const parentType = typeInfo.getParentType()?.name;
-          if (!parentType) return;
-          const parentIsCollection = parentType.includes("Collection");
-          if (protectedTypes.includes(parentType[0].toLowerCase() + parentType.substring(1)) 
-          && !ALWAYS_PUBLIC_FIELDS.has(node.name.value)
-          && !(parentIsCollection && node.name.value === "items")) {
-            // Query has asked for a non-public field in this type, so we mark its results as needing verification.
-            console.log("Marking type", parentType, "as requiring verification, because of value", node.name.value);
-            typesRequiringVerification.push(parentType);
-          }
-        }
-    }));
-    console.log("Finished visiting.");
-    return typesRequiringVerification;
-  };
 
   const customQueryResolvers : IResolvers = Object.fromEntries(protectedTypes.map(
     type => [type, (root, args, context, info)  => {
@@ -169,10 +188,9 @@ async function runServer () {
       fieldName: info.fieldName,
       args,
       context,
-      info    })
+      info    
+    })
   }]));
-
-  
 
   const schema = mergeSchemas({
     schemas: [contentfulSchema],
@@ -194,40 +212,43 @@ async function runServer () {
       context: {
         user: "noel"
       },
-      customExecuteFn: (args) => {  
-        const verificationRequiredFields = findVerificationRequiredFields(args.schema, args.document);
-        return Promise.resolve(execute(args)).then(result => {
-          if (verificationRequiredFields.length > 0) {
-            const verificationVisitor = Object.fromEntries(
-              verificationRequiredFields.map(fieldName => [
-                fieldName,
-                {
-                  ssoProtected (isSsoProtected : boolean) {
-                    if (isSsoProtected) {
-                      throw new Error("Oh no, auth required for " + fieldName);
-                    }
-                    return isSsoProtected;
-                  }
-                }
-              ])
-            )
-            visitResult(result, {
-              document: args.document,
-              variables: args.variableValues || {}
-            }, args.schema, verificationVisitor );
-          }
-          return result;
-        })
-      },
-      customFormatErrorFn: (error) => ({
-        message: error.message,
-        locations: error.locations,
-        stack: error.stack ? error.stack.split('\n') : [],
-        path: error.path,
-      })
-    }),
+      customExecuteFn: (args) => executeAndVerify(args, protectedTypes)
+    })
   );
 
-  app.listen(4000);
+  return app;
 };
-runServer();
+
+// If the file is being called directly instead of being required as a module.
+if (require.main === module) {
+  (async () => {
+    // Create the ApolloServer object
+    const isConfigFromFile = process.argv.includes("--config-from-file")
+    let config;
+    try {
+      config = getCredentials(isConfigFromFile);
+    } catch (error) {
+      console.error("Could not load credentials from file. Make sure you have filled in credentials in the .env file," +
+        "or try running the server without --config-from-file.");
+      process.exit(1);
+    }
+    if (config.IS_PREVIEW_ENV) {
+      console.log("Running in preview environment, will request draft content from Contentful.");
+    }
+    // Check if access token and space ID are supplied.
+    if (!config.CONTENTFUL_ACCESS_TOKEN || !config.CONTENTFUL_SPACE_ID ||
+      !config.COGNITO_REGION || !config.COGNITO_USER_POOL || !config.CONTENTFUL_ENVIRONMENT_ID) {
+      console.error("Contentful and/or Cognito values not supplied. Please set environment variables CONTENTFUL_ACCESS_TOKEN, " +
+        "CONTENTFUL_SPACE_ID, CONTENTFUL_ENVIRONMENT_ID, COGNITO_REGION and COGNITO_USER_POOL.");
+      process.exit(1);
+    }
+
+    try {
+      let server = await createServer(config);
+
+      // The 'listen' method launches a web server.
+      server.listen(4000);
+      console.log(`🚀  Content API server ready. Server started in: ${new Date().getTime() - startTime}ms.`);
+    } catch(error) { console.log('Error creating server object and getting it to listen: ', error) }
+  })();
+}
