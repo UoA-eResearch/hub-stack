@@ -253,24 +253,24 @@ mat-expansion-panel {
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
-::ng-deep.mat-focused .mat-form-field-label {
-  /*change color of label*/
-  color: rgba(200, 200, 200, 0.6) !important;
-}
+// ::ng-deep.mat-focused .mat-form-field-label {
+//   /*change color of label*/
+//   color: rgba(200, 200, 200, 0.6) !important;
+// }
 
-::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple {
-  /*change color of underline*/
-  background-color: rgba(200, 200, 200, 0.6) !important;
-}
+// ::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple {
+//   /*change color of underline*/
+//   background-color: rgba(200, 200, 200, 0.6) !important;
+// }
 
-::ng-deep.mat-form-field-ripple {
-  /*change color of underline when focused*/
-  background-color: rgba(200, 200, 200, 0.6) !important;
-}
+// ::ng-deep.mat-form-field-ripple {
+//   /*change color of underline when focused*/
+//   background-color: rgba(200, 200, 200, 0.6) !important;
+// }
 
-::ng-deep input {
-  caret-color: white !important;
-}
+// ::ng-deep input {
+//   caret-color: white !important;
+// }
 
 /*
  * Search Results Filters Styling
