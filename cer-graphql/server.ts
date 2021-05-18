@@ -15,6 +15,7 @@ import { graphqlHTTP } from "express-graphql";
 import fetch from "node-fetch";
 import executeAndVerify from "./executeAndVerify";
 import authenticateByJwt from "./authenticateByJwt";
+import cors from "cors";
 
 // Measure server startup time
 var startTime = new Date().getTime(); 
@@ -172,7 +173,14 @@ export async function createServer (config: CerGraphqlServerConfig) {
 
   // Health check endpoint. Maintain compatibility with the Apollo endpoint.
   app.get("/.well-known/apollo/server-health", (req : Request, res : Response) => res.send("OK"));
-
+  
+  // Enable CORS headers
+  app.use(cors());
+  
+  app.use(
+    await authenticateByJwt(cognitoPublicKeysUrl, IS_PREVIEW_ENV)
+  );
+  
   app.use(
     '/',
     graphqlHTTP({
@@ -185,10 +193,6 @@ export async function createServer (config: CerGraphqlServerConfig) {
       // validationRules: [PrintAllFields],
       customExecuteFn: (args) => executeAndVerify(args, protectedTypes)
     })
-  );
-
-  app.use(
-    await authenticateByJwt(cognitoPublicKeysUrl, IS_PREVIEW_ENV)
   );
 
   return app;
