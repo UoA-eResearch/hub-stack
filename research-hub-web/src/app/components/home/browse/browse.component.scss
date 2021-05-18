@@ -1,6 +1,6 @@
 @import "variables";
 @import "mixins";
-// @import '../home.component.scss'; //should not be imported here
+@import "styles-common";
 
 /**
  * Custom Text
@@ -11,6 +11,12 @@
   @include size(large) {
     text-align: left;
   }
+}
+
+.content-container {
+  width: 95vw;
+  margin: 60px auto;
+  @extend .site-padding;
 }
 
 /**
