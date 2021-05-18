@@ -66,7 +66,6 @@ function getFieldsByType(schema: GraphQLSchema, document: ASTNode) {
 const findVerificationRequiredFields = (fieldsByType: Record<string, string[]>, protectedTypes: string[]) => {
   const typesRequiringVerification = Object.keys(fieldsByType).filter(typeName => {
     const typeIsCollection = typeName.endsWith("Collection");
-    const fieldIsCollection = typeName.endsWith("Collection");
     const upperCaseName = typeName[0].toLowerCase() + typeName.substring(1);
     if (!protectedTypes.includes(upperCaseName)) {
       // This type isn't protected, no need to verify its fields.
@@ -79,7 +78,7 @@ const findVerificationRequiredFields = (fieldsByType: Record<string, string[]>, 
     const protectedFields = fieldsByType[typeName].filter(field =>
       !ALWAYS_PUBLIC_FIELDS.has(field) &&
       !(typeIsCollection && field === "items") &&
-      !fieldIsCollection
+      !field.endsWith("Collection")
     );
     if (protectedFields.length > 0) {
       // Log any non-public fields the user is requesting
@@ -100,7 +99,7 @@ function assertTypesHaveSsoField(fieldsByType: Record<string, string[]>, verific
   return;
 }
 
-function  executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: string[]) {
+async function executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: string[]) {
   const fieldsByType = getFieldsByType(args.schema, args.document);
   const verificationRequiredTypes = findVerificationRequiredFields(fieldsByType, protectedTypes);
   /**
@@ -112,34 +111,33 @@ function  executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: strin
    * response is then intercepted and only returned if none of the results have an 'ssoProtected: true'
    * field. This is done in the visitResult function.
    */
-  return Promise.resolve(execute(args)).then(result => {
-    if (verificationRequiredTypes.length > 0) {
-      /*
-        Create an object shaped like 
-        const verificationVisitor = {typeName: 
-          {ssoProtected: Function},
-         ...}
-      */
-      const verificationVisitor = Object.fromEntries(
-        verificationRequiredTypes.map(typeName => [
-          typeName,
-          {
-            ssoProtected(isSsoProtected: boolean) {
-              if (isSsoProtected) {
-                throw new AuthenticationError("Authentication required to view protected content from " + typeName);
-              }
-              return isSsoProtected;
+  const result = await Promise.resolve(execute(args));
+  if (verificationRequiredTypes.length > 0) {
+    /*
+      Create an object shaped like
+      const verificationVisitor = {typeName:
+        {ssoProtected: Function},
+       ...}
+    */
+    const verificationVisitor = Object.fromEntries(
+      verificationRequiredTypes.map(typeName => [
+        typeName,
+        {
+          ssoProtected(isSsoProtected: boolean) {
+            if (isSsoProtected) {
+              throw new AuthenticationError("Authentication required to view protected content from " + typeName);
             }
+            return isSsoProtected;
           }
-        ])
-      )
-      visitResult(result, {
-        document: args.document,
-        variables: args.variableValues || {}
-      }, args.schema, verificationVisitor);
-    }
-    return result;
-  })
+        }
+      ])
+    );
+    visitResult(result, {
+      document: args.document,
+      variables: args.variableValues || {}
+    }, args.schema, verificationVisitor);
+  }
+  return result;
 }
 
 export default function executeAndVerify(args: ExecutionArgs, protectedTypes: string[]) {
