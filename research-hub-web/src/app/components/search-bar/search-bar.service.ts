@@ -246,6 +246,9 @@ export class SearchBarService {
           includeContentTypes : pageTypes
         };
 
+        // send search term to GA
+        !query.query ? null : window.dataLayer.push({ 'query': query.query });
+
         // Send the POST request
         this.http.post(environment.searchUrl, query).subscribe(data => {
           let array = [];
