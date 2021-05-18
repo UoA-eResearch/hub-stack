@@ -1,10 +1,5 @@
 @import "variables";
 
-mat-expansion-panel,
-mat-card {
-  margin: 8px 0;
-}
-
 div.mat-card-avatar mat-icon {
   color: map-get($hub-teal, 800);
 }
