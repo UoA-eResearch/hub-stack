@@ -1,5 +1,5 @@
 resource "aws_waf_ipset" "ipset" {
-  name = "cloudfront_ipset"
+  name = "researchhub_cloudfront_ipset"
 
   # the list of IPs we want to whitelist = UoA IP range only
   ip_set_descriptors {
@@ -10,8 +10,8 @@ resource "aws_waf_ipset" "ipset" {
 
 resource "aws_waf_rule" "wafrule" {
   depends_on  = [aws_waf_ipset.ipset]
-  name        = "cloudfront_waf_rule"
-  metric_name = "cloudfrontwafrule"
+  name        = "researchhub_cloudfront_waf_rule"
+  metric_name = "researchhubcloudfrontwafrule"
 
   predicates {
     data_id = aws_waf_ipset.ipset.id
@@ -25,8 +25,8 @@ resource "aws_waf_web_acl" "waf_acl" {
     aws_waf_ipset.ipset,
     aws_waf_rule.wafrule,
   ]
-  name        = "cloudfront_waf_acl"
-  metric_name = "cloudfrontwafacl"
+  name        = "researchhub_cloudfront_waf_acl"
+  metric_name = "researchhubcloudfrontwafacl"
 
   default_action {
     type = "BLOCK"
