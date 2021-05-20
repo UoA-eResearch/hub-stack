@@ -34,6 +34,9 @@ resource "aws_cloudfront_distribution" "main_website" {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = var.dns_entry
+    
+    # support gzip and other http transfer compression
+    compress         = true
 
     forwarded_values {
       query_string = true
