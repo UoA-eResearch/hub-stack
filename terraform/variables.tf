@@ -140,6 +140,11 @@ variable "vpc_id" {
   description = "What is the ID of the VPC this will reside within"
 }
 
+variable "create_firewall" {
+  description = "Should a cloudfront firewall be created?"
+  default     = false
+}
+
 ########################
 # Loadbalancer for ECS #
 ########################

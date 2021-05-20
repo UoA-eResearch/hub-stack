@@ -8,7 +8,7 @@ export const environment = {
     cognitoAwsRegion: 'ap-southeast-2',
     cognitoUserPoolId: 'ap-southeast-2_B3Lx9B4bL',
     cognitoDomain: 'uoapool',
-    cognitoClientId: 'TBC',
+    cognitoClientId: '7o2oq232s4qjk93eagnj9c63e0',
     redirectUri: 'https://research-hub.auckland.ac.nz',
     scopes: 'openid profile https://research-hub-prod.auckland.ac.nz/spa',
     codeChallengeMethod: 'S256',
