@@ -6,6 +6,16 @@ resource "aws_waf_ipset" "ipset" {
     type  = "IPV4"
     value = "130.216.0.0/16"
   }
+
+  ip_set_descriptors {
+    type  = "IPV4"
+    value = "172.24.0.0/18"
+  }
+
+  ip_set_descriptors {
+    type  = "IPV4"
+    value = "202.36.244.0/24"
+  }
 }
 
 resource "aws_waf_rule" "wafrule" {
