@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import '../styles.scss';
 @import '../themes.scss';
 @import '../typography.scss';
@@ -198,12 +199,12 @@ mat-expansion-panel-header .mat-expanded {
     width: 100%;
     height: 100%;
     color: $color-icon;
-    font-size: mat-font-size($app-sidenav-list-typography, body-2) !important;
-    font-weight: mat-font-weight($app-sidenav-list-typography, body-2) !important;
+    font-size: mat.font-size($app-sidenav-list-typography, body-2) !important;
+    font-weight: mat.font-weight($app-sidenav-list-typography, body-2) !important;
   }
   .mat-line {
-    font-size: mat-font-size($app-sidenav-list-typography, body-1) !important;
-    font-weight: mat-font-weight($app-sidenav-list-typography, body-1) !important;
+    font-size: mat.font-size($app-sidenav-list-typography, body-1) !important;
+    font-weight: mat.font-weight($app-sidenav-list-typography, body-1) !important;
   }
 }
 
@@ -256,7 +257,7 @@ mat-expansion-panel-header .mat-expanded {
   height: fit-content!important;
   line-height: 48px!important;
   background: rgba(10, 10, 10, 0);
-  font-size: mat-font-size($app-base-typography, body-1);
+  font-size: mat.font-size($app-base-typography, body-1);
 }
 .mat-expansion-panel-body {
   margin-left: 0 !important;
@@ -324,8 +325,8 @@ footer {
   min-height: $height-footer-xs;
   @include size(medium) { min-height: $height-footer; }
   background: $dark-grey;
-  font-size: mat-font-size($app-base-typography, button);
-  font-weight: mat-font-weight($app-base-typography, caption);
+  font-size: mat.font-size($app-base-typography, button);
+  font-weight: mat.font-weight($app-base-typography, caption);
   color: #a1a1a1;
 
   .footer-content {
@@ -356,8 +357,8 @@ footer {
   a {
     text-align: left;
     text-decoration: none;
-    font-size: mat-font-size($app-base-typography, button);
-    font-weight: mat-font-weight($app-base-typography, caption);
+    font-size: mat.font-size($app-base-typography, button);
+    font-weight: mat.font-weight($app-base-typography, caption);
     color: #a1a1a1;
   }
   .footer-xs a {

@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import 'themes';
 @import 'typography';
 
@@ -163,8 +164,8 @@ span {
  * Gloabl styles and Material overrides
  */
 mat-chip.mat-chip {
-  font-size: mat-font-size($app-chips-typography, button);
-  font-weight: mat-font-weight($app-chips-typography, button);
+  font-size: mat.font-size($app-chips-typography, button);
+  font-weight: mat.font-weight($app-chips-typography, button);
 }
 mat-card  {
   margin: 8px 0;
@@ -263,7 +264,7 @@ svg {
 .mat-menu-item {
   color: white;
   background-color: map-get($hub-teal, 700);
-  font-size: mat-font-size($app-base-typography, body-1);
+  font-size: mat.font-size($app-base-typography, body-1);
 }
 
 

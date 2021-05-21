@@ -1,10 +1,10 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 
 /**
  * Include the common styles for Angular Material. Be sure that you only ever include this mixin once!
  */
-@include mat-core();
+@include mat.core();
 
 
 /**
@@ -72,20 +72,20 @@ $hub-orange: (
   A400 : #ffd0bf,
   A700 : #ffbda6,
   contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
     300: white,
     400: white,
     500: white,
-    600: $white-87-opacity,
-    700: $white-87-opacity,
-    800: $white-87-opacity,
-    900: $white-87-opacity,
-    A100: $black-87-opacity,
+    600: rgba(white, 0.87),
+    700: rgba(white, 0.87),
+    800: rgba(white, 0.87),
+    900: rgba(white, 0.87),
+    A100: rgba(black, 0.87),
     A200: white,
     A400: white,
-    A700: $white-87-opacity,
+    A700: rgba(white, 0.87),
   )
 );
 $hub-pink: (
@@ -321,11 +321,11 @@ $research-activity-palette-discover:  (
 /**
  * Create the hub app theme
  */ 
-$hub-app-primary: mat-palette($hub-teal);
-$hub-app-accent: mat-palette($hub-orange);
-$hub-app-warn: mat-palette($hub-pink);
-$hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
-@include angular-material-theme($hub-app-theme);
+$hub-app-primary: mat.define-palette($hub-teal);
+$hub-app-accent: mat.define-palette($hub-orange);
+$hub-app-warn: mat.define-palette($hub-pink);
+$hub-app-theme: mat.define-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
+@include mat.all-component-themes($hub-app-theme);
 $mat-theme-ignore-duplication-warnings: true;
 
 

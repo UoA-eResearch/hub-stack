@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import './themes.scss';
 
 // https://material.angular.io/guide/typography
@@ -163,43 +163,43 @@ $font-family: 'National';
 /**
  * All typography
  */
-$app-base-typography: mat-typography-config(
+$app-base-typography: mat.define-typography-config(
   $font-family:   $font-family,
-  $display-4:     mat-typography-level(112px, 112px, 300),
-  $display-3:     mat-typography-level(56px, 56px, 400),
-  $display-2:     mat-typography-level(45px, 48px, 400),
-  $display-1:     mat-typography-level(34px, 40px, 400),
-  $headline:      mat-typography-level(28px, 32px, 400), // <h1>
-  $title:         mat-typography-level(24px, 28px, 500), // <h2>
-  $subheading-2:  mat-typography-level(20px, 24px, 400), // <h3>
-  $subheading-1:  mat-typography-level(16px, 20px, 400), // <h4>
-  $body-2:        mat-typography-level(16px, 24px, 500), // bolder body text
-  $body-1:        mat-typography-level(16px, 22px, 400), // base body text <p> ?
-  $caption:       mat-typography-level(12px, 20px, 400), // smaller body and hint text
-  $button:        mat-typography-level(14px, 14px, 500),
-  $input:         mat-typography-level(16px, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
+  $display-4:     mat.define-typography-level(112px, 112px, 300),
+  $display-3:     mat.define-typography-level(56px, 56px, 400),
+  $display-2:     mat.define-typography-level(45px, 48px, 400),
+  $display-1:     mat.define-typography-level(34px, 40px, 400),
+  $headline:      mat.define-typography-level(28px, 32px, 400), // <h1>
+  $title:         mat.define-typography-level(24px, 28px, 500), // <h2>
+  $subheading-2:  mat.define-typography-level(20px, 24px, 400), // <h3>
+  $subheading-1:  mat.define-typography-level(16px, 20px, 400), // <h4>
+  $body-2:        mat.define-typography-level(16px, 24px, 500), // bolder body text
+  $body-1:        mat.define-typography-level(16px, 22px, 400), // base body text <p> ?
+  $caption:       mat.define-typography-level(12px, 20px, 400), // smaller body and hint text
+  $button:        mat.define-typography-level(14px, 14px, 500),
+  $input:         mat.define-typography-level(16px, 1.125, 400) // Line-height must be unit-less fraction of the font-size.
 );
 
 
 /**
  * Override typography for all Angular Material, including mat-base-typography and all components.
  */
-@include angular-material-typography($app-base-typography);
+@include mat.all-component-typographies($app-base-typography);
 
 
 /**
  * Sidenav
  */
-$app-sidenav-list-typography: mat-typography-config(
-  $body-1:        mat-typography-level(16px, 20px, 400), // text
-  $body-2:        mat-typography-level(24px, 24px, 500) // icon
+$app-sidenav-list-typography: mat.define-typography-config(
+  $body-1:        mat.define-typography-level(16px, 20px, 400), // text
+  $body-2:        mat.define-typography-level(24px, 24px, 500) // icon
 );
 
 /**
  * Mat Chip
  */
-$app-chips-typography: mat-typography-config(
-  $button:      mat-typography-level(16px, 20px, 400) // text
+$app-chips-typography: mat.define-typography-config(
+  $button:      mat.define-typography-level(16px, 20px, 400) // text
 );
 
 
