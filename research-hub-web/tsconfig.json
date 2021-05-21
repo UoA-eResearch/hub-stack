@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "downlevelIteration": true,
     "importHelpers": true,
@@ -23,31 +23,31 @@
     ],
     "paths": {
       "@services/*": [
-        "src/app/services/*"
+        "app/services/*"
       ],
       "@pipes/*": [
-        "src/app/pipes/*"
+        "app/pipes/*"
       ],
       "@app/*": [
-        "src/app/*"
+        "app/*"
       ],
       "@model/*": [
-        "src/app/model/*"
+        "app/model/*"
       ],
       "@environments/*": [
-        "src/environments/*"
+        "environments/*"
       ],
       "@graphql/*": [
-        "src/app/graphql/*"
+        "app/graphql/*"
       ],
       "@components/*": [
-        "src/app/components/*"
+        "app/components/*"
       ],
       "@directives/*": [
-        "src/app/directives/*"
+        "app/directives/*"
       ],
       "@assets/*": [
-        "src/assets/*"
+        "assets/*"
       ],
     },
   },
@@ -56,7 +56,8 @@
     "src/polyfills.ts",
   ],
   "include": [
-    "**/src/**/*.d.ts"
+    "**/*.d.ts",
+    "**/*.ts"
   ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
