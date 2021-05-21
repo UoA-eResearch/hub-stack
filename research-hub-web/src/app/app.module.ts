@@ -21,9 +21,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { HomeModule } from './components/home/home.module';
 
 import { Apollo } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { HttpLink } from 'apollo-angular/http';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { onError } from 'apollo-link-error';
+import { onError } from '@apollo/client/link/error';
 
 import { environment } from '@environments/environment';
 import { AppStorageService } from './services/app-storage.service';
@@ -66,7 +66,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     FlexLayoutModule,
     HomeModule,
     HomeModule,
-    HttpLinkModule,
     ErrorPagesModule
   ],
   providers: [
