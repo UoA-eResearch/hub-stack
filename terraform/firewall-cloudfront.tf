@@ -1,20 +1,30 @@
 resource "aws_waf_ipset" "ipset" {
   name = "researchhub_cloudfront_ipset"
 
-  # the list of IPs we want to whitelist = UoA IP range only
+  # the list of IPs we want to whitelist = UoA IP ranges only
   ip_set_descriptors {
     type  = "IPV4"
-    value = "130.216.0.0/16"
+    value = "130.216.0.0/16"	# uoa network ip range
   }
 
   ip_set_descriptors {
     type  = "IPV4"
-    value = "172.24.0.0/18"
+    value = "172.24.0.0/18"	# uoa wifi internal ip range
   }
 
   ip_set_descriptors {
     type  = "IPV4"
-    value = "202.36.244.0/24"
+    value = "202.36.244.0/24"	#uoa wifi external ip range
+  }
+  
+  ip_set_descriptors {
+    type  = "IPV4"
+    value = "10.0.0.0/8"	# vpn internal ip range
+  }
+  
+  ip_set_descriptors {
+    type  = "IPV4"
+    value = "121.99.0.0/16"		# vpn external ip range
   }
 }
 
