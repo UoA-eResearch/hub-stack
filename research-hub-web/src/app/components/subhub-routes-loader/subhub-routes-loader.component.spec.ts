@@ -8,7 +8,7 @@ const routes = [
   { path: '', component: SubHubRoutesLoaderComponent }
 ];
 
-fdescribe('SubHubRoutesLoaderComponent', () => {
+describe('SubHubRoutesLoaderComponent', () => {
   let component: SubHubRoutesLoaderComponent;
   let fixture: ComponentFixture<SubHubRoutesLoaderComponent>;
 

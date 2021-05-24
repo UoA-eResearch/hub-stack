@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { MockModule } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 
-fdescribe('CerGraphqlService', () => {
+describe('CerGraphqlService', () => {
   let service: CerGraphqlService;
 
   const mock_subHubCollectionWithChildPagesSlugs =

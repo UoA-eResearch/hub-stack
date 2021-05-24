@@ -3,7 +3,7 @@ import { MockPipe } from 'ng-mocks';
 import { HumanCasePipe } from '../../../pipes/human-case.pipe';
 import { CardsComponent } from './cards.component';
 
-fdescribe('CardsComponent', () => {
+describe('CardsComponent', () => {
   let pipe: HumanCasePipe;
   let component: CardsComponent;
   let fixture: ComponentFixture<CardsComponent>;

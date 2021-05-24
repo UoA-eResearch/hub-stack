@@ -4,7 +4,7 @@ import { MaterialModule } from '@app/app.material.module';
 import { MockModule } from 'ng-mocks';
 import { LegacyRoutingComponent } from './legacy-routing.component';
 
-fdescribe('LegacyRoutingComponent', () => {
+describe('LegacyRoutingComponent', () => {
   let component: LegacyRoutingComponent;
   let fixture: ComponentFixture<LegacyRoutingComponent>;
   // let controller: ApolloTestingController;

@@ -5,7 +5,7 @@ import { MockModule, MockPipe } from 'ng-mocks';
 import { HumanCasePipe } from '../../../pipes/human-case.pipe';
 import { LargeCardsComponent } from './large-cards.component';
 
-fdescribe('LargeCardsComponent', () => {
+describe('LargeCardsComponent', () => {
   let pipe: HumanCasePipe;
   let component: LargeCardsComponent;
   let fixture: ComponentFixture<LargeCardsComponent>;

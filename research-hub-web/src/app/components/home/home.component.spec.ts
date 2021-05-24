@@ -5,7 +5,7 @@ import { FeaturedComponent } from './featured/featured.component';
 import { HomeComponent } from './home.component';
 import { ResearchActivityComponent } from './research-activity/research-activity.component';
 
-fdescribe('HomeComponent', () => {
+describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
