@@ -98,7 +98,7 @@ describe('BrowseComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ BrowseComponent ],
-      imports: [ HttpClientTestingModule, ApolloTestingModule, ],
+      imports: [ HttpClientTestingModule, ApolloTestingModule ],
       providers: [ MockProvider(SearchBarService) ]
     })
     .compileComponents();
