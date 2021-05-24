@@ -5,7 +5,7 @@ import { BLOCKS } from '@contentful/rich-text-types';
 import { MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 
-fdescribe('BodyMediaComponent', () => {
+describe('BodyMediaComponent', () => {
   let component: BodyMediaComponent;
   let fixture: ComponentFixture<BodyMediaComponent>;
 

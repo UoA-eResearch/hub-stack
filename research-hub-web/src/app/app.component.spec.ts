@@ -12,7 +12,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatMenuModule } from '@angular/material/menu'
 import { MockModule, MockProvider } from 'ng-mocks';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 

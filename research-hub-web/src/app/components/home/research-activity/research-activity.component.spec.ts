@@ -7,7 +7,7 @@ import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockProvider } from 'ng-mocks';
 
-fdescribe('ResearchActivityComponent', () => {
+describe('ResearchActivityComponent', () => {
   let component: ResearchActivityComponent;
   let fixture: ComponentFixture<ResearchActivityComponent>;
   const mockStages$: Observable<StageCollection> = of({

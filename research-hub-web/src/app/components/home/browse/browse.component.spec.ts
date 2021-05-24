@@ -7,7 +7,7 @@ import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockProvider } from 'ng-mocks';
 
-fdescribe('BrowseComponent', () => {
+describe('BrowseComponent', () => {
   let component: BrowseComponent;
   let fixture: ComponentFixture<BrowseComponent>;
   const mockCategories$: Observable<CategoryCollection> = of({

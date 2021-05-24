@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockModule, MockProvider } from 'ng-mocks';
 
-fdescribe('EventsComponent', () => {
+describe('EventsComponent', () => {
   let component: EventsComponent;
   let fixture: ComponentFixture<EventsComponent>;
   let controller: ApolloTestingController;

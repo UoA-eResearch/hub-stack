@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VideoCardComponent } from './video-card.component';
 
-fdescribe('VideoCardComponent', () => {
+describe('VideoCardComponent', () => {
   let component: VideoCardComponent;
   let fixture: ComponentFixture<VideoCardComponent>;
 

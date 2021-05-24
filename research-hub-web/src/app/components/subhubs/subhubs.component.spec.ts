@@ -23,7 +23,7 @@ import { MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 
 
-fdescribe('SubhubsComponent', () => {
+describe('SubhubsComponent', () => {
   let component: SubhubsComponent;
   let fixture: ComponentFixture<SubhubsComponent>;
   let backend: ApolloTestingController;

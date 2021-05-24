@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 import { SearchBarComponent } from './search-bar.component';
 import { SearchBarService } from './search-bar.service';
 
-fdescribe('SearchBarComponent', () => {
+describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
   let fixture: ComponentFixture<SearchBarComponent>;
 
