@@ -1,14 +1,16 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@app/app.material.module';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
+import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { SearchBarService } from '../search-bar/search-bar.service';
 import { SearchPageComponent } from './search-page.component';
 
-xdescribe('SearchPageComponent', () => {// this test needs work; excluded for now
+describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
   let fixture: ComponentFixture<SearchPageComponent>;
 
@@ -16,13 +18,15 @@ xdescribe('SearchPageComponent', () => {// this test needs work; excluded for no
     await TestBed.configureTestingModule({
       declarations: [
         SearchPageComponent,
-        SearchBarComponent // this needs to be mocked, using MockComponent causes error I don't quite understand at the moment
+        MockComponent(NgxSkeletonLoaderComponent),
+        MockComponent(SearchBarComponent)
       ],
       imports: [
+        RouterTestingModule,
         ApolloTestingModule,
         HttpClientTestingModule,
         MockModule(MaterialModule),
-        MockModule(FormsModule)
+        MockModule(FormsModule),
       ],
       providers: [
         SearchBarService
