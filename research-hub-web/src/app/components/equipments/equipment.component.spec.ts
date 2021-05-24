@@ -58,8 +58,7 @@ describe('EquipmentComponent', () => {
         MockModule(BrowserAnimationsModule)
       ],
       providers: [
-        MockProvider(AppComponentService),
-        AllEquipmentGQL
+        MockProvider(AppComponentService)
       ]
     })
       .compileComponents();

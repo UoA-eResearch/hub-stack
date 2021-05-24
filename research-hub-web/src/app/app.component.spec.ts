@@ -18,7 +18,7 @@ describe('AppComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppComponent ],
+      declarations: [AppComponent],
       imports: [
         HttpClientTestingModule,
         ApolloTestingModule,
@@ -26,16 +26,13 @@ describe('AppComponent', () => {
         MockModule(MatMenuModule)
       ],
       providers: [
-          Location,
-          MockProvider(SearchBarService),
-          MockProvider(AppComponentService),
-          Title,
-          MockProvider(LoginService),
-          Apollo,
-          MockProvider(DeviceDetectorService)
+        MockProvider(SearchBarService),
+        MockProvider(AppComponentService),
+        MockProvider(LoginService),
+        MockProvider(DeviceDetectorService)
       ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

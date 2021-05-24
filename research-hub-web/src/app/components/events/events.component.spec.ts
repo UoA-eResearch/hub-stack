@@ -57,8 +57,7 @@ describe('EventsComponent', () => {
         MockModule(SharedModule),
         MockModule(BrowserAnimationsModule)
       ], providers: [
-        MockProvider(AppComponentService),
-        AllEventsGQL
+        MockProvider(AppComponentService)
       ]
     })
       .compileComponents();

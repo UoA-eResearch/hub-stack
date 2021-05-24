@@ -275,8 +275,7 @@ describe('ArticlesComponent', () => {
         MockModule(BrowserAnimationsModule),
         RouterTestingModule.withRoutes([])
       ], providers: [
-        MockProvider(AppComponentService),
-        AllArticlesGQL
+        MockProvider(AppComponentService)
       ]
     }).compileComponents();
   }));

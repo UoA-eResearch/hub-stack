@@ -513,7 +513,6 @@ describe('SubhubsComponent', () => {
         MockModule(BrowserAnimationsModule),
         RouterTestingModule
       ], providers: [
-        AllSubHubGQL,
         MockProvider(AppComponentService),
         MockProvider(AllContentItemParentSubHubsGQL)
       ]

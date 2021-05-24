@@ -43,7 +43,7 @@ describe('ResearchActivityComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ResearchActivityComponent ],
-      imports: [ HttpClientTestingModule, ApolloTestingModule, ],
+      imports: [ HttpClientTestingModule, ApolloTestingModule ],
       providers: [ MockProvider(SearchBarService) ]
     })
     .compileComponents();

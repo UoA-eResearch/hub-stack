@@ -57,8 +57,7 @@ describe('ServicesComponent', () => {
         MockModule(SharedModule),
         MockModule(BrowserAnimationsModule)
       ], providers: [
-        MockProvider(AppComponentService),
-        AllServicesGQL
+        MockProvider(AppComponentService)
       ]
     })
       .compileComponents();
