@@ -1,77 +1,81 @@
-@import "../../../typography.scss";
-@import "../../../themes.scss";
-@import "../../../styles.scss";
-@import '../../app.component.scss';
+@import "variables";
+@import "mixins";
+@import "styles-common";
 
+/**
+* Make first div flex container
+*/
+:host > div:first-child {
+  display: flex;
+  flex-direction: column;
+}
 
 /**
  * Content Container
  */
- .content-container {
-    @extend .margin-bottom;
-    padding: 16px 0;
-    width: 95vw;
-    margin: 0 auto;
-    text-align: center;
+.content-container {
+  @extend .margin-bottom;
+  padding: 16px 0;
+  width: 95vw;
+  margin: 0 auto;
+  text-align: center;
 }
-
 
 /**
  * Colored backgrounds
  */
 .grey-background {
-    background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 .teal-background {
-    background: map-get($hub-teal, 700);
+  background: map-get($hub-teal, 700);
 }
-
 
 /**
  * Section shadows
  */
 .shadow {
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4)!important;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4) !important;
 }
-
 
 /**
  * Featured Section
  */
 .featured {
-    z-index: 1
+  z-index: 1;
 }
-
 
 /**
  * Contact Section
  */
 .contact-container {
-    z-index: 2;
-    .contact {
-        margin: 0 auto;
-        text-align: center;
-        @include size(large) { text-align: left; }
-        .text {
-            width: 100%;
-            @extend .text;
-            @include size(large) { 
-            text-align: left;
-            }
-        }
-        .standard-button {
-            color: #eeeeee!important;
-            padding-bottom: 2.4px!important;
-            border: 3px solid $dark-grey!important;
-            border-radius: 50px!important;
-            background-color: $dark-grey!important;
-            transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-        }
-        .standard-button:hover {
-            color: $dark-grey!important;
-            border-radius: 50px!important;
-            background-color: #eeeeee!important;
-            transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-        }
+  z-index: 2;
+  .contact {
+    margin: 0 auto;
+    text-align: center;
+    @include size(large) {
+      text-align: left;
     }
+    .text {
+      width: 100%;
+      @extend .text;
+      @include size(large) {
+        text-align: left;
+      }
+    }
+    .standard-button {
+      color: #eeeeee !important;
+      padding-bottom: 2.4px !important;
+      border: 3px solid $dark-grey !important;
+      border-radius: 50px !important;
+      background-color: $dark-grey !important;
+      transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    }
+    .standard-button:hover {
+      color: $dark-grey !important;
+      border-radius: 50px !important;
+      background-color: #eeeeee !important;
+      transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    }
+  }
 }
