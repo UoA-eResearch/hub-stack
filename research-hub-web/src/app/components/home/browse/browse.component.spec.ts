@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
 
 describe('BrowseComponent', () => {
   let component: BrowseComponent;
@@ -97,8 +98,8 @@ describe('BrowseComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ BrowseComponent ],
-      imports: [ HttpClientTestingModule, ApolloTestingModule, ],
-      providers: [ SearchBarService ]
+      imports: [ HttpClientTestingModule, ApolloTestingModule ],
+      providers: [ MockProvider(SearchBarService) ]
     })
     .compileComponents();
   });
@@ -119,5 +120,5 @@ describe('BrowseComponent', () => {
       expect(res).toBeTruthy();
     });
   })
-  
+
 });

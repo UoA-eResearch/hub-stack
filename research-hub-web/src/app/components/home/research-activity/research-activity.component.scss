@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "styles-common";
 
 /**
  * Custom Text
@@ -10,6 +11,12 @@
   @include size(large) {
     text-align: left;
   }
+}
+
+.content-container {
+  width: 95vw;
+  margin: 60px auto;
+  @extend .site-padding;
 }
 
 /**

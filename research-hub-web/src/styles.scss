@@ -2,6 +2,7 @@
 @import "typography";
 @import "variables";
 @import "styles-common";
+@import "mixins";
 
 /**
  * Native Elements
@@ -163,7 +164,7 @@ mat-chip.mat-chip {
   font-size: mat-font-size($app-chips-typography, button);
   font-weight: mat-font-weight($app-chips-typography, button);
 }
-mat-card {
+mat-card.mat-card {
   margin: 8px 0;
   border-radius: 0%;
 }
@@ -174,6 +175,9 @@ svg {
   width: 24px !important;
   height: 24px !important;
   line-height: 24px !important;
+}
+mat-expansion-panel {
+  margin: 8px 0;
 }
 .mat-expansion-indicator::after {
   font-size: 8px !important;
@@ -249,24 +253,24 @@ svg {
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
-::ng-deep.mat-focused .mat-form-field-label {
-  /*change color of label*/
-  color: rgba(200, 200, 200, 0.6) !important;
-}
+// ::ng-deep.mat-focused .mat-form-field-label {
+//   /*change color of label*/
+//   color: rgba(200, 200, 200, 0.6) !important;
+// }
 
-::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple {
-  /*change color of underline*/
-  background-color: rgba(200, 200, 200, 0.6) !important;
-}
+// ::ng-deep.mat-form-field.mat-focused .mat-form-field-ripple {
+//   /*change color of underline*/
+//   background-color: rgba(200, 200, 200, 0.6) !important;
+// }
 
-::ng-deep.mat-form-field-ripple {
-  /*change color of underline when focused*/
-  background-color: rgba(200, 200, 200, 0.6) !important;
-}
+// ::ng-deep.mat-form-field-ripple {
+//   /*change color of underline when focused*/
+//   background-color: rgba(200, 200, 200, 0.6) !important;
+// }
 
-::ng-deep input {
-  caret-color: white !important;
-}
+// ::ng-deep input {
+//   caret-color: white !important;
+// }
 
 /*
  * Search Results Filters Styling
@@ -385,4 +389,32 @@ svg {
 .call-to-action:hover .arrow {
   transform: translate(10px);
   transition: transform 0.2s ease-out;
+}
+
+/**
+* content container for homepage
+*/
+.content-container {
+  width: 95vw;
+  margin: 60px auto;
+  @extend .site-padding;
+  h2 {
+    font-size: 36px;
+    text-align: center;
+    @include size(medium) {
+      text-align: left;
+      font-size: 48px;
+    }
+  }
+  p {
+    font-size: 16px;
+    position: relative;
+    word-wrap: break-word;
+    margin: 0 auto;
+    text-align: center;
+    @include size(medium) {
+      text-align: left;
+      font-size: 20px;
+    }
+  }
 }
