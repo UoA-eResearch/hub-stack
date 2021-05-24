@@ -2,16 +2,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BodyMediaComponent } from './body-media.component';
 import { BodyMediaService } from '@services/body-media.service';
 import { BLOCKS } from '@contentful/rich-text-types';
+import { MockProvider } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('BodyMediaComponent', () => {
+fdescribe('BodyMediaComponent', () => {
   let component: BodyMediaComponent;
   let fixture: ComponentFixture<BodyMediaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ BodyMediaComponent ],
-      imports: [ ],
-      providers: [ BodyMediaService ]
+      imports: [ RouterTestingModule ],
+      providers: [ MockProvider(BodyMediaService) ]
     })
     .compileComponents();
   });
@@ -25,5 +27,5 @@ describe('BodyMediaComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
 });

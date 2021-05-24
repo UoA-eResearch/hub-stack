@@ -19,9 +19,11 @@ import {
   SubHubOrder,
 } from "@graphql/schema";
 import { AppComponentService } from '@app/app.component.service';
+import { MockModule, MockProvider } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
-describe('SubhubsComponent', () => {
+fdescribe('SubhubsComponent', () => {
   let component: SubhubsComponent;
   let fixture: ComponentFixture<SubhubsComponent>;
   let backend: ApolloTestingController;
@@ -149,11 +151,16 @@ describe('SubhubsComponent', () => {
   // A Single SubHub
   // All the data for an example parent subhub.
   const singleSubHub$: Observable<SubHub> = of({
-        "slug": "landing-page-for-a-sub-hub",
-        "title": "Landing page for a 'sub-hub'",
-        "summary": "This is the landing page that demos everything a subhub can do..",
-        "body": {
-          "json": {
+    "slug": "landing-page-for-a-sub-hub",
+    "title": "Landing page for a 'sub-hub'",
+    "summary": "This is the landing page that demos everything a subhub can do..",
+    "body": {
+      "json": {
+        "data": {
+
+        },
+        "content": [
+          {
             "data": {
 
             },
@@ -162,104 +169,99 @@ describe('SubhubsComponent', () => {
                 "data": {
 
                 },
-                "content": [
-                  {
-                    "data": {
-
-                    },
-                    "marks": [
-
-                    ],
-                    "value": "Wow. Much excite. I can describe all sorts of useful stuff here. ",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
-              },
-              {
-                "data": {
-                  "target": {
-                    "sys": {
-                      "id": "21lOuLkozscCcNZHw0BRf",
-                      "type": "Link",
-                      "linkType": "Asset"
-                    }
-                  }
-                },
-                "content": [
+                "marks": [
 
                 ],
-                "nodeType": "embedded-asset-block"
-              },
-              {
-                "data": {
-
-                },
-                "content": [
-                  {
-                    "data": {
-
-                    },
-                    "marks": [
-
-                    ],
-                    "value": "Heaps and heaps of info about the subhub actually. ",
-                    "nodeType": "text"
-                  }
-                ],
-                "nodeType": "paragraph"
+                "value": "Wow. Much excite. I can describe all sorts of useful stuff here. ",
+                "nodeType": "text"
               }
             ],
-            "nodeType": "document"
+            "nodeType": "paragraph"
           },
-          "__typename": "SubHubBody"
+          {
+            "data": {
+              "target": {
+                "sys": {
+                  "id": "21lOuLkozscCcNZHw0BRf",
+                  "type": "Link",
+                  "linkType": "Asset"
+                }
+              }
+            },
+            "content": [
+
+            ],
+            "nodeType": "embedded-asset-block"
+          },
+          {
+            "data": {
+
+            },
+            "content": [
+              {
+                "data": {
+
+                },
+                "marks": [
+
+                ],
+                "value": "Heaps and heaps of info about the subhub actually. ",
+                "nodeType": "text"
+              }
+            ],
+            "nodeType": "paragraph"
+          }
+        ],
+        "nodeType": "document"
+      },
+      "__typename": "SubHubBody"
+    },
+    "ssoProtected": false,
+    "searchable": true,
+    "subhubPagesCollection": {
+      "items": [
+        {
+          "__typename": "Equipment",
+          "slug": "death-star",
+          "title": "Death Star",
+          "ssoProtected": true,
+          "summary": "Mobile space station and galactic superweapon."
         },
-        "ssoProtected": false,
-        "searchable": true,
-        "subhubPagesCollection": {
-          "items": [
-            {
-              "__typename": "Equipment",
-              "slug": "death-star",
-              "title": "Death Star",
-              "ssoProtected": true,
-              "summary": "Mobile space station and galactic superweapon."
-            },
-            {
-              "__typename": "Service",
-              "slug": "super-dooper-research-service",
-              "title": "Super dooper research service",
-              "ssoProtected": true,
-              "summary": "The best service ever. It saved my life."
-            },
-            {
-              "__typename": "SubHub",
-              "slug": "a-subhub-to-be-included-as-level-2-of-a-landing-page-subhub",
-              "title": "a subhub to be included as level 2 of a landing page subhub",
-              "ssoProtected": true,
-              "summary": "as the title says"
-            },
-            {
-              "__typename": "Article",
-              "slug": "top-secret-article",
-              "title": "Top Secret Article",
-              "ssoProtected": true,
-              "summary": "For testing SSO"
-            },
-            {
-              "__typename": "Article",
-              "slug": "first-article",
-              "title": "First article",
-              "ssoProtected": false,
-              "summary": "A brief description of the first article. I'm writing some more stuff here just so that this seems a little more realistic. Sam was here. Have a good day."
-            }
-          ],
-          "__typename": "SubHubSubhubPagesCollection"
+        {
+          "__typename": "Service",
+          "slug": "super-dooper-research-service",
+          "title": "Super dooper research service",
+          "ssoProtected": true,
+          "summary": "The best service ever. It saved my life."
         },
-        "__typename": "SubHub"
+        {
+          "__typename": "SubHub",
+          "slug": "a-subhub-to-be-included-as-level-2-of-a-landing-page-subhub",
+          "title": "a subhub to be included as level 2 of a landing page subhub",
+          "ssoProtected": true,
+          "summary": "as the title says"
+        },
+        {
+          "__typename": "Article",
+          "slug": "top-secret-article",
+          "title": "Top Secret Article",
+          "ssoProtected": true,
+          "summary": "For testing SSO"
+        },
+        {
+          "__typename": "Article",
+          "slug": "first-article",
+          "title": "First article",
+          "ssoProtected": false,
+          "summary": "A brief description of the first article. I'm writing some more stuff here just so that this seems a little more realistic. Sam was here. Have a good day."
+        }
+      ],
+      "__typename": "SubHubSubhubPagesCollection"
+    },
+    "__typename": "SubHub"
   } as unknown as SubHub);
 
-  // All the data required for the current subhub. 
+  // All the data required for the current subhub.
   const currentSubHubData$: Observable<SubHubCollection> = of({
     "items": [
       {
@@ -505,15 +507,15 @@ describe('SubhubsComponent', () => {
       declarations: [SubhubsComponent],
       imports: [
         ApolloTestingModule,
-        CommonModule,
-        MaterialModule,
-        SharedModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+        MockModule(CommonModule),
+        MockModule(MaterialModule),
+        MockModule(SharedModule),
+        MockModule(BrowserAnimationsModule),
+        RouterTestingModule
       ], providers: [
         AllSubHubGQL,
-        AppComponentService,
-        AllContentItemParentSubHubsGQL
+        MockProvider(AppComponentService),
+        MockProvider(AllContentItemParentSubHubsGQL)
       ]
     })
       .compileComponents();

@@ -1,15 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockPipe } from 'ng-mocks';
 import { HumanCasePipe } from '../../../pipes/human-case.pipe';
 import { CardsComponent } from './cards.component';
 
-describe('CardsComponent', () => {
+fdescribe('CardsComponent', () => {
   let pipe: HumanCasePipe;
   let component: CardsComponent;
   let fixture: ComponentFixture<CardsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CardsComponent, HumanCasePipe ]
+      declarations: [
+        CardsComponent,
+        MockPipe(HumanCasePipe)
+      ]
     })
     .compileComponents();
   });

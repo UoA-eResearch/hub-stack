@@ -5,8 +5,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
 
-describe('ResearchActivityComponent', () => {
+fdescribe('ResearchActivityComponent', () => {
   let component: ResearchActivityComponent;
   let fixture: ComponentFixture<ResearchActivityComponent>;
   const mockStages$: Observable<StageCollection> = of({
@@ -43,7 +44,7 @@ describe('ResearchActivityComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ResearchActivityComponent ],
       imports: [ HttpClientTestingModule, ApolloTestingModule, ],
-      providers: [ SearchBarService ]
+      providers: [ MockProvider(SearchBarService) ]
     })
     .compileComponents();
   });
@@ -64,5 +65,5 @@ describe('ResearchActivityComponent', () => {
       expect(res).toBeTruthy();
     });
   })
-  
+
 });

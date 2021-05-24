@@ -9,8 +9,10 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockModule, MockProvider } from 'ng-mocks';
 
-describe('EventsComponent', () => {
+fdescribe('EventsComponent', () => {
   let component: EventsComponent;
   let fixture: ComponentFixture<EventsComponent>;
   let controller: ApolloTestingController;
@@ -48,14 +50,14 @@ describe('EventsComponent', () => {
         EventsComponent
       ],
       imports: [
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
+        RouterTestingModule,
         ApolloTestingModule,
-        CommonModule,
-        MaterialModule,
-        SharedModule,
-        BrowserAnimationsModule
+        MockModule(CommonModule),
+        MockModule(MaterialModule),
+        MockModule(SharedModule),
+        MockModule(BrowserAnimationsModule)
       ], providers: [
-        AppComponentService,
+        MockProvider(AppComponentService),
         AllEventsGQL
       ]
     })
