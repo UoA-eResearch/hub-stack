@@ -51,14 +51,6 @@
       ],
     },
   },
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts",
-  ],
-  "include": [
-    "**/*.d.ts",
-    "**/*.ts"
-  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
