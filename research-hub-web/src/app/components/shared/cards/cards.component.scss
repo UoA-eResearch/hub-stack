@@ -1,25 +1,21 @@
-@import '../../../../themes.scss';
-@import '../../../../typography.scss';
-@import '../../../../styles.scss';
-
+@import "variables";
 
 /**
  * Mat Card
  */
 mat-card {
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.27)!important;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.27) !important;
 }
 
 /**
  * Card Image
- */ 
+ */
 .mat-card-image {
   min-height: 80px;
   max-height: 152px;
   margin-bottom: 5px;
   object-fit: cover;
 }
-
 
 /**
   * Mat-Card Title
@@ -31,46 +27,44 @@ mat-card {
   }
 }
 .mat-card a {
-  color: $dark-grey!important;
+  color: $dark-grey !important;
 }
-
 
 /**
   * Lock Icon
   */
-  mat-icon {
-    color: $dark-grey!important;
-    font-size: 14px!important;
-    vertical-align: middle;
+mat-icon {
+  color: $dark-grey !important;
+  font-size: 14px !important;
+  vertical-align: middle;
 }
-
 
 /**
  * Card Label
  */
- .card-label {
+.card-label {
   background: map-get($hub-teal, 700);
   color: rgb(255, 255, 255);
   position: absolute;
   font-size: 14px;
-  left:0;
-  top:0;
+  left: 0;
+  top: 0;
   padding: 0px 15px;
- }
+}
 
-.contact-card-summary  {
+.contact-card-summary {
   a {
-    color: #018193!important;
+    color: #018193 !important;
     display: inline-block;
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-   }
-   mat-icon {
-     font-size: 12px!important;
-     color: $body-grey!important;
-     width: 16px!important;
-     vertical-align: middle;   
-    }
+  }
+  mat-icon {
+    font-size: 12px !important;
+    color: $body-grey !important;
+    width: 16px !important;
+    vertical-align: middle;
+  }
 }

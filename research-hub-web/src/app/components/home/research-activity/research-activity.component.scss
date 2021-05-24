@@ -1,20 +1,23 @@
-@import "../../../../styles.scss";
-@import '../../../../themes.scss';
-@import '../../../../typography.scss';
-@import '../home.component.scss';
-
+@import "variables";
+@import "mixins";
+@import "styles-common";
 
 /**
  * Custom Text
  */
- .text {
+.text {
   width: 100%;
   @extend .text;
-  @include size(large) { 
+  @include size(large) {
     text-align: left;
   }
 }
 
+.content-container {
+  width: 95vw;
+  margin: 60px auto;
+  @extend .site-padding;
+}
 
 /**
  * Research Activity Container
@@ -30,24 +33,23 @@
     display: table;
     overflow: hidden;
 
-
-    &:active, &:focus{
+    &:active,
+    &:focus {
       outline: none;
       text-decoration: none;
     }
     .inner-panel {
-
       margin-right: 20px; /* Set to 0 if you don't want shadow at the right side */
       margin-left: 0px; /* Set to 20px if you want shadow at the left side */
       margin-top: 0px; /* Set to 20px if you want shadow at the top side */
       margin-bottom: 0px; /* Set to 20px if you want shadow at the bottom side */
-      box-shadow: -3px 0px 10px black; 
+      box-shadow: -3px 0px 10px black;
 
       width: 100%;
       margin: 0 auto;
-      transform: skew(0deg); 
+      transform: skew(0deg);
       margin-left: 0vw;
-      height: 240px; 
+      height: 240px;
       display: flex;
       text-align: center;
       align-items: center;
@@ -61,16 +63,17 @@
         transform: skew(30deg);
       }
       * {
-        color: #FFFFFF;
+        color: #ffffff;
       }
       div {
         width: 100%;
-        transform: skew(0deg); 
+        transform: skew(0deg);
         @include size(medium) {
           width: 60%;
-          transform: skew(-30deg); 
+          transform: skew(-30deg);
         }
-        &:active, &:focus {
+        &:active,
+        &:focus {
           text-decoration: none;
           outline: none;
         }
@@ -83,9 +86,10 @@
         font-style: italic;
         font-weight: bold;
         word-wrap: break-word;
-        @include size(medium) {  
+        @include size(medium) {
           width: 100%;
-          font-size: 40px; }
+          font-size: 40px;
+        }
       }
       p {
         width: 90vw;
@@ -100,19 +104,19 @@
       }
       &:hover {
         cursor: pointer;
-        background: #FFFFFF;
+        background: #ffffff;
         border: 4px solid map-get($hub-teal, 700);
         transition: background 0.11s ease-in-out;
         * {
           transition: background 0.11s ease-in-out;
-          color: map-get($hub-teal, 700)!important;
+          color: map-get($hub-teal, 700) !important;
         }
       }
     }
     .research-category-img {
       width: 55vw;
       margin-left: -5vw;
-  
+
       > img {
         object-fit: cover;
         width: 100%;
