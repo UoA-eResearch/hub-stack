@@ -8,30 +8,31 @@ describe('ResearchHubs Homepage', () => {
         cy.visit('/');
     });
 
-    it('has title', () => {
-        cy.contains('ResearchHub');
-    });
-
     // Only enable if featured items are enabled
-    //
-    // it('displays featured items', () => {
-    //     cy.contains(`The thing you learn about learning is that there's always more to learn! Here are the highlights of what we are all learning together in the research community at the University of Auckland`);
-    // })
+    it('displays featured articles', () => {
+        cy.expect('h2.featured-title').not.to.be.empty;
+        cy.expect('.featured-content app-cards mat-nav-list:first-child').not.to.be.empty;
+    })
 
     it('displays research categories', () => {
-        cy.contains(`Research Categories`);
+        cy.expect('#research-categories h2').not.to.be.empty;
+        cy.expect('#research-categories mat-card').not.to.be.empty;
     })
 
     it('displays research activities', () => {
-        cy.contains(`Research Activities`);
+        cy.expect('#research-activities h2').not.to.be.empty;
+        cy.expect('#research-activities .inner-panel h3').not.to.be.empty;
+        cy.expect('#research-activities .inner-panel p').not.to.be.empty;
     })
 
     it('displays contact section', () => {
-        cy.contains(`We are developing the ResearchHub further`);
+        cy.expect('.contact h2').not.to.be.empty;
+        cy.expect('.contact p').not.to.be.empty;
+        cy.expect('.contact .feedback-content p').not.to.be.empty;
     })
 
     it('displays footer', () => {
-        cy.contains(`Centre for eResearch`);
+        cy.expect('footer .footer-content li:first-child').not.to.be.empty;
     })
 
     // it('clicking Sign In takes you to SSO', () => {
