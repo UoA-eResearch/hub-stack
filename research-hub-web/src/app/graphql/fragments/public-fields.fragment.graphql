@@ -54,6 +54,20 @@ fragment PublicFields on Entry {
       ssoProtected
       searchable
     }
+    ... on Funding {
+      __typename
+      icon {
+        url
+      }
+      slug
+      title
+      summary
+      banner {
+        url
+      }
+      ssoProtected
+      searchable
+    }
     ... on Service {
       __typename
       icon {
