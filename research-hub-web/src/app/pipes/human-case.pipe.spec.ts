@@ -1,7 +1,7 @@
 
 import { HumanCasePipe } from "./human-case.pipe";
 
-describe('Human case: pipe', () => {
+fdescribe('Human case: pipe', () => {
     let pipe: HumanCasePipe;
 
     beforeEach(() => {

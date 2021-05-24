@@ -5,8 +5,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
 
-describe('BrowseComponent', () => {
+fdescribe('BrowseComponent', () => {
   let component: BrowseComponent;
   let fixture: ComponentFixture<BrowseComponent>;
   const mockCategories$: Observable<CategoryCollection> = of({
@@ -98,7 +99,7 @@ describe('BrowseComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ BrowseComponent ],
       imports: [ HttpClientTestingModule, ApolloTestingModule, ],
-      providers: [ SearchBarService ]
+      providers: [ MockProvider(SearchBarService) ]
     })
     .compileComponents();
   });
@@ -119,5 +120,5 @@ describe('BrowseComponent', () => {
       expect(res).toBeTruthy();
     });
   })
-  
+
 });

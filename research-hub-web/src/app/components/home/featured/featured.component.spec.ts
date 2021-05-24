@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { FeaturedComponent } from './featured.component';
 
-describe('FeaturedComponent', () => {
+fdescribe('FeaturedComponent', () => {
   let component: FeaturedComponent;
   let fixture: ComponentFixture<FeaturedComponent>;
 
