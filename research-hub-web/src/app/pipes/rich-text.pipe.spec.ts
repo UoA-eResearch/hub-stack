@@ -1,6 +1,6 @@
 import { RichTextToHTML } from "./rich-text.pipe";
 
-describe('List item to router link : pipe', () => {
+fdescribe('List item to router link : pipe', () => {
     let pipe: RichTextToHTML;
 
     beforeEach(() => {

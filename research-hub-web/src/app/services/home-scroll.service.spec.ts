@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { HomeScrollService } from './home-scroll.service';
 
-describe('HomeScrollService', () => {
+fdescribe('HomeScrollService', () => {
   let service: HomeScrollService;
 
   beforeEach(() => {
