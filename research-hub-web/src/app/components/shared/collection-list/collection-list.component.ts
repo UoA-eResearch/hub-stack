@@ -61,11 +61,11 @@ export class CollectionListComponent implements OnInit, OnDestroy {
     switch (__typename.toLowerCase()) {
       case 'article': return 'article';
       case 'equipment': return 'handyman';
-      case 'subHub': return 'language';
+      case 'subhub': return 'language';
       case 'service': return 'manage_accounts';
       case 'event': return 'event';
       case 'software': return 'code';
-      case 'caseStudy': return 'cases';
+      case 'casestudy': return 'cases';
       case 'funding': return 'paid';
       default: return 'article'
     }
