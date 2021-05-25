@@ -58,21 +58,15 @@ export class CollectionListComponent implements OnInit, OnDestroy {
    * @param __typename the type for which we're searching for a default icon.
    */
   public getDefaultTypeIcon(__typename: string): string {
-    switch (__typename) {
+    switch (__typename.toLowerCase()) {
       case 'article': return 'article';
-      case 'Article': return 'article';
       case 'equipment': return 'handyman';
-      case 'Equipment': return 'handyman';
       case 'subHub': return 'language';
-      case 'SubHub': return 'language';
       case 'service': return 'manage_accounts';
-      case 'Service': return 'manage_accounts';
       case 'event': return 'event';
-      case 'Event': return 'event';
       case 'software': return 'code';
-      case 'Software': return 'code';
       case 'caseStudy': return 'cases';
-      case 'CaseStudy': return 'cases';
+      case 'funding': return 'paid';
       default: return 'article'
     }
   }
