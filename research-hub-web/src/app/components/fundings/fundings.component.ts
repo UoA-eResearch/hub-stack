@@ -49,6 +49,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
+    public bodyMediaServicePurpose: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
   ) { this.detectDevice(); }
@@ -99,9 +100,11 @@ export class FundingsComponent implements OnInit, OnDestroy {
         data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
         data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
         data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+        data.applicationDocumentsCollection.items = data.applicationDocumentsCollection.items.filter(item => item);
         
         this.detectDevice();
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        this.bodyMediaServicePurpose.setBodyMedia(data.purpose?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

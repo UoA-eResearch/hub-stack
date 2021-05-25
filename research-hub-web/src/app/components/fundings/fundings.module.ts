@@ -5,8 +5,6 @@ import { FundingRoutingModule } from './funding-routing.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 
-
-
 @NgModule({
   declarations: [
     FundingsComponent
