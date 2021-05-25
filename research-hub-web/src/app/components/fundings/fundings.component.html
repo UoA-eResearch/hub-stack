@@ -36,7 +36,7 @@
                 <th role="columnheader">Description</th>
                 </tr>
                 <tr *ngIf="funding.type" role="row">
-                    <td role="cell">Type</td>
+                    <td role="cell">Type (fund/award/prize)</td>
                     <td role="cell">{{ funding.type }}</td>
                 </tr>
                 <tr *ngIf="funding.funding" role="row">
@@ -106,11 +106,8 @@
             </div>
 
             <!-- Funding Purpose -->
-            <div>
-                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="funding.purpose.json"
-                    [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
-            </div>
-
+            <app-funding-purpose></app-funding-purpose>
+            
             <!-- Specifications Table -->
             <div class="section-2" *ngIf="
                 funding.type ||
@@ -128,6 +125,7 @@
             </div>
 
             <!-- Funding Application Documents -->
+            <h3>Application Documents<hr></h3>
             <div fxLayout="row wrap" fxLayout.lt-sm="column wrap" fxlayoutgap="1%">
                 <div class="application-doc-container" ngClass.xs="application-doc-container-mobile" *ngFor="let item of funding.applicationDocumentsCollection.items" fxflex>
                     <div class="application-doc file" ngClass.xs="application-doc-mobile">
@@ -150,8 +148,6 @@
                     </div>
                 </div>
             </div>
-            
-            
 
             <!-- Related -->
             <div

@@ -49,7 +49,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    public bodyMediaServicePurpose: BodyMediaService,
+    // public bodyMediaServicePurpose: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
   ) { this.detectDevice(); }
@@ -91,7 +91,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
       this.getFundingBySlug(this.slug).subscribe(data => {
 
         // If Call To Action is an email address
-        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        if (data.callToAction?.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           data['callToAction'] = 'mailto:' + data['callToAction'];
         }
 
@@ -103,8 +103,9 @@ export class FundingsComponent implements OnInit, OnDestroy {
         data.applicationDocumentsCollection.items = data.applicationDocumentsCollection.items.filter(item => item);
         
         this.detectDevice();
+
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.bodyMediaServicePurpose.setBodyMedia(data.purpose?.links);
+        // this.bodyMediaServicePurpose.setBodyMedia(data.purpose?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
