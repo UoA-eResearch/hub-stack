@@ -51,32 +51,7 @@ query GetFundingBySlug($slug: String) {
             eligibility
             eligibleExpenses
             deadlines {
-                links {
-                    entries {
-                        block { 
-                        ...PublicFields
-                        sys {
-                            id
-                        }
-                        }
-                        inline { 
-                        ...PublicFields
-                        sys {
-                            id
-                        } 
-                        }
-                        hyperlink { 
-                        ...PublicFields 
-                        sys {
-                            id
-                        }
-                        }
-                    }
-                    assets {
-                        block { ...AssetFields }
-                        hyperlink { ...AssetFields }
-                    }
-                }
+                json
             }
             bodyText {
                 json 
@@ -108,12 +83,7 @@ query GetFundingBySlug($slug: String) {
                 }
             }
             applicationDocumentsCollection {
-                items { 
-                    url
-                    title
-                    description
-                    size
-                }
+                items { ...AssetFields }
             }
             relatedContactsCollection {
                 items { ...PublicFields }
