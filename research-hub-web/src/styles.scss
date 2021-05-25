@@ -307,28 +307,28 @@ mat-expansion-panel {
 /**
  * Content Titles
  */
-.content-title {
+h1.content-title {
   color: map-get($hub-navy, 500);
   font-size: 52px;
   font-weight: bold;
   line-height: 110%;
 }
-.content-title-mobile {
+h1.content-title-mobile {
   font-size: 36px;
 }
-.content-summary {
+p.content-summary {
   color: $color-icon;
   font-size: 24px;
   line-height: 110%;
 }
-.content-summary-mobile {
+p.content-summary-mobile {
   font-size: 20px;
 }
 
 /**
  * Maori Proverb
  */
-.maori-proverb {
+h2.maori-proverb {
   font-weight: 400 !important;
   font-size: 30px !important;
   font-style: italic;
