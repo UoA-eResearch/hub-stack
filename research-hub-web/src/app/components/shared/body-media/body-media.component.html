@@ -26,7 +26,7 @@
                                 <a href="{{ contentItem.url }}">{{ contentItem.title }}</a>
                             </mat-card-title>
                             <mat-card-content class="card-summary">
-                                <div>{{ contentItem.description }}</div>
+                                <div *ngIf="contentItem.description">{{ contentItem.description }}</div>
                                 <div class="download">
                                     <a href="{{ contentItem.url }}">
                                         <img class="download-arrow" style="height: 10px; width: auto"
