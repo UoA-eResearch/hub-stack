@@ -21,6 +21,7 @@
     <ng-template #titleSummary>
         <h1 role="heading" aria-level="1" class="content-title" 
         ngClass.lt-md="content-title-mobile">{{ funding.title }}</h1>
+        <h2 aria-level="2" *ngIf="funding.maoriProverb" class="maori-proverb">{{ funding.maoriProverb}}<hr></h2>
         <p class="content-summary" ngClass.sm="content-summary-sm"
         ngClass.xs="content-summary-xs">{{ funding.summary }}</p>
     </ng-template>
@@ -34,30 +35,26 @@
                 <th role="columnheader">Details</th>
                 <th role="columnheader">Description</th>
                 </tr>
-                <!-- <tr *ngIf="funding.audience" role="row">
-                    <td role="cell">Audience</td>
-                    <td role="cell">{{ funding.audience }}</td>
+                <tr *ngIf="funding.type" role="row">
+                    <td role="cell">Type</td>
+                    <td role="cell">{{ funding.type }}</td>
                 </tr>
-                <tr *ngIf="funding.mode" role="row">
-                    <td role="cell">Mode of Delivery</td>
-                    <td role="cell">{{ funding.mode }}</td>
+                <tr *ngIf="funding.funding" role="row">
+                    <td role="cell">Funding</td>
+                    <td role="cell">{{ funding.funding }}</td>
                 </tr>
-                <tr *ngIf="funding.availability" role="row">
-                    <td role="cell">Availability</td>
-                    <td role="cell">{{ funding.availability }}</td>
+                <tr *ngIf="funding.eligibility" role="row">
+                    <td role="cell">Eligibility</td>
+                    <td role="cell">{{ funding.eligibility }}</td>
                 </tr>
-                <tr *ngIf="funding.date && !funding.availability" role="row">
-                    <td role="cell">Date</td>
-                    <td role="cell"> {{ funding.date | date:'longDate'}} {{ funding.date | date:'shortTime'}}</td>
+                <tr *ngIf="funding.eligibleExpenses" role="row">
+                    <td role="cell">Eligible Expenses</td>
+                    <td role="cell"> {{ funding.eligibleExpenses }}</td>
                 </tr>
-                <tr *ngIf="funding.location" role="row">
-                    <td role="cell">Location</td>
-                    <td role="cell" [innerHTML]="funding.location.json | richTextToHTML"></td>
+                <tr *ngIf="funding.deadlines" role="row">
+                    <td role="cell">Deadlines</td>
+                    <td role="cell" [innerHTML]="funding.deadlines.json | richTextToHTML"></td>
                 </tr>
-                <tr *ngIf="funding.access" role="row">
-                    <td role="cell">Access</td>
-                    <td [innerHTML]="funding.access" role="cell"></td>
-                </tr> -->
             </table>
         </div>
     </ng-template>
@@ -108,21 +105,53 @@
                 <div class="mini-hr" *ngIf="!funding.callToAction"><hr/></div>
             </div>
 
+            <!-- Funding Purpose -->
+            <div>
+                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="funding.purpose.json"
+                    [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
+            </div>
+
+            <!-- Specifications Table -->
+            <div class="section-2" *ngIf="
+                funding.type ||
+                funding.funding ||
+                funding.eligibility ||
+                funding.eligibleExpenses ||
+                funding.deadlines">
+                <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+            </div>           
+
             <!-- Funding Body -->
             <div>
                 <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="funding.bodyText.json"
                     [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
             </div>
 
-            <!-- Specifications Table -->
-            <!-- <div class="section-2" *ngIf="
-                funding.audience ||
-                funding.mode ||
-                funding.availability ||
-                funding.date ||
-                funding.access">
-                <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-            </div> -->
+            <!-- Funding Application Documents -->
+            <div fxLayout="row wrap" fxLayout.lt-sm="column wrap" fxlayoutgap="1%">
+                <div class="application-doc-container" ngClass.xs="application-doc-container-mobile" *ngFor="let item of funding.applicationDocumentsCollection.items" fxflex>
+                    <div class="application-doc file" ngClass.xs="application-doc-mobile">
+                        <a href="{{ item.url }}">
+                            <mat-card>
+                                <mat-card-title class="card-title">
+                                    <a href="{{ item.url }}">{{ item.title }}</a>
+                                </mat-card-title>
+                                <mat-card-content class="card-summary">
+                                    <div>{{ item.description }}</div>
+                                    <div class="download">
+                                        <a href="{{ item.url }}">
+                                            <img class="download-arrow" style="height: 10px; width: auto"
+                                            src="assets/components/navy-download.png" alt="download-arrow">Download File</a>&nbsp;
+                                        <span class="file-size">{{ item.size }}&nbsp;kB</span>
+                                    </div>
+                                </mat-card-content>
+                            </mat-card>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            
 
             <!-- Related -->
             <div
