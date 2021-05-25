@@ -17,35 +17,6 @@ query GetFundingBySlug($slug: String) {
             }
             maoriProverb
             summary
-            purpose {
-                json 
-                links {
-                    entries {
-                        block { 
-                        ...PublicFields
-                        sys {
-                            id
-                        }
-                        }
-                        inline { 
-                        ...PublicFields
-                        sys {
-                            id
-                        } 
-                        }
-                        hyperlink { 
-                        ...PublicFields 
-                        sys {
-                            id
-                        }
-                        }
-                    }
-                    assets {
-                        block { ...AssetFields }
-                        hyperlink { ...AssetFields }
-                    }
-                }
-            }
             type
             funding
             eligibility
@@ -58,22 +29,22 @@ query GetFundingBySlug($slug: String) {
                 links {
                     entries {
                         block { 
-                        ...PublicFields
-                        sys {
-                            id
-                        }
+                            ...PublicFields
+                            sys {
+                                id
+                            }
                         }
                         inline { 
-                        ...PublicFields
-                        sys {
-                            id
-                        } 
+                            ...PublicFields
+                            sys {
+                                id
+                            } 
                         }
                         hyperlink { 
-                        ...PublicFields 
-                        sys {
-                            id
-                        }
+                            ...PublicFields 
+                            sys {
+                                id
+                            }
                         }
                     }
                     assets {
