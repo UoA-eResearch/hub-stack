@@ -95,7 +95,7 @@ export class CerGraphqlService {
       }
 
       return breadCrumbsArray;
-    } catch (e) { throw new Error('Error loading breadcrumbs') }
+    } catch (e) { throw new Error('Error loading breadcrumbs\n' + e) }
   }
 
   /**
