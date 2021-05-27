@@ -265,8 +265,12 @@ async function createServer(config) {
         resolvers: [{ Query: customQueryResolvers }],
     });
 
+    const enablePlayground = CONTENTFUL_ENVIRONMENT_ID === 'prod' ? false : true;
+
     return new ApolloServer({
         schema,
+        introspection: true,
+        playground: enablePlayground,
         context: ({ req }) => {
             // Log incoming queries
             if (req && req.body && (req.body.operationName != 'IntrospectionQuery'))
