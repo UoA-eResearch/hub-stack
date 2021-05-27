@@ -6,27 +6,29 @@ import { SharedModule } from '../app.shared.module';
 import { SearchBarService } from '../../search-bar/search-bar.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockModule, MockProvider } from 'ng-mocks';
 
 describe('CollectionListComponent', () => {
   let component: CollectionListComponent;
   let fixture: ComponentFixture<CollectionListComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [CollectionListComponent],
       imports: [
         ApolloTestingModule,
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
-        CommonModule,
-        SharedModule,
+        RouterTestingModule,
+        MockModule(CommonModule),
+        MockModule(SharedModule),
         HttpClientTestingModule
       ],
       providers: [
-        SearchBarService,
+        MockProvider(SearchBarService),
       ]
     })
       .compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CollectionListComponent);
