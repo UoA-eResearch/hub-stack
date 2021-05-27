@@ -212,12 +212,15 @@ describe("Tests for cer-graphql", () => {
 
         test('Requesting an articleCollection private field with an invalid Authorization header fails', async function () {
             let { query, close } = await createServerAndTestClientWithAuth(false);
-            let message = false;
-            let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
-            message = res.errors[0];
-            expect(message).toBeTruthy();
-            // stop the server
-            close();
+            try {
+                let message = false;
+                let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+                message = res.errors[0];
+                expect(message).toBeTruthy();
+            } finally {
+                // stop the server
+                close();
+            }
         }, TIMEOUT_PERIOD);
 
         test('Requesting an articleCollection private field w/o a header returns an error', async function () {
@@ -227,10 +230,13 @@ describe("Tests for cer-graphql", () => {
 
         test('Requesting an articleCollection private field with a valid Authorization header returns data', async function () {
             let { query, close } = await createServerAndTestClientWithAuth();
-            let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
-            expect((res as any).data.articleCollection).toBeTruthy();
+            try {
+                let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+                expect((res as any).data.articleCollection).toBeTruthy();
+            } finally {
             // stop the server
-            close();
+                close();
+            }
         }, TIMEOUT_PERIOD);
 
         test('Requesting a article single resource private field returns an error', async function () {
