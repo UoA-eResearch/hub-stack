@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from "@angular/router/testing";
+import { MaterialModule } from '@app/app.material.module';
+import { MockModule } from 'ng-mocks';
 import { LegacyRoutingComponent } from './legacy-routing.component';
 
 describe('LegacyRoutingComponent', () => {
@@ -16,7 +18,8 @@ describe('LegacyRoutingComponent', () => {
             path: "error/:errorCode",
             redirectTo: "",
           }
-        ])
+        ]),
+        MockModule(MaterialModule)
       ]
     })
     .compileComponents();

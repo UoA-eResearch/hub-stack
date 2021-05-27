@@ -19,7 +19,7 @@ export class CardsComponent implements OnInit {
     // Then, remove null items.
     this.contentItem = Object.assign({}, this._inputContentItem);
     // Don't display content without a title or name.
-    this.contentItem.items = this.contentItem.items.filter(item => item && (item.title || item.name || item.maoriName));
+    this.contentItem.items = this.contentItem.items?.filter(item => item && (item.title || item.name || item.maoriName));
     // If you want to hide image when displayed
     if (this.hideImage) { this.contentItem.items.forEach(element => {
         try { delete element['banner'].url } catch {} });
