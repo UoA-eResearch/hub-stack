@@ -246,6 +246,19 @@ async function createServer(config) {
         }
     })
 
+    customQueryResolvers['personCollection'] = (root, args, context, info) => {
+        if (IS_PREVIEW_ENV) {
+            // Add preview as a query argument if we are in a preview
+            // environment.
+            args.preview = true;
+        }
+        if (context.user) { // If the user is signed in, simply forward request
+            return forwardReqToContentful(args, context, info);
+        } else { // If the user is not signed in they shouldn't be allowed to request the personCollection
+            return new AuthenticationError('You cannot query the personCollection unless authenticated.');
+        }
+    }
+
     // Function used in resolvers to forward requests on to Contentful
     let forwardReqToContentful = (args, context, info) =>
         info.mergeInfo.delegateToSchema({
