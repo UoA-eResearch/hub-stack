@@ -6,4 +6,5 @@ ADD package.json .
 ADD package-lock.json .
 ADD index.js .
 RUN  npm install
-CMD ["node","index.js"]
+RUN npm run build
+CMD ["node","build/server.js"]
