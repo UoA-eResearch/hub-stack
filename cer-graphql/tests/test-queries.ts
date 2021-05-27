@@ -1,5 +1,3 @@
-const { gql } = require('apollo-server')
-
 // List of fields that do not require SSO for different types
 const ALWAYS_PUBLIC_FIELDS = [
     'title',
@@ -9,9 +7,9 @@ const ALWAYS_PUBLIC_FIELDS = [
 ]
 
 // Fields that will be for searching
-exports.SEARCHABLE_FIELDS = SEARCHABLE_FIELDS = ['title', 'summary', 'ssoProtected'];
+export const SEARCHABLE_FIELDS = ['title', 'summary', 'ssoProtected'];
 
-exports.GET_ARTICLE_COLLECTION = gql`
+export const GET_ARTICLE_COLLECTION = `
 { 
     articleCollection {
         items {
@@ -21,7 +19,7 @@ exports.GET_ARTICLE_COLLECTION = gql`
 }
 `;
 
-exports.GET_ARTICLE_COLLECTION_PRIVATE = gql`
+export const GET_ARTICLE_COLLECTION_PRIVATE = `
 { 
     articleCollection {
         items {
@@ -33,7 +31,7 @@ exports.GET_ARTICLE_COLLECTION_PRIVATE = gql`
 }
 `;
 
-exports.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO = gql`
+export const GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO = `
 query {
 	articleCollection ( where:{
     AND:[
@@ -52,7 +50,7 @@ query {
 }
 `;
 
-exports.GET_SUBHUB_COLLECTION = gql`
+export const GET_SUBHUB_COLLECTION = `
 { 
     subHubCollection {
         items {
@@ -62,7 +60,7 @@ exports.GET_SUBHUB_COLLECTION = gql`
 }
 `;
 
-exports.GET_EQUIPMENT_COLLECTION = gql`
+export const GET_EQUIPMENT_COLLECTION = `
 { 
     equipmentCollection {
         items {
@@ -72,7 +70,7 @@ exports.GET_EQUIPMENT_COLLECTION = gql`
 }
 `;
 
-exports.GET_ARTICLE_BY_SYS_ID = gql`
+export const GET_ARTICLE_BY_SYS_ID = `
     query ($id: String!) { 
         article(id: $id) {
             title 
@@ -81,7 +79,7 @@ exports.GET_ARTICLE_BY_SYS_ID = gql`
     }
 `;
 
-exports.GET_ARTICLE_BY_SYS_ID_PRIVATE = gql`
+export const GET_ARTICLE_BY_SYS_ID_PRIVATE = `
     query ($id: String!) { 
         article(id: $id) {
             bodyText {
@@ -91,7 +89,7 @@ exports.GET_ARTICLE_BY_SYS_ID_PRIVATE = gql`
     }
 `;
 
-exports.GET_ARTICLE_BY_WHERE = gql`
+export const GET_ARTICLE_BY_WHERE = `
 query ($title: String!) {
     articleCollection(where: {
         title: $title
