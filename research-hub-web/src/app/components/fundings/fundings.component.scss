@@ -1,10 +1,9 @@
-@import '../../../themes.scss';
-@import '../../../typography.scss';
-@import '../../../styles.scss';
+@import "variables";
+@import "mixins";
 
 mat-expansion-panel,
 mat-card  {
-    margin: 1vh 0;
+   margin: 1vh 0;
 }
 
 
@@ -12,45 +11,45 @@ mat-card  {
  * funding Image
  */
 .funding-image {
-    margin: 0 auto;
+   margin: 0 auto;
 }
 
 
 /**
  * Specifications Table
  */
- .specifications-table {
-    width: 100%;
-    border-collapse: collapse;
-    @include size(large) { 
-        width: 50%;
-        margin: 0 auto;}
-    td, th {
-        border: 1px solid #ddd;
-        padding: 8px;
-    }
-    th {
-        text-align: left;
-        padding-top: 12px;
-        margin-bottom: 12px;
-        color: $color-background;
-        background-color: map-get($hub-teal, 700);
-    }
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    td:nth-child(odd) {
-        font-weight: bold;
-        width: 25%;
-    }
+.specifications-table {
+   width: 100%;
+   border-collapse: collapse;
+   @include size(large) { 
+      width: 50%;
+      margin: 0 auto;}
+   td, th {
+      border: 1px solid #ddd;
+      padding: 8px;
+   }
+   th {
+      text-align: left;
+      padding-top: 12px;
+      margin-bottom: 12px;
+      color: $color-background;
+      background-color: map-get($hub-teal, 700);
+   }
+   tr:nth-child(even) {
+      background-color: #f2f2f2;
+   }
+   td:nth-child(odd) {
+      font-weight: bold;
+      width: 25%;
+   }
 }
 
 
 /**
  * Custom Button Styles
  */
- .standard-button {
-    @extend .standard-button;
+.standard-button {
+   @extend .standard-button;
    border: 3px solid map-get($hub-navy, 500)!important;
    background-color: map-get($hub-navy, 500)!important;
 }
@@ -66,13 +65,13 @@ mat-card  {
 /**
  * Funding Application Documents
  */
- .application-doc-container {
-    margin:0 4px;
-    max-width: 30%; 
- }
- .application-doc {
-    max-width: 100%; 
-    text-align: center; 
+.application-doc-container {
+   margin:0 4px;
+   max-width: 30%; 
+}
+.application-doc {
+   max-width: 100%; 
+   text-align: center; 
 }
 
 /**
@@ -82,10 +81,10 @@ mat-card  {
   margin: 12px 0px;
 }
 .file .mat-card {
-    margin: 0 auto;
-    text-align: left;
-    background-color: $light-grey;
-    transition: background-color 0.2s ease-in-out
+   margin: 0 auto;
+   text-align: left;
+   background-color: $light-grey;
+   transition: background-color 0.2s ease-in-out
 }
 .file .mat-card:hover {
    background-color: $input-grey;
