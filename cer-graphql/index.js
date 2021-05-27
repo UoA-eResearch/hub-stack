@@ -265,7 +265,7 @@ async function createServer(config) {
         resolvers: [{ Query: customQueryResolvers }],
     });
 
-    const enablePlayground = CONTENTFUL_ENVIRONMENT_ID === 'prod' ? false : true;
+    const enablePlayground = CONTENTFUL_ENVIRONMENT_ID === 'dev' ? true : false;
 
     return new ApolloServer({
         schema,
