@@ -59,6 +59,20 @@ function getJwtToken(authHeader: string = "") {
         return authHeader.substring('Bearer '.length);
 }
   
+function sendUnauthenticatedError(res: Response, message: string) {
+    res.statusCode = 401;
+    res.send({
+        errors: [
+            {
+                message,
+                extensions: {
+                    code: "UNAUTHENTICATED"
+                }
+            }
+        ]
+    })
+    return;
+}
 
 export default async function authenticateByJwt(jwkUrl: string, isPreviewEnv: boolean)  {
     const cognitoPublicKeys = await fetchCognitoPublicKeys(jwkUrl);
@@ -70,7 +84,7 @@ export default async function authenticateByJwt(jwkUrl: string, isPreviewEnv: bo
             if (isPreviewEnv) {
                 // Reject all non-logged in queries in preview environment
                 console.log("No bearer token sent. In preview environment, so returning AuthenticationError.");
-                next(new AuthenticationError('You must sign in to SSO before accessing preview API.'));
+                sendUnauthenticatedError(res, 'You must sign in to SSO before accessing preview API.')
                 return;
             }
             next();
@@ -83,7 +97,7 @@ export default async function authenticateByJwt(jwkUrl: string, isPreviewEnv: bo
                 if (isPreviewEnv) {
                     // Reject all non-logged in queries in preview environment
                     console.log("In preview environment, so returning AuthenticationError.\n", e)
-                    next(new AuthenticationError('You must sign in to SSO before accessing preview API.'));
+                    sendUnauthenticatedError(res, 'You must sign in to SSO before accessing preview API.')
                     return;
                 }
                 next();
