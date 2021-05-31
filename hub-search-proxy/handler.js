@@ -54,7 +54,7 @@ module.exports.search = async (event, context) => {
     let size = 10;
     let from = 0;
     let queryFilters = {};
-    let contentTypes = ["article","casestudy","equipment","event","service","software","subhub"];
+    let contentTypes = ["article","casestudy","equipment","event", "funding", "service","software","subhub"];
     let sort = [];
     
     if (requestBody.hasOwnProperty('query')) {
@@ -70,11 +70,11 @@ module.exports.search = async (event, context) => {
       queryFilters = requestBody.filters;
     }
     if (requestBody.hasOwnProperty('includeContentTypes') && requestBody.includeContentTypes.length > 0) {
-      const validContentTypes = ["article","casestudy","equipment","event","service","software","subhub"];
+      const validContentTypes = ["article","casestudy","equipment","event", "funding", "service","software","subhub"];
       contentTypes = requestBody.includeContentTypes.map(contentType => contentType.toLowerCase());
       for(const type of contentTypes) {
         if (!validContentTypes.includes(type)) {
-          throw new Error(`Received invalid content type: ${type}. Valid types are: article, casestudy, equipment, event, service, software, subhub`);
+          throw new Error(`Received invalid content type: ${type}. Valid types are: article, casestudy, equipment, event, funding, service, software, subhub`);
         }
       }
     }
@@ -373,7 +373,7 @@ module.exports.delete = async (event, context) => {
  */
 module.exports.bulk = async () => {  
   let validEntries;
-  const validContentTypes = ['article','caseStudy','equipment','event','service','software','subHub'];
+  const validContentTypes = ['article','caseStudy','equipment','event', 'funding', 'service','software','subHub'];
   
   try {
     // contentful export and filter entries
