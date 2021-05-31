@@ -11,6 +11,7 @@ import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockModule, MockProvider } from 'ng-mocks';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
@@ -268,14 +269,13 @@ describe('ArticlesComponent', () => {
       declarations: [ArticlesComponent],
       imports: [
         ApolloTestingModule,
-        CommonModule,
-        MaterialModule,
-        SharedModule,
-        BrowserAnimationsModule,
+        MockModule(CommonModule),
+        MockModule(MaterialModule),
+        MockModule(SharedModule),
+        MockModule(BrowserAnimationsModule),
         RouterTestingModule.withRoutes([])
       ], providers: [
-        AppComponentService,
-        AllArticlesGQL
+        MockProvider(AppComponentService)
       ]
     }).compileComponents();
   }));

@@ -15,8 +15,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   /**
    * Contact Section
    */
+  // TODO this section should be in the CMS
   public title = "Contact";
-  public description = "If you want to get in touch you can ring us, write to us or even visit us. We'd love to hear from you.";
+  public description = ""; 
   public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public email = "eresearch-support@auckland.ac.nz";
   public phone = "+64 9 373 7599 ext 82231";

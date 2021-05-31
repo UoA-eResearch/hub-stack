@@ -4,7 +4,7 @@ This solution will provision the core requirements of the ResearchHub environmen
 
 ## Prerequisites
 1. Download and install the Terraform command line tool: https://www.terraform.io/downloads.html
-2. Create AWS temporary credentials for the AWS account you are deploying to. Instructions for accessing the credentials are on the [Auckland Uni wiki](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI). Make sure you name the credentials profile according to what is defined in the backend.conf definition for the env you are deploying to (e.g. for nonprod, the profile should be 'uoa-its-nonprod').
+2. Create AWS temporary credentials for the AWS account you are deploying to. Instructions for accessing the credentials are on the [Auckland Uni wiki](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=UC&title=AWS+Temporary+Credentials+for+CLI). Make sure you name the credentials profile according to what is defined in the backend.conf definition for the AWS account you are deploying to (e.g. for deploying the test env to nonprod, the profile should be 'uoa-its-nonprod').
 
 ## Usage
 
@@ -15,7 +15,7 @@ This solution will provision the core requirements of the ResearchHub environmen
 5. View output values in the console. 
 6. Use the outputs:
   - Update/create required parameter store values
-  - Update the relevant environment variables in hub-stack, research-hub-web, and serverless-now env files etc
+  - Update the relevant environment variables in hub-stack, research-hub-web, and hub-search-proxy env files etc
   - Update Jenkinsfile with S3 bucket names and Cloudfront distribution IDs (for main and secondary (preview) websites)
 7. Deploy static website files and cer-graphql by triggering the appropriate Jenkins CI/CD pipeline.
 
@@ -27,19 +27,25 @@ For more commands see the [CLI reference](https://www.terraform.io/docs/commands
 - Before running this command, ensure you have created the AWS temporary credentials for the AWS account you are deploying to.
 
 terraform init -backend-config=envs/env-name/backend.conf
-e.g. `terraform init -backend-config=envs/its-nonprod/backend.conf`
+e.g. `terraform init -backend-config=envs/test/backend.conf`
+e.g. `terraform init -backend-config=envs/dev/backend.conf`
 
 You can check the backend s3 bucket defined in [main.tf](main.tf) to ensure the state has been stored. This 'remote state' can then be used by other team members in order to create, read, update, or destroy the current resources. Read more [here](https://www.terraform.io/docs/language/settings/backends/index.html).
 
 **Check the plan for what infrastructure will be created/updated**
 
 terraform plan -var-file=var-file -out=tfplan
-e.g. `terraform plan -var-file=envs/its-nonprod/hub-test.tfvars -out=tfplan`
+e.g. `terraform plan -var-file=envs/test/hub-test.tfvars -out=tfplan`
+e.g. `terraform plan -var-file=envs/dev/hub-dev.tfvars -out=tfplan`
+
+A human-readable plan is output to the console. The tfplan file is in a binary format and can be used later to apply the exact changes specified in the plan.
+To view a JSON representation of the tfplan file, use `terraform show -json <FILE>`.
 
 **Apply (create/update) infrastructure**
 
 terraform apply -var-file=var-file
-e.g. `terraform apply -var-file=envs/its-nonprod/hub-test.tfvars`
+e.g. `terraform apply -var-file=envs/test/hub-test.tfvars`
+e.g. `terraform apply -var-file=envs/dev/hub-dev.tfvars`
 
 **Query output variables**
 
@@ -51,6 +57,10 @@ terraform output
 terraform plan -destroy -var-file=var-file
 2. destroy:
 terraform destroy -var-file=var-file --auto-approve
+
+**CI/CD in Jenkins**
+
+A Jenkins pipeline can be used to invoke the Terraform actions to either create or destroy infrastructure. For the prod environment, changes can ONLY be done via Jenkins. The pipeline is called [hub-infrastructure-deploy](https://prod.jenkins-new.auckland.ac.nz/job/Centre%20for%20eResearch%20(CeR)/job/hub-infrastructure-deploy/). To trigger the pipeline, go to 'Build with Parameters' and enter the deployment env (dev, test or prod), whether you want to create or destroy, and which branch to take the Terraform scripts from (generally should be master).
 
 ## Explanation of variables used
 
@@ -74,8 +84,10 @@ terraform destroy -var-file=var-file --auto-approve
 | secondary_addresses | Any (if existing) Secondary DNS names the site will be accessible via |
 | index_doc | The root document that users will land on, relative to the base of the S3 Bucket |
 | acm_arn | ARN of certificate in us-east-1 that will be attached to the Website (not created by Terraform due to Hybrid DNS situation) |
+| create_route53_entry | Should a route53 entry be created. If on-prem DNS is used, then don't create an entry in Route53. |
+| create_route53_zone | Should a route53 zone be created. If on-prem DNS is used, then create a zone in Route53. TBC - not sure if this is required. |
 | -----------  | ----------- |
-| **Secondary website (if applicable)** | ----------- |
+| **Preview environment (aka "Secondary website")** | ----------- |
 | create_secondary | Should the second Bucket/CloudFront be setup? |
 | dns_entry_secondary | What will be the main DNS entry for the secondary site |
 | secondary_addresses_secondary | Any other DNS names the secondary site will be accessed via |
@@ -93,7 +105,7 @@ terraform destroy -var-file=var-file --auto-approve
 | lb_subnets | List of subnets the LB will be running in |
 | vpc_id | ID of the VPC we are running from |
 | ecs_lb_acm_arn | ARN of the certificate that is attached to the loadbalancer (not created by Terraform due to Hybrid DNS situation) |
-| r53_hosted_zone | Hosted Zone in R53 to create the DNS entry for the LB (if possible, TBC) |
+| r53_hosted_zone | Hosted Zone in R53 to create the DNS entry for the LB |
 | lb_dns_name | DNS Name that will be created in above hosted zone |
 | -----------  | ----------- |
 | **ECS Environment** | ----------- |

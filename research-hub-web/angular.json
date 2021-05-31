@@ -15,7 +15,7 @@
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "tsconfig.json",
+            "tsConfig": "tsconfig.build.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
               "./src/assets"
@@ -28,8 +28,14 @@
             "allowedCommonJsDependencies": [
               "graphql-tag",
               "crypto-js",
-              "zen-observable"
-            ]
+              "zen-observable",
+              "markdown-to-html-pipe"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/partial-styles/"
+              ]
+            }
           },
           "configurations": {
             "local": {
@@ -62,7 +68,7 @@
                 }
               ]
             },
-            "nonprod": {
+            "test": {
               "budgets": [
                 {
                   "type": "anyComponentStyle",
@@ -80,7 +86,29 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.nonprod.ts"
+                  "with": "src/environments/environment.test.ts"
+                }
+              ]
+            },
+            "dev": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6mb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
                 }
               ]
             },
@@ -105,6 +133,121 @@
                   "with": "src/environments/environment.sandbox.ts"
                 }
               ]
+            },
+            "sandbox-preview": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.sandbox-preview.ts"
+                }
+              ]
+            },
+            "dev-preview": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev-preview.ts"
+                }
+              ]
+            },
+            "test-preview": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test-preview.ts"
+                }
+              ]
+            },
+            "prod-preview": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod-preview.ts"
+                }
+              ]
+            },
+            "sandbox-local": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.sandbox-local.ts"
+                }
+              ]
             }
           }
         },
@@ -120,11 +263,29 @@
             "sandbox": {
               "browserTarget": "research-hub-web:build:sandbox"
             },
-            "nonprod": {
-              "browserTarget": "research-hub-web:build:nonprod"
+            "sandbox-preview": {
+              "browserTarget": "research-hub-web:build:sandbox-preview"
+            },
+            "sandbox-local": {
+              "browserTarget": "research-hub-web:build:sandbox-local"
+            },
+            "dev": {
+              "browserTarget": "research-hub-web:build:dev"
+            },
+            "dev-preview": {
+              "browserTarget": "research-hub-web:build:dev-preview"
+            },
+            "test": {
+              "browserTarget": "research-hub-web:build:test"
+            },
+            "test-preview": {
+              "browserTarget": "research-hub-web:build:test-preview"
             },
             "prod": {
               "browserTarget": "research-hub-web:build:prod"
+            },
+            "prod-preview": {
+              "browserTarget": "research-hub-web:build:prod-preview"
             }
           }
         },
@@ -163,7 +324,12 @@
             ],
             "assets": [
               "src/assets"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/partial-styles/"
+              ]
+            }
           }
         },
         "lint": {

@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { RouterTestingModule } from '@angular/router/testing';
+import { MockModule, MockProvider } from 'ng-mocks';
 
 describe('EventsComponent', () => {
   let component: EventsComponent;
@@ -48,15 +50,14 @@ describe('EventsComponent', () => {
         EventsComponent
       ],
       imports: [
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
+        RouterTestingModule,
         ApolloTestingModule,
-        CommonModule,
-        MaterialModule,
-        SharedModule,
-        BrowserAnimationsModule
+        MockModule(CommonModule),
+        MockModule(MaterialModule),
+        MockModule(SharedModule),
+        MockModule(BrowserAnimationsModule)
       ], providers: [
-        AppComponentService,
-        AllEventsGQL
+        MockProvider(AppComponentService)
       ]
     })
       .compileComponents();
@@ -77,7 +78,7 @@ describe('EventsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all Event', () => {
+  it('should get all events', () => {
     spyOn(component, 'getAllEvents').and.returnValue(mockAllEvent$);
     component.getAllEvents().subscribe(res => {
       expect(res).toBeTruthy();

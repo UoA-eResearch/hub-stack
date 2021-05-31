@@ -1,9 +1,22 @@
 import { Routes } from '@angular/router';
 import { LoginSuccessGuard } from '@uoa/auth';
 import { HomeComponent } from '@components/home/home.component';
+import { LegacyRoutingComponent } from "@components/legacy-routing/legacy-routing.component";
 
 
 export const appRoutes: Routes = [
+  {
+    path: 'content/:id',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then((m) => m.LegacyRoutingModule)
+  },
+  {
+    path: 'requestVm',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
+  },
+  {
+    path: 'requestStorage',
+    loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
+  },
   {
     path: '',
     redirectTo: 'home',
@@ -24,11 +37,11 @@ export const appRoutes: Routes = [
   },
   {
     path: 'equipment',
-    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
   },
   {
     path: 'equipment/:slug',
-    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentModule)
+    loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
   },
   {
     path: 'casestudies',
@@ -64,11 +77,11 @@ export const appRoutes: Routes = [
   },
   {
     path: 'services',
-    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServicesModule)
   },
   {
     path: 'service/:slug',
-    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServiceModule)
+    loadChildren: () => import('@app/components/services/services.module').then(m => m.ServicesModule)
   },
   {
     path: 'software/:slug',
@@ -77,5 +90,13 @@ export const appRoutes: Routes = [
   {
     path: 'software',
     loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+  },
+  /**
+   * SubHub routes loader module:
+   * Wildcard route that loads a component module that checks if the route is a subhub friendly URL.
+   */
+  {
+    path: '**',
+    loadChildren: () =>  import("@app/components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
   }
 ];

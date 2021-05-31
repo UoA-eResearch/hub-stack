@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowseComponent } from './browse.component';
 import { SearchBarService } from '../../search-bar/search-bar.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
 
 describe('BrowseComponent', () => {
   let component: BrowseComponent;
@@ -97,8 +98,8 @@ describe('BrowseComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ BrowseComponent ],
-      imports: [ HttpClientModule, ApolloTestingModule, ],
-      providers: [ SearchBarService ]
+      imports: [ HttpClientTestingModule, ApolloTestingModule ],
+      providers: [ MockProvider(SearchBarService) ]
     })
     .compileComponents();
   });
@@ -119,5 +120,4 @@ describe('BrowseComponent', () => {
       expect(res).toBeTruthy();
     });
   })
-  
 });

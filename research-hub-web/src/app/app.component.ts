@@ -1,7 +1,7 @@
 import { filter, pluck, flatMap, catchError } from 'rxjs/operators';
 import { Component, ContentChildren, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { format } from 'date-fns';
@@ -9,7 +9,6 @@ import { LoginService } from '@uoa/auth';
 import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
-import { BypassErrorService } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
 import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -34,6 +33,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public eResearchUrl = 'http://eresearch.auckland.ac.nz';
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
   public privacyUrl = 'https://www.auckland.ac.nz/en/privacy.html';
+  public accessibilityUrl = 'https://www.auckland.ac.nz/en/accessibility.html';
 
   public url: Subscription;
   public showNotification: Boolean;
@@ -57,7 +57,6 @@ export class AppComponent implements OnInit, OnDestroy {
   public currentUrl = undefined;
 
   public userInfo;
-  public authenticated: Boolean;
   public isMobile: Boolean;
   public onSearchPage: Boolean;
   public onHomePage: Boolean;
@@ -77,11 +76,9 @@ export class AppComponent implements OnInit, OnDestroy {
     public allCategoriesGQL: AllCategoriesGQL,
     public getHomepageGQL: GetHomepageGQL,
     public allStagesGQL: AllStagesGQL,
-    private _bypass: BypassErrorService,
     private deviceService: DeviceDetectorService,
     public homeScrollService: HomeScrollService) {
       this.detectDevice();
-      this._bypass.bypassError(environment.cerGraphQLUrl, [500]);
 
       // Smooth scrolling in IE/Edge
       smoothscroll.polyfill();
@@ -123,7 +120,14 @@ export class AppComponent implements OnInit, OnDestroy {
       this.titleService.setTitle(this.pageTitle + ' | ResearchHub');
     });
 
+    this.initialiseHashUrlRedirect();
+
+    if (isPlatformBrowser) {
+      this.routerSub = this.router.events.pipe(
+        filter(event => event instanceof NavigationEnd))
+        .subscribe(async event => {
     // Get All Categories
+    if (!this.allCategories$) {
     this.allCategories$ = this.getAllCategories();
 
     // Set Event Id used for search filtering
@@ -132,15 +136,11 @@ export class AppComponent implements OnInit, OnDestroy {
         if (element.name == 'Events') this.searchBarService.setEventId(element.sys.id);
       });
     })
-
+    }
     // Get All Stages
-    this.allStages$ = this.getAllStages();
-
-    if (isPlatformBrowser) {
-      this.routerSub = this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd))
-        .subscribe(async event => {
-          
+    if (!this.allStages$) {
+        this.allStages$ = this.getAllStages();
+    }
           // Need to use urlAfterRedirects rather than url to get correct routeName, even when route redirected automatically
           const url = event['urlAfterRedirects'];
           const routeName = this.getRouteName(url);
@@ -148,10 +148,24 @@ export class AppComponent implements OnInit, OnDestroy {
 
           // Check if the user is logged in now (Cognito redirect)
           this.loginService.isAuthenticated().then(data => {
-            this.authenticated = data;
             this.getHomepageData();
           });
           this.userInfo = await this.loginService.getUserInfo();
+
+          window.dataLayer.push({
+            'user': JSON.stringify(this.userInfo),
+            ...this.userInfo,
+          });
+
+          // pushing an individual usergroupss to google analytics
+          if (this.userInfo.groups) {
+            this.userInfo.groups.trim().replace('\"', '').replace(']', '').replace('[', '').split(',').map(group => {
+              let groupObj = {};
+              group = group.trim().split('.')[0];
+              groupObj[group] = group;
+              window.dataLayer.push(groupObj);
+            })
+          }
 
           if (routeName) {
 
@@ -183,6 +197,20 @@ export class AppComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+
+  private initialiseHashUrlRedirect() {
+    //When the url changes, we check if actual url has a "#" in it, then we redirect to the route without it.
+    // Redirect hash-style URLs of the old ResearchHub to the new style.
+    this.router.events.subscribe((event: RouterEvent): void => {
+      if (!this.router.navigated && event instanceof NavigationStart) {
+        const url = event.url;  
+        if (url.match('^/#/')) {
+          this.router.navigateByUrl(url.replace('#/', ''), {replaceUrl: true});
+        }
+      }
+    });
   }
 
   /**
@@ -253,12 +281,14 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mediaChangeSub.unsubscribe();
-    this.searchTextChangeSub.unsubscribe();
-    this.routerSub.unsubscribe();
-    this.titleSub.unsubscribe();
-    this.scrollSub.unsubscribe();
-    this.url.unsubscribe();
+    try {
+      this.mediaChangeSub.unsubscribe();
+      this.searchTextChangeSub.unsubscribe();
+      this.routerSub.unsubscribe();
+      this.titleSub.unsubscribe();
+      this.scrollSub.unsubscribe();
+      this.url.unsubscribe();
+    } catch {}   
   }
 
   // Get year for footer copyright

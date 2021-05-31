@@ -7,12 +7,8 @@ const aws = require('aws-sdk');
 const aws4 = require('aws4');
 const fetch = require('node-fetch');
 
-const TIMEOUT_PERIOD = 20000;
-
-const configResult = require('dotenv').config({ path: '../.env' });
-if (configResult.error) {
-    throw configResult.error;
-}
+const TIMEOUT_PERIOD = 40000;
+let awsProfile = 'saml';
 
 /**
  * This function creates both the ApolloServer and test client
@@ -20,7 +16,8 @@ if (configResult.error) {
  */
 async function createServerAndTestClient() {
     let server = await createServer(getCredentials(true));
-    return createTestClient(new ApolloServer({ ...server, context: () => { } }));
+    let testServer = createTestClient(new ApolloServer({ ...server, context: () => { } }));
+    return testServer;
 }
 
 /**
@@ -34,7 +31,9 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
     if (!useValidToken) {
         tokens['access_token'] = 'Bearer fake token value';
     }
-    return createTestClient(new ApolloServer({
+
+    // creating a new apollo server with authorization baked into the requests
+    let authorizedServer = createTestClient(new ApolloServer({
         ...server.config,
         context: () => server.config.context({
             req: {
@@ -44,29 +43,51 @@ async function createServerAndTestClientWithAuth(useValidToken = true) {
             }
         })
     }));
+    return authorizedServer;
 }
 
 /**
- * Gets OAuth tokens
+ * Gets OAuth tokens from 2FAB Lambda
  */
 const getTokens = async () => {
+    let deployStage = process.env.stage.trim();
+    console.log('Getting AWS credentials for profile ' + awsProfile)
     let awsCreds = new aws.SharedIniFileCredentials({
-        profile: process.env.awsProfile,
+        profile: awsProfile
     });
+
     if (awsCreds.sessionToken === undefined) {
-        // falling back to local def profile.
-        console.log("Couldn't find aws profile matching environment variable awsProfile. Falling back to saml profile for local development.");
+        console.warn('AWS Profile not found, defaulting to saml');
+        // falling back to local default profile.
         awsCreds = new aws.SharedIniFileCredentials({
             profile: 'saml',
         });
     }
 
+    let awsLambdaParams;
+    console.log('setting 2FAB parameters for ' + deployStage);
+    if (deployStage === 'sandbox') {
+        awsLambdaParams = {
+            host: "apigw.sandbox.amazon.auckland.ac.nz",
+            path: "/aws-token-grabber/",
+            region: "ap-southeast-2",
+            service: "execute-api"
+        }
+    } else {
+        awsLambdaParams = {
+            host: "apigw.test.amazon.auckland.ac.nz",
+            path: "/aws-token-grabber/",
+            region: "ap-southeast-2",
+            service: "execute-api"
+        }
+    }
+
     // Adding the AWS4 Signature to our request parameters
     let opts = {
-        host: process.env.OAUTH_LAMBDA_HOST,
-        path: process.env.OAUTH_LAMBDA_PATH,
-        region: process.env.OAUTH_LAMBDA_REGION,
-        service: process.env.OAUTH_LAMBDA_SERVICE,
+        host: awsLambdaParams.host,
+        path: awsLambdaParams.path,
+        region: awsLambdaParams.region,
+        service: awsLambdaParams.service,
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate, br'
     };
@@ -79,6 +100,7 @@ const getTokens = async () => {
     // Making request to 2FAB Lambda using 
     let res = await fetch(`https://${opts.host}${opts.path}`, opts);
     const resJson = await res.json();
+    console.warn({resJson});
     try {
         if (!resJson['access_token']) {
             throw 'Fetching response for OAuth2.0 tokens does not contain access token. You may need to renew locally stored AWS credentials.';
@@ -91,10 +113,19 @@ const getTokens = async () => {
 }
 
 /**
- * Before any of the tests run create the query function and make
+ * Before any of the tests run, set the aws-profile, and create the query function and make
  * it available within all tests.
  */
 beforeAll(async () => {
+    // set the aws profile based on the argument passed in
+    process.argv.forEach(arg => {
+        if (arg.indexOf('--aws-profile') > -1) {
+            awsProfile = arg.split('=')[1];
+        }
+    });
+
+    console.log('AWS Profile set to ' + awsProfile);
+
     try {
         return { query } = await createServerAndTestClient();
     } catch (error) {
@@ -148,7 +179,7 @@ describe('Contentful filters (conditionals)', () => {
 
 describe('Authorization resolvers', () => {
 
-    test('Requesting an articleCollection non-public field with an invalid Authorization header fails', async function () {
+    test('Requesting an articleCollection private field with an invalid Authorization header fails', async function () {
         let { query } = await createServerAndTestClientWithAuth(false);
         let message = false;
         try {
@@ -159,23 +190,22 @@ describe('Authorization resolvers', () => {
         expect(message).toBeTruthy();
     }, TIMEOUT_PERIOD);
 
-    test('Requesting an articleCollection non-public field w/o a header returns an error', async function () {
+    test('Requesting an articleCollection private field w/o a header returns an error', async function () {
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE });
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 
-    test('Requesting an articleCollection non-public field with a valid Authorization header returns data', async function () {
+    test('Requesting an articleCollection private field with a valid Authorization header returns data', async function () {
         let { query } = await createServerAndTestClientWithAuth();
         let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
         expect(res.data.articleCollection).toBeTruthy();
     }, TIMEOUT_PERIOD);
 
-    test('Requesting a article single resource non-public field returns an error', async function () {
+    test('Requesting a article single resource private field returns an error', async function () {
         let res = await query({
             query: TQ.GET_ARTICLE_BY_SYS_ID_PRIVATE,
             variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
         });
-
         expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
     });
 

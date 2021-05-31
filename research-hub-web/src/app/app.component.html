@@ -71,30 +71,32 @@
           </div>
         </mat-expansion-panel>
 
-        <!-- Sign In -->
-        <mat-list-item *ngIf="!authenticated">
-          <a mat-line (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</a>
-        </mat-list-item>
-
-
         <!-- Sign Out -->
-        <mat-expansion-panel *ngIf="authenticated" style="background: #FFFFFF" hideToggle="true">
+        <div *ngIf="loginService.loggedIn$ | async; else signinlist">
+          <mat-expansion-panel style="background: #FFFFFF" hideToggle="true">
 
-          <!-- Sign Out Name -->
-          <mat-expansion-panel-header *ngIf="authenticated"  class="expandable-menu">
-            <mat-list-item>
-              <a mat-line fxLayout="row" fxLayoutAlign="start center">
-                <mat-icon matPrefix style="margin-right: 5px;">person</mat-icon>
-                <span fxHide.gt-sm>{{ userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0) }}</span>
-              </a>
-            </mat-list-item>
-          </mat-expansion-panel-header>
-
-          <!-- Sign Out List -->
-          <div *ngIf="authenticated">
-            <a mat-line (click)="loginService.logout()" (keydown.enter)="loginService.logout()">Sign Out</a>
-          </div>
-        </mat-expansion-panel>
+            <!-- Sign Out Name -->
+            <mat-expansion-panel-header class="expandable-menu" *ngIf="loginService.userInfo$ | async as userInfo">
+              <mat-list-item>
+                <a mat-line fxLayout="row" fxLayoutAlign="start center">
+                  <mat-icon matPrefix style="margin-right: 5px;">person</mat-icon>
+                  <span fxHide.gt-sm>{{ userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0) }}</span>
+                </a>
+              </mat-list-item>
+            </mat-expansion-panel-header>
+  
+            <!-- Sign Out List -->
+            <div>
+              <a mat-line (click)="loginService.logout()" (keydown.enter)="loginService.logout()">Sign Out</a>
+            </div>
+          </mat-expansion-panel>
+        </div>      
+        <!-- Sign In -->
+        <ng-template #signinlist>
+          <mat-list-item>
+            <a mat-line (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</a>
+          </mat-list-item>
+        </ng-template>  
       </mat-nav-list>
     </mat-sidenav>
 
@@ -197,41 +199,44 @@
                   </mat-menu>
 
                   <!-- Sign In Button -->
-                  <button role="button" aria-label="sign-in" *ngIf="!authenticated" fxHide.lt-md
-                    mat-button (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</button>
+                  <div *ngIf="loginService.loggedIn$ | async; else signin">
+                    <div *ngIf="loginService.userInfo$ | async as userInfo" >
+                      <button fxHide fxShow.gt-sm role="button" class="button-menu" aria-label="user-info" mat-button [matMenuTriggerFor]="userMenu">
+                        <mat-icon fxHide fxShow.gt-sm matPrefix style="margin-right: 5px;">person</mat-icon>
+                        <span fxHide fxShow.gt-md>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</span>
+                        <span fxHide fxShow.lt-lg>{{ userInfo?.firstName }}</span>
+                      </button>   
 
-                  <button fxHide fxShow.gt-sm role="button" class="button-menu" aria-label="user-info" *ngIf="authenticated" mat-button [matMenuTriggerFor]="userMenu">
-                    <mat-icon fxHide fxShow.gt-sm matPrefix style="margin-right: 5px;">person</mat-icon>
-                    <span fxHide fxShow.gt-md>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</span>
-                    <span fxHide fxShow.lt-lg>{{ userInfo?.firstName }}</span>
-                  </button>
+                      <!-- User Details -->
+                      <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+                        <div class="user-detail-dropdown">
+                          <img src="assets/imgs/uoa-logo-blue.svg" alt="uoa-logo-blue">
 
-                  <!-- User Details -->
-                  <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-                    <div class="user-detail-dropdown">
-                      <img src="assets/imgs/uoa-logo-blue.svg" alt="uoa-logo-blue">
+                          <mat-list class="user-menu-list">
+                            <mat-list-item>
+                              <mat-icon mat-list-icon>person</mat-icon>
+                              <p mat-line>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</p>
+                            </mat-list-item>
+                            <mat-list-item>
+                              <mat-icon mat-list-icon>note</mat-icon>
+                              <p mat-line>{{ userInfo?.email }}</p>
+                            </mat-list-item>
+                          </mat-list>
 
-                      <mat-list class="user-menu-list">
-                        <mat-list-item>
-                          <mat-icon mat-list-icon>person</mat-icon>
-                          <p mat-line>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</p>
-                        </mat-list-item>
-                        <mat-list-item>
-                          <mat-icon mat-list-icon>note</mat-icon>
-                          <p mat-line>{{ userInfo?.email }}</p>
-                        </mat-list-item>
-                      </mat-list>
-
-                      <!-- Sign Out Button-->
-                      <div fxLayout="row" fxLayoutAlign="end">
-                        <button role="button" aria-label="sign-out" mat-raised-button class="sign-out-button"
-                        (click)="loginService.logout()" (keydown.enter)="loginService.logout()">
-                          Sign Out
-                        </button>
-                      </div>
-                    </div>
-                  </mat-menu>
-
+                          <!-- Sign Out Button-->
+                          <div fxLayout="row" fxLayoutAlign="end">
+                            <button role="button" aria-label="sign-out" mat-raised-button class="sign-out-button"
+                            (click)="loginService.logout()" (keydown.enter)="loginService.logout()">
+                              Sign Out
+                            </button>
+                          </div>
+                        </div>
+                      </mat-menu>
+                    </div>     
+                  </div>
+                  <ng-template #signin>
+                    <button role="button" aria-label="sign-in" fxHide.lt-md mat-button (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</button>
+                  </ng-template>
                 </div>
               </div>
             </div>
@@ -295,29 +300,30 @@
 
               <!-- Footer Links -->
               <div class="footer-links" fxLayout="row wrap" fxFlexOrder.lt-md="0" fxLayoutGap="2vw" fxLayoutAlign="space-between">
-                <div fxLayout="column">
-                  <a class="link-header">About</a>
-                  <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
-                </div>
-                <div fxLayout="column">
-                  <a class="link-header">Engage</a>
-                  <a href="{{ feedbackLink }}">Feedback</a>
-                </div>
-                <div fxLayout="column">
-                  <a class="link-header">Helpful Links</a>
-                  <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
-                  <a [href]="privacyUrl" target="_blank">Privacy</a>
-                </div>
+                <ul class='footer-content'>
+                  <li>
+                    <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
+                  </li>
+                  <li>
+                    <a [href]="eResearchUrl" target="_blank">Centre for eResearch</a>
+                  </li>
+                  <li>
+                    Copyright © {{ getYear() }}
+                  </li>
+                  <li>
+                    <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
+                  </li>
+                  <li>
+                    <a [href]="privacyUrl" target="_blank">Privacy</a>
+                  </li>
+                  <li>
+                    <a [href]="accessibilityUrl" target="_blank">Accessibility</a>
+                  </li>
+                  <li>
+                    <a href="{{ feedbackLink }}">Feedback</a>
+                  </li>
+                </ul>
               </div>
-            </div>
-            
-            <!-- Copyright -->
-            <div class="copyright">
-              <a
-              [href]="eResearchUrl" 
-              target="_blank">
-                  Copyright © {{ getYear() }} Centre for eResearch
-              </a>
             </div>
           </div>
         </footer>
