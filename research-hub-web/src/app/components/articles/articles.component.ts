@@ -16,7 +16,6 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-articles',
@@ -53,7 +52,6 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService,
-    public loginService: LoginService
   ) { this.detectDevice(); }
   
   /**
@@ -96,22 +94,16 @@ export class ArticlesComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-
-      /**
-       * If the page is SSO Protected then check if the user is authenticated
-       */
+      this.article = this.getArticleBySlug(this.slug);
       this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
-        if (data.ssoProtected == true) {
-          this.loginService.isAuthenticated().then((isAuthenticated) => {
-            isAuthenticated ? this.article = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
-          });
-        }
-        else {
-          this.article = data;
-        }
-
         this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        // Strip nulls from related collection data.
+        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

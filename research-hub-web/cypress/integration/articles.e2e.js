@@ -5,15 +5,15 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('can visit an article and display its title', () => {
-        cy.contains('Open Access');
+        cy.expect('h1.content-title').not.to.be.empty;
     });
 
     it('can visit an article and display its subtitle', () => {
-        cy.contains('Open Access brings increased visibility, usage and impact to researchers and institutions. It benefits researchers, institutions, nations and society as a whole.');
+        cy.expect('app-articles .content-summary').not.to.be.empty;
     });
 
     it('article displays body text', () => {
-        cy.contains('Open access is making published research freely available on the internet. Open access material includes journal articles, artwork, books and book chapters, conference proceedings, theses, data and images.');
+        cy.expect('app-articles ng-component.ng-star-inserted').not.to.be.empty;
     });
 
     it('displays a list of related items', () => {
@@ -21,8 +21,8 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Research Outputs').click();
-        cy.contains('Publications and creative works in Research Outputs populate University Directory profiles and the Academic Performance Review (APR). For information on access and general use of the Research Outputs system, please see Research Outputs support.');
+        cy.get('#you-might-be-interested-in').contains('Creative Commons').click();
+        cy.expect('h2.featured-title').not.to.be.empty;
     });
 
     // it('displays a list of contacts', () => {
@@ -44,10 +44,9 @@ describe('ResearchHubs Article Pages', () => {
         cy.get('#organisations').contains('Libraries and Learning Services').should('exist');
     });
 
-    // Cypress doesn't dupport multi-tab testing
-    // 
+    // testing stops when you navigate away from the root domain
     // it('clicking on an organisation takes you to the organisation', () => {
-    //     cy.get('#organisations').contains('Centre for eResearch').click();
-    //     cy.contains("The Office of Research Strategy and Integrity (ORSI) was established in 2018 to support the work of the Deputy Vice Chancellor Research and the University's Research Committee in: ");
+    //     cy.get('#organisations').contains('Te Tumu Herenga').click();
+    //     cy.expect('#page-title').not.to.be.empty;
     // });
 });

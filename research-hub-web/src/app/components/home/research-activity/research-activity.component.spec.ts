@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ResearchActivityComponent } from './research-activity.component';
 import { SearchBarService } from '../../search-bar/search-bar.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { MockProvider } from 'ng-mocks';
 
 describe('ResearchActivityComponent', () => {
   let component: ResearchActivityComponent;
@@ -42,8 +43,8 @@ describe('ResearchActivityComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ResearchActivityComponent ],
-      imports: [ HttpClientModule, ApolloTestingModule, ],
-      providers: [ SearchBarService ]
+      imports: [ HttpClientTestingModule, ApolloTestingModule ],
+      providers: [ MockProvider(SearchBarService) ]
     })
     .compileComponents();
   });
@@ -64,5 +65,4 @@ describe('ResearchActivityComponent', () => {
       expect(res).toBeTruthy();
     });
   })
-  
 });

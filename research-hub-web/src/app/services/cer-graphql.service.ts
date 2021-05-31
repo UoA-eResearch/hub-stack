@@ -18,6 +18,7 @@ export interface SubHubTitleAndSlug {
 })
 export class CerGraphqlService {
 
+  public hasPushedSubhubRoutes = false;
   private _subHubCollectionWithChildPagesSlugs;
   private _subHubMap: SubHubMap = new SubHubMap();
 
@@ -31,10 +32,22 @@ export class CerGraphqlService {
    * Dynamically pushes the SubHubs and the SubHub child pages to the application's routing array
    */
   public async pushSubHubRoutes(): Promise<void> {
+    this.hasPushedSubhubRoutes = true;
     const routes = this.router.config;
     await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
-    this._subHubMap.routes.forEach(route => { routes.push(route); }); // Push the new routes to the application's routes.
-    this.router.resetConfig(routes);
+    // Check if there's a wildcard route in our configuration...
+    const wildcardRouteIdx = routes.findIndex((route) => route.path === "**");
+    let  newRoutes;
+    if (wildcardRouteIdx > -1) {
+      // ...if so, insert the new routes before the wildcard route, so during routing
+      // the new routes are matched before the wildcard route.
+      const routesBeforeWildcard = routes.slice(0, wildcardRouteIdx);
+      const wildcardRouteAndAfter = routes.slice(wildcardRouteIdx, routes.length);
+      newRoutes = routesBeforeWildcard.concat(this._subHubMap.routes, wildcardRouteAndAfter);
+    } else {
+      newRoutes = routes.concat(this._subHubMap.routes);
+    }
+    this.router.resetConfig(newRoutes);
   }
 
   /**
@@ -82,7 +95,7 @@ export class CerGraphqlService {
       }
 
       return breadCrumbsArray;
-    } catch (e) { throw new Error('Error loading breadcrumbs') }
+    } catch (e) { throw new Error('Error loading breadcrumbs\n' + e) }
   }
 
   /**
@@ -97,6 +110,9 @@ export class CerGraphqlService {
   private _getBreadCrumbsArray(entrySlug: string, breadcrumbsArray) {
     for (const item of this._subHubCollectionWithChildPagesSlugs) {
       item.internalPagesCollection.items.forEach(subPage => {
+        if (!subPage) {
+          return;
+        }
         if (subPage.slug === entrySlug) { // The SubHub's childPages contains the current entry we're searching for
           for (const subHub of breadcrumbsArray) { // Check it's not already known
             if (subHub.slug === item.slug) {
@@ -213,6 +229,9 @@ class SubHubMap {
     parentSubHub[subHub.slug] = new Content(subHub.slug, subHub.__typename); // Add to the right parent subhub
 
     for (const subHubChildPage of subHub.internalPagesCollection.items) { // Then loop through its child pages
+      if (!subHubChildPage) {
+        continue;
+      }
       if (subHubChildPage.__typename === 'SubHub') { // If the child page is a SubHub, check if its known
         const subHubChildPageExistingParentSubHub = this.findParentSubHub(subHubChildPage.slug, this.map);
         if (subHubChildPageExistingParentSubHub) { // The child SubHub is known, so move it here

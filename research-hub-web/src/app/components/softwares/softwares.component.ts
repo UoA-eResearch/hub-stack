@@ -16,8 +16,6 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { LoginService } from '@uoa/auth';
-
 @Component({
   selector: 'app-software',
   templateUrl: './softwares.component.html',
@@ -51,8 +49,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService,
-    public loginService: LoginService
+    private deviceService: DeviceDetectorService
   ) { this.detectDevice(); }
 
   // Detect if device is Mobile
@@ -88,22 +85,15 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
           })
         if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
       });
-
-      /**
-       * If the page is SSO Protected then check if the user is authenticated
-       */
+      this.software = this.getSoftwareBySlug(this.slug);
       this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
-        if (data.ssoProtected == true) {
-          this.loginService.isAuthenticated().then((isAuthenticated) => {
-            isAuthenticated ? this.software = data : this.loginService.doLogin(`${data.__typename.toLowerCase()}/${data.slug}`);
-          });
-        }
-        else {
-          this.software = data;
-        }
-
         this.detectDevice();
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        // Strip nulls from related collection data.
+        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);        
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

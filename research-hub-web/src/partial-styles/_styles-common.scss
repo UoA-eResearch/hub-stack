@@ -1,0 +1,39 @@
+@import "variables";
+
+/**
+* This is a workaround for making @extend from global styles available to angular components
+* Instead of including the entire styles.scss file only this partial file should be included
+*/
+
+.site-content {
+  margin: 0 auto;
+}
+
+.site-padding {
+  @extend .site-content;
+  padding-left: $padding-site;
+  padding-right: $padding-site;
+}
+
+.top-padding {
+  padding-top: $padding-site-top;
+}
+
+.margin-bottom {
+  margin-bottom: $padding-site-top;
+}
+
+/**
+ * Section Padding
+ */
+.section {
+  margin: 32px 0px;
+}
+.section-2 {
+  margin: 45px 0px;
+}
+
+.card-summary {
+  font-size: 14px;
+  color: $color-icon;
+}

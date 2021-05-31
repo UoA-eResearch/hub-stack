@@ -1,11 +1,17 @@
 
 resource "aws_ecs_task_definition" "graphql" {
-  family                   = "cer-graphql"
+  family                   = "cer-graphql-${var.lifecycle_state}"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
-  cpu                      = 256
-  memory                   = 512
+  cpu                      = 512
+  memory                   = 1024
   execution_role_arn       = aws_iam_role.ecs_task_assume.arn
+  tags = merge(
+    local.common_tags,
+    {
+      "Name" = "graphql ecs_task_definition"
+    },
+  )
 
   container_definitions = <<DEFINITION
 [
@@ -17,7 +23,7 @@ resource "aws_ecs_task_definition" "graphql" {
     "logConfiguration": {
       "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cer-graphql-task",
+          "awslogs-group": "/ecs/cer-graphql-${var.lifecycle_state}",
           "awslogs-region": "${var.aws_region}",
           "awslogs-create-group": "true",
           "awslogs-stream-prefix": "ecs"
@@ -25,7 +31,9 @@ resource "aws_ecs_task_definition" "graphql" {
     },
     "portMappings": [
       {
-        "containerPort": 4000
+        "containerPort": 4000,
+        "hostPort": 4000,
+        "protocol": "tcp"
       }
     ],
     "secrets": [
@@ -44,6 +52,10 @@ resource "aws_ecs_task_definition" "graphql" {
       {
         "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-user-pool",
         "name": "COGNITO_USER_POOL"
+      },
+      {
+        "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-environment-id",
+        "name": "CONTENTFUL_ENVIRONMENT_ID"
       }
     ]
   }
@@ -60,7 +72,7 @@ data "aws_ecs_task_definition" "graphql" {
 }
 
 resource "aws_ecs_service" "this" {
-  name                    = "cer-graphql-service"
+  name                    = "cer-graphql-service-${var.lifecycle_state}"
   cluster                 = aws_ecs_cluster.cer.id
   enable_ecs_managed_tags = true
   propagate_tags          = "SERVICE"
@@ -119,7 +131,7 @@ resource "aws_ecs_service" "this" {
 # Configure the TG the Service will attach to.
 # IP is the setting needed for Fargate
 resource "aws_alb_target_group" "ecs-cer-graphql" {
-  name        = "ecs-cer-graphql"
+  name        = "ecs-cer-graphql-${var.lifecycle_state}"
   port        = "80"
   protocol    = "HTTP"
   vpc_id      = var.vpc_id

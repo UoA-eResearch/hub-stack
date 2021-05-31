@@ -80,6 +80,16 @@ variable "acm_arn" {
   description = "The AWS ARN for the SSL certificate to be used. This is mandatory, but must be created before this step due to our hybrid DNS configuration"
 }
 
+variable "create_route53_entry" {
+  default     = false
+  description = "Should a route53 entry be created. If on-prem DNS is used, then don't create an entry in Route53."
+}
+
+# variable "create_route53_zone" {
+#   default     = false
+#   description = "Should a route53 zone be created. If on-prem DNS is used, then create a zone in Route53."
+# }
+
 #####################################
 # Secondary website (if applicable) #
 #####################################
@@ -129,12 +139,6 @@ variable "route53_hosted_zone_id" {
 variable "vpc_id" {
   description = "What is the ID of the VPC this will reside within"
 }
-
-variable "subnets" {
-  description = "Private subnets within the VPC"
-  type        = list(string)
-}
-
 
 ########################
 # Loadbalancer for ECS #
@@ -237,13 +241,6 @@ variable "cognito_identity_provider" {
 
 variable "permitted_group" {
   description = "What groups will be permitted access (in standard UoA syntax, i.e {group1}|{group2}|{group3})"
-}
-
-#######################
-#   Contentful S3     #
-#######################
-variable "create_contentful_backup_bucket" {
-  description = "Should the Contentful backup bucket be created."
 }
 
 ###############################

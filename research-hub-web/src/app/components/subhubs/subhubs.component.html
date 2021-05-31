@@ -6,7 +6,7 @@
     <app-collection-list [type]="'content'" [collection]="allSubHubs"></app-collection-list>
 </div>
 
-<div style="overflow-x: hidden" class="results" *ngIf="subHub">
+<div style="overflow-x: hidden" class="results" *ngIf="subHub | async as subHub">
     
     <div>
 

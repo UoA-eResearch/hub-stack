@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "downlevelIteration": true,
     "importHelpers": true,
@@ -9,11 +9,13 @@
     "declaration": false,
     "module": "es2020",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "target": "es5",
-    "types": [],
+    "types": ["jasmine"],
     "lib": [
       "es2018",
       "dom",
@@ -21,41 +23,34 @@
     ],
     "paths": {
       "@services/*": [
-        "src/app/services/*"
+        "app/services/*"
       ],
       "@pipes/*": [
-        "src/app/pipes/*"
+        "app/pipes/*"
       ],
       "@app/*": [
-        "src/app/*"
+        "app/*"
       ],
       "@model/*": [
-        "src/app/model/*"
+        "app/model/*"
       ],
       "@environments/*": [
-        "src/environments/*"
+        "environments/*"
       ],
       "@graphql/*": [
-        "src/app/graphql/*"
+        "app/graphql/*"
       ],
       "@components/*": [
-        "src/app/components/*"
+        "app/components/*"
       ],
       "@directives/*": [
-        "src/app/directives/*"
+        "app/directives/*"
       ],
       "@assets/*": [
-        "src/assets/*"
+        "assets/*"
       ],
     },
   },
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts",
-  ],
-  "include": [
-    "**/src/**/*.d.ts"
-  ],
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true

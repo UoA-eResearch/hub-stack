@@ -1,5 +1,4 @@
-
-<span [ngSwitch]="data.nodeType">
+<span [ngSwitch]="data.nodeType" *ngIf="contentItem">
 
     <!-- Asset Block -->
     <span *ngSwitchCase="'embedded-asset-block'">
@@ -57,6 +56,7 @@
                 <mat-card-title>
                     <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">{{ contentItem['title'] }}</a>
                 </mat-card-title>
+                <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
                 <mat-card-content><span class="card-summary">{{ contentItem['summary'] }}</span></mat-card-content>
                 <span *ngIf="contentItem['__typename'] != 'Person'" class="call-to-action" 
                     style="display: flex; align-items: center;max-width: fit-content">
@@ -87,7 +87,7 @@
                 <div>
                     <a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">
                         <mat-card class="embedded-entry-block">
-                            <mat-card-title><a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">{{ contentItem.title }}</a></mat-card-title>              
+                            <mat-card-title><a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">{{ contentItem.title }}</a><mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon></mat-card-title>             
                             <mat-card-content><span class="card-summary">{{ contentItem.summary }}</span></mat-card-content> 
                         </mat-card>
                     </a>

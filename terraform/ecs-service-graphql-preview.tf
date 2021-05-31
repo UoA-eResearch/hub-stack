@@ -1,11 +1,17 @@
 
 resource "aws_ecs_task_definition" "graphql_preview" {
-  family                   = "cer-graphql-preview"
+  family                   = "cer-graphql-preview-${var.lifecycle_state}"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   cpu                      = 256
   memory                   = 512
   execution_role_arn       = aws_iam_role.ecs_task_assume.arn
+  tags = merge(
+    local.common_tags,
+    {
+      "Name" = "graphql_preview ecs_task_definition"
+    },
+  )
 
   container_definitions = <<DEFINITION
 [
@@ -17,7 +23,7 @@ resource "aws_ecs_task_definition" "graphql_preview" {
     "logConfiguration": {
       "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/cer-graphql-preview-task",
+          "awslogs-group": "/ecs/cer-graphql-preview-${var.lifecycle_state}",
           "awslogs-region": "${var.aws_region}",
           "awslogs-create-group": "true",
           "awslogs-stream-prefix": "ecs"
@@ -33,12 +39,8 @@ resource "aws_ecs_task_definition" "graphql_preview" {
     ],
     "secrets": [
         {
-         "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-access-token",
+         "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-preview-access-token",
          "name": "CONTENTFUL_ACCESS_TOKEN"
-        },
-        {
-          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-preview-access-token",
-          "name": "CONTENTFUL_PREVIEW_ACCESS_TOKEN"
         },
         {
           "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-space-id",
@@ -51,6 +53,10 @@ resource "aws_ecs_task_definition" "graphql_preview" {
         {
           "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/cognito-user-pool",
           "name": "COGNITO_USER_POOL"
+        },
+        {
+          "valueFrom": "arn:aws:ssm:${var.aws_region}:${data.aws_caller_identity.current.account_id}:parameter/${var.lifecycle_state}/research-hub/contentful-environment-id",
+          "name": "CONTENTFUL_ENVIRONMENT_ID"
         }
     ]
   }
@@ -67,7 +73,7 @@ data "aws_ecs_task_definition" "graphql_preview" {
 }
 
 resource "aws_ecs_service" "preview" {
-  name                    = "cer-graphql-preview-service"
+  name                    = "cer-graphql-preview-service-${var.lifecycle_state}"
   cluster                 = aws_ecs_cluster.cer.id
   enable_ecs_managed_tags = true
   propagate_tags          = "SERVICE"
@@ -126,7 +132,7 @@ resource "aws_ecs_service" "preview" {
 # Configure the TG the Service will attach to.
 # IP is the setting needed for Fargate
 resource "aws_alb_target_group" "ecs-cer-graphql-preview" {
-  name        = "ecs-cer-graphql-preview"
+  name        = "ecs-cer-graphql-preview-${var.lifecycle_state}"
   port        = "80"
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
