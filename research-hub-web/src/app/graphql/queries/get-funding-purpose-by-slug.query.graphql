@@ -1,0 +1,30 @@
+query GetFundingPurposeBySlug($slug: String) {
+    fundingCollection(limit: 1, where: {slug: $slug}) {
+        items {
+            __typename
+            sys {
+                id
+            }
+            ssoProtected
+            purpose {
+                json 
+                links {
+                    entries {
+                        inline { 
+                            ...PublicFields
+                            sys {
+                                id
+                            } 
+                        }
+                        hyperlink { 
+                            ...PublicFields 
+                            sys {
+                                id
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
