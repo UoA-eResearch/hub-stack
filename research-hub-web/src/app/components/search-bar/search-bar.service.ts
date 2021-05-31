@@ -214,7 +214,7 @@ export class SearchBarService {
 
   // Create list result
   public createResultsList() {
-      let pageTypes = ["equipment", "event", "article", "service", "subhub", "software", "casestudy"];
+      let pageTypes = ["equipment", "event", "article", "service", "subhub", "software", "casestudy", "funding"];
 
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
