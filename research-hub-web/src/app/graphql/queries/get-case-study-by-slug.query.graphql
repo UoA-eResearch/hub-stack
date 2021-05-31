@@ -1,95 +1,85 @@
 query GetCaseStudyBySlug($slug: String) {
-    caseStudyCollection(limit: 1, where: {slug: $slug}) {
-        items {
-          __typename
-          sys {
-            id
-          }
-          title
-          slug
-          ssoProtected
-          searchable
-          banner {
-            title
-            description
-            url
-          }
-          summary
-          bodyText {
-            json 
-            links {
-              entries {
-                block { 
-                  ...PublicFields
-                  sys {
-                    id
-                  }
-                }
-                inline { 
-                  ...PublicFields
-                  sys {
-                    id
-                  } 
-                }
-                hyperlink { 
-                  ...PublicFields 
-                  sys {
-                    id
-                  }
-                }
-              }
-              assets {
-                block { ...AssetFields }
-                hyperlink { ...AssetFields }
-              }
-            }
-          }
-          relatedItemsCollection {
-            items { ...PublicFields }
-          }
-          relatedOrgsCollection {
-            items { ...PublicFields }
-          }
-          relatedDocsCollection {
-            items { ...PublicFields }
-          }
-          relatedContactsCollection {
-            items { 
+  caseStudyCollection(limit: 1, where: {slug: $slug}) {
+    items {
+      __typename
+      sys {
+        id
+      }
+      title
+      slug
+      ssoProtected
+      searchable
+      banner {
+        title
+        description
+        url
+      }
+      summary
+      bodyText {
+        json 
+        links {
+          entries {
+            block { 
               ...PublicFields
-              ...on Person {
-                role
+              sys {
+                id
+              }
+            }
+            inline { 
+              ...PublicFields
+              sys {
+                id
+              } 
+            }
+            hyperlink { 
+              ...PublicFields 
+              sys {
+                id
               }
             }
           }
-          references {
-              json 
-            links {
-              entries {
-                block { 
-                  ...PublicFields
-                  sys {
-                    id
-                  }
-                }
-                inline { 
-                  ...PublicFields
-                  sys {
-                    id
-                  } 
-                }
-                hyperlink { 
-                  ...PublicFields 
-                  sys {
-                    id
-                  }
-                }
-              }
-              assets {
-                block { ...AssetFields }
-                hyperlink { ...AssetFields }
+          assets {
+            block { ...AssetFields }
+            hyperlink { ...AssetFields }
+          }
+        }
+      }
+      references {
+        json 
+        links {
+          entries {
+            inline { 
+              ...PublicFields
+              sys {
+                id
+              } 
+            }
+            hyperlink { 
+              ...PublicFields 
+              sys {
+                id
               }
             }
           }
         }
+      }        
+      relatedItemsCollection {
+        items { ...PublicFields }
+      }
+      relatedOrgsCollection {
+        items { ...PublicFields }
+      }
+      relatedDocsCollection {
+        items { ...PublicFields }
+      }
+      relatedContactsCollection {
+        items { 
+          ...PublicFields
+          ...on Person {
+            role
+          }
+        }
+      }
     }
+  }
 }
