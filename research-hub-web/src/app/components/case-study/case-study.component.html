@@ -6,7 +6,7 @@
     <app-collection-list [type]="'content'" [collection]="allCaseStudies"></app-collection-list>
 </div>
 
-<div id="caseStudy-container" *ngIf="caseStudy">
+<div id="caseStudy-container" *ngIf="caseStudy | async as caseStudy">
     
     <!-- Templates -->
     <ng-template #breadcrumbs>
@@ -16,6 +16,10 @@
     <ng-template #caseStudyBody>
         <ngx-contentful-rich-text id="body" class="section-2" style="word-break:break-word;" [document]="caseStudy.bodyText.json"
             [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
+    </ng-template>
+
+    <ng-template #caseStudyReferences>
+        <p>References here</p>
     </ng-template>
 
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
@@ -91,6 +95,11 @@
                     <!-- caseStudy Body -->
                     <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
                         <ng-container *ngTemplateOutlet="caseStudyBody"></ng-container>
+                    </div>
+
+                    <!-- caseStudy References -->
+                    <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
+                        <ng-container *ngTemplateOutlet="caseStudyReferences"></ng-container>
                     </div>
 
                     <!-- Extra Links -->
