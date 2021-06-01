@@ -23,18 +23,12 @@ export class RichTextComponent implements OnInit {
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
   };
 
-  public bodyMediaService: BodyMediaService
-
   constructor(
+    public bodyMediaService: BodyMediaService
   ) { }
 
   ngOnInit(): void {
-    this.bodyMediaService = new BodyMediaService();
     this.bodyMediaService.setBodyMedia(this.richTextLinks);
-
-    console.log(this.bodyMediaService.bodyMedia);
-    console.log(this.richTextLinks);
-    console.log(this.richTextJson);
   }
 
 }
