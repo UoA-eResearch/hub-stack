@@ -33,9 +33,6 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
   public fundingPurpose$: Subscription;
   public json;
   public route$: Subscription;
-  // public bodyLinks$: Subscription;
-  // public parentSubHubs;
-  // public isMobile: Boolean;
   
   constructor(
     public route: ActivatedRoute,
@@ -43,7 +40,6 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    // public bodyMediaServicePurpose: BodyMediaService,
     public router: Router,
   ) { }
 
@@ -64,7 +60,6 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
   private async _loadContent() {      
     this.fundingPurpose = this.getFundingPurposeBySlug(this.slug);
     this.getFundingPurposeBySlug(this.slug).subscribe(data => {
-      console.log(data)
       this.bodyMediaService.setBodyMedia(data.purpose?.links);
     });
   }
