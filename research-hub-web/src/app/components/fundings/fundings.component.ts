@@ -48,7 +48,8 @@ export class FundingsComponent implements OnInit, OnDestroy {
     public getFundingBySlugGQL: GetFundingBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
-    public bodyMediaService: BodyMediaService,    
+    public bodyMediaService: BodyMediaService,
+    // public bodyMediaServicePurpose: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
   ) { this.detectDevice(); }
@@ -63,10 +64,10 @@ export class FundingsComponent implements OnInit, OnDestroy {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getFundingBySlug() method.
      */
-    this.route$ = this.route.params.subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
+      this.route$ = this.route.params.subscribe(params => {
+        this.slug = params.slug || this.route.snapshot.data.slug;
+        this._loadContent();
+      });
   }
 
   /**
@@ -104,6 +105,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
         this.detectDevice();
 
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        // this.bodyMediaServicePurpose.setBodyMedia(data.purpose?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

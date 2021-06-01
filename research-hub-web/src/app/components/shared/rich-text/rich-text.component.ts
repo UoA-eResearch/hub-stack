@@ -31,6 +31,10 @@ export class RichTextComponent implements OnInit {
   ngOnInit(): void {
     this.bodyMediaService = new BodyMediaService();
     this.bodyMediaService.setBodyMedia(this.richTextLinks);
+
+    console.log(this.bodyMediaService.bodyMedia);
+    console.log(this.richTextLinks);
+    console.log(this.richTextJson);
   }
 
 }
