@@ -18,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { RichTextComponent } from './rich-text/rich-text.component';
+import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { RichTextComponent } from './rich-text/rich-text.component';
     NgxPaginationModule,
     MarkdownToHtmlModule,
     NgxSkeletonLoaderModule,
+    NgxContentfulRichTextModule
   ],
   declarations: [
     ErrorDialogComponent,

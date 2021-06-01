@@ -19,7 +19,8 @@
     </ng-template>
 
     <ng-template #caseStudyReferences>
-        <p>References here</p>
+        <h2>References</h2>
+        <app-rich-text [richTextLinks]="caseStudy.references.links" [richTextJson]="caseStudy.references.json"></app-rich-text>
     </ng-template>
 
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
@@ -92,13 +93,9 @@
 
                 <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column wrap" fxLayoutGap="5%">
 
-                    <!-- caseStudy Body -->
+                    <!-- caseStudy Body and References -->
                     <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
                         <ng-container *ngTemplateOutlet="caseStudyBody"></ng-container>
-                    </div>
-
-                    <!-- caseStudy References -->
-                    <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
                         <ng-container *ngTemplateOutlet="caseStudyReferences"></ng-container>
                     </div>
 

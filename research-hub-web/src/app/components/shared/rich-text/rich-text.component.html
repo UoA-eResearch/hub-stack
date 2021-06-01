@@ -1,5 +1,4 @@
-<!-- <div *ngIf="richText| async as richText"> -->
-<div>
+<div *ngIf="richTextJson">
   <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="richTextJson"
       [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
 </div>
