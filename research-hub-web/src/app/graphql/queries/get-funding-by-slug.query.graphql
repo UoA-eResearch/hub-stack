@@ -53,6 +53,25 @@ query GetFundingBySlug($slug: String) {
                     }
                 }
             }
+            purpose {
+                json 
+                links {
+                    entries {
+                        inline { 
+                            ...PublicFields
+                            sys {
+                                id
+                            } 
+                        }
+                        hyperlink { 
+                            ...PublicFields 
+                            sys {
+                                id
+                            }
+                        }
+                    }
+                }
+            }
             applicationDocumentsCollection {
                 items { ...AssetFields }
             }
