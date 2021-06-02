@@ -27,5 +27,4 @@ describe('BodyMediaComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

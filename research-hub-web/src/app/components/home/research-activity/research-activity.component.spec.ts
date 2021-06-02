@@ -65,5 +65,4 @@ describe('ResearchActivityComponent', () => {
       expect(res).toBeTruthy();
     });
   })
-
 });

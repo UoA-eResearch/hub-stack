@@ -120,5 +120,4 @@ describe('BrowseComponent', () => {
       expect(res).toBeTruthy();
     });
   })
-
 });
