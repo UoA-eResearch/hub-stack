@@ -17,7 +17,6 @@ import { VideoCardComponent } from './video-card/video-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { RichTextComponent } from './rich-text/rich-text.component';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 
 
@@ -44,8 +43,7 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
-    VideoCardComponent,
-    RichTextComponent
+    VideoCardComponent
   ],
   exports: [
     FlexLayoutModule,
@@ -62,8 +60,7 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     VideoCardComponent,
     NgxPaginationModule,
     MarkdownToHtmlModule,
-    NgxSkeletonLoaderModule,
-    RichTextComponent,
+    NgxSkeletonLoaderModule
   ],
   providers: [],
 })
