@@ -5,11 +5,13 @@ import { FundingRoutingModule } from './funding-routing.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { FundingPurposeComponent } from './funding-purpose/funding-purpose.component';
+import { FundingDeadlinesComponent } from './funding-deadlines/funding-deadlines.component';
 
 @NgModule({
   declarations: [
     FundingsComponent,
-    FundingPurposeComponent
+    FundingPurposeComponent,
+    FundingDeadlinesComponent
   ],
   imports: [
     CommonModule,

@@ -50,9 +50,10 @@
                     <td role="cell">Eligible Expenses</td>
                     <td role="cell"> {{ funding.eligibleExpenses }}</td>
                 </tr>
-                <tr *ngIf="funding.deadlines" role="row">
+                <tr role="row">
                     <td role="cell">Deadlines</td>
-                    <td role="cell" [innerHTML]="funding.deadlines.json | richTextToHTML"></td>
+                    <!-- <td role="cell" [innerHTML]="funding.deadlines.json | richTextToHTML"></td>  removed for now as it is not working for inline entries -->
+                    <td role="cell"><app-funding-deadlines></app-funding-deadlines></td>
                 </tr>
             </table>
         </div>
