@@ -12,7 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockModule, MockProvider } from 'ng-mocks';
 
-describe('FundingPurposeComponent', () => {
+describe('CaseStudyReferencesComponent', () => {
   let component: CaseStudyReferencesComponent;
   let fixture: ComponentFixture<CaseStudyReferencesComponent>;
   let controller: ApolloTestingController;
@@ -68,7 +68,7 @@ describe('FundingPurposeComponent', () => {
   });
 
   describe('When a url slug is present', async () => {
-    it('Should get a single Funding data by Slug', () => {
+    it('Should get a single CaseStudy data by Slug', () => {
       spyOn(component, 'getCaseStudyReferencesBySlug').and.returnValue(mockCaseStudy$);
       component.getCaseStudyReferencesBySlug(component.slug).subscribe(res => {
         expect(res.slug).toEqual('death-star');

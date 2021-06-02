@@ -19,8 +19,7 @@
     </ng-template>
 
     <ng-template #caseStudyReferences>
-        <h2>References</h2>
-        <app-rich-text [richTextLinks]="caseStudy.references.links" [richTextJson]="caseStudy.references.json"></app-rich-text>
+        <app-case-study-references></app-case-study-references>
     </ng-template>
 
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">

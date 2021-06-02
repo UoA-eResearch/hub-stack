@@ -6,6 +6,7 @@ query GetCaseStudyBySlug($slug: String) {
         id
       }
       title
+      maoriProverb
       slug
       ssoProtected
       searchable
@@ -43,26 +44,7 @@ query GetCaseStudyBySlug($slug: String) {
             hyperlink { ...AssetFields }
           }
         }
-      }
-      references {
-        json 
-        links {
-          entries {
-            inline { 
-              ...PublicFields
-              sys {
-                id
-              } 
-            }
-            hyperlink { 
-              ...PublicFields 
-              sys {
-                id
-              }
-            }
-          }
-        }
-      }        
+      } 
       relatedItemsCollection {
         items { ...PublicFields }
       }
