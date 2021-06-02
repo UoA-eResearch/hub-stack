@@ -130,7 +130,15 @@
             <!-- Equipment Body -->
             <div>
                 <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="equipment.bodyText.json"
-                    [nodeRenderers]="nodeRenderers"> </ngx-contentful-rich-text></div>
+                    [nodeRenderers]="nodeRenderers"> </ngx-contentful-rich-text>
+                </div>
+
+                <h2 role="heading" aria-level="1" class="location" 
+                    ngClass.lt-md="heading">Location</h2>
+                <div>
+                    <ngx-contentful-rich-text id="location" style="word-break:break-word;" [document]="equipment.location.json"
+                        [nodeRenderers]="nodeRenderers"> </ngx-contentful-rich-text>
+                    </div>
 
             <div class="section-2" fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column wrap" fxLayoutAlign="space-between">
                 
