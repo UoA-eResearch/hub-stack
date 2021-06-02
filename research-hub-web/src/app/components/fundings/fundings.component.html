@@ -21,7 +21,6 @@
     <ng-template #titleSummary>
         <h1 role="heading" aria-level="1" class="content-title" 
         ngClass.lt-md="content-title-mobile">{{ funding.title }}</h1>
-        <h2 aria-level="2" *ngIf="funding.maoriProverb" class="maori-proverb">{{ funding.maoriProverb}}<hr></h2>
         <p class="content-summary" ngClass.sm="content-summary-sm"
         ngClass.xs="content-summary-xs">{{ funding.summary }}</p>
     </ng-template>
@@ -120,13 +119,13 @@
 
             <!-- Funding Body -->
             <div class="section">
-                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="funding.bodyText.json"
+                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="funding.bodyText?.json"
                     [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
             </div>
 
             <!-- Funding Application Documents -->
             <h3>Application Documents<hr></h3>
-            <div fxLayout="row wrap" fxLayout.lt-sm="column wrap" fxlayoutgap="1%">
+            <div *ngIf="funding.applicationDocumentsCollection?.items.length > 0; else noApplicationDocs" fxLayout="row wrap" fxLayout.lt-sm="column wrap" fxlayoutgap="1%">
                 <div class="application-doc-container" ngClass.xs="application-doc-container-mobile" *ngFor="let item of funding.applicationDocumentsCollection.items" fxflex>
                     <div class="application-doc file" ngClass.xs="application-doc-mobile">
                         <a href="{{ item.url }}">
@@ -148,6 +147,9 @@
                     </div>
                 </div>
             </div>
+            <ng-template #noApplicationDocs>
+              <p>It looks like there aren't any documents here.</p>
+            </ng-template>
 
             <!-- Related -->
             <div
