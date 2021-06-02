@@ -28,7 +28,8 @@
             "allowedCommonJsDependencies": [
               "graphql-tag",
               "crypto-js",
-              "zen-observable"
+              "zen-observable",
+              "markdown-to-html-pipe"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
