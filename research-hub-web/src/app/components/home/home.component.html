@@ -1,40 +1,38 @@
 <div>
   <!-- Featured Component -->
-  <div #featured class="featured teal-background shadow">
-    <app-featured></app-featured>
+  <div class="featured teal-background shadow">
+    <div #featured class="content-container">
+      <app-featured></app-featured>
+    </div>
   </div>
   <!-- Browse Categories Component -->
-  <div #categories fxFlex class="grey-background" fxFlex.xs="noshrink">
-    <app-browse></app-browse>
+  <div class="grey-background">
+    <div #categories class="content-container">
+      <app-browse></app-browse>
+    </div>
   </div>
   <!-- Research Activity Component -->
   <div #activities>
     <app-research-activity></app-research-activity>
   </div>
   <!-- Contact -->
-  <div class="grey-background contact-container">
-    <div class="site-padding contact content-container" ngClass.lt-md="site-padding-mobile">
+  <div class="grey-background">
+    <div class="content-container text" ngClass.lt-md="site-padding-mobile">
       <!-- Title -->
-      <div class="text site-padding" ngClass.lt-md="site-padding-mobile">
-        <h2>{{ title }}</h2>
-        <p>We'd love to hear from you. Get in contact via email <a
-            href='mailto: reshubproject@auckland.ac.nz'>reshubproject@auckland.ac.nz</a>.</p>
-        <div class="main-underline"></div>
-      </div>
+      <h2>{{ title }}</h2>
+      <p>We'd love to hear from you. Get in contact via email <a
+          href='mailto: reshubproject@auckland.ac.nz'>reshubproject@auckland.ac.nz</a>.</p>
+      <div class="main-underline"></div>
       <!-- Contact Content -->
-      <div class="contact-content section-2 site-padding margin-bottom">
-        <!-- Feedback -->
-        <div class="feedback-container">
-          <div class="feedback-content">
-            <p>We are developing the ResearchHub further and would be grateful for your feedback.</p>
-            <br>
-            <a href="{{ feedbackLink }}">
-              <button role="button" mat-flat-button aria-label="provide-feedback" class="standard-button">
-                <span>Provide Feedback</span>
-              </button>
-            </a>
-          </div>
-        </div>
+      <!-- Feedback -->
+      <div class="feedback-container">
+        <p>We are developing the ResearchHub further and would be grateful for your feedback.</p>
+        <br>
+        <a href="{{ feedbackLink }}">
+          <button role="button" mat-flat-button aria-label="provide-feedback" class="standard-button">
+            <span>Provide Feedback</span>
+          </button>
+        </a>
       </div>
     </div>
   </div>

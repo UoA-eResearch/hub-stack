@@ -11,14 +11,31 @@
 }
 
 /**
- * Content Container
- */
-.content-container {
-  @extend .margin-bottom;
-  padding: 16px 0;
+* content container for homepage
+*/
+div.content-container {
   width: 95vw;
-  margin: 0 auto;
-  text-align: center;
+  margin: 60px auto;
+  @extend .site-padding;
+  h2 {
+    font-size: 36px;
+    text-align: center;
+    @include size(medium) {
+      text-align: left;
+      font-size: 48px;
+    }
+  }
+  p {
+    font-size: 16px;
+    position: relative;
+    word-wrap: break-word;
+    margin: 0 auto;
+    text-align: center;
+    @include size(medium) {
+      text-align: left;
+      font-size: 20px;
+    }
+  }
 }
 
 /**
@@ -45,37 +62,47 @@
   z-index: 1;
 }
 
+div.feedback-container {
+  p {
+    font-size: 16px;
+  }
+}
+
 /**
  * Contact Section
  */
-.contact-container {
-  z-index: 2;
-  .contact {
-    margin: 0 auto;
-    text-align: center;
-    @include size(large) {
-      text-align: left;
-    }
-    .text {
-      width: 100%;
-      @extend .text;
-      @include size(large) {
-        text-align: left;
-      }
-    }
-    .standard-button {
-      color: #eeeeee !important;
-      padding-bottom: 2.4px !important;
-      border: 3px solid $dark-grey !important;
-      border-radius: 50px !important;
-      background-color: $dark-grey !important;
-      transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-    }
-    .standard-button:hover {
-      color: $dark-grey !important;
-      border-radius: 50px !important;
-      background-color: #eeeeee !important;
-      transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-    }
-  }
-}
+// .contact-container {
+//   z-index: 2;
+//   .contact {
+//     margin: 0 auto;
+//     text-align: center;
+//     @include size(large) {
+//       text-align: left;
+//     }
+//     .text {
+//       width: 100%;
+//       @extend .text;
+//       @include size(large) {
+//         text-align: left;
+//       }
+//       margin-top: 40px;
+//       margin-right: auto;
+//       margin-bottom: 40px;
+//       margin-left: auto;
+//     }
+//     .standard-button {
+//       color: #eeeeee !important;
+//       padding-bottom: 2.4px !important;
+//       border: 3px solid $dark-grey !important;
+//       border-radius: 50px !important;
+//       background-color: $dark-grey !important;
+//       transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+//     }
+//     .standard-button:hover {
+//       color: $dark-grey !important;
+//       border-radius: 50px !important;
+//       background-color: #eeeeee !important;
+//       transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+//     }
+//   }
+// }

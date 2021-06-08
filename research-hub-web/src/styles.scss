@@ -396,30 +396,4 @@ h2.maori-proverb {
 }
 
 
-/**
-* content container for homepage
-*/
-.content-container {
-  width: 95vw;
-  margin: 60px auto;
-  @extend .site-padding;
-  h2 {
-    font-size: 36px;
-    text-align: center;
-    @include size(medium) {
-      text-align: left;
-      font-size: 48px;
-    }
-  }
-  p {
-    font-size: 16px;
-    position: relative;
-    word-wrap: break-word;
-    margin: 0 auto;
-    text-align: center;
-    @include size(medium) {
-      text-align: left;
-      font-size: 20px;
-    }
-  }
-}
+
