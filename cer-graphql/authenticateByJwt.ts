@@ -1,8 +1,9 @@
 import jwt, { JwtHeader } from "jsonwebtoken";
 import jwkToPem, { JWK } from "jwk-to-pem";
 import { NextFunction, Request, Response } from "express";
-import { AuthenticationError } from "apollo-server-errors";
 import fetch from "node-fetch";
+import { AuthenticationError } from "apollo-server-errors";
+import { formatError } from "graphql";
 
 interface CognitoPublicKeys {
     keys: Array<JWK & JwtHeader>
@@ -63,12 +64,7 @@ function sendUnauthenticatedError(res: Response, message: string) {
     res.statusCode = 401;
     res.send({
         errors: [
-            {
-                message,
-                extensions: {
-                    code: "UNAUTHENTICATED"
-                }
-            }
+            formatError(new AuthenticationError(message))
         ]
     })
     return;

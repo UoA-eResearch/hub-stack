@@ -24,7 +24,7 @@
     "express-graphql": "^0.12.0",
     "apollo-server-errors": "^2.5.0",
     "graphql": "^15.5.0",
-    "graphql-tools": "^7.0.4",
+    "graphql-tools": "^7.0.5",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.4",
     "node-fetch": "^2.6.1",

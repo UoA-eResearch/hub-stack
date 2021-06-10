@@ -101,3 +101,28 @@ query ($title: String!) {
     }
 }
 `;
+
+export const ALIASING_SSOPROTECTED_QUERY = `
+{ 
+    articleCollection {
+        items {
+            aPhoneFieldThatPretendsToBeReal: ssoProtected
+        }
+    }
+}`;
+
+export const GET_ARTICLE_COLLECTION_PRIVATE_FRAGMENT = `
+{
+    articleCollection {
+      items {
+        ...PrivateFields
+      }
+    }
+  }
+  
+  fragment PrivateFields on Article {
+    owner {
+      name
+    }
+  }
+`

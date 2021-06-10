@@ -1,4 +1,5 @@
 import { 
+  formatError,
   GraphQLSchema,
   print,
  } from "graphql";
@@ -152,14 +153,13 @@ export async function createServer (config: CerGraphqlServerConfig) {
         args.preview = true;
     }
     
-    
     return delegateToSchema({
       schema: contentfulSchema,
       operation: "query",
       fieldName: info.fieldName,
       args,
       context,
-      info    
+      info
     })
   }]));
 
@@ -188,9 +188,8 @@ export async function createServer (config: CerGraphqlServerConfig) {
       graphiql: true,
       customFormatErrorFn: err => {
         console.error(err);
-        return err;
+        return formatError(err);
       },
-      // validationRules: [PrintAllFields],
       customExecuteFn: (args) => executeAndVerify(args, protectedTypes)
     })
   );

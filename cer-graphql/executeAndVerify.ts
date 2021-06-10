@@ -9,6 +9,8 @@ import {
     execute,
     ExecutionArgs,
     print,
+    FieldNode,
+    GraphQLError,
    } from "graphql";
 import { visitResult } from "graphql-tools";
   
@@ -99,6 +101,18 @@ function assertTypesHaveSsoField(fieldsByType: Record<string, string[]>, verific
   return;
 }
 
+function assertNoAliasingSsoProtected(document: ASTNode) {
+  visit(document, {
+    Field(node: FieldNode) {
+      const name = node.name.value;
+      const hasAlias = node.alias;
+      if (name === "ssoProtected" && hasAlias) {
+          throw new AuthenticationError("Validation: Aliasing the ssoProtected field is forbidden.");
+      }
+    }
+  });
+}
+
 async function executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: string[]) {
   const fieldsByType = getFieldsByType(args.schema, args.document);
   const verificationRequiredTypes = findVerificationRequiredFields(fieldsByType, protectedTypes);
@@ -106,6 +120,7 @@ async function executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: 
    * Check whether they have included the ssoProtected field. If they haven't throw an auth error. 
    */
   assertTypesHaveSsoField(fieldsByType, verificationRequiredTypes);
+  assertNoAliasingSsoProtected(args.document);
   /**
    * Execute the query. If they have request non-public fields and isn't logged in, the
    * response is then intercepted and only returned if none of the results have an 'ssoProtected: true'
