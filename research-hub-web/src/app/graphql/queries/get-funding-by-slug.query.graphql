@@ -15,7 +15,6 @@ query GetFundingBySlug($slug: String) {
             icon {
                 url
             }
-            maoriProverb
             summary
             type
             funding
