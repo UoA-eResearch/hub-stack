@@ -21,7 +21,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('Creative Commons').click();
+        cy.get('#you-might-be-interested-in mat-nav-list:first-child').click();
         cy.expect('h2.featured-title').not.to.be.empty;
     });
 
