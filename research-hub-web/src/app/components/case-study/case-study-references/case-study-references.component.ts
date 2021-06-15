@@ -5,8 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
-  Funding,
-  GetFundingPurposeBySlugGQL,
+  CaseStudy,
+  GetCaseStudyReferencesBySlugGQL,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -14,11 +14,11 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
-  selector: 'app-funding-purpose',
-  templateUrl: './funding-purpose.component.html',
-  styleUrls: ['./funding-purpose.component.scss']
+  selector: 'app-case-study-references',
+  templateUrl: './case-study-references.component.html',
+  styleUrls: ['./case-study-references.component.scss']
 })
-export class FundingPurposeComponent implements OnInit, OnDestroy {
+export class CaseStudyReferencesComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
@@ -29,14 +29,14 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public fundingPurpose;
-  public fundingPurpose$: Subscription;
+  public caseStudyReferences;
+  public caseStudyReferences$: Subscription;
   public json;
   public route$: Subscription;
   
   constructor(
     public route: ActivatedRoute,
-    public getFundingPurposeBySlugGQL: GetFundingPurposeBySlugGQL,
+    public getCaseStudyReferencesBySlugGQL: GetCaseStudyReferencesBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
@@ -46,7 +46,7 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getFundingBySlug() method.
+     * passed to the getCaseStudyReferencesBySlug() method.
      */
       this.route$ = this.route.params.subscribe(params => {
         this.slug = params.slug || this.route.snapshot.data.slug;
@@ -55,12 +55,12 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function that loads the Funding/collection depending on if a slug is present.
+   * Function that loads the CaseStudy/collection depending on if a slug is present.
    */
   private async _loadContent() {      
-    this.fundingPurpose = this.getFundingPurposeBySlug(this.slug);
-    this.getFundingPurposeBySlug(this.slug).subscribe(data => {
-      this.bodyMediaService.setBodyMedia(data.purpose?.links);
+    this.caseStudyReferences = this.getCaseStudyReferencesBySlug(this.slug);
+    this.getCaseStudyReferencesBySlug(this.slug).subscribe(data => {
+      this.bodyMediaService.setBodyMedia(data.references?.links);
     });
   }
 
@@ -73,16 +73,16 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
    *
    * @param slug The Funding's slug. Retrieved from the route parameter of the same name.
    */
-  public getFundingPurposeBySlug(slug: string): Observable<Funding> {
+  public getCaseStudyReferencesBySlug(slug: string): Observable<CaseStudy> {
     try {
-      return this.getFundingPurposeBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.fundingCollection.items)) as Observable<Funding>;
-    } catch (e) { console.error(`Error loading Funding Purpose ${slug}:`, e); }
+      return this.getCaseStudyReferencesBySlugGQL.fetch({ slug: this.slug })
+        .pipe(flatMap(x => x.data.caseStudyCollection.items)) as Observable<CaseStudy>;
+    } catch (e) { console.error(`Error loading Case Study References ${slug}:`, e); }
   }
 
   ngOnDestroy() {
     try {
-      this.fundingPurpose$.unsubscribe();
+      this.caseStudyReferences$.unsubscribe();
       this.route$.unsubscribe();
     } catch {}
   }

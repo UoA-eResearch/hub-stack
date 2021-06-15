@@ -1,0 +1,9 @@
+<div *ngIf="caseStudyReferences | async as caseStudyReferences">
+  <h2>References</h2>
+  <ngx-contentful-rich-text *ngIf="caseStudyReferences.references !== null; else noReferences" id="body" style="word-break:break-word;" 
+    [document]="caseStudyReferences.references?.json" [nodeRenderers]="nodeRenderers">
+  </ngx-contentful-rich-text>
+  <ng-template #noReferences>
+    <p>It looks like there aren't any references here.</p>
+  </ng-template>
+</div>
