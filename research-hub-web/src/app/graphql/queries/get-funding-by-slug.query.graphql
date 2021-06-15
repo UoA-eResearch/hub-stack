@@ -20,9 +20,6 @@ query GetFundingBySlug($slug: String) {
             funding
             eligibility
             eligibleExpenses
-            deadlines {
-                json
-            }
             bodyText {
                 json 
                 links {
