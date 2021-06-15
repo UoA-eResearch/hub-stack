@@ -206,9 +206,8 @@ pipeline {
                             echo 'Running research-hub-web unit tests'
                             sh 'npm run test-ci'
 
-                            // TODO fix e2e tests/css
-                            // echo 'Running research-hub-web e2e tests'
-                            // sh "npm run e2e-ci"
+                            echo 'Running research-hub-web e2e tests'
+                            sh "npm run e2e-ci"
                         }
                     }
                 }
