@@ -1,35 +1,35 @@
-<div id="research-categories" *ngIf="allCategories$ | async as allCategories" class="content-container">
-  <div class="text" ngClass.lt-md="site-padding-mobile">
-    <h2>{{ title }}</h2>
-    <p>{{ description }}</p>
-    <div class="main-underline"></div>
-  </div>
+<div id="research-categories" *ngIf="allCategories$ | async as allCategories">
+  <app-content-container>
+    <app-content-title [title]="title" [description]="description"></app-content-title>
 
-  <!-- Category Cards Container -->
-  <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap" ngClass.lt-md="site-padding-mobile">
+    <!-- Category Cards Container -->
+    <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap" ngClass.lt-md="site-padding-mobile">
 
-    <!-- Category Cards Content -->
-    <div *ngFor="let item of allCategories.items" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
+      <!-- Category Cards Content -->
+      <div *ngFor="let item of allCategories.items" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
 
         <!-- Individual Category Card -->
         <mat-card fxLayout="column" fxLayoutAlign="space-between" class="tile-content">
           <div>
             <mat-card-title class="card-title">
-              <a selected class="title-text" [routerLink]="['/search']" (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
-              (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">{{ item.name }}</a>
+              <a selected class="title-text" [routerLink]="['/search']"
+                (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
+                (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">{{
+                item.name }}</a>
             </mat-card-title>
             <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
           </div>
           <mat-card-actions>
-            <a class="tile-button" [routerLink]="['/search']" (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
+            <a class="tile-button" [routerLink]="['/search']"
+              (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
               (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">
-              <button role="button" aria-label="view-category" mat-flat-button
-                  class="standard-button">
-                  <span>View Category</span>
+              <button role="button" aria-label="view-category" mat-flat-button class="standard-button">
+                <span>View Category</span>
               </button>
             </a>
           </mat-card-actions>
         </mat-card>
+      </div>
     </div>
-  </div>
+  </app-content-container>
 </div>
