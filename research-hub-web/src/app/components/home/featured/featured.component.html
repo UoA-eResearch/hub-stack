@@ -1,10 +1,9 @@
-<div class="featured-container">
-  <div *ngIf="homepage$ | async as homepage">
-    <div class="featured-content" *ngIf="homepage.featuredItemsCollection.items.length > 0">
-      <h2 class="featured-title">Featured</h2>
-      <p class="featured-summary">{{ homepage.featuredItemsDescription }}</p>
-      <div class="main-underline-white"></div>
+<div *ngIf="homepage$ | async as homepage">
+  <app-content-container>
+    <app-content-title [title]="'Featured'" [description]="homepage.featuredItemsDescription" [lightColorText]="true">
+    </app-content-title>
+    <div *ngIf="homepage.featuredItemsCollection.items.length > 0">
       <app-cards [flex]="'row'" [contentItem]="homepage.featuredItemsCollection"></app-cards>
     </div>
-  </div>
+  </app-content-container>
 </div>
