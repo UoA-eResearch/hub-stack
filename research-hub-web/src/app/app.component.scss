@@ -456,3 +456,18 @@ footer {
   color: black;
   background-color: white;
 }
+
+/**
+ *  Search bar
+ */
+.mat-form-field-ripple, .mat-form-field-underline {
+  background-color: rgba(200, 200, 200, 0.6) !important;
+}
+
+.mat-focused .mat-form-field-label {
+  color: rgba(200, 200, 200, 0.6) !important;
+}
+
+input {
+  caret-color: rgba(200, 200, 200, 0.6) !important;
+}
