@@ -15,15 +15,11 @@ query GetFundingBySlug($slug: String) {
             icon {
                 url
             }
-            maoriProverb
             summary
             type
             funding
             eligibility
             eligibleExpenses
-            deadlines {
-                json
-            }
             bodyText {
                 json 
                 links {

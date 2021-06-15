@@ -6,7 +6,7 @@ import { AppComponentService } from '@app/app.component.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   Funding,
-  GetFundingPurposeBySlugGQL,
+  GetFundingDeadlinesBySlugGQL,
 } from '@graphql/schema';
 import { CerGraphqlService } from '@services/cer-graphql.service';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -14,11 +14,11 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 
 @Component({
-  selector: 'app-funding-purpose',
-  templateUrl: './funding-purpose.component.html',
-  styleUrls: ['./funding-purpose.component.scss']
+  selector: 'app-funding-deadlines',
+  templateUrl: './funding-deadlines.component.html',
+  styleUrls: ['./funding-deadlines.component.scss']
 })
-export class FundingPurposeComponent implements OnInit, OnDestroy {
+export class FundingDeadlinesComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
@@ -29,14 +29,14 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public fundingPurpose;
-  public fundingPurpose$: Subscription;
+  public fundingDeadlines;
+  public fundingDeadlines$: Subscription;
   public json;
   public route$: Subscription;
   
   constructor(
     public route: ActivatedRoute,
-    public getFundingPurposeBySlugGQL: GetFundingPurposeBySlugGQL,
+    public getFundingDeadlinesBySlugGQL: GetFundingDeadlinesBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
@@ -58,9 +58,9 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
    * Function that loads the Funding/collection depending on if a slug is present.
    */
   private async _loadContent() {      
-    this.fundingPurpose = this.getFundingPurposeBySlug(this.slug);
-    this.getFundingPurposeBySlug(this.slug).subscribe(data => {
-      this.bodyMediaService.setBodyMedia(data.purpose?.links);
+    this.fundingDeadlines = this.getFundingDeadlinesBySlug(this.slug);
+    this.getFundingDeadlinesBySlug(this.slug).subscribe(data => {
+      this.bodyMediaService.setBodyMedia(data.deadlines?.links);
     });
   }
 
@@ -73,16 +73,16 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
    *
    * @param slug The Funding's slug. Retrieved from the route parameter of the same name.
    */
-  public getFundingPurposeBySlug(slug: string): Observable<Funding> {
+  public getFundingDeadlinesBySlug(slug: string): Observable<Funding> {
     try {
-      return this.getFundingPurposeBySlugGQL.fetch({ slug: this.slug })
+      return this.getFundingDeadlinesBySlugGQL.fetch({ slug: this.slug })
         .pipe(flatMap(x => x.data.fundingCollection.items)) as Observable<Funding>;
-    } catch (e) { console.error(`Error loading Funding Purpose ${slug}:`, e); }
+    } catch (e) { console.error(`Error loading Funding Deadlines ${slug}:`, e); }
   }
 
   ngOnDestroy() {
     try {
-      this.fundingPurpose$.unsubscribe();
+      this.fundingDeadlines$.unsubscribe();
       this.route$.unsubscribe();
     } catch {}
   }
