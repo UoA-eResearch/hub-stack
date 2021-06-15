@@ -1,0 +1,8 @@
+<div [ngClass]="lightColorText ? 'light-color' : ''">
+  <h2>{{ title }}</h2>
+  <p>{{ description }}</p>
+  <p>
+    <ng-content></ng-content>
+  </p>
+  <div [ngClass]="lightColorText ? 'main-underline-white' : 'main-underline'"></div>
+</div>
