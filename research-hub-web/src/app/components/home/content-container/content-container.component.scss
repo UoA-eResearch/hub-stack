@@ -1,0 +1,10 @@
+@import 'styles-common';
+
+/**
+* content container for homepage
+*/
+.content-container {
+  width: 95vw;
+  margin: 60px auto;
+  @extend .site-padding;
+}

@@ -3,6 +3,8 @@ import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CerGraphqlService } from './cer-graphql.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MockModule } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CerGraphqlService', () => {
   let service: CerGraphqlService;
@@ -131,8 +133,8 @@ describe('CerGraphqlService', () => {
     TestBed.configureTestingModule({
       imports: [
         ApolloTestingModule,
-        CommonModule,
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+        MockModule(CommonModule),
+        RouterTestingModule
       ]
     });
     service = TestBed.inject(CerGraphqlService);
@@ -168,6 +170,6 @@ describe('CerGraphqlService', () => {
     service['_subHubCollectionWithChildPagesSlugs'] = circularMock_subHubCollectionWithChildPagesSlugs;
 
     const entrySlug = 'first-article';
-    await expectAsync(service.getParentSubHubs(entrySlug)).toBeRejectedWithError('Error loading breadcrumbs');
+    await expectAsync(service.getParentSubHubs(entrySlug)).toBeRejectedWithError();
   });
 });

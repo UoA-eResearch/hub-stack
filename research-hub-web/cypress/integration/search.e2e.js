@@ -35,11 +35,11 @@ describe('ResearchHubs Search Page from Homepage', () => {
         cy.get('mat-chip').contains('Clear All').should('exist');
     });
 
-    it('Clicking a research activity navigates to the search page', () => {
-        cy.get('#research-activities').contains('Plan & Design').click();
-        cy.get('mat-chip').contains('Plan & Design').should('exist');
-        cy.get('mat-chip').contains('Clear All').should('exist');
-    });
+    // it(' navigates to the search page', () => {
+    //     cy.get('#research-activities').contains('Plan & Design').click();
+    //     cy.get('mat-chip').contains('Plan & Design').should('exist');
+    //     cy.get('mat-chip').contains('Clear All').should('exist');
+    // });
 });
 
 describe('ResearchHubs Search Page', () => {

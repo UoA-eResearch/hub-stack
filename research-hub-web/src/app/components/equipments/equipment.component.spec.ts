@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { MockModule, MockProvider } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
@@ -48,15 +50,15 @@ describe('EquipmentComponent', () => {
         EquipmentComponent
       ],
       imports: [
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' }),
+        RouterTestingModule,
         ApolloTestingModule,
-        CommonModule,
-        MaterialModule,
-        SharedModule,
-        BrowserAnimationsModule
-      ], providers: [
-        AppComponentService,
-        AllEquipmentGQL
+        MockModule(CommonModule),
+        MockModule(MaterialModule),
+        MockModule(SharedModule),
+        MockModule(BrowserAnimationsModule)
+      ],
+      providers: [
+        MockProvider(AppComponentService)
       ]
     })
       .compileComponents();

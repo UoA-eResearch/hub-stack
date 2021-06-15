@@ -12,7 +12,8 @@ module.exports = function (config) {
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-verbose-reporter'),
-      require("karma-spec-reporter")
+      require("karma-spec-reporter"),
+      require('karma-time-stats-reporter')
     ],
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
@@ -31,7 +32,7 @@ module.exports = function (config) {
       },
       fixWebpackSourcePaths: true
     },
-    reporters: ['spec'],
+    reporters: ['spec', 'time-stats'],
     specReporter: {
       maxLogLines: 5,         // limit number of lines logged per test
       suppressErrorSummary: true,  // do not print error summary
@@ -39,6 +40,19 @@ module.exports = function (config) {
       suppressPassed: false,  // do not print information about passed tests
       suppressSkipped: true,  // do not print information about skipped tests
       showSpecTiming: false // print the time elapsed for each spec
+    },
+    timeStatsReporter: {
+      reportTimeStats: true,           // Print Time Stats (histogram)
+      binSize: 50,                    // Bin size for histogram (in milliseconds)
+      slowThreshold: 500,              // The threshold for what is considered a slow test (in milliseconds).
+                                       // This is also the max value for last bin histogram
+                                       // Note that this will automatically be rounded up to be evenly divisible by binSize
+      reportSlowestTests: true,        // Print top slowest tests
+      showSlowTestRankNumber: false,   // Displays rank number next to slow tests, e.g. `1) Slow Test`
+      longestTestsCount: 5,            // Number of top slowest tests to list
+                                       // Set to `Infinity` to show all slow tests. Useful in combination with `reportOnlyBeyondThreshold` as `true`
+      reportOnlyBeyondThreshold: false // Only report tests that are slower than threshold
+
     },
     port: 9876,
     colors: true,
