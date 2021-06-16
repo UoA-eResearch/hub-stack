@@ -109,6 +109,28 @@
 }
 
 /*
+ * Notification Bar
+ */
+.notification-bar-container {
+  a {
+    text-decoration: underline;
+  }
+  text-align: center;
+  * { color: white; }
+  background: map-get($hub-pink, 500);
+  .notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+  transition: all 0.1s ease-in-out;
+}
+
+
+/*
  * Initial Search
  */
 .initial-search {
@@ -433,4 +455,19 @@ footer {
 .sign-out-button {
   color: black;
   background-color: white;
+}
+
+/**
+ *  Search bar
+ */
+.mat-form-field-ripple, .mat-form-field-underline {
+  background-color: rgba(200, 200, 200, 0.6) !important;
+}
+
+.mat-focused .mat-form-field-label {
+  color: rgba(200, 200, 200, 0.6) !important;
+}
+
+input {
+  caret-color: rgba(200, 200, 200, 0.6) !important;
 }

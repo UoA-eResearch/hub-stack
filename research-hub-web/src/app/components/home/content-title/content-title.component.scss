@@ -1,0 +1,28 @@
+@import 'mixins';
+
+h2 {
+  font-size: 36px;
+  text-align: center;
+  @include size(large) {
+    text-align: left;
+    font-size: 48px;
+  }
+}
+
+p {
+  font-size: 16px;
+  position: relative;
+  word-wrap: break-word;
+  margin: 0 auto;
+  text-align: center;
+  @include size(large) {
+    text-align: left;
+    font-size: 20px;
+  }
+}
+
+div.light-color {
+  h2, p {
+    color: white;
+  }
+}
