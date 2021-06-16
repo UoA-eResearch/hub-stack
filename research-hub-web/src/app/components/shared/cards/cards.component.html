@@ -1,87 +1,103 @@
 <div *ngIf="contentItem?.items?.length > 0" role="article">
 
-    <!-- Title of card collection -->
-    <h3 *ngIf="title">{{ title }}<hr/></h3>
+  <!-- Title of card collection -->
+  <h3 *ngIf="title">{{ title }}
+    <hr />
+  </h3>
 
     <!-- Items List -->
     <div fxLayout="{{ flex }}" fxLayout.lt-md="column wrap" fxLayoutGap="1%">
-        <mat-nav-list role="list" fxFlex="19%" *ngFor="let content of contentItem.items" class="collection">
-            
-            <!-- Templates -->
-            <ng-template #image>
-                <img mat-card-image 
-                     srcset="{{ content.banner?.url }}?fm=webp,
-                             {{ content.banner?.url }}"
-                     src="{{ content.banner?.url }}" 
-                     alt="{{ content.title }}-banner">
-            </ng-template>
-            <ng-template #noImage><div style="margin-top: 12px;"></div></ng-template>
-            <ng-container *ngIf="content.__typename == 'Person' || content.__typename == 'OrgUnit'; then contact; else standard"></ng-container>
+      <mat-nav-list role="list" fxFlex="19%" *ngFor="let content of contentItem.items" class="collection">
+          
+      <!-- Templates -->
+      <ng-template #image>
+        <img mat-card-image 
+              srcset="{{ content.banner?.url }}?fm=webp,
+                      {{ content.banner?.url }}"
+              src="{{ content.banner?.url }}" 
+              alt="{{ content.title }}-banner">
+      </ng-template>
+      <ng-template #noImage><div style="margin-top: 12px;"></div></ng-template>
+      <ng-container *ngIf="content.__typename == 'Person' || content.__typename == 'OrgUnit'; then contact; else standard"></ng-container>
 
-            <ng-template #standard>
-                <mat-card role="listitem">
-                    <ng-container *ngIf="content.banner; then image; else noImage">
-                    </ng-container>
-                    <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
-                    <span *ngIf="content.__typename == 'OfficialDocuments'" class="card-label">Document</span>
-                    <span *ngIf="content.__typename != 'SubHub' && content.__typename != 'OfficialDocuments'" class="card-label">{{ content.__typename | humanCase }}</span>
-    
-                    <mat-card-title>
-                        <h4 *ngIf="content.__typename != 'OfficialDocuments'"><a class="card-title" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
-                                {{ content['title'] }}</a></h4>
-                        <h4 *ngIf="content.__typename == 'OfficialDocuments'"><a class="card-title" href="{{ content.url ? content.url : content.document?.url }}" target="_blank">
-                            {{ content['title'] }}</a></h4>
-                    </mat-card-title>
-                    <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
-                    <mat-card-content><span class="card-summary"><p>{{ content['summary'] }}</p></span></mat-card-content>
-                    
-                    <span *ngIf="content.__typename != 'OfficialDocuments'" class="call-to-action"
-                        style="display: flex; align-items: center;max-width: fit-content">
-                        <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">Read More&nbsp;&nbsp;</a>
-                        <img class="arrow" alt="link-arrow" style="height: 20px; width: auto" src="assets/components/dark-arrow.png">
-                    </span>
-                    
-                    <span *ngIf="content.__typename == 'OfficialDocuments'">
-                        <span *ngIf="content.url != 'null' || content.document != 'null'" class="call-to-action" style="display: flex; align-items: center; max-width: fit-content">
-                            <a href="{{ content.url ? content.url : content.document?.url }}" target="_blank">View Document&nbsp;&nbsp;</a>
-                            <img class="arrow" alt="link-arrow" style="height: 20px; width: auto" src="assets/components/dark-arrow.png">
-                        </span>
-                    </span>
-                </mat-card>
-            </ng-template>
+      <ng-template #standard>
+        <mat-card role="listitem">
+          <ng-container *ngIf="content.banner; then image; else noImage">
+          </ng-container>
+          <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
+          <span *ngIf="content.__typename == 'OfficialDocuments'" class="card-label">Document</span>
+          <span *ngIf="content.__typename != 'SubHub' && content.__typename != 'OfficialDocuments'"
+            class="card-label">{{ content.__typename | humanCase }}</span>
 
-            <ng-template #contact>
-                <mat-card role="listitem">
-                    <ng-container *ngIf="content.banner; then image; else noImage"></ng-container>
-                    <span *ngIf="content.__typename == 'Person'" class="card-label">Contact</span>
-                    <span *ngIf="content.__typename == 'OrgUnit'" class="card-label">Unit</span>
-    
-                    <mat-card-title>
-                        <h4>
-                            <a class="card-title" *ngIf="content.maoriName" href="{{ content.link }}" target="_blank" style="font-weight: lighter">{{ content['maoriName'] }}<br></a>
-                            <a class="card-title" href="{{ content.link }}" target="_blank">{{ content['name'] }}</a>
-                        </h4>
-                    </mat-card-title>
-                    <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
-                    <mat-card-content>
-                        <span *ngIf="content.__typename == 'Person'" class="card-summary contact-card-summary">
-                            <p style="word-wrap: break-word">{{ content['role'] }}</p>
-                                <a *ngIf="content.email" href="mailto:{{ content['email'] }}">
-                                    <mat-icon>email</mat-icon>{{ content['email'] }}</a>
-                                <a *ngIf="content.phone" href="tel:{{ content['phone'] }}">
-                                    <mat-icon>phone</mat-icon>{{ content['phone'] }}</a>
-                        </span>
-                        <span *ngIf="content.__typename == 'OrgUnit'">
-                            <p style="word-wrap: break-word">{{ content['description'] }}</p>
-                            <span class="call-to-action" style="display: flex; align-items: center;max-width: fit-content">
-                                <a href="{{ content.link }}" target="_blank">See Unit&nbsp;&nbsp;</a>
-                                <img class="arrow" alt="link-arrow" style="height: 20px; width: auto" src="assets/components/dark-arrow.png">
-                            </span>
-                        </span>
-                    </mat-card-content>
-                </mat-card>
-            </ng-template>
-            <br/>
-        </mat-nav-list>
-    </div>
+          <mat-card-title>
+            <h4 *ngIf="content.__typename != 'OfficialDocuments'"><a class="card-title"
+                [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+                {{ content['title'] }}</a></h4>
+            <h4 *ngIf="content.__typename == 'OfficialDocuments'"><a class="card-title"
+                href="{{ content.url ? content.url : content.document?.url }}" target="_blank">
+                {{ content['title'] }}</a></h4>
+          </mat-card-title>
+          <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
+          <mat-card-content><span class="card-summary">
+              <p>{{ content['summary'] }}</p>
+            </span></mat-card-content>
+
+          <span *ngIf="content.__typename != 'OfficialDocuments'" class="call-to-action"
+            style="display: flex; align-items: center;max-width: fit-content">
+            <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">Read
+              More&nbsp;&nbsp;</a>
+            <img class="arrow" alt="link-arrow" style="height: 20px; width: auto"
+              src="assets/components/dark-arrow.png">
+          </span>
+
+          <span *ngIf="content.__typename == 'OfficialDocuments'">
+            <span *ngIf="content.url != 'null' || content.document != 'null'" class="call-to-action"
+              style="display: flex; align-items: center; max-width: fit-content">
+              <a href="{{ content.url ? content.url : content.document?.url }}" target="_blank">View
+                Document&nbsp;&nbsp;</a>
+              <img class="arrow" alt="link-arrow" style="height: 20px; width: auto"
+                src="assets/components/dark-arrow.png">
+            </span>
+          </span>
+        </mat-card>
+      </ng-template>
+
+      <ng-template #contact>
+        <mat-card role="listitem">
+          <ng-container *ngIf="content.banner; then image; else noImage"></ng-container>
+          <span *ngIf="content.__typename == 'Person'" class="card-label">Contact</span>
+          <span *ngIf="content.__typename == 'OrgUnit'" class="card-label">Unit</span>
+
+          <mat-card-title>
+            <h4>
+              <a class="card-title" *ngIf="content.maoriName" href="{{ content.link }}" target="_blank"
+                style="font-weight: lighter">{{ content['maoriName'] }}<br></a>
+              <a class="card-title" href="{{ content.link }}" target="_blank">{{ content['name'] }}</a>
+            </h4>
+          </mat-card-title>
+          <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
+          <mat-card-content>
+            <span *ngIf="content.__typename == 'Person'" class="card-summary contact-card-summary">
+              <p style="word-wrap: break-word">{{ content['role'] }}</p>
+              <a *ngIf="content.email" href="mailto:{{ content['email'] }}">
+                <mat-icon>email</mat-icon>{{ content['email'] }}
+              </a>
+              <a *ngIf="content.phone" href="tel:{{ content['phone'] }}">
+                <mat-icon>phone</mat-icon>{{ content['phone'] }}
+              </a>
+            </span>
+            <span *ngIf="content.__typename == 'OrgUnit'">
+              <p style="word-wrap: break-word">{{ content['description'] }}</p>
+              <span class="call-to-action" style="display: flex; align-items: center;max-width: fit-content">
+                <a href="{{ content.link }}" target="_blank">See Unit&nbsp;&nbsp;</a>
+                <img class="arrow" alt="link-arrow" style="height: 20px; width: auto"
+                  src="assets/components/dark-arrow.png">
+              </span>
+            </span>
+          </mat-card-content>
+        </mat-card>
+      </ng-template>
+      <br />
+    </mat-nav-list>
+  </div>
 </div>

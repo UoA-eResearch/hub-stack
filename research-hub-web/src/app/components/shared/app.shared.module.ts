@@ -17,6 +17,7 @@ import { VideoCardComponent } from './video-card/video-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     NgxPaginationModule,
     MarkdownToHtmlModule,
     NgxSkeletonLoaderModule,
+    NgxContentfulRichTextModule
   ],
   declarations: [
     ErrorDialogComponent,
@@ -58,7 +60,7 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
     VideoCardComponent,
     NgxPaginationModule,
     MarkdownToHtmlModule,
-    NgxSkeletonLoaderModule,
+    NgxSkeletonLoaderModule
   ],
   providers: [],
 })
