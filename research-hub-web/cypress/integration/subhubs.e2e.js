@@ -8,10 +8,10 @@ describe('ResearchHubs SubHub Pages', () => {
         cy.expect('h1.content-title').not.to.be.empty;    });
 
     it('can visit an subhub and display its subtitle', () => {
-        cy.expect('app-subhubs .content-summary').not.to.be.empty; 
+        cy.expect('#subhub-container .content-summary').not.to.be.empty; 
     });
     it('subhub displays body text', () => {
-        cy.expect('app-subhubs ng-component.ng-star-inserted').not.to.be.empty;
+        cy.expect('#subhub-container ng-component.ng-star-inserted').not.to.be.empty;
     });
 
     it('displays subhub children', () => {
