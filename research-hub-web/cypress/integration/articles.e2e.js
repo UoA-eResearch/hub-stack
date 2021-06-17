@@ -30,7 +30,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations').contains('Libraries and Learning Services').should('exist');
+        cy.get('#organisations').should('exist');
     });
 
 });
