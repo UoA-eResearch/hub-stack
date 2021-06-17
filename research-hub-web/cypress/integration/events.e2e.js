@@ -22,7 +22,7 @@ describe('ResearchHubs Events Pages', () => {
     });
 
     it('displays a list of contacts', () => {
-        cy.get('#contacts').contains('Organisational Development (OD)').should('exist');
+        cy.expect('#contacts .card-title').not.to.be.empty;
     });
 
     it('displays a list of organisations', () => {
