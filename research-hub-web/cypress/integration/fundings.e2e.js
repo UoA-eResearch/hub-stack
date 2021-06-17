@@ -4,15 +4,15 @@ describe('ResearchHubs Funding Pages', () => {
         cy.visit('/funding/FRDF');
     });
 
-    it('can visit a case study and display its title', () => {
+    it('can visit a funding page and display its title', () => {
         cy.expect('h1.content-title').not.to.be.empty;
     });
 
-    it('can visit a case study and display its subtitle', () => {
+    it('can visit a funding page and display its subtitle', () => {
         cy.expect('app-case-study .content-summary').not.to.be.empty;
     });
 
-    it('case study displays body text', () => {
+    it('funding page displays body text', () => {
         cy.expect('app-case-study ng-component.ng-star-inserted').not.to.be.empty;
     });
 
