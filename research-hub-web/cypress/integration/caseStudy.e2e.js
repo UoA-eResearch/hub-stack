@@ -9,11 +9,11 @@ describe('ResearchHubs Case Study Pages', () => {
   });
 
   it('can visit a case study and display its subtitle', () => {
-      cy.expect('app-case-study .content-summary').not.to.be.empty;
+      cy.expect('#case-study-container .content-summary').not.to.be.empty;
   });
 
   it('case study displays body text', () => {
-      cy.expect('app-case-study ng-component.ng-star-inserted').not.to.be.empty;
+      cy.expect('#case-study-container ng-component.ng-star-inserted').not.to.be.empty;
   });
 
   it('displays a list of related items', () => {
