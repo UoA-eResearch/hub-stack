@@ -20,14 +20,9 @@ describe('ResearchHubs Case Study Pages', () => {
       cy.get('#you-might-be-interested-in').should('exist');
   });
 
-  // it('clicking a related item takes you to its page', () => {
-  //     cy.get('#you-might-be-interested-in').contains('Creative Commons').click();
-  //     cy.expect('h2.featured-title').not.to.be.empty;
-  // });
-
-  // it('displays a list of contacts', () => {
-  //     cy.get('#contacts').contains('Dharani Sontam').should('exist');
-  // });
+  it('displays a list of contacts', () => {
+      cy.expect('#contacts#contacts .card-title').not.to.be.empty;
+  });
 
   // it('displays a list of documents', () => {
   //     cy.get('#documents').contains('Open Access Guidelines').should('exist');
@@ -44,9 +39,5 @@ describe('ResearchHubs Case Study Pages', () => {
   //     cy.get('#organisations').contains('Libraries and Learning Services').should('exist');
   // });
 
-  // testing stops when you navigate away from the root domain
-  // it('clicking on an organisation takes you to the organisation', () => {
-  //     cy.get('#organisations').contains('Te Tumu Herenga').click();
-  //     cy.expect('#page-title').not.to.be.empty;
-  // });
+
 });
