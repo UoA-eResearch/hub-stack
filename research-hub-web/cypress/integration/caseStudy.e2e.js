@@ -24,9 +24,9 @@ describe('ResearchHubs Case Study Pages', () => {
       cy.expect('#contacts .card-title').not.to.be.empty;
   });
 
-  // it('displays a list of documents', () => {
-  //     cy.get('#documents').contains('Open Access Guidelines').should('exist');
-  // });
+  it('displays a list of documents', () => {
+      cy.expect('#documents .card-title').not.to.be.empty;
+  });
 
   // Cypress doesn't support multi-tabs
   // 
