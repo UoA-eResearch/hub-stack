@@ -21,7 +21,7 @@ describe('ResearchHubs Case Study Pages', () => {
   });
 
   it('displays a list of contacts', () => {
-      cy.expect('#contacts#contacts .card-title').not.to.be.empty;
+      cy.expect('#contacts .card-title').not.to.be.empty;
   });
 
   // it('displays a list of documents', () => {
