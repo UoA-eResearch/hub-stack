@@ -25,28 +25,12 @@ describe('ResearchHubs Article Pages', () => {
         cy.expect('h2.featured-title').not.to.be.empty;
     });
 
-    // it('displays a list of contacts', () => {
-    //     cy.get('#contacts').contains('Dharani Sontam').should('exist');
-    // });
-
     it('displays a list of documents', () => {
         cy.get('#documents').contains('Open Access Guidelines').should('exist');
     });
-
-    // Cypress doesn't support multi-tabs
-    // 
-    // it('clicking on a documents takes you to the documents', () => {
-    //     cy.get('#documents').contains('IT Acceptable Use Guidelines').click();
-    //     cy.contains('The Impact of Research');
-    // });
 
     it('displays a list of organisations', () => {
         cy.get('#organisations').contains('Libraries and Learning Services').should('exist');
     });
 
-    // testing stops when you navigate away from the root domain
-    // it('clicking on an organisation takes you to the organisation', () => {
-    //     cy.get('#organisations').contains('Te Tumu Herenga').click();
-    //     cy.expect('#page-title').not.to.be.empty;
-    // });
 });
