@@ -9,11 +9,11 @@ describe('ResearchHubs Software Pages', () => {
     });
 
     it('can visit an software and display its subtitle', () => {
-        cy.expect('app-software .content-summary').not.to.be.empty;
+        cy.expect('#software-container .content-summary').not.to.be.empty;
     });
 
     it('software displays body text', () => {
-        cy.expect('app-software ng-component.ng-star-inserted').not.to.be.empty;
+        cy.expect('#software-container ng-component.ng-star-inserted').not.to.be.empty;
     });
 
     it('software displays specifications table', () => {
