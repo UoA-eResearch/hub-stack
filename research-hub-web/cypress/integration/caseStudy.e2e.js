@@ -28,16 +28,4 @@ describe('ResearchHubs Case Study Pages', () => {
       cy.expect('#documents .card-title').not.to.be.empty;
   });
 
-  // Cypress doesn't support multi-tabs
-  // 
-  // it('clicking on a documents takes you to the documents', () => {
-  //     cy.get('#documents').contains('IT Acceptable Use Guidelines').click();
-  //     cy.contains('The Impact of Research');
-  // });
-
-  // it('displays a list of organisations', () => {
-  //     cy.get('#organisations').contains('Libraries and Learning Services').should('exist');
-  // });
-
-
 });
