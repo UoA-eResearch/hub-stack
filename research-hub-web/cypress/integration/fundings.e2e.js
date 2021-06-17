@@ -9,11 +9,11 @@ describe('ResearchHubs Funding Pages', () => {
     });
 
     it('can visit a funding page and display its subtitle', () => {
-        cy.expect('app-case-study .content-summary').not.to.be.empty;
+        cy.expect('#funding-container .content-summary').not.to.be.empty;
     });
 
     it('funding page displays body text', () => {
-        cy.expect('app-case-study ng-component.ng-star-inserted').not.to.be.empty;
+        cy.expect('#funding-container ng-component.ng-star-inserted').not.to.be.empty;
     });
 
     it('displays specifications table', () => {

@@ -9,11 +9,11 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('can visit an article and display its subtitle', () => {
-        cy.expect('app-articles .content-summary').not.to.be.empty;
+       cy.expect('#article-container .content-summary').not.to.be.empty; 
     });
 
     it('article displays body text', () => {
-        cy.expect('app-articles ng-component.ng-star-inserted').not.to.be.empty;
+        cy.expect('#article-container ng-component.ng-star-inserted').not.to.be.empty;
     });
 
     it('displays a list of related items', () => {
