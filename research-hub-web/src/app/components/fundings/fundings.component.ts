@@ -16,6 +16,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-fundings',
@@ -40,6 +41,8 @@ export class FundingsComponent implements OnInit, OnDestroy {
   public allFundings$: Observable<FundingCollection>;
   public parentSubHubs;
   public isMobile: Boolean;
+  public supportsWebp: Boolean;
+  public bannerImageUrl: string;
   
   constructor(
     public route: ActivatedRoute,
@@ -49,25 +52,32 @@ export class FundingsComponent implements OnInit, OnDestroy {
     public cerGraphQLService: CerGraphqlService,
     public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
-    // public bodyMediaServicePurpose: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { this.detectDevice(); }
+  ) {
+    this.detectDevice();
+    this.detectWebP();
+  }
 
-  // Detect if device is Mobile
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
+  }
+
+  detectWebP() {
+    supportsWebP.then(supported => {
+      this.supportsWebp = supported;
+    });
   }
 
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getFundingBySlug() method.
-     */
-      this.route$ = this.route.params.subscribe(params => {
-        this.slug = params.slug || this.route.snapshot.data.slug;
-        this._loadContent();
-      });
+    */
+    this.route$ = this.route.params.subscribe(params => {
+      this.slug = params.slug || this.route.snapshot.data.slug;
+      this._loadContent();
+    });
   }
 
   /**
@@ -102,10 +112,12 @@ export class FundingsComponent implements OnInit, OnDestroy {
         data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
         data.applicationDocumentsCollection.items = data.applicationDocumentsCollection.items.filter(item => item);
         
-        this.detectDevice();
+        // Set banner image URL for webp format if webp is supported
+        if (data.banner?.url) {
+          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?fm=webp' : data.banner?.url;
+        }
 
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        // this.bodyMediaServicePurpose.setBodyMedia(data.purpose?.links);
         this.appComponentService.setTitle(data.title);
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
