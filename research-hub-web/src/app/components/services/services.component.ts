@@ -16,6 +16,7 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-services',
@@ -40,6 +41,8 @@ export class ServicesComponent implements OnInit, OnDestroy {
   public allServices$: Observable<ServiceCollection>;
   public parentSubHubs;
   public isMobile: Boolean;
+  public supportsWebp: Boolean;
+  public bannerImageUrl: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -51,11 +54,19 @@ export class ServicesComponent implements OnInit, OnDestroy {
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { this.detectDevice(); }
+  ) {
+    this.detectDevice();
+    this.detectWebP();
+  }
 
-  // Detect if device is Mobile
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
+  }
+
+  detectWebP() {
+    supportsWebP.then(supported => {
+      this.supportsWebp = supported;
+    });
   }
 
   async ngOnInit() {
@@ -99,7 +110,12 @@ export class ServicesComponent implements OnInit, OnDestroy {
         data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
         data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
         data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
-        this.detectDevice();
+        
+        // Set banner image URL for webp format if webp is supported
+        if (data.banner?.url) {
+          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?fm=webp' : data.banner?.url;
+        }
+
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
