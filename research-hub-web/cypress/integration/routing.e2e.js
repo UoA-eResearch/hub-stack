@@ -20,14 +20,14 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
 
     it('can visit /research-impact/support-for-impactful-research and load an Article', () => {
         cy.visit('/research-impact/support-for-impactful-research');
-        cy.contains('Throughout the University there are a number of staff who can offer specialist support in different areas related to research impact. This page also includes research impact related training opportunities and events.');
-        cy.get('#article-container').should('exist')
+        cy.expect('h1.content-title').not.to.be.empty;
+        cy.expect('#article-container').not.to.be.empty;
     });
 
-    // it('can visit /research-software-and-computing/advanced-compute/research-virtual-machines and load a Service', () => {
-    //     cy.visit('/research-software-and-computing/advanced-compute/research-virtual-machines');
-    //     cy.contains("View Service");
-    // })
+    it('can visit Research Virtual Machines page and load a Service', () => {
+        cy.visit('/research-software-and-computing/advanced-compute/research-virtual-machines');
+        cy.expect('#you-might-be-interested-in .mat-nav-list:first-child a.card-title').not.to.be.empty;
+    })
 
     it('will update a content item\'s URL when it is visited from outside the SubHub', () => {
         cy.visit('/article/support-for-impactful-research');
@@ -37,10 +37,10 @@ describe('ResearchHubs Dynamic SubHub Routing', () => {
 
 describe("ResearchHubs legacy routing", () => {
 
-    // it('can visit an old-style content route and be redirected to right page', () => {
-    //     cy.visit('/#/content/1');
-    //     cy.contains("View Service"); // Button for view service should exist.
-    // });
+    it('can visit an old-style content route and be redirected to right page', () => {
+        cy.visit('/#/content/1');
+        cy.expect('h1.content-title').not.to.be.empty;
+    });
 
     it('should redirect invalid content route to not found page', () => {
         cy.visit('/#/content/thisdoesntexist');
