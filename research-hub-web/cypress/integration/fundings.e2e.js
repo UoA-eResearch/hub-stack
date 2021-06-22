@@ -5,15 +5,15 @@ describe('ResearchHubs Funding Pages', () => {
     });
 
     it('can visit a funding page and display its title', () => {
-        cy.expect('h1.content-title').not.to.be.empty;
+        cy.get('h1.content-title').text().should('not.be.empty');
     });
 
     it('can visit a funding page and display its subtitle', () => {
-        cy.expect('#funding-container .content-summary').not.to.be.empty;
+        cy.get('.content-summary').text().should('not.be.empty');
     });
 
     it('funding page displays body text', () => {
-        cy.expect('#funding-container ng-component.ng-star-inserted').not.to.be.empty;
+        cy.get('#funding-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
     });
 
     it('displays specifications table', () => {
@@ -22,10 +22,10 @@ describe('ResearchHubs Funding Pages', () => {
     });
 
     it('displays a list of contacts', () => {
-        cy.get('#contacts').should('exist');
+        cy.get('#contacts .card-title').text().should('not.be.empty');
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations').should('exist');
+        cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });
 });

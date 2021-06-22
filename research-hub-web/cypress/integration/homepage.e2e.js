@@ -1,6 +1,5 @@
 /**
  * Tests the basic homepage components i.e. Search, Featured, Research Categories, Research Activities, Contact
- * 
  */
 describe('ResearchHubs Homepage', () => {
 
@@ -10,33 +9,27 @@ describe('ResearchHubs Homepage', () => {
 
     // Only enable if featured items are enabled
     it('displays featured articles', () => {
-        cy.expect('h2.featured-title').not.to.be.empty;
-        cy.expect('.featured-content app-cards mat-nav-list:first-child').not.to.be.empty;
+        cy.get('app-content-title h2').text().should('not.be.empty');
+        cy.get('app-cards mat-nav-list:first-child h4 a').text().should('not.be.empty');
     })
 
     it('displays research categories', () => {
-        cy.expect('#research-categories h2').not.to.be.empty;
-        cy.expect('#research-categories mat-card').not.to.be.empty;
+        cy.get('#research-categories h2').text().should('not.be.empty');
+        cy.get('#research-categories mat-card').text().should('not.be.empty');
     })
 
     it('displays research activities', () => {
-        cy.expect('#research-activities h2').not.to.be.empty;
-        cy.expect('#research-activities .inner-panel h3').not.to.be.empty;
-        cy.expect('#research-activities .inner-panel p').not.to.be.empty;
+        cy.get('#research-activities h2').text().should('not.be.empty');
+        cy.get('#research-activities .inner-panel h3').text().should('not.be.empty');
+        cy.get('#research-activities .inner-panel p').text().should('not.be.empty');
     })
 
     it('displays contact section', () => {
-        cy.expect('.contact h2').not.to.be.empty;
-        cy.expect('.contact p').not.to.be.empty;
-        cy.expect('.contact .feedback-content p').not.to.be.empty;
+        cy.get('#contacts h2').text().should('not.be.empty');
+        cy.get('#contacts .feedback-container p').text().should('not.be.empty');
     })
 
     it('displays footer', () => {
-        cy.expect('footer .footer-content li:first-child').not.to.be.empty;
+        cy.get('.footer-content li:first-child a').text().should('not.be.empty');
     })
-
-    // it('clicking Sign In takes you to SSO', () => {
-    //     cy.get('#top-bar').contains('Sign In').click();
-    //     cy.contains('Or sign in with one of the following services');
-    // })
 });
