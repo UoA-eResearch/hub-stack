@@ -5,15 +5,15 @@ describe('ResearchHubs Equipment  Pages', () => {
     });
 
     it('can visit an equipment and display its title', () => {
-        cy.contains('Operetta High-Content Imaging System');
+        cy.expect('h1.content-title').not.to.be.empty;
     });
 
-    it('can visit an equipment and display its subtitle', () => {
-        cy.contains('The Operetta is an automated microscope which enables you to study many features simultaneously in complex biological systems. This is known as High Content Screening as extensive data can be generated from the images the Operetta captures.');
+    it('can visit an equipment page and display its subtitle', () => {
+        cy.expect('.content-summary').not.to.be.empty;
     });
 
     it('equipment displays body text', () => {
-        cy.contains('The School of Biological Sciences (SBS) hosts an Operetta high-content screening (HCS) system that can be used for imaging cells and samples in great detail from slides and multi-well plates. This is useful for assay development, genome-wide siRNA, compound screens and many other image-based applications. The Operetta system has associated analysis tools to generate statistically valid numerical data from the microscope images it captures.');
+        cy.expect('#equipment-container p .ng-star-inserted').not.to.be.empty;
     });
 
     it('equipment displays specifications table', () => {
@@ -31,27 +31,12 @@ describe('ResearchHubs Equipment  Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in').contains('FoS Shared Research Equipment (ShaRE)').click();
-        cy.contains('ShaRE houses core research facilities within the Faculty of Science to help people access the key analytical equipment and expertise necessary to support quality research and teaching.');
+        cy.get('#you-might-be-interested-in .mat-nav-list:first-child a.card-title').click();
+        cy.expect('.banner-content h1').not.to.be.empty;
     });
-    
-    // No document in equipment
-    //
-    // it('displays a list of documents', () => {
-    //     cy.get('#documents').contains('IT Acceptable Use Policy').should('exist');
-    // });
-    
-    // it('clicking on a documents takes you to the documents', () => {
-    //     cy.get('#documents').contains('Health Research Council – Research Impact Guidance').invoke('removeAttr', 'target').click();
-    //     cy.contains('The Impact of Research');
-    // });
     
     it('displays a list of organisations', () => {
-        cy.get('#organisations').contains('School of Biological Sciences').should('exist');
+        cy.expect('#organisations mat-card:first-child h4').not.to.be.empty;
     });
     
-    // it('clicking on an organisation takes you to the organisation', () => {
-    //     cy.get('#organisations').children().invoke('removeAttr', 'target').contains('School of Biological Sciences').click();
-    //     cy.contains("Our school offers state-of-the-art research and teaching across a range of subject areas within the field of biological sciences. Find out more below.");
-    // });
 });
