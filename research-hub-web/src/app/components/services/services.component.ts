@@ -39,7 +39,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allServices$: Observable<ServiceCollection>;
   public parentSubHubs;
-  public isMobile: Boolean;
+  public isMobile: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -77,10 +77,10 @@ export class ServicesComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual Service,
      * therefore run the corresponding query. If not, return all Services.
      */
-    if (!!this.slug) {
+    if (this.slug) {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllServicesSlugs().subscribe(data => {
-        let slugs = [];
+        const slugs = [];
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
@@ -122,7 +122,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
     try {
       return this.allServicesGQL.fetch()
         .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
-    } catch (e) { console.error('Error loading all Services:', e) };
+    } catch (e) { console.error('Error loading all Services:', e) }
   }
 
   /**
@@ -136,7 +136,7 @@ export class ServicesComponent implements OnInit, OnDestroy {
     try {
       return this.allServicesSlugsGQL.fetch()
         .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
-    } catch (e) { console.error('Error loading all services:', e) };
+    } catch (e) { console.error('Error loading all services:', e) }
   }
 
   /**

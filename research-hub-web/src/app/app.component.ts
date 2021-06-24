@@ -24,7 +24,7 @@ import { HomeScrollService } from '@services/home-scroll.service';
   animations: []
 })
 export class AppComponent implements OnInit, OnDestroy {
-  public viewIsLoaded: Boolean = false;
+  public viewIsLoaded = false;
   public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public aboutUs = "https://www.eresearch.auckland.ac.nz/?_ga=2.69549080.943707055.1614124973-1995817083.1603163706#";
 
@@ -36,10 +36,10 @@ export class AppComponent implements OnInit, OnDestroy {
   public accessibilityUrl = 'https://www.auckland.ac.nz/en/accessibility.html';
 
   public url: Subscription;
-  public showNotification: Boolean;
-  public showBanner: Boolean;
-  public title: String;
-  public summary: String;
+  public showNotification: boolean;
+  public showBanner: boolean;
+  public title: string;
+  public summary: string;
   private mediaChangeSub: Subscription;
   private searchTextChangeSub: Subscription;
   private routerSub: Subscription;
@@ -57,11 +57,11 @@ export class AppComponent implements OnInit, OnDestroy {
   public currentUrl = undefined;
 
   public userInfo;
-  public isMobile: Boolean;
-  public onSearchPage: Boolean;
-  public onHomePage: Boolean;
-  public mobileBackground: String;
-  public desktopBackground: String;
+  public isMobile: boolean;
+  public onSearchPage: boolean;
+  public onHomePage: boolean;
+  public mobileBackground: string;
+  public desktopBackground: string;
 
   @ContentChildren(RouterOutlet) outlet;
 
@@ -160,7 +160,7 @@ export class AppComponent implements OnInit, OnDestroy {
           // pushing an individual usergroupss to google analytics
           if (this.userInfo.groups) {
             this.userInfo.groups.trim().replace('\"', '').replace(']', '').replace('[', '').split(',').map(group => {
-              let groupObj = {};
+              const groupObj = {};
               group = group.trim().split('.')[0];
               groupObj[group] = group;
               window.dataLayer.push(groupObj);
@@ -254,7 +254,7 @@ export class AppComponent implements OnInit, OnDestroy {
     try {
       return this.allCategoriesGQL.fetch()
         .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
-    } catch (e) { console.error('Error loading all Categories:', e) };
+    } catch (e) { console.error('Error loading all Categories:', e) }
   }
 
   // Get all research stages
@@ -262,7 +262,7 @@ export class AppComponent implements OnInit, OnDestroy {
     try {
       return this.allStagesGQL.fetch()
         .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
-    } catch (e) { console.error('Error loading all stages:', e) };
+    } catch (e) { console.error('Error loading all stages:', e) }
   }
 
   // Get homepage
@@ -270,7 +270,7 @@ export class AppComponent implements OnInit, OnDestroy {
     try {
       return this.getHomepageGQL.fetch()
         .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
-    } catch (e) { console.error('Error loading homepage:', e) };
+    } catch (e) { console.error('Error loading homepage:', e) }
   }
 
   // Search

@@ -32,7 +32,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
   };
 
-  public isMobile: Boolean;
+  public isMobile: boolean;
   public bannerTextStyling;
   public slug: string;
   public caseStudy;
@@ -85,9 +85,9 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual CaseStudy,
      * therefore run the corresponding query. If not, return all CaseStudy.
      */
-    if (!!this.slug) {
+    if (this.slug) {
       this.getAllCaseStudySlugs().subscribe(data => {
-        let slugs = [];
+        const slugs = [];
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
@@ -128,7 +128,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     try {
       return this.allCaseStudyGQL.fetch()
         .pipe(pluck('data', 'caseStudyCollection')) as Observable<CaseStudyCollection>
-    } catch (e) { console.error('Error loading all CaseStudy:', e) };
+    } catch (e) { console.error('Error loading all CaseStudy:', e) }
   }
 
   /**
@@ -142,7 +142,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     try {
       return this.allCaseStudySlugsGQL.fetch()
         .pipe(pluck('data', 'caseStudyCollection')) as Observable<CaseStudyCollection>
-    } catch (e) { console.error('Error loading all case studies:', e) };
+    } catch (e) { console.error('Error loading all case studies:', e) }
   }
 
   /**

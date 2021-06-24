@@ -5,7 +5,7 @@ import { BreadcrumbsComponent } from './breadcrumbs.component';
 describe('BreadcrumbsComponent', () => {
   let component: BreadcrumbsComponent;
   let fixture: ComponentFixture<BreadcrumbsComponent>;
-  let breadCrumbs = [
+  const breadCrumbs = [
         {
           'title': 'Engagement',
           'slug': 'engagement'

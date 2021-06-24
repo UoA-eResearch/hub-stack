@@ -38,7 +38,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allSoftware$: Observable<SoftwareCollection>;
   public parentSubHubs;
-  public isMobile: Boolean;
+  public isMobile: boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -76,10 +76,10 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual Software,
      * therefore run the corresponding query. If not, return all Software.
      */
-    if (!!this.slug) {
+    if (this.slug) {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllSoftwareSlugs().subscribe(data => {
-        let slugs = [];
+        const slugs = [];
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
@@ -115,7 +115,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     try {
       return this.allSoftwareGQL.fetch()
         .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
-    } catch (e) { console.error('Error loading all Software:', e) };
+    } catch (e) { console.error('Error loading all Software:', e) }
   }
 
   /**
@@ -129,7 +129,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     try {
       return this.allSoftwareSlugsGQL.fetch()
         .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
-    } catch (e) { console.error('Error loading all software:', e) };
+    } catch (e) { console.error('Error loading all software:', e) }
   }
 
   /**
