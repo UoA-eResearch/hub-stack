@@ -2,7 +2,8 @@
   "root": true,
   "ignorePatterns": [
     "projects/**/*",
-    "cypress/**/*"
+    "cypress/**/*",
+    "**/*.spec.ts"
   ],
   "overrides": [
     {
