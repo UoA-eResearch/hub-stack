@@ -44,11 +44,19 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
   },
   {
-    path: 'article/:slug',
-    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
+    path: 'casestudies',
+    loadChildren: () => import('@components/case-study/case-study.module').then(m => m.CaseStudyModule)
+  },
+  {
+    path: 'casestudy/:slug',
+    loadChildren: () => import('@components/case-study/case-study.module').then(m => m.CaseStudyModule)
   },
   {
     path: 'articles',
+    loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
+  },
+  {
+    path: 'article/:slug',
     loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
   },
   {
@@ -58,6 +66,14 @@ export const appRoutes: Routes = [
   {
     path: 'events',
     loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
+  },
+  {
+    path: 'funding/:slug',
+    loadChildren: () => import('@app/components/fundings/fundings.module').then(m => m.FundingsModule)
+  },
+  {
+    path: 'funding',
+    loadChildren: () => import('@app/components/fundings/fundings.module').then(m => m.FundingsModule)
   },
   {
     path: 'subhub/:slug',

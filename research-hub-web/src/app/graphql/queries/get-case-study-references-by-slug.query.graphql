@@ -1,0 +1,30 @@
+query GetCaseStudyReferencesBySlug($slug: String) {
+    caseStudyCollection(limit: 1, where: {slug: $slug}) {
+        items {
+            __typename
+            sys {
+                id
+            }
+            ssoProtected
+            references {
+                json 
+                links {
+                    entries {
+                        inline { 
+                            ...PublicFields
+                            sys {
+                                id
+                            } 
+                        }
+                        hyperlink { 
+                            ...PublicFields 
+                            sys {
+                                id
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

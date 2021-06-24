@@ -15,7 +15,7 @@
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "tsConfig": "tsconfig.json",
+            "tsConfig": "tsconfig.build.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
               "./src/assets"
@@ -28,8 +28,14 @@
             "allowedCommonJsDependencies": [
               "graphql-tag",
               "crypto-js",
-              "zen-observable"
-            ]
+              "zen-observable",
+              "markdown-to-html-pipe"
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/partial-styles/"
+              ]
+            }
           },
           "configurations": {
             "local": {
@@ -318,7 +324,12 @@
             ],
             "assets": [
               "src/assets"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/partial-styles/"
+              ]
+            }
           }
         },
         "lint": {

@@ -16,6 +16,14 @@ pipeline {
         label("uoa-buildtools-ionic")
     }
 
+    options {
+        buildDiscarder(
+            logRotator(
+                daysToKeepStr: "30"
+            )
+        )
+    }
+
     stages {
 
         stage('Checkout') {
@@ -206,7 +214,7 @@ pipeline {
         }
 
         stage('Run tests') {
-            parallel {
+            stages {
                 stage('Run research-hub-web tests') {
                     when {
                         anyOf {
@@ -218,12 +226,11 @@ pipeline {
                         echo 'Testing research-hub-web project'
 
                         dir("research-hub-web") {
-                            // TODO Disable tests for now, make them work in Jenkins!
-                            // echo 'Running research-hub-web unit tests'
-                            // sh 'npm run test-ci'
+                            echo 'Running research-hub-web unit tests'
+                            sh 'npm run test-ci'
 
-                            // echo 'Running research-hub-web e2e tests'
-                            // sh "npm run e2e-ci"
+                            echo 'Running research-hub-web e2e tests'
+                            sh "npm run e2e-ci"
                         }
                     }
                 }
