@@ -1,0 +1,4 @@
+<div *ngIf="fundingPurpose | async as fundingPurpose">
+  <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="fundingPurpose.purpose?.json"
+      [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
+</div>

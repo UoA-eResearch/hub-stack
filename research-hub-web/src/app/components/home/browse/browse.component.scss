@@ -1,19 +1,6 @@
-@import '../../../../styles.scss';
-@import '../../../../themes.scss';
-@import '../../../../typography.scss';
-@import '../home.component.scss';
-
-/**
- * Custom Text
- */
-.text {
-  width: 100%;
-  @extend .text;
-  @include size(large) { 
-    text-align: left;
-  }
-}
-
+@import "variables";
+@import "mixins";
+@import "styles-common";
 
 /**
  * Browse and guide tiles
@@ -30,21 +17,21 @@
   }
   .tile-button {
     color: map-get($hub-navy, 500);
-    font-size: 16px!important;
+    font-size: 16px !important;
   }
   .standard-button {
     @extend .standard-button;
     margin-bottom: 16px;
-    border: 3px solid map-get($hub-navy, 500)!important;
-    background-color: map-get($hub-navy, 500)!important;
+    border: 3px solid map-get($hub-navy, 500) !important;
+    background-color: map-get($hub-navy, 500) !important;
     &:hover {
       @extend .standard-button;
-      background-color: white!important;
-      color: map-get($hub-navy, 500)!important;
+      background-color: white !important;
+      color: map-get($hub-navy, 500) !important;
     }
   }
 }
 
 mat-card {
-  box-shadow: 0px 0px 10px #cfcfcf!important;
+  box-shadow: 0px 0px 10px #cfcfcf !important;
 }
