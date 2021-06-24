@@ -14,7 +14,7 @@ import {
 import express, { Response, Request } from "express";
 import { graphqlHTTP } from "express-graphql";
 import fetch from "node-fetch";
-import executeAndVerify from "./executeAndVerify";
+import executeAndVerify, { assertNoDeepProtectedFields } from "./executeAndVerify";
 import authenticateByJwt from "./authenticateByJwt";
 import cors from "cors";
 
@@ -152,15 +152,24 @@ export async function createServer (config: CerGraphqlServerConfig) {
         // environment.
         args.preview = true;
     }
+
+    // assertNoDeepProtectedFields(info.fieldNodes[0]);
     
-    return delegateToSchema({
+    const delegatedResult = delegateToSchema({
       schema: contentfulSchema,
       operation: "query",
       fieldName: info.fieldName,
       args,
       context,
       info
+    }) as Promise<any>;
+    delegatedResult.then(result => {
+      if (result.items && Array.isArray(result.items)) {
+        const isEveryItemPublic = (result.items as any[]).every(item => !item?.ssoProtected);
+        console.log("Is every item public?", isEveryItemPublic);
+      }
     })
+    return delegatedResult;
   }]));
 
   const schema = mergeSchemas({

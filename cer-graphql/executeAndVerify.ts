@@ -11,8 +11,11 @@ import {
     print,
     FieldNode,
     GraphQLError,
+    Kind,
+    FragmentSpreadNode,
+    FragmentDefinitionNode,
    } from "graphql";
-import { visitResult } from "graphql-tools";
+import { correctASTNodes, visitResult } from "graphql-tools";
   
 const GRAPHQL_INTROSPECTION_FIELDS = [
   '__Schema',
@@ -53,7 +56,9 @@ function getFieldsByType(schema: GraphQLSchema, document: ASTNode) {
   const fieldsByType: Record<string, string[]> = {};
   const typeInfo = new TypeInfo(schema);
   visit(document, visitWithTypeInfo(typeInfo, {
-      Field(node) {
+      Field(node, key, parent, path, ancestors) {
+        console.log(path);
+        
         const parentType = typeInfo.getParentType()?.name;
         if (!parentType) return;
         if (!fieldsByType[parentType]) {
@@ -63,6 +68,96 @@ function getFieldsByType(schema: GraphQLSchema, document: ASTNode) {
       }
   }));
   return fieldsByType;
+}
+
+type FragmentFieldDepthInfo = {
+  depth: number,
+  name: string
+};
+
+/**
+ * 
+ * @param document The query document
+ * @param maxDepth number of nested selectionsets a protected field can be in.
+ */
+export function assertNoDeepProtectedFields(document: ASTNode, maxDepth = 3) {
+  // Field depths, keyed by field name
+  const depthByField: Record<string, number[]> = {};
+  // How deep do fragment spreads occur, keyed by fragment name
+  const fragmentSpreads: Record<string, number[]> = {};
+  // Which fields are in fragments and how deep are they in the fragment, keyed by fragment name.
+  const fieldsInFragment: Record<string, FragmentFieldDepthInfo[]> = {};
+
+  // Traverse the query to figure out how deep fields are.
+  visit(document, {
+    FragmentSpread(node, key, parent, path, ancestors) {
+      const fragmentName = node.name.value;
+      const nestedLevel = ancestors.filter(a => (
+        "kind" in a ? a.kind === "SelectionSet" : false
+      ));
+      if (!fragmentSpreads[fragmentName]) {
+        fragmentSpreads[fragmentName] = [];
+      }
+        fragmentSpreads[fragmentName].push(nestedLevel.length);
+    },
+    Field(node, key, parent, path, ancestors) {
+      console.log("Visiting field ", key);
+      const name = node.name.value;
+      const nestedSelectionSets = ancestors.filter(a => (
+        "kind" in a ? a.kind === "SelectionSet" : false
+      ));
+
+      const fragmentDefs = ancestors.filter(a => (
+        "kind" in a ? a.kind === "FragmentDefinition" : false
+      )) as FragmentDefinitionNode[];
+
+      if (fragmentDefs.length > 0) {
+        // If this is inside a fragment,
+        // we put it aside in the fieldsInFragment
+        // field so we can sum it up with fragment spread
+        // depth later.
+        const fragmentName = fragmentDefs[0].name.value;
+        if (!fieldsInFragment[fragmentName]) {
+          fieldsInFragment[fragmentName] = [];
+        }
+        fieldsInFragment[fragmentName].push({
+          name,
+          depth: nestedSelectionSets.length
+        });
+      } else {
+        // If it's just a field, we add it to the main
+        // main depthByField object.
+        if (!depthByField[name]) {
+          depthByField[name] = [];
+        }
+        depthByField[name].push(nestedSelectionSets.length);
+      }
+    }
+  });
+
+  // Next, sum the depths of fields in fragments
+  // and put them in depthByField
+  Object.keys(fieldsInFragment).forEach(fragment => {
+    fieldsInFragment[fragment].forEach(field => {
+      const depths = fragmentSpreads[fragment].map(fragmentDepth => fragmentDepth + field.depth - 1);
+      if (!depthByField[field.name]) {
+        depthByField[field.name] = [];
+      }
+      depthByField[field.name] = depthByField[field.name].concat(depths);
+    });
+  });
+
+  const protectedFields = Object.keys(depthByField).filter(field => (
+    // Find fields which are protected.
+    !ALWAYS_PUBLIC_FIELDS.has(field))
+  );
+
+  protectedFields.forEach(fieldName => {
+    if (depthByField[fieldName].some(depth => depth > maxDepth)) {
+      throw new AuthenticationError("Validation: Query should not ask for nested fields that are protected.");
+    }
+    
+  });
 }
 
 const findVerificationRequiredFields = (fieldsByType: Record<string, string[]>, protectedTypes: string[]) => {
@@ -90,6 +185,8 @@ const findVerificationRequiredFields = (fieldsByType: Record<string, string[]>, 
   });
   return typesRequiringVerification;
 };
+
+
 
 function assertTypesHaveSsoField(fieldsByType: Record<string, string[]>, verificationRequiredTypes: string[]) {
   const eachTypeHasSsoField = verificationRequiredTypes.every(typeName => 
@@ -119,6 +216,7 @@ async function executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: 
   /**
    * Check whether they have included the ssoProtected field. If they haven't throw an auth error. 
    */
+  assertNoDeepProtectedFields(args.document);
   assertTypesHaveSsoField(fieldsByType, verificationRequiredTypes);
   assertNoAliasingSsoProtected(args.document);
   /**
@@ -139,6 +237,7 @@ async function executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: 
         typeName,
         {
           ssoProtected(isSsoProtected: boolean) {
+            console.log("My arguments are ", arguments);
             if (isSsoProtected) {
               throw new AuthenticationError("Authentication required to view protected content from " + typeName);
             }
@@ -167,6 +266,7 @@ export default function executeAndVerify(args: ExecutionArgs, protectedTypes: st
 
   if (!context.user && args.operationName !== "IntrospectionQuery") {
     return executeUnauthenticatedQuery(args, protectedTypes)
+    // return Promise.resolve(execute(args));
   } else {
     // If authenticated, simply execute the query without verification.
     return Promise.resolve(execute(args));
