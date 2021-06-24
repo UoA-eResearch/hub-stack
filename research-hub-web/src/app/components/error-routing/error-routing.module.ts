@@ -22,7 +22,7 @@ export class ErrorRoutingModule extends UoaErrorsConfig {
             title: 'Page Not Found',
             content: `Unfortunately it appears the page you were trying to access doesn't exist.` };
             
-        for (let [key, value] of Object.entries(this.ErrorPageContent)) {
+        for (const [key, value] of Object.entries(this.ErrorPageContent)) {
             value.content += `
                 <br><br>
                 <a href="/">

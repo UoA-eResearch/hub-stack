@@ -38,7 +38,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allSubHubs$: Observable<SubHubCollection>;
   public parentSubHubs;
-  public isMobile: Boolean;
+  public isMobile: boolean;
   public bannerTextStyling;
 
   constructor(
@@ -81,7 +81,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual SubHub,
      * therefore run the corresponding query. If not, return all SubHub.
      */
-    if (!!this.slug) {
+    if (this.slug) {
       this.subHub = this.getSubHubBySlug(this.slug);
       this.subHub$ = this.getSubHubBySlug(this.slug).subscribe(data => {
         // Remove nulls from server in case of error.
@@ -110,7 +110,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     try {
       return this.allSubHubGQL.fetch()
         .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>
-    } catch (e) { console.error('Error loading all SubHub:', e) };
+    } catch (e) { console.error('Error loading all SubHub:', e) }
   }
 
   /**

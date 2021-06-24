@@ -37,7 +37,7 @@ export class ResearchActivityComponent implements OnInit {
     try {
       return this.getHomepageGQL.fetch()
         .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
-    } catch (e) { console.error('Error loading homepage:', e) };
+    } catch (e) { console.error('Error loading homepage:', e) }
   }
 
   // Get all research stages
@@ -45,6 +45,6 @@ export class ResearchActivityComponent implements OnInit {
     try {
       return this.allStagesGQL.fetch()
         .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
-    } catch (e) { console.error('Error loading all stages:', e) };
+    } catch (e) { console.error('Error loading all stages:', e) }
   }
 }

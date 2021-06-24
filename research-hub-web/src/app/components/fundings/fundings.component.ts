@@ -39,7 +39,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allFundings$: Observable<FundingCollection>;
   public parentSubHubs;
-  public isMobile: Boolean;
+  public isMobile: boolean;
   
   constructor(
     public route: ActivatedRoute,
@@ -78,10 +78,10 @@ export class FundingsComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual Funding,
      * therefore run the corresponding query. If not, return all Fundings.
      */
-    if (!!this.slug) {
+    if (this.slug) {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllFundingSlugs().subscribe(data => {
-        let slugs = [];
+        const slugs = [];
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
@@ -127,7 +127,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
     try {
       return this.allFundingGQL.fetch()
         .pipe(pluck('data', 'fundingCollection')) as Observable<FundingCollection>
-    } catch (e) { console.error('Error loading all Fundings:', e) };
+    } catch (e) { console.error('Error loading all Fundings:', e) }
   }
 
   /**
@@ -141,7 +141,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
     try {
       return this.allFundingSlugsGQL.fetch()
         .pipe(pluck('data', 'fundingCollection')) as Observable<FundingCollection>
-    } catch (e) { console.error('Error loading all fundings:', e) };
+    } catch (e) { console.error('Error loading all fundings:', e) }
   }
 
   /**

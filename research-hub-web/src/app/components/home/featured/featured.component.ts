@@ -26,6 +26,6 @@ export class FeaturedComponent implements OnInit {
     try {
       return this.getHomepageGQL.fetch()
         .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
-    } catch (e) { console.error('Error loading homepage:', e) };
+    } catch (e) { console.error('Error loading homepage:', e) }
   }
 }
