@@ -5,6 +5,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
+import { MockComponent, MockProvider } from 'ng-mocks';
+import { ContentContainerComponent } from '../content-container/content-container.component';
+import { ContentTitleComponent } from '../content-title/content-title.component';
 
 describe('ResearchActivityComponent', () => {
   let component: ResearchActivityComponent;
@@ -41,9 +44,13 @@ describe('ResearchActivityComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResearchActivityComponent ],
-      imports: [ HttpClientTestingModule, ApolloTestingModule, ],
-      providers: [ SearchBarService ]
+      declarations: [
+        ResearchActivityComponent,
+        MockComponent(ContentContainerComponent),
+        MockComponent(ContentTitleComponent)
+      ],
+      imports: [ HttpClientTestingModule, ApolloTestingModule ],
+      providers: [ MockProvider(SearchBarService) ]
     })
     .compileComponents();
   });
@@ -64,5 +71,4 @@ describe('ResearchActivityComponent', () => {
       expect(res).toBeTruthy();
     });
   })
-  
 });
