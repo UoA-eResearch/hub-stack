@@ -17,7 +17,6 @@ import {
   import executeQuery, { CerGraphqlExecutionContext } from "./executeQuery";
   import authenticateByJwt from "./authenticateByJwt";
   import cors from "cors";
-  import { AuthenticationError } from "apollo-server-errors";
   import assertResultsArePublicItems from "./assertResultsArePublicItems";
   
   // Measure server startup time
@@ -43,6 +42,7 @@ import {
     IS_PREVIEW_ENV: boolean
   }
   
+
   /**
    * Conditionally loads environment variables from an environment file returns object with env values.
    * @param {boolean} isFromFile Whether or not to load the .env file
@@ -145,8 +145,7 @@ import {
   
   
     // Get a list of the types that have the ssoProtected field
-    let protectedTypes = getProtectedTypes(contentfulSchema);
-  
+    let protectedTypes = getProtectedTypes(contentfulSchema); 
     const customQueryResolvers : IResolvers = Object.fromEntries(protectedTypes.map(
       type => [type, (root, args, context, info)  => {
         if (IS_PREVIEW_ENV) {

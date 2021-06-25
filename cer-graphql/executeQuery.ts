@@ -146,7 +146,7 @@ function assertNoDeepProtectedFields(document: ASTNode, schema: GraphQLSchema, p
     // exceed maxDepth. 
     Object.keys(depthByField).forEach(fieldName => {
         if (depthByField[fieldName].some(depth => depth > maxDepth)) {
-            throw new AuthenticationError("Validation: Query should not ask for nested fields that are protected.");
+            throw new AuthenticationError("Validation: Unauthenticated query should not ask for nested fields that are protected.");
         }
 
     });
