@@ -1,3 +1,9 @@
+/**
+ * executeQuery.ts
+ * A custom execution function for GraphQL.js, containing validations for
+ * unauthenticated queries.
+*/
+
 import { Request } from "express";
 import { 
     execute,
