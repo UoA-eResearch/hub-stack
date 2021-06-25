@@ -3,9 +3,15 @@ import {
     execute,
     ExecutionArgs,
     print,
+    ASTNode,
+    FieldNode,
+    FragmentDefinitionNode,
+    GraphQLSchema,
+    TypeInfo,
+    visit,
+    visitWithTypeInfo
    } from "graphql";
 import { AuthenticationError } from "apollo-server-errors";
-import { ASTNode, FieldNode, FragmentDefinitionNode, GraphQLSchema, TypeInfo, visit, visitWithTypeInfo } from "graphql";
 
 const GRAPHQL_INTROSPECTION_FIELDS = [
     '__Schema',
@@ -35,6 +41,17 @@ const GRAPHQL_INTROSPECTION_FIELDS = [
     ...GRAPHQL_INTROSPECTION_FIELDS
   ]);
   
+
+function isProtectedField(fieldName: string, typeName: string) {
+    // A protected field is a field that:
+    // 1. aren't in the ALWAYS_PUBLIC_FIELDS set,
+    // 2. isn't a Contentful "items" field for collection items,
+    // 3. isn't a collection field itself.
+    return !ALWAYS_PUBLIC_FIELDS.has(fieldName) &&
+        !(typeName.endsWith("Collection") && fieldName === "items") &&
+        !fieldName.endsWith("Collection")
+}
+
 type FragmentFieldDepthInfo = {
     depth: number,
     name: string
@@ -47,7 +64,7 @@ type FragmentFieldDepthInfo = {
  * @throws AuthenticationError if there are any protected nested fields.
  */
 function assertNoDeepProtectedFields(document: ASTNode, schema: GraphQLSchema, protectedTypes: Set<string>, maxDepth = 3) {
-    // Field depths, keyed by field name
+    // Field depths (i.e. where in the query does this field appear), keyed by field name
     const depthByField: Record<string, number[]> = {};
     // How deep do fragment spreads occur, keyed by fragment name
     const fragmentSpreads: Record<string, number[]> = {};
@@ -59,7 +76,6 @@ function assertNoDeepProtectedFields(document: ASTNode, schema: GraphQLSchema, p
     // First, we collect all the fields and their paths in the query.
     // If there are fragments, we collect the fields separately, because
     // they can appear in different places depending on fragment spread.
-    // We also run the no aliasing checking visitor here for efficiency's sake.
     visit(document, visitWithTypeInfo(typeInfo, {
         FragmentSpread(node, key, parent, path, ancestors) {
             const fragmentName = node.name.value;
@@ -75,8 +91,9 @@ function assertNoDeepProtectedFields(document: ASTNode, schema: GraphQLSchema, p
             const parentType = typeInfo.getParentType()?.name || "";
             const upperCaseParentType = parentType[0].toLowerCase() + parentType.substring(1);
             const name = node.name.value;
-            if (!protectedTypes.has(upperCaseParentType)) {
-                // If this doesn't belong to one of the protected types, skip recording the field.
+            if (!protectedTypes.has(upperCaseParentType) || !isProtectedField(name, upperCaseParentType)) {
+                // If this doesn't belong to one of the protected types, or it's not a protected field,
+                // skip recording the field.
                 return;
             }
             const nestedSelectionSets = ancestors.filter(a => (
@@ -125,12 +142,9 @@ function assertNoDeepProtectedFields(document: ASTNode, schema: GraphQLSchema, p
         });
     });
 
-    const protectedFields = Object.keys(depthByField).filter(field => (
-        // Find fields which are protected.
-        !ALWAYS_PUBLIC_FIELDS.has(field))
-    );
-
-    protectedFields.forEach(fieldName => {
+    // Finally, check each occurrence of protected fields does not
+    // exceed maxDepth. 
+    Object.keys(depthByField).forEach(fieldName => {
         if (depthByField[fieldName].some(depth => depth > maxDepth)) {
             throw new AuthenticationError("Validation: Query should not ask for nested fields that are protected.");
         }
@@ -154,6 +168,7 @@ type TypeInstance = {
     type: string,
     fields: string[]
 };
+
 
 /**
  * Given a query document, check if 1- whether it asks for protected fields, and 2- whether 
@@ -187,11 +202,8 @@ function assertProtectedTypeHasSsoField(document: ASTNode, schema: GraphQLSchema
 
     const typeInstancesVerificationStatus = Object.keys(fieldsByPath).map(path => {
         const typeInstance = fieldsByPath[path];
-        const typeIsCollection = typeInstance.type.endsWith("Collection");
         const protectedFields = typeInstance.fields.filter(field => 
-            !ALWAYS_PUBLIC_FIELDS.has(field) &&
-            !(typeIsCollection && field === "items") &&
-            !field.endsWith("Collection")
+            isProtectedField(field, typeInstance.type)
         );
         if (protectedFields.length > 0) {
             // Log any non-public fields the user is requesting
@@ -223,11 +235,28 @@ function validateUnauthenticatedQuery(document: ASTNode, schema: GraphQLSchema, 
 
 
 async function executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: string[]) {
-  const requiresVerification = validateUnauthenticatedQuery(args.document, args.schema, new Set(protectedTypes));
-  const context = args.contextValue as Request;
-  // Add this to context, so our protected type resolvers can know whether to check results or not.
-  context.resRequiresVerification = requiresVerification;
-  return await Promise.resolve(execute(args));
+    const protectedTypeSet = new Set(protectedTypes);
+    const resRequiresVerification = validateUnauthenticatedQuery(args.document, args.schema, protectedTypeSet);
+    // Add this to context, so our protected type resolvers can know whether to check results or not.
+    (args.contextValue as CerGraphqlExecutionContext).resRequiresVerification = resRequiresVerification;
+    return await Promise.resolve(execute(args));
+}
+
+/**
+ * A custom execution context, with values we've added that can be used in resolvers.
+*/
+export type CerGraphqlExecutionContext = {
+    username?: string,
+    resRequiresVerification?: boolean,
+    originalRequest: Request
+};
+
+function createCerGraphqlContext(originalRequest: Request) {
+    const context: CerGraphqlExecutionContext = {
+        originalRequest,
+        username: originalRequest.user?.username
+    };
+    return context;
 }
 
 /**
@@ -240,15 +269,17 @@ async function executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: 
 export default function executeQuery(args: ExecutionArgs, protectedTypes: string[]) {
   // express-graphql passes in the express Request (which we've customised, see authenticateByJwt.ts) 
   // as context value by default.
-  const context = args.contextValue as Request;
+  // We create a custom context value to replace it.
+  const originalRequest = args.contextValue as Request;
+  const context = args.contextValue = createCerGraphqlContext(originalRequest);
 
   if (args.operationName !== 'IntrospectionQuery') {
-    console.log(`User: ${context.user ? context.user.username.split('_')[1] : 'Unauthenticated'}`)
+    console.log(`User: ${context.username ? context.username.split('_')[1] : 'Unauthenticated'}`)
     // Log incoming queries
     console.log('\n===== Query Recieved: ======\n', print(args.document));
   }
 
-  if (!context.user && args.operationName !== "IntrospectionQuery") {
+  if (!context.username && args.operationName !== "IntrospectionQuery") {
     return executeUnauthenticatedQuery(args, protectedTypes);
   } else {
     // If authenticated, simply execute the query without verification.

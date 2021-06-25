@@ -10,8 +10,9 @@ const TIMEOUT_PERIOD = 40000;
 let awsProfile = 'saml';
 
 /**
- * This function creates both the ApolloServer and test client
+ * This function creates both the server and a test client
  * used to make queries against it.
+ * The test client is a simple fetch function that asks for a JSON response. 
  */
 async function createServerAndTestClient() {
     let server = (await createServer(getCredentials(true))).listen();
@@ -264,6 +265,13 @@ describe("Tests for cer-graphql", () => {
                 variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
             });
             expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
+        });
+
+        test("Requesting a subhubCollection with nested public field (including the items field) returns data", async function() {
+            let res = await query({
+                query: TQ.GET_SUBHUB_COLLECTION_NESTED_ITEMS_FIELD
+            });
+            expect((res as any).data.subHubCollection).toBeTruthy();
         });
 
     });

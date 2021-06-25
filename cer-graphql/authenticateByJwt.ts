@@ -19,7 +19,6 @@ declare global {
     namespace Express {
       interface Request {
         user?: UserToken,
-        resRequiresVerification?: boolean
       }
     }
 }

@@ -14,7 +14,7 @@ import {
 import express, { Response, Request } from "express";
 import { graphqlHTTP } from "express-graphql";
 import fetch from "node-fetch";
-import executeQuery from "./executeQuery";
+import executeQuery, { CerGraphqlExecutionContext } from "./executeQuery";
 import authenticateByJwt from "./authenticateByJwt";
 import cors from "cors";
 import { AuthenticationError } from "apollo-server-errors";
@@ -176,7 +176,7 @@ export async function createServer (config: CerGraphqlServerConfig) {
       info
     }) as Promise<any>;
     return delegatedResult.then(result => {
-      if ((context as Request).resRequiresVerification) {
+      if ((context as CerGraphqlExecutionContext).resRequiresVerification) {
         assertResultsArePublicItems(result);
       }
       return result;

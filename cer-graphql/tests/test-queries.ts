@@ -137,7 +137,6 @@ export const GET_ARTICLE_COLLECTION_NESTED_PROTECTED_FIELD = `
             ...ProtectedField
           }
         }
-        ssoProtected
       }
     }
   }
@@ -146,3 +145,20 @@ export const GET_ARTICLE_COLLECTION_NESTED_PROTECTED_FIELD = `
           callToAction
   }
   `
+
+export const GET_SUBHUB_COLLECTION_NESTED_ITEMS_FIELD = `
+{
+    subHubCollection {
+        items {
+            ssoProtected
+            linkedFrom {
+                subHubCollection  {
+                    items{
+                        slug
+                    }
+                }
+            }
+        }
+    }
+}
+`
