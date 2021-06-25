@@ -126,3 +126,23 @@ export const GET_ARTICLE_COLLECTION_PRIVATE_FRAGMENT = `
     }
   }
 `
+
+export const GET_ARTICLE_COLLECTION_NESTED_PROTECTED_FIELD = `
+{
+    articleCollection {
+      items {
+        ssoProtected
+        relatedItemsCollection {
+          items {
+            ...ProtectedField
+          }
+        }
+        ssoProtected
+      }
+    }
+  }
+  
+  fragment ProtectedField on Article {
+          callToAction
+  }
+  `

@@ -231,7 +231,12 @@ describe("Tests for cer-graphql", () => {
         test("Requesting an articleCollection private field in a fragment w/o a header returns an error", async function() {
             let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_FRAGMENT});
             expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
-        })
+        });
+
+        test("Requesting an article private field that is deeply-nested w/o a header returns an error", async function() {
+            let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_NESTED_PROTECTED_FIELD});
+            expect(res.errors[0].extensions.code).toEqual("UNAUTHENTICATED");
+        });
 
         test("Aliasing the ssoProtected field should not be permitted without logging in", async function() {
             let res = await query ({

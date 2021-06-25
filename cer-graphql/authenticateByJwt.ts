@@ -18,7 +18,8 @@ type UserToken = {
 declare global {
     namespace Express {
       interface Request {
-        user?: UserToken
+        user?: UserToken,
+        resRequiresVerification?: boolean
       }
     }
 }

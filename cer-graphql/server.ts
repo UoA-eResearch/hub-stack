@@ -14,9 +14,10 @@ import {
 import express, { Response, Request } from "express";
 import { graphqlHTTP } from "express-graphql";
 import fetch from "node-fetch";
-import executeAndVerify, { assertNoDeepProtectedFields } from "./executeAndVerify";
+import executeQuery from "./executeQuery";
 import authenticateByJwt from "./authenticateByJwt";
 import cors from "cors";
+import { AuthenticationError } from "apollo-server-errors";
 
 // Measure server startup time
 var startTime = new Date().getTime(); 
@@ -145,13 +146,24 @@ export async function createServer (config: CerGraphqlServerConfig) {
   // Get a list of the types that have the ssoProtected field
   let protectedTypes = getProtectedTypes(contentfulSchema);
 
+  function assertResultsArePublicItems(result: any) {
+    console.log({result});
+      if (result.items && Array.isArray(result.items)) {
+        const isEveryItemPublic = (result.items as any[]).every(item => !item?.ssoProtected);
+        console.log("Is every item public?", isEveryItemPublic);
+        if (!isEveryItemPublic) {
+          throw new AuthenticationError("Authentication required to view protected content.");
+        }
+      }
+  }
+
   const customQueryResolvers : IResolvers = Object.fromEntries(protectedTypes.map(
     type => [type, (root, args, context, info)  => {
       if (IS_PREVIEW_ENV) {
         // Add preview as a query argument if we are in a preview
         // environment.
         args.preview = true;
-    }
+    }    
 
     // assertNoDeepProtectedFields(info.fieldNodes[0]);
     
@@ -163,13 +175,12 @@ export async function createServer (config: CerGraphqlServerConfig) {
       context,
       info
     }) as Promise<any>;
-    delegatedResult.then(result => {
-      if (result.items && Array.isArray(result.items)) {
-        const isEveryItemPublic = (result.items as any[]).every(item => !item?.ssoProtected);
-        console.log("Is every item public?", isEveryItemPublic);
+    return delegatedResult.then(result => {
+      if ((context as Request).resRequiresVerification) {
+        assertResultsArePublicItems(result);
       }
-    })
-    return delegatedResult;
+      return result;
+    });
   }]));
 
   const schema = mergeSchemas({
@@ -199,7 +210,7 @@ export async function createServer (config: CerGraphqlServerConfig) {
         console.error(err);
         return formatError(err);
       },
-      customExecuteFn: (args) => executeAndVerify(args, protectedTypes)
+      customExecuteFn: (args) => executeQuery(args, protectedTypes)
     })
   );
 
