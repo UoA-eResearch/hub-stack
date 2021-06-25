@@ -1,5 +1,7 @@
 resource "aws_waf_ipset" "ipset" {
-  name = "researchhub_cloudfront_ipset"
+  count = var.create_firewall ? 1 : 0
+
+  name = "researchhub_cloudfront_ipset_${var.lifecycle_state}"
 
   # the list of IPs we want to whitelist = UoA IP ranges only
   ip_set_descriptors {
@@ -29,24 +31,28 @@ resource "aws_waf_ipset" "ipset" {
 }
 
 resource "aws_waf_rule" "wafrule" {
-  depends_on  = [aws_waf_ipset.ipset]
-  name        = "researchhub_cloudfront_waf_rule"
-  metric_name = "researchhubcloudfrontwafrule"
+  count = var.create_firewall ? 1 : 0
+
+  depends_on  = [aws_waf_ipset.ipset[0]]
+  name        = "researchhub_cloudfront_waf_rule_${var.lifecycle_state}"
+  metric_name = "researchhubcloudfrontwafrule${var.lifecycle_state}"
 
   predicates {
-    data_id = aws_waf_ipset.ipset.id
+    data_id = aws_waf_ipset.ipset[0].id
     negated = false
     type    = "IPMatch"
   }
 }
 
 resource "aws_waf_web_acl" "waf_acl" {
+  count = var.create_firewall ? 1 : 0
+
   depends_on  = [
-    aws_waf_ipset.ipset,
-    aws_waf_rule.wafrule,
+    aws_waf_ipset.ipset[0],
+    aws_waf_rule.wafrule[0],
   ]
-  name        = "researchhub_cloudfront_waf_acl"
-  metric_name = "researchhubcloudfrontwafacl"
+  name        = "researchhub_cloudfront_waf_acl_${var.lifecycle_state}"
+  metric_name = "researchhubcloudfrontwafacl${var.lifecycle_state}"
 
   default_action {
     type = "BLOCK"
@@ -58,7 +64,7 @@ resource "aws_waf_web_acl" "waf_acl" {
     }
     
     priority = 1
-    rule_id  = aws_waf_rule.wafrule.id
+    rule_id  = aws_waf_rule.wafrule[0].id
     type     = "REGULAR"
   }
 }
