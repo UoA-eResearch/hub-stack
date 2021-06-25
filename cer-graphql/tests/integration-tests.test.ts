@@ -1,4 +1,4 @@
-import { createServer, getCredentials } from "../server";
+import { createServer, getCredentials } from "../index";
 import * as TQ from './test-queries'; // Collection of test queries
 import aws from 'aws-sdk';
 import fetch from "node-fetch";
