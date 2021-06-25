@@ -30,23 +30,17 @@ describe('ResearchHubs Search Page from Homepage', () => {
         cy.contains('Sorry, your search for "fffffffff" in All Categories, did not match anything on the ResearchHub.');
     });
 
-    it('Clicking a research category navigates to the search page', () => {
+    it('clicking a research category navigates to the search page', () => {
         cy.get('#research-categories').contains('View Category').click();
         cy.get('mat-chip').contains('Clear All').should('exist');
     });
 
-    it('Clicking a research activity navigates to the search page', () => {
-        cy.get('#research-activities').contains('Plan & Design').click();
-        cy.get('mat-chip').contains('Plan & Design').should('exist');
-        cy.get('mat-chip').contains('Clear All').should('exist');
-    });
 });
 
 describe('ResearchHubs Search Page', () => {
     beforeEach(() => {
         cy.visit('/search');
     });
-
 
     it('search filters should exist', () => {
         cy.get('#search-filters').should('exist');
