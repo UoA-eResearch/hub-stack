@@ -1,4 +1,4 @@
-import { createServer, getCredentials } from "../server";
+import { createServer, getCredentials } from "../index";
 import * as TQ from './test-queries'; // Collection of test queries
 import aws from 'aws-sdk';
 import fetch from "node-fetch";
@@ -10,8 +10,9 @@ const TIMEOUT_PERIOD = 40000;
 let awsProfile = 'saml';
 
 /**
- * This function creates both the ApolloServer and test client
+ * This function creates both the server and a test client
  * used to make queries against it.
+ * The test client is a simple fetch function that asks for a JSON response. 
  */
 async function createServerAndTestClient() {
     let server = (await createServer(getCredentials(true))).listen();
@@ -228,6 +229,25 @@ describe("Tests for cer-graphql", () => {
             expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
         });
 
+        test("Requesting an articleCollection private field in a fragment w/o a header returns an error", async function() {
+            let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_FRAGMENT});
+            expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
+        });
+
+        test("Requesting an article private field that is deeply-nested w/o a header returns an error", async function() {
+            let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_NESTED_PROTECTED_FIELD});
+            expect(res.errors[0].extensions.code).toEqual("UNAUTHENTICATED");
+        });
+
+        test("Aliasing the ssoProtected field should not be permitted without logging in", async function() {
+            let res = await query ({
+                query: TQ.ALIASING_SSOPROTECTED_QUERY
+            });
+            expect(res.errors.length).toBeGreaterThan(0);
+            expect(res.errors[0].extensions.code).toBe("UNAUTHENTICATED");
+            expect(res.data).toBeFalsy();
+        });
+
         test('Requesting an articleCollection private field with a valid Authorization header returns data', async function () {
             let { query, close } = await createServerAndTestClientWithAuth();
             try {
@@ -245,6 +265,13 @@ describe("Tests for cer-graphql", () => {
                 variables: { id: 'fRd5opeuTFTvdS12aPjI2' }
             });
             expect(res.errors[0].extensions.code).toEqual('UNAUTHENTICATED');
+        });
+
+        test("Requesting a subhubCollection with nested public field (including the items field) returns data", async function() {
+            let res = await query({
+                query: TQ.GET_SUBHUB_COLLECTION_NESTED_ITEMS_FIELD
+            });
+            expect((res as any).data.subHubCollection).toBeTruthy();
         });
 
     });
