@@ -35,7 +35,8 @@ two_fab_url = "https://apigw.test.amazon.auckland.ac.nz/aws-token-grabber/"
 route53_hosted_zone_id = "Z165SO9T1OX8VZ"
 
 # Network
-vpc_id           = "vpc-05ace6f7251ef59c3" # uoa-connect-nonprod  10.0.64.0/18
+vpc_id          = "vpc-05ace6f7251ef59c3" # uoa-connect-nonprod  10.0.64.0/18
+create_firewall = true
 
 # Loadbalancer for ECS
 lb_name = "rhubcpapi-lb-test"
