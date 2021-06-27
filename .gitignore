@@ -45,3 +45,5 @@ research-hub-web/typings
 serverless-now/.serverless/
 serverless-now/env/local.env
 
+# ====================== cer-graphql =================== #
+cer-graphql/build
