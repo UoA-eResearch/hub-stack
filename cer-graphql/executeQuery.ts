@@ -16,7 +16,7 @@ import {
     TypeInfo,
     visit,
     visitWithTypeInfo
-   } from "graphql";
+} from "graphql";
 import { AuthenticationError } from "apollo-server-errors";
 
 const GRAPHQL_INTROSPECTION_FIELDS = [
@@ -50,7 +50,7 @@ const GRAPHQL_INTROSPECTION_FIELDS = [
 
 function isProtectedField(fieldName: string, typeName: string) {
     // A protected field is a field that:
-    // 1. aren't in the ALWAYS_PUBLIC_FIELDS set,
+    // 1. isn't in the ALWAYS_PUBLIC_FIELDS set,
     // 2. isn't a Contentful "items" field for collection items,
     // 3. isn't a collection field itself.
     return !ALWAYS_PUBLIC_FIELDS.has(fieldName) &&
