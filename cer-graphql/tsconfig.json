@@ -7,8 +7,5 @@
       "esModuleInterop": true,
       "strict": true,
       "lib": [ "es2019" ]
-    },
-    "exclude": [
-      "tests"
-    ]
+    }
   }
