@@ -198,6 +198,7 @@ function assertProtectedTypeHasSsoField(document: ASTNode, schema: GraphQLSchema
                 // If this doesn't belong to one of the protected types, skip recording the field.
                 return;
             }
+            // We remove the last part of this field's path to find the parent node's path.
             const parentPathKey = path.slice(0, path.length - 1).join(".");
             if (!fieldsByPath[parentPathKey]) {
                 fieldsByPath[parentPathKey] = { type: upperCaseParentType , fields: []};
