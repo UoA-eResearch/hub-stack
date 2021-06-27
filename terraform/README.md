@@ -100,10 +100,13 @@ A Jenkins pipeline can be used to invoke the Terraform actions to either create 
 | **Route53 Routing** | ----------- |
 | route53_hosted_zone_id | The ID for the Route53 hosted zone that is used to route traffic from our domain(s) to CloudFront |
 | -----------  | ----------- |
+| **Network** | ----------- |
+| vpc_id | ID of the VPC we are running from |
+| create_firewall | Should a cloudfront firewall be created (yes for dev and test to restrict access only to UoA IPs, no for prod) |
+| -----------  | ----------- |
 | **Loadbalancer for ECS** | ----------- |
 | lb_name | Friendly name for the Loadbalancer |
 | lb_subnets | List of subnets the LB will be running in |
-| vpc_id | ID of the VPC we are running from |
 | ecs_lb_acm_arn | ARN of the certificate that is attached to the loadbalancer (not created by Terraform due to Hybrid DNS situation) |
 | r53_hosted_zone | Hosted Zone in R53 to create the DNS entry for the LB |
 | lb_dns_name | DNS Name that will be created in above hosted zone |
