@@ -19,7 +19,7 @@ resource "aws_cloudfront_distribution" "secondary_website" {
   enabled             = true
   default_root_object = var.index_doc
   is_ipv6_enabled     = false
-  web_acl_id          = var.create_firewall ? aws_waf_web_acl.waf_acl.id : null
+  web_acl_id          = var.create_firewall ? aws_waf_web_acl.waf_acl[0].id : null
 
   default_cache_behavior {
     # The following commented block shows how to configure a Lambda@Edge

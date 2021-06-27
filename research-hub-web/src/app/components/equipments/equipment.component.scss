@@ -1,10 +1,22 @@
 @import "variables";
 
 /**
- * Equipment Image
+ * banner Image
  */
-.equipment-image {
-  margin: 0 auto;
+ .no-banner {
+  display: none;
+}
+
+.mobile-banner {
+  background-repeat: no-repeat;
+  padding: 20vh 0px;
+}
+
+.standard-banner {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding: 20vh 0px;
 }
 
 /**

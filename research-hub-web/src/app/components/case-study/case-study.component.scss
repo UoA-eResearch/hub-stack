@@ -2,3 +2,20 @@ mat-expansion-panel,
 mat-card  {
     margin: 8px 0;
 }
+
+/**
+ * banner Image
+ */  
+.mobile-banner {
+    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+    background-repeat: no-repeat;
+    padding: 72px 0px;
+}
+
+.standard-banner {
+    background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    padding: 72px 0px;
+}
