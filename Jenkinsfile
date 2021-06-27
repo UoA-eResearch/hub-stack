@@ -12,14 +12,14 @@ pipeline {
         booleanParam(name: "FORCE_REDEPLOY_LINK_CHECKER", defaultValue: false, description: "Force redeploy the SubHub link checker Contentful app even if there are no code changes.")
     }
 
-    agent  {
+    agent {
         label("uoa-buildtools-ionic")
     }
 
     options {
         buildDiscarder(
             logRotator(
-                daysToKeepStr: "30"
+                numToKeepStr: "3"
             )
         )
     }

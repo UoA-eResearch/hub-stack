@@ -18,6 +18,7 @@ import {
   import authenticateByJwt from "./authenticateByJwt";
   import cors from "cors";
   import assertResultsArePublicItems from "./assertResultsArePublicItems";
+import { AuthenticationError } from "apollo-server-errors";
   
   // Measure server startup time
   var startTime = new Date().getTime(); 
@@ -110,8 +111,6 @@ import {
     });
   }
   
-  
-  
   function getProtectedTypes(schema: GraphQLSchema) {
     const typeMap = schema.getTypeMap();
   
@@ -152,10 +151,7 @@ import {
           // Add preview as a query argument if we are in a preview
           // environment.
           args.preview = true;
-      }    
-  
-      // assertNoDeepProtectedFields(info.fieldNodes[0]);
-      
+      }          
       const delegatedResult = delegateToSchema({
         schema: contentfulSchema,
         operation: "query",
@@ -171,7 +167,29 @@ import {
         return result;
       });
     }]));
-  
+
+    customQueryResolvers['personCollection'] = (root, args, context, info) => {
+      if (IS_PREVIEW_ENV) {
+        // Add preview as a query argument if we are in a preview
+        // environment.
+        args.preview = true;
+      }
+      if (context.user) { // If the user is signed in, simply forward request
+        return delegateToSchema({
+          schema: contentfulSchema,
+          operation: "query",
+          fieldName: info.fieldName,
+          args,
+          context,
+          info
+        });
+      } else { // If the user is not signed in they shouldn't be allowed to request the personCollection
+        return new AuthenticationError('You cannot query the personCollection unless authenticated.');
+      }
+    }
+
+    const enablePlayground = CONTENTFUL_ENVIRONMENT_ID === 'dev' ? true : false;
+
     const schema = mergeSchemas({
       schemas: [contentfulSchema],
       resolvers: [{
@@ -194,7 +212,7 @@ import {
       '/',
       graphqlHTTP({
         schema,
-        graphiql: true,
+        graphiql: enablePlayground,
         customFormatErrorFn: err => {
           console.error(err);
           return formatError(err);

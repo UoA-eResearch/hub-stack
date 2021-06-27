@@ -11,7 +11,7 @@ pipeline {
     }
 
     agent  {
-        label("uoa-buildtools-ionic")
+        label("uoa-buildtool-large")
     }
 
     stages {
