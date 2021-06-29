@@ -33,7 +33,7 @@ hr {
     list-style: none;
     counter-reset: ol-counter;
   }
-  ul li::before {
+  ul li::marker {
     position: absolute;
     content: "\2022";
     color: map-get($hub-navy, 500);
@@ -54,8 +54,8 @@ hr {
       padding-left: 20px;
     }
   }
-  ol li::before {
-    content: counter(ol-counter) ". ";
+  ol li::marker {
+    content: counters(ol-counter, '.');
     position: absolute;
     color: map-get($hub-navy, 500);
     font-weight: bold;
