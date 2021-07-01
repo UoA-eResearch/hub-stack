@@ -74,10 +74,10 @@
   margin-top: 10px;
 }
 .download a {
-  color: $light-blue;
+  color: $dark-blue;
 }
 .mat-card-title a {
-  color: $light-blue;
+  color: $dark-blue;
   border-bottom: solid 2px transparent;
 }
 .mat-card-title a:hover {
@@ -185,7 +185,7 @@ small {
 .mat-card-title {
   span * {
     font-size: 18px;
-    color: $light-blue;
+    color: $dark-blue;
   }
 }
 .mat-card-title a {
