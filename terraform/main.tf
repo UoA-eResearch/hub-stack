@@ -1,10 +1,4 @@
 terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = ">= 3.0.0"
-    }
-  }
   required_version = ">= 0.12.30"
   backend "s3" {
     key     = "researchhub/terraform.tfstate"
@@ -12,6 +6,7 @@ terraform {
 }
 
 provider "aws" {
+  version = ">= 3.41.0"
   region  = var.aws_region
   profile = var.aws_profile
   ignore_tags {

@@ -44,7 +44,7 @@ resource "aws_cloudfront_distribution" "main_website" {
 
     lambda_function_association {
       event_type = "origin-response"
-      lambda_arn = "${aws_lambda_function.secure_headers.arn}"
+      lambda_arn = aws_lambda_function.secure_headers.arn
     }
   }
 
