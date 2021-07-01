@@ -190,7 +190,7 @@ mat-expansion-panel {
 }
 
 .search-results-text {
-  color: map-get($hub-navy, 500) !important;
+  color: $dark-blue !important;
   font-weight: 500;
   font-style: italic;
 }
@@ -284,7 +284,7 @@ mat-expansion-panel {
  * Content Titles
  */
 h1.content-title {
-  color: map-get($hub-navy, 500);
+  color: $dark-blue;
   font-size: 52px;
   font-weight: bold;
   line-height: 110%;
