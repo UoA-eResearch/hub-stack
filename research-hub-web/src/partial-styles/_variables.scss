@@ -27,38 +27,40 @@ $padding-site-top: 4vh;
 /**
   * Material design colors generated with: http://mcg.mbitson.com/
   */
+/* For use in src/lib/core/theming/_palette.scss */
 $hub-teal: (
-  50: #00467f,
-  100: #00467f,
-  200: #00467f,
-  300: #00467f,
-  400: #00467f,
-  500: #00467f,
-  600: #00467f,
-  700: #00467f,
-  800: #00467f,
-  900: #00467f,
-  A100: #00467f,
-  A200: #00467f,
-  A400: #00467f,
-  A700: #00467f,
-  contrast: (
-    50: #000000,
-    100: #000000,
-    200: #000000,
-    300: #000000,
-    400: #000000,
-    500: #ffffff,
-    600: #ffffff,
-    700: #ffffff,
-    800: #ffffff,
-    900: #ffffff,
-    A100: #000000,
-    A200: #000000,
-    A400: #000000,
-    A700: #000000,
-  ),
+    50 : #e0e9f0,
+    100 : #b3c8d9,
+    200 : #80a3bf,
+    300 : #4d7ea5,
+    400 : #266292,
+    500 : #00467f,
+    600 : #003f77,
+    700 : #00376c,
+    800 : #002f62,
+    900 : #00204f,
+    A100 : #82a8ff,
+    A200 : #4f84ff,
+    A400 : #1c60ff,
+    A700 : #034fff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
 );
+
 $hub-orange: (
   50: #fff0e0,
   100: #ffdab3,
@@ -337,9 +339,9 @@ $color-pink: map-get($hub-pink, 500);
 $color-orange: map-get($hub-orange, 500);
 $color-icon: #757575;
 $color-background: #ffffff;
-$color-content-header: map-get($hub-navy, 500);
+$color-content-header: $light-blue;
 $color-content-summary-bg: auto;
-$color-guide-tile-bg: map-get($hub-teal, 700);
+$color-guide-tile-bg: $dark-blue;
 
 /**
 * All typography
@@ -348,7 +350,7 @@ $color-guide-tile-bg: map-get($hub-teal, 700);
 $font-family: "National";
 
 $body-light-bg-font-color: black;
-$link-light-bg-color: map-get($hub-teal, 700);
+$link-light-bg-color: $dark-blue;
 
 $breadcrumb-previous-color: map-get($hub-teal, A100);
 $breadcrumb-current-color: $color-icon;
@@ -396,7 +398,7 @@ $app-chips-typography: mat-typography-config(
 /**
  * Colors
  */
-$heading-1-font-color: map-get($hub-navy, 500);
-$heading-2-font-color: map-get($hub-navy, 500);
+$heading-1-font-color: $light-blue;
+$heading-2-font-color: $light-blue;
 $heading-3-font-color: $dark-grey;
 $heading-4-font-color: $dark-grey;
