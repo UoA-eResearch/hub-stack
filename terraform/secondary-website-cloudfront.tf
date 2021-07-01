@@ -22,16 +22,6 @@ resource "aws_cloudfront_distribution" "secondary_website" {
   web_acl_id          = var.create_firewall ? aws_waf_web_acl.waf_acl[0].id : null
 
   default_cache_behavior {
-    # The following commented block shows how to configure a Lambda@Edge
-    # This is useful for securing the distribution further.
-    # See https://medium.com/faun/hardening-the-http-security-headers-with-aws-lambda-edge-and-cloudfront-2e2da1ae4d83
-    /*
-    lambda_function_association {
-      event_type = "origin-request"
-      lambda_arn = "arn:aws:lambda:us-east-1:630143336532:function:iNZightRepo_cloudfront_lambda:1"
-    }
-    */
-
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = var.dns_entry_secondary
@@ -52,6 +42,11 @@ resource "aws_cloudfront_distribution" "secondary_website" {
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
+
+    lambda_function_association {
+      event_type = "origin-response"
+      lambda_arn = "${TBC}"
+    }
   }
 
   # Log to bucket. Leave bucket as is, if Cloud Team is on the ball then no issues should arise.
