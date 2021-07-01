@@ -11,7 +11,7 @@ mat-card {
  * SubHub Card
  */
 .subhub-card {
-  background: map-get($hub-teal, 700);
+  background: $dark-blue;
   img {
     object-fit: cover;
     max-height: 200px;
@@ -37,7 +37,7 @@ mat-card {
   text-overflow: ellipsis;
 }
 .card-label {
-  color: map-get($hub-teal, 700);
+  color: $dark-blue;
   background: rgb(255, 255, 255);
   position: absolute;
   left: 0;

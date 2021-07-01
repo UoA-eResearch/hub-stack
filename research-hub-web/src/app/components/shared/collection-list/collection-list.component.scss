@@ -2,7 +2,7 @@
 @import "mixins";
 
 div.mat-card-avatar mat-icon {
-  color: map-get($hub-teal, 800);
+  color: $dark-blue;
 }
 
 div.collection {
@@ -78,7 +78,7 @@ mat-card {
  * Card Result Icon
  */
 .item-avatar-icon {
-  color: map-get($hub-navy, 500) !important;
+  color: $light-blue !important;
 }
 
 /**
@@ -86,7 +86,7 @@ mat-card {
  */
 ::ng-deep.ngx-pagination {
   .current {
-    background: map-get($hub-teal, 500) !important;
+    background: $dark-blue !important;
   }
   text-align: center;
   padding: 0;
