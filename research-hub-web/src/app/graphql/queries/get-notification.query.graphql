@@ -1,0 +1,9 @@
+query GetNotification {
+  homepageCollection(limit: 1) {
+    items {
+      notification {
+        json
+      }
+    }
+  }
+}
