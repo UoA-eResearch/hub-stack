@@ -11,6 +11,7 @@ import { SearchBarService } from './components/search-bar/search-bar.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatMenuModule } from '@angular/material/menu'
 import { MockModule, MockProvider } from 'ng-mocks';
+import { AppLayoutModule } from './components/layout/layout.module';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -23,7 +24,8 @@ describe('AppComponent', () => {
         HttpClientTestingModule,
         ApolloTestingModule,
         RouterTestingModule.withRoutes([]),
-        MockModule(MatMenuModule)
+        MockModule(MatMenuModule),
+        MockModule(AppLayoutModule)
       ],
       providers: [
         MockProvider(SearchBarService),
