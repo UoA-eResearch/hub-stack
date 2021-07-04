@@ -14,7 +14,7 @@
       <!-- Main Navbar -->
       <div class="app-toolbar" ngClass.lt-md="site-padding-mobile">
         <div class="app-toolbar-row" fxLayout="row" fxLayoutAlign="start center" color="primary">
-          <a [routerLink]="homeUrl" (click)="clearSearchText()" class="hub-logo" ngClass.xs="hub-logo-xs">
+          <a [routerLink]="'/'" (click)="clearSearchText()" class="hub-logo" ngClass.xs="hub-logo-xs">
             <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
           </a>
         </div>
@@ -123,7 +123,7 @@
                   <a
                     fxFlex.lt-md
                     class="hub-logo"
-                    [routerLink]="homeUrl"
+                    [routerLink]="'/'"
                     (click)="clearSearchText()">
                     <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
                   </a>
@@ -269,53 +269,7 @@
           <router-outlet></router-outlet>
         </div>
 
-        <!-- Footer Container-->
-        <footer>
 
-          <!-- Footer Content -->
-          <div class="footer-content" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center" ngClass.lt-md="site-padding-mobile">
-
-            <div style="width: 100%" fxLayoutGap="5%" fxLayout="row" fxLayout.lt-md="column">
-
-              <!-- UoA Footer Logo -->
-              <div fxFlexOrder.lt-md="1" class="logo-img-container">
-                <a [href]="aucklandUniUrl" target="_blank" >
-                  <img class="logo-img" src="assets/imgs/uoa-logo.svg" alt="uoa-logo">
-                </a>
-              </div>
-
-              <!-- Spacer between footer content -->
-              <div fxFlex fxHide.lt-md></div>
-
-              <!-- Footer Links -->
-              <div class="footer-links" fxLayout="row wrap" fxFlexOrder.lt-md="0" fxLayoutGap="2vw" fxLayoutAlign="space-between">
-                <ul class='footer-content'>
-                  <li>
-                    <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
-                  </li>
-                  <li>
-                    <a [href]="eResearchUrl" target="_blank">Centre for eResearch</a>
-                  </li>
-                  <li>
-                    Copyright © {{ getYear() }}
-                  </li>
-                  <li>
-                    <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
-                  </li>
-                  <li>
-                    <a [href]="privacyUrl" target="_blank">Privacy</a>
-                  </li>
-                  <li>
-                    <a [href]="accessibilityUrl" target="_blank">Accessibility</a>
-                  </li>
-                  <li>
-                    <a href="{{ feedbackLink }}">Feedback</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
