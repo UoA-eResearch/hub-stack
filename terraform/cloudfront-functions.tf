@@ -3,6 +3,8 @@ resource "aws_cloudfront_function" "secure_headers" {
   runtime = "cloudfront-js-1.0"
   comment = "Cloudfront Function that adds secure headers to the response."
   publish = true
-  code    = file("lambdas/secure-headers.js")
+
+  // We have a function per environment seeing there are differences in the Content Security Policies between environments
+  code    = file("lambdas/secure-headers-${var.lifecycle_state}.js")
   tags    = local.common_tags
 }
