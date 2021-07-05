@@ -12,9 +12,9 @@
       <!-- Templates -->
       <ng-template #image>
         <img mat-card-image 
-              srcset="{{ content.banner?.url }}?fm=webp,
-                      {{ content.banner?.url }}"
-              src="{{ content.banner?.url }}" 
+              srcset="{{ content.banner?.url }}?w=1000&fm=webp,
+                      {{ content.banner?.url }}?w=1000"
+              src="{{ content.banner?.url }}?w=1000"
               alt="{{ content.title }}-banner">
       </ng-template>
       <ng-template #noImage><div style="margin-top: 12px;"></div></ng-template>

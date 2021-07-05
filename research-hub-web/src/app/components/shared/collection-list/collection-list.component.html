@@ -13,9 +13,9 @@
                 <mat-card fxLayout="row" role="listitem">
                     <span mat-card-avatar class="item-avatar">
                         <div *ngIf="content.icon; else avatarIcon">
-                            <img srcset="{{ content.icon }}?fm=webp,
-                                         {{ content.icon }}" 
-                                 src="{{ content.icon }}" 
+                            <img srcset="{{ content.icon }}?w=200&fm=webp,
+                                         {{ content.icon }}?w=200" 
+                                 src="{{ content.icon }}?w=200" 
                                  alt="{{ content.title }}"
                                  class="item-avatar" width="100%" height="100%" />
                         </div>
@@ -69,9 +69,9 @@
                         class="item-avatar">
                         <div *ngIf="content.icon; else avatarIcon">
                             <img
-                                srcset="{{content?.icon?.url}}?fm=webp,
-                                        {{content?.icon?.url}}"
-                                src="{{content?.icon?.url}}"
+                                srcset="{{content?.icon?.url}}?w=200&fm=webp,
+                                        {{content?.icon?.url}}?w=200"
+                                src="{{content?.icon?.url}}?w=200"
                                 alt="{{content?.icon?.description}}"
                                 class="item-avatar"
                                 width="100%"
