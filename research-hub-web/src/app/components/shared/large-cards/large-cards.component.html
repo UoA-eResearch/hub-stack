@@ -4,7 +4,13 @@
         *ngFor="let subHub of contentItem.items">
 
             <!-- Templates -->
-            <ng-template #image><img mat-card-image src="{{ subHub.banner?.url }}" alt="{{ subHub.title }}-banner"></ng-template>
+            <ng-template #image>
+                <img mat-card-image 
+                     srcset="{{ subHub.banner?.url }}?w=1000&fm=webp,
+                             {{ subHub.banner?.url }}?w=1000"
+                     src="{{ subHub.banner?.url }}?w=1000"
+                     alt="{{ subHub.title }}-banner">
+            </ng-template>
             <ng-template #noImage><div style="margin-top: 15px;"></div></ng-template>
 
             <mat-card class="subhub-card" role="listitem">

@@ -16,6 +16,8 @@ import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import supportsWebP from 'supports-webp';
+
 @Component({
   selector: 'app-software',
   templateUrl: './softwares.component.html',
@@ -39,6 +41,8 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
   public allSoftware$: Observable<SoftwareCollection>;
   public parentSubHubs;
   public isMobile: Boolean;
+  public supportsWebp: Boolean;
+  public bannerImageUrl: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -50,11 +54,19 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { this.detectDevice(); }
+  ) { 
+    this.detectDevice();
+    this.detectWebP();
+  }
 
-  // Detect if device is Mobile
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
+  }
+
+  detectWebP() {
+    supportsWebP.then(supported => {
+      this.supportsWebp = supported;
+    });
   }
 
   async ngOnInit() {
@@ -87,12 +99,17 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
       });
       this.software = this.getSoftwareBySlug(this.slug);
       this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
-        this.detectDevice();
         // Strip nulls from related collection data.
         data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
         data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
         data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
         data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);        
+
+        // Set banner image URL for webp format if webp is supported
+        if (data.banner?.url) {
+          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+        }
+
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
         this.appComponentService.setTitle(data.title);
       });
