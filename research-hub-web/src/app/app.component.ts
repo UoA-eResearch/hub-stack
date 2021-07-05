@@ -9,7 +9,6 @@ import { Location } from '@angular/common';
 import { AppComponentService } from './app.component.service';
 import { Title } from '@angular/platform-browser';
 import { Apollo } from 'apollo-angular';
-import { environment } from '@environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { GetHomepageGQL, Homepage, AllCategoriesGQL, CategoryCollection, AllStagesGQL, StageCollection } from './graphql/schema';
 import smoothscroll from 'smoothscroll-polyfill';

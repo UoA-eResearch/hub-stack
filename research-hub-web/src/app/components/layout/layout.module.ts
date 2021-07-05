@@ -7,6 +7,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { NotificationComponent } from './notification/notification.component';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '../shared/app.shared.module';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -21,7 +22,8 @@ import { SharedModule } from '../shared/app.shared.module';
   imports: [
     CommonModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
+    RouterModule
   ],
   exports: [
     LayoutComponent
