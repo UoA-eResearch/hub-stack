@@ -324,6 +324,13 @@ $research-activity-palette-discover: (
 );
 
 /**
+* generate theme colors
+*/
+$hub-app-primary: mat-palette($hub-teal);
+$hub-app-accent: mat-palette($hub-orange);
+$hub-app-warn: mat-palette($hub-pink);
+
+/**
 * Site wide colors
 */
 $color-primary: map-get($hub-app-primary, 500);
