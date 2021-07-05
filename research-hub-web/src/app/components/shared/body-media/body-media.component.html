@@ -7,9 +7,9 @@
                 <div class="embedded-asset-block section-2" ngClass.xs="embedded-asset-block-mobile">
                     <a href="{{ contentItem.url }}">
                         <img *ngIf="contentItem.url" 
-                             srcset="{{ contentItem.url }}?fm=webp,
-                                     {{ contentItem.url }}"
-                             src="{{ contentItem.url }}"
+                             srcset="{{ contentItem.url }}?w=1500&fm=webp,
+                                     {{ contentItem.url }}?w=1500"
+                             src="{{ contentItem.url }}?w=1500"
                              alt="{{ contentItem.title }}"/>
                     </a><br>{{ contentItem.title }}
                     <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description }}</small>
@@ -53,9 +53,9 @@
         <!-- Templates -->
         <ng-template #image>
             <img mat-card-image 
-                 srcset="{{ contentItem.banner?.url }}?fm=webp,
-                         {{ contentItem.banner?.url }}"
-                 src="{{ contentItem.banner?.url }}" 
+                 srcset="{{ contentItem.banner?.url }}?w=1000&fm=webp,
+                         {{ contentItem.banner?.url }}?w=1000"
+                 src="{{ contentItem.banner?.url }}?w=1000" 
                  alt="{{ contentItem.title }}-banner">
         </ng-template>
         <ng-template #noImage><div style="margin-top: 10px;"></div></ng-template>
