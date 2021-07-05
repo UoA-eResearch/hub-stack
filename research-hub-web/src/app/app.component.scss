@@ -195,69 +195,7 @@ mat-expansion-panel-header .mat-expanded {
   }
 }
 
-/*
- * Navigation Toolbar
- */
-.app-toolbar-container {
-  color: white;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0);
-}
-.app-toolbar {
-  padding-left: $padding-site;
-  padding-right: $padding-site;
-  background-color: map-get($hub-teal, 700);
-  .app-toolbar-row {
-    height: 64px;
-  }
-}
-.app-toolbar-xs {
-  .app-toolbar-row {
-    height: 64px;
-  }
-}
-.mat-menu-panel,
-.mat-menu-content {
-  min-width: fit-content !important;
-}
-.mat-menu-item {
-  color: white !important;
-  padding: 0 16px !important;
-  height: fit-content !important;
-  line-height: 48px !important;
-  background: rgba(10, 10, 10, 0);
-  font-size: mat-font-size($app-base-typography, body-1);
-}
-.mat-expansion-panel-body {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-.sidenav-container {
-  min-height: calc(100vh);
-}
-.sidenav-container {
-  mat-sidenav {
-    background-color: $color-background;
-  }
-}
-.sidenav-container {
-  mat-sidenav mat-list {
-    padding-left: 1em;
-    padding-top: 1em;
-  }
-}
-.sidenav-content-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-.sidenav-content {
-  flex: 1 0 auto;
-  background-color: $color-background;
-  min-height: calc(100vh - #{$height-footer-xs});
-  @include size(medium) {
-    min-height: calc(100vh - #{$height-footer});
-  }
-}
+
 
 /**
  * Section Header Text

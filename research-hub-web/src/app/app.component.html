@@ -1,4 +1,3 @@
-<!-- Logo Spinner-->
 <app-layout>
   <router-outlet></router-outlet>
 </app-layout>
@@ -98,7 +97,13 @@
     <!-- Main Screen -->
     <mat-sidenav-content>
 
-
+      <!-- Notification Bar -->
+      <div *ngIf="showNotification" class="notification-bar-container" fxLayout="row">
+        <div class="notification-bar-content" *ngIf="homepage$ | async as homepage">
+          <div [innerHTML]="homepage.notification.json | richTextToHTML"></div>
+        </div>
+        <mat-icon (click)="showNotification = false">close</mat-icon>
+      </div>
 
       <div class="sidenav-content-wrapper">
         <div #topContent fxLayout="column" class="sidenav-content">
@@ -106,129 +111,6 @@
           <!-- Banner -->
           <div class="banner-container-home" [style]="showBanner ? isMobile ? mobileBackground : desktopBackground : ''">
 
-            <!-- Main Navbar -->
-            <div id="top-bar" #topbar class="app-toolbar-container">
-              <div class="site-content site-padding" ngClass.lt-lg="site-content site-padding-mobile app-toolbar-xs"
-              [style]="showBanner ? 'background-color: rgba(0,0,0,0)' : 'background-color: #018193; box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 15px'">
-
-                <!-- Main Navbar Content -->
-                <div fxLayout="row" class="app-toolbar-row" fxLayoutAlign="center center">
-
-                  <!-- Mobile Menu Toggle -->
-                  <button role="button" aria-label="menu" fxHide.gt-sm mat-icon-button style="margin-right: 6px;"
-                    (click)="sidenav.toggle()" matTooltip="Menu"><mat-icon>menu</mat-icon>
-                  </button>
-
-                  <!-- Logo/Home -->
-                  <a
-                    fxFlex.lt-md
-                    class="hub-logo"
-                    [routerLink]="'/'"
-                    (click)="clearSearchText()">
-                    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo">
-                  </a>
-
-                  <!-- Space Divider -->
-                  <span fxHide.lt-md style="flex: 1 1 auto;"></span>
-
-                  <!-- Search Icon (Mobile)-->
-                  <button role="button" aria-label="search" *ngIf="!onSearchPage" (click)="clearSearchText()"
-                    (keydown.enter)="clearSearchText()" mat-icon-button
-                    fxHide.gt-sm routerLink="/search" matTooltip="Search">
-                    <mat-icon>search</mat-icon>
-                  </button>
-
-                  <!-- Search Button -->
-                  <button role="button" aria-label="search" *ngIf="!onSearchPage" mat-button
-                  fxHide.lt-md routerLink="/search" (click)="clearSearchText()"
-                  (keydown.enter)="clearSearchText()">Search</button>
-
-
-                  <!--
-                    Research Categories Button if we are on the homepage. This will scroll down to the homepage section that displays
-                    the Research Categories
-                   -->
-                  <button role="button" aria-label="categories" *ngIf="!onSearchPage && onHomePage" mat-button
-                  fxHide.lt-md class="button-menu" (click)="this.homeScrollService.scrollTo('Categories')">Research Categories</button>
-                  <!--
-                    Research Categories Button if we're not on the homepage. This will render an expansion panel dropdown list
-                    of all the Research Categories
-                  -->
-                  <button role="button" aria-label="categories" *ngIf="!onSearchPage && !onHomePage" mat-button
-                  fxHide.lt-md class="button-menu" [matMenuTriggerFor]="browseMenu">Research Categories</button>
-
-                  <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
-                    <div *ngIf="allCategories$ | async as allCategories">
-                      <button role="button" aria-label="category" mat-menu-item *ngFor="let item of allCategories.items" [routerLink]="['/search']"
-                        (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
-                        (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">{{item.name}}</button>
-                    </div>
-                  </mat-menu>
-
-
-                  <!--
-                    Research Activities Button if we are on the homepage. This will scroll down to the homepage section that displays
-                    the Research Activities
-                   -->
-                  <button role="button" aria-label="activities" *ngIf="!onSearchPage && onHomePage" mat-button
-                  fxHide.lt-md class="button-menu" (click)="this.homeScrollService.scrollTo('Activities')">Research Activities</button>
-                  <!--
-                    Research Activites Button if we're not on the homepage. This will render an expansion panel dropdown list
-                    of all the Research Activities
-                  -->
-                  <button role="button" aria-label="activities" *ngIf="!onSearchPage && !onHomePage" mat-button
-                    fxHide.lt-md  class="button-menu" [matMenuTriggerFor]="researchActivityMenu">Research Activities</button>
-
-                    <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
-                    <div *ngIf="allStages$ | async as allStages">
-                      <button role="button" aria-label="activity" mat-menu-item *ngFor="let item of allStages.items" [routerLink]="['/search']"
-                        (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])"
-                        (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id])">{{ item.name }}</button>
-                    </div>
-                  </mat-menu>
-
-                  <!-- Sign In Button -->
-                  <div *ngIf="loginService.loggedIn$ | async; else signin">
-                    <div *ngIf="loginService.userInfo$ | async as userInfo" >
-                      <button fxHide fxShow.gt-sm role="button" class="button-menu" aria-label="user-info" mat-button [matMenuTriggerFor]="userMenu">
-                        <mat-icon fxHide fxShow.gt-sm matPrefix style="margin-right: 5px;">person</mat-icon>
-                        <span fxHide fxShow.gt-md>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</span>
-                        <span fxHide fxShow.lt-lg>{{ userInfo?.firstName }}</span>
-                      </button>
-
-                      <!-- User Details -->
-                      <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-                        <div class="user-detail-dropdown">
-                          <img src="assets/imgs/uoa-logo-blue.svg" alt="uoa-logo-blue">
-
-                          <mat-list class="user-menu-list">
-                            <mat-list-item>
-                              <mat-icon mat-list-icon>person</mat-icon>
-                              <p mat-line>{{ userInfo?.firstName + ' ' + userInfo?.lastName }}</p>
-                            </mat-list-item>
-                            <mat-list-item>
-                              <mat-icon mat-list-icon>note</mat-icon>
-                              <p mat-line>{{ userInfo?.email }}</p>
-                            </mat-list-item>
-                          </mat-list>
-
-                          <!-- Sign Out Button-->
-                          <div fxLayout="row" fxLayoutAlign="end">
-                            <button role="button" aria-label="sign-out" mat-raised-button class="sign-out-button"
-                            (click)="loginService.logout()" (keydown.enter)="loginService.logout()">
-                              Sign Out
-                            </button>
-                          </div>
-                        </div>
-                      </mat-menu>
-                    </div>
-                  </div>
-                  <ng-template #signin>
-                    <button role="button" aria-label="sign-in" fxHide.lt-md mat-button (click)="loginService.doLogin(currentUrl)" (keydown.enter)="loginService.doLogin(currentUrl)">Sign In</button>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
 
             <!-- Homepage Banner -->
             <div
