@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.12.30"
+  required_version = ">= 0.12.31"
   backend "s3" {
     key     = "researchhub/terraform.tfstate"
   }
