@@ -12,7 +12,7 @@ resource "aws_waf_ipset" "ipset" {
 
   ip_set_descriptors {
     type  = "IPV4"
-    value = "172.16.0.0/12"	# uoa wifi internal ip range
+    value = "172.24.0.0/18"	# uoa wifi internal ip range
   }
 
   ip_set_descriptors {

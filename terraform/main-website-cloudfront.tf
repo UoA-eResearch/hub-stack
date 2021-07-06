@@ -44,7 +44,7 @@ resource "aws_cloudfront_distribution" "main_website" {
 
     lambda_function_association {
       event_type = "origin-response"
-      lambda_arn = aws_cloudfront_function.secure_headers.arn
+      lambda_arn = aws_cloudfront_function.secure_headers.qualified_arn
     }
   }
 
@@ -132,9 +132,4 @@ output "cf_hosted_zone_id" {
 output "cf_origin_access_identity" {
   value       = try(aws_cloudfront_origin_access_identity.origin_access_identity.cloudfront_access_identity_path, "")
   description = "A shortcut to the full path for the origin access identity to use in CloudFront"
-}
-
-output "cf_associated_lambda" {
-  value       = try(aws_cloudfront_function.secure_headers.status, "")
-  description = "Is the cloudfront lambda associated to the CF distribution."
 }
