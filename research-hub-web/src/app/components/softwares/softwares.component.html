@@ -12,11 +12,10 @@
     <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="software.title"></app-breadcrumbs></ng-template>
 
     <ng-template #dynamicBanner>
-        <div class="banner-container" [style]="software.banner ? isMobile ?
-                        'background: url(' + software.banner.url + ') no-repeat; padding: 20vh 0px'
-                        : 'background: url(' + software.banner.url + ') no-repeat fixed center; padding: 20vh 0px'
-                    :'display: none'">
-        </div>  
+        <div class="banner-container" 
+            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'" 
+            [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
+        </div>
     </ng-template>
 
     <ng-template #titleSummary>
@@ -31,9 +30,9 @@
                 <th role="columnheader">Details</th>
                 <th role="columnheader">Description</th>
                 </tr>
-                <tr *ngIf="software.licensing" role="row">
-                    <td role="cell">Licensing</td>
-                    <td [innerHTML]="software.licensing" role="cell"></td>
+                <tr *ngIf="software.licencing" role="row">
+                    <td role="cell">Licencing</td>
+                    <td [innerHTML]="software.licencing" role="cell"></td>
                 </tr>
                 <tr *ngIf="software.cost" role="row">
                     <td role="cell">Cost</td>
