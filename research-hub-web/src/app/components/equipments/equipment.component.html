@@ -15,10 +15,11 @@
     </ng-template>
 
     <ng-template #dynamicBanner>
-        <div class="banner-container" [style]="equipment.banner ? isMobile ?
-                        'background: url(' + equipment.banner.url + ') no-repeat; padding: 20vh 0px'
-                        : 'background: url(' + equipment.banner.url + ') no-repeat fixed center; padding: 20vh 0px'
-                    : 'display: none;'"></div></ng-template>
+        <div class="banner-container" 
+            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'" 
+            [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
+        </div>
+    </ng-template>
 
     <ng-template #specificationsTable>
         <div id="specifications-table" class="specifications">
@@ -68,6 +69,10 @@
                 <tr *ngIf="equipment.access" role="row">
                     <td role="cell">Access</td>
                     <td [innerHTML]="equipment.access" role="cell"></td>
+                </tr>
+                <tr *ngIf="equipment.location" role="row">
+                    <td role="cell">Location</td>
+                    <td role="cell" [innerHTML]="equipment.location.json | richTextToHTML"></td>
                 </tr>
             </table>
         </div>
@@ -130,7 +135,8 @@
             <!-- Equipment Body -->
             <div>
                 <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="equipment.bodyText.json"
-                    [nodeRenderers]="nodeRenderers"> </ngx-contentful-rich-text></div>
+                    [nodeRenderers]="nodeRenderers"> </ngx-contentful-rich-text>
+            </div>
 
             <div class="section-2" fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column wrap" fxLayoutAlign="space-between">
                 
@@ -147,7 +153,8 @@
                     equipment.audience ||
                     equipment.availability ||
                     equipment.cost ||
-                    equipment.access">
+                    equipment.access ||
+                    equipment.location">
                     <ng-container *ngTemplateOutlet="specificationsTable2"></ng-container>
                 </div>
             </div>

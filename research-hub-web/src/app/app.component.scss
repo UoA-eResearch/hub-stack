@@ -73,7 +73,7 @@
   * {
     color: white;
   }
-  background: map-get($hub-pink, 500);
+  background: $light-blue;
   .notification-bar-content {
     @extend .site-padding;
     padding-top: 15px;
@@ -96,7 +96,7 @@
   * {
     color: white;
   }
-  background: map-get($hub-pink, 500);
+  background: $light-blue;
   .notification-bar-content {
     @extend .site-padding;
     padding-top: 15px;
@@ -117,7 +117,7 @@
   }
   text-align: center;
   * { color: white; }
-  background: map-get($hub-pink, 500);
+  background: $light-blue;
   .notification-bar-content {
     @extend .site-padding;
     padding-top: 15px;
@@ -271,7 +271,7 @@ mat-expansion-panel-header .mat-expanded {
 .app-toolbar {
   padding-left: $padding-site;
   padding-right: $padding-site;
-  background-color: map-get($hub-teal, 700);
+  background-color: $dark-blue;
   .app-toolbar-row {
     height: 64px;
   }

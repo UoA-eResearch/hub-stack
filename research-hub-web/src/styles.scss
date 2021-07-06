@@ -33,10 +33,10 @@ hr {
     list-style: none;
     counter-reset: ol-counter;
   }
-  ul li::before {
+  ul li::marker {
     position: absolute;
     content: "\2022";
-    color: map-get($hub-navy, 500);
+    color: $light-blue;
     font-weight: bold;
     display: inline-block;
     width: 2em;
@@ -54,10 +54,10 @@ hr {
       padding-left: 20px;
     }
   }
-  ol li::before {
-    content: counter(ol-counter) ". ";
+  ol li::marker {
+    content: counters(ol-counter, '.');
     position: absolute;
-    color: map-get($hub-navy, 500);
+    color: $light-blue;
     font-weight: bold;
     display: inline-block;
     width: 1em;
@@ -79,7 +79,7 @@ hr {
 .main-underline-navy {
   width: 45%;
   margin: 20px auto;
-  border-bottom: 6px solid map-get($hub-navy, 500);
+  border-bottom: 6px solid $light-blue;
   @media only screen and (min-width: 1280px) {
     width: 15%;
     margin-left: 0;
@@ -107,7 +107,7 @@ h1 {
   margin-bottom: 16px;
 }
 h2 {
-  color: $heading-2-font-color;
+  color: $dark-blue;
   font-family: $font-family;
   margin-bottom: 16px;
 }
@@ -190,7 +190,7 @@ mat-expansion-panel {
 }
 
 .search-results-text {
-  color: map-get($hub-navy, 500) !important;
+  color: $dark-blue !important;
   font-weight: 500;
   font-style: italic;
 }
@@ -244,7 +244,7 @@ mat-expansion-panel {
 .mat-menu-content,
 .mat-menu-item {
   color: white;
-  background-color: map-get($hub-teal, 700);
+  background-color: $dark-blue;
   font-size: mat-font-size($app-base-typography, body-1);
 }
 
@@ -284,7 +284,7 @@ mat-expansion-panel {
  * Content Titles
  */
 h1.content-title {
-  color: map-get($hub-navy, 500);
+  color: $dark-blue;
   font-size: 52px;
   font-weight: bold;
   line-height: 110%;
@@ -323,20 +323,20 @@ h2.maori-proverb {
 .standard-button {
   color: white !important;
   padding-bottom: 2.4px !important;
-  border: 3px solid map-get($hub-teal, 700) !important;
+  border: 3px solid $dark-blue !important;
   border-radius: 50px !important;
-  background-color: map-get($hub-teal, 700) !important;
+  background-color: $dark-blue !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .standard-button:hover {
-  color: map-get($hub-teal, 700) !important;
+  color: $dark-blue !important;
   border-radius: 50px !important;
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 .alternate-button {
   padding-bottom: 2.4px !important;
-  color: map-get($hub-teal, 700) !important;
+  color: $dark-blue !important;
   border: 3px solid white !important;
   border-radius: 50px !important;
   background-color: white !important;
@@ -345,7 +345,7 @@ h2.maori-proverb {
 .alternate-button:hover {
   color: white !important;
   border-radius: 50px !important;
-  background-color: map-get($hub-teal, 700) !important;
+  background-color: $light-blue !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
 
