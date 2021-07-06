@@ -4,19 +4,19 @@ describe('ResearchHubs Software Pages', () => {
         cy.visit('/research-software-and-computing/store-sync-share/microsoft-onedrive');
     });
 
-    it('can visit an software and display its title', () => {
-        cy.expect('h1.content-title').not.to.be.empty;    
+    it('can visit a software page and display its title', () => {
+        cy.get('h1.content-title').text().should('not.be.empty');
     });
 
-    it('can visit an software and display its subtitle', () => {
-        cy.expect('#software-container .content-summary').not.to.be.empty;
+    it('displays a subtitle', () => {
+        cy.get('#software-container .content-summary').text().should('not.be.empty');
     });
 
-    it('software displays body text', () => {
-        cy.expect('#software-container ng-component.ng-star-inserted').not.to.be.empty;
+    it('displays body text', () => {
+        cy.get('#software-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
     });
 
-    it('software displays specifications table', () => {
+    it('displays a specifications table', () => {
         cy.get('#specifications-table').contains('Details').should('exist');
         cy.get('#specifications-table').contains('Description').should('exist');
     });
@@ -26,16 +26,15 @@ describe('ResearchHubs Software Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in mat-nav-list:first-child').click();
-        cy.expect('h2.featured-title').not.to.be.empty;
+        cy.get('#you-might-be-interested-in mat-nav-list:first-child mat-card-title > h4 > a').click();
+        cy.get('h1.content-title').text().should('not.be.empty');
     });
 
     it('displays a list of contacts', () => {
-        cy.expect('#contacts .card-title').not.to.be.empty;
+        cy.get('#contacts .card-title').text().should('not.be.empty');
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations').should('exist');
+        cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });
-
 });
