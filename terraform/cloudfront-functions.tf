@@ -6,5 +6,4 @@ resource "aws_cloudfront_function" "secure_headers" {
 
   // We have a function per environment seeing there are differences in the Content Security Policies between environments
   code    = file("lambdas/secure-headers-${var.lifecycle_state}.js")
-  tags    = local.common_tags
 }
