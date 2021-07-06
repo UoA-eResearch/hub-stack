@@ -43,9 +43,9 @@ resource "aws_cloudfront_distribution" "secondary_website" {
     default_ttl            = 3600
     max_ttl                = 86400
 
-    lambda_function_association {
-      event_type = "origin-response"
-      lambda_arn = aws_cloudfront_function.secure_headers.qualified_arn
+    function_association {
+      event_type = "viewer-response"
+      function_arn = aws_cloudfront_function.secure_headers.arn
     }
   }
 
