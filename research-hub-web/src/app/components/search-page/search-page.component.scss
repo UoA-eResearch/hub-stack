@@ -18,7 +18,7 @@
       background: #fafafa;
       border: 1px solid $input-grey;
       * {
-        color: map-get($hub-teal, 500) !important;
+        color: $dark-blue !important;
       }
     }
   }
@@ -52,7 +52,7 @@
 
 // Filter Chip Indicator
 .mat-chip {
-  background-color: map-get($hub-teal, 500) !important;
+  background-color: $dark-blue !important;
   color: white !important;
   &.clear {
     background-color: rgba(0, 0, 0, 0.3) !important;

@@ -41,7 +41,7 @@
     padding-top: 12px;
     margin-bottom: 12px;
     color: $color-background;
-    background-color: map-get($hub-teal, 700);
+    background-color: $dark-blue;
   }
   tr:nth-child(even) {
     background-color: #f2f2f2;
@@ -57,11 +57,11 @@
  */
 .standard-button {
   @extend .standard-button;
-  border: 3px solid map-get($hub-navy, 500) !important;
-  background-color: map-get($hub-navy, 500) !important;
+  border: 3px solid $light-blue !important;
+  background-color: $light-blue !important;
 }
 .standard-button:hover {
-  color: map-get($hub-navy, 500) !important;
+  color: $light-blue !important;
   border-radius: 50px !important;
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
