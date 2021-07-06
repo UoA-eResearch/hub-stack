@@ -44,7 +44,7 @@ resource "aws_cloudfront_distribution" "main_website" {
 
     lambda_function_association {
       event_type = "origin-response"
-      lambda_arn = aws_lambda_function.secure_headers.arn
+      lambda_arn = aws_cloudfront_function.secure_headers.arn
     }
   }
 
@@ -135,6 +135,6 @@ output "cf_origin_access_identity" {
 }
 
 output "cf_associated_lambda" {
-  value       = try(aws_lambda_function.secure_headers.status, "")
+  value       = try(aws_cloudfront_function.secure_headers.status, "")
   description = "Is the cloudfront lambda associated to the CF distribution."
 }

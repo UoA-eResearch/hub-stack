@@ -45,7 +45,7 @@ resource "aws_cloudfront_distribution" "secondary_website" {
 
     lambda_function_association {
       event_type = "origin-response"
-      lambda_arn = aws_lambda_function.secure_headers.arn
+      lambda_arn = aws_cloudfront_function.secure_headers.arn
     }
   }
 
