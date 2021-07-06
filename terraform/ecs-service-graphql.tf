@@ -104,7 +104,7 @@ resource "aws_ecs_service" "this" {
   }
 
   load_balancer {
-    target_group_arn = aws_alb_target_group.ecs-cer-graphql.arn
+    target_group_arn = aws_lb_target_group.ecs-cer-graphql.arn
     container_name   = "cer-graphql"
     container_port   = 4000
   }
@@ -119,7 +119,7 @@ resource "aws_ecs_service" "this" {
       "Name" = "graphql-service-definition"
     },
   )
-  depends_on = [aws_alb_target_group.ecs-cer-graphql]
+  depends_on = [aws_lb_target_group.ecs-cer-graphql]
   lifecycle {
     # create_before_destroy = true
     ignore_changes = [desired_count]
@@ -130,7 +130,7 @@ resource "aws_ecs_service" "this" {
 
 # Configure the TG the Service will attach to.
 # IP is the setting needed for Fargate
-resource "aws_alb_target_group" "ecs-cer-graphql" {
+resource "aws_lb_target_group" "ecs-cer-graphql" {
   name        = "ecs-cer-graphql-${var.lifecycle_state}"
   port        = "80"
   protocol    = "HTTP"
@@ -145,17 +145,17 @@ resource "aws_alb_target_group" "ecs-cer-graphql" {
     matcher             = "200"
   }
 
-  depends_on = [aws_alb.ecs-load-balancer]
+  depends_on = [aws_lb.ecs-load-balancer]
 }
 
 resource "aws_lb_listener_rule" "routing" {
-  listener_arn = aws_alb_listener.alb-listener.arn
+  listener_arn = aws_lb_listener.alb-listener.arn
   # Need to ensure this increments if we add more
   priority = 1
 
   action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.ecs-cer-graphql.id
+    target_group_arn = aws_lb_target_group.ecs-cer-graphql.id
   }
 
   # Based upon work in Sandbox
