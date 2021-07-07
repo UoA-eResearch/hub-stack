@@ -1,71 +1,62 @@
 @import "variables";
 @import "mixins";
 
-.app-toolbar-container {
+mat-toolbar {
   color: white;
-  position: relative;
-  background-color: rgba(0, 0, 0, 0);
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 1000;
 }
-.app-toolbar {
-  padding-left: $padding-site;
-  padding-right: $padding-site;
-  background-color: map-get($hub-teal, 700);
-  .app-toolbar-row {
-    height: 64px;
-  }
-}
-.app-toolbar-xs {
-  .app-toolbar-row {
-    height: 64px;
-  }
-}
-.mat-menu-panel,
-.mat-menu-content {
-  min-width: fit-content !important;
-}
-.mat-menu-item {
-  color: white !important;
-  padding: 0 16px !important;
-  height: fit-content !important;
-  line-height: 48px !important;
-  background: rgba(10, 10, 10, 0);
-  font-size: mat-font-size($app-base-typography, body-1);
-}
-.mat-expansion-panel-body {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-.sidenav-container {
-  min-height: calc(100vh);
-}
-.sidenav-container {
-  mat-sidenav {
-    background-color: $color-background;
-  }
-}
-.sidenav-container {
-  mat-sidenav mat-list {
-    padding-left: 1em;
-    padding-top: 1em;
-  }
-}
-.sidenav-content-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-.sidenav-content {
-  flex: 1 0 auto;
-  background-color: $color-background;
-  min-height: calc(100vh - #{$height-footer-xs});
-  @include size(medium) {
-    min-height: calc(100vh - #{$height-footer});
-  }
-}
-.transparent-navbar {
-  background-color: rgba(0,0,0,0);
-}
-.colored-navbar {
-  background-color: #018193;
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 15px;
 
+/**
+ * User Detail Dropdown
+ */
+.user-detail-dropdown {
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+/**
+ * Sign Out Button
+ */
+.sign-out-button {
+  color: black;
+  background-color: white;
+}
+
+/*
+ * User Menu
+ */
+.user-menu-list {
+  margin-bottom: 10.5px;
+  mat-list-item {
+    mat-icon {
+      color: white;
+    }
+    p {
+      font-size: 0.7em !important;
+      color: white;
+    }
+  }
+}
+
+.transparent-navbar {
+  background-color: transparent;
+}
+
+/*
+ * Hub Logo
+ */
+ .hub-logo {
+  height: 30px;
+  img {
+    height: 30px;
+    @include size(small) {
+      height: 32px;
+      img {
+        height: 32px;
+      }
+    }
+  }
 }

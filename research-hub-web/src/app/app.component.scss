@@ -2,21 +2,7 @@
 @import "mixins";
 @import "styles-common";
 
-/*
- * Hub Logo
- */
-.hub-logo {
-  height: 30px;
-  img {
-    height: 30px;
-    @include size(small) {
-      height: 32px;
-      img {
-        height: 32px;
-      }
-    }
-  }
-}
+
 
 /*
  * Banner Styling
@@ -162,40 +148,6 @@ mat-expansion-panel-header .mat-expanded {
   height: 64px !important;
 }
 
-/*
- * Navigation list
- */
-.sidenav-container mat-sidenav mat-list-item {
-  mat-icon {
-    width: 100%;
-    height: 100%;
-    color: $color-icon;
-    font-size: mat-font-size($app-sidenav-list-typography, body-2) !important;
-    font-weight: mat-font-weight($app-sidenav-list-typography, body-2) !important;
-  }
-  .mat-line {
-    font-size: mat-font-size($app-sidenav-list-typography, body-1) !important;
-    font-weight: mat-font-weight($app-sidenav-list-typography, body-1) !important;
-  }
-}
-
-/*
- * User Menu
- */
-.user-menu-list {
-  margin-bottom: 10.5px;
-  mat-list-item {
-    mat-icon {
-      color: white;
-    }
-    p {
-      font-size: 0.7em !important;
-      color: white;
-    }
-  }
-}
-
-
 
 /**
  * Section Header Text
@@ -224,21 +176,7 @@ mat-expansion-panel-header .mat-expanded {
 
 
 
-/**
- * User Detail Dropdown
- */
-.user-detail-dropdown {
-  margin-right: 8px;
-  margin-left: 8px;
-}
 
-/**
- * Sign Out Button
- */
-.sign-out-button {
-  color: black;
-  background-color: white;
-}
 
 /**
  *  Search bar

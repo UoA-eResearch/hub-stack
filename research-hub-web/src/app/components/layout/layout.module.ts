@@ -8,6 +8,7 @@ import { NotificationComponent } from './notification/notification.component';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '../shared/app.shared.module';
 import { RouterModule } from '@angular/router';
+import { MobileSideNavComponent } from './mobile-side-nav/mobile-side-nav.component';
 
 
 
@@ -17,7 +18,8 @@ import { RouterModule } from '@angular/router';
     LayoutComponent,
     FooterComponent,
     LoadingSpinnerComponent,
-    NotificationComponent
+    NotificationComponent,
+    MobileSideNavComponent
   ],
   imports: [
     CommonModule,
