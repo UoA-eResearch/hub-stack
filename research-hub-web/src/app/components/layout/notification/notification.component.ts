@@ -6,11 +6,11 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-notification',
   template: `
-    <div *ngIf="showNotification" class="notification-bar-container" fxLayout="row">
+    <div *ngIf="showNotification && !hasBeenDismissed" class="notification-bar-container" fxLayout="row">
       <div class="notification-bar-content">
         <div [innerHTML]="this.notification | richTextToHTML"></div>
       </div>
-      <mat-icon (click)="showNotification = false">close</mat-icon>
+      <mat-icon (click)="close()">close</mat-icon>
     </div>
   `,
   styleUrls: ['notification.component.scss'],
@@ -20,6 +20,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private notificationQuery$: Subscription;
 
   public showNotification = false;
+  public hasBeenDismissed = false;
   public notification: JSON;
 
   constructor(
@@ -34,6 +35,11 @@ export class NotificationComponent implements OnInit, OnDestroy {
       this.showNotification = true;
     });
 
+  }
+
+  close(): void {
+    this.showNotification = false;
+    this.hasBeenDismissed = true;
   }
 
   ngOnDestroy(): void {
