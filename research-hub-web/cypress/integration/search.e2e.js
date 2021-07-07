@@ -5,29 +5,29 @@ describe('ResearchHubs Search Page from Homepage', () => {
     });
 
     it('Search Bar exists on homepage', () => {
-        cy.get('input').should('exist');
+        cy.get('.initial-search-outer input').invoke('attr', 'data-placeholder').should('eq', 'Search');
     });
 
     it('entering in the search bar navigates to the search page', () => {
-        cy.get('input').type('{enter}');
+        cy.get('.initial-search-outer input').type('{enter}');
         cy.get('#search-filters').should('exist');
     });
 
     it('displays search content', () => {
-        cy.get('input').type('{enter}');
+        cy.get('.initial-search-outer input').type('{enter}');
         cy.contains('Results');
     });
 
     it('displays number of results', () => {
-        cy.get('input').type('vision');
-        cy.get('input').type('{enter}');
+        cy.get('.initial-search-outer input').type('vision');
+        cy.get('.initial-search-outer input').type('{enter}');
         cy.contains('Results');
     });
 
     it('displays no results', () => {
-        cy.get('input').type('fffffffff');
-        cy.get('input').type('{enter}');
-        cy.contains('Sorry, your search for "fffffffff" in All Categories, did not match anything on the ResearchHub.');
+        cy.get('.initial-search-outer input').type('fffffffff');
+        cy.get('.initial-search-outer input').type('{enter}');
+        cy.contains('Sorry, your search for "fffffffff"');
     });
 
     it('clicking a research category navigates to the search page', () => {

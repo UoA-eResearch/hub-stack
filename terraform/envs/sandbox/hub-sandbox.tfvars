@@ -35,7 +35,8 @@ two_fab_url = "https://apigw.sandbox.amazon.auckland.ac.nz/aws-token-grabber/"
 route53_hosted_zone_id = "ZMGQD6EYUM762"
 
 # Network
-vpc_id           = "vpc-1e77d279"  # uoa-sandbox  10.0.12.0/22
+vpc_id          = "vpc-1e77d279"  # uoa-sandbox  10.0.12.0/22
+create_firewall = true
 
 # Loadbalancer for ECS
 lb_name = "research-hub-public-lb"   # arn:aws:elasticloadbalancing:ap-southeast-2:416527880812:loadbalancer/app/research-hub-public-lb/9db900eab79d1dd7

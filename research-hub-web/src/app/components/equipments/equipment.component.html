@@ -15,10 +15,11 @@
     </ng-template>
 
     <ng-template #dynamicBanner>
-        <div class="banner-container" [style]="equipment.banner ? isMobile ?
-                        'background: url(' + equipment.banner.url + ') no-repeat; padding: 20vh 0px'
-                        : 'background: url(' + equipment.banner.url + ') no-repeat fixed center; padding: 20vh 0px'
-                    : 'display: none;'"></div></ng-template>
+        <div class="banner-container" 
+            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'" 
+            [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
+        </div>
+    </ng-template>
 
     <ng-template #specificationsTable>
         <div id="specifications-table" class="specifications">

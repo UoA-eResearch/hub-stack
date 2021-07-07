@@ -11,14 +11,14 @@ pipeline {
         booleanParam(name: "FORCE_REDEPLOY_SP", defaultValue: false, description: 'Force redeploy the search-proxy Lambda  even if there are no code changes.')
     }
 
-    agent  {
+    agent {
         label("uoa-buildtools-ionic")
     }
 
     options {
         buildDiscarder(
             logRotator(
-                daysToKeepStr: "30"
+                numToKeepStr: "3"
             )
         )
     }

@@ -15,6 +15,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { GetHomepageGQL, Homepage, AllCategoriesGQL, CategoryCollection, AllStagesGQL, StageCollection } from './graphql/schema';
 import smoothscroll from 'smoothscroll-polyfill';
 import { HomeScrollService } from '@services/home-scroll.service';
+import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-root',
@@ -62,6 +63,8 @@ export class AppComponent implements OnInit, OnDestroy {
   public onHomePage: Boolean;
   public mobileBackground: String;
   public desktopBackground: String;
+  public supportsWebp: Boolean;
+  public bannerImageUrl: string;
 
   @ContentChildren(RouterOutlet) outlet;
 
@@ -79,6 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private deviceService: DeviceDetectorService,
     public homeScrollService: HomeScrollService) {
       this.detectDevice();
+      this.detectWebP();
 
       // Smooth scrolling in IE/Edge
       smoothscroll.polyfill();
@@ -87,6 +91,12 @@ export class AppComponent implements OnInit, OnDestroy {
   // Detect if device is Mobile
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
+  }
+
+  detectWebP() {
+    supportsWebP.then(supported => {
+      this.supportsWebp = supported;
+    });
   }
 
   // Get formatted route name
@@ -227,11 +237,16 @@ export class AppComponent implements OnInit, OnDestroy {
         this.showNotification = ['home', 'home#'].includes(this.currentRoute);
       }
 
+      // Set banner image URL for webp format if webp is supported
+      if (data.image?.url) {
+        this.bannerImageUrl = this.supportsWebp ? data.image?.url + '?fm=webp' : data.image?.url;
+      }
+
       // Set background for mobile devices
-      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat; height: 100vh`;
+      this.mobileBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ this.bannerImageUrl }) no-repeat; height: 100vh`;
 
       // Set background for desktop devices
-      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ data.image?.url }) no-repeat fixed center; height: 100vh`;
+      this.desktopBackground = `background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(${ this.bannerImageUrl }) no-repeat fixed center; height: 100vh`;
 
       this.viewIsLoaded = true;
     });

@@ -30,7 +30,7 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
      this.returnVal$ = this.bodyMediaService.getBodyMedia();
 
       switch(this.data.nodeType) {
-        // For each type of node, first filter out null values, then find matching node. 
+        // For each type of node, first filter out null values, then find matching node.
         case 'embedded-asset-block':
           this.contentItem = this.returnVal$.assets['block'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
           this.contentItem['size'] = Math.round(this.contentItem['size'] / 1000) + (Math.round(this.contentItem['size'] % 1000) / 100);
@@ -46,14 +46,6 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
           break;
         case 'asset-hyperlink':
           this.contentItem = this.returnVal$.assets['hyperlink'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
-          break;
-        case 'unordered-list':
-          this.contentItem = {__typename: '', items: []};
-          this.contentItem['items'] = this.data.content;
-          break;
-        case 'ordered-list':
-          this.contentItem = {__typename: '', items: []};
-          this.contentItem['items'] = this.data.content;
           break;
         case 'blockquote':
           this.contentItem = this.data.content[0];
