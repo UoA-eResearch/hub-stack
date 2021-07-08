@@ -7,11 +7,11 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: 'app-mobile-side-nav',
-  templateUrl: './mobile-side-nav.component.html',
-  styleUrls: ['./mobile-side-nav.component.scss']
+  selector: 'app-side-nav',
+  templateUrl: './side-nav.component.html',
+  styleUrls: ['./side-nav.component.scss']
 })
-export class MobileSideNavComponent implements OnInit {
+export class SideNavComponent implements OnInit {
   @ViewChild('sidenav') sideNav: MatSidenav;
   @Input() allCategories: Category[] = [];
   @Input() allStages: Stage[] = [];
