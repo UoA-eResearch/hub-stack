@@ -1,3 +1,5 @@
+import { gql } from "apollo-server";
+
 // List of fields that do not require SSO for different types
 const ALWAYS_PUBLIC_FIELDS = [
     'title',
@@ -9,7 +11,7 @@ const ALWAYS_PUBLIC_FIELDS = [
 // Fields that will be for searching
 export const SEARCHABLE_FIELDS = ['title', 'summary', 'ssoProtected'];
 
-export const GET_ARTICLE_COLLECTION = `
+export const GET_ARTICLE_COLLECTION = gql`
 { 
     articleCollection {
         items {
@@ -19,7 +21,7 @@ export const GET_ARTICLE_COLLECTION = `
 }
 `;
 
-export const GET_ARTICLE_COLLECTION_PRIVATE = `
+export const GET_ARTICLE_COLLECTION_PRIVATE = gql`
 { 
     articleCollection {
         items {
@@ -31,7 +33,7 @@ export const GET_ARTICLE_COLLECTION_PRIVATE = `
 }
 `;
 
-export const GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO = `
+export const GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO = gql`
 query {
 	articleCollection ( where:{
     AND:[
@@ -50,7 +52,7 @@ query {
 }
 `;
 
-export const GET_SUBHUB_COLLECTION = `
+export const GET_SUBHUB_COLLECTION = gql`
 { 
     subHubCollection {
         items {
@@ -60,7 +62,7 @@ export const GET_SUBHUB_COLLECTION = `
 }
 `;
 
-export const GET_EQUIPMENT_COLLECTION = `
+export const GET_EQUIPMENT_COLLECTION = gql`
 { 
     equipmentCollection {
         items {
@@ -70,7 +72,7 @@ export const GET_EQUIPMENT_COLLECTION = `
 }
 `;
 
-export const GET_ARTICLE_BY_SYS_ID = `
+export const GET_ARTICLE_BY_SYS_ID = gql`
     query ($id: String!) { 
         article(id: $id) {
             title 
@@ -79,7 +81,7 @@ export const GET_ARTICLE_BY_SYS_ID = `
     }
 `;
 
-export const GET_ARTICLE_BY_SYS_ID_PRIVATE = `
+export const GET_ARTICLE_BY_SYS_ID_PRIVATE = gql`
     query ($id: String!) { 
         article(id: $id) {
             bodyText {
@@ -89,7 +91,7 @@ export const GET_ARTICLE_BY_SYS_ID_PRIVATE = `
     }
 `;
 
-export const GET_ARTICLE_BY_WHERE = `
+export const GET_ARTICLE_BY_WHERE = gql`
 query ($title: String!) {
     articleCollection(where: {
         title: $title
@@ -102,7 +104,7 @@ query ($title: String!) {
 }
 `;
 
-export const ALIASING_SSOPROTECTED_QUERY = `
+export const ALIASING_SSOPROTECTED_QUERY = gql`
 { 
     articleCollection {
         items {
@@ -111,7 +113,7 @@ export const ALIASING_SSOPROTECTED_QUERY = `
     }
 }`;
 
-export const GET_ARTICLE_COLLECTION_PRIVATE_FRAGMENT = `
+export const GET_ARTICLE_COLLECTION_PRIVATE_FRAGMENT = gql`
 {
     articleCollection {
       items {
@@ -127,7 +129,7 @@ export const GET_ARTICLE_COLLECTION_PRIVATE_FRAGMENT = `
   }
 `
 
-export const GET_ARTICLE_COLLECTION_NESTED_PROTECTED_FIELD = `
+export const GET_ARTICLE_COLLECTION_NESTED_PROTECTED_FIELD = gql`
 {
     articleCollection {
       items {
@@ -146,7 +148,7 @@ export const GET_ARTICLE_COLLECTION_NESTED_PROTECTED_FIELD = `
   }
   `
 
-export const GET_SUBHUB_COLLECTION_NESTED_ITEMS_FIELD = `
+export const GET_SUBHUB_COLLECTION_NESTED_ITEMS_FIELD = gql`
 {
     subHubCollection {
         items {

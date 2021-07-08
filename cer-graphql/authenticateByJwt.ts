@@ -9,22 +9,8 @@ interface CognitoPublicKeys {
     keys: Array<JWK & JwtHeader>
 }
 
-type UserToken = {
-    // The token has more information than this, add them to type definition as required.
-    username: string
-}
-
-// Add a user custom property so the graphql middleware can see auth information.
-declare global {
-    namespace Express {
-      interface Request {
-        user?: UserToken,
-      }
-    }
-}
-
-async function fetchCognitoPublicKeys(jwkUrl: string): Promise<CognitoPublicKeys> {
-    return fetch(jwkUrl).then((response) => {
+export async function fetchCognitoPublicKeys(jwkUrl: string): Promise<CognitoPublicKeys> {
+    return fetch(jwkUrl).then((response: any) => {
         if (!response.ok) {
             throw new Error("Could not reach Cognito public keys URL.");
         }
@@ -59,46 +45,30 @@ function getJwtToken(authHeader: string = "") {
         }
         return authHeader.substring('Bearer '.length);
 }
-  
-function sendUnauthenticatedError(res: Response, message: string) {
-    res.statusCode = 401;
-    res.send({
-        errors: [
-            formatError(new AuthenticationError(message))
-        ]
-    })
-    return;
-}
 
-export default async function authenticateByJwt(jwkUrl: string, isPreviewEnv: boolean)  {
-    const cognitoPublicKeys = await fetchCognitoPublicKeys(jwkUrl);
-    return (req: Request, res: Response, next: NextFunction) => {
-        const token = getJwtToken(req.headers.authorization);
-        // Check if the authorization header exists and has a bearer token.
-        // If not, return null
-        if (!token) {
+export default async function authenticateByJwt(cognitoPublicKeys: CognitoPublicKeys, authHeader = "", isPreviewEnv: boolean)  {
+    const token = getJwtToken(authHeader);
+    // Check if the authorization header exists and has a bearer token.
+    // If not, return null
+    if (!token) {
+        if (isPreviewEnv) {
+            // Reject all non-logged in queries in preview environment
+            console.log("No bearer token sent. In preview environment, so returning AuthenticationError.");
+            throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
+        }
+        return {};
+    } else {
+        try {
+            return {
+                user: verifyJwt(token, cognitoPublicKeys)
+            };
+        } catch (e) {
+            console.log("Exception thrown while verifying user", e);
             if (isPreviewEnv) {
                 // Reject all non-logged in queries in preview environment
-                console.log("No bearer token sent. In preview environment, so returning AuthenticationError.");
-                sendUnauthenticatedError(res, 'You must sign in to SSO before accessing preview API.')
-                return;
+                console.log("In preview environment, so returning AuthenticationError.\n", e)
+                throw new AuthenticationError('You must sign in to SSO before accessing preview API.');
             }
-            next();
-        } else {
-            try {
-                req.user = verifyJwt(token, cognitoPublicKeys) as UserToken;
-                next();
-            } catch (e) {
-                console.log("Exception thrown while verifying user", e);
-                if (isPreviewEnv) {
-                    // Reject all non-logged in queries in preview environment
-                    console.log("In preview environment, so returning AuthenticationError.\n", e)
-                    sendUnauthenticatedError(res, 'You must sign in to SSO before accessing preview API.')
-                    return;
-                }
-                next();
-            }
-
         }
     }
 }

@@ -1,21 +1,16 @@
 /**
- * executeQuery.ts
- * A custom execution function for GraphQL.js, containing validations for
- * unauthenticated queries.
+ * validateUnauthenticatedQuery.ts
+ * A set of validations for unauthenticated queries.
 */
-
-import { Request } from "express";
 import { 
-    execute,
-    ExecutionArgs,
-    print,
+
     ASTNode,
     FieldNode,
     FragmentDefinitionNode,
     GraphQLSchema,
     TypeInfo,
     visit,
-    visitWithTypeInfo
+    visitWithTypeInfo,
 } from "graphql";
 import { AuthenticationError } from "apollo-server-errors";
 
@@ -61,7 +56,15 @@ function isProtectedField(fieldName: string, typeName: string) {
 type FragmentFieldDepthInfo = {
     depth: number,
     name: string
-  };
+};
+
+function visitFragments(field: ASTNode, fragments: Record<string, FragmentDefinitionNode>) {
+    // First, visit field node and find fragmentspreads.
+    // For each fragmentspread
+        // visit node and find fragmentspread
+        // if 0, return fields and their depths
+        // if >0, return fields + visit fragmentspread
+}
 
 /**
  * Given a query document, check that it doesn't ask for protected, nested fields on protected types.
@@ -69,7 +72,10 @@ type FragmentFieldDepthInfo = {
  * @param maxDepth number of nested selectionsets a protected field can be in.
  * @throws AuthenticationError if there are any protected nested fields.
  */
-function assertNoDeepProtectedFields(document: ASTNode, schema: GraphQLSchema, protectedTypes: Set<string>, maxDepth = 3) {
+function assertNoDeepProtectedFields(document: ASTNode | undefined, schema: GraphQLSchema, protectedTypes: Set<string>, maxDepth = 3) {
+    if (!document || !schema) {
+        return;
+    }
     // Field depths (i.e. where in the query does this field appear), keyed by field name
     const depthByField: Record<string, number[]> = {};
     // How deep do fragment spreads occur, keyed by fragment name
@@ -77,7 +83,9 @@ function assertNoDeepProtectedFields(document: ASTNode, schema: GraphQLSchema, p
     // Which fields are in fragments and how deep are they in the fragment, keyed by fragment name.
     const fieldsInFragment: Record<string, FragmentFieldDepthInfo[]> = {};
 
+    // const typeInfo = new TypeInfo(schema, undefined, type);
     const typeInfo = new TypeInfo(schema);
+    // typeInfo.enter(document);
 
     // First, we collect all the fields and their paths in the query.
     // If there are fragments, we collect the fields separately, because
@@ -154,21 +162,23 @@ function assertNoDeepProtectedFields(document: ASTNode, schema: GraphQLSchema, p
         if (depthByField[fieldName].some(depth => depth > maxDepth)) {
             throw new AuthenticationError("Validation: Unauthenticated query should not ask for nested fields that are protected.");
         }
-
     });
 }
 
-function assertNoAliasingSsoProtected(document: ASTNode) {
+function assertNoAliasingSsoProtectedOrItems(document: ASTNode | undefined) {
+    if (!document) {
+        return;
+    }
     visit(document, {
       Field(node: FieldNode) {
         const name = node.name.value;
         const hasAlias = node.alias;
-        if (name === "ssoProtected" && hasAlias) {
+        if ((name === "ssoProtected" || name === "items") && hasAlias) {
             throw new AuthenticationError("Validation: Aliasing the ssoProtected field is forbidden.");
         }
       }
     });
-  }
+}
 
 type TypeInstance = {
     type: string,
@@ -185,7 +195,10 @@ type TypeInstance = {
  * @returns True if there are protected fields, false if not.
  * @throws AuthenticationError if protected fields are requested without ssoProtected.
  */
-function assertProtectedTypeHasSsoField(document: ASTNode, schema: GraphQLSchema, protectedTypes: Set<string>) {
+function assertProtectedTypeHasSsoField(document: ASTNode | undefined, schema: GraphQLSchema, protectedTypes: Set<string>) {
+    if (!document || !schema) {
+        return false;
+    }
     const fieldsByPath: Record<string, TypeInstance> = {};
     const typeInfo = new TypeInfo(schema);
     // First, find fields and group them by their type and path. 
@@ -193,15 +206,15 @@ function assertProtectedTypeHasSsoField(document: ASTNode, schema: GraphQLSchema
         Field(node, key, parent, path, ancestors) {
             const name = node.name.value;
             const parentType = typeInfo.getParentType()?.name || "";
-            const upperCaseParentType = parentType[0].toLowerCase() + parentType.substring(1);
-            if (!protectedTypes.has(upperCaseParentType)) {
+            const lowerCaseParentType = parentType[0].toLowerCase() + parentType.substring(1);
+            if (!protectedTypes.has(lowerCaseParentType)) {
                 // If this doesn't belong to one of the protected types, skip recording the field.
                 return;
             }
             // We remove the last part of this field's path to find the parent node's path.
             const parentPathKey = path.slice(0, path.length - 1).join(".");
             if (!fieldsByPath[parentPathKey]) {
-                fieldsByPath[parentPathKey] = { type: upperCaseParentType , fields: []};
+                fieldsByPath[parentPathKey] = { type: lowerCaseParentType , fields: []};
             }
             fieldsByPath[parentPathKey].fields.push(name);
         }
@@ -234,63 +247,15 @@ function assertProtectedTypeHasSsoField(document: ASTNode, schema: GraphQLSchema
  * @throws AuthenticationError if the query exceeds what an unauthenticated
  * query should have. 
  */
-function validateUnauthenticatedQuery(document: ASTNode, schema: GraphQLSchema, protectedTypes: Set<string>): boolean {
+// export function validateUnauthenticatedQuery(resolveInfo: GraphQLResolveInfo, protectedTypes: Set<string>): boolean {
+    // const { fieldNodes, schema, parentType } = resolveInfo;
+        // assertNoDeepProtectedFields(fieldNodes[0], parentType, schema, protectedTypes);
+    // assertNoAliasingSsoProtectedOrItems(fieldNodes[0]);
+    // return assertProtectedTypeHasSsoField(fieldNodes[0], schema, protectedTypes);
+
+export function validateUnauthenticatedQuery(document: ASTNode, schema: GraphQLSchema, protectedTypes: Set<string>) {
     assertNoDeepProtectedFields(document, schema, protectedTypes);
-    assertNoAliasingSsoProtected(document);
+    assertNoAliasingSsoProtectedOrItems(document);
     return assertProtectedTypeHasSsoField(document, schema, protectedTypes);
-}
 
-
-async function executeUnauthenticatedQuery(args: ExecutionArgs, protectedTypes: string[]) {
-    const protectedTypeSet = new Set(protectedTypes);
-    const resRequiresVerification = validateUnauthenticatedQuery(args.document, args.schema, protectedTypeSet);
-    // Add this to context, so our protected type resolvers can know whether to check results or not.
-    (args.contextValue as CerGraphqlExecutionContext).resRequiresVerification = resRequiresVerification;
-    return await Promise.resolve(execute(args));
-}
-
-/**
- * A custom execution context, with values we've added that can be used in resolvers.
-*/
-export type CerGraphqlExecutionContext = {
-    username?: string,
-    resRequiresVerification?: boolean,
-    originalRequest: Request
-};
-
-function createCerGraphqlContext(originalRequest: Request) {
-    const context: CerGraphqlExecutionContext = {
-        originalRequest,
-        username: originalRequest.user?.username
-    };
-    return context;
-}
-
-/**
- * A custom execute function that differentiates between unauthenticated and
- * authenticated queries.
- * @param args ExecutionArgs as part of the execution context
- * @param protectedTypes A list of protected types
- * @returns A promise of the result of execution
- */
-export default function executeQuery(args: ExecutionArgs, protectedTypes: string[]) {
-  // express-graphql passes in the express Request (which we've customised, see authenticateByJwt.ts) 
-  // as context value by default.
-  // We create a custom context value to replace it.
-  const originalRequest = args.contextValue as Request;
-  const context = args.contextValue = createCerGraphqlContext(originalRequest);
-
-  if (args.operationName !== 'IntrospectionQuery') {
-    console.log(`User: ${context.username ? context.username.split('_')[1] : 'Unauthenticated'}`)
-    // Log incoming queries
-    console.log('\n===== Query Recieved: ======\n', print(args.document));
-  }
-
-  if (!context.username && args.operationName !== "IntrospectionQuery") {
-    return executeUnauthenticatedQuery(args, protectedTypes);
-  } else {
-    // If authenticated, simply execute the query without verification.
-    return Promise.resolve(execute(args));
-  }
-  
 }
