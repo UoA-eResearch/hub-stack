@@ -1,25 +1,23 @@
-import { 
-    formatError,
-    GraphQLSchema,
-    print,
-   } from "graphql";
-  import { 
-    wrapSchema, 
-    mergeSchemas, 
-    delegateToSchema, 
-    introspectSchema, 
-    ExecutionParams,
-    IResolvers
-  } from "graphql-tools";
-  import express, { Response, Request } from "express";
-  import { graphqlHTTP } from "express-graphql";
-  import fetch from "node-fetch";
-  import executeQuery, { CerGraphqlExecutionContext } from "./executeQuery";
-  import authenticateByJwt from "./authenticateByJwt";
-  import cors from "cors";
-  import assertResultsArePublicItems from "./assertResultsArePublicItems";
+import {
+  DocumentNode,
+  GraphQLResolveInfo,
+  GraphQLSchema
+} from "graphql";
+import fetch from "cross-fetch";
+import { validateUnauthenticatedQuery } from "./validateUnauthenticatedQuery";
+import authenticateByJwt, { fetchCognitoPublicKeys } from "./authenticateByJwt";
+import assertResultsArePublicItems from "./assertResultsArePublicItems";
 import { AuthenticationError } from "apollo-server-errors";
-  
+import {
+  ApolloServer, 
+  mergeSchemas,
+  makeRemoteExecutableSchema,
+  delegateToSchema,
+  introspectSchema,
+} from "apollo-server";
+import { HttpLink } from "apollo-link-http";
+import depthLimit from "graphql-depth-limit";
+
   // Measure server startup time
   var startTime = new Date().getTime(); 
   
@@ -87,81 +85,89 @@ import { AuthenticationError } from "apollo-server-errors";
     };
   };
   
-  // Set up remote schemas
-  // Load a remote schema and set up the http-link
-  async function getRemoteSchema (remoteUri: string) {
-    // Fetch remote schema.
-    const executor = async ({ document, variables }: ExecutionParams) => {
-      const query = print(document);
-      const fetchResult = await fetch(remoteUri, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query, variables })
+// Set up remote schemas
+// Load a remote schema and set up the http-link
+async function getRemoteSchema(remoteUri: string) {
+  try {
+      console.log('Loading remote schema...')
+      const link = new HttpLink({ uri: remoteUri, fetch });
+      const schema = await introspectSchema(link);
+
+      console.log('Remote schema loaded successfully.')
+      return makeRemoteExecutableSchema({
+          schema,
+          link,
       });
-      return fetchResult.json();
-    };
-    console.log('Loading remote schema...')
-    const schema = await introspectSchema(executor);
-    console.log('Remote schema loaded successfully.')
-    return wrapSchema({
-      schema,
-      executor
-    });
+  } catch (e) {
+    console.error(e);
+    throw new Error("Unable to load remote schema.");
   }
-  
-  function getProtectedTypes(schema: GraphQLSchema) {
-    const typeMap = schema.getTypeMap();
-  
-    return Object.keys(typeMap)
-        .filter(x => x.includes('Filter')) // Get all the filters
-        .filter(x => !x.startsWith('cf')) // Filter out Contentful's special cf* filters
-        .filter(y => { // Filter by those with an ssoProtected field
-          const type = typeMap[y];
-          // First check this type has its own nested fields, before seeing if it has a ssoProtected field.
-          return "getFields" in type && type.getFields()["ssoProtected"]; 
-        })
-        .flatMap(z => [z.replace('Filter', ''), z.replace('Filter', 'Collection')]) // Replace 'xfilter' with 'x' and 'xCollection'
-        .map(a => a[0].toLowerCase() + a.substring(1)); // Make first char lower case
-  }
-  
-  export async function createServer (config: CerGraphqlServerConfig) {
-    const { CONTENTFUL_ACCESS_TOKEN,
-      CONTENTFUL_ENVIRONMENT_ID,
-      CONTENTFUL_SPACE_ID,
-      COGNITO_REGION,
-      COGNITO_USER_POOL,
-      IS_PREVIEW_ENV
+}
+function getProtectedTypes(schema: GraphQLSchema) {
+  const typeMap = schema.getTypeMap();
+
+  return Object.keys(typeMap)
+    .filter(x => x.includes('Filter')) // Get all the filters
+    .filter(x => !x.startsWith('cf')) // Filter out Contentful's special cf* filters
+    .filter(y => { // Filter by those with an ssoProtected field
+      const type = typeMap[y];
+      // First check this type has its own nested fields, before seeing if it has a ssoProtected field.
+      return "getFields" in type && type.getFields()["ssoProtected"];
+    })
+    .flatMap(z => [z.replace('Filter', ''), z.replace('Filter', 'Collection')]) // Replace 'xfilter' with 'x' and 'xCollection'
+    .map(a => a[0].toLowerCase() + a.substring(1)); // Make first char lower case
+}
+
+export async function createServer (config: CerGraphqlServerConfig) {
+  const { CONTENTFUL_ACCESS_TOKEN,
+    CONTENTFUL_ENVIRONMENT_ID,
+    CONTENTFUL_SPACE_ID,
+    COGNITO_REGION,
+    COGNITO_USER_POOL,
+    IS_PREVIEW_ENV
   } = config;
-  
-    const contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
+
+  const contentfulSchema = await getRemoteSchema(`https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}` +
     `/environments/${CONTENTFUL_ENVIRONMENT_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`);
-  
-    // Load Cognito public keys in order to verify tokens.
-    const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
-      "/.well-known/jwks.json";
-  
-  
-    // Get a list of the types that have the ssoProtected field
-    let protectedTypes = getProtectedTypes(contentfulSchema); 
-    const customQueryResolvers : IResolvers = Object.fromEntries(protectedTypes.map(
-      type => [type, (root, args, context, info)  => {
-        if (IS_PREVIEW_ENV) {
-          // Add preview as a query argument if we are in a preview
-          // environment.
-          args.preview = true;
-      }          
-      const delegatedResult = delegateToSchema({
+
+  // Load Cognito public keys in order to verify tokens.
+  const cognitoPublicKeysUrl = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL}` +
+    "/.well-known/jwks.json";
+
+  const cognitoPublicKeys = await fetchCognitoPublicKeys(cognitoPublicKeysUrl);
+
+  // Get a list of the types that have the ssoProtected field
+  const protectedTypes = getProtectedTypes(contentfulSchema);
+
+  const customQueryResolvers = Object.fromEntries(protectedTypes.map(
+    type => [type, (root: DocumentNode, args: any, context: any, info: GraphQLResolveInfo): Promise<any> | AuthenticationError => {
+      if (IS_PREVIEW_ENV) {
+        // Add preview as a query argument if we are in a preview
+        // environment.
+        args.preview = true;
+      }
+      const user = context.user;
+      console.log(`User: ${user ? user.username.split('_')[1] : 'Unauthenticated'}`)
+      let verificationRequired = false;
+      const protectedTypesSet = new Set(protectedTypes);
+      if (!user) {
+        /**
+         * If the user is not signed in and the responseVerificationRequired flag is
+         * true (i.e. they requested potentially non-public info rmation), check the response
+         * for the existence of any 'ssoProtected: true' fields.
+         */
+        verificationRequired = validateUnauthenticatedQuery(root, schema, protectedTypesSet);
+      }
+
+      return delegateToSchema({
         schema: contentfulSchema,
         operation: "query",
         fieldName: info.fieldName,
         args,
         context,
         info
-      }) as Promise<any>;
-      return delegatedResult.then(result => {
-        if ((context as CerGraphqlExecutionContext).resRequiresVerification) {
+      }).then(result => {
+        if (verificationRequired) {
           assertResultsArePublicItems(result);
         }
         return result;
@@ -174,6 +180,7 @@ import { AuthenticationError } from "apollo-server-errors";
         // environment.
         args.preview = true;
       }
+      console.log(`User: ${context.user ? context.user.username.split('_')[1] : 'Unauthenticated'}`)
       if (context.user) { // If the user is signed in, simply forward request
         return delegateToSchema({
           schema: contentfulSchema,
@@ -196,32 +203,36 @@ import { AuthenticationError } from "apollo-server-errors";
         Query: customQueryResolvers
       }]
     });
-    const app = express();
-  
-    // Health check endpoint. Maintain compatibility with the Apollo endpoint.
-    app.get("/.well-known/apollo/server-health", (req : Request, res : Response) => res.send("OK"));
-    
-    // Enable CORS headers
-    app.use(cors());
-    
-    app.use(
-      await authenticateByJwt(cognitoPublicKeysUrl, IS_PREVIEW_ENV)
-    );
-    
-    app.use(
-      '/',
-      graphqlHTTP({
-        schema,
-        graphiql: enablePlayground,
-        customFormatErrorFn: err => {
+    return new ApolloServer({
+      schema,
+      introspection: true,
+      playground: enablePlayground,
+      rootValue: (document: DocumentNode) => {
+        // This sets the root value for each resolver to be the query document,
+        // enabling us to run validation functions in the resolver.
+        return document;
+      },
+      // apply query validation rules
+      validationRules: [
+        depthLimit(
+          5,
+          { ignore: [] }
+        ),
+      ],
+      context: ({req}) => {
+          // Log incoming queries
+          if (req && req.body && (req.body.operationName != 'IntrospectionQuery'))
+              console.log('\n===== Query Recieved: ======\n', req.body.query)
+          // Apply authentication.
+          return authenticateByJwt(cognitoPublicKeys, req?.headers?.authorization, IS_PREVIEW_ENV);
+      }, formatError: (err: any) => {
+          // Print out errors so they can be searched in logs.
           console.error(err);
-          return formatError(err);
+          return err;
         },
-        customExecuteFn: (args) => executeQuery(args, protectedTypes)
-      })
-    );
-  
-    return app;
+      
+  });
+
   };
   
   // If the file is being called directly instead of being required as a module.

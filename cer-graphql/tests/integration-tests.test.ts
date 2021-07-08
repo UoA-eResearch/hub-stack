@@ -1,4 +1,6 @@
 import { createServer, getCredentials } from "../index";
+import { createTestClient } from "apollo-server-testing";
+import { ApolloServer } from "apollo-server";
 import * as TQ from './test-queries'; // Collection of test queries
 import aws from 'aws-sdk';
 import fetch from "node-fetch";
@@ -14,59 +16,39 @@ let awsProfile = 'saml';
  * used to make queries against it.
  * The test client is a simple fetch function that asks for a JSON response. 
  */
-async function createServerAndTestClient() {
-    let server = (await createServer(getCredentials(true))).listen();
-    const addrInfo = server.address() as AddressInfo;
-    const addr = `http://localhost:${addrInfo.port}`;
-    return {
-        query: (q: object) => (
-            fetch(addr, {
-                method: "POST",
-                body: JSON.stringify(q),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            }).then(res => {
-                return res.json();
-            })
-        ),
-        close: () => {
-            server.close();
-        }
-    }
-};
-
+ async function createServerAndTestClient() {
+    let server = await createServer(getCredentials(true));
+    
+    const testServer = {
+        query: (q: any) => server.executeOperation(q) 
+    };
+    return testServer;
+}
 /**
  * Creates as testing server using the real server's configuration 
  * with an injected context so we can add an authorization header to our query requests.
  * If passed false, will create a query with an valid authorization header.
  */
-async function createServerAndTestClientWithAuth(useValidToken = true) {
-    let server = (await createServer(getCredentials(true))).listen();
-    const addrInfo = server.address() as AddressInfo;
-    const addr = `http://localhost:${addrInfo.port}`;
+ async function createServerAndTestClientWithAuth(useValidToken = true) {
+    let server = await createServer(getCredentials(true));
     let tokens = await getTokens();
     if (!useValidToken) {
         tokens['access_token'] = 'Bearer fake token value';
     }
 
-    return {
-        query: (q: object) => (
-            fetch(addr, {
-                method: "POST",
-                body: JSON.stringify(q),
-                headers: {
-                    authorization: `Bearer ${tokens["access_token"]}`,
-                    "Content-Type": "application/json"
-                }
-            }).then(res => {
-                return res.json();
-            })
-        ),
-        close: () => {
-            server.close();
-        }
+    // creating a new apollo server with authorization baked into the requests
+     let authorizedServer = {
+         async query(q: any) {
+             return await server.executeOperation(q, {
+                 req: {
+                     headers: {
+                         authorization: `Bearer ${tokens['access_token']}`
+                     }
+                 }
+             });
+         }
     };
+    return authorizedServer;
 }
 
 /**
@@ -141,7 +123,6 @@ describe("Tests for cer-graphql", () => {
      * it available within all tests.
      */
     let query : Function;
-    let closeServer: Function;
     beforeAll(async () => {
         // set the aws profile based on the argument passed in
         process.argv.forEach(arg => {
@@ -155,15 +136,9 @@ describe("Tests for cer-graphql", () => {
         try {
             const client = await createServerAndTestClient();
             query = client.query;
-            closeServer = client.close;
         } catch (error) {
             fail("An error occurred when trying to setup the server. Have you filled in credentials in the .env file?");
         }
-    });
-
-    afterAll(() => {
-        // End the server being tested.
-        closeServer();
     });
 
     describe('Basic collection queries', () => {
@@ -212,16 +187,12 @@ describe("Tests for cer-graphql", () => {
     describe('Authorization resolvers', () => {
 
         test('Requesting an articleCollection private field with an invalid Authorization header fails', async function () {
-            let { query, close } = await createServerAndTestClientWithAuth(false);
-            try {
-                let message = false;
-                let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
-                message = res.errors[0];
-                expect(message).toBeTruthy();
-            } finally {
-                // stop the server
-                close();
-            }
+            let { query } = await createServerAndTestClientWithAuth(false);
+            let message = false;
+            let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+            message = res.errors ? !!res.errors[0] : false;
+            expect(message).toBeTruthy();
+
         }, TIMEOUT_PERIOD);
 
         test('Requesting an articleCollection private field w/o a header returns an error', async function () {
@@ -245,18 +216,12 @@ describe("Tests for cer-graphql", () => {
             });
             expect(res.errors.length).toBeGreaterThan(0);
             expect(res.errors[0].extensions.code).toBe("UNAUTHENTICATED");
-            expect(res.data).toBeFalsy();
         });
 
         test('Requesting an articleCollection private field with a valid Authorization header returns data', async function () {
-            let { query, close } = await createServerAndTestClientWithAuth();
-            try {
-                let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
-                expect((res as any).data.articleCollection).toBeTruthy();
-            } finally {
-            // stop the server
-                close();
-            }
+            let { query } = await createServerAndTestClientWithAuth();
+            let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
+            expect((res as any).data.articleCollection).toBeTruthy();
         }, TIMEOUT_PERIOD);
 
         test('Requesting a article single resource private field returns an error', async function () {
