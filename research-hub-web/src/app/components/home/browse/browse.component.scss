@@ -13,21 +13,21 @@
   background-color: white;
   .title-text {
     font-size: 24px;
-    color: map-get($hub-navy, 500);
+    color: $dark-blue;
   }
   .tile-button {
-    color: map-get($hub-navy, 500);
+    color: $dark-blue;
     font-size: 16px !important;
   }
   .standard-button {
     @extend .standard-button;
     margin-bottom: 16px;
-    border: 3px solid map-get($hub-navy, 500) !important;
-    background-color: map-get($hub-navy, 500) !important;
+    border: 3px solid $dark-blue !important;
+    background-color: $dark-blue !important;
     &:hover {
       @extend .standard-button;
       background-color: white !important;
-      color: map-get($hub-navy, 500) !important;
+      color: $light-blue !important;
     }
   }
 }

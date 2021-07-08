@@ -5,15 +5,15 @@ describe('ResearchHubs Events Pages', () => {
     });
 
     it('can visit an event and display its title', () => {
-        cy.expect('h1.content-title').not.to.be.empty;
+        cy.get('h1.content-title').text().should('not.be.empty');
     });
 
     it('can visit an event and display its subtitle', () => {
-        cy.expect('.content-summary').not.to.be.empty;
+        cy.get('.content-summary').text().should('not.be.empty');
     });
 
     it('event displays body text', () => {
-        cy.expect('#event-container p .ng-star-inserted').not.to.be.empty;
+        cy.get('#event-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
     });
 
     it('event displays specifications table', () => {
@@ -22,11 +22,11 @@ describe('ResearchHubs Events Pages', () => {
     });
 
     it('displays a list of contacts', () => {
-        cy.expect('#contacts .card-title').not.to.be.empty;
+        cy.get('#contacts .card-title').text().should('not.be.empty');
     });
 
     it('displays a list of organisations', () => {
-        cy.expect('#organisations mat-card:first-child h4').not.to.be.empty;
+        cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });
 
 });
