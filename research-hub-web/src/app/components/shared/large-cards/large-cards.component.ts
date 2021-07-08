@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class LargeCardsComponent implements OnInit {
   @Input() contentItem;
-  @Input() hideImage? : boolean;
+  @Input() hideImage? : Boolean;
   // public contentArray;
 
   constructor() { }
@@ -27,7 +27,7 @@ export class LargeCardsComponent implements OnInit {
       this.contentItem.items.forEach(element => {
         delete element['banner'].url;
       });
-    }
+    };
 
     // If card is displaying an Organizational Unit
     if (this.contentItem.items[0]?.__typename == 'OrgUnit') {

@@ -31,7 +31,7 @@ export class BrowseComponent implements OnInit {
     try {
       return this.allCategoriesGQL.fetch()
         .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
-    } catch (e) { console.error('Error loading all Categories:', e) }
+    } catch (e) { console.error('Error loading all Categories:', e) };
   }
 
   // Get homepage data
@@ -39,7 +39,7 @@ export class BrowseComponent implements OnInit {
     try {
       return this.getHomepageGQL.fetch()
         .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
-    } catch (e) { console.error('Error loading homepage:', e) }
+    } catch (e) { console.error('Error loading homepage:', e) };
   }
 
   getSearchQueryParams(item: any) {

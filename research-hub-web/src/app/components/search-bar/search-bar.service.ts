@@ -153,7 +153,7 @@ export class SearchBarService {
     try {
       return this.allStagesGQL.fetch()
         .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
-    } catch (e) { console.error('Error loading all stages:', e) }
+    } catch (e) { console.error('Error loading all stages:', e) };
   }
 
   // Get all research categories
@@ -161,7 +161,7 @@ export class SearchBarService {
     try {
       return this.allCategoriesGQL.fetch()
         .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
-    } catch (e) { console.error('Error loading all Categories:', e) }
+    } catch (e) { console.error('Error loading all Categories:', e) };
   }
 
   // Get all organisations
@@ -169,7 +169,7 @@ export class SearchBarService {
     try {
       return this.allOrganisationsGQL.fetch()
         .pipe(pluck('data', 'orgUnitCollection')) as Observable<OrgUnitCollection>
-    } catch (e) { console.error('Error loading all organisations:', e) }
+    } catch (e) { console.error('Error loading all organisations:', e) };
   }
 
   // Get all Events
@@ -177,7 +177,7 @@ export class SearchBarService {
     try {
       return this.allEventsGQL.fetch()
         .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
-    } catch (e) { console.error('Error loading all Events:', e) }
+    } catch (e) { console.error('Error loading all Events:', e) };
   }
 
   // Get All Pages
@@ -185,7 +185,7 @@ export class SearchBarService {
     try {
       return this.allPagesGQL.fetch()
         .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) }
+    } catch (e) { console.error('Error loading all pages:', e) };
   }
 
   // Get All Pages by Category
@@ -193,7 +193,7 @@ export class SearchBarService {
     try {
       return this.allItemsByCategoryGQL.fetch({ displayOrder: filter })
         .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) }
+    } catch (e) { console.error('Error loading all pages:', e) };
   }
 
   // Get All Pages by Stage
@@ -201,7 +201,7 @@ export class SearchBarService {
     try {
       return this.allItemsByStageGQL.fetch({ displayOrder: filter })
         .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) }
+    } catch (e) { console.error('Error loading all pages:', e) };
   }
 
   // Get All Pages by Organisation
@@ -209,7 +209,7 @@ export class SearchBarService {
     try {
       return this.allItemsByOrganisationGQL.fetch({ displayOrder: filter })
         .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) }
+    } catch (e) { console.error('Error loading all pages:', e) };
   }
 
   // Create list result
@@ -224,7 +224,7 @@ export class SearchBarService {
       this.setTotalPages(this.getTotalPages());
 
       // Create deep copy of category array to handle events manually
-      const categories = this.getCategory().map(x => { return  x });
+      let categories = this.getCategory().map(x => { return  x });
 
       // If event is selected, remove it from search parameters, event is a content model so must be handled differently
       if (this.getCategory().includes(this.getEventId())) {
@@ -233,7 +233,7 @@ export class SearchBarService {
       }
 
       // Create the search query
-        const query = {
+        let query = {
           query: this.getSearchText(),
           size: 10,
           from: (this.getCurrentPage() - 1) * 10,
@@ -248,9 +248,9 @@ export class SearchBarService {
 
         // Send the POST request
         this.http.post(environment.searchUrl, query).subscribe(data => {
-          const array = [];
+          let array = [];
           data["result"]["hits"]["hits"].forEach(element => {
-            const result = {
+            let result = {
               "title": element._source.fields.title["en-US"],
               "summary" : element._source.fields.summary["en-US"],
               "slug" : element._source.fields.slug["en-US"],

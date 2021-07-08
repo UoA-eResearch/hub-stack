@@ -39,7 +39,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allEvents$: Observable<EventCollection>;
   public parentSubHubs;
-  public isMobile: boolean;
+  public isMobile: Boolean;
   
   constructor(
     public route: ActivatedRoute,
@@ -77,10 +77,10 @@ export class EventsComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual Event,
      * therefore run the corresponding query. If not, return all Events.
      */
-    if (this.slug) {
+    if (!!this.slug) {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllEventSlugs().subscribe(data => {
-        const slugs = [];
+        let slugs = [];
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
@@ -123,7 +123,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     try {
       return this.allEventsGQL.fetch()
         .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
-    } catch (e) { console.error('Error loading all Events:', e) }
+    } catch (e) { console.error('Error loading all Events:', e) };
   }
 
   /**
@@ -137,7 +137,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     try {
       return this.allEventSlugsGQL.fetch()
         .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
-    } catch (e) { console.error('Error loading all events:', e) }
+    } catch (e) { console.error('Error loading all events:', e) };
   }
 
   /**
