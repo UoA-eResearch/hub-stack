@@ -32,7 +32,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
   };
 
-  public isMobile: boolean;
+  public isMobile: Boolean;
   public bannerTextStyling;
   public slug: string;
   public article;
@@ -85,10 +85,10 @@ export class ArticlesComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual article,
      * therefore run the corresponding query. If not, return all articles.
      */
-    if (this.slug) {
+    if (!!this.slug) {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllArticlesSlugs().subscribe(data => {
-        const slugs = [];
+        let slugs = [];
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
@@ -125,7 +125,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     try {
       return this.allArticlesGQL.fetch()
         .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all articles:', e) }
+    } catch (e) { console.error('Error loading all articles:', e) };
   }
 
   /**
@@ -139,7 +139,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     try {
       return this.allArticlesSlugsGQL.fetch()
         .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all articles:', e) }
+    } catch (e) { console.error('Error loading all articles:', e) };
   }
 
   /**

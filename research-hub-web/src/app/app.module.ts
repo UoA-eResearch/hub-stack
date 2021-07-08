@@ -125,7 +125,7 @@ export class AppModule {
     // const link = error.concat(http);
     // Create the default (global) Apollo client
     const client = apollo.create({
-      cache: new InMemoryCache({ fragmentMatcher }) ,
+      cache: new InMemoryCache({ fragmentMatcher }) as InMemoryCache,
       link: error.concat(http),
       defaultOptions: {
         watchQuery: {

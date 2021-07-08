@@ -40,7 +40,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   public bodyLinks$: Subscription;
   public allEquipment$: Observable<EquipmentCollection>;
   public parentSubHubs;
-  public isMobile: boolean;
+  public isMobile: Boolean;
 
   constructor(
     public route: ActivatedRoute,
@@ -79,10 +79,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual Equipment,
      * therefore run the corresponding query. If not, return all Equipment.
      */
-    if (this.slug) {
+    if (!!this.slug) {
       // Check if the equipment slug is valid otherwise redirect to 404
       this.getAllEquipmentSlugs().subscribe(data => {
-        const slugs = [];
+        let slugs = [];
           data.items.forEach(data => {
             slugs.push(data.slug)
           })
@@ -118,7 +118,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     try {
       return this.allEquipmentGQL.fetch()
         .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
-    } catch (e) { console.error('Error loading all Equipment:', e) }
+    } catch (e) { console.error('Error loading all Equipment:', e) };
   }
 
   /**
@@ -132,7 +132,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     try {
       return this.allEquipmentSlugsGQL.fetch()
         .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
-    } catch (e) { console.error('Error loading all equipment', e) }
+    } catch (e) { console.error('Error loading all equipment', e) };
   }
 
   /**

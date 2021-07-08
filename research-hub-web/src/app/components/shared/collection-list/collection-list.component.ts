@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class CollectionListComponent implements OnInit, OnDestroy {
   public pageNumber;
-  public loading = false;
+  public loading: Boolean = false;
   public itemsPerPage = 10;
   public searchTextSub: Subscription;
 
@@ -72,6 +72,6 @@ export class CollectionListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    try { this.searchTextSub.unsubscribe(); } catch {}
+    try { this.searchTextSub.unsubscribe(); } catch {};
   }
 }

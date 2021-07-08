@@ -9,9 +9,9 @@ import { map } from 'rxjs/operators';
  * method. It contains an array of SubHubs, with their title and slug.
  */
 export interface SubHubTitleAndSlug {
-  title: string,
-  slug: string
-}
+  title: String,
+  slug: String
+};
 
 @Injectable({
   providedIn: 'root'
@@ -118,7 +118,7 @@ export class CerGraphqlService {
             if (subHub.slug === item.slug) {
               throw new Error('Circular SubHub structure detected');
             }
-          }
+          };
           breadcrumbsArray.push({ title: item.title, slug: item.slug }); // Push it to the breadcrumbsArray
           return this._getBreadCrumbsArray(item.slug, breadcrumbsArray); // Call the function on the SubHub
         }
@@ -196,7 +196,7 @@ class SubHubMap {
    * @param subHub The current SubHub we are looking in
    */
   findParentSubHub(subHubSlug: string, subHub: Content | ContentMap): Content | ContentMap {
-    if (subHub[subHubSlug]) { return subHub; } // If the subHub is in the current SubHub
+    if (subHub[subHubSlug]) { return subHub; }; // If the subHub is in the current SubHub
 
     const childSubHubs: string[] = Object.keys(subHub) // Otherwise look at its children
       .filter(key => subHub[key].typeName === 'SubHub')
