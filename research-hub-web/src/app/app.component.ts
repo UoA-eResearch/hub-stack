@@ -1,5 +1,5 @@
 import { filter, pluck, flatMap } from 'rxjs/operators';
-import { Component, ContentChildren, OnDestroy, OnInit } from '@angular/core';
+import { Component, ContentChildren, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
@@ -19,6 +19,7 @@ import supportsWebP from 'supports-webp';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: []
 })
 export class AppComponent implements OnInit, OnDestroy {
