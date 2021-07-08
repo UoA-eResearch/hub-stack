@@ -2,7 +2,7 @@
 @import "styles-common";
 
 div.notification-bar-container {
-  background: map-get($hub-pink, 500);
+  background: $light-blue;
   transition: all 0.1s ease-in-out;
   a {
     text-decoration: underline;
