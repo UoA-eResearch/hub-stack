@@ -7,7 +7,7 @@ ADD package-lock.json .
 ADD index.ts .
 ADD tsconfig.json .
 ADD authenticateByJwt.ts .
-ADD executeQuery.ts .
+ADD validateUnauthenticatedQuery.ts .
 ADD assertResultsArePublicItems.ts .
 ADD jest.config.js .
 
