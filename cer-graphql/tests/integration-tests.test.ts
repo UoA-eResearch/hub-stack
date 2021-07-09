@@ -1,10 +1,7 @@
 import { createServer, getCredentials } from "../index";
-import { createTestClient } from "apollo-server-testing";
-import { ApolloServer } from "apollo-server";
 import * as TQ from './test-queries'; // Collection of test queries
 import aws from 'aws-sdk';
 import fetch from "node-fetch";
-import { AddressInfo } from "net";
 // This package does not have type declarations.
 const aws4 = require('aws4');
 
