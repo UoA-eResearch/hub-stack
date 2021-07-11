@@ -215,7 +215,7 @@ export async function createServer (config: CerGraphqlServerConfig) {
       // apply query validation rules
       validationRules: [
         depthLimit(
-          5,
+          7,
           { ignore: [] }
         ),
       ],
