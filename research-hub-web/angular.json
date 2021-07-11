@@ -24,7 +24,9 @@
               "src/styles.scss",
               "src/app/components/error-routing/error-routing.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/tagManager.js"
+            ],
             "allowedCommonJsDependencies": [
               "graphql-tag",
               "crypto-js",
