@@ -209,7 +209,7 @@ export async function createServer (config: CerGraphqlServerConfig) {
       playground: enablePlayground,
       rootValue: (document: DocumentNode) => {
         // This sets the root value for each resolver to be the query document,
-        // enabling us to run validation functions in the resolver.
+        // enabling us to have the whole query document in resolvers.
         return document;
       },
       // apply query validation rules
