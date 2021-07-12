@@ -7,6 +7,7 @@ import {
     ASTNode,
     FieldNode,
     FragmentDefinitionNode,
+    GraphQLResolveInfo,
     GraphQLSchema,
     TypeInfo,
     visit,
@@ -58,12 +59,35 @@ type FragmentFieldDepthInfo = {
     name: string
 };
 
-function visitFragments(field: ASTNode, fragments: Record<string, FragmentDefinitionNode>) {
-    // First, visit field node and find fragmentspreads.
-    // For each fragmentspread
-        // visit node and find fragmentspread
-        // if 0, return fields and their depths
-        // if >0, return fields + visit fragmentspread
+// function visitFragments(field: ASTNode, fragments: Record<string, FragmentDefinitionNode>) {
+//     // First, visit field node and find fragmentspreads.
+//     // For each fragmentspread
+//         // visit node and find fragmentspread
+//         // if 0, return fields and their depths
+//         // if >0, return fields + visit fragmentspread
+// }
+
+function assertNoDeepProtectedFieldsInResolver(resolverInfo: GraphQLResolveInfo, protectedTypes: Set<string>, maxDepth = 3) {
+    if (!resolverInfo) {
+        return;
+    }
+    const { schema, fieldNodes, returnType } = resolverInfo;
+    // Field depths (i.e. where in the query does this field appear), keyed by field name
+    const depthByField: Record<string, number[]> = {};
+    // How deep do fragment spreads occur, keyed by fragment name
+    const fragmentSpreads: Record<string, number[]> = {};
+    // Which fields are in fragments and how deep are they in the fragment, keyed by fragment name.
+    const fieldsInFragment: Record<string, FragmentFieldDepthInfo[]> = {};
+    
+    // Start typeInfo at the type the resolver is in.
+    const typeInfo = new TypeInfo(schema, undefined, returnType);
+
+    visit(fieldNodes[0], {
+        FragmentSpread(node, key, parent, path, ancestors) {
+            const name = node.name.value;
+            resolverInfo
+        }
+    });
 }
 
 /**
@@ -204,6 +228,7 @@ function assertProtectedTypeHasSsoField(document: ASTNode | undefined, schema: G
     // First, find fields and group them by their type and path. 
     visit(document, visitWithTypeInfo(typeInfo, {
         Field(node, key, parent, path, ancestors) {
+            
             const name = node.name.value;
             const parentType = typeInfo.getParentType()?.name || "";
             const lowerCaseParentType = parentType[0].toLowerCase() + parentType.substring(1);
@@ -238,6 +263,13 @@ function assertProtectedTypeHasSsoField(document: ASTNode | undefined, schema: G
     // Returns verification required if at least some of the types require verification.
     return typeInstancesVerificationStatus.some(status => status);
 }
+
+export function validateUnauthenticatedQueryField(resolveInfo: GraphQLResolveInfo, protectedTypes: Set<string>): boolean {
+    const { fieldNodes, schema, parentType } = resolveInfo;
+    assertNoDeepProtectedFields(fieldNodes[0], schema, protectedTypes);
+    assertNoAliasingSsoProtectedOrItems(fieldNodes[0]);
+    return assertProtectedTypeHasSsoField(fieldNodes[0], schema, protectedTypes);
+}
 /**
  * Given a query, checks whether it conforms to conditions we have
  * for unauthenticated queries, and whether the results from this
@@ -247,12 +279,6 @@ function assertProtectedTypeHasSsoField(document: ASTNode | undefined, schema: G
  * @throws AuthenticationError if the query exceeds what an unauthenticated
  * query should have. 
  */
-// export function validateUnauthenticatedQuery(resolveInfo: GraphQLResolveInfo, protectedTypes: Set<string>): boolean {
-    // const { fieldNodes, schema, parentType } = resolveInfo;
-        // assertNoDeepProtectedFields(fieldNodes[0], parentType, schema, protectedTypes);
-    // assertNoAliasingSsoProtectedOrItems(fieldNodes[0]);
-    // return assertProtectedTypeHasSsoField(fieldNodes[0], schema, protectedTypes);
-
 export function validateUnauthenticatedQuery(document: ASTNode, schema: GraphQLSchema, protectedTypes: Set<string>) {
     assertNoDeepProtectedFields(document, schema, protectedTypes);
     assertNoAliasingSsoProtectedOrItems(document);
