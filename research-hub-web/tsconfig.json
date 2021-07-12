@@ -49,6 +49,9 @@
       "@assets/*": [
         "assets/*"
       ],
+      "crypto": [
+        "../node_modules/crypto-js"
+      ]
     },
   },
   "angularCompilerOptions": {
