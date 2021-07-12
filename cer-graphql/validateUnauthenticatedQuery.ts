@@ -58,14 +58,6 @@ type FragmentFieldDepthInfo = {
     name: string
 };
 
-function visitFragments(field: ASTNode, fragments: Record<string, FragmentDefinitionNode>) {
-    // First, visit field node and find fragmentspreads.
-    // For each fragmentspread
-        // visit node and find fragmentspread
-        // if 0, return fields and their depths
-        // if >0, return fields + visit fragmentspread
-}
-
 /**
  * Given a query document, check that it doesn't ask for protected, nested fields on protected types.
  * @param document The query document
@@ -83,9 +75,7 @@ function assertNoDeepProtectedFields(document: ASTNode | undefined, schema: Grap
     // Which fields are in fragments and how deep are they in the fragment, keyed by fragment name.
     const fieldsInFragment: Record<string, FragmentFieldDepthInfo[]> = {};
 
-    // const typeInfo = new TypeInfo(schema, undefined, type);
     const typeInfo = new TypeInfo(schema);
-    // typeInfo.enter(document);
 
     // First, we collect all the fields and their paths in the query.
     // If there are fragments, we collect the fields separately, because
@@ -247,12 +237,6 @@ function assertProtectedTypeHasSsoField(document: ASTNode | undefined, schema: G
  * @throws AuthenticationError if the query exceeds what an unauthenticated
  * query should have. 
  */
-// export function validateUnauthenticatedQuery(resolveInfo: GraphQLResolveInfo, protectedTypes: Set<string>): boolean {
-    // const { fieldNodes, schema, parentType } = resolveInfo;
-        // assertNoDeepProtectedFields(fieldNodes[0], parentType, schema, protectedTypes);
-    // assertNoAliasingSsoProtectedOrItems(fieldNodes[0]);
-    // return assertProtectedTypeHasSsoField(fieldNodes[0], schema, protectedTypes);
-
 export function validateUnauthenticatedQuery(document: ASTNode, schema: GraphQLSchema, protectedTypes: Set<string>) {
     assertNoDeepProtectedFields(document, schema, protectedTypes);
     assertNoAliasingSsoProtectedOrItems(document);
