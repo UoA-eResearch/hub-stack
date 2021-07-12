@@ -19,6 +19,7 @@ resource "aws_cloudfront_distribution" "secondary_website" {
   enabled             = true
   default_root_object = var.index_doc
   is_ipv6_enabled     = false
+  web_acl_id          = var.create_firewall ? aws_waf_web_acl.waf_acl[0].id : null
 
   default_cache_behavior {
     # The following commented block shows how to configure a Lambda@Edge
@@ -34,6 +35,9 @@ resource "aws_cloudfront_distribution" "secondary_website" {
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = var.dns_entry_secondary
+    
+    # support gzip and other http transfer compression
+    compress         = true
 
     forwarded_values {
       query_string = true

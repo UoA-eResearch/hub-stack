@@ -35,7 +35,8 @@ two_fab_url = "https://apigw.prod.amazon.auckland.ac.nz/aws-token-grabber/"
 route53_hosted_zone_id = "ZLHJUA7WC63E9"  # Prod uses on-prem DNS
 
 # Network
-vpc_id           = "vpc-0b478c527a885336d"
+vpc_id          = "vpc-0b478c527a885336d"
+create_firewall = false
 
 # Loadbalancer for ECS
 lb_name = "rhubcpapi-lb-prod"

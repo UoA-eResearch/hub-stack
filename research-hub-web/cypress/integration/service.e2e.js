@@ -5,15 +5,15 @@ describe('ResearchHubs services Pages', () => {
     });
 
     it('can visit an service and display its title', () => {
-        cy.contains('Research Virtual Machines');
+        cy.get('h1.content-title').text().should('not.be.empty');
     });
 
     it('can visit an service and display its subtitle', () => {
-        cy.expect('#service-container .content-summary').not.to.be.empty;
+        cy.get('#service-container .content-summary').text().should('not.be.empty');
     });
 
     it('service displays body text', () => {
-        cy.expect('#service-container ng-component.ng-star-inserted').not.to.be.empty;
+        cy.get('#service-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
     });
 
     it('service displays specifications table', () => {
@@ -26,20 +26,20 @@ describe('ResearchHubs services Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in mat-nav-list:first-child').click();
-        cy.expect('h2.featured-title').not.to.be.empty;
+        cy.get('#you-might-be-interested-in mat-nav-list:first-child mat-card-title > h4 > a').click();
+        cy.get('h1.content-title').text().should('not.be.empty');
     });
 
     it('displays a list of contacts', () => {
-        cy.expect('#contacts mat-card:first-child h4').not.to.be.empty;
+        cy.get('#contacts .card-title').text().should('not.be.empty');
     });
     
     it('displays a list of documents', () => {
-        cy.expect('#documents mat-card:first-child h4').not.to.be.empty;
+        cy.get('#documents mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });
     
     it('displays a list of organisations', () => {
-        cy.expect('#organisations mat-card:first-child h4').not.to.be.empty;
+        cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });
 
 });

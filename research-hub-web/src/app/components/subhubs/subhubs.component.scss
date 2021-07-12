@@ -1,7 +1,23 @@
 @import "variables";
 
+/**
+ * banner Image
+ */
+ .mobile-banner {
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-repeat: no-repeat;
+}
+
+.standard-banner {
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding: 72px 0px;
+}
+
 div.mat-card-avatar mat-icon {
-  color: map-get($hub-teal, 800);
+  color: $dark-blue;
 }
 
 .related-item-summary {
