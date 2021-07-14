@@ -17,8 +17,7 @@ import { map } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class NotificationComponent implements OnInit, OnDestroy {
-  private notificationQuery$: Subscription;
-
+  private subscriptions: Subscription =  new Subscription();
   public showNotification = false;
   public hasBeenDismissed = false;
   public notification: JSON;
@@ -28,12 +27,14 @@ export class NotificationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.notificationQuery$ = this.getNotification.fetch().pipe(
-      map((result) => result.data.homepageCollection.items[0].notification)
-    ).subscribe((result) => {
-      this.notification = result.json;
-      this.showNotification = true;
-    });
+    this.subscriptions.add(
+      this.getNotification.fetch().pipe(
+        map((result) => result.data.homepageCollection.items[0].notification)
+      ).subscribe((result) => {
+        this.notification = result.json;
+        this.showNotification = true;
+      })
+    );
 
   }
 
@@ -43,7 +44,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.notificationQuery$?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
 }

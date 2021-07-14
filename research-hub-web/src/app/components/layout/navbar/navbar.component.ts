@@ -18,8 +18,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public allCategories: Category[] = [];
   public allStages: Stage[] = [];
 
-  private allCategoriesSub: Subscription;
-  private allStagesSub: Subscription;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private router: Router,
@@ -39,8 +38,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.currentUrl = event.urlAfterRedirects;
     }});
 
-    this.allCategoriesSub = this.getAllCategories().subscribe((allCategories) => this.allCategories = allCategories);
-    this.allStagesSub = this.getAllStages().subscribe((allStages) => this.allStages = allStages);
+    this.subscriptions.add(this.getAllCategories().subscribe((allCategories) => this.allCategories = allCategories));
+    this.subscriptions.add(this.getAllStages().subscribe((allStages) => this.allStages = allStages));
   }
 
   private getAllCategories(): Observable<Category[]> {
@@ -56,8 +55,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.allCategoriesSub?.unsubscribe();
-    this.allStagesSub?.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
 }
