@@ -5,32 +5,32 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('can visit an article and display its title', () => {
-        cy.expect('h1.content-title').not.to.be.empty;
+        cy.get('h1.content-title').text().should('not.be.empty');
     });
 
     it('can visit an article and display its subtitle', () => {
-       cy.expect('#article-container .content-summary').not.to.be.empty; 
+        cy.get('#article-container .content-summary small').text().should('not.be.empty');
     });
 
     it('article displays body text', () => {
-        cy.expect('#article-container ng-component.ng-star-inserted').not.to.be.empty;
+        cy.get('#article-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
     });
 
     it('displays a list of related items', () => {
-        cy.get('#you-might-be-interested-in').should('exist');
+        cy.get('#you-might-be-interested-in mat-nav-list:first-child .card-title').text().should('not.be.empty');
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in mat-nav-list:first-child').click();
-        cy.expect('h2.featured-title').not.to.be.empty;
+        cy.get('#you-might-be-interested-in mat-nav-list:first-child mat-card-title > h4 > a').click();
+        cy.get('h1.content-title').text().should('not.be.empty');
     });
 
     it('displays a list of documents', () => {
-        cy.get('#documents').contains('Open Access Guidelines').should('exist');
+        cy.get('#documents mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations').should('exist');
+        cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });
 
 });

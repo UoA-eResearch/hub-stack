@@ -74,14 +74,14 @@
   margin-top: 10px;
 }
 .download a {
-  color: map-get($hub-navy, 500);
+  color: $light-blue;
 }
 .mat-card-title a {
-  color: map-get($hub-navy, 500);
+  color: $light-blue;
   border-bottom: solid 2px transparent;
 }
 .mat-card-title a:hover {
-  border-bottom: solid 2px map-get($hub-navy, 500);
+  border-bottom: solid 2px $light-blue;
 }
 .mat-card:hover .download-arrow {
   -webkit-animation: download 0.5s ease-in-out forwards;
@@ -147,10 +147,10 @@ mat-icon {
 
 .embedded-entry-block .mat-card-title a {
   font-size: 18px;
-  color: map-get($hub-navy, 500);
+  color: $light-blue;
 }
 .embedded-entry-block .mat-card-title a:hover {
-  border-bottom: solid 2px map-get($hub-navy, 500);
+  border-bottom: solid 2px $light-blue;
 }
 
 small {
@@ -185,14 +185,14 @@ small {
 .mat-card-title {
   span * {
     font-size: 18px;
-    color: map-get($hub-navy, 500);
+    color: $light-blue;
   }
 }
 .mat-card-title a {
   max-width: fit-content !important;
 }
 .mat-card-title a:hover {
-  border-bottom: solid 2px map-get($hub-navy, 500);
+  border-bottom: solid 2px $light-blue;
 }
 
 .mat-card-content {
@@ -239,7 +239,7 @@ small {
     td {
       padding: 8px;
       word-break: keep-all;
-      border: 1px solid map-get($hub-navy, 500);
+      border: 1px solid $light-blue;
     }
   }
 }

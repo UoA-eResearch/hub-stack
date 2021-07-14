@@ -27,4 +27,8 @@ query AllSearchableContentPublicFields {
     subHubCollection(where: { searchable: true }) {
         items { ...PublicFields }
     }
+
+    fundingCollection(where: { searchable: true }) {
+        items { ...PublicFields }
+    }
 }

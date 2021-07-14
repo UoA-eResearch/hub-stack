@@ -6,9 +6,9 @@
             <!-- Templates -->
             <ng-template #image>
                 <img mat-card-image 
-                     srcset="{{ subHub.banner?.url }}?fm=webp,
-                             {{ subHub.banner?.url }}"
-                     src="{{ subHub.banner?.url }}"
+                     srcset="{{ subHub.banner?.url }}?w=1000&fm=webp,
+                             {{ subHub.banner?.url }}?w=1000"
+                     src="{{ subHub.banner?.url }}?w=1000"
                      alt="{{ subHub.title }}-banner">
             </ng-template>
             <ng-template #noImage><div style="margin-top: 15px;"></div></ng-template>
