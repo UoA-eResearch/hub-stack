@@ -18,7 +18,7 @@ const deliveryApiClient = contentful.createClient({
   accessToken: token
 })
 
-const VALID_CONTENT_TYPES = ['article','caseStudy','equipment','event', 'funding', 'service','software','subHub'];
+const VALID_CONTENT_TYPES = ['article','casestudy','equipment','event', 'funding', 'service','software','subhub'];
 
 let credentials;
 try {
@@ -388,7 +388,7 @@ module.exports.bulk = async () => {
     };
     const contentfulData = await contentfulExport(options);
     validEntries = contentfulData.entries.filter(
-      entry => VALID_CONTENT_TYPES.includes(entry.sys.contentType.sys.id)
+      entry => VALID_CONTENT_TYPES.includes(entry.sys.contentType.sys.id.toLowerCase())
     );
 
     console.log(`Found ${validEntries.length} entries to upload.`);
