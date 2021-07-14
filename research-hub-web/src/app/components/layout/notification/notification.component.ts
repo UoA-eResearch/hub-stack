@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-notification',
   template: `
-    <div *ngIf="false && !hasBeenDismissed" class="notification-bar-container" fxLayout="row">
+    <div *ngIf="showNotification && !hasBeenDismissed" class="notification-bar-container" fxLayout="row">
       <div class="notification-bar-content">
         <div [innerHTML]="this.notification | richTextToHTML"></div>
       </div>
