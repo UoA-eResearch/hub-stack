@@ -65,7 +65,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    HomeModule,
     HttpLinkModule,
     ErrorPagesModule,
     AppLayoutModule
