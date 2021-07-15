@@ -1,20 +1,17 @@
 query GetHomepage {
-    homepageCollection(limit: 1) {
+  homepageCollection(limit: 1) {
+    items {
+      image {
+        url
+      }
+      featuredItemsCollection {
         items {
-            image {
-                url
-            }
-            featuredItemsCollection {
-                items {
-                    ...PublicFields
-                }
-            }
-            featuredItemsDescription
-            researchCategories
-            researchActivities
-            notification {
-                json
-            }
+          ...PublicFields
         }
+      }
+      featuredItemsDescription
+      researchCategories
+      researchActivities
     }
+  }
 }

@@ -30,7 +30,12 @@
 
     </mat-nav-list>
   </mat-sidenav>
-  <ng-content></ng-content>
+
+  <!--router content-->
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
 </mat-sidenav-container>
 
 <ng-template #isSignedIn>

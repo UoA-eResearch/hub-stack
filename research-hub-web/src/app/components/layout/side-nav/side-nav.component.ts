@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss']
 })
-export class SideNavComponent implements OnInit {
+export class SideNavComponent {
   @ViewChild('sidenav') sideNav: MatSidenav;
   @Input() allCategories: Category[] = [];
   @Input() allStages: Stage[] = [];
@@ -24,9 +24,6 @@ export class SideNavComponent implements OnInit {
     public searchBarService: SearchBarService,
     public loginService: LoginService
   ) { }
-
-  ngOnInit(): void {
-  }
 
   toggle(): void {
     this.sideNav.toggle();

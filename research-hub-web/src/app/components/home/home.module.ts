@@ -9,6 +9,7 @@ import { ResearchActivityComponent } from './research-activity/research-activity
 import { SharedModule } from '@components/shared/app.shared.module';
 import { ContentTitleComponent } from './content-title/content-title.component';
 import { ContentContainerComponent } from './content-container/content-container.component';
+import { BannerImageComponent } from './banner-image/banner-image.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ContentContainerComponent } from './content-container/content-container
     ResearchActivityComponent,
     FeaturedComponent,
     ContentTitleComponent,
-    ContentContainerComponent
+    ContentContainerComponent,
+    BannerImageComponent
   ]
 })
 export class HomeModule {

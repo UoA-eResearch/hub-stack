@@ -1,0 +1,87 @@
+@import "mixins";
+@import "variables";
+
+.banner-container-home {
+  height: 100vh;
+  text-align: center;
+  max-height: auto;
+  background-size: cover !important;
+  .banner-content-home {
+    margin: 20vh 2.5vh;
+    display: inline-block;
+    @include size(medium) {
+      margin: 25vh 10vh;
+      display: inline-block;
+    }
+    .banner-text {
+      width: auto !important;
+      .page-summary,
+      .page-title {
+        text-shadow: 0px 0px 8px $dark-grey;
+        margin: 0 auto;
+        font-weight: lighter;
+        color: white !important;
+        @include size(medium) {
+          width: 45vw !important;
+        }
+      }
+      .page-title {
+        color: #ffffff;
+        margin-bottom: 32px;
+        font-size: 48px;
+        @include size(medium) {
+          font-size: 92px;
+        }
+      }
+      .page-summary {
+        font-size: 20px;
+        word-wrap: break-word;
+        color: $light-grey;
+        line-height: 100%;
+      }
+    }
+  }
+}
+
+/**
+ * Explore arrow animation
+ */
+ @keyframes explore {
+  0% {
+    margin-top: 5px;
+  }
+  50% {
+    margin-top: 16px;
+  }
+  100% {
+    margin-top: 5px;
+  }
+}
+@keyframes explore2 {
+  0% {
+    margin-top: 0px;
+  }
+  50% {
+    margin-top: 3px;
+  }
+  100% {
+    margin-top: 0px;
+  }
+}
+/*
+ * Explore Arrow
+ */
+.explore {
+  cursor: pointer;
+  p {
+    animation: explore2 1.5s infinite;
+  }
+  .explore-arrow {
+    animation: explore 1.5s infinite;
+  }
+}
+
+// Set background
+.background {
+  height: 100vh
+}
