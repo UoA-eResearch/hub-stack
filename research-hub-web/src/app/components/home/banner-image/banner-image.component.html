@@ -1,4 +1,8 @@
-<div class="banner-container-home" [ngStyle]="{'background': url !== undefined ? 'linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(' + url + ') no-repeat fixed center' : ''}">
+<div
+  class="banner-container-home"
+  *ngIf="bannerImageUrl$ | async; let url"
+  [ngStyle]="{'background': 'linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(' + url + ') no-repeat fixed center'}"
+>
 
   <!-- Homepage Banner -->
   <div class="banner-content-home">
