@@ -111,9 +111,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.searchText = '';
-    this.title = "Welcome to the ResearchHub"
-    this.summary = "The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research."
 
     this.titleSub = this.appComponentService.titleChange.subscribe((title) => {
       this.pageTitle = title;
