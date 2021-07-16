@@ -1,0 +1,12 @@
+query GetFeaturedItems {
+  homepageCollection(limit: 1) {
+    items {
+      featuredItemsDescription
+      featuredItemsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+    }
+  }
+}
