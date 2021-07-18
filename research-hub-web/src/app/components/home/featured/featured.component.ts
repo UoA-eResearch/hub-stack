@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GetFeaturedItemsGQL, GetFeaturedItemsQuery } from '@graphql/schema';
 
-type FeaturedItems = GetFeaturedItemsQuery['homepageCollection']['items'][0];
+type HomepageFeaturedItems = GetFeaturedItemsQuery['homepageCollection']['items'][number];
 
 @Component({
   selector: 'app-featured',
@@ -12,7 +12,7 @@ type FeaturedItems = GetFeaturedItemsQuery['homepageCollection']['items'][0];
   styleUrls: ['./featured.component.scss']
 })
 export class FeaturedComponent implements OnInit {
-  public featuredItems$: Observable<FeaturedItems>;
+  public featuredItems$: Observable<HomepageFeaturedItems>;
 
   constructor(
     public getFeaturedItemsGQL: GetFeaturedItemsGQL,
