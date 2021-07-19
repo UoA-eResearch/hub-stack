@@ -1,4 +1,3 @@
-import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';

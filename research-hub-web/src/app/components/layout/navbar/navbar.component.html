@@ -1,60 +1,69 @@
-<!-- Main Navbar -->
-<mat-toolbar
-  id="top-bar"
-  #topbar
-  color="primary"
-  class="mat-elevation-z6"
-  [ngStyle]="{'background-color': isHome ? 'transparent' : ''}"
+<div class="top-bar-wrapper">
+  <!--notification-->
+  <app-notification></app-notification>
+
+  <!-- Main Navbar -->
+  <mat-toolbar
+    id="top-bar"
+    #topbar
+    color="primary"
+    class="mat-elevation-z6"
+    [ngStyle]="{ 'background-color': isHome ? '' : '' }"
+  >
+    <!-- Mobile Menu Toggle -->
+    <button
+      role="button"
+      aria-label="menu"
+      fxHide.gt-sm
+      mat-icon-button
+      style="margin-right: 6px"
+      matTooltip="Menu"
+      (click)="sidenav.toggle()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <!-- Logo/Home -->
+    <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
+      <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
+    </a>
+
+    <!-- Space Divider -->
+    <span fxHide.lt-md style="flex: 1 1 auto"></span>
+
+    <!-- Search Icon (Mobile)-->
+    <button
+      role="button"
+      aria-label="search"
+      (click)="searchBarService.setSearchText('')"
+      (keydown.enter)="searchBarService.setSearchText('')"
+      mat-icon-button
+      fxHide.gt-sm
+      routerLink="/search"
+      matTooltip="Search"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <!--Navigation buttons-->
+    <ng-container *ngTemplateOutlet="search"></ng-container>
+    <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
+    <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
+    <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
+    <ng-container *ngIf="loginService.loggedIn$ | async; else signin">
+      <ng-container *ngTemplateOutlet="isSignedIn"></ng-container>
+    </ng-container>
+  </mat-toolbar>
+</div>
+
+<app-side-nav
+  #sidenav
+  [allCategories]="allCategories"
+  [allStages]="allStages"
+  [currentUrl]="currentUrl"
 >
-  <!-- Mobile Menu Toggle -->
-  <button
-    role="button"
-    aria-label="menu"
-    fxHide.gt-sm
-    mat-icon-button
-    style="margin-right: 6px"
-    matTooltip="Menu"
-    (click)="sidenav.toggle()"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
-
-  <!-- Logo/Home -->
-  <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
-    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
-  </a>
-
-  <!-- Space Divider -->
-  <span fxHide.lt-md style="flex: 1 1 auto"></span>
-
-  <!-- Search Icon (Mobile)-->
-  <button
-    role="button"
-    aria-label="search"
-    (click)="searchBarService.setSearchText('')"
-    (keydown.enter)="searchBarService.setSearchText('')"
-    mat-icon-button
-    fxHide.gt-sm
-    routerLink="/search"
-    matTooltip="Search"
-  >
-    <mat-icon>search</mat-icon>
-  </button>
-
-  <!--Navigation buttons-->
-  <ng-container *ngTemplateOutlet="search"></ng-container>
-  <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
-  <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
-  <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
-  <ng-container *ngIf="(loginService.loggedIn$ | async); else signin">
-    <ng-container *ngTemplateOutlet="isSignedIn"></ng-container>
-  </ng-container>
-</mat-toolbar>
-
-<app-side-nav #sidenav [allCategories]="allCategories" [allStages]="allStages" [currentUrl]="currentUrl">
   <router-outlet></router-outlet>
 </app-side-nav>
-
 
 <!--templates-->
 
