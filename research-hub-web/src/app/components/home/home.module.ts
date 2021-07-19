@@ -10,6 +10,7 @@ import { SharedModule } from '@components/shared/app.shared.module';
 import { ContentTitleComponent } from './content-title/content-title.component';
 import { ContentContainerComponent } from './content-container/content-container.component';
 import { BannerImageComponent } from './banner-image/banner-image.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { BannerImageComponent } from './banner-image/banner-image.component';
     FeaturedComponent,
     ContentTitleComponent,
     ContentContainerComponent,
-    BannerImageComponent
+    BannerImageComponent,
+    ContactComponent
   ]
 })
 export class HomeModule {

@@ -15,16 +15,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('categories') categories: QueryList<ElementRef>;
   @ViewChild('activities') activities: QueryList<ElementRef>;
 
-  /**
-   * Contact Section
-   */
-  // TODO this section should be in the CMS
-  public title = "Contact";
-  public description = "";
-  public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
-  public email = "eresearch-support@auckland.ac.nz";
-  public phone = "+64 9 373 7599 ext 82231";
-
   public featuredItemsDescription: string;
   public browseDescription: string;
   public researchActivitiesDescription: string;
