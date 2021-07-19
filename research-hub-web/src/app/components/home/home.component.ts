@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild } from '@angular/core';
-import { GetHomepageGQL, GetHomepageQuery, Homepage } from '@app/graphql/schema';
+import { GetHomepageGQL } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -25,7 +25,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   public email = "eresearch-support@auckland.ac.nz";
   public phone = "+64 9 373 7599 ext 82231";
 
-  public backgroundUrl: string;
+  public featuredItemsDescription: string;
+  public browseDescription: string;
+  public researchActivitiesDescription: string;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -39,7 +41,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getHomepageGQL.fetch().pipe(
         map(x => x.data.homepageCollection.items[0])
       ).subscribe(result => {
-        this.backgroundUrl = result.image.url;
+        this.featuredItemsDescription = result.featuredItemsDescription;
+        this.browseDescription = result.researchCategories;
+        this.researchActivitiesDescription = result.researchActivities;
       })
     )
   }

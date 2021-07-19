@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GetFeaturedItemsGQL, GetFeaturedItemsQuery } from '@graphql/schema';
+import { GetAllFeaturedItemsGQL, GetAllFeaturedItemsQuery } from '@graphql/schema';
 
-type HomepageFeaturedItems = GetFeaturedItemsQuery['homepageCollection']['items'][number];
+type HomepageFeaturedItems = GetAllFeaturedItemsQuery['featuredItemsCollection']['items'][number]['itemsCollection'];
 
 @Component({
   selector: 'app-featured',
@@ -11,15 +11,16 @@ type HomepageFeaturedItems = GetFeaturedItemsQuery['homepageCollection']['items'
   styleUrls: ['./featured.component.scss']
 })
 export class FeaturedComponent implements OnInit {
+  @Input() description: string;
   public featuredItems$: Observable<HomepageFeaturedItems>;
 
   constructor(
-    public getFeaturedItemsGQL: GetFeaturedItemsGQL
+    public getAllFeaturedItemsGQL: GetAllFeaturedItemsGQL
   ) { }
 
   ngOnInit(){
-    this.featuredItems$ = this.getFeaturedItemsGQL.fetch().pipe(
-      map(x => x.data.homepageCollection.items[0])
+    this.featuredItems$ = this.getAllFeaturedItemsGQL.fetch().pipe(
+      map(x => x.data.featuredItemsCollection.items[0].itemsCollection)
     );
   }
 }
