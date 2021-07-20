@@ -14,5 +14,5 @@ resource "aws_cloudfront_function" "redirect_spa" {
   comment = "Cloudfront Function that redirects requests to index.html for SPA."
   publish = true
 
-  code    = file("lambdas/redirect_spa.js")
+  code    = file("lambdas/redirect-spa.js")
 }
