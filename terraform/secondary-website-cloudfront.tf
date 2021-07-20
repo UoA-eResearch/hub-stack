@@ -47,6 +47,11 @@ resource "aws_cloudfront_distribution" "secondary_website" {
       event_type = "viewer-response"
       function_arn = aws_cloudfront_function.secure_headers.arn
     }
+
+    function_association {
+      event_type = "viewer-request"
+      function_arn = aws_cloudfront_function.redirect_spa.arn
+    }
   }
 
   # Log to bucket. Leave bucket as is, if Cloud Team is on the ball then no issues should arise.
@@ -64,22 +69,6 @@ resource "aws_cloudfront_distribution" "secondary_website" {
       restriction_type = "none"
       locations        = []
     }
-  }
-
-  # Specify custom error pages
-  # The following is required for a SPA to redirect to base
-  custom_error_response {
-    error_code            = "403"
-    response_page_path    = "/index.html"
-    response_code         = "200"
-    error_caching_min_ttl = 60
-  }
-
-  custom_error_response {
-    error_code            = "404"
-    response_page_path    = "/index.html"
-    response_code         = "200"
-    error_caching_min_ttl = 5
   }
 
   # Setup the SSL certificate that is used with HTTPS
