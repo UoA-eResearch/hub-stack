@@ -1,4 +1,4 @@
-import { OnDestroy, SimpleChanges } from '@angular/core';
+import { OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Component, OnInit, Input } from '@angular/core'
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './collection-list.component.html',
   styleUrls: ['./collection-list.component.scss']
 })
-export class CollectionListComponent implements OnInit, OnDestroy {
+export class CollectionListComponent implements OnInit, OnDestroy, OnChanges {
   public pageNumber;
   public loading: Boolean = false;
   public itemsPerPage = 10;
@@ -45,7 +45,7 @@ export class CollectionListComponent implements OnInit, OnDestroy {
     this.scrollToTop();
   }
 
-  
+
   // Scrolling to top of page on search
   scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
