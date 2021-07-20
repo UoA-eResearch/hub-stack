@@ -1,7 +1,7 @@
 <!-- If we're displaying a collection of articles-->
 <div
-    *ngIf="allEquipment$ | async as allEquipment" 
-    class="site-padding margin-bottom top-padding" 
+    *ngIf="allEquipment$ | async as allEquipment"
+    class="site-padding margin-bottom top-padding"
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [type]="'content'" [collection]="allEquipment"></app-collection-list>
 </div>
@@ -15,8 +15,8 @@
     </ng-template>
 
     <ng-template #dynamicBanner>
-        <div class="banner-container" 
-            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'" 
+        <div class="banner-container"
+            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'"
             [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
         </div>
     </ng-template>
@@ -57,7 +57,7 @@
                     <td role="cell">Audience</td>
                     <td [innerHTML]="equipment.audience" role="cell"></td>
                 </tr>
-            
+
                 <tr *ngIf="equipment.availability" role="row">
                     <td role="cell">Availability</td>
                     <td [innerHTML]="equipment.availability" role="cell"></td>
@@ -77,29 +77,29 @@
             </table>
         </div>
     </ng-template>
-    
+
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
         <app-cards id="you-might-be-interested-in" [hideImage]="hide" [flex]="flex" [title]="'Explore Related'"
             [contentItem]="equipment.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards id="organisations" [hideImage]="hide" [flex]="flex" [title]="'Organisations'" 
+        <app-cards id="organisations" [hideImage]="hide" [flex]="flex" [title]="'Organisations'"
             [contentItem]="equipment.relatedOrgsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
-        <app-cards id="documents" [hideImage]="hide" [flex]="flex" [title]="'Documents'" 
+        <app-cards id="documents" [hideImage]="hide" [flex]="flex" [title]="'Documents'"
             [contentItem]="equipment.relatedDocsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards id="contacts" [hideImage]="hide" [flex]="flex" [title]="'Contacts'" 
+        <app-cards id="contacts" [hideImage]="hide" [flex]="flex" [title]="'Contacts'"
             [contentItem]="equipment.relatedContactsCollection"></app-cards>
     </ng-template>
 
     <ng-template #titleSummary>
-        <h1 role="heading" aria-level="1" class="content-title" 
+        <h1 role="heading" aria-level="1" class="content-title"
             ngClass.lt-md="content-title-mobile"> {{ equipment.title }}</h1>
 
         <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs">
@@ -134,12 +134,12 @@
 
             <!-- Equipment Body -->
             <div>
-                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="equipment.bodyText.json"
+                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" [document]="equipment.bodyText.json"
                     [nodeRenderers]="nodeRenderers"> </ngx-contentful-rich-text>
             </div>
 
             <div class="section-2" fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column wrap" fxLayoutAlign="space-between">
-                
+
                 <!-- Specifications Table -->
                 <div fxFlex *ngIf="
                     equipment.manufacturer ||
@@ -185,4 +185,3 @@
     </div>
     <div class="section"></div>
 </div>
-    

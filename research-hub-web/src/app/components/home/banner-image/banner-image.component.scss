@@ -85,3 +85,19 @@
 .background {
   height: 100vh
 }
+
+/*
+ * Initial Search
+ */
+ .initial-search {
+  padding: 0px 1em;
+  width: 60vw;
+  margin: 0 auto;
+  font-size: 20px;
+  color: #fafafa;
+  border: 1px solid rgba(78, 78, 78, 0.6);
+  @include size(medium) {
+    width: 30vw;
+  }
+  background-color: rgba(202, 202, 202, 0.4);
+}

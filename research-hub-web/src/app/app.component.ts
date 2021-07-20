@@ -19,7 +19,6 @@ import supportsWebP from 'supports-webp';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   animations: []
 })
 export class AppComponent implements OnInit, OnDestroy {
