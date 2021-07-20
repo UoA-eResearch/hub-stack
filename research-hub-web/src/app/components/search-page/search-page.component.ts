@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { 
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
   CategoryCollection,
   OrgUnitCollection,
   StageCollection,
@@ -14,7 +14,7 @@ import { SearchBarService } from '@app/components/search-bar/search-bar.service'
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.scss']
 })
-export class SearchPageComponent implements OnInit {
+export class SearchPageComponent implements OnInit, OnDestroy {
   public allCategories$: Observable<CategoryCollection>;
   public allStages$: Observable<StageCollection>;
   public allOrganisations$: Observable<OrgUnitCollection>;
