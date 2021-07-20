@@ -1,4 +1,4 @@
-<div *ngIf="contentItem?.items?.length > 0" role="article">
+<div *ngIf="_contentItem?.items?.length > 0" role="article">
 
   <!-- Title of card collection -->
   <h3 *ngIf="title">{{ title }}
@@ -7,11 +7,11 @@
 
     <!-- Items List -->
     <div fxLayout="{{ flex }}" fxLayout.lt-md="column wrap" fxLayoutGap="1%">
-      <mat-nav-list role="list" fxFlex="19%" *ngFor="let content of contentItem.items" class="collection">
-          
+      <mat-nav-list role="list" fxFlex="19%" *ngFor="let content of _contentItem.items" class="collection">
+
       <!-- Templates -->
       <ng-template #image>
-        <img mat-card-image 
+        <img mat-card-image
               srcset="{{ content.banner?.url }}?w=1000&fm=webp,
                       {{ content.banner?.url }}?w=1000"
               src="{{ content.banner?.url }}?w=1000"
