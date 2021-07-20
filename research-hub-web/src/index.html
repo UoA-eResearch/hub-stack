@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" style="margin: 0;">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <title>ResearchHub</title>
@@ -10,9 +10,7 @@
     <link rel="icon" href="./assets/imgs/favicon.png?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      
-    <script>__Zone_enable_cross_context_check = true;</script>
-  
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="ResearchHub" />
@@ -29,56 +27,6 @@
     <meta property="og:image" content="https://images.ctfassets.net/vbuxn5csp0ik/5IfxoF4WQ4Ks71q2HeLbgC/d0c3bb826ceebd31be789a73edac48fe/UoA_Details_230-min.jpeg?w=1200&h=630&q=90" />
     <meta property="og:image:alt" content="The University of Auckland" />
     <meta property="og:image:type" content="image/jpeg" />
-
-    <!-- Data Layer initialization for Google Tag Manager -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-    </script>
-
-    <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-        w[l] = w[l] || []; w[l].push({
-          'gtm.start':
-            new Date().getTime(), event: 'gtm.js'
-        }); var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'dataLayer', 'GTM-KD4QCHV');</script>
-    <!-- End Google Tag Manager -->
-
-    <style type="text/css">
-      body, html { height: 100% }
-
-      .app-loading {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-      }
-
-      .app-loading .spinner {
-        height: 15vh!important;
-        width: 15vh!important;
-        animation: rotate 1.5s linear infinite;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-      }
-
-      .app-loading .spinner .path {
-        animation: dash 3.5s ease-in-out infinite;
-        fill: #00467f;
-      }
-
-      @keyframes rotate {
-        100% { transform: rotate(360deg) }}
-
-    </style>
   </head>
 
   <body>
@@ -87,13 +35,6 @@
         style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
-    <app-root>
-      <!-- Loading SVG replaced by app after startup -->
-      <div class="app-loading">
-        <div class="logo"></div>
-        <svg class="spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-        </svg>
-      </div>
-    </app-root>
+    <app-root></app-root>
   </body>
 </html>

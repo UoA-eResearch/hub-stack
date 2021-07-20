@@ -1,5 +1,5 @@
 # Basic ALB configuration
-resource "aws_alb" "ecs-load-balancer" {
+resource "aws_lb" "ecs-load-balancer" {
   name            = var.lb_name
   security_groups = [aws_security_group.loadbalancer_sg.id]
   subnets         = var.lb_subnets
@@ -20,8 +20,8 @@ resource "aws_route53_record" "ecs-lb-entry" {
   type    = "A"
 
   alias {
-    name                   = aws_alb.ecs-load-balancer.dns_name
-    zone_id                = aws_alb.ecs-load-balancer.zone_id
+    name                   = aws_lb.ecs-load-balancer.dns_name
+    zone_id                = aws_lb.ecs-load-balancer.zone_id
     evaluate_target_health = false
   }
 }
@@ -33,8 +33,8 @@ resource "aws_route53_record" "ecs-lb-entry-ipv6" {
   type    = "AAAA"
 
   alias {
-    name                   = aws_alb.ecs-load-balancer.dns_name
-    zone_id                = aws_alb.ecs-load-balancer.zone_id
+    name                   = aws_lb.ecs-load-balancer.dns_name
+    zone_id                = aws_lb.ecs-load-balancer.zone_id
     evaluate_target_health = false
   }
 }
@@ -93,8 +93,8 @@ resource "aws_security_group_rule" "container_outbound" {
 
 # Redirect insecure to secure
 # Even with basic messages we don't want information leakage
-resource "aws_alb_listener" "alb-listener-insecure" {
-  load_balancer_arn = aws_alb.ecs-load-balancer.id
+resource "aws_lb_listener" "alb-listener-insecure" {
+  load_balancer_arn = aws_lb.ecs-load-balancer.id
   port              = "80"
   protocol          = "HTTP"
 
@@ -108,7 +108,7 @@ resource "aws_alb_listener" "alb-listener-insecure" {
     }
   }
 
-  depends_on = [aws_alb.ecs-load-balancer]
+  depends_on = [aws_lb.ecs-load-balancer]
 }
 
 # Default secure response is that nothing is there
@@ -116,8 +116,8 @@ resource "aws_alb_listener" "alb-listener-insecure" {
 # however it can be a nice addition, and makes scaling 
 # a matter of adding services to the listener without 
 # messing with the default
-resource "aws_alb_listener" "alb-listener" {
-  load_balancer_arn = aws_alb.ecs-load-balancer.id
+resource "aws_lb_listener" "alb-listener" {
+  load_balancer_arn = aws_lb.ecs-load-balancer.id
   port              = "443"
   protocol          = "HTTPS"
   certificate_arn   = var.ecs_lb_acm_arn
@@ -133,5 +133,5 @@ resource "aws_alb_listener" "alb-listener" {
     }
   }
 
-  depends_on = [aws_alb.ecs-load-balancer]
+  depends_on = [aws_lb.ecs-load-balancer]
 }
