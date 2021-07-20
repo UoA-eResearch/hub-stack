@@ -64,3 +64,23 @@ mat-toolbar {
     }
   }
 }
+
+/*
+ * Button styles
+ */
+.menu-button {
+  top: 4.8px;
+  right: 10.5px;
+  color: white !important;
+}
+.menu-button-xs {
+  @extend .menu-button;
+  top: 2.4px;
+  right: 10.5px;
+}
+.mat-button {
+  line-height: 64px !important;
+  padding: 0 16px !important;
+  min-width: 64px !important;
+  font-weight: 100;
+}
