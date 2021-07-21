@@ -25,7 +25,6 @@
               "src/app/components/error-routing/error-routing.scss"
             ],
             "scripts": [
-              "src/tagManager.js"
             ],
             "allowedCommonJsDependencies": [
               "graphql-tag",
@@ -63,6 +62,10 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "index": {
+                "input": "src/index.prod.html",
+                "output": "index.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -221,6 +224,10 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "index": {
+                "input": "src/index.prod.html",
+                "output": "index.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
