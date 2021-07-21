@@ -25,4 +25,5 @@ export const environment = {
       return []
     }
   },
+  googleTagManagerId: 'GTM-KD4QCHV',
 };

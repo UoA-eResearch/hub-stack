@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 
 import { HomeModule } from './components/home/home.module';
 
@@ -37,7 +38,7 @@ import { CerGraphqlService } from './services/cer-graphql.service';
 
 
 /**
- * Generated from Fragment matcher graphql-code-generator plugi
+ * Generated from Fragment matcher graphql-code-generator plugin
  * For more information see:
  * - https://graphql-code-generator.com/docs/plugins/fragment-matcher
  * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
@@ -67,7 +68,8 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     HomeModule,
     HomeModule,
     HttpLinkModule,
-    ErrorPagesModule
+    ErrorPagesModule,
+    NgxGoogleAnalyticsModule.forRoot(environment.googleTagManagerId)
   ],
   providers: [
     CerGraphqlService,
