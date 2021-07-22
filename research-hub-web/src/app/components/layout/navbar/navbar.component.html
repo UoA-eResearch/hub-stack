@@ -50,9 +50,7 @@
     <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
     <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
     <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
-    <ng-container *ngIf="loginService.loggedIn$ | async; else signin">
-      <ng-container *ngTemplateOutlet="isSignedIn"></ng-container>
-    </ng-container>
+    <ng-container *ngIf="loginService.loggedIn$ | async; then isSignedIn; else signIn"></ng-container>
   </mat-toolbar>
 </div>
 
@@ -173,7 +171,7 @@
 </ng-template>
 
 <ng-template #isSignedIn>
-  <ng-container *ngIf="loginService.userInfo$ | async; let userInfo">
+  <ng-container *ngIf="userInfo">
     <button
       fxHide
       fxShow.gt-sm
@@ -228,7 +226,7 @@
 </ng-template>
 
 <!--Sign in button template-->
-<ng-template #signin>
+<ng-template #signIn>
   <button
     role="button"
     aria-label="sign-in"
