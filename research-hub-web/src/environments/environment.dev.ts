@@ -24,5 +24,5 @@ export const environment = {
       return []
     }
   },
-  googleTagManagerId: 'GTM-WW9MPRJ',
+  googleTagManagerId: 'GTM-MXPQZS9',
 };
