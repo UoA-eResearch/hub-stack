@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { FundingsComponent } from './fundings.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -57,7 +57,7 @@ describe('FundingsComponent', () => {
         MockModule(SharedModule),
         MockModule(BrowserAnimationsModule)
       ], providers: [
-        MockProvider(AppComponentService)
+        MockProvider(PageTitleService)
       ]
     })
       .compileComponents();

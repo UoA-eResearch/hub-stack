@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEquipmentGQL,
@@ -51,7 +51,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     public allEquipmentSlugsGQL: AllEquipmentSlugsGQL,
     public getEquipmentBySlugGQL: GetEquipmentBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService,
+    public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService,
@@ -114,11 +114,11 @@ export class EquipmentComponent implements OnInit, OnDestroy {
         }
 
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.appComponentService.setTitle(data.title);
+        this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.appComponentService.setTitle('Equipment');
+      this.pageTitleService.title = 'Equipment';
       this.allEquipment$ = this.getAllEquipment();
       try { this.equipment$.unsubscribe(); } catch {}
     }

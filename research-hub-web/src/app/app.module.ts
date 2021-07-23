@@ -8,7 +8,7 @@ import { RoutingModule } from './routing/routing.module';
 import { SharedModule } from './components/shared/app.shared.module';
 import { ServicesModule } from './services/services.module';
 import { SearchBarService } from './components/search-bar/search-bar.service';
-import { AppComponentService } from './app.component.service';
+import { PageTitleService } from './services/page-title.service';
 
 import { AuthModule, CognitoConfigService, StorageService, LoginService } from '@uoa/auth';
 import { AppAuthConfigService } from './services/app-auth-config.service';
@@ -72,7 +72,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   providers: [
     CerGraphqlService,
     SearchBarService,
-    AppComponentService,
+    PageTitleService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
     { provide: StorageService, useClass: AppStorageService },
   ],

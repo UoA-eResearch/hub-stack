@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LoginService } from '@uoa/auth';
-import { AppComponentService } from './app.component.service';
-import { Title } from '@angular/platform-browser';
+import { PageTitleService } from './services/page-title.service';
 
 @Component({
   selector: 'app-root',
@@ -16,21 +15,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private titleService: Title,
-    public appComponentService: AppComponentService,
+    public titleService: PageTitleService,
     public loginService: LoginService,
   ) { }
 
 
   ngOnInit(): void {
     this.initialiseHashUrlRedirect();
-
-
-    this.subscriptions.add(
-      this.appComponentService.titleChange.subscribe((title) => {
-        this.titleService.setTitle(title + ' | ResearchHub');
-      })
-    )
+    this.titleService.title = ''; //sets title to welcome message
   }
 
 

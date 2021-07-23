@@ -1,5 +1,5 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppComponentService } from '../../app.component.service';
+import { PageTitleService } from '../../services/page-title.service';
 import { ArticlesComponent } from './articles.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { MockModule, MockProvider } from 'ng-mocks';
 
 describe('ArticlesComponent', () => {
   let component: ArticlesComponent;
-  let appComponentService: AppComponentService;
+  let appComponentService: PageTitleService;
   let fixture: ComponentFixture<ArticlesComponent>;
   let controller: ApolloTestingController;
   const mockAllArticles$: Observable<ArticleCollection> = of({
@@ -275,7 +275,7 @@ describe('ArticlesComponent', () => {
         MockModule(BrowserAnimationsModule),
         RouterTestingModule.withRoutes([])
       ], providers: [
-        MockProvider(AppComponentService)
+        MockProvider(PageTitleService)
       ]
     }).compileComponents();
   }));

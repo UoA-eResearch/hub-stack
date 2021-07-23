@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllSoftwareGQL,
@@ -50,11 +50,11 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     public allSoftwareSlugsGQL: AllSoftwareSlugsGQL,
     public getSoftwareBySlugGQL: GetSoftwareBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService,
+    public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { 
+  ) {
     this.detectDevice();
     this.detectWebP();
   }
@@ -103,7 +103,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
         data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
         data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
         data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);        
+        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
 
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
@@ -111,11 +111,11 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
         }
 
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.appComponentService.setTitle(data.title);
+        this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.appComponentService.setTitle('Software');
+      this.pageTitleService.title = 'Software';
       this.allSoftware$ = this.getAllSoftware();
       try { this.software$.unsubscribe(); } catch {}
     }
