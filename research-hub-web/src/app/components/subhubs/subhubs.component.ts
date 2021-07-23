@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllSubHubGQL,
@@ -49,11 +49,11 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     public allSubHubGQL: AllSubHubGQL,
     public getSubHubBySlugGQL: GetSubHubBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService,
+    public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { 
+  ) {
     this.detectDevice();
     this.detectWebP();
   }
@@ -68,7 +68,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
       this.supportsWebp = supported;
     });
   }
-  
+
   async ngOnInit() {
     /**
      * Check if there is a slug URL parameter present. If so, this is
@@ -100,7 +100,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
         data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
         data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.appComponentService.setTitle(data.title);
+        this.pageTitleService.title = data.title;
 
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
@@ -109,7 +109,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.appComponentService.setTitle('SubHub');
+      this.pageTitleService.title = 'SubHub';
       this.allSubHubs$ = this.getAllSubHubs();
       try { this.subHub$.unsubscribe(); } catch {}
     }

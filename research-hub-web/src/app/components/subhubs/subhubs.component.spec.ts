@@ -18,7 +18,7 @@ import {
   AllContentItemParentSubHubsGQL,
   SubHubOrder,
 } from "@graphql/schema";
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -513,7 +513,7 @@ describe('SubhubsComponent', () => {
         MockModule(BrowserAnimationsModule),
         RouterTestingModule
       ], providers: [
-        MockProvider(AppComponentService),
+        MockProvider(PageTitleService),
         MockProvider(AllContentItemParentSubHubsGQL)
       ]
     })

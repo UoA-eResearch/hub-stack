@@ -1,7 +1,7 @@
 <!-- If we're displaying a collection of Fundings-->
 <div
-    *ngIf="allFundings$ | async as allFundings" 
-    class="site-padding margin-bottom top-padding" 
+    *ngIf="allFundings$ | async as allFundings"
+    class="site-padding margin-bottom top-padding"
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [type]="'content'" [collection]="allFundings"></app-collection-list>
 </div>
@@ -12,21 +12,21 @@
     <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="funding.title"></app-breadcrumbs></ng-template>
 
     <ng-template #dynamicBanner>
-        <div class="banner-container" 
-            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'" 
+        <div class="banner-container"
+            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'"
             [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
         </div>
     </ng-template>
 
     <ng-template #titleSummary>
-        <h1 role="heading" aria-level="1" class="content-title" 
+        <h1 role="heading" aria-level="1" class="content-title"
         ngClass.lt-md="content-title-mobile">{{ funding.title }}</h1>
         <p class="content-summary" ngClass.sm="content-summary-sm"
         ngClass.xs="content-summary-xs">{{ funding.summary }}</p>
     </ng-template>
 
     <ng-template #specificationsTable>
-        <div 
+        <div
             id="specifications-table"
             class="specifications section">
             <table class="specifications-table" role="table">
@@ -58,24 +58,24 @@
             </table>
         </div>
     </ng-template>
-    
+
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" 
+        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'"
             [contentItem]="funding.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
+        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'"
             [contentItem]="funding.relatedOrgsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
-        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
+        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'"
             [contentItem]="funding.relatedDocsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
+        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'"
             [contentItem]="funding.relatedContactsCollection"></app-cards>
     </ng-template>
 
@@ -107,7 +107,7 @@
 
             <!-- Funding Purpose -->
             <app-funding-purpose></app-funding-purpose>
-            
+
             <!-- Specifications Table -->
             <div class="section-2" *ngIf="
                 funding.type ||
@@ -116,11 +116,11 @@
                 funding.eligibleExpenses ||
                 funding.deadlines">
                 <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-            </div>           
+            </div>
 
             <!-- Funding Body -->
             <div class="section">
-                <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="funding.bodyText?.json"
+                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" [document]="funding.bodyText?.json"
                     [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
             </div>
 

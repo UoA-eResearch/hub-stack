@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   CaseStudy,
@@ -33,12 +33,12 @@ export class CaseStudyReferencesComponent implements OnInit, OnDestroy {
   public caseStudyReferences$: Subscription;
   public json;
   public route$: Subscription;
-  
+
   constructor(
     public route: ActivatedRoute,
     public getCaseStudyReferencesBySlugGQL: GetCaseStudyReferencesBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService,
+    public appComponentService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
   ) { }
@@ -57,7 +57,7 @@ export class CaseStudyReferencesComponent implements OnInit, OnDestroy {
   /**
    * Function that loads the CaseStudy/collection depending on if a slug is present.
    */
-  private async _loadContent() {      
+  private async _loadContent() {
     this.caseStudyReferences = this.getCaseStudyReferencesBySlug(this.slug);
     this.getCaseStudyReferencesBySlug(this.slug).subscribe(data => {
       this.bodyMediaService.setBodyMedia(data.references?.links);

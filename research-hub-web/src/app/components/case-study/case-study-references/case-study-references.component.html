@@ -1,6 +1,6 @@
 <div *ngIf="caseStudyReferences | async as caseStudyReferences">
   <h2>References</h2>
-  <ngx-contentful-rich-text *ngIf="caseStudyReferences.references !== null; else noReferences" id="body" style="word-break:break-word;" 
+  <ngx-contentful-rich-text *ngIf="caseStudyReferences.references !== null; else noReferences" id="bodyMediaList" style="word-break:break-word;"
     [document]="caseStudyReferences.references?.json" [nodeRenderers]="nodeRenderers">
   </ngx-contentful-rich-text>
   <ng-template #noReferences>

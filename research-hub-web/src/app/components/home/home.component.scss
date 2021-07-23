@@ -33,17 +33,3 @@
 .featured {
   z-index: 1;
 }
-
-div.feedback-container {
-  text-align: center;
-  @include size(large) {
-    text-align: left;
-  }
-  p {
-    font-size: 16px;
-    text-align: center;
-    @include size(large) {
-      text-align: left;
-    }
-  }
-}
