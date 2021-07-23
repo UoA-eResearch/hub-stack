@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllEventsGQL,
@@ -43,18 +43,18 @@ export class EventsComponent implements OnInit, OnDestroy {
   public isMobile: Boolean;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
-  
+
   constructor(
     public route: ActivatedRoute,
     public allEventsGQL: AllEventsGQL,
     public allEventSlugsGQL: AllEventsSlugsGQL,
     public getEventBySlugGQL: GetEventBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService,
+    public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { 
+  ) {
     this.detectDevice();
     this.detectWebP();
    }
@@ -111,18 +111,18 @@ export class EventsComponent implements OnInit, OnDestroy {
         data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
         data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
         data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
-        
+
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
         }
 
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.appComponentService.setTitle(data.title);
+        this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.appComponentService.setTitle('Events');
+      this.pageTitleService.title = 'Events';
       this.allEvents$ = this.getAllEvents();
       try { this.event$.unsubscribe(); } catch {}
     }

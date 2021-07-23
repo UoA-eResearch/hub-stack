@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   AllArticlesGQL,
@@ -51,7 +51,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     public allArticlesSlugsGQL: AllArticlesSlugsGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService,
+    public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService,
@@ -59,7 +59,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     this.detectDevice();
     this.detectWebP();
   }
-  
+
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
   }
@@ -105,7 +105,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
       });
       this.article = this.getArticleBySlug(this.slug);
       this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
-        
+
         // Strip nulls from related collection data.
         data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
         data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
@@ -118,11 +118,11 @@ export class ArticlesComponent implements OnInit, OnDestroy {
         }
 
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.appComponentService.setTitle(data.title);
+        this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.appComponentService.setTitle('Articles');
+      this.pageTitleService.title = 'Articles';
       this.allArticles$ = this.getAllArticles();
       try { this.article$.unsubscribe(); } catch {}
     }

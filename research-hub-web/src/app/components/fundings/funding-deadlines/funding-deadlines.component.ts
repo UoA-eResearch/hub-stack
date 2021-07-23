@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Type } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { pluck, flatMap, catchError } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { BodyMediaService } from '@services/body-media.service';
 import {
   Funding,
@@ -33,12 +33,11 @@ export class FundingDeadlinesComponent implements OnInit, OnDestroy {
   public fundingDeadlines$: Subscription;
   public json;
   public route$: Subscription;
-  
+
   constructor(
     public route: ActivatedRoute,
     public getFundingDeadlinesBySlugGQL: GetFundingDeadlinesBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
   ) { }
@@ -57,7 +56,7 @@ export class FundingDeadlinesComponent implements OnInit, OnDestroy {
   /**
    * Function that loads the Funding/collection depending on if a slug is present.
    */
-  private async _loadContent() {      
+  private async _loadContent() {
     this.fundingDeadlines = this.getFundingDeadlinesBySlug(this.slug);
     this.getFundingDeadlinesBySlug(this.slug).subscribe(data => {
       this.bodyMediaService.setBodyMedia(data.deadlines?.links);

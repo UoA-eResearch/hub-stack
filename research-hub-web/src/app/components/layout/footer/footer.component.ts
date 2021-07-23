@@ -6,7 +6,7 @@ import { format } from 'date-fns';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
   public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public aboutUs = "https://www.eresearch.auckland.ac.nz/?_ga=2.69549080.943707055.1614124973-1995817083.1603163706#";
 
@@ -18,9 +18,6 @@ export class FooterComponent implements OnInit {
   public accessibilityUrl = 'https://www.auckland.ac.nz/en/accessibility.html';
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
   // Get year for footer copyright
   getYear() {

@@ -4,7 +4,7 @@ import { LoginService } from '@uoa/auth';
 import { Apollo } from 'apollo-angular';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AppComponent } from './app.component';
-import { AppComponentService } from './app.component.service';
+import { PageTitleService } from './services/page-title.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { SearchBarService } from './components/search-bar/search-bar.service';
@@ -29,7 +29,7 @@ describe('AppComponent', () => {
       ],
       providers: [
         MockProvider(SearchBarService),
-        MockProvider(AppComponentService),
+        MockProvider(PageTitleService),
         MockProvider(LoginService),
         MockProvider(DeviceDetectorService)
       ]
