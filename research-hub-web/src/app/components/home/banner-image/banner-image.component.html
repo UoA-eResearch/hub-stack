@@ -1,12 +1,11 @@
 <div
   class="banner-container-home"
   *ngIf="bannerImageUrl$ | async; let url"
-  [ngStyle]="{
-    'background':
+  [style.background]="
       'linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url(' +
-      supportsWebp ? (url + '?fm=webp') : url +
+      url +
       ') no-repeat fixed center'
-  }"
+  "
 >
   <!-- Homepage Banner -->
   <div class="banner-content-home">

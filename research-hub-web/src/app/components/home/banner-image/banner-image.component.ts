@@ -4,7 +4,7 @@ import { SearchBarService } from '@app/components/search-bar/search-bar.service'
 import { GetBannerImageGQL } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -19,8 +19,6 @@ export class BannerImageComponent implements OnInit {
   public title = "Welcome to the ResearchHub";
   public summary = "The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research.";
 
-  public supportsWebp: boolean;
-
   constructor(
     public homeScrollService: HomeScrollService,
     public searchBarService: SearchBarService,
@@ -30,14 +28,10 @@ export class BannerImageComponent implements OnInit {
 
   ngOnInit(): void {
     this.bannerImageUrl$ = this.getBannerImageGQL.fetch().pipe(
-      map(x => x.data.homepageCollection.items[0].image.url)
+      map(x => x.data.homepageCollection.items[0].image.url),
+      // we detect webP in the async request for the URL, because it seems to be required for css background to work properly
+      mergeMap(async url => (await supportsWebP) ? url + '?fm=webp' : url)
     )
-  }
-
-  detectWebP(): void {
-    supportsWebP.then(supported => {
-      this.supportsWebp = supported;
-    });
   }
 
   // Adding search bar in here for now
