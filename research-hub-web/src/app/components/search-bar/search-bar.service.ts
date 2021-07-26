@@ -262,12 +262,12 @@ export class SearchBarService {
           });
           
           const resultsTotal = data["result"]["hits"]["total"]["value"];
-          
+
           // Create the results
           this.setResults(array);
           this.setTotalPages(resultsTotal);
           
-          // push search query info to GTM dataLayer - action=searchQuery, category=search, label=search, value=resultsTotal
+          // push search query info to GTM dataLayer
           window.dataLayer.push({
             'event': 'search',
             'searchQuery': this.getSearchText(),
