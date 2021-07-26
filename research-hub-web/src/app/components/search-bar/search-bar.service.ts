@@ -260,10 +260,19 @@ export class SearchBarService {
             }
             array.push(result);
           });
-            
+          
+          const resultsTotal = data["result"]["hits"]["total"]["value"];
+          
           // Create the results
           this.setResults(array);
-          this.setTotalPages(data["result"]["hits"]["total"]["value"]);
+          this.setTotalPages(resultsTotal);
+          
+          // push search query info to GTM dataLayer - action=searchQuery, category=search, label=search, value=resultsTotal
+          window.dataLayer.push({
+            'event': 'search',
+            'searchQuery': this.getSearchText(),
+            'resultsTotal': resultsTotal
+          });
         })
   }
 }
