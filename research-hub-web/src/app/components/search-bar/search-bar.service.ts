@@ -18,6 +18,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 
 @Injectable()
@@ -52,7 +53,8 @@ export class SearchBarService {
     public allItemsByStageGQL: AllItemsByStageGQL,
     public allItemsByOrganisationGQL: AllItemsByOrganisationGQL,
     public allEventsGQL: AllEventsGQL,
-    private http: HttpClient
+    private http: HttpClient,
+    private $gaService: GoogleAnalyticsService
   ) { }
 
 
@@ -273,6 +275,26 @@ export class SearchBarService {
             'searchQuery': this.getSearchText(),
             'resultsTotal': resultsTotal
           });
+          
+          this.$gaService.event('search', 'search', this.getSearchText(), resultsTotal);
+
+          if (
+            this.getSearchText() !== undefined || 
+            this.getCategory() !== undefined ||
+            this.getStage() !== undefined ||
+            this.getOrganisation() !== undefined
+            ) {
+            const cleanedQuery = this.getSearchText() !== undefined ? this.getSearchText().trim().split(' ').join('+') : '';
+            const categories = this.getCategory().join('+');
+            const researchActivities = this.getStage().join('+');
+            const orgs = this.getOrganisation().join('+');
+
+            console.log(`/search?q=${cleanedQuery}&cat=${categories}&ra=${researchActivities}&org=${orgs}`);
+            
+            // send virtual page view for GA site search tracking
+            this.$gaService.pageView(`/search?q=${cleanedQuery}&cat=${categories}&ra=${researchActivities}&org=${orgs}`);
+          }
+          
         })
   }
 }
