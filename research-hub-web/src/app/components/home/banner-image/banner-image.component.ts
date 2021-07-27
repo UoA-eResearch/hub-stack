@@ -4,7 +4,7 @@ import { SearchBarService } from '@app/components/search-bar/search-bar.service'
 import { GetBannerImageGQL } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -30,7 +30,7 @@ export class BannerImageComponent implements OnInit {
     this.bannerImageUrl$ = this.getBannerImageGQL.fetch().pipe(
       map(x => x.data.homepageCollection.items[0].image.url),
       // we detect webP in the async request for the URL, because it seems to be required for css background to work properly
-      mergeMap(async url => (await supportsWebP) ? url + '?fm=webp' : url)
+      switchMap(async url => (await supportsWebP) ? url + '?fm=webp' : url)
     )
   }
 
