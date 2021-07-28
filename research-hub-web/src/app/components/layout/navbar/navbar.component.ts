@@ -4,8 +4,8 @@ import { SearchBarService } from '@app/components/search-bar/search-bar.service'
 import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { LoginService, UserInfoDto } from '@uoa/auth';
-import { Observable, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { from, Observable, Subscription } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +18,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   public allCategories: Category[] = [];
   public allStages: Stage[] = [];
 
-  public userInfo: UserInfoDto | null = null;
+  public userInfo$: Observable<UserInfoDto>;
+  public loggedIn$: Observable<boolean>;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -43,16 +44,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       })
     );
 
-
-    this.subscriptions.add(
-      this.loginService.userInfo$.pipe(
-        filter(userInfo => userInfo !== null && userInfo !== undefined)
-      ).subscribe(userInfo => {
-        console.log('userInfo ', userInfo)
-        this.userInfo = userInfo;
-        this.sendGoogleAnalyticsUserInfo(userInfo)
-      })
+    this.loggedIn$ = from(this.loginService.isAuthenticated()).pipe(
+      switchMap(() => this.loginService.loggedIn$)
     );
+
+    this.userInfo$ = this.loginService.userInfo$.pipe(
+      filter(userInfo => userInfo !== null && userInfo !== undefined),
+      tap(userInfo => this.sendGoogleAnalyticsUserInfo(userInfo))
+    );
+
 
     this.subscriptions.add(this.getAllCategories().subscribe((allCategories) => this.allCategories = allCategories));
     this.subscriptions.add(this.getAllStages().subscribe((allStages) => this.allStages = allStages));
@@ -88,6 +88,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       map((result) => result.data.stageCollection.items)
     ) as Observable<Stage[]>;
   }
+
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
