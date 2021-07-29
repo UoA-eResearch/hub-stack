@@ -3,9 +3,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Category, Stage } from '@app/graphql/schema';
-import { LoginService } from '@uoa/auth';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { LoginService, UserInfoDto } from '@uoa/auth';
+import { from, Observable, Subscription } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 
 @Component({
@@ -19,10 +19,10 @@ export class SideNavComponent implements OnInit, OnDestroy {
   @Input() allStages: Stage[] = [];
   public currentUrl: string;
 
-  private subscriptions: Subscription = new Subscription();
+  public userInfo$: Observable<UserInfoDto>;
+  public loggedIn$: Observable<boolean>;
 
-  public allCategories$: Observable<Category[]> | null = null;
-  public allStages$: Observable<Stage[]> | null = null;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     private router: Router,
@@ -39,7 +39,35 @@ export class SideNavComponent implements OnInit, OnDestroy {
           this.currentUrl = event.urlAfterRedirects;
         }
       })
-    )
+    );
+
+    this.loggedIn$ = from(this.loginService.isAuthenticated()).pipe(
+      switchMap(() => this.loginService.loggedIn$)
+    );
+
+    this.userInfo$ = this.loginService.userInfo$.pipe(
+      filter(userInfo => userInfo !== null && userInfo !== undefined),
+      tap(userInfo => this.sendGoogleAnalyticsUserInfo(userInfo))
+    );
+  }
+
+  private sendGoogleAnalyticsUserInfo(userInfo: UserInfoDto): void {
+    window.dataLayer.push({
+      'user': JSON.stringify(userInfo),
+      ...userInfo,
+    });
+
+    // groups disabled for now, as there is a bug in the UoA auth library
+    // if (userInfo.groups) {
+    //   console.log(userInfo.groups);
+    //   JSON.parse(`${userInfo.groups}`).map(group => {
+    //     const groupObj = {};
+    //     group = group.trim().split('.')[0];
+    //     groupObj[group] = group;
+    //     console.log(groupObj);
+    //     window.dataLayer.push(groupObj);
+    //   })
+    // }
   }
 
   toggle(): void {
