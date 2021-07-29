@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router, RouterEvent } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { LoginService } from '@uoa/auth';
+import { Observable, Subscription } from 'rxjs';
 import { PageTitleService } from './services/page-title.service';
+import { map } from 'rxjs/operators';
+import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from './graphql/schema';
 
 @Component({
   selector: 'app-root',
@@ -13,16 +14,23 @@ import { PageTitleService } from './services/page-title.service';
 export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription =  new Subscription();
 
+  public allCategories: Category[];
+  public allStages: Stage[];
+
   constructor(
     private router: Router,
     public titleService: PageTitleService,
-    public loginService: LoginService,
+    private allCategoriesGQL: AllCategoriesGQL,
+    private allStagesGQL: AllStagesGQL
   ) { }
 
 
   ngOnInit(): void {
     this.initialiseHashUrlRedirect();
     this.titleService.title = ''; //sets title to welcome message
+
+    this.subscriptions.add(this.getAllCategories().subscribe((allCategories) => this.allCategories = allCategories));
+    this.subscriptions.add(this.getAllStages().subscribe((allStages) => this.allStages = allStages));
   }
 
 
@@ -41,8 +49,19 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  private getAllCategories(): Observable<Category[]> {
+    return this.allCategoriesGQL.fetch().pipe(
+      map((result) => result.data.categoryCollection.items)
+    ) as Observable<Category[]>;
+  }
+
+  private getAllStages(): Observable<Stage[]> {
+    return this.allStagesGQL.fetch().pipe(
+      map((result) => result.data.stageCollection.items)
+    ) as Observable<Stage[]>;
+  }
+
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
-
 }

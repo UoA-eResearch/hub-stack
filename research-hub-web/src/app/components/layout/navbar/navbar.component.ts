@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from '@app/graphql/schema';
+import { Category, Stage } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { LoginService, UserInfoDto } from '@uoa/auth';
 import { from, Observable, Subscription } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -13,10 +13,13 @@ import { filter, map, switchMap, tap } from 'rxjs/operators';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+  @Input() allCategories: Category[] = [];
+  @Input() allStages: Stage[] = [];
+
+  @Output() toggleSidenav: EventEmitter<void> = new EventEmitter<void>();
+
   public isHome = false;
   public currentUrl = '/';
-  public allCategories: Category[] = [];
-  public allStages: Stage[] = [];
 
   public userInfo$: Observable<UserInfoDto>;
   public loggedIn$: Observable<boolean>;
@@ -26,8 +29,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public homeScrollService: HomeScrollService,
-    private allCategoriesGQL: AllCategoriesGQL,
-    private allStagesGQL: AllStagesGQL,
     public searchBarService: SearchBarService,
     public loginService: LoginService
   ) { }
@@ -52,10 +53,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       filter(userInfo => userInfo !== null && userInfo !== undefined),
       tap(userInfo => this.sendGoogleAnalyticsUserInfo(userInfo))
     );
-
-
-    this.subscriptions.add(this.getAllCategories().subscribe((allCategories) => this.allCategories = allCategories));
-    this.subscriptions.add(this.getAllStages().subscribe((allStages) => this.allStages = allStages));
   }
 
   private sendGoogleAnalyticsUserInfo(userInfo: UserInfoDto): void {
@@ -77,17 +74,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // }
   }
 
-  private getAllCategories(): Observable<Category[]> {
-    return this.allCategoriesGQL.fetch().pipe(
-      map((result) => result.data.categoryCollection.items)
-    ) as Observable<Category[]>;
-  }
 
-  private getAllStages(): Observable<Stage[]> {
-    return this.allStagesGQL.fetch().pipe(
-      map((result) => result.data.stageCollection.items)
-    ) as Observable<Stage[]>;
-  }
 
 
   ngOnDestroy(): void {
