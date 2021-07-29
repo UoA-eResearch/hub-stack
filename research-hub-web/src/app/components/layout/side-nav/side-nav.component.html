@@ -24,10 +24,7 @@
         </mat-nav-list>
       </mat-expansion-panel>
       <mat-divider></mat-divider>
-      <ng-container *ngIf="loginService.loggedIn$ | async; else signinlist">
-        <ng-container *ngTemplateOutlet="isSignedIn"></ng-container>
-      </ng-container>
-
+      <ng-container *ngIf="loggedIn$ | async; then isSignedIn; else signinlist"></ng-container>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -39,11 +36,11 @@
 </mat-sidenav-container>
 
 <ng-template #isSignedIn>
-  <ng-container *ngIf="loginService.userInfo$ | async; let userInfo">
+  <ng-container *ngIf="userInfo$ | async; let userInfo">
     <mat-expansion-panel hideToggle>
 
       <!-- Sign Out Name -->
-      <mat-expansion-panel-header class="expandable-menu" *ngIf="loginService.userInfo$ | async; let userInfo">
+      <mat-expansion-panel-header class="expandable-menu">
         <mat-list-item>
           <a mat-line fxLayout="row" fxLayoutAlign="start center">
             <mat-icon matPrefix style="margin-right: 5px;">person</mat-icon>
