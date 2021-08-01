@@ -293,8 +293,11 @@ export class SearchBarService {
                 
         // push to GTM datalayer
         window.dataLayer.push({
-          'event': 'virtualPageView',
-          'path': path
+          event: 'pageView',
+          page: {
+            'path': path,
+            'title': 'search-results'
+          }
         })
 
         // test with gaservice
