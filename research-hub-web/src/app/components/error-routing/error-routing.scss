@@ -30,4 +30,15 @@
       color: $dark-blue !important;
     }
   }
+
+  /**
+   * Error-Pages library overrides
+   */
+  app-footer {
+    visibility: hidden;
+  }
+
+  div.button.flex {
+    visibility: hidden;
+  }
 }
