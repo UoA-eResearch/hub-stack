@@ -273,15 +273,20 @@ export class SearchBarService {
         // url-safe the search text -replace non-alphanumeric, extra whitespaces etc, then join words with +
         const cleanedQuery = searchText.replace(/[\W_]+/g," ").trim().split(' ').join('+');
         const categories = this.getCategory().join('+');
+        const researchActivities = this.getStage().join('+');
+        const orgs = this.getOrganisation().join('+');
 
         // push search query info to GTM dataLayer
+        // the searchQueryUrl (cleanedQuery) is used to create a virtual page view in GA, which then generates site search data
         window.dataLayer.push({
-          'event': 'search',
-          'searchQuery': searchText,
-          'searchQueryUrl': cleanedQuery,
-          'resultsTotal': resultsTotal,
-          'searchCategory': categories
-        });    
+          event: 'search',
+          searchQuery: searchText,
+          searchQueryUrl: cleanedQuery,
+          resultsTotal: resultsTotal,
+          searchCategory: categories,
+          researchActivities: researchActivities,
+          orgs: orgs
+        });
       })
   }
 }
