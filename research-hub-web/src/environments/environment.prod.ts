@@ -24,6 +24,5 @@ export const environment = {
     get whoNeedIdToken() {
       return []
     }
-  },
-  googleTagManagerId: 'GTM-KD4QCHV',
+  }
 };
