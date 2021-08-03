@@ -18,7 +18,6 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { GoogleAnalyticsService } from 'ngx-google-analytics';
 
 
 @Injectable()
@@ -53,8 +52,7 @@ export class SearchBarService {
     public allItemsByStageGQL: AllItemsByStageGQL,
     public allItemsByOrganisationGQL: AllItemsByOrganisationGQL,
     public allEventsGQL: AllEventsGQL,
-    private http: HttpClient,
-    private $gaService: GoogleAnalyticsService
+    private http: HttpClient
   ) { }
 
 
@@ -271,37 +269,19 @@ export class SearchBarService {
         this.setResults(array);
         this.setTotalPages(resultsTotal);
         
-        // push search query info to GTM dataLayer
-        window.dataLayer.push({
-          'event': 'search',
-          'searchQuery': searchText,
-          'resultsTotal': resultsTotal
-        });
-        
-        // test using gaservice event
-        this.$gaService.event('search2', 'search2', searchText, resultsTotal);
-
         // prepare to send virtual page view for GA site search tracking:
         // url-safe the search text -replace non-alphanumeric, extra whitespaces etc, then join words with +
         const cleanedQuery = searchText.replace(/[\W_]+/g," ").trim().split(' ').join('+');
         const categories = this.getCategory().join('+');
-        const researchActivities = this.getStage().join('+');
-        const orgs = this.getOrganisation().join('+');
 
-        const path = `/search?q=${cleanedQuery}&cat=${categories}&ra=${researchActivities}&org=${orgs}`
-        console.log(path);
-                
-        // push to GTM datalayer
+        // push search query info to GTM dataLayer
         window.dataLayer.push({
-          event: 'pageView',
-          page: {
-            'path': path,
-            'title': 'search-results'
-          }
-        })
-
-        // test with gaservice
-        this.$gaService.pageView(path);        
+          'event': 'search',
+          'searchQuery': searchText,
+          'searchQueryUrl': cleanedQuery,
+          'resultsTotal': resultsTotal,
+          'searchCategory': categories
+        });    
       })
   }
 }

@@ -17,7 +17,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { NgxGoogleAnalyticsModule } from 'ngx-google-analytics';
 
 import { HomeModule } from './components/home/home.module';
 
@@ -68,8 +67,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     HomeModule,
     HomeModule,
     HttpLinkModule,
-    ErrorPagesModule,
-    NgxGoogleAnalyticsModule.forRoot(environment.googleTagManagerId)
+    ErrorPagesModule
   ],
   providers: [
     CerGraphqlService,
