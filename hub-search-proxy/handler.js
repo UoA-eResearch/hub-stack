@@ -273,7 +273,14 @@ module.exports.search = async (event, context) => {
             ]
           }
         },
-        sort: sort
+        sort: sort,
+        highlight: {
+          fields: {
+            "fields.title.en-US": {},
+            "fields.summary.en-US": {},
+            "fields.keywords.en-US": {}
+          }
+        }
       };
     }
 
