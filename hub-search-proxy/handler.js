@@ -275,6 +275,12 @@ module.exports.search = async (event, context) => {
         },
         sort: sort,
         highlight: {
+          fragment_size: 300,
+          highlight_query: {simple_query_string: {
+            query: queryString,
+            default_operator: "and",
+            analyzer: "hub_analyzer"
+          }},
           fields: {
             "fields.title.en-US": {},
             "fields.summary.en-US": {},
