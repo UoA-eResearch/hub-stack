@@ -272,7 +272,7 @@ export class SearchBarService {
         // prepare to send virtual page view for GA site search tracking:
         // url-safe the search text -replace non-alphanumeric, extra whitespaces etc, then join words with +
         const cleanedQuery = searchText.replace(/[\W_]+/g," ").trim().split(' ').join('+');
-        const categories = this.getCategory().join('+');
+        const searchCategories = this.getCategory().join('+');
         const researchActivities = this.getStage().join('+');
         const orgs = this.getOrganisation().join('+');
 
@@ -283,7 +283,7 @@ export class SearchBarService {
           searchQuery: searchText,
           searchQueryUrl: cleanedQuery,
           resultsTotal: resultsTotal,
-          searchCategory: categories,
+          searchCategory: searchCategories,
           researchActivities: researchActivities,
           orgs: orgs
         });
