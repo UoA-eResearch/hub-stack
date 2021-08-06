@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
+import { FilterType } from '@app/global/global-variables';
 
 @Component({
   selector: 'app-search-page',
@@ -26,6 +27,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public organisationFilter = this.searchBarService.getOrganisation();
   public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
+  public filterTypes = FilterType;
 
 
   constructor(
@@ -70,6 +72,26 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.searchBarService.setCurrentPage(1);
     this.searchBarService.createResultsList();
     this.initialPages();
+  }
+
+  public removeFilterById(filterId: string, filterType: FilterType) {
+    let filter;
+    if (filterType === FilterType.ResearchCategory) {
+      filter = this.categoryFilter;
+    }
+    if (filterType === FilterType.ResearchActivity) {
+      filter = this.stageFilter;
+    }
+    if (filterType === FilterType.Organisation) {
+      filter = this.organisationFilter;
+    }
+
+    const index = filter.indexOf(filterId);
+    if (index > -1) {
+      filter.splice(index, 1);
+    }
+
+    this.updateSearchFilters();
   }
 
   ngOnDestroy() {

@@ -35,6 +35,12 @@ export enum OptionType {
     Category,
     Menu
   }
+
+  export enum FilterType {
+    ResearchActivity,
+    ResearchCategory,
+    Organisation
+  }
   
 export enum ResearchActivityId {
     PlanDesign = 1,

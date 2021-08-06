@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "styles-common";
 
 div.mat-card-avatar mat-icon {
   color: $dark-blue;
@@ -71,6 +72,19 @@ mat-card {
     color: $dark-grey !important;
     font-size: 14px !important;
     vertical-align: middle;
+  }
+
+  // keyword chips
+  .mat-chip {
+    background-color: $silver;
+    color: white;
+    min-height: 18px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: pre;
+  }
+  .mat-chip.mat-standard-chip::after {
+    background: #0000;
   }
 }
 

@@ -23,11 +23,16 @@
                         </ng-template>
                     </span>
                     <span class="card-content">
-                        <h4 class="card-title">
-                            {{ content.title }}&nbsp;
+                        <h4 class="card-title" [innerHTML]=content.title>
+                            &nbsp;
                             <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
                         </h4>
-                        <p class="card-summary">{{ content.summary }}</p>
+
+                        <p class="card-summary" [innerHTML]=content.summary></p>
+
+                        <mat-chip-list class="keyword-chips" *ngIf="content.keywords" [tabIndex]="-1" aria-label="item keywords">
+                            <mat-chip *ngFor="let keyword of content.keywords" [selectable]="false" aria-label="keyword" [innerHTML]=keyword></mat-chip>
+                        </mat-chip-list>
                     </span>
                 </mat-card>
             </a>

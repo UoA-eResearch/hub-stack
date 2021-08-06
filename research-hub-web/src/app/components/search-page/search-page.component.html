@@ -59,8 +59,9 @@
             <!-- Categories -->
             <span  *ngIf="i.allCategories">
                 <span *ngFor="let filter of i.allCategories.items">
-                    <mat-chip *ngIf="categoryFilter.includes(filter.sys.id)">
+                    <mat-chip *ngIf="categoryFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.ResearchCategory)">
                         {{ filter.name }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                 </span>
             </span>
@@ -68,8 +69,9 @@
             <!-- Activities -->
             <span *ngIf="i.allStages">
                 <span *ngFor="let filter of i.allStages.items">
-                    <mat-chip *ngIf="stageFilter.includes(filter.sys.id)">
+                    <mat-chip *ngIf="stageFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.ResearchActivity)">
                         {{ filter.name }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                 </span>
             </span>
@@ -77,8 +79,9 @@
             <!-- Organisation -->
             <span *ngIf="i.allOrganisations">
                 <span *ngFor="let filter of i.allOrganisations.items">
-                    <mat-chip *ngIf="organisationFilter.includes(filter.sys.id)">
+                    <mat-chip *ngIf="organisationFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.Organisation)">
                         {{ filter.name }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                 </span>
             </span>
