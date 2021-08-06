@@ -250,13 +250,27 @@ export class SearchBarService {
         this.http.post(environment.searchUrl, query).subscribe(data => {
           let array = [];
           data["result"]["hits"]["hits"].forEach(element => {
+            // Set how the results will be displayed
+            const title: string = element.highlight?.["fields.title.en-US"] ?
+              element.highlight["fields.title.en-US"].join('') :
+              element._source.fields.title["en-US"];
+
+            const summary: string = element.highlight?.["fields.summary.en-US"] ?
+              element.highlight["fields.summary.en-US"].join(' ') :
+              element._source.fields.summary["en-US"];
+
+            const keywords: string[] = element.highlight?.["fields.keywords.en-US"] ?
+              element.highlight["fields.keywords.en-US"] :
+              element._source.fields.keywords?.["en-US"];
+
             let result = {
-              "title": element._source.fields.title["en-US"],
-              "summary" : element._source.fields.summary["en-US"],
+              "title": title,
+              "summary" : summary,
               "slug" : element._source.fields.slug["en-US"],
               "ssoProtected" : element._source.fields.ssoProtected["en-US"],
               "__typename" : element._source.sys.contentType.sys.id,
-              "icon": element._source.fields.icon?.["en-US"]["url"]
+              "icon": element._source.fields.icon?.["en-US"]["url"],
+              "keywords": keywords
             }
             array.push(result);
           });
