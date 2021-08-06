@@ -1,3 +1,5 @@
+@import "mixins";
+
 mat-expansion-panel-header {
   padding: 0 16px;
   font-size: 20px;
@@ -11,4 +13,11 @@ mat-list-item {
 mat-expansion-panel {
   width: 70vw;
   box-shadow: none !important;
+}
+
+mat-sidenav-container {
+  margin-top: 64px;
+  @media (max-width: 599px) {
+    margin-top: 56px;
+  }
 }
