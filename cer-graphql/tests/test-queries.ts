@@ -164,3 +164,28 @@ export const GET_SUBHUB_COLLECTION_NESTED_ITEMS_FIELD = gql`
     }
 }
 `
+
+export const GET_PROTECTED_FIELDS_IN_NESTED_FRAGMENTS = gql`
+{
+  articleCollection(limit: 1) {
+    items{
+      relatedItemsCollection {
+        items {
+			...MyFragment          
+        }
+      }
+    }
+  }
+}
+
+fragment MyFragment on Article {
+  ...PrivateFields
+}
+
+fragment PrivateFields on Article {
+  owner {
+    name
+  }
+  ssoProtected
+}
+`;
