@@ -1,11 +1,24 @@
 @import "variables";
 @import "mixins";
+@import "styles-common";
 
 /**
- * Service Image
+ * banner Image
  */
-.service-image {
-  margin: 0 auto;
+ .no-banner {
+  display: none;
+}
+
+.mobile-banner {
+  background-repeat: no-repeat;
+  padding: 20vh 0px;
+}
+
+.standard-banner {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding: 20vh 0px;
 }
 
 /**
@@ -35,7 +48,7 @@
   padding-top: 1.5vh;
   margin-bottom: 1.5vh;
   text-align: left;
-  background-color: map-get($hub-teal, 700);
+  background-color: $dark-blue;
   color: $color-background;
 }
 
@@ -44,11 +57,11 @@
  */
 .standard-button {
   @extend .standard-button;
-  border: 3px solid map-get($hub-navy, 500) !important;
-  background-color: map-get($hub-navy, 500) !important;
+  border: 3px solid $light-blue !important;
+  background-color: $light-blue !important;
 }
 .standard-button:hover {
-  color: map-get($hub-navy, 500) !important;
+  color: $light-blue !important;
   border-radius: 50px !important;
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;

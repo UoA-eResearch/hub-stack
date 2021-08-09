@@ -4,7 +4,13 @@
         *ngFor="let subHub of contentItem.items">
 
             <!-- Templates -->
-            <ng-template #image><img mat-card-image src="{{ subHub.banner?.url }}" alt="{{ subHub.title }}-banner"></ng-template>
+            <ng-template #image>
+                <img mat-card-image 
+                     srcset="{{ subHub.banner?.url }}?w=1000&fm=webp,
+                             {{ subHub.banner?.url }}?w=1000"
+                     src="{{ subHub.banner?.url }}?w=1000"
+                     alt="{{ subHub.title }}-banner">
+            </ng-template>
             <ng-template #noImage><div style="margin-top: 15px;"></div></ng-template>
 
             <mat-card class="subhub-card" role="listitem">
@@ -12,9 +18,13 @@
                 <span *ngIf="subHub.__typename == 'SubHub'" class="card-label">Topic</span>
                 <span *ngIf="subHub.__typename != 'SubHub'" class="card-label">{{ subHub.__typename | humanCase }}</span>
                 <mat-card-title class="card-title">
-                    <h4><a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">{{ subHub.title }}</a></h4>
+                    <h4>
+                        <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
+                            {{ subHub.title }}
+                        </a>
+                        <mat-icon *ngIf="subHub.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
+                    </h4>
                 </mat-card-title>
-                <mat-icon *ngIf="subHub.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
                 <mat-card-content class="content-item-summary"><p>{{ subHub.summary }}</p></mat-card-content>
                 <br>
                 <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">

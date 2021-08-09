@@ -8,7 +8,7 @@
 
 <div style="overflow-x: hidden" class="results" *ngIf="subHub | async as subHub">
     
-    <div>
+    <div id='subhub-container'>
 
         <!-- Templates -->
         <ng-template #subHubChildren><app-large-cards id="subHub-children" [contentItem]="subHub"></app-large-cards></ng-template>
@@ -35,11 +35,10 @@
                 [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
         </ng-template>
         <div>
-            <div class="banner-container" [style]="subHub.banner ?
-                isMobile ?
-                'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subHub.banner.url + ') no-repeat'
-                :'background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(' + subHub.banner.url + ') no-repeat fixed center; padding: 72px 0px'
-                :''">
+            <div class="banner-container" 
+                [ngClass]="bannerImageUrl === undefined ? '' : isMobile ? 'mobile-banner' : 'standard-banner'" 
+                [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
+                
                 <div class="banner-content">
 
                     <!-- Title -->

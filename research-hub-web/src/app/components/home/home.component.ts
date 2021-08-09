@@ -6,7 +6,7 @@ import { HomeScrollService } from '@services/home-scroll.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements AfterViewInit {
 
   @ViewChild('featured') featured: QueryList<ElementRef>;
   @ViewChild('categories') categories: QueryList<ElementRef>;
@@ -17,16 +17,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
    */
   // TODO this section should be in the CMS
   public title = "Contact";
-  public description = ""; 
+  public description = "";
   public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public email = "eresearch-support@auckland.ac.nz";
   public phone = "+64 9 373 7599 ext 82231";
 
   constructor(public homeScrollService: HomeScrollService) {
-  }
-
-  ngOnInit() {
-    
   }
 
   ngAfterViewInit() {

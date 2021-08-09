@@ -4,12 +4,16 @@
 */
 import { 
 
+    ASTKindToNode,
     ASTNode,
     FieldNode,
     FragmentDefinitionNode,
+    GraphQLResolveInfo,
     GraphQLSchema,
     TypeInfo,
     visit,
+    visitInParallel,
+    Visitor,
     visitWithTypeInfo,
 } from "graphql";
 import { AuthenticationError } from "apollo-server-errors";
@@ -58,6 +62,41 @@ type FragmentFieldDepthInfo = {
     name: string
 };
 
+// function visitFragments(field: ASTNode, fragments: Record<string, FragmentDefinitionNode>) {
+//     // First, visit field node and find fragmentspreads.
+//     // For each fragmentspread
+//         // visit node and find fragmentspread
+//         // if 0, return fields and their depths
+//         // if >0, return fields + visit fragmentspread
+// }
+
+
+
+function assertNoDeepProtectedFieldsInResolver(resolverInfo: GraphQLResolveInfo, protectedTypes: Set<string>, maxDepth = 3) {
+    if (!resolverInfo) {
+        return;
+    }
+    const { schema, fieldNodes, returnType } = resolverInfo;
+    // Field depths (i.e. where in the query does this field appear), keyed by field name
+    const depthByField: Record<string, number[]> = {};
+    // How deep do fragment spreads occur, keyed by fragment name
+    const fragmentSpreads: Record<string, number[]> = {};
+    // Which fields are in fragments and how deep are they in the fragment, keyed by fragment name.
+    const fieldsInFragment: Record<string, FragmentFieldDepthInfo[]> = {};
+    
+    // Start typeInfo at the type the resolver is in.
+    const typeInfo = new TypeInfo(schema, undefined, returnType);
+
+    visit(fieldNodes[0], {
+        FragmentSpread(node, key, parent, path, ancestors) {
+            const name = node.name.value;
+            // const fragment = resolverInfo.fragments[name]
+            
+        },
+        
+    });
+}
+
 /**
  * Given a query document, check that it doesn't ask for protected, nested fields on protected types.
  * @param document The query document
@@ -75,7 +114,9 @@ function assertNoDeepProtectedFields(document: ASTNode | undefined, schema: Grap
     // Which fields are in fragments and how deep are they in the fragment, keyed by fragment name.
     const fieldsInFragment: Record<string, FragmentFieldDepthInfo[]> = {};
 
+    // const typeInfo = new TypeInfo(schema, undefined, type);
     const typeInfo = new TypeInfo(schema);
+    // typeInfo.enter(document);
 
     // First, we collect all the fields and their paths in the query.
     // If there are fragments, we collect the fields separately, because
@@ -155,20 +196,44 @@ function assertNoDeepProtectedFields(document: ASTNode | undefined, schema: Grap
     });
 }
 
-function assertNoAliasingSsoProtectedOrItems(document: ASTNode | undefined) {
-    if (!document) {
-        return;
+/**
+ * A visitor function that check the query doesn't have fragment nested within a fragment. This is a fix for cases where the query
+ * requests protected fields in a fragment nested within a deeply-nested fragment (as defined by the maxDepth argument
+ * in assertNoDeepProtectedFields). assertNoDeepProtectedFields currently doesn't take deeply-nested fragment in fragment 
+ * depth into account. See the test query GET_PROTECTED_FIELDS_IN_NESTED_FRAGMENTS in test-queries.ts 
+ * as an example of what this function is trying to prevent.
+ * 
+ * In case the project needs to support fragment spreads in fragments in the future, this will need to be replaced 
+ * with a change to the assertNoDeepProtectedFields function.
+ *   
+ * @throws AuthenticationError if there is any fragment nested within a fragment.
+ */
+const assertNoNestedFragmentFn: Visitor<ASTKindToNode> = {
+    FragmentSpread(node, key, parent, path, ancestors) {
+        const fragmentParents = ancestors.filter(a => (
+            "kind" in a ? a.kind === "FragmentDefinition" : false
+        ));
+        if (fragmentParents.length > 0) {
+            throw new AuthenticationError("Validation: You may not nest fragments within a fragment.");
+        }
     }
-    visit(document, {
-      Field(node: FieldNode) {
+};
+
+/**
+ * A visitor function that checks the query doesn't alias ssoProtected or items fields. This is because if the query's 
+ * results need to be verified later (see assertResultsArePublicItems.ts), we need to be able to access the ssoProtected field.
+ * 
+ * @throws AuthenticationError if any ssoProtected or items field has an alias.
+ */
+const assertNoAliasingSsoProtectedOrItemsFn: Visitor<ASTKindToNode> = {
+    Field(node: FieldNode) {
         const name = node.name.value;
         const hasAlias = node.alias;
         if ((name === "ssoProtected" || name === "items") && hasAlias) {
-            throw new AuthenticationError("Validation: Aliasing the ssoProtected field is forbidden.");
+            throw new AuthenticationError(`Validation: Aliasing the ${name} field is forbidden.`);
         }
-      }
-    });
-}
+    }
+};
 
 type TypeInstance = {
     type: string,
@@ -228,6 +293,19 @@ function assertProtectedTypeHasSsoField(document: ASTNode | undefined, schema: G
     // Returns verification required if at least some of the types require verification.
     return typeInstancesVerificationStatus.some(status => status);
 }
+
+export function validateUnauthenticatedQueryField(resolveInfo: GraphQLResolveInfo, protectedTypes: Set<string>): boolean {
+    if (!resolveInfo) {
+        return false;
+    }
+    const { fieldNodes, schema, parentType } = resolveInfo;
+    visit(fieldNodes[0], visitInParallel(
+        [assertNoNestedFragmentFn, assertNoAliasingSsoProtectedOrItemsFn]
+    ));
+    assertNoDeepProtectedFieldsInResolver(resolveInfo, protectedTypes);
+    assertNoDeepProtectedFields(fieldNodes[0], schema, protectedTypes);
+    return assertProtectedTypeHasSsoField(fieldNodes[0], schema, protectedTypes);
+}
 /**
  * Given a query, checks whether it conforms to conditions we have
  * for unauthenticated queries, and whether the results from this
@@ -238,8 +316,13 @@ function assertProtectedTypeHasSsoField(document: ASTNode | undefined, schema: G
  * query should have. 
  */
 export function validateUnauthenticatedQuery(document: ASTNode, schema: GraphQLSchema, protectedTypes: Set<string>) {
+    if (!document) {
+        return false;
+    }
+    visit(document, visitInParallel(
+        [assertNoNestedFragmentFn, assertNoAliasingSsoProtectedOrItemsFn]
+    ));
     assertNoDeepProtectedFields(document, schema, protectedTypes);
-    assertNoAliasingSsoProtectedOrItems(document);
     return assertProtectedTypeHasSsoField(document, schema, protectedTypes);
 
 }

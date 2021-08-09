@@ -39,7 +39,7 @@
                         ngDefaultControl multiple placeholder="Organisations">
                         <mat-select-trigger>Organisations</mat-select-trigger>
                         <div *ngIf="allOrganisations$ | async as allOrganisations">
-                            <mat-option *ngFor="let item of allOrganisations.items" value="{{ item.sys.id }}" style="word-wrap: break-word;">{{ item.name }}</mat-option>
+                            <mat-option *ngFor="let item of allOrganisations.items" value="{{ item.sys.id }}" style="word-wrap: break-word; line-height: 1.2em;">{{ item.name }}</mat-option>
                         </div>
                     </mat-select>
                 </div>

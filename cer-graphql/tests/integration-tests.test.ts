@@ -236,5 +236,13 @@ describe("Tests for cer-graphql", () => {
             expect((res as any).data.subHubCollection).toBeTruthy();
         });
 
+        test("Requesting protected fields inside deeply nested fragments within a fragment should not be permitted without logging in", async function() {
+            let res = await query({
+                query: TQ.GET_PROTECTED_FIELDS_IN_NESTED_FRAGMENTS
+            });
+            expect(res.errors.length).toBeGreaterThan(0);
+            expect(res.errors[0].extensions.code).toBe("UNAUTHENTICATED");
+        });
+
     });
 });

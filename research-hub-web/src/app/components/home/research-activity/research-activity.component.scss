@@ -50,12 +50,12 @@
       text-align: center;
       align-items: center;
       justify-content: center;
-      background: map-get($hub-teal, 700);
-      border: 4px solid map-get($hub-teal, 700);
+      background: $dark-blue;
+      border: 4px solid $dark-blue;
       transition: background 0.11s ease-in-out, color 0.1s ease-in-out;
       @include size(medium) {
-        width: 55%;
-        margin-left: -5vw;
+        width: 60%;
+        margin-left: -8vw;
         transform: skew(30deg);
       }
       * {
@@ -101,17 +101,17 @@
       &:hover {
         cursor: pointer;
         background: #ffffff;
-        border: 4px solid map-get($hub-teal, 700);
+        border: 4px solid $dark-blue;
         transition: background 0.11s ease-in-out;
         * {
           transition: background 0.11s ease-in-out;
-          color: map-get($hub-teal, 700) !important;
+          color: $dark-blue !important;
         }
       }
     }
     .research-category-img {
       width: 55vw;
-      margin-left: -5vw;
+      margin-left: -8vw;
 
       > img {
         object-fit: cover;
