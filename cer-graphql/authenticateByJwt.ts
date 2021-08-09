@@ -1,7 +1,7 @@
 import jwt, { JwtHeader } from "jsonwebtoken";
 import jwkToPem, { JWK } from "jwk-to-pem";
 import { NextFunction, Request, Response } from "express";
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 import { AuthenticationError } from "apollo-server-errors";
 import { formatError } from "graphql";
 

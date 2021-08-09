@@ -1,7 +1,7 @@
 import { createServer, getCredentials } from "../index";
 import * as TQ from './test-queries'; // Collection of test queries
 import aws from 'aws-sdk';
-import fetch from "node-fetch";
+import fetch from "cross-fetch";
 // This package does not have type declarations.
 const aws4 = require('aws4');
 
