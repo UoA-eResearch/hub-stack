@@ -63,10 +63,18 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "index": {
+                "input": "src/index.prod.html",
+                "output": "index.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/tagManager.js",
+                  "with": "src/tagManager.prod.js"
                 }
               ]
             },
@@ -221,6 +229,10 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "index": {
+                "input": "src/index.prod.html",
+                "output": "index.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
