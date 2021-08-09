@@ -6,7 +6,7 @@ variable "aws_region" {
 }
 
 variable "aws_profile" {
-  default     = "my-aws-profile"
+  default     = "default"
   description = "The profile to be used when running"
 }
 
@@ -149,6 +149,7 @@ variable "create_firewall" {
 # Loadbalancer for ECS #
 ########################
 variable "lb_name" {
+  type        = string
   description = "What name should the LB be created with"
 }
 

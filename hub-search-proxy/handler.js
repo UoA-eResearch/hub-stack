@@ -18,6 +18,8 @@ const deliveryApiClient = contentful.createClient({
   accessToken: token
 })
 
+const VALID_CONTENT_TYPES = ['article','casestudy','equipment','event', 'funding', 'service','software','subhub'];
+
 let credentials;
 try {
   // try getting credentials for the lambda from the AWS environment
@@ -54,7 +56,7 @@ module.exports.search = async (event, context) => {
     let size = 10;
     let from = 0;
     let queryFilters = {};
-    let contentTypes = ["article","casestudy","equipment","event", "funding", "service","software","subhub"];
+    let contentTypes = VALID_CONTENT_TYPES.slice();
     let sort = [];
     
     if (requestBody.hasOwnProperty('query')) {
@@ -70,11 +72,10 @@ module.exports.search = async (event, context) => {
       queryFilters = requestBody.filters;
     }
     if (requestBody.hasOwnProperty('includeContentTypes') && requestBody.includeContentTypes.length > 0) {
-      const validContentTypes = ["article","casestudy","equipment","event", "funding", "service","software","subhub"];
       contentTypes = requestBody.includeContentTypes.map(contentType => contentType.toLowerCase());
       for(const type of contentTypes) {
-        if (!validContentTypes.includes(type)) {
-          throw new Error(`Received invalid content type: ${type}. Valid types are: article, casestudy, equipment, event, funding, service, software, subhub`);
+        if (!VALID_CONTENT_TYPES.includes(type)) {
+          throw new Error(`Received invalid content type: ${type}. Valid types are: ${VALID_CONTENT_TYPES.join()}`);
         }
       }
     }
@@ -373,7 +374,6 @@ module.exports.delete = async (event, context) => {
  */
 module.exports.bulk = async () => {  
   let validEntries;
-  const validContentTypes = ['article','caseStudy','equipment','event', 'funding', 'service','software','subHub'];
   
   try {
     // contentful export and filter entries
@@ -388,7 +388,7 @@ module.exports.bulk = async () => {
     };
     const contentfulData = await contentfulExport(options);
     validEntries = contentfulData.entries.filter(
-      entry => validContentTypes.includes(entry.sys.contentType.sys.id)
+      entry => VALID_CONTENT_TYPES.includes(entry.sys.contentType.sys.id.toLowerCase())
     );
 
     console.log(`Found ${validEntries.length} entries to upload.`);

@@ -2,6 +2,7 @@
   "name": "cer-graphql",
   "version": "1.0.0",
   "description": "A GraphQL server used to proxy and authorise requests to external data sources.",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
     "test-local": "export stage='test' && npm run test",

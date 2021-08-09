@@ -1,15 +1,32 @@
 @import "variables";
 
 /**
+ * banner Image
+ */
+.mobile-banner {
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-repeat: no-repeat;
+  padding: 72px 0px;
+}
+
+.standard-banner {
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding: 72px 0px;
+}
+
+/**
  * Custom Button Styles
  */
 .standard-button {
   @extend .standard-button;
-  border: 3px solid map-get($hub-navy, 500) !important;
-  background-color: map-get($hub-navy, 500) !important;
+  border: 3px solid $light-blue !important;
+  background-color: $light-blue !important;
 }
 .standard-button:hover {
-  color: map-get($hub-navy, 500) !important;
+  color: $light-blue !important;
   border-radius: 50px !important;
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
