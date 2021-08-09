@@ -37,7 +37,7 @@ import { CerGraphqlService } from './services/cer-graphql.service';
 
 
 /**
- * Generated from Fragment matcher graphql-code-generator plugi
+ * Generated from Fragment matcher graphql-code-generator plugin
  * For more information see:
  * - https://graphql-code-generator.com/docs/plugins/fragment-matcher
  * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
