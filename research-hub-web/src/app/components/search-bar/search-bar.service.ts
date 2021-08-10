@@ -232,52 +232,75 @@ export class SearchBarService {
         pageTypes = ["event"]
       }
 
+      let searchText = this.getSearchText() !== undefined ? this.getSearchText() : '';
+
       // Create the search query
-        let query = {
-          query: this.getSearchText(),
-          size: 10,
-          from: (this.getCurrentPage() - 1) * 10,
-          sort: this.getSort(),
-          filters: {
-            relatedOrgs: this.getOrganisation(),
-            stage: this.getStage(),
-            category: categories
-          },
-          includeContentTypes : pageTypes
-        };
+      let query = {
+        query: searchText,
+        size: 10,
+        from: (this.getCurrentPage() - 1) * 10,
+        sort: this.getSort(),
+        filters: {
+          relatedOrgs: this.getOrganisation(),
+          stage: this.getStage(),
+          category: categories
+        },
+        includeContentTypes : pageTypes
+      };
 
-        // Send the POST request
-        this.http.post(environment.searchUrl, query).subscribe(data => {
-          let array = [];
-          data["result"]["hits"]["hits"].forEach(element => {
-            // Set how the results will be displayed
-            const title: string = element.highlight?.["fields.title.en-US"] ?
-              element.highlight["fields.title.en-US"].join('') :
-              element._source.fields.title["en-US"];
+      // Send the POST request
+      this.http.post(environment.searchUrl, query).subscribe(data => {
+        let array = [];
+        data["result"]["hits"]["hits"].forEach(element => {
+          // Set how the results will be displayed
+          const title: string = element.highlight?.["fields.title.en-US"] ?
+            element.highlight["fields.title.en-US"].join('') :
+            element._source.fields.title["en-US"];
 
-            const summary: string = element.highlight?.["fields.summary.en-US"] ?
-              element.highlight["fields.summary.en-US"].join(' ') :
-              element._source.fields.summary["en-US"];
+          const summary: string = element.highlight?.["fields.summary.en-US"] ?
+            element.highlight["fields.summary.en-US"].join(' ') :
+            element._source.fields.summary["en-US"];
 
-            const keywords: string[] = element.highlight?.["fields.keywords.en-US"] ?
-              element.highlight["fields.keywords.en-US"] :
-              element._source.fields.keywords?.["en-US"];
+          const keywords: string[] = element.highlight?.["fields.keywords.en-US"] ?
+            element.highlight["fields.keywords.en-US"] :
+            element._source.fields.keywords?.["en-US"];
 
-            let result = {
-              "title": title,
-              "summary" : summary,
-              "slug" : element._source.fields.slug["en-US"],
-              "ssoProtected" : element._source.fields.ssoProtected["en-US"],
-              "__typename" : element._source.sys.contentType.sys.id,
-              "icon": element._source.fields.icon?.["en-US"]["url"],
-              "keywords": keywords
-            }
-            array.push(result);
-          });
-            
-          // Create the results
-          this.setResults(array);
-          this.setTotalPages(data["result"]["hits"]["total"]["value"]);
-        })
+          let result = {
+            "title": title,
+            "summary" : summary,
+            "slug" : element._source.fields.slug["en-US"],
+            "ssoProtected" : element._source.fields.ssoProtected["en-US"],
+            "__typename" : element._source.sys.contentType.sys.id,
+            "icon": element._source.fields.icon?.["en-US"]["url"],
+            "keywords": keywords
+          }
+          array.push(result);
+        });
+
+        const resultsTotal = data["result"]["hits"]["total"]["value"];
+          
+        // Create the results
+        this.setResults(array);
+        this.setTotalPages(resultsTotal);
+
+        // prepare to send virtual page view for GA site search tracking:
+        // url-safe the search text -replace non-alphanumeric, extra whitespaces etc, then join words with +
+        const cleanedQuery = searchText.replace(/[\W_]+/g," ").trim().split(' ').join('+');
+        const searchCategories = this.getCategory().join('+');
+        const researchActivities = this.getStage().join('+');
+        const orgs = this.getOrganisation().join('+');
+
+        // push search query info to GTM dataLayer
+        // the searchQueryUrl (cleanedQuery) is used to create a virtual page view in GA, which then generates site search data
+        window.dataLayer.push({
+          event: 'search',
+          searchQuery: searchText,
+          searchQueryUrl: cleanedQuery,
+          resultsTotal: resultsTotal,
+          searchCategory: searchCategories,
+          researchActivities: researchActivities,
+          orgs: orgs
+        });
+      })
   }
 }
