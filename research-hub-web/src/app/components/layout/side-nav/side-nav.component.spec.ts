@@ -11,7 +11,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { SideNavComponent } from './side-nav.component';
 
 
-fdescribe('MobileSideNavComponent', () => {
+describe('MobileSideNavComponent', () => {
   let component: SideNavComponent;
   let fixture: ComponentFixture<SideNavComponent>;
 
