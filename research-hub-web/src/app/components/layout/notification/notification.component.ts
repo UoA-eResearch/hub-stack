@@ -6,7 +6,11 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-notification',
   template: `
-    <div *ngIf="showNotification && !hasBeenDismissed" class="notification-bar-container" fxLayout="row">
+    <div
+      *ngIf="showNotification && !hasBeenDismissed"
+      class="notification-bar-container mat-elevation-z6"
+      fxLayout="row"
+    >
       <div class="notification-bar-content">
         <div [innerHTML]="this.notification | richTextToHTML"></div>
       </div>
@@ -17,7 +21,7 @@ import { map } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class NotificationComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription =  new Subscription();
+  private subscriptions: Subscription = new Subscription();
   public showNotification = false;
   public hasBeenDismissed = false;
   public notification: JSON;

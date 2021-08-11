@@ -74,7 +74,7 @@
     of all the Research Categories
   -->
   <button
-    *ngIf="!isHome"
+    *ngIf="!isHome && currentUrl !== '/search'"
     role="button"
     aria-label="categories"
     mat-button
@@ -127,7 +127,7 @@
     of all the Research Activities
   -->
   <button
-    *ngIf="!isHome"
+    *ngIf="!isHome && currentUrl !== '/search'"
     role="button"
     aria-label="activities"
     mat-button
