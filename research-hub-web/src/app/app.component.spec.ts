@@ -1,7 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Title } from '@angular/platform-browser';
-import { LoginService } from '@uoa/auth';
-import { Apollo } from 'apollo-angular';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AppComponent } from './app.component';
 import { PageTitleService } from './services/page-title.service';
@@ -30,7 +27,6 @@ describe('AppComponent', () => {
       providers: [
         MockProvider(SearchBarService),
         MockProvider(PageTitleService),
-        MockProvider(LoginService),
         MockProvider(DeviceDetectorService)
       ]
     })
