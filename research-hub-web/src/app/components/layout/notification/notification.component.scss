@@ -2,6 +2,7 @@
 @import "styles-common";
 
 div.notification-bar-container {
+  z-index: 1000;
   background: $light-blue;
   transition: all 0.1s ease-in-out;
   a {
