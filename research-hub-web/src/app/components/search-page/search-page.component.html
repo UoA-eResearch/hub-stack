@@ -1,5 +1,5 @@
 <div class="search-page-container">
-    
+
     <!-- Search Header Filter Options -->
     <div class="search-header search-page-container grey-background">
         <div fxLayout="column" ngClass.gt-sm="top-padding site-padding-2" ngClass.lt-md="top-padding site-padding">
@@ -35,7 +35,7 @@
 
                 <!-- Organisation Filters -->
                 <div fxFlex>
-                    <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="organisationFilter" name="organisationFilter" 
+                    <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="organisationFilter" name="organisationFilter"
                         ngDefaultControl multiple placeholder="Organisations">
                         <mat-select-trigger>Organisations</mat-select-trigger>
                         <div *ngIf="allOrganisations$ | async as allOrganisations">
@@ -94,7 +94,7 @@
             count="10" [theme]="{ height: '80px' }" animation="pulse">
         </ngx-skeleton-loader>
     </div>
-    
+
     <!-- Search Results -->
     <div id="search-results" ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" *ngIf="allCurrentPages.length > 0">
         <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-list-filter">
