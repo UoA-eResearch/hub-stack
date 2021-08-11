@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { NotificationComponent } from './notification/notification.component';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '../shared/app.shared.module';
 import { RouterModule } from '@angular/router';
 import { SideNavComponent } from './side-nav/side-nav.component';
-import { ScrollDispatcher, ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { FooterComponent } from './footer/footer.component';
 
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    FooterComponent,
-    LoadingSpinnerComponent,
     NotificationComponent,
-    SideNavComponent
+    SideNavComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -29,8 +27,6 @@ import { ScrollDispatcher, ScrollingModule } from '@angular/cdk/scrolling';
   ],
   exports: [
     NavbarComponent,
-    FooterComponent,
-    LoadingSpinnerComponent,
     NotificationComponent,
     SideNavComponent
   ]
