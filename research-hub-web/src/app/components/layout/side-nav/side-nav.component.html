@@ -30,7 +30,10 @@
 
   <!--router content-->
   <mat-sidenav-content>
-    <router-outlet></router-outlet>
+    <div style="min-height: 100vh;">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
   </mat-sidenav-content>
 
 </mat-sidenav-container>
