@@ -105,16 +105,18 @@
             <!-- Results -->
             <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
                 <h3 style="margin-bottom: 0" class="search-results-text">{{ this.searchBarService.getTotalPages() }}&nbsp;&nbsp;</h3>
-                <p style="margin-bottom: 0">Results</p>
+                <p *ngIf="this.searchBarService.getTotalPages() !== 1; else onlyOne" style="margin-bottom: 0">Results</p>
+                <ng-template #onlyOne><p style="margin-bottom: 0">Result</p></ng-template>
             </span>
 
             <!-- Divider -->
             <div fxHide.lt-md fxFlex></div>
 
             <!-- Filtering Options -->
-            <div id="filtering-options" fxFlexOrder.lt-sm="1" fxFlex="25%">
-                <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
-                    placeholder="Order By">
+            <mat-label id="order-label">Order By:</mat-label>
+            <div fxFlexOrder.lt-sm="1" fxFlex="25%">
+                <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" ngDefaultControl
+                    placeholder="Relevance">
                     <div>
                         <mat-option value="">Relevance</mat-option>
                         <mat-option value="A-Z">Alphabetical</mat-option>

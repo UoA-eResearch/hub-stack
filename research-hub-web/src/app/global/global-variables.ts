@@ -31,16 +31,16 @@ export enum ContentTypeId {
 }
 
 export enum OptionType {
-    ResearchActivity = 1,
-    Category,
-    Menu
-  }
+  ResearchActivity = 1,
+  Category,
+  Menu
+}
 
-  export enum FilterType {
-    ResearchActivity,
-    ResearchCategory,
-    Organisation
-  }
+export enum FilterType {
+  ResearchActivity = 1,
+  ResearchCategory,
+  Organisation
+}
   
 export enum ResearchActivityId {
     PlanDesign = 1,
