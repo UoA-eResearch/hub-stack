@@ -265,6 +265,11 @@ export class SearchBarService {
             element.highlight["fields.keywords.en-US"] :
             element._source.fields.keywords?.["en-US"];
 
+          const type = element._source.sys.contentType.sys.id === "subHub" ? "topic" : element._source.sys.contentType.sys.id
+          const typeAndKeywords: string[] = keywords != undefined ?
+            [type].concat(keywords) :
+            [type]
+
           let result = {
             "title": title,
             "summary" : summary,
@@ -272,7 +277,7 @@ export class SearchBarService {
             "ssoProtected" : element._source.fields.ssoProtected["en-US"],
             "__typename" : element._source.sys.contentType.sys.id,
             "icon": element._source.fields.icon?.["en-US"]["url"],
-            "keywords": keywords
+            "keywords": typeAndKeywords
           }
           array.push(result);
         });
