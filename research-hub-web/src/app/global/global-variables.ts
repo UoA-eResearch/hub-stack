@@ -111,10 +111,14 @@ export enum ResearchActivityId {
     { name: 'About', icon: 'info', routerLink: '/about', type: OptionType.Menu }
   ];
 
-  export const CategoryDisplayNames = {
-    'Policies': 'Policy',
-    'Support': 'Service',
-    'Facilities': 'Facility',
-    'Person': 'People'
+  export const ContentTypeDisplayNames = {
+    'article': 'Article',
+    'caseStudy': 'Case Study',
+    'equipment': 'Equipment',
+    'event': 'Event',
+    'funding': 'Funding',
+    'service': 'Service',
+    'software': 'Software',
+    'subHub': 'Topic'
   };
   
