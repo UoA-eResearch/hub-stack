@@ -8,11 +8,14 @@ mat-expansion-panel-header {
 }
 
 mat-list-item {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
   height: 60px;
 }
 
 mat-expansion-panel {
-  width: 70vw;
+  width: 85vw;
   box-shadow: none !important;
 }
 
@@ -28,6 +31,12 @@ mat-sidenav-container {
 
   div.outlet-min-height {
     min-height: 100vh;
+  }
+}
+
+mat-sidenav {
+  @media (max-width: 599px) {
+    min-width: 85vw
   }
 }
 
