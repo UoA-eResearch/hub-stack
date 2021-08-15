@@ -2,6 +2,7 @@ import { OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Component, OnInit, Input } from '@angular/core'
 import { Subscription } from 'rxjs';
+import { ContentTypeDisplayNames } from '@app/global/global-variables';
 
 @Component({
   selector: 'app-collection-list',
@@ -51,6 +52,25 @@ export class CollectionListComponent implements OnInit, OnDestroy, OnChanges {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  searchOnKeyword(keyword) {
+    if (Object.values(ContentTypeDisplayNames).includes(keyword)) {
+      const type = Object.keys(ContentTypeDisplayNames)[Object.values(ContentTypeDisplayNames).indexOf(keyword)];
+      this.searchBarService.setContentType([type]);
+      this.searchBarService.setCurrentPage(1);
+      this.searchBarService.createResultsList();
+    } else {
+      this.searchBarService.setSearchText(this.removeHtmlTags(keyword));
+      this.searchBarService.setCurrentPage(1);
+      this.searchBarService.createResultsList();
+    }    
+  }
+
+  // Clean up any <em> tags from highlighted keywords
+  private removeHtmlTags(dirtyString){
+    return dirtyString.replace(/<[^>]*>/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+  }
 
   /**
    * Returns a material-icon name. Called in the component when a content item doesn't
