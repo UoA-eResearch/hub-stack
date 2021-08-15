@@ -221,9 +221,7 @@ export class SearchBarService {
             element.highlight["fields.summary.en-US"].join(' ') :
             element._source.fields.summary["en-US"];
 
-          const keywords: string[] = element.highlight?.["fields.keywords.en-US"] ?
-            element.highlight["fields.keywords.en-US"] :
-            element._source.fields.keywords?.["en-US"];
+          const keywords: string[] = element._source.fields.keywords?.["en-US"];
 
           const typeAndKeywords: string[] = keywords != undefined ?
             [ContentTypeDisplayNames[element._source.sys.contentType.sys.id]].concat(keywords) :
@@ -246,9 +244,6 @@ export class SearchBarService {
         // Create the results
         this.setResults(array);
         this.setTotalPages(resultsTotal);
-
-        // reset the Content Type filter to all pages
-        this.contentType = Object.keys(ContentTypeDisplayNames);
 
         // prepare to send virtual page view for GA site search tracking:
         // url-safe the search text -replace non-alphanumeric, extra whitespaces etc, then join words with +
