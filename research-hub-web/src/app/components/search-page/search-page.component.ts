@@ -51,6 +51,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.searchBarService.setCategory([]);
     this.searchBarService.setStage([]);
     this.searchBarService.setOrganisation([]);
+    this.searchBarService.setContentType([]);
     this.searchBarService.createResultsList();
   }
 

@@ -6,7 +6,7 @@
         <!-- Collection Container -->
         <mat-nav-list role="list">
             <a *ngFor="let content of collection | paginate: { itemsPerPage: itemsPerPage , currentPage: pageNumber, totalItems: searchBarService.getTotalPages() }"
-                [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" class="result-item"
+                class="result-item"
                 [ngClass]="{'ssoProtected': content.ssoProtected }">
 
                 <!-- Collection Item -->
@@ -18,20 +18,20 @@
                                 alt="{{ content.title }}" class="item-avatar" width="100%" height="100%" />
                         </div>
                         <ng-template #avatarIcon>
-                            <mat-icon class="item-avatar-icon" [innerHTML]="getDefaultTypeIcon(content.__typename)">
+                            <mat-icon class="item-avatar-icon" [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" [innerHTML]="getDefaultTypeIcon(content.__typename)">
                             </mat-icon>
                         </ng-template>
                     </span>
                     <span class="card-content">
-                        <h4 class="card-title" [innerHTML]=content.title>
+                        <h4 class="card-title" [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" [innerHTML]=content.title>
                             &nbsp;
                             <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
                         </h4>
 
-                        <p class="card-summary" [innerHTML]=content.summary></p>
+                        <p class="card-summary" [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" [innerHTML]=content.summary></p>
 
-                        <mat-chip-list class="keyword-chips" *ngIf="content.keywords" [tabIndex]="-1" aria-label="item keywords">
-                            <mat-chip *ngFor="let keyword of content.keywords" [selectable]="false" aria-label="keyword" [innerHTML]=keyword></mat-chip>
+                        <mat-chip-list class="keyword-chips" *ngIf="content.keywords" aria-label="item keywords">
+                            <mat-chip *ngFor="let keyword of content.keywords" (click)="searchOnKeyword(keyword)" aria-label="keyword" [innerHTML]=keyword></mat-chip>
                         </mat-chip-list>
                     </span>
                 </mat-card>

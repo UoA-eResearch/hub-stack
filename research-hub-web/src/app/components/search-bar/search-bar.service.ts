@@ -5,25 +5,19 @@ import {
   AllCategoriesGQL,
   AllStagesGQL,
   AllOrganisationsGQL,
-  AllPagesGQL,
-  AllItemsByCategoryGQL,
-  AllItemsByStageGQL,
-  AllItemsByOrganisationGQL,
   CategoryCollection,
   OrgUnitCollection,
   StageCollection,
-  EventCollection,
-  AllEventsGQL
+  EventCollection  
 } from '@app/graphql/schema';
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { ContentTypeDisplayNames } from '@app/global/global-variables';
 
 
 @Injectable()
 export class SearchBarService {
-
-  public searchChange: Subject<any> = new Subject<any>();
   public searchCategoryChange: Subject<any> = new Subject<any>();
   public searchStageChange: Subject<any> = new Subject<any>();
   public searchOrganisationChange: Subject<any> = new Subject<any>();
@@ -32,6 +26,7 @@ export class SearchBarService {
   public currentPageChange: Subject<any> = new Subject<any>();
   public totalPagesChange: Subject<any> = new Subject<any>();
   public sortTypeChange: Subject<any> = new Subject<any>();
+  public contentTypeChange: Subject<any> = new Subject<any>();
   public searchText: string;
   public category: Array<any> = new Array<any>();
   public stage: Array<any> = new Array<any>();
@@ -40,6 +35,7 @@ export class SearchBarService {
   public currentPage;
   public totalPages;
   public sortType;
+  public contentType: Array<string> = Object.keys(ContentTypeDisplayNames);
   public eventIdChange: Subject<any> = new Subject<any>();
   public eventId;
 
@@ -47,11 +43,6 @@ export class SearchBarService {
     public allCategoriesGQL: AllCategoriesGQL,
     public allStagesGQL: AllStagesGQL,
     public allOrganisationsGQL: AllOrganisationsGQL,
-    public allPagesGQL: AllPagesGQL,
-    public allItemsByCategoryGQL: AllItemsByCategoryGQL,
-    public allItemsByStageGQL: AllItemsByStageGQL,
-    public allItemsByOrganisationGQL: AllItemsByOrganisationGQL,
-    public allEventsGQL: AllEventsGQL,
     private http: HttpClient
   ) { }
 
@@ -112,6 +103,17 @@ export class SearchBarService {
     return this.sortType;
   }
 
+  // Content Type
+  setContentType(contentType) {
+    if (contentType !== undefined) {
+      this.contentType = contentType;
+      this.contentTypeChange.next(contentType);
+    }
+  }
+  getContentType() {
+    return this.contentType;
+  }
+
   // Current Page
   setCurrentPage(currentPage) {
     this.currentPage = currentPage;
@@ -121,7 +123,7 @@ export class SearchBarService {
     return this.currentPage;
   }
 
-  // Toal Pages
+  // Total Pages
   setTotalPages(totalPages) {
     this.totalPages = totalPages;
     this.totalPagesChange.next(totalPages);
@@ -172,50 +174,8 @@ export class SearchBarService {
     } catch (e) { console.error('Error loading all organisations:', e) };
   }
 
-  // Get all Events
-  public getAllEvents(): Observable<EventCollection> {
-    try {
-      return this.allEventsGQL.fetch()
-        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
-    } catch (e) { console.error('Error loading all Events:', e) };
-  }
-
-  // Get All Pages
-  public getAllPages() {
-    try {
-      return this.allPagesGQL.fetch()
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Category
-  public getAllItemsByCategory(filter) {
-    try {
-      return this.allItemsByCategoryGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Stage
-  public getAllItemsByStage(filter) {
-    try {
-      return this.allItemsByStageGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Organisation
-  public getAllItemsByOrganisation(filter) {
-    try {
-      return this.allItemsByOrganisationGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
   // Create list result
   public createResultsList() {
-      let pageTypes = ["equipment", "event", "article", "service", "subhub", "software", "casestudy", "funding"];
-
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
       this.setTotalPages(this.getTotalPages());
@@ -229,7 +189,7 @@ export class SearchBarService {
       // If event is selected, remove it from search parameters, event is a content model so must be handled differently
       if (this.getCategory().includes(this.getEventId())) {
         categories.splice(this.getCategory().indexOf(this.getEventId()), 1)
-        pageTypes = ["event"]
+        this.contentType = ["event"]
       }
 
       let searchText = this.getSearchText() !== undefined ? this.getSearchText() : '';
@@ -245,7 +205,7 @@ export class SearchBarService {
           stage: this.getStage(),
           category: categories
         },
-        includeContentTypes : pageTypes
+        includeContentTypes : this.contentType
       };
 
       // Send the POST request
@@ -265,10 +225,9 @@ export class SearchBarService {
             element.highlight["fields.keywords.en-US"] :
             element._source.fields.keywords?.["en-US"];
 
-          const type = element._source.sys.contentType.sys.id === "subHub" ? "topic" : element._source.sys.contentType.sys.id
           const typeAndKeywords: string[] = keywords != undefined ?
-            [type].concat(keywords) :
-            [type]
+            [ContentTypeDisplayNames[element._source.sys.contentType.sys.id]].concat(keywords) :
+            [ContentTypeDisplayNames[element._source.sys.contentType.sys.id]]
 
           let result = {
             "title": title,
@@ -287,6 +246,9 @@ export class SearchBarService {
         // Create the results
         this.setResults(array);
         this.setTotalPages(resultsTotal);
+
+        // reset the Content Type filter to all pages
+        this.contentType = Object.keys(ContentTypeDisplayNames);
 
         // prepare to send virtual page view for GA site search tracking:
         // url-safe the search text -replace non-alphanumeric, extra whitespaces etc, then join words with +
