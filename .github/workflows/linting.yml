@@ -33,6 +33,4 @@ jobs:
         
       - name: ng lint
         working-directory: ./research-hub-web
-        with:
-          eslint: true
         run: ng lint
