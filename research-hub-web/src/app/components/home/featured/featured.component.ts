@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GetAllFeaturedItemsGQL, GetAllFeaturedItemsQuery } from '@graphql/schema';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GetAllFeaturedItemsGQL, GetAllFeaturedItemsQuery } from '@graphql/schema';
 
 type HomepageFeaturedItems = GetAllFeaturedItemsQuery['featuredItemsCollection']['items'][number]['itemsCollection'];
 
@@ -18,7 +18,7 @@ export class FeaturedComponent implements OnInit {
     public getAllFeaturedItemsGQL: GetAllFeaturedItemsGQL
   ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.featuredItems$ = this.getAllFeaturedItemsGQL.fetch().pipe(
       map(x => x.data.featuredItemsCollection.items[0].itemsCollection)
     );

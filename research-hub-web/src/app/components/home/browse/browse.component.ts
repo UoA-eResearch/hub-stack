@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AllCategoriesGQL, CategoryCollection, Category, GetHomepageGQL, Homepage } from '@app/graphql/schema';
-import { flatMap, pluck } from 'rxjs/operators';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
+import { AllCategoriesGQL, CategoryCollection } from '@app/graphql/schema';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-browse',
@@ -19,7 +19,7 @@ export class BrowseComponent implements OnInit {
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
     public searchBarService: SearchBarService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     this.allCategories$ = this.getAllCategories();

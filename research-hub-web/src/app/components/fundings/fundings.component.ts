@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy, Type } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { pluck, flatMap, catchError } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageTitleService } from '@services/page-title.service';
-import { BodyMediaService } from '@services/body-media.service';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllFundingGQL,
   AllFundingSlugsGQL,
-  GetFundingBySlugGQL,
-  FundingCollection,
   Funding,
+  FundingCollection,
+  GetFundingBySlugGQL
 } from '@graphql/schema';
+import { BodyMediaService } from '@services/body-media.service';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Observable, Subscription } from 'rxjs';
+import { flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -92,16 +92,16 @@ export class FundingsComponent implements OnInit, OnDestroy {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllFundingSlugs().subscribe(data => {
         let slugs = [];
-          data.items.forEach(data => {
-            slugs.push(data.slug)
-          })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+        data.items.forEach(data => {
+          slugs.push(data.slug)
+        })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
       });
       this.funding = this.getFundingBySlug(this.slug);
       this.getFundingBySlug(this.slug).subscribe(data => {
 
         // If Call To Action is an email address
-        if (data.callToAction?.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           data['callToAction'] = 'mailto:' + data['callToAction'];
         }
 
@@ -124,7 +124,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
     } else {
       this.pageTitleService.title = 'Fundings';
       this.allFundings$ = this.getAllFundings();
-      try { this.funding$.unsubscribe(); } catch {}
+      try { this.funding$.unsubscribe(); } catch { }
     }
   }
 
@@ -177,6 +177,6 @@ export class FundingsComponent implements OnInit, OnDestroy {
       this.funding$.unsubscribe();
       this.route$.unsubscribe();
       this.bodyLinks$.unsubscribe();
-    } catch {}
+    } catch { }
   }
 }

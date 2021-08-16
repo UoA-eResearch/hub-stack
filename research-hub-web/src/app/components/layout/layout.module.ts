@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './navbar/navbar.component';
-import { NotificationComponent } from './notification/notification.component';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '../shared/app.shared.module';
-import { RouterModule } from '@angular/router';
-import { SideNavComponent } from './side-nav/side-nav.component';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FooterComponent } from './footer/footer.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NotificationComponent } from './notification/notification.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 
 

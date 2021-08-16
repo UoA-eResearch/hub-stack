@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy, Type } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { pluck, flatMap, catchError } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageTitleService } from '@services/page-title.service';
-import { BodyMediaService } from '@services/body-media.service';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllSoftwareGQL,
   AllSoftwareSlugsGQL,
   GetSoftwareBySlugGQL,
-  SoftwareCollection,
   Software,
+  SoftwareCollection
 } from '@graphql/schema';
+import { BodyMediaService } from '@services/body-media.service';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Observable, Subscription } from 'rxjs';
+import { flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -74,10 +74,10 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getSoftwareBySlug() method.
      */
-      this.route$ = this.route.params.subscribe(params => {
-        this.slug = params.slug || this.route.snapshot.data.slug;
-        this._loadContent();
-      });
+    this.route$ = this.route.params.subscribe(params => {
+      this.slug = params.slug || this.route.snapshot.data.slug;
+      this._loadContent();
+    });
   }
 
   /**
@@ -92,10 +92,10 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllSoftwareSlugs().subscribe(data => {
         let slugs = [];
-          data.items.forEach(data => {
-            slugs.push(data.slug)
-          })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+        data.items.forEach(data => {
+          slugs.push(data.slug)
+        })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
       });
       this.software = this.getSoftwareBySlug(this.slug);
       this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
@@ -117,7 +117,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
     } else {
       this.pageTitleService.title = 'Software';
       this.allSoftware$ = this.getAllSoftware();
-      try { this.software$.unsubscribe(); } catch {}
+      try { this.software$.unsubscribe(); } catch { }
     }
   }
 
@@ -170,6 +170,6 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
       this.software$.unsubscribe();
       this.route$.unsubscribe();
       this.bodyLinks$.unsubscribe();
-    } catch {}
+    } catch { }
   }
 }

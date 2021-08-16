@@ -1,13 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import {
   AllStagesGQL,
-  StageCollection,
-  GetHomepageGQL,
-  Homepage
+  StageCollection
 } from '@graphql/schema';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-research-activity',
@@ -23,7 +21,7 @@ export class ResearchActivityComponent implements OnInit {
   constructor(
     public allStagesGQL: AllStagesGQL,
     public searchBarService: SearchBarService
-    ) {}
+  ) { }
 
   async ngOnInit() {
     this.allStages$ = this.getAllStages();

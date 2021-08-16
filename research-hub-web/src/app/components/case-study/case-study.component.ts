@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy, Type } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { pluck, flatMap, catchError } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageTitleService } from '@services/page-title.service';
-import { BodyMediaService } from '@services/body-media.service';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllCaseStudiesGQL,
   AllCaseStudySlugsGQL,
-  GetCaseStudyBySlugGQL,
-  CaseStudyCollection,
   CaseStudy,
+  CaseStudyCollection,
+  GetCaseStudyBySlugGQL
 } from '@graphql/schema';
+import { BodyMediaService } from '@services/body-media.service';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Observable, Subscription } from 'rxjs';
+import { catchError, flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -75,15 +75,15 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getCaseStudyBySlug() method.
      */
-      this.route$ = this.route.params.subscribe(params => {
-        this.slug = params.slug || this.route.snapshot.data.slug;
-        this._loadContent();
-      });
+    this.route$ = this.route.params.subscribe(params => {
+      this.slug = params.slug || this.route.snapshot.data.slug;
+      this._loadContent();
+    });
 
-      /**
-       * Set styling for text if banner is present
-       */
-      this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
+    /**
+     * Set styling for text if banner is present
+     */
+    this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   }
 
   /**
@@ -97,10 +97,10 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     if (!!this.slug) {
       this.getAllCaseStudySlugs().subscribe(data => {
         let slugs = [];
-          data.items.forEach(data => {
-            slugs.push(data.slug)
-          })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+        data.items.forEach(data => {
+          slugs.push(data.slug)
+        })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
       });
       this.caseStudy = this.getCaseStudyBySlug(this.slug);
 
@@ -126,7 +126,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     } else {
       this.pageTitleService.title = 'Case Studies';
       this.allCaseStudies$ = this.getAllCaseStudy();
-      try { this.caseStudy$.unsubscribe(); } catch {}
+      try { this.caseStudy$.unsubscribe(); } catch { }
     }
   }
 
@@ -179,6 +179,6 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
       this.caseStudy$.unsubscribe();
       this.route$.unsubscribe();
       this.bodyLinks$.unsubscribe();
-    } catch {}
+    } catch { }
   }
 }
