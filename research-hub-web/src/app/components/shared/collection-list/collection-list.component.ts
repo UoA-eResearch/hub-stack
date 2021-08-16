@@ -66,10 +66,10 @@ export class CollectionListComponent implements OnInit, OnDestroy, OnChanges {
       // this.searchBarService.createResultsList();
 
     } else {
-      // this.searchBarService.setSort('');
-      // this.searchBarService.setStage([]);
-      // this.searchBarService.setCategory([]);
-      // this.searchBarService.setOrganisation([]);
+      this.searchBarService.setSort('');
+      this.searchBarService.setStage([]);
+      this.searchBarService.setCategory([]);
+      this.searchBarService.setOrganisation([]);
       this.searchBarService.setCurrentPage(1);
       this.searchBarService.setSearchText(keyword);
       this.searchBarService.createResultsList();

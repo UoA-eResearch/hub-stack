@@ -28,7 +28,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
   public filterTypes = FilterType;
-
+  public categoryChangeSub;
+  public stageChangeSub;
+  public organisationChangeSub;
 
   constructor(
     public searchBarService: SearchBarService,
@@ -39,6 +41,19 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
+
+    this.categoryChangeSub = this.searchBarService.searchCategoryChange.subscribe(searchCategory => {
+      this.categoryFilter = searchCategory;
+    });
+
+    this.stageChangeSub = this.searchBarService.searchStageChange.subscribe(searchStage => {
+      this.stageFilter = searchStage;
+    });
+
+    this.organisationChangeSub = this.searchBarService.searchOrganisationChange.subscribe(searchOrganisation => {
+      this.organisationFilter = searchOrganisation;
+    });
+
     this.searchBarService.createResultsList();
     this.initialPages();
   }
@@ -97,6 +112,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.resultSub$.unsubscribe();
+    this.categoryChangeSub.unsubscribe();
+    this.stageChangeSub.unsubscribe();
+    this.organisationChangeSub.unsubscribe();
     this.allCurrentPages = [];
   }
 }
