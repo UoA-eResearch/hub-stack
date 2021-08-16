@@ -1,5 +1,5 @@
 import { filter, pluck, flatMap, catchError } from 'rxjs/operators';
-import { AfterViewInit, Component, ContentChildren, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { SearchBarService } from './components/search-bar/search-bar.service';
 import { NavigationEnd, NavigationStart, Router, RouterEvent, RouterOutlet } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
@@ -24,7 +24,7 @@ import supportsWebP from 'supports-webp';
   encapsulation: ViewEncapsulation.None,
   animations: []
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AppComponent implements OnInit, OnDestroy {
   public viewIsLoaded: Boolean = false;
   public feedbackLink = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public aboutUs = "https://www.eresearch.auckland.ac.nz/?_ga=2.69549080.943707055.1614124973-1995817083.1603163706#";
@@ -69,8 +69,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   @ContentChildren(RouterOutlet) outlet;
 
   constructor(
-    private location: Location,
-    public searchBarService: SearchBarService,
+    private location: Location, 
+    public searchBarService: SearchBarService, 
     private router: Router,
     private titleService: Title,
     public appComponentService: AppComponentService,
@@ -92,8 +92,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
   }
-
-  ngAfterViewInit() { }
 
   detectWebP() {
     supportsWebP.then(supported => {
@@ -197,7 +195,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
             // Change navbar links 'Research Categories' and 'Research Activities' to scroll if on homepage otherwise expansion panel
             this.onHomePage = ['home', 'home#'].includes(routeName);
-
+            
             // Show banner if we're on the homepage
             this.showBanner = this.onHomePage == true;
 
@@ -217,7 +215,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     // Redirect hash-style URLs of the old ResearchHub to the new style.
     this.router.events.subscribe((event: RouterEvent): void => {
       if (!this.router.navigated && event instanceof NavigationStart) {
-        const url = event.url;
+        const url = event.url;  
         if (url.match('^/#/')) {
           this.router.navigateByUrl(url.replace('#/', ''), {replaceUrl: true});
         }
@@ -305,7 +303,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.titleSub.unsubscribe();
       this.scrollSub.unsubscribe();
       this.url.unsubscribe();
-    } catch {}
+    } catch {}   
   }
 
   // Get year for footer copyright
