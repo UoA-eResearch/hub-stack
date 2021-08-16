@@ -1,22 +1,22 @@
-import { Component, OnInit, OnDestroy, Type } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { pluck, flatMap, catchError } from 'rxjs/operators';
+import { Location } from '@angular/common';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageTitleService } from '@services/page-title.service';
-import { BodyMediaService } from '@services/body-media.service';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllEquipmentGQL,
   AllEquipmentSlugsGQL,
-  GetEquipmentBySlugGQL,
-  EquipmentCollection,
   Equipment,
+  EquipmentCollection,
+  GetEquipmentBySlugGQL
 } from '@graphql/schema';
+import { BodyMediaService } from '@services/body-media.service';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { Location } from '@angular/common';
+import { Observable, Subscription } from 'rxjs';
+import { flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -77,10 +77,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getEquipmentBySlug() method.
      */
-      this.route$ = this.route.params.subscribe(params => {
-        this.slug = params.slug || this.route.snapshot.data.slug;
-        this._loadContent();
-      });
+    this.route$ = this.route.params.subscribe(params => {
+      this.slug = params.slug || this.route.snapshot.data.slug;
+      this._loadContent();
+    });
   }
 
   /**
@@ -95,10 +95,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       // Check if the equipment slug is valid otherwise redirect to 404
       this.getAllEquipmentSlugs().subscribe(data => {
         let slugs = [];
-          data.items.forEach(data => {
-            slugs.push(data.slug)
-          })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+        data.items.forEach(data => {
+          slugs.push(data.slug)
+        })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
       });
       this.equipment = this.getEquipmentBySlug(this.slug);
       this.equipment$ = this.getEquipmentBySlug(this.slug).subscribe(data => {
@@ -120,7 +120,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     } else {
       this.pageTitleService.title = 'Equipment';
       this.allEquipment$ = this.getAllEquipment();
-      try { this.equipment$.unsubscribe(); } catch {}
+      try { this.equipment$.unsubscribe(); } catch { }
     }
   }
 
@@ -173,6 +173,6 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       this.equipment$.unsubscribe();
       this.route$.unsubscribe();
       this.bodyLinks$.unsubscribe();
-    } catch {}
+    } catch { }
   }
 }

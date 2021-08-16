@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { PageTitleService } from './services/page-title.service';
 import { map } from 'rxjs/operators';
 import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from './graphql/schema';
+import { PageTitleService } from './services/page-title.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from './graphql/schem
   animations: []
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription =  new Subscription();
+  private subscriptions: Subscription = new Subscription();
 
   public allCategories: Category[];
   public allStages: Stage[];

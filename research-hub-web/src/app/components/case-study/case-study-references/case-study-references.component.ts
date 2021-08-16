@@ -1,17 +1,17 @@
-import { Component, OnInit, OnDestroy, Type } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { pluck, flatMap, catchError } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageTitleService } from '@services/page-title.service';
-import { BodyMediaService } from '@services/body-media.service';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   CaseStudy,
-  GetCaseStudyReferencesBySlugGQL,
+  GetCaseStudyReferencesBySlugGQL
 } from '@graphql/schema';
+import { BodyMediaService } from '@services/body-media.service';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { Observable, Subscription } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-case-study-references',
@@ -48,10 +48,10 @@ export class CaseStudyReferencesComponent implements OnInit, OnDestroy {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getCaseStudyReferencesBySlug() method.
      */
-      this.route$ = this.route.params.subscribe(params => {
-        this.slug = params.slug || this.route.snapshot.data.slug;
-        this._loadContent();
-      });
+    this.route$ = this.route.params.subscribe(params => {
+      this.slug = params.slug || this.route.snapshot.data.slug;
+      this._loadContent();
+    });
   }
 
   /**
@@ -84,6 +84,6 @@ export class CaseStudyReferencesComponent implements OnInit, OnDestroy {
     try {
       this.caseStudyReferences$.unsubscribe();
       this.route$.unsubscribe();
-    } catch {}
+    } catch { }
   }
 }
