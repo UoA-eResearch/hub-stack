@@ -1,4 +1,4 @@
-name: Lint
+name: Lint research-hub-web
 
 on:
   # Trigger the workflow on push or pull request,
@@ -6,9 +6,14 @@ on:
   push:
     branches:
       - master
+    paths: 
+      - 'research-hub-web'
   pull_request:
     branches:
       - master
+    paths: 
+      - 'research-hub-web'
+
 
 jobs:
   run-linters:
