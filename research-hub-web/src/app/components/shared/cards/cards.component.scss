@@ -21,6 +21,11 @@ mat-card {
   * Mat-Card Title
   */
 .mat-card-title {
+  h4 {
+    font: 400 16px/20px National;
+    letter-spacing: normal;
+    margin: 0 0 16px
+  }
   display: inline-block;
   a:hover {
     border-bottom: solid 2px $dark-grey;
