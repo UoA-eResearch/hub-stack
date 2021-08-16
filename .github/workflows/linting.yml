@@ -25,9 +25,14 @@ jobs:
           node-version: 14
           
       - name: Install Node.js dependencies
+        working-directory: ./research-hub-web
         run: npm ci
+
+      - name: Install Angular CLI
+        run: npm install -g @angular/cli
         
-      - name: Run ng lint
+      - name: ng lint
+        working-directory: ./research-hub-web
         with:
           eslint: true
         run: ng lint
