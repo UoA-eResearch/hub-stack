@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from './graphql/schema';
 import { PageTitleService } from './services/page-title.service';
 
@@ -35,7 +35,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscribeToRouterEvents() {
     this.subscriptions.add(
-      this.router.events.subscribe((event: RouterEvent): void => {
+      this.router.events.pipe(
+        filter((event: RouterEvent) => event instanceof NavigationStart || event instanceof NavigationEnd)
+      ).subscribe((event: RouterEvent): void => {
         if (!this.router.navigated && event instanceof NavigationStart) {
           this.hashUrlRedirect(event.url);
         }
