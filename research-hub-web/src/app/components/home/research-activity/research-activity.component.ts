@@ -1,13 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
+import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import {
   AllStagesGQL,
-  StageCollection,
-  GetHomepageGQL,
-  Homepage
+  StageCollection
 } from '@graphql/schema';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
+import { Observable } from 'rxjs';
+import { pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-research-activity',
@@ -15,29 +13,18 @@ import { SearchBarService } from '@app/components/search-bar/search-bar.service'
   styleUrls: ['./research-activity.component.scss']
 })
 export class ResearchActivityComponent implements OnInit {
+  @Input() description: string;
+
   public title = 'Research Activities';
-  public description = '';
   public allStages$: Observable<StageCollection>;
-  
+
   constructor(
     public allStagesGQL: AllStagesGQL,
-    public searchBarService: SearchBarService,
-    public getHomepageGQL: GetHomepageGQL
-    ) {}
+    public searchBarService: SearchBarService
+  ) { }
 
   async ngOnInit() {
     this.allStages$ = this.getAllStages();
-    this.getHomepage().subscribe(data => {
-      this.description = data.researchActivities;
-    })
-  }
-
-  // Get homepage data
-  public getHomepage(): Observable<Homepage> {
-    try {
-      return this.getHomepageGQL.fetch()
-        .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
-    } catch (e) { console.error('Error loading homepage:', e) };
   }
 
   // Get all research stages

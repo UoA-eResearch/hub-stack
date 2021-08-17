@@ -1,0 +1,93 @@
+<mat-sidenav-container>
+  <mat-sidenav id="sidenav" #sidenav mode="over" opened="false">
+    <mat-nav-list>
+      <mat-list-item (click)="sidenav.toggle()" [routerLink]="'/events'"
+        >Events</mat-list-item
+      >
+      <mat-expansion-panel hideToggle *ngIf="currentUrl !== '/search'">
+        <mat-expansion-panel-header>
+          Research Categories
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item
+            *ngFor="let item of allCategories"
+            (click)="sidenav.toggle()"
+            [routerLink]="'/search'"
+            (click)="searchByCategory(item.sys.id)"
+          >
+            {{ item.name }}
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-divider></mat-divider>
+      <mat-expansion-panel hideToggle *ngIf="currentUrl !== '/search'">
+        <mat-expansion-panel-header>
+          Research Activities
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <mat-list-item
+            *ngFor="let item of allStages"
+            (click)="sidenav.toggle()"
+            [routerLink]="'/search'"
+            (click)="searchByCategory(item.sys.id)"
+          >
+            {{ item.name }}
+          </mat-list-item>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-divider></mat-divider>
+      <ng-container
+        *ngIf="loggedIn$ | async; then isSignedIn; else signinlist"
+      ></ng-container>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <!--router content-->
+  <mat-sidenav-content cdkScrollable>
+    <app-notification></app-notification>
+    <div style="min-height: 100vh">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<ng-template #isSignedIn>
+  <ng-container *ngIf="userInfo$ | async; let userInfo">
+    <mat-expansion-panel hideToggle>
+      <!-- Sign Out Name -->
+      <mat-expansion-panel-header class="expandable-menu">
+        <mat-list-item>
+          <a mat-line fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon matPrefix style="margin-right: 5px">person</mat-icon>
+            <span fxHide.gt-sm>{{
+              userInfo?.firstName?.charAt(0) + userInfo?.lastName?.charAt(0)
+            }}</span>
+          </a>
+        </mat-list-item>
+      </mat-expansion-panel-header>
+
+      <!-- Sign Out List -->
+      <div>
+        <a
+          mat-line
+          (click)="loginService.logout()"
+          (keydown.enter)="loginService.logout()"
+          >Sign Out</a
+        >
+      </div>
+    </mat-expansion-panel>
+  </ng-container>
+</ng-template>
+
+<!--Sign in button template-->
+<ng-template #signinlist>
+  <mat-list-item>
+    <a
+      mat-line
+      (click)="loginService.doLogin(currentUrl)"
+      (keydown.enter)="loginService.doLogin(currentUrl)"
+      >Sign In</a
+    >
+  </mat-list-item>
+</ng-template>
