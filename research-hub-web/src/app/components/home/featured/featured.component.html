@@ -1,9 +1,8 @@
-<div *ngIf="homepage$ | async as homepage">
+<div *ngIf="featuredItems$ | async; let featuredItems">
   <app-content-container>
-    <app-content-title [title]="'Featured'" [description]="homepage.featuredItemsDescription" [lightColorText]="true">
-    </app-content-title>
-    <div *ngIf="homepage.featuredItemsCollection.items.length > 0">
-      <app-cards [flex]="'row'" [contentItem]="homepage.featuredItemsCollection"></app-cards>
-    </div>
+    <app-content-title [title]="'Featured'" [description]="description" [lightColorText]="true"></app-content-title>
+    <ng-container *ngIf="featuredItems.items.length > 0">
+      <app-cards [flex]="'row'" [contentItem]="featuredItems"></app-cards>
+    </ng-container>
   </app-content-container>
 </div>

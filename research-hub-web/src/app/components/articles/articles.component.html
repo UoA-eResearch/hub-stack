@@ -1,46 +1,46 @@
 <!-- If we're displaying a collection of articles-->
 <div
-    *ngIf="allArticles$ | async as allArticles" 
-    class="site-padding margin-bottom top-padding" 
+    *ngIf="allArticles$ | async as allArticles"
+    class="site-padding margin-bottom top-padding"
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
     <app-collection-list [type]="'content'" [collection]="allArticles"></app-collection-list>
 </div>
 
 <div id="article-container" *ngIf="article | async as article">
-    
+
     <!-- Templates -->
     <ng-template #breadcrumbs>
         <app-breadcrumbs [contentItem]="parentSubHubs" [title]="article.title"></app-breadcrumbs>
     </ng-template>
 
     <ng-template #articleBody>
-        <ngx-contentful-rich-text id="body" class="section-2" style="word-break:break-word;" [document]="article.bodyText.json"
+        <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;" [document]="article.bodyText.json"
             [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
     </ng-template>
 
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'" 
+        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'"
             [contentItem]="article.relatedItemsCollection"></app-cards>
     </ng-template>
 
     <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'" 
+        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'"
             [contentItem]="article.relatedOrgsCollection"></app-cards>
     </ng-template>
-    
+
     <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'" 
+        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'"
             [contentItem]="article.relatedContactsCollection"></app-cards>
     </ng-template>
 
     <ng-template #officialDocuments let-hide="hideImage" let-flex="flex">
-        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'" 
+        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'"
             [contentItem]="article.relatedDocsCollection"></app-cards>
     </ng-template>
 
         <div>
-            <div class="banner-container" 
-                [ngClass]="bannerImageUrl === undefined ? '' : isMobile ? 'mobile-banner' : 'standard-banner'" 
+            <div class="banner-container"
+                [ngClass]="bannerImageUrl === undefined ? '' : isMobile ? 'mobile-banner' : 'standard-banner'"
                 [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
 
                 <div class="banner-content">
