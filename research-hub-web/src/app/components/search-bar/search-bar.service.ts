@@ -268,13 +268,14 @@ export class SearchBarService {
         // Create the results
         this.setResults(array);
         this.setTotalPages(resultsTotal);
-        
+      
         // prepare to send virtual page view for GA site search tracking:
         // url-safe the search text -replace non-alphanumeric, extra whitespaces etc, then join words with +
         const cleanedQuery = searchText.replace(/[\W_]+/g," ").trim().split(' ').join('+');
         const searchCategories = this.getCategory().join('+');
         const researchActivities = this.getStage().join('+');
         const orgs = this.getOrganisation().join('+');
+        const sort = this.getSort() ? this.getSort() : 'relevance';
 
         // push search query info to GTM dataLayer
         // the searchQueryUrl (cleanedQuery) is used to create a virtual page view in GA, which then generates site search data
@@ -285,8 +286,10 @@ export class SearchBarService {
           resultsTotal: resultsTotal,
           searchCategory: searchCategories,
           researchActivities: researchActivities,
-          orgs: orgs
+          orgs: orgs,
+          sortedBy: sort
         });
-      })
+      }
+    )
   }
 }
