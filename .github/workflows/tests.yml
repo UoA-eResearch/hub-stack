@@ -24,16 +24,24 @@ jobs:
         with:
           node-version: 14
 
-      - name: Install Node.js dependencies
+      - name: Install Node.js dependencies cer-graphql
+        working-directory: ./cer-graphql
+        run: npm ci
+
+      - name: Run cer-graphql
+        working-directory: ./cer-graphql
+        run: npm run dev
+
+      - name: Generate GraphQL Schema
+        working-directory: ./research-hub-web
+        run: npm run generate
+
+      - name: Install Node.js dependencies research-hub-web
         working-directory: ./research-hub-web
         run: npm ci
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
-
-      - name: Generate GraphQL Schema
-        working-directory: ./research-hub-web
-        run: npm run generate
 
       - name: npm run test-ci
         working-directory: ./research-hub-web
