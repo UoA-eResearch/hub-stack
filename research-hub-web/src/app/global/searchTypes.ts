@@ -3,8 +3,8 @@ interface SearchQuery {
   size: number,
   from: number,
   sort: SortOrder,
-  filters: SearchFilters,
-  includeContentTypes : ContentType
+  filters?: SearchFilters,
+  includeContentTypes : ContentType[]
 }
 
 interface SearchFilters {
