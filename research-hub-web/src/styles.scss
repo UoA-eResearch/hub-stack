@@ -4,6 +4,12 @@
 @import "styles-common";
 @import "mixins";
 
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 /**
  * Native Elements
  */
@@ -17,7 +23,6 @@ body {
   margin: 0;
   padding: 0;
   color: $body-light-bg-font-color;
-  height: 100vh;
   margin: 0;
 }
 hr {
@@ -29,7 +34,7 @@ hr {
 /**
  * List
  */
-#body {
+#bodyMediaList {
   ul,
   ol {
     list-style: none;
@@ -383,5 +388,42 @@ h2.maori-proverb {
   margin-bottom: 32px;
 }
 
+/**
+ *  Search bar
+ */
+.mat-form-field-ripple, .mat-form-field-underline {
+  background-color: rgba(200, 200, 200, 0.6) !important;
+}
 
+.mat-focused .mat-form-field-label {
+  color: rgba(200, 200, 200, 0.6) !important;
+}
 
+input {
+  caret-color: rgba(200, 200, 200, 0.6) !important;
+}
+
+/**
+ * Section Header Text
+ */
+.text {
+  width: 100%;
+  margin: 40px auto;
+  @include size(medium) {
+    width: 60%;
+    margin: 40px auto;
+  }
+  > h2 {
+    color: #333333;
+    font-size: 36px;
+    @include size(medium) {
+      font-size: 48px;
+    }
+  }
+  > p {
+    font-size: 16px;
+    @include size(medium) {
+      font-size: 20px;
+    }
+  }
+}

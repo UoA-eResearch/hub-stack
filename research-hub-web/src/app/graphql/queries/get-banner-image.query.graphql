@@ -1,0 +1,9 @@
+query GetBannerImage {
+  homepageCollection(limit: 1) {
+    items {
+      image {
+        url
+      }
+    }
+  }
+}

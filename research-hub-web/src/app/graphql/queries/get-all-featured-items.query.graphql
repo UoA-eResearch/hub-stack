@@ -1,0 +1,11 @@
+query GetAllFeaturedItems {
+  featuredItemsCollection(limit: 1) {
+    items {
+      itemsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+    }
+  }
+}

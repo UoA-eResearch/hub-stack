@@ -1,41 +1,22 @@
 
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { AppComponent } from './app.component';
-import { RoutingModule } from './routing/routing.module';
-import { SharedModule } from './components/shared/app.shared.module';
-import { ServicesModule } from './services/services.module';
-import { SearchBarService } from './components/search-bar/search-bar.service';
-import { AppComponentService } from './app.component.service';
-
-import { AuthModule, CognitoConfigService, StorageService, LoginService } from '@uoa/auth';
-import { AppAuthConfigService } from './services/app-auth-config.service';
-import { ErrorPagesModule, BypassErrorService } from '@uoa/error-pages';
-import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { StorageServiceModule } from 'ngx-webstorage-service';
-import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { HomeModule } from './components/home/home.module';
-
+import { environment } from '@environments/environment';
+import { AuthModule, CognitoConfigService, LoginService, StorageService } from '@uoa/auth';
+import { BypassErrorService, ErrorPagesModule } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { onError } from 'apollo-link-error';
-
-import { environment } from '@environments/environment';
-import { AppStorageService } from './services/app-storage.service';
-
-
-/**
- * Dynamic Routing
- */
-import { APP_INITIALIZER } from '@angular/core';
-import { CerGraphqlService } from './services/cer-graphql.service';
-
-
+import { StorageServiceModule } from 'ngx-webstorage-service';
+import { AppComponent } from './app.component';
+import { AppLayoutModule } from './components/layout/layout.module';
+import { SearchBarService } from './components/search-bar/search-bar.service';
+import { SharedModule } from './components/shared/app.shared.module';
 /**
  * Generated from Fragment matcher graphql-code-generator plugin
  * For more information see:
@@ -43,6 +24,21 @@ import { CerGraphqlService } from './services/cer-graphql.service';
  * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
  */
 import result from './graphql/possible-types';
+import { RoutingModule } from './routing/routing.module';
+import { AppAuthConfigService } from './services/app-auth-config.service';
+import { AppStorageService } from './services/app-storage.service';
+import { CerGraphqlService } from './services/cer-graphql.service';
+import { PageTitleService } from './services/page-title.service';
+import { ServicesModule } from './services/services.module';
+
+
+
+
+
+
+
+
+
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData: {
@@ -64,15 +60,14 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    HomeModule,
-    HomeModule,
     HttpLinkModule,
-    ErrorPagesModule
+    ErrorPagesModule,
+    AppLayoutModule
   ],
   providers: [
     CerGraphqlService,
     SearchBarService,
-    AppComponentService,
+    PageTitleService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
     { provide: StorageService, useClass: AppStorageService },
   ],
@@ -83,12 +78,12 @@ export class AppModule {
 
     // The httpLink between Apollo and the GraphQL server
     const http = httpLink.create({ uri: environment.cerGraphQLUrl });
-      // @uoa/error-pages automatically shows an error page when it
-      // sees an error in fetch requests through an http interceptor.
-      // Because some authentication errors from cer-graphql
-      // are returned with a 400 status code, we want error-pages to ignore those
-      // errors so they can be handled by our onError handler.
-      this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
+    // @uoa/error-pages automatically shows an error page when it
+    // sees an error in fetch requests through an http interceptor.
+    // Because some authentication errors from cer-graphql
+    // are returned with a 400 status code, we want error-pages to ignore those
+    // errors so they can be handled by our onError handler.
+    this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
 
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
