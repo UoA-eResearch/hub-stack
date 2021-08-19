@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchServiceService {
+export class SearchService {
 
   constructor(
     private http: HttpClient
