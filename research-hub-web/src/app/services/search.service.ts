@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment'
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-
+import { Params } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
+  public searchText: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public categoryFilters: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  public orgFilters: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  public stageFilters: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
 
   constructor(
     private http: HttpClient
@@ -38,4 +42,26 @@ export class SearchService {
       })
     );
   }
+
+  public generateQueryString(searchText: string, filters?: SearchFilters, sortOrder?: SortOrder): Params {
+    const params: Params = {
+      q: searchText,
+    }
+
+    if (filters?.category) {
+      params.cat = filters.category
+    }
+    if (filters?.relatedOrgs) {
+      params.org = filters.relatedOrgs
+    }
+    if (filters.stage) {
+      params.ra = filters.stage
+    }
+    if (sortOrder) {
+      params.sort = sortOrder
+    }
+
+    return params;
+  }
+
 }

@@ -8,9 +8,9 @@ interface SearchQuery {
 }
 
 interface SearchFilters {
-  relatedOrgs: string[],
-  stage: string[],
-  category: string[]
+  relatedOrgs?: string[],
+  stage?: string[],
+  category?: string[]
 }
 
 interface SearchResult {
