@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { GetAllFeaturedItemsGQL, GetAllFeaturedItemsQuery } from '@graphql/schema';
 import { Observable } from 'rxjs';
-import { flatMap, catchError } from 'rxjs/operators';
-import { GetHomepageGQL, Homepage } from '@graphql/schema';
+import { map } from 'rxjs/operators';
+
+type HomepageFeaturedItems = GetAllFeaturedItemsQuery['featuredItemsCollection']['items'][number]['itemsCollection'];
 
 @Component({
   selector: 'app-featured',
@@ -10,22 +11,16 @@ import { GetHomepageGQL, Homepage } from '@graphql/schema';
   styleUrls: ['./featured.component.scss']
 })
 export class FeaturedComponent implements OnInit {
-  public homepage$: Observable<Homepage>;
+  @Input() description: string;
+  public featuredItems$: Observable<HomepageFeaturedItems>;
 
   constructor(
-    public getHomepageGQL: GetHomepageGQL,
-    public router: Router) { }
+    public getAllFeaturedItemsGQL: GetAllFeaturedItemsGQL
+  ) { }
 
-  ngOnInit(){
-    // Get Homepage Image
-    this.homepage$ = this.getHomepage();
-  }
-
-  // Get homepage
-  public getHomepage(): Observable<Homepage> {
-    try {
-      return this.getHomepageGQL.fetch()
-        .pipe(flatMap(x => x.data.homepageCollection.items)) as Observable<Homepage>
-    } catch (e) { console.error('Error loading homepage:', e) };
+  ngOnInit() {
+    this.featuredItems$ = this.getAllFeaturedItemsGQL.fetch().pipe(
+      map(x => x.data.featuredItemsCollection.items[0].itemsCollection)
+    );
   }
 }

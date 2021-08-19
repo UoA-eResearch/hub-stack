@@ -1,0 +1,26 @@
+<app-content-container>
+  <app-content-title [title]="title">
+    We'd love to hear from you. Get in contact via email
+    <a href="mailto: reshubproject@auckland.ac.nz"
+      >reshubproject@auckland.ac.nz</a
+    >.
+  </app-content-title>
+  <!-- Feedback -->
+  <div class="feedback-container">
+    <p>
+      We are developing the ResearchHub further and would be grateful for
+      your feedback.
+    </p>
+    <br />
+    <a href="{{ feedbackLink }}">
+      <button
+        role="button"
+        mat-flat-button
+        aria-label="provide-feedback"
+        class="standard-button"
+      >
+        <span>Provide Feedback</span>
+      </button>
+    </a>
+  </div>
+</app-content-container>
