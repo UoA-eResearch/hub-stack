@@ -10,15 +10,15 @@ import { Params } from '@angular/router';
 })
 export class SearchService {
   public searchText: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public categoryFilters: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  public orgFilters: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  public stageFilters: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({});
 
   constructor(
     private http: HttpClient
   ) { }
 
   public search(query: SearchQuery): Observable<SearchResult[]> {
+    this.updateSearchSubjects(query);
+
     return this.http.post(
       environment.searchUrl,
       query
@@ -62,6 +62,11 @@ export class SearchService {
     }
 
     return params;
+  }
+
+  private updateSearchSubjects(query: SearchQuery) {
+    this.searchText.next(query.query);
+    this.searchFilters.next(query.filters);
   }
 
 }
