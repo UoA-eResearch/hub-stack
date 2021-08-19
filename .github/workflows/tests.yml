@@ -5,10 +5,14 @@ on:
   # but only for the main branch
   push:
     branches:
-      - master
+      - prod
+      - test
+      - dev*
   pull_request:
     branches:
-      - master
+      - prod
+      - test
+      - dev*
 
 jobs: 
   run-unit-tests:
@@ -18,6 +22,16 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
+
+      - name: Set branch-based environment variables
+        uses: iamtheyammer/branch-env-vars@v1.0.3
+        with:
+        # optional, just an example of setting a setting
+          bevOverwrite: true
+          SCHEMA_PATH: |
+            prod:https://rhubcpapi.auckland.ac.nz/cer-graphql-service/
+            test:https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
+            dev*:https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
 
       - name: Set up Node.js
         uses: actions/setup-node@v1
