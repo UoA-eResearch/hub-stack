@@ -8,7 +8,7 @@ import {
   CategoryCollection,
   OrgUnitCollection,
   StageCollection,
-  EventCollection  
+  EventCollection
 } from '@app/graphql/schema';
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
@@ -79,7 +79,6 @@ export class SearchBarService {
   getStage() {
     return this.stage;
   }
-
 
   // Organisation
   setOrganisation(organisation) {
@@ -221,12 +220,6 @@ export class SearchBarService {
             element.highlight["fields.summary.en-US"].join(' ') :
             element._source.fields.summary["en-US"];
 
-          const keywords: string[] = element._source.fields.keywords?.["en-US"];
-
-          const typeAndKeywords: string[] = keywords != undefined ?
-            [ContentTypeDisplayNames[element._source.sys.contentType.sys.id]].concat(keywords) :
-            [ContentTypeDisplayNames[element._source.sys.contentType.sys.id]]
-
           let result = {
             "title": title,
             "summary" : summary,
@@ -234,7 +227,7 @@ export class SearchBarService {
             "ssoProtected" : element._source.fields.ssoProtected["en-US"],
             "__typename" : element._source.sys.contentType.sys.id,
             "icon": element._source.fields.icon?.["en-US"]["url"],
-            "keywords": typeAndKeywords
+            "banner": element._source.fields.banner?.["en-US"]["url"]
           }
           array.push(result);
         });

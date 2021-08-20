@@ -54,45 +54,6 @@ export class CollectionListComponent implements OnInit, OnDestroy, OnChanges {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  searchOnKeyword(keyword) {
-    if (Object.values(ContentTypeDisplayNames).includes(keyword)) {
-      // do nothing for now - needs to be handled as another filter type
-      
-      // get the correct type name e.g. 'Topic' = 'subHub'
-      // const type = Object.keys(ContentTypeDisplayNames)[Object.values(ContentTypeDisplayNames).indexOf(keyword)];
-      // this.searchBarService.setContentType([type]);
-      // this.searchBarService.setSearchText('');
-      // this.searchBarService.setCurrentPage(1);
-      // this.searchBarService.createResultsList();
-
-    } else {
-      this.searchBarService.setSort('');
-      this.searchBarService.setStage([]);
-      this.searchBarService.setCategory([]);
-      this.searchBarService.setOrganisation([]);
-      this.searchBarService.setCurrentPage(1);
-      this.searchBarService.setSearchText(keyword);
-      this.searchBarService.createResultsList();
-      this.searchBarService.setCurrentPage(1);
-      this.searchBarService.createResultsList();
-    }    
-  }
-
-  toTitleCase(keyword: string) {
-    const exceptions = ['www', 'dmp', 'sgs', 'pyr'];
-    if (exceptions.includes(keyword)) {
-      return keyword.toUpperCase();
-    }
-    if (keyword.toLowerCase() === 'phd') {
-      return 'PhD';
-    }
-    if (isUpperCase(keyword)) {
-      return keyword;
-    } else {
-      return titleCase(keyword);
-    }
-  }
-
   /**
    * Returns a material-icon name. Called in the component when a content item doesn't
    * have an avatar defined.
