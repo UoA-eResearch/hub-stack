@@ -474,10 +474,10 @@ function formatResponse(status, body) {
   }
 }
 
-async function getImageUrl(assetId, width=200, format="jpg") {
+async function getImageUrl(assetId) {
   try {
     const asset = await deliveryApiClient.getAsset(assetId);
-    return asset.fields.file.url + `?w=${width}&fm=${format}`;
+    return asset.fields.file.url;
   } catch(error) {
     console.log(error);
   }
