@@ -29,10 +29,6 @@
                         </h4>
 
                         <p class="card-summary" [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" [innerHTML]=content.summary></p>
-
-                        <mat-chip-list class="keyword-chips" *ngIf="content.keywords" aria-label="item keywords">
-                            <mat-chip *ngFor="let keyword of content.keywords" (click)="searchOnKeyword(keyword)" aria-label="keyword">{{toTitleCase(keyword)}}</mat-chip>
-                        </mat-chip-list>
                     </span>
                 </mat-card>
             </a>
