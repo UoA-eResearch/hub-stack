@@ -32,7 +32,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   public countActiveFilters(): number {
-    console.log(this.activeFilters);
     return !this.activeFilters
       ? 0
       : this.activeFilters.category.length ?? 0
