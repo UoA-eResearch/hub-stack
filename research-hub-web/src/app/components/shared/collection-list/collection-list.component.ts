@@ -2,9 +2,6 @@ import { OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Component, OnInit, Input } from '@angular/core'
 import { Subscription } from 'rxjs';
-import { ContentTypeDisplayNames } from '@app/global/global-variables';
-import { titleCase } from "title-case";
-import { isUpperCase } from "is-upper-case";
 
 @Component({
   selector: 'app-collection-list',
