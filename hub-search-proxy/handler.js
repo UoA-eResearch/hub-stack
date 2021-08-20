@@ -92,22 +92,27 @@ module.exports.search = async (event, context) => {
     }
 
     let query;
+    const includeInResult = [
+      "fields.slug",
+      "fields.title",
+      "fields.summary",
+      "fields.ssoProtected",
+      "fields.searchable",
+      "fields.keywords",
+      "fields.icon",
+      "fields.banner",
+      "sys.contentType",
+      "fields.stage.en-US.sys.id",
+      "fields.category.en-US.sys.id",
+      "fields.relatedOrgs.en-US.sys.id"
+    ];
 
     if(queryString.length === 0 && Object.keys(queryFilters).length === 0) {
       // query with no filters and no query string (fetch all searchable results)
 
       query = { 
         _source: {
-          includes: [
-            "fields.slug",
-            "fields.title",
-            "fields.summary",
-            "fields.ssoProtected",
-            "fields.searchable",
-            "fields.keywords",
-            "fields.icon",
-            "sys.contentType"
-          ]
+          includes: includeInResult
         },
         query: {
           bool: {
@@ -158,16 +163,7 @@ module.exports.search = async (event, context) => {
     
       query = { 
         _source: {
-          includes: [
-            "fields.slug",
-            "fields.title",
-            "fields.summary",
-            "fields.ssoProtected",
-            "fields.searchable",
-            "fields.keywords",
-            "fields.icon",
-            "sys.contentType"
-          ]
+          includes: includeInResult
         },
         query: { 
           bool: {
@@ -245,16 +241,7 @@ module.exports.search = async (event, context) => {
     
       query = { 
         _source: {
-          includes: [
-            "fields.slug",
-            "fields.title",
-            "fields.summary",
-            "fields.ssoProtected",
-            "fields.searchable",
-            "fields.keywords",
-            "fields.icon",
-            "sys.contentType"
-          ]
+          includes: includeInResult
         },
         query: { 
           bool: {
@@ -283,8 +270,7 @@ module.exports.search = async (event, context) => {
           }},
           fields: {
             "fields.title.en-US": {},
-            "fields.summary.en-US": {},
-            "fields.keywords.en-US": {}
+            "fields.summary.en-US": {}
           }
         }
       };
@@ -321,9 +307,15 @@ module.exports.search = async (event, context) => {
 module.exports.update = async (event, context) => {
   let doc = JSON.parse(event.body);
 
+  // add banner url
+  if (doc.fields.hasOwnProperty('banner')) {
+    const bannerUrl = await getImageUrl(doc.fields.banner['en-US'].sys.id);
+    doc.fields.banner['en-US']['url'] = bannerUrl;
+  }
+
   // add icon url
   if (doc.fields.hasOwnProperty('icon')) {
-    const iconUrl = await getIconUrl(doc.fields.icon['en-US'].sys.id);
+    const iconUrl = await getImageUrl(doc.fields.icon['en-US'].sys.id);
     doc.fields.icon['en-US']['url'] = iconUrl;
   }
 
@@ -406,10 +398,18 @@ module.exports.bulk = async () => {
 
     console.log(`Found ${validEntries.length} entries to upload.`);
 
+    // add banner urls
+    for(var i = 0; i < validEntries.length; i++) {
+      if (validEntries[i].fields.hasOwnProperty('banner')) {
+        const bannerUrl = await getImageUrl(validEntries[i].fields.banner['en-US'].sys.id);
+        validEntries[i].fields.banner['en-US']['url'] = bannerUrl;
+      }
+    };
+
     // add icon urls
     for(var i = 0; i < validEntries.length; i++) {
       if (validEntries[i].fields.hasOwnProperty('icon')) {
-        const iconUrl = await getIconUrl(validEntries[i].fields.icon['en-US'].sys.id);
+        const iconUrl = await getImageUrl(validEntries[i].fields.icon['en-US'].sys.id);
         validEntries[i].fields.icon['en-US']['url'] = iconUrl;
       }
     };
@@ -474,10 +474,10 @@ function formatResponse(status, body) {
   }
 }
 
-async function getIconUrl (iconId) {
+async function getImageUrl(assetId, width=200, format="jpg") {
   try {
-    const asset = await deliveryApiClient.getAsset(iconId);
-    return asset.fields.file.url
+    const asset = await deliveryApiClient.getAsset(assetId);
+    return asset.fields.file.url + `?w=${width}&fm=${format}`;
   } catch(error) {
     console.log(error);
   }
