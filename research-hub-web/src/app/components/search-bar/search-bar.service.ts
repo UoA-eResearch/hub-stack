@@ -13,7 +13,6 @@ import {
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { ContentTypeDisplayNames } from '@app/global/global-variables';
 
 
 @Injectable()
@@ -35,7 +34,7 @@ export class SearchBarService {
   public currentPage;
   public totalPages;
   public sortType;
-  public contentType: Array<string> = Object.keys(ContentTypeDisplayNames);
+  public contentType: Array<string>;
   public eventIdChange: Subject<any> = new Subject<any>();
   public eventId;
 
