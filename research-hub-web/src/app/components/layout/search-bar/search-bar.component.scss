@@ -1,0 +1,28 @@
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid white;
+  padding: 2px;
+  height: 45px;
+  border-radius: 5px;
+  width: 500px;
+  background-color: white;
+
+  input {
+    border: none;
+    background: transparent;
+    flex-grow: 2;
+    font-size: 24px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  button {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
