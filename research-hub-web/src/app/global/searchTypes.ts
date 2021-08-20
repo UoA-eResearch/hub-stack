@@ -1,19 +1,19 @@
-interface SearchQuery {
+export interface SearchQuery {
   query: string,
   size: number,
   from: number,
-  sort: SortOrder,
+  sort?: SortOrder,
   filters?: SearchFilters,
   includeContentTypes : ContentType[]
 }
 
-interface SearchFilters {
+export interface SearchFilters {
   relatedOrgs?: string[],
   stage?: string[],
   category?: string[]
 }
 
-interface SearchResult {
+export interface SearchResult {
   title: string;
   summary: string;
   slug: string;
@@ -22,5 +22,5 @@ interface SearchResult {
   icon: string;
 }
 
-type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
-type ContentType = 'Article' | 'SubHub'
+export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
+export type ContentType = 'Article' | 'SubHub'

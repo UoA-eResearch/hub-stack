@@ -8,6 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotificationComponent } from './notification/notification.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 
 
@@ -16,7 +17,8 @@ import { SideNavComponent } from './side-nav/side-nav.component';
     NavbarComponent,
     NotificationComponent,
     SideNavComponent,
-    FooterComponent
+    FooterComponent,
+    SearchBarComponent
   ],
   imports: [
     CommonModule,

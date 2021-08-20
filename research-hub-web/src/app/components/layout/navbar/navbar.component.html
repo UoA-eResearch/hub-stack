@@ -4,7 +4,6 @@
   #topbar
   color="primary"
   class="mat-elevation-z6"
-  [ngStyle]="{ 'background-color': isHome ? '' : '' }"
 >
   <!-- Mobile Menu Toggle -->
   <button
@@ -27,6 +26,8 @@
   <!-- Space Divider -->
   <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
+  <app-search-bar></app-search-bar>
+
   <!-- Search Icon (Mobile)-->
   <button
     role="button"
@@ -42,7 +43,6 @@
   </button>
 
   <!--Navigation buttons-->
-  <ng-container *ngTemplateOutlet="search"></ng-container>
   <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
   <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
   <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
@@ -224,18 +224,5 @@
     (keydown.enter)="loginService.doLogin(currentUrl)"
   >
     Sign In
-  </button>
-</ng-template>
-
-<!-- Search Button -->
-<ng-template #search>
-  <button
-    role="button"
-    aria-label="search"
-    mat-button
-    fxHide.lt-md
-    routerLink="/search"
-  >
-    Search
   </button>
 </ng-template>
