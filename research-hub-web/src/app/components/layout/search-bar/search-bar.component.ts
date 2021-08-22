@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   public searchText: string;
-  public activeFilters: SearchFilters | null = null;
+  public activeFilters: SearchFilters;
 
   private subscriptions = new Subscription();
 
@@ -34,9 +34,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public countActiveFilters(): number {
     return !this.activeFilters
       ? 0
-      : this.activeFilters.category.length ?? 0
-        + this.activeFilters.relatedOrgs.length ?? 0
-        + this.activeFilters.stage.length ?? 0;
+      : this.activeFilters.category?.length ?? 0
+        + this.activeFilters.relatedOrgs?.length ?? 0
+        + this.activeFilters.stage?.length ?? 0;
   }
 
 }
