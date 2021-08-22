@@ -319,6 +319,30 @@ module.exports.update = async (event, context) => {
     doc.fields.icon['en-US']['url'] = iconUrl;
   }
 
+  // add category names
+  if (doc.fields.hasOwnProperty('category')) {
+    for (let item of doc.fields.category['en-US']) {
+      const name = await getFilterName(item.sys.id);
+      item.name = name;
+    }
+  }
+
+  // add research stage names
+  if (doc.fields.hasOwnProperty('stage')) {
+    for (let item of doc.fields.stage['en-US']) {
+      const name = await getFilterName(item.sys.id);
+      item.name = name;
+    }
+  }
+
+  // add related organisations names
+  if (doc.fields.hasOwnProperty('relatedOrgs')) {
+    for (let item of doc.fields.relatedOrgs['en-US']) {
+      const name = await getFilterName(item.sys.id);
+      item.name = name;
+    }
+  }
+
   const params = {
     id: event.pathParameters.id,
     index: ELASTICSEARCH_INDEX_NAME,
@@ -398,22 +422,44 @@ module.exports.bulk = async () => {
 
     console.log(`Found ${validEntries.length} entries to upload.`);
 
-    // add banner urls
     for(var i = 0; i < validEntries.length; i++) {
+      // add banner urls
       if (validEntries[i].fields.hasOwnProperty('banner')) {
         const bannerUrl = await getImageUrl(validEntries[i].fields.banner['en-US'].sys.id);
         validEntries[i].fields.banner['en-US']['url'] = bannerUrl;
       }
-    };
 
-    // add icon urls
-    for(var i = 0; i < validEntries.length; i++) {
+      // add icon urls
       if (validEntries[i].fields.hasOwnProperty('icon')) {
         const iconUrl = await getImageUrl(validEntries[i].fields.icon['en-US'].sys.id);
         validEntries[i].fields.icon['en-US']['url'] = iconUrl;
       }
-    };
 
+      // add category names
+      if (doc.fields.hasOwnProperty('category')) {
+        for (let item of doc.fields.category['en-US']) {
+          const name = await getFilterName(item.sys.id);
+          item.name = name;
+        }
+      }
+
+      // add research stage names
+      if (doc.fields.hasOwnProperty('stage')) {
+        for (let item of doc.fields.stage['en-US']) {
+          const name = await getFilterName(item.sys.id);
+          item.name = name;
+        }
+      }
+
+      // add related organisations names
+      if (doc.fields.hasOwnProperty('relatedOrgs')) {
+        for (let item of doc.fields.relatedOrgs['en-US']) {
+          const name = await getFilterName(item.sys.id);
+          item.name = name;
+        }
+      }
+    };
+    
     // perform the upload
     console.log(`Uploading documents to index: ${ELASTICSEARCH_INDEX_NAME}`);
     const bulkBody = validEntries.flatMap((doc) => [
@@ -478,6 +524,16 @@ async function getImageUrl(assetId) {
   try {
     const asset = await deliveryApiClient.getAsset(assetId);
     return asset.fields.file.url;
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+// fetch the name of a filter (e.g. a category, stage, or organisation) by id 
+async function getFilterName(id) {
+  try {
+    const filter = await deliveryApiClient.getEntry(id);
+    return filter.fields.name['en-US'];
   } catch(error) {
     console.log(error);
   }
