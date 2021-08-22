@@ -422,38 +422,38 @@ module.exports.bulk = async () => {
 
     console.log(`Found ${validEntries.length} entries to upload.`);
 
-    for(var i = 0; i < validEntries.length; i++) {
+    for(let entry of validEntries) {
       // add banner urls
-      if (validEntries[i].fields.hasOwnProperty('banner')) {
-        const bannerUrl = await getImageUrl(validEntries[i].fields.banner['en-US'].sys.id);
-        validEntries[i].fields.banner['en-US']['url'] = bannerUrl;
+      if (entry.fields.hasOwnProperty('banner')) {
+        const bannerUrl = await getImageUrl(entry.fields.banner['en-US'].sys.id);
+        entry.fields.banner['en-US']['url'] = bannerUrl;
       }
 
       // add icon urls
-      if (validEntries[i].fields.hasOwnProperty('icon')) {
-        const iconUrl = await getImageUrl(validEntries[i].fields.icon['en-US'].sys.id);
-        validEntries[i].fields.icon['en-US']['url'] = iconUrl;
+      if (entry.fields.hasOwnProperty('icon')) {
+        const iconUrl = await getImageUrl(entry.fields.icon['en-US'].sys.id);
+        entry.fields.icon['en-US']['url'] = iconUrl;
       }
 
       // add category names
-      if (doc.fields.hasOwnProperty('category')) {
-        for (let item of doc.fields.category['en-US']) {
+      if (entry.fields.hasOwnProperty('category')) {
+        for (let item of entry.fields.category['en-US']) {
           const name = await getFilterName(item.sys.id);
           item.name = name;
         }
       }
 
       // add research stage names
-      if (doc.fields.hasOwnProperty('stage')) {
-        for (let item of doc.fields.stage['en-US']) {
+      if (entry.fields.hasOwnProperty('stage')) {
+        for (let item of entry.fields.stage['en-US']) {
           const name = await getFilterName(item.sys.id);
           item.name = name;
         }
       }
 
       // add related organisations names
-      if (doc.fields.hasOwnProperty('relatedOrgs')) {
-        for (let item of doc.fields.relatedOrgs['en-US']) {
+      if (entry.fields.hasOwnProperty('relatedOrgs')) {
+        for (let item of entry.fields.relatedOrgs['en-US']) {
           const name = await getFilterName(item.sys.id);
           item.name = name;
         }
