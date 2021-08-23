@@ -5,15 +5,10 @@ import {
   AllCategoriesGQL,
   AllStagesGQL,
   AllOrganisationsGQL,
-  AllPagesGQL,
-  AllItemsByCategoryGQL,
-  AllItemsByStageGQL,
-  AllItemsByOrganisationGQL,
   CategoryCollection,
   OrgUnitCollection,
   StageCollection,
-  EventCollection,
-  AllEventsGQL
+  EventCollection
 } from '@app/graphql/schema';
 import { Observable, Subject } from 'rxjs';
 import { pluck } from 'rxjs/operators';
@@ -22,8 +17,6 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class SearchBarService {
-
-  public searchChange: Subject<any> = new Subject<any>();
   public searchCategoryChange: Subject<any> = new Subject<any>();
   public searchStageChange: Subject<any> = new Subject<any>();
   public searchOrganisationChange: Subject<any> = new Subject<any>();
@@ -32,6 +25,7 @@ export class SearchBarService {
   public currentPageChange: Subject<any> = new Subject<any>();
   public totalPagesChange: Subject<any> = new Subject<any>();
   public sortTypeChange: Subject<any> = new Subject<any>();
+  public contentTypeChange: Subject<any> = new Subject<any>();
   public searchText: string;
   public category: Array<any> = new Array<any>();
   public stage: Array<any> = new Array<any>();
@@ -40,6 +34,7 @@ export class SearchBarService {
   public currentPage;
   public totalPages;
   public sortType;
+  public contentType: Array<string>;
   public eventIdChange: Subject<any> = new Subject<any>();
   public eventId;
 
@@ -47,11 +42,6 @@ export class SearchBarService {
     public allCategoriesGQL: AllCategoriesGQL,
     public allStagesGQL: AllStagesGQL,
     public allOrganisationsGQL: AllOrganisationsGQL,
-    public allPagesGQL: AllPagesGQL,
-    public allItemsByCategoryGQL: AllItemsByCategoryGQL,
-    public allItemsByStageGQL: AllItemsByStageGQL,
-    public allItemsByOrganisationGQL: AllItemsByOrganisationGQL,
-    public allEventsGQL: AllEventsGQL,
     private http: HttpClient
   ) { }
 
@@ -89,7 +79,6 @@ export class SearchBarService {
     return this.stage;
   }
 
-
   // Organisation
   setOrganisation(organisation) {
     if (organisation !== undefined) {
@@ -112,6 +101,17 @@ export class SearchBarService {
     return this.sortType;
   }
 
+  // Content Type
+  setContentType(contentType) {
+    if (contentType !== undefined) {
+      this.contentType = contentType;
+      this.contentTypeChange.next(contentType);
+    }
+  }
+  getContentType() {
+    return this.contentType;
+  }
+
   // Current Page
   setCurrentPage(currentPage) {
     this.currentPage = currentPage;
@@ -121,7 +121,7 @@ export class SearchBarService {
     return this.currentPage;
   }
 
-  // Toal Pages
+  // Total Pages
   setTotalPages(totalPages) {
     this.totalPages = totalPages;
     this.totalPagesChange.next(totalPages);
@@ -172,50 +172,8 @@ export class SearchBarService {
     } catch (e) { console.error('Error loading all organisations:', e) };
   }
 
-  // Get all Events
-  public getAllEvents(): Observable<EventCollection> {
-    try {
-      return this.allEventsGQL.fetch()
-        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
-    } catch (e) { console.error('Error loading all Events:', e) };
-  }
-
-  // Get All Pages
-  public getAllPages() {
-    try {
-      return this.allPagesGQL.fetch()
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Category
-  public getAllItemsByCategory(filter) {
-    try {
-      return this.allItemsByCategoryGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Stage
-  public getAllItemsByStage(filter) {
-    try {
-      return this.allItemsByStageGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
-  // Get All Pages by Organisation
-  public getAllItemsByOrganisation(filter) {
-    try {
-      return this.allItemsByOrganisationGQL.fetch({ displayOrder: filter })
-        .pipe(pluck('data'));
-    } catch (e) { console.error('Error loading all pages:', e) };
-  }
-
   // Create list result
   public createResultsList() {
-      let pageTypes = ["equipment", "event", "article", "service", "subhub", "software", "casestudy", "funding"];
-
       // Set page number to 1 as default
       if (this.getCurrentPage() == undefined) this.setCurrentPage(1);
       this.setTotalPages(this.getTotalPages());
@@ -229,7 +187,7 @@ export class SearchBarService {
       // If event is selected, remove it from search parameters, event is a content model so must be handled differently
       if (this.getCategory().includes(this.getEventId())) {
         categories.splice(this.getCategory().indexOf(this.getEventId()), 1)
-        pageTypes = ["event"]
+        this.contentType = ["event"]
       }
 
       let searchText = this.getSearchText() !== undefined ? this.getSearchText() : '';
@@ -245,26 +203,36 @@ export class SearchBarService {
           stage: this.getStage(),
           category: categories
         },
-        includeContentTypes : pageTypes
+        includeContentTypes : this.contentType
       };
 
       // Send the POST request
       this.http.post(environment.searchUrl, query).subscribe(data => {
         let array = [];
         data["result"]["hits"]["hits"].forEach(element => {
+          // Set how the results will be displayed
+          const title: string = element.highlight?.["fields.title.en-US"] ?
+            element.highlight["fields.title.en-US"].join('') :
+            element._source.fields.title["en-US"];
+
+          const summary: string = element.highlight?.["fields.summary.en-US"] ?
+            element.highlight["fields.summary.en-US"].join(' ') :
+            element._source.fields.summary["en-US"];
+
           let result = {
-            "title": element._source.fields.title["en-US"],
-            "summary" : element._source.fields.summary["en-US"],
+            "title": title,
+            "summary" : summary,
             "slug" : element._source.fields.slug["en-US"],
             "ssoProtected" : element._source.fields.ssoProtected["en-US"],
             "__typename" : element._source.sys.contentType.sys.id,
-            "icon": element._source.fields.icon?.["en-US"]["url"]
+            "icon": element._source.fields.icon?.["en-US"]["url"],
+            "banner": element._source.fields.banner?.["en-US"]["url"]
           }
           array.push(result);
         });
-        
-        const resultsTotal = data["result"]["hits"]["total"]["value"];
 
+        const resultsTotal = data["result"]["hits"]["total"]["value"];
+          
         // Create the results
         this.setResults(array);
         this.setTotalPages(resultsTotal);

@@ -59,8 +59,9 @@
             <!-- Categories -->
             <span  *ngIf="i.allCategories">
                 <span *ngFor="let filter of i.allCategories.items">
-                    <mat-chip *ngIf="categoryFilter.includes(filter.sys.id)">
+                    <mat-chip *ngIf="categoryFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.ResearchCategory)">
                         {{ filter.name }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                 </span>
             </span>
@@ -68,8 +69,9 @@
             <!-- Activities -->
             <span *ngIf="i.allStages">
                 <span *ngFor="let filter of i.allStages.items">
-                    <mat-chip *ngIf="stageFilter.includes(filter.sys.id)">
+                    <mat-chip *ngIf="stageFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.ResearchActivity)">
                         {{ filter.name }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                 </span>
             </span>
@@ -77,8 +79,9 @@
             <!-- Organisation -->
             <span *ngIf="i.allOrganisations">
                 <span *ngFor="let filter of i.allOrganisations.items">
-                    <mat-chip *ngIf="organisationFilter.includes(filter.sys.id)">
+                    <mat-chip *ngIf="organisationFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.Organisation)">
                         {{ filter.name }}
+                        <mat-icon matChipRemove>cancel</mat-icon>
                     </mat-chip>
                 </span>
             </span>
@@ -102,16 +105,18 @@
             <!-- Results -->
             <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
                 <h3 style="margin-bottom: 0" class="search-results-text">{{ this.searchBarService.getTotalPages() }}&nbsp;&nbsp;</h3>
-                <p style="margin-bottom: 0">Results</p>
+                <p *ngIf="this.searchBarService.getTotalPages() !== 1; else onlyOne" style="margin-bottom: 0">Results</p>
+                <ng-template #onlyOne><p style="margin-bottom: 0">Result</p></ng-template>
             </span>
 
             <!-- Divider -->
             <div fxHide.lt-md fxFlex></div>
 
             <!-- Filtering Options -->
-            <div id="filtering-options" fxFlexOrder.lt-sm="1" fxFlex="25%">
-                <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" name="organisationFilter" ngDefaultControl
-                    placeholder="Order By">
+            <mat-label id="order-label">Order By:</mat-label>
+            <div fxFlexOrder.lt-sm="1" fxFlex="25%">
+                <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" ngDefaultControl
+                    placeholder="Relevance">
                     <div>
                         <mat-option value="">Relevance</mat-option>
                         <mat-option value="A-Z">Alphabetical</mat-option>
@@ -124,7 +129,7 @@
 
     <!-- No results message -->
     <div *ngIf="searchBarService.getTotalPages() == 0" class="no-results">
-        <p>Sorry, your search for "<i><b>{{ searchBarService.getSearchText() }}</b></i>" in All Categories, did not match anything on the ResearchHub.</p>
+        <p>Sorry, your search for "<i><b>{{ searchBarService.getSearchText() }}</b></i>" did not match anything on the ResearchHub.</p>
         <p>
             <br><b>Suggestions:</b><br>
             Widen your filters<br>
