@@ -102,9 +102,9 @@ module.exports.search = async (event, context) => {
       "fields.icon",
       "fields.banner",
       "sys.contentType",
-      "fields.stage.en-US.sys.id",
-      "fields.category.en-US.sys.id",
-      "fields.relatedOrgs.en-US.sys.id"
+      "fields.stage.en-US",
+      "fields.category.en-US",
+      "fields.relatedOrgs.en-US"
     ];
 
     if(queryString.length === 0 && Object.keys(queryFilters).length === 0) {
@@ -306,6 +306,18 @@ module.exports.search = async (event, context) => {
 
 module.exports.update = async (event, context) => {
   let doc = JSON.parse(event.body);
+  const categories = await deliveryApiClient.getEntries({
+    content_type: "category",
+    select: ['sys.id', 'fields.name']
+  });
+  const stages = await deliveryApiClient.getEntries({
+    content_type: "stage",
+    select: ['sys.id', 'fields.name']
+  });
+  const organisations = await deliveryApiClient.getEntries({
+    content_type: "OrgUnit",
+    select: ['sys.id', 'fields.name']
+  });
 
   // add banner url
   if (doc.fields.hasOwnProperty('banner')) {
@@ -317,6 +329,30 @@ module.exports.update = async (event, context) => {
   if (doc.fields.hasOwnProperty('icon')) {
     const iconUrl = await getImageUrl(doc.fields.icon['en-US'].sys.id);
     doc.fields.icon['en-US']['url'] = iconUrl;
+  }
+
+  // add category names
+  if (doc.fields.hasOwnProperty('category')) {
+    for (let item of doc.fields.category['en-US']) {
+      const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
+      if (cat) {item['name'] = cat.fields.name;}
+    }
+  }
+
+  // add research stage names
+  if (doc.fields.hasOwnProperty('stage')) {
+    for (let item of doc.fields.stage['en-US']) {
+      const stage = stages.items.find((c) => { return c.sys.id === item.sys.id; });
+      if (stage) {item['name'] = stage.fields.name;}
+    }
+  }
+
+  // add related organisations names
+  if (doc.fields.hasOwnProperty('relatedOrgs')) {
+    for (let item of doc.fields.relatedOrgs['en-US']) {
+      const org = organisations.items.find((c) => { return c.sys.id === item.sys.id; });
+      if (org) {item['name'] = org.fields.name;}
+    }
   }
 
   const params = {
@@ -379,6 +415,18 @@ module.exports.delete = async (event, context) => {
  */
 module.exports.bulk = async () => {  
   let validEntries;
+  const categories = await deliveryApiClient.getEntries({
+    content_type: "category",
+    select: ['sys.id', 'fields.name']
+  });
+  const stages = await deliveryApiClient.getEntries({
+    content_type: "stage",
+    select: ['sys.id', 'fields.name']
+  });
+  const organisations = await deliveryApiClient.getEntries({
+    content_type: "OrgUnit",
+    select: ['sys.id', 'fields.name']
+  });
   
   try {
     // contentful export and filter entries
@@ -398,29 +446,52 @@ module.exports.bulk = async () => {
 
     console.log(`Found ${validEntries.length} entries to upload.`);
 
-    // add banner urls
-    for(var i = 0; i < validEntries.length; i++) {
-      if (validEntries[i].fields.hasOwnProperty('banner')) {
-        const bannerUrl = await getImageUrl(validEntries[i].fields.banner['en-US'].sys.id);
-        validEntries[i].fields.banner['en-US']['url'] = bannerUrl;
+    console.log('Transforming entries...');
+    for(let entry of validEntries) {
+      // add banner urls
+      if (entry.fields.hasOwnProperty('banner')) {
+        const bannerUrl = await getImageUrl(entry.fields.banner['en-US'].sys.id);
+        entry.fields.banner['en-US']['url'] = bannerUrl;
       }
-    };
 
-    // add icon urls
-    for(var i = 0; i < validEntries.length; i++) {
-      if (validEntries[i].fields.hasOwnProperty('icon')) {
-        const iconUrl = await getImageUrl(validEntries[i].fields.icon['en-US'].sys.id);
-        validEntries[i].fields.icon['en-US']['url'] = iconUrl;
+      // add icon urls
+      if (entry.fields.hasOwnProperty('icon')) {
+        const iconUrl = await getImageUrl(entry.fields.icon['en-US'].sys.id);
+        entry.fields.icon['en-US']['url'] = iconUrl;
       }
-    };
 
+      // add category names
+      if (entry.fields.hasOwnProperty('category')) {
+        for (let item of entry.fields.category['en-US']) {
+          const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
+          if (cat) {item['name'] = cat.fields.name;}
+        }
+      }
+
+      // add research stage names
+      if (entry.fields.hasOwnProperty('stage')) {
+        for (let item of entry.fields.stage['en-US']) {
+          const stage = stages.items.find((c) => { return c.sys.id === item.sys.id; });
+          if (stage) {item['name'] = stage.fields.name;}
+        }
+      }
+
+      // add related organisations names
+      if (entry.fields.hasOwnProperty('relatedOrgs')) {
+        for (let item of entry.fields.relatedOrgs['en-US']) {
+          const org = organisations.items.find((c) => { return c.sys.id === item.sys.id; });
+          if (org) {item['name'] = org.fields.name;}
+        }
+      }     
+    };
+    
     // perform the upload
     console.log(`Uploading documents to index: ${ELASTICSEARCH_INDEX_NAME}`);
     const bulkBody = validEntries.flatMap((doc) => [
       { update: { _index: ELASTICSEARCH_INDEX_NAME, _id: doc.sys.id } },
       { doc: doc, doc_as_upsert: true },
     ]);
-    const { body: bulkResponse } = await esClient.bulk({ refresh: true, body: bulkBody });
+    const { body: bulkResponse } = await esClient.bulk({ refresh: true, body: bulkBody });        
     const erroredDocuments = []
     if (bulkResponse.errors) {
       // The items array has the same order of the dataset we just indexed.

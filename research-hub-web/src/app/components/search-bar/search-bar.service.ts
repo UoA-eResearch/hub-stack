@@ -219,6 +219,12 @@ export class SearchBarService {
             element.highlight["fields.summary.en-US"].join(' ') :
             element._source.fields.summary["en-US"];
 
+          const categoryNames: string[] = element._source.fields.category?.["en-US"].map(x => x.name);
+          const stageNames: string[] = element._source.fields.stage?.["en-US"].map(x => x.name);
+          const orgNames: string[] = element._source.fields.relatedOrgs?.["en-US"].map(x => x.name);
+          
+          const chips: string[] = [...categoryNames || [], ...stageNames || [], ...orgNames || []];
+
           let result = {
             "title": title,
             "summary" : summary,
@@ -226,7 +232,8 @@ export class SearchBarService {
             "ssoProtected" : element._source.fields.ssoProtected["en-US"],
             "__typename" : element._source.sys.contentType.sys.id,
             "icon": element._source.fields.icon?.["en-US"]["url"],
-            "banner": element._source.fields.banner?.["en-US"]["url"]
+            "banner": element._source.fields.banner?.["en-US"]["url"],
+            "chips": chips
           }
           array.push(result);
         });
