@@ -51,7 +51,6 @@ export class CollectionListComponent implements OnInit, OnDestroy, OnChanges {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-
   /**
    * Returns a material-icon name. Called in the component when a content item doesn't
    * have an avatar defined.
