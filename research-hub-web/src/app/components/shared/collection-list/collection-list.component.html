@@ -29,6 +29,10 @@
                         </h4>
 
                         <p class="card-summary" [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]" [innerHTML]=content.summary></p>
+
+                        <mat-chip-list class="result-chips" *ngIf="content.chips" aria-label="result chips">
+                            <mat-chip *ngFor="let chip of content.chips" aria-label="result chip">{{chip}}</mat-chip>
+                        </mat-chip-list>
                     </span>
                 </mat-card>
             </a>
