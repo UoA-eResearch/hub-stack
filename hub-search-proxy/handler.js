@@ -102,9 +102,9 @@ module.exports.search = async (event, context) => {
       "fields.icon",
       "fields.banner",
       "sys.contentType",
-      "fields.stage.en-US.sys.id",
-      "fields.category.en-US.sys.id",
-      "fields.relatedOrgs.en-US.sys.id"
+      "fields.stage.en-US",
+      "fields.category.en-US",
+      "fields.relatedOrgs.en-US"
     ];
 
     if(queryString.length === 0 && Object.keys(queryFilters).length === 0) {
@@ -306,6 +306,18 @@ module.exports.search = async (event, context) => {
 
 module.exports.update = async (event, context) => {
   let doc = JSON.parse(event.body);
+  const categories = await deliveryApiClient.getEntries({
+    content_type: "category",
+    select: ['sys.id', 'fields.name']
+  });
+  const stages = await deliveryApiClient.getEntries({
+    content_type: "stage",
+    select: ['sys.id', 'fields.name']
+  });
+  const organisations = await deliveryApiClient.getEntries({
+    content_type: "OrgUnit",
+    select: ['sys.id', 'fields.name']
+  });
 
   // add banner url
   if (doc.fields.hasOwnProperty('banner')) {
@@ -322,24 +334,24 @@ module.exports.update = async (event, context) => {
   // add category names
   if (doc.fields.hasOwnProperty('category')) {
     for (let item of doc.fields.category['en-US']) {
-      const name = await getFilterName(item.sys.id);
-      item.name = name;
+      const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
+      if (cat) {item['name'] = cat.fields.name;}
     }
   }
 
   // add research stage names
   if (doc.fields.hasOwnProperty('stage')) {
     for (let item of doc.fields.stage['en-US']) {
-      const name = await getFilterName(item.sys.id);
-      item.name = name;
+      const stage = stages.items.find((c) => { return c.sys.id === item.sys.id; });
+      if (stage) {item['name'] = stage.fields.name;}
     }
   }
 
   // add related organisations names
   if (doc.fields.hasOwnProperty('relatedOrgs')) {
     for (let item of doc.fields.relatedOrgs['en-US']) {
-      const name = await getFilterName(item.sys.id);
-      item.name = name;
+      const org = organisations.items.find((c) => { return c.sys.id === item.sys.id; });
+      if (org) {item['name'] = org.fields.name;}
     }
   }
 
@@ -403,6 +415,18 @@ module.exports.delete = async (event, context) => {
  */
 module.exports.bulk = async () => {  
   let validEntries;
+  const categories = await deliveryApiClient.getEntries({
+    content_type: "category",
+    select: ['sys.id', 'fields.name']
+  });
+  const stages = await deliveryApiClient.getEntries({
+    content_type: "stage",
+    select: ['sys.id', 'fields.name']
+  });
+  const organisations = await deliveryApiClient.getEntries({
+    content_type: "OrgUnit",
+    select: ['sys.id', 'fields.name']
+  });
   
   try {
     // contentful export and filter entries
@@ -422,6 +446,7 @@ module.exports.bulk = async () => {
 
     console.log(`Found ${validEntries.length} entries to upload.`);
 
+    console.log('Transforming entries...');
     for(let entry of validEntries) {
       // add banner urls
       if (entry.fields.hasOwnProperty('banner')) {
@@ -438,26 +463,26 @@ module.exports.bulk = async () => {
       // add category names
       if (entry.fields.hasOwnProperty('category')) {
         for (let item of entry.fields.category['en-US']) {
-          const name = await getFilterName(item.sys.id);
-          item.name = name;
+          const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
+          if (cat) {item['name'] = cat.fields.name;}
         }
       }
 
       // add research stage names
       if (entry.fields.hasOwnProperty('stage')) {
         for (let item of entry.fields.stage['en-US']) {
-          const name = await getFilterName(item.sys.id);
-          item.name = name;
+          const stage = stages.items.find((c) => { return c.sys.id === item.sys.id; });
+          if (stage) {item['name'] = stage.fields.name;}
         }
       }
 
       // add related organisations names
       if (entry.fields.hasOwnProperty('relatedOrgs')) {
         for (let item of entry.fields.relatedOrgs['en-US']) {
-          const name = await getFilterName(item.sys.id);
-          item.name = name;
+          const org = organisations.items.find((c) => { return c.sys.id === item.sys.id; });
+          if (org) {item['name'] = org.fields.name;}
         }
-      }
+      }     
     };
     
     // perform the upload
@@ -466,7 +491,7 @@ module.exports.bulk = async () => {
       { update: { _index: ELASTICSEARCH_INDEX_NAME, _id: doc.sys.id } },
       { doc: doc, doc_as_upsert: true },
     ]);
-    const { body: bulkResponse } = await esClient.bulk({ refresh: true, body: bulkBody });
+    const { body: bulkResponse } = await esClient.bulk({ refresh: true, body: bulkBody });        
     const erroredDocuments = []
     if (bulkResponse.errors) {
       // The items array has the same order of the dataset we just indexed.
@@ -524,16 +549,6 @@ async function getImageUrl(assetId) {
   try {
     const asset = await deliveryApiClient.getAsset(assetId);
     return asset.fields.file.url;
-  } catch(error) {
-    console.log(error);
-  }
-}
-
-// fetch the name of a filter (e.g. a category, stage, or organisation) by id 
-async function getFilterName(id) {
-  try {
-    const filter = await deliveryApiClient.getEntry(id);
-    return filter.fields.name['en-US'];
   } catch(error) {
     console.log(error);
   }
