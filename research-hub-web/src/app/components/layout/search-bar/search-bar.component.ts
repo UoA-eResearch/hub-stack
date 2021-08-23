@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class SearchBarComponent implements OnInit, OnDestroy {
   public searchText: string;
   public activeFilters: SearchFilters;
+  public showFilters = false;
 
   private subscriptions = new Subscription();
 
