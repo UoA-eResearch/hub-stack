@@ -9,6 +9,8 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { FilterType } from '@app/global/global-variables';
+import { SearchService } from '@services/search.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-search-page',
@@ -32,12 +34,46 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public stageChangeSub;
   public organisationChangeSub;
 
+  public queryParams: ParamMap;
+  public searchResults;
+
   constructor(
     public searchBarService: SearchBarService,
-    public location: Location
+    public searchService: SearchService,
+    public location: Location,
+    private route: ActivatedRoute
     ) { }
 
   async ngOnInit() {
+    this.route.queryParamMap
+      .subscribe(params => {
+        this.queryParams = params;
+      }
+    );
+
+    const searchFilters: SearchFilters = {
+      category: this.queryParams.getAll('cat'),
+      stage: this.queryParams.getAll('ra'),
+      relatedOrgs: this.queryParams.getAll('org')
+    }
+
+    const contentTypes : ContentType[] = ['Article', 'CaseStudy', 'Equipment', 'Event', 'Funding', 'Service', 'Software', 'SubHub']
+
+    const searchQuery: SearchQuery = {
+      query: (this.queryParams.get('q') || ''),
+      size: 10,
+      from: 0,
+      filters: searchFilters,
+      sort: (this.queryParams.get('sort') || 'relevance') as SortOrder,
+      includeContentTypes: contentTypes
+    };
+
+    this.searchService.search(searchQuery)
+      .subscribe(results => {
+        this.searchResults = results;
+        console.log(results);
+      });
+
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
