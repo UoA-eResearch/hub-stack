@@ -1,7 +1,7 @@
 <div class="search-filters-container">
   <mat-tab-group>
     <mat-tab [label]="'Categories'">
-      <div *ngIf="allCategories$ | async; let allCategories">
+      <div class="list-container" *ngIf="allCategories$ | async; let allCategories">
         <mat-selection-list #categories [(ngModel)]="activeFilters.category">
           <mat-list-option
             *ngFor="let category of allCategories"
@@ -11,14 +11,26 @@
             {{ category.name }}
           </mat-list-option>
         </mat-selection-list>
-        <p>Option selected: {{ getSelected(categories) }}</p>
       </div>
     </mat-tab>
     <mat-tab [label]="'Activities'">
-      <p>Activities</p>
+      <div class="list-container" *ngIf="allStages$ | async; let allStages">
+        <mat-selection-list #categories [(ngModel)]="activeFilters.stage">
+          <mat-list-option
+            *ngFor="let stage of allStages"
+            [value]="stage.sys.id"
+            checkboxPosition="before"
+          >
+            {{ stage.name }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
     </mat-tab>
     <mat-tab [label]="'Organisations'">
       <p>Organisations</p>
     </mat-tab>
   </mat-tab-group>
+  <span style="flex: 1 1 auto"></span>
+  <mat-divider></mat-divider>
+  <div>abc2134</div>
 </div>

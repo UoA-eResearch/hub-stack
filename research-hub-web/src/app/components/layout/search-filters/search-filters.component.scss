@@ -1,3 +1,18 @@
 .search-filters-container {
-  width: 700px;
+  display: flex;
+  flex-direction: column;
+  height: 450px;
+  width: 1010px;
+  .list-container {
+    padding: 10px;
+    width: 1000px;
+  }
+  mat-selection-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    mat-list-option {
+      width: 325px;
+    }
+  }
 }
