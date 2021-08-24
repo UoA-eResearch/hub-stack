@@ -1,1 +1,49 @@
-<p>search-results-list works!</p>
+<ng-container *ngIf="results">
+  <div [ngClass]="{'loading': loading, 'loaded': !loading}">
+
+    <!-- Search Results Container -->
+    <mat-nav-list role="list">
+        <a *ngFor="let result of results | paginate: { itemsPerPage: itemsPerPage , currentPage: pageNumber, totalItems: searchBarService.getTotalPages() }"
+            class="result-item"
+            [ngClass]="{'ssoProtected': result.ssoProtected }">
+
+            <!-- Result Item -->
+            <mat-card fxLayout="row" role="listitem">
+                <span mat-card-avatar class="item-avatar">
+                    <div *ngIf="result.icon; else avatarIcon">
+                        <img srcset="{{ result.icon }}?w=200&fm=webp,
+                                     {{ result.icon }}?w=200" src="{{ result.icon }}?w=200"
+                            alt="{{ result.title }}" class="item-avatar" width="100%" height="100%" />
+                    </div>
+                    <ng-template #avatarIcon>
+                        <mat-icon class="item-avatar-icon" [routerLink]="['/' + result.__typename.toLowerCase(), result.slug]" [innerHTML]="getDefaultTypeIcon(result.__typename)">
+                        </mat-icon>
+                    </ng-template>
+                </span>
+                <span class="card-content">
+                    <h4 class="card-title" [routerLink]="['/' + result.__typename.toLowerCase(), result.slug]" [innerHTML]=result.title>
+                        &nbsp;
+                        <mat-icon *ngIf="result.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
+                    </h4>
+
+                    <p class="card-summary" [routerLink]="['/' + result.__typename.toLowerCase(), result.slug]" [innerHTML]=result.summary></p>
+
+                    <mat-chip-list class="result-chips" *ngIf="result.chips" aria-label="result chips">
+                        <mat-chip *ngFor="let chip of result.chips" aria-label="result chip">{{chip}}</mat-chip>
+                    </mat-chip-list>
+                </span>
+            </mat-card>
+        </a>
+    </mat-nav-list>
+    <div class="section-2">
+
+        <!-- Paginator -->
+        <div id="pagination">
+            <pagination-controls class="page-control" responsive="true" (pageChange)="nextPage($event)"
+                (pageBoundsCorrection)="resetPage()" screenReaderPaginationLabel="Pagination"
+                screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+        </div>
+    </div>
+  </div>
+</ng-container>
