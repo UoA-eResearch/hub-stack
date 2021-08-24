@@ -29,15 +29,17 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   public clearFilters(): void {
-    this.activeFilters = null;
+    this.activeFilters = {
+      category: [],
+      stage: [],
+      relatedOrgs: []
+    };
   }
 
   public countActiveFilters(): number {
-    return !this.activeFilters
-      ? 0
-      : this.activeFilters.category?.length ?? 0
-        + this.activeFilters.relatedOrgs?.length ?? 0
-        + this.activeFilters.stage?.length ?? 0;
+    return this.activeFilters.category.length
+      + this.activeFilters.relatedOrgs.length
+      + this.activeFilters.stage.length;
   }
 
 }
