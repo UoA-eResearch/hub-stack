@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
 import { SearchFilters } from '@app/global/searchTypes';
-import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from '@app/graphql/schema';
+import { AllCategoriesGQL, AllOrganisationsGQL, AllStagesGQL, Category, OrgUnit, Stage } from '@app/graphql/schema';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -16,18 +16,21 @@ export class SearchFiltersComponent implements OnInit {
 
   public allCategories$: Observable<Category[]>;
   public allStages$: Observable<Stage[]>;
+  public allOrgUnits$: Observable<OrgUnit[]>;
 
   public loading = false;
 
   constructor(
     private allCategoriesGQL: AllCategoriesGQL,
-    private allStagesGQL: AllStagesGQL
+    private allStagesGQL: AllStagesGQL,
+    private allOrgUnitsGQL: AllOrganisationsGQL
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
     this.allCategories$ = this.getAllCategories();
     this.allStages$ = this.getAllStages();
+    this.allOrgUnits$ = this.getAllOrgUnits();
   }
 
   private getAllCategories(): Observable<Category[]> {
@@ -42,8 +45,10 @@ export class SearchFiltersComponent implements OnInit {
     ) as Observable<Stage[]>;
   }
 
-  public getSelected(list: MatSelectionList) {
-    return list.selectedOptions.selected.map(x => x.value).join(',');
+  private getAllOrgUnits(): Observable<OrgUnit[]> {
+    return this.allOrgUnitsGQL.fetch().pipe(
+      map((result) => result.data.orgUnitCollection.items)
+    ) as Observable<OrgUnit[]>;
   }
 
 }

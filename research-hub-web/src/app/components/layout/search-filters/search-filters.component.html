@@ -30,7 +30,17 @@
       </div>
     </mat-tab>
     <mat-tab [label]="'Organisations'">
-      <p>Organisations</p>
+      <div class="list-container" *ngIf="allOrgUnits$ | async; let allOrgUnits">
+        <mat-selection-list #stages [(ngModel)]="activeFilters.relatedOrgs">
+          <mat-list-option
+            *ngFor="let orgUnit of allOrgUnits"
+            [value]="orgUnit.sys.id"
+            checkboxPosition="before"
+          >
+            {{ orgUnit.name }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
     </mat-tab>
   </mat-tab-group>
   <span style="flex: 1 1 auto"></span>
