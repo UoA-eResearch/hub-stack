@@ -15,7 +15,7 @@
     </mat-tab>
     <mat-tab [label]="'Activities'">
       <div class="list-container" *ngIf="allStages$ | async; let allStages">
-        <mat-selection-list #categories [(ngModel)]="activeFilters.stage">
+        <mat-selection-list #stages [(ngModel)]="activeFilters.stage">
           <mat-list-option
             *ngFor="let stage of allStages"
             [value]="stage.sys.id"
@@ -32,5 +32,5 @@
   </mat-tab-group>
   <span style="flex: 1 1 auto"></span>
   <mat-divider></mat-divider>
-  <div>abc2134</div>
+  <span class="search-filters-footer">Filters: </span>
 </div>
