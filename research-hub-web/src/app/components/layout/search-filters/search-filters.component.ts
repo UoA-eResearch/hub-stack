@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
 import { SearchFilters } from '@app/global/searchTypes';
 import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from '@app/graphql/schema';
-import { forkJoin, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({

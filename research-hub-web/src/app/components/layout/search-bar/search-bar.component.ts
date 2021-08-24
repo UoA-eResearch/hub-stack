@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SearchFilters, SearchQuery } from '@app/global/searchTypes';
+import { SearchFilters } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { Subscription } from 'rxjs';
 
