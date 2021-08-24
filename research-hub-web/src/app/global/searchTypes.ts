@@ -23,4 +23,4 @@ interface SearchResult {
 }
 
 type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
-type ContentType = 'Article' | 'SubHub'
+type ContentType = 'Article' | 'CaseStudy' | 'Equipment' | 'Event' | 'Funding' | 'Service' | 'Software' | 'SubHub'
