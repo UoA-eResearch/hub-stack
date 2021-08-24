@@ -1,7 +1,10 @@
 <div class="search-filters-container">
   <mat-tab-group>
     <mat-tab [label]="'Categories'">
-      <div class="list-container" *ngIf="allCategories$ | async; let allCategories">
+      <div
+        class="list-container"
+        *ngIf="allCategories$ | async; let allCategories"
+      >
         <mat-selection-list #categories [(ngModel)]="activeFilters.category">
           <mat-list-option
             *ngFor="let category of allCategories"
@@ -32,5 +35,22 @@
   </mat-tab-group>
   <span style="flex: 1 1 auto"></span>
   <mat-divider></mat-divider>
-  <span class="search-filters-footer">Filters: </span>
+  <span class="search-filters-footer">
+    Filters:
+    {{
+      activeFilters.category.length === 1
+        ? activeFilters.category.length + " category"
+        : activeFilters.category.length + " categories"
+    }},
+    {{
+      activeFilters.stage.length === 1
+        ? activeFilters.stage.length + " activity"
+        : activeFilters.stage.length + " activities"
+    }},
+    {{
+      activeFilters.relatedOrgs.length === 1
+        ? activeFilters.relatedOrgs.length + " organisation"
+        : activeFilters.relatedOrgs.length + " organisations"
+    }},
+  </span>
 </div>

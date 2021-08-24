@@ -8,9 +8,9 @@ export interface SearchQuery {
 }
 
 export interface SearchFilters {
-  relatedOrgs?: string[],
-  stage?: string[],
-  category?: string[]
+  relatedOrgs: string[],
+  stage: string[],
+  category: string[]
 }
 
 export interface SearchResult {
