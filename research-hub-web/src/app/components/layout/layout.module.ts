@@ -9,6 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NotificationComponent } from './notification/notification.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchFiltersComponent } from './search-filters/search-filters.component';
 
 
 
@@ -18,7 +19,8 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     NotificationComponent,
     SideNavComponent,
     FooterComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SearchFiltersComponent
   ],
   imports: [
     CommonModule,
