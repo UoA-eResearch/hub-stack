@@ -20,7 +20,7 @@ export class CollectionListComponent implements OnChanges {
 
   // Scrolling to top of page on page change
   scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelector('mat-sidenav-content').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   /**
