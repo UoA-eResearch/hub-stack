@@ -1,0 +1,24 @@
+<div class="search-filters-container">
+  <mat-tab-group>
+    <mat-tab [label]="'Categories'">
+      <div *ngIf="allCategories$ | async; let allCategories">
+        <mat-selection-list #categories [(ngModel)]="activeFilters.category">
+          <mat-list-option
+            *ngFor="let category of allCategories"
+            [value]="category.sys.id"
+            checkboxPosition="before"
+          >
+            {{ category.name }}
+          </mat-list-option>
+        </mat-selection-list>
+        <p>Option selected: {{ getSelected(categories) }}</p>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'Activities'">
+      <p>Activities</p>
+    </mat-tab>
+    <mat-tab [label]="'Organisations'">
+      <p>Organisations</p>
+    </mat-tab>
+  </mat-tab-group>
+</div>

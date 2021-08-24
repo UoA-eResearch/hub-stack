@@ -11,7 +11,7 @@ import { SearchFilters, SearchQuery, SearchResult, SortOrder } from '@app/global
 })
 export class SearchService {
   public searchText: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({});
+  public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({category: ['21N4dNlosHsqGnfzCHHlBK']});
 
   constructor(
     private http: HttpClient

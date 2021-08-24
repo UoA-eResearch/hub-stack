@@ -29,6 +29,8 @@
     >
       <mat-icon>tune</mat-icon>
     </button>
-    <div class="filter-content">abc123</div>
+    <div *ngIf="showFilters" class="filter-content">
+      <app-search-filters></app-search-filters>
+    </div>
   </form>
 </div>

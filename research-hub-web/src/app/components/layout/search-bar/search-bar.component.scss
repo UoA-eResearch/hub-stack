@@ -33,11 +33,12 @@
     }
 
     .filter-content {
-      height: 50px;
       position: absolute;
+      top: 64px;
       display: block;
       z-index: 1000;
       color: black;
+      background-color: white;
     }
   }
 }
