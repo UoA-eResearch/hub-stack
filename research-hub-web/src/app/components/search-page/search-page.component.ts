@@ -70,7 +70,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.searchBarService.createResultsList();
   }
 
-  // Create the initial page lsit
+  // Create the initial page list
   public async initialPages() {
 
     // Updating results when searched
