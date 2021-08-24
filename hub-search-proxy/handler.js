@@ -80,8 +80,8 @@ module.exports.search = async (event, context) => {
       }
     }
     if (requestBody.hasOwnProperty('sort')) {
-      if(!(requestBody.sort === "A-Z" || requestBody.sort === "Z-A" || requestBody.sort === "")) {
-        throw new Error('Sort options are A-Z or Z-A. Pass empty string or no sort property for sorting by score.')
+      if(!(requestBody.sort === "A-Z" || requestBody.sort === "Z-A" || requestBody.sort === "" || requestBody.sort === "relevance")) {
+        throw new Error('Sort options are A-Z, Z-A, or relevance.')
       }
       if (requestBody.sort === "A-Z") {
         sort.push({ "fields.title.en-US.raw": "asc" });
