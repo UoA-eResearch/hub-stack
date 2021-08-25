@@ -7,7 +7,13 @@ mat-toolbar {
   position: -webkit-sticky;
   top: 0;
   z-index: 1000;
-  padding: 0 5vw;
+  .main-navbar {
+    padding: 0 25px;
+  }
+
+  .mobile-search-row {
+    background-color: white;
+  }
 }
 
 /**
@@ -41,10 +47,6 @@ mat-toolbar {
       color: white;
     }
   }
-}
-
-.transparent-navbar {
-  background-color: transparent;
 }
 
 /*

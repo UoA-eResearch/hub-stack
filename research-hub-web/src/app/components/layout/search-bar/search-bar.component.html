@@ -25,12 +25,15 @@
     <button
       mat-icon-button
       color="primary"
+      fxHide.lt-md
       (click)="showFilters = !showFilters"
     >
       <mat-icon>tune</mat-icon>
     </button>
     <div *ngIf="showFilters" class="filter-content">
-      <app-search-filters [(activeFilters)]="activeFilters"></app-search-filters>
+      <app-search-filters
+        [(activeFilters)]="activeFilters"
+      ></app-search-filters>
     </div>
   </form>
 </div>

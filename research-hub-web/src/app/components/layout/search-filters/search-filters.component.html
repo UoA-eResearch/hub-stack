@@ -6,13 +6,14 @@
         *ngIf="allCategories$ | async; let allCategories"
       >
         <mat-selection-list #categories [(ngModel)]="activeFilters.category">
-          <mat-list-option
-            *ngFor="let category of allCategories"
-            [value]="category.sys.id"
-            checkboxPosition="before"
-          >
-            {{ category.name }}
-          </mat-list-option>
+          <ng-container *ngFor="let category of allCategories">
+            <mat-list-option
+              [value]="category.sys.id"
+              checkboxPosition="before"
+            >
+              {{ category.name }}
+            </mat-list-option>
+          </ng-container>
         </mat-selection-list>
       </div>
     </mat-tab>
@@ -45,7 +46,7 @@
   </mat-tab-group>
   <span style="flex: 1 1 auto"></span>
   <mat-divider></mat-divider>
-  <span class="search-filters-footer">
+  <div class="search-filters-footer">
     Filters:
     {{
       activeFilters.category.length === 1
@@ -61,6 +62,6 @@
       activeFilters.relatedOrgs.length === 1
         ? activeFilters.relatedOrgs.length + " organisation"
         : activeFilters.relatedOrgs.length + " organisations"
-    }},
-  </span>
+    }}
+  </div>
 </div>
