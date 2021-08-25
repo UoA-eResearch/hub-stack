@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { Category, Stage } from '@app/graphql/schema';
@@ -6,6 +6,7 @@ import { HomeScrollService } from '@services/home-scroll.service';
 import { LoginService, UserInfoDto } from '@uoa/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-navbar',
@@ -20,6 +21,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   public isHome = false;
   public currentUrl = '/';
+  public showMobileSearch = false;
 
   public userInfo$: Observable<UserInfoDto>;
   public loggedIn$: Observable<boolean>;
@@ -74,7 +76,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // }
   }
 
-
+  public toggleMobileSearchBar(): void {
+    this.showMobileSearch = !this.showMobileSearch;
+  }
 
 
   ngOnDestroy(): void {

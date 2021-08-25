@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { SearchFilters } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { Subscription } from 'rxjs';
@@ -9,9 +9,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
+  @Input() public showFilters = false;
+
   public searchText: string;
   public activeFilters: SearchFilters;
-  public showFilters = false;
 
   private subscriptions = new Subscription();
 

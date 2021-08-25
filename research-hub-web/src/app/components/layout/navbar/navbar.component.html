@@ -1,54 +1,59 @@
 <!-- Main Navbar -->
 <mat-toolbar
+  aria-label="Top Toolbar"
   id="top-bar"
   #topbar
   color="primary"
   class="mat-elevation-z6"
 >
-  <!-- Mobile Menu Toggle -->
-  <button
-    role="button"
-    aria-label="menu"
-    fxHide.gt-sm
-    mat-icon-button
-    style="margin-right: 6px"
-    matTooltip="Menu"
-    (click)="toggleSidenav.emit()"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
+  <mat-toolbar-row class="main-navbar">
+    <!-- Mobile Menu Toggle -->
+    <button
+      role="button"
+      aria-label="menu"
+      fxHide.gt-sm
+      mat-icon-button
+      style="margin-right: 6px"
+      matTooltip="Menu"
+      (click)="toggleSidenav.emit()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
 
-  <!-- Logo/Home -->
-  <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
-    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
-  </a>
+    <!-- Logo/Home -->
+    <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
+      <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
+    </a>
 
-  <!-- Space Divider -->
-  <span fxHide.lt-md style="flex: 1 1 auto"></span>
+    <!-- Space Divider -->
+    <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
-  <app-search-bar></app-search-bar>
+    <app-search-bar fxHide.lt-md></app-search-bar>
 
-  <!-- Search Icon (Mobile)-->
-  <button
-    role="button"
-    aria-label="search"
-    (click)="searchBarService.setSearchText('')"
-    (keydown.enter)="searchBarService.setSearchText('')"
-    mat-icon-button
-    fxHide.gt-sm
-    routerLink="/search"
-    matTooltip="Search"
-  >
-    <mat-icon>search</mat-icon>
-  </button>
+    <!-- Search Icon (Mobile)-->
+    <button
+      role="button"
+      aria-label="search"
+      mat-icon-button
+      fxHide.gt-sm
+      matTooltip="Search"
+      (click)="toggleMobileSearchBar()"
+    >
+      <mat-icon *ngIf="!showMobileSearch">search</mat-icon>
+      <mat-icon *ngIf="showMobileSearch">close</mat-icon>
+    </button>
 
-  <!--Navigation buttons-->
-  <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
-  <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
-  <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
-  <ng-container
-    *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
-  ></ng-container>
+    <!--Navigation buttons-->
+    <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
+    <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
+    <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
+    <ng-container
+      *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
+    ></ng-container>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="mobile-search-row" *ngIf="showMobileSearch">
+    <app-search-bar [showFilters]="showMobileSearch"></app-search-bar>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <!--templates-->

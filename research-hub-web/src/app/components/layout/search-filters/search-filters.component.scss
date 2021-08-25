@@ -3,9 +3,13 @@
   flex-direction: column;
   height: 475px;
   width: 1010px;
+  @media (max-width: 960px) {
+    height: calc(100vh - 112px);
+    width: 100vw;
+  }
   .list-container {
     padding: 10px;
-    width: 1000px;
+    overflow: auto;
   }
   mat-selection-list {
     display: flex;
@@ -13,6 +17,9 @@
     flex-wrap: wrap;
     mat-list-option {
       width: 325px;
+      @media (max-width: 960px) {
+        width: 100%
+      }
     }
   }
   .search-filters-footer {
