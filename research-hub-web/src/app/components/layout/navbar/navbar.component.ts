@@ -43,6 +43,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
         next: (event: NavigationEnd) => {
           this.isHome = event.urlAfterRedirects ? (event.urlAfterRedirects === '/home') : false;
           this.currentUrl = event.urlAfterRedirects;
+          this.focusSearch();
         }
       })
     );
@@ -55,6 +56,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       filter(userInfo => userInfo !== null && userInfo !== undefined),
       tap(userInfo => this.sendGoogleAnalyticsUserInfo(userInfo))
     );
+  }
+
+  private focusSearch(): void {
+    const searchInput = document.querySelector('#searchBox');
+    if (searchInput instanceof HTMLInputElement) {
+      searchInput.focus();
+    }
   }
 
   private sendGoogleAnalyticsUserInfo(userInfo: UserInfoDto): void {
