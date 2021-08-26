@@ -1,4 +1,4 @@
-<div class="search-bar-outer" [ngClass]="{ 'white-bottom': showFilters }">
+<div #searchBar class="search-bar-outer" [ngClass]="{ 'white-bottom': showFilters }">
   <form class="search-bar-inner">
     <button
       mat-icon-button
@@ -35,8 +35,8 @@
     >
       <mat-icon>tune</mat-icon>
     </button>
-    <div *ngIf="showFilters" class="filter-content">
-      <app-search-filters
+    <div #filterContent class="filter-content">
+      <app-search-filters *ngIf="showFilters"
         [(activeFilters)]="activeFilters"
       ></app-search-filters>
     </div>
