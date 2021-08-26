@@ -7,14 +7,23 @@
     height: calc(100vh - 112px);
     width: 100vw;
   }
+
   .list-container {
     padding: 10px;
     overflow: auto;
+    flex: 1;
+    @media (max-width: 960px) {
+      height: calc(100vh - 212px);
+    }
   }
+
   mat-selection-list {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    @media (min-width: 961px) {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
     mat-list-option {
       width: 325px;
       @media (max-width: 960px) {
@@ -22,6 +31,7 @@
       }
     }
   }
+
   .search-filters-footer {
     margin: 10px 0px;
     padding: 0px 10px;
