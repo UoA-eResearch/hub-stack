@@ -1,0 +1,36 @@
+<div class="search-bar-outer" [ngClass]="{ 'white-bottom': showFilters }">
+  <form class="search-bar-inner">
+    <button
+      mat-icon-button
+      aria-label="Search"
+      color="primary"
+      [routerLink]="'/search'"
+      [queryParams]="
+        searchService.generateQueryParams(searchText, activeFilters)
+      "
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+    <input [(ngModel)]="searchText" [ngModelOptions]="{ standalone: true }" />
+    <mat-chip-list>
+      <mat-chip
+        *ngIf="countActiveFilters() > 0"
+        [removable]="true"
+        (removed)="clearFilters()"
+      >
+        Reset Filters ({{ countActiveFilters() }})
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="showFilters = !showFilters"
+    >
+      <mat-icon>tune</mat-icon>
+    </button>
+    <div *ngIf="showFilters" class="filter-content">
+      <app-search-filters [(activeFilters)]="activeFilters"></app-search-filters>
+    </div>
+  </form>
+</div>
