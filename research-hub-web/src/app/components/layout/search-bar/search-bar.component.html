@@ -11,7 +11,12 @@
     >
       <mat-icon>search</mat-icon>
     </button>
-    <input type="search" [(ngModel)]="searchText" [ngModelOptions]="{ standalone: true }" />
+    <input
+      type="search"
+      [(ngModel)]="searchText"
+      [ngModelOptions]="{ standalone: true }"
+      placeholder="Search for anything"
+    />
     <mat-chip-list>
       <mat-chip
         *ngIf="countActiveFilters() > 0"

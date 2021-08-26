@@ -1,7 +1,8 @@
 .search-filters-container {
   display: flex;
   flex-direction: column;
-  height: 475px;
+  height: auto;
+  min-height: 510px;
   width: 1010px;
   @media (max-width: 960px) {
     height: calc(100vh - 112px);

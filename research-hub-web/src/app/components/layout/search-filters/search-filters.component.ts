@@ -1,3 +1,4 @@
+import { state, style } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
 import { SearchFilters } from '@app/global/searchTypes';
@@ -18,8 +19,6 @@ export class SearchFiltersComponent implements OnInit {
   public allStages$: Observable<Stage[]>;
   public allOrgUnits$: Observable<OrgUnit[]>;
 
-  public loading = false;
-
   constructor(
     private allCategoriesGQL: AllCategoriesGQL,
     private allStagesGQL: AllStagesGQL,
@@ -27,7 +26,6 @@ export class SearchFiltersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loading = true;
     this.allCategories$ = this.getAllCategories();
     this.allStages$ = this.getAllStages();
     this.allOrgUnits$ = this.getAllOrgUnits();
