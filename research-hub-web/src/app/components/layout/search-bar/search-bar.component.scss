@@ -1,0 +1,46 @@
+.search-bar-outer {
+  height: 64px;
+  width: 500px;
+  padding: 10px 0px;
+
+  .search-bar-inner {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid white;
+    padding: 2px;
+    border-radius: 5px;
+    background-color: white;
+    height: 100%;
+
+    input {
+      border: none;
+      background: transparent;
+      flex-grow: 2;
+      font-size: 20px;
+      font: "National";
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    button {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    .filter-content {
+      position: absolute;
+      top: 64px;
+      z-index: 1000;
+      background-color: white;
+    }
+  }
+}
+
+.white-bottom {
+  background: linear-gradient(to bottom, transparent 50%, white 50%);
+}

@@ -1,0 +1,23 @@
+.search-filters-container {
+  display: flex;
+  flex-direction: column;
+  height: 475px;
+  width: 1010px;
+  .list-container {
+    padding: 10px;
+    width: 1000px;
+  }
+  mat-selection-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    mat-list-option {
+      width: 325px;
+    }
+  }
+  .search-filters-footer {
+    margin: 10px 0px;
+    padding: 0px 10px;
+    color: black;
+  }
+}

@@ -4,13 +4,14 @@ import { environment } from 'environments/environment'
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Params } from '@angular/router';
+import { SearchFilters, SearchQuery, SearchResult, SortOrder } from '@app/global/searchTypes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
   public searchText: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({});
+  public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({category: [], stage: [], relatedOrgs: []});
 
   constructor(
     private http: HttpClient
@@ -43,7 +44,7 @@ export class SearchService {
     );
   }
 
-  public generateQueryString(searchText: string, filters?: SearchFilters, sortOrder?: SortOrder): Params {
+  public generateQueryParams(searchText: string, filters?: SearchFilters, sortOrder?: SortOrder): Params {
     const params: Params = {
       q: searchText,
     }
@@ -54,7 +55,7 @@ export class SearchService {
     if (filters?.relatedOrgs) {
       params.org = filters.relatedOrgs
     }
-    if (filters.stage) {
+    if (filters?.stage) {
       params.ra = filters.stage
     }
     if (sortOrder) {
@@ -68,5 +69,4 @@ export class SearchService {
     this.searchText.next(query.query);
     this.searchFilters.next(query.filters);
   }
-
 }
