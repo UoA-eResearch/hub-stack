@@ -52,6 +52,29 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.search();  
+
+    this.allStages$ = this.searchBarService.getAllStages();
+    this.allCategories$ = this.searchBarService.getAllCategories();
+    this.allOrganisations$ = this.searchBarService.getAllOrganisations();
+
+    this.searchBarService.createResultsList();
+    this.initialPages();
+  }
+
+  // Clear All Filters
+  public clear () {
+    this.categoryFilter = [];
+    this.stageFilter = [];
+    this.organisationFilter = [];
+    this.searchBarService.setCategory([]);
+    this.searchBarService.setStage([]);
+    this.searchBarService.setOrganisation([]);
+    this.searchBarService.setContentType([]);
+    this.searchBarService.createResultsList();
+  }
+
+  public search() {
     const searchFilters: SearchFilters = {
       category: this.queryParams.getAll('cat'),
       stage: this.queryParams.getAll('ra'),
@@ -74,37 +97,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.searchResults = results;
         console.log(results);
       });
-
-    this.allStages$ = this.searchBarService.getAllStages();
-    this.allCategories$ = this.searchBarService.getAllCategories();
-    this.allOrganisations$ = this.searchBarService.getAllOrganisations();
-
-    this.categoryChangeSub = this.searchBarService.searchCategoryChange.subscribe(searchCategory => {
-      this.categoryFilter = searchCategory;
-    });
-
-    this.stageChangeSub = this.searchBarService.searchStageChange.subscribe(searchStage => {
-      this.stageFilter = searchStage;
-    });
-
-    this.organisationChangeSub = this.searchBarService.searchOrganisationChange.subscribe(searchOrganisation => {
-      this.organisationFilter = searchOrganisation;
-    });
-
-    this.searchBarService.createResultsList();
-    this.initialPages();
-  }
-
-  // Clear All Filters
-  public clear () {
-    this.categoryFilter = [];
-    this.stageFilter = [];
-    this.organisationFilter = [];
-    this.searchBarService.setCategory([]);
-    this.searchBarService.setStage([]);
-    this.searchBarService.setOrganisation([]);
-    this.searchBarService.setContentType([]);
-    this.searchBarService.createResultsList();
   }
 
   // Create the initial page list
@@ -147,9 +139,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.resultSub$.unsubscribe();
-    this.categoryChangeSub.unsubscribe();
-    this.stageChangeSub.unsubscribe();
-    this.organisationChangeSub.unsubscribe();
     this.allCurrentPages = [];
   }
 }
