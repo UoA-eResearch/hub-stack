@@ -59,6 +59,7 @@ mat-card {
     @extend .card-title;
     width: fit-content;
     display: inline-block;
+    margin-top: 0 !important;
     margin-bottom: 0 !important;
     border-bottom: 2px solid rgba(0, 0, 0, 0);
     &:hover {
@@ -86,10 +87,16 @@ mat-card {
 }
 
 /**
- * Card Result Icon
+ * Card Label
  */
-.item-avatar-icon {
-  color: $light-blue !important;
+ .card-label {
+  background: $dark-blue;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 14px;
+  right: 0;
+  top: 0;
+  padding: 0px 15px;
 }
 
 /**
