@@ -31,12 +31,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
   public filterTypes = FilterType;
-  public categoryChangeSub;
-  public stageChangeSub;
-  public organisationChangeSub;
 
   public queryParams: ParamMap;
-  public searchResults;
+  public searchResults: SearchResult[];
 
   constructor(
     public searchBarService: SearchBarService,

@@ -19,7 +19,7 @@ export interface SearchResult {
   slug: string;
   ssoProtected: boolean;
   contentType: ContentType;
-  icon: string;
+  chips: string[];
 }
 
 export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
