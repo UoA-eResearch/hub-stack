@@ -27,13 +27,17 @@ export class SearchService {
       map(data => {
         const results: SearchResult[] = [];
         data["result"]["hits"]["hits"].forEach(element => {
+          const summary = element.highlight?.["fields.summary.en-US"] ?
+            element.highlight["fields.summary.en-US"].join(' ') :
+            element._source.fields.summary["en-US"];
+          
           const result: SearchResult = {
             title: element._source.fields.title["en-US"],
-            summary: element._source.fields.summary["en-US"],
+            summary: summary,
             slug: element._source.fields.slug["en-US"],
             ssoProtected: element._source.fields.ssoProtected["en-US"],
             contentType : element._source.sys.contentType.sys.id,
-            icon: element._source.fields.icon?.["en-US"]["url"]
+            chips: element._source.fields.category?.["en-US"].map(x => x.name)
           };
 
           results.push(result);
