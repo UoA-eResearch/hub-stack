@@ -75,4 +75,8 @@ export class SearchService {
     this.searchText.next(query.query);
     this.searchFilters.next(query.filters);
   }
+
+  public setSearchFilters(filters: SearchFilters) {
+    this.searchFilters.next(filters);
+  }
 }
