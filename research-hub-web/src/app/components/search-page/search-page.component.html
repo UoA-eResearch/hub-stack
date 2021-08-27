@@ -104,8 +104,8 @@
 
             <!-- Results -->
             <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
-                <h3 style="margin-bottom: 0" class="search-results-text">{{ this.searchBarService.getTotalPages() }}&nbsp;&nbsp;</h3>
-                <p *ngIf="this.searchBarService.getTotalPages() !== 1; else onlyOne" style="margin-bottom: 0">Results</p>
+                <h3 style="margin-bottom: 0" class="search-results-text">{{ totalResults }}&nbsp;&nbsp;</h3>
+                <p *ngIf="totalResults !== 1; else onlyOne" style="margin-bottom: 0">Results</p>
                 <ng-template #onlyOne><p style="margin-bottom: 0">Result</p></ng-template>
             </span>
 

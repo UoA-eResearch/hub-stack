@@ -12,6 +12,7 @@ import { SearchFilters, SearchQuery, SearchResult, SortOrder } from '@app/global
 export class SearchService {
   public searchText: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({category: [], stage: [], relatedOrgs: []});
+  public totalResults: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   constructor(
     private http: HttpClient
@@ -25,6 +26,7 @@ export class SearchService {
       query
     ).pipe(
       map(data => {
+        this.totalResults.next(data["result"]["hits"]["total"]["value"]);
         const results: SearchResult[] = [];
         data["result"]["hits"]["hits"].forEach(element => {
           const summary = element.highlight?.["fields.summary.en-US"] ?

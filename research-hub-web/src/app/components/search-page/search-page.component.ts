@@ -34,6 +34,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   public queryParams: ParamMap;
   public searchResults: SearchResult[];
+  public totalResults: number;
 
   constructor(
     public searchBarService: SearchBarService,
@@ -43,11 +44,13 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     ) { }
 
   async ngOnInit() {
-    this.route.queryParamMap
-      .subscribe(params => {
-        this.queryParams = params;
-      }
-    );
+    this.route.queryParamMap.subscribe(params => {
+      this.queryParams = params;
+    });
+
+    this.searchService.totalResults.subscribe(total => {
+      this.totalResults = total;
+    });
 
     this.search();  
 
