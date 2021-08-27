@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import {
   CategoryCollection,
   OrgUnitCollection,
@@ -22,12 +22,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public allCategories$: Observable<CategoryCollection>;
   public allStages$: Observable<StageCollection>;
   public allOrganisations$: Observable<OrgUnitCollection>;
-  public resultSub$: Subscription;
   public sortType = this.searchBarService.getSort();
-  public allCurrentPages = [];
-  public categoryFilter = this.searchBarService.getCategory();
-  public stageFilter = this.searchBarService.getStage();
-  public organisationFilter = this.searchBarService.getOrganisation();
   public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
   public filterTypes = FilterType;
@@ -35,6 +30,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public queryParams: ParamMap;
   public searchResults: SearchResult[];
   public totalResults: number;
+  public searchText: string;
+  public activeFilters: SearchFilters;
+
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     public searchBarService: SearchBarService,
@@ -44,37 +43,47 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     ) { }
 
   async ngOnInit() {
-    this.route.queryParamMap.subscribe(params => {
+    this.subscriptions.add(this.route.queryParamMap.subscribe(params => {
       this.queryParams = params;
-    });
+      this.search();
+    }));
 
-    this.searchService.totalResults.subscribe(total => {
+    this.subscriptions.add(this.searchService.totalResults.subscribe(total => {
       this.totalResults = total;
-    });
+    }));
 
-    this.search();  
+    this.subscriptions.add(this.searchService.searchText.subscribe(text => {
+      this.searchText = text;
+    })); 
+
+    this.subscriptions.add(this.searchService.searchFilters.subscribe(filters => {
+      this.activeFilters = filters;
+      console.log(this.activeFilters)
+    }));
 
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
 
-    this.searchBarService.createResultsList();
-    this.initialPages();
   }
 
   // Clear All Filters
-  public clear () {
-    this.categoryFilter = [];
-    this.stageFilter = [];
-    this.organisationFilter = [];
-    this.searchBarService.setCategory([]);
-    this.searchBarService.setStage([]);
-    this.searchBarService.setOrganisation([]);
-    this.searchBarService.setContentType([]);
-    this.searchBarService.createResultsList();
+  public clearFilters() {
+    this.activeFilters = {
+      category: [],
+      stage: [],
+      relatedOrgs: []
+    };
+
+    this.searchService.setSearchFilters(this.activeFilters);
+
+    // TODO: get new search results list
+    //need to set the query params then execute the search
   }
 
   public search() {
+    console.log("Searching..")
+
     const searchFilters: SearchFilters = {
       category: this.queryParams.getAll('cat'),
       stage: this.queryParams.getAll('ra'),
@@ -92,53 +101,45 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       includeContentTypes: contentTypes
     };
 
-    this.searchService.search(searchQuery)
+    this.subscriptions.add(this.searchService.search(searchQuery)
       .subscribe(results => {
         this.searchResults = results;
-        console.log(results);
-      });
-  }
-
-  // Create the initial page list
-  public async initialPages() {
-
-    // Updating results when searched
-    this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
-      this.allCurrentPages = data.map(x => ({ ...x }));
-    });
+      }));
   }
 
   // Update search filters
   public updateSearchFilters() {
     this.searchBarService.setSort(this.sortType);
-    this.searchBarService.setStage(this.stageFilter);
-    this.searchBarService.setCategory(this.categoryFilter);
-    this.searchBarService.setOrganisation(this.organisationFilter);
+    // this.searchBarService.setStage(this.stageFilter);
+    // this.searchBarService.setCategory(this.categoryFilter);
+    // this.searchBarService.setOrganisation(this.organisationFilter);
     this.searchBarService.setCurrentPage(1);
     this.searchBarService.createResultsList();
   }
 
   public removeFilterById(filterId: string, filterType: FilterType) {
     if (filterType === FilterType.ResearchCategory) {
-      if (this.categoryFilter.indexOf(filterId) !== -1) {
-        this.categoryFilter = this.categoryFilter.filter(filter => filter !== filterId);
+      if (this.activeFilters.category.indexOf(filterId) !== -1) {
+        this.activeFilters.category = this.activeFilters.category.filter(filter => filter !== filterId);
       }
     }
     if (filterType === FilterType.ResearchActivity) {
-      if (this.stageFilter.indexOf(filterId) !== -1) {
-        this.stageFilter = this.stageFilter.filter(filter => filter !== filterId);
+      if (this.activeFilters.stage.indexOf(filterId) !== -1) {
+        this.activeFilters.stage = this.activeFilters.stage.filter(filter => filter !== filterId);
       }
     }
     if (filterType === FilterType.Organisation) {      
-      if (this.organisationFilter.indexOf(filterId) !== -1) {
-        this.organisationFilter = this.organisationFilter.filter(filter => filter !== filterId);
+      if (this.activeFilters.relatedOrgs.indexOf(filterId) !== -1) {
+        this.activeFilters.relatedOrgs = this.activeFilters.relatedOrgs.filter(filter => filter !== filterId);
       }      
     }
-    this.updateSearchFilters() 
+    this.searchService.setSearchFilters(this.activeFilters);
+
+    // TODO: get new search results list
+    //need to set the query params then execute the search
   }
 
   ngOnDestroy() {
-    this.resultSub$.unsubscribe();
-    this.allCurrentPages = [];
+    this.subscriptions.unsubscribe();
   }
 }
