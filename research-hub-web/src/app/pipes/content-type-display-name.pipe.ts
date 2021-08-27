@@ -7,7 +7,8 @@ import { ContentTypeDisplayNames } from '@app/global/global-variables';
 export class ContentTypeDisplayNamePipe implements PipeTransform {
 
   transform(value: string): string {
-    return ContentTypeDisplayNames[value];
+    return ContentTypeDisplayNames[value] !== undefined ?
+      ContentTypeDisplayNames[value] : 'Other';
   }
 
 }

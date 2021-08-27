@@ -4,7 +4,7 @@ import { SharedModule } from '../app.shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MockModule } from 'ng-mocks';
 
-fdescribe('CollectionListComponent', () => {
+describe('CollectionListComponent', () => {
   let component: CollectionListComponent;
   let fixture: ComponentFixture<CollectionListComponent>;
 
