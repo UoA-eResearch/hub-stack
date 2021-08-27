@@ -9,6 +9,7 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { FilterType } from '@app/global/global-variables';
+import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
@@ -123,27 +124,25 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.searchBarService.setOrganisation(this.organisationFilter);
     this.searchBarService.setCurrentPage(1);
     this.searchBarService.createResultsList();
-    this.initialPages();
   }
 
   public removeFilterById(filterId: string, filterType: FilterType) {
-    let filter;
     if (filterType === FilterType.ResearchCategory) {
-      filter = this.categoryFilter;
+      if (this.categoryFilter.indexOf(filterId) !== -1) {
+        this.categoryFilter = this.categoryFilter.filter(filter => filter !== filterId);
+      }
     }
     if (filterType === FilterType.ResearchActivity) {
-      filter = this.stageFilter;
+      if (this.stageFilter.indexOf(filterId) !== -1) {
+        this.stageFilter = this.stageFilter.filter(filter => filter !== filterId);
+      }
     }
-    if (filterType === FilterType.Organisation) {
-      filter = this.organisationFilter;
+    if (filterType === FilterType.Organisation) {      
+      if (this.organisationFilter.indexOf(filterId) !== -1) {
+        this.organisationFilter = this.organisationFilter.filter(filter => filter !== filterId);
+      }      
     }
-
-    const index = filter.indexOf(filterId);
-    if (index > -1) {
-      filter.splice(index, 1);
-    }
-
-    this.updateSearchFilters();
+    this.updateSearchFilters() 
   }
 
   ngOnDestroy() {
