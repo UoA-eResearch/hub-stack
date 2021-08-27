@@ -7,6 +7,11 @@
         </div>
     </div>
 
+    <!-- Breadcrumbs -->
+    <div class="site-padding" ngClass.lt-md="site-padding-mobile">
+        <app-breadcrumbs [contentItem]="" [title]="'Search'"></app-breadcrumbs>
+    </div>
+
     <!-- Active Filters -->
     <div ngClass.gt-sm="site-padding-2 section" ngClass.lt-md="site-padding section"  *ngIf="activeFilters.category.length > 0 || activeFilters.stage.length > 0 || activeFilters.relatedOrgs.length > 0">
         <mat-chip-list fxFlex="row wrap" *ngIf="{ allCategories: allCategories$ | async, allStages: allStages$ | async, allOrganisations: allOrganisations$ | async } as i">
