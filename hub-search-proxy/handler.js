@@ -246,7 +246,7 @@ module.exports.search = async (event, context) => {
         }
       }
 
-      const minimum_should_match = 0;
+      let minimum_should_match = 0;
       if (queryParts.length > 0) { minimum_should_match = 1 };
     
       query = { 
