@@ -4,7 +4,7 @@ import { environment } from 'environments/environment'
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Params } from '@angular/router';
-import { SearchFilters, SearchQuery, SearchResult, SortOrder } from '@app/global/searchTypes';
+import { SearchFilters, SearchQuery, SearchResult, SearchResults, SortOrder } from '@app/global/searchTypes';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,12 @@ import { SearchFilters, SearchQuery, SearchResult, SortOrder } from '@app/global
 export class SearchService {
   public searchText: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({category: [], stage: [], relatedOrgs: []});
-  public totalResults: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   constructor(
     private http: HttpClient
   ) { }
 
-  public search(query: SearchQuery): Observable<SearchResult[]> {
+  public search(query: SearchQuery): Observable<SearchResults> {
     this.updateSearchSubjects(query);
 
     return this.http.post(
@@ -26,7 +25,7 @@ export class SearchService {
       query
     ).pipe(
       map(data => {
-        this.totalResults.next(data["result"]["hits"]["total"]["value"]);
+        const totalResults = data["result"]["hits"]["total"]["value"];
         const results: SearchResult[] = [];
         data["result"]["hits"]["hits"].forEach(element => {
           const summary = element.highlight?.["fields.summary.en-US"] ?
@@ -45,7 +44,12 @@ export class SearchService {
           results.push(result);
         });
 
-        return results;
+        const searchResults: SearchResults = {
+          totalResults,
+          results
+        }
+
+        return searchResults;
       })
     );
   }
@@ -74,9 +78,5 @@ export class SearchService {
   private updateSearchSubjects(query: SearchQuery) {
     this.searchText.next(query.query);
     this.searchFilters.next(query.filters);
-  }
-
-  public setSearchFilters(filters: SearchFilters) {
-    this.searchFilters.next(filters);
   }
 }

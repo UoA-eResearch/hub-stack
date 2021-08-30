@@ -1,11 +1,12 @@
 <div class="search-page-container">
 
     <!-- Search Header Filter Options -->
-    <div class="search-header search-page-container grey-background">
-        <div fxLayout="column" ngClass.gt-sm="top-padding site-padding-2" ngClass.lt-md="top-padding site-padding">
-            Search Banner...
+    <ng-container class="search-header grey-background">
+        <div class="banner-container"
+            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'"
+            [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
         </div>
-    </div>
+    </ng-container>
 
     <!-- Breadcrumbs -->
     <div class="site-padding" ngClass.lt-md="site-padding-mobile">

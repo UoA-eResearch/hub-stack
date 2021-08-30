@@ -8,6 +8,25 @@
   background-color: #eeeeee;
 }
 
+/**
+ * banner Image
+ */
+ .no-banner {
+  display: none;
+}
+
+.mobile-banner {
+  background-repeat: no-repeat;
+  padding: 20vh 0px;
+}
+
+.standard-banner {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding: 20vh 0px;
+}
+
 // Search controls container
 .search-header {
   .search-filters {
