@@ -13,6 +13,11 @@ export interface SearchFilters {
   category: string[]
 }
 
+export interface SearchResults {
+  totalResults: number;
+  results: SearchResult[];
+}
+
 export interface SearchResult {
   title: string;
   summary: string;
@@ -23,4 +28,4 @@ export interface SearchResult {
 }
 
 export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
-export type ContentType = 'Article' | 'CaseStudy' | 'Equipment' | 'Event' | 'Funding' | 'Service' | 'Software' | 'SubHub'
+export type ContentType = 'article' | 'caseStudy' | 'equipment' | 'event' | 'funding' | 'service' | 'software' | 'subHub'

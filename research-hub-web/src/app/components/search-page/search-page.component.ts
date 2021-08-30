@@ -11,7 +11,9 @@ import { SearchBarService } from '@app/components/search-bar/search-bar.service'
 import { FilterType } from '@app/global/global-variables';
 import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-search-page',
@@ -27,11 +29,17 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
   public filterTypes = FilterType;
 
+  public bannerImageUrl: string = 'https://images.ctfassets.net/vbuxn5csp0ik/dLNmMgxMJVJjdDATTpWZn/433ae5de80f78868c4fb37a256ed2801/1500_UoA_13Oct09_001.jpg';
+  public isMobile: Boolean;
+  public supportsWebp: Boolean;
+
   public queryParams: ParamMap;
-  public searchResults: SearchResult[];
+  public searchResults: SearchResult[] = [];
   public totalResults: number;
   public searchText: string;
   public activeFilters: SearchFilters;
+  public searchResultsSub: Subscription;
+  public sortOrder: SortOrder = 'relevance';
 
   private subscriptions: Subscription = new Subscription();
 
@@ -39,32 +47,47 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     public searchBarService: SearchBarService,
     public searchService: SearchService,
     public location: Location,
-    private route: ActivatedRoute
-    ) { }
+    private route: ActivatedRoute,
+    private router: Router,
+    private deviceService: DeviceDetectorService,
+    ) {
+      this.detectDevice();
+      this.detectWebP();
+    }
 
-  async ngOnInit() {
-    this.subscriptions.add(this.route.queryParamMap.subscribe(params => {
-      this.queryParams = params;
-      this.search();
-    }));
-
-    this.subscriptions.add(this.searchService.totalResults.subscribe(total => {
-      this.totalResults = total;
-    }));
-
-    this.subscriptions.add(this.searchService.searchText.subscribe(text => {
-      this.searchText = text;
-    })); 
-
-    this.subscriptions.add(this.searchService.searchFilters.subscribe(filters => {
-      this.activeFilters = filters;
-      console.log(this.activeFilters)
-    }));
-
+  ngOnInit() {
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
 
+    this.subscriptions.add(this.route.queryParamMap.subscribe(params => {
+      this.queryParams = params;
+      this.search();
+    })); // or route snapshot
+
+    this.subscriptions.add(this.searchService.searchText.subscribe(text => {
+      this.searchText = text;
+    })); // get from query string
+
+    this.subscriptions.add(this.searchService.searchFilters.subscribe(filters => {
+      this.activeFilters = filters;
+    })); // get from query string 
+
+    this.searchResultsSub = this.search().subscribe(results => {
+        // for endless scroll functionality, we want to append the results to the results list
+        this.searchResults.push(...results.results);
+        this.totalResults = results.totalResults;
+    });
+  }
+
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
+
+  detectWebP() {
+    supportsWebP.then(supported => {
+      this.supportsWebp = supported;
+    });
   }
 
   // Clear All Filters
@@ -75,13 +98,25 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       relatedOrgs: []
     };
 
-    this.searchService.setSearchFilters(this.activeFilters);
+    this.searchService.searchFilters.next(this.activeFilters);
+
+    //this.searchService.setSearchFilters(this.activeFilters);
 
     // TODO: get new search results list
     //need to set the query params then execute the search
   }
 
-  public search() {
+
+  /**
+   * Executes a search using the current route parameters.
+   *
+   * @param size - The maximum amount of hits to be returned
+   * @param from - The offset from the first result
+   * @returns a SearchResults list observable
+   *
+   * @beta
+   */
+  public search(size: number = 10, from: number = 0) {
     console.log("Searching..")
 
     const searchFilters: SearchFilters = {
@@ -90,21 +125,18 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       relatedOrgs: this.queryParams.getAll('org')
     }
 
-    const contentTypes : ContentType[] = ['Article', 'CaseStudy', 'Equipment', 'Event', 'Funding', 'Service', 'Software', 'SubHub']
+    const contentTypes : ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
 
     const searchQuery: SearchQuery = {
       query: (this.queryParams.get('q') || ''),
-      size: 10,
-      from: 0,
+      size: size,
+      from: from,
       filters: searchFilters,
       sort: (this.queryParams.get('sort') || 'relevance') as SortOrder,
       includeContentTypes: contentTypes
     };
 
-    this.subscriptions.add(this.searchService.search(searchQuery)
-      .subscribe(results => {
-        this.searchResults = results;
-      }));
+    return this.searchService.search(searchQuery);
   }
 
   // Update search filters
@@ -133,7 +165,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.activeFilters.relatedOrgs = this.activeFilters.relatedOrgs.filter(filter => filter !== filterId);
       }      
     }
-    this.searchService.setSearchFilters(this.activeFilters);
+    this.searchService.searchFilters.next(this.activeFilters);
+    this.router.navigate(['/search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
 
     // TODO: get new search results list
     //need to set the query params then execute the search
