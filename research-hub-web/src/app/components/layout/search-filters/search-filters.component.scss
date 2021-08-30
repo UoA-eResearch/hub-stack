@@ -14,7 +14,7 @@
     overflow: auto;
     flex: 1;
     @media (max-width: 960px) {
-      height: calc(100vh - 212px);
+      height: calc(100vh - 112px - 49px);
     }
   }
 

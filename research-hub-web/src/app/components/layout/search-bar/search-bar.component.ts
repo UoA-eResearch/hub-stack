@@ -11,13 +11,12 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./search-bar.component.scss']
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
-  @Input() public showFilters = false;
-
-  @ViewChild('searchBar') searchBar: ElementRef;
-  @ViewChild('filterContent') filterContent: ElementRef;
+  @ViewChild('searchBarContainer') searchBarContainer: ElementRef;
 
   public searchText: string;
   public activeFilters: SearchFilters;
+  public showMobileSearch = false;
+  public showFilters = false;
 
   private subscriptions = new Subscription();
 
@@ -27,11 +26,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
-      if (e.target !== this.searchBar.nativeElement
-        && e.target !== this.filterContent.nativeElement
-        && !this.searchBar.nativeElement.contains(e.target)
-        && !this.filterContent.nativeElement.contains(e.target)) {
-          this.showFilters = false;
+      if (
+        e.target !== this.searchBarContainer.nativeElement
+        && !this.searchBarContainer.nativeElement.contains(e.target)
+      ) {
+        this.showFilters = false;
       }
     });
   }
@@ -60,6 +59,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     return this.activeFilters.category.length
       + this.activeFilters.relatedOrgs.length
       + this.activeFilters.stage.length;
+  }
+
+  public toggleMobileSearch(): void {
+    this.showMobileSearch = !this.showMobileSearch;
+    this.showFilters = this.showMobileSearch;
   }
 
 }
