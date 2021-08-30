@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { FilterType } from '@app/global/global-variables';
-import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType } from '@app/global/searchTypes';
+import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType, SearchResults } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
@@ -52,13 +52,14 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     ) {
       this.detectDevice();
       this.detectWebP();
+      this.router.onSameUrlNavigation ='reload';
     }
 
   ngOnInit() {
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
-
+    
     this.subscriptions.add(this.route.queryParamMap.subscribe(params => {
       this.searchText = params.get('q') || '';
       this.activeFilters = {
@@ -67,13 +68,13 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         relatedOrgs: params.getAll('org')
       }
       this.sortOrder = params.get('sort') as SortOrder || 'relevance';
-      this.search();
     }));
 
     this.searchResultsSub = this.search().subscribe(results => {
-        // for endless scroll functionality, we want to append the results to the results list
-        this.searchResults.push(...results.results);
-        this.totalResults = results.totalResults;
+      // for endless scroll functionality, we want to append the results to the results list
+      console.log('got results..')
+      this.searchResults.push(...results.results);
+      this.totalResults = results.totalResults;
     });
   }
 
@@ -87,30 +88,15 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Clear All Filters
-  public clearFilters() {
-    this.activeFilters = {
-      category: [],
-      stage: [],
-      relatedOrgs: []
-    };
-
-    this.searchService.searchFilters.next(this.activeFilters);
-
-    // TODO: get new search results list
-    //need to set the query params then execute the search
-  }
-
-
   /**
    * Executes a search using the current search text, filters and sort order.
    *
    * @param size - The maximum amount of hits to be returned
    * @param from - The offset from the first result
-   * @returns a SearchResults list observable
+   * @returns a SearchResults observable
    *
    */
-  private search(size: number = 10, from: number = 0) {
+  private search(size: number = 10, from: number = 0) : Observable<SearchResults> {
     console.log("Searching..")
 
     const contentTypes : ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
@@ -124,7 +110,19 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       includeContentTypes: contentTypes
     };
 
+    console.log(searchQuery);
+
     return this.searchService.search(searchQuery);
+  }  
+
+  public clearFilters() {
+    this.activeFilters = {
+      category: [],
+      stage: [],
+      relatedOrgs: []
+    };
+    this.searchService.searchFilters.next(this.activeFilters);
+    this.router.navigate(['search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
   }
 
   public removeFilterById(filterId: string, filterType: FilterType) {
@@ -144,11 +142,11 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       }      
     }
     this.searchService.searchFilters.next(this.activeFilters);
-    this.router.navigate(['/search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
+    this.router.navigate(['search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
   }
 
   public updateSortOrder() {
-    this.router.navigate(['/search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
+    this.router.navigate(['search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
   }
 
   ngOnDestroy() {
