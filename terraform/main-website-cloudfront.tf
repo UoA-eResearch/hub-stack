@@ -21,16 +21,6 @@ resource "aws_cloudfront_distribution" "main_website" {
   web_acl_id          = var.create_firewall ? aws_waf_web_acl.waf_acl[0].id : null
 
   default_cache_behavior {
-    # The following commented block shows how to configure a Lambda@Edge
-    # This is useful for securing the distribution further.
-    # See https://medium.com/faun/hardening-the-http-security-headers-with-aws-lambda-edge-and-cloudfront-2e2da1ae4d83
-    /*
-    lambda_function_association {
-      event_type = "origin-request"
-      lambda_arn = "arn:aws:lambda:us-east-1:630143336532:function:iNZightRepo_cloudfront_lambda:1"
-    }
-    */
-
     allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = var.dns_entry
@@ -51,6 +41,16 @@ resource "aws_cloudfront_distribution" "main_website" {
     min_ttl                = 0
     default_ttl            = 3600
     max_ttl                = 86400
+
+    function_association {
+      event_type = "viewer-response"
+      function_arn = aws_cloudfront_function.secure_headers.arn
+    }
+
+    function_association {
+      event_type = "viewer-request"
+      function_arn = aws_cloudfront_function.redirect_spa.arn
+    }
   }
 
   # Log to bucket. Leave bucket as is, if Cloud Team is on the ball then no issues should arise.
@@ -68,22 +68,6 @@ resource "aws_cloudfront_distribution" "main_website" {
       restriction_type = "none"
       locations        = []
     }
-  }
-
-  # Specify custom error pages
-  # The following is required for a SPA to redirect to base
-  custom_error_response {
-    error_code            = "403"
-    response_page_path    = "/index.html"
-    response_code         = "200"
-    error_caching_min_ttl = 60
-  }
-
-  custom_error_response {
-    error_code            = "404"
-    response_page_path    = "/index.html"
-    response_code         = "200"
-    error_caching_min_ttl = 5
   }
 
   # Setup the SSL certificate that is used with HTTPS

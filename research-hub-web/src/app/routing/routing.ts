@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { LoginSuccessGuard } from '@uoa/auth';
-import { HomeComponent } from '@components/home/home.component';
-import { LegacyRoutingComponent } from "@components/legacy-routing/legacy-routing.component";
 
 
 export const appRoutes: Routes = [
@@ -29,7 +27,7 @@ export const appRoutes: Routes = [
   {
     path: 'home',
     canActivate: [LoginSuccessGuard],
-    component: HomeComponent,
+    loadChildren: () => import('@components/home/home.module').then((m) => m.HomeModule)
   },
   {
     path: 'search',

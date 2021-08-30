@@ -25,6 +25,5 @@ export const environment = {
     get whoNeedIdToken() {
       return []
     },
-  },
-  
+  }
 }

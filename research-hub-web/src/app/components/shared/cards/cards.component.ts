@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CardsComponent implements OnInit {
   @Input() title;
-  public contentItem;
-  @Input("contentItem") _inputContentItem;
+  public _contentItem;
+  @Input() contentItem;
   @Input() hideImage?: boolean;
   @Input() flex;
 
@@ -17,11 +17,11 @@ export class CardsComponent implements OnInit {
   async ngOnInit() {
     // Make a copy of the contentItem, so we can make changes to it without causing ChangedAfterCheckErrors.
     // Then, remove null items.
-    this.contentItem = Object.assign({}, this._inputContentItem);
+    this._contentItem = Object.assign({}, this.contentItem);
     // Don't display content without a title or name.
-    this.contentItem.items = this.contentItem.items?.filter(item => item && (item.title || item.name || item.maoriName));
+    this._contentItem.items = this._contentItem.items?.filter(item => item && (item.title || item.name || item.maoriName));
     // If you want to hide image when displayed
-    if (this.hideImage) { this.contentItem.items.forEach(element => {
+    if (this.hideImage) { this._contentItem.items.forEach(element => {
         try { delete element['banner'].url } catch {} });
     };
   }

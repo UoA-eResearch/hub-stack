@@ -54,8 +54,8 @@
       border: 4px solid $dark-blue;
       transition: background 0.11s ease-in-out, color 0.1s ease-in-out;
       @include size(medium) {
-        width: 55%;
-        margin-left: -5vw;
+        width: 60%;
+        margin-left: -8vw;
         transform: skew(30deg);
       }
       * {
@@ -111,7 +111,7 @@
     }
     .research-category-img {
       width: 55vw;
-      margin-left: -5vw;
+      margin-left: -8vw;
 
       > img {
         object-fit: cover;
