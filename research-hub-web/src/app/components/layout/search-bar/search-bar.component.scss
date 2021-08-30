@@ -44,10 +44,9 @@ $mobile-max-width: 960px;
       flex-shrink: 1;
       font-size: 20px;
       font: "National";
-    }
-
-    input:focus {
-      outline: none;
+      &:focus {
+        outline: none;
+      }
     }
 
     button {
