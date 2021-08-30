@@ -6,54 +6,36 @@
   color="primary"
   class="mat-elevation-z6"
 >
-  <mat-toolbar-row class="main-navbar">
-    <!-- Mobile Menu Toggle -->
-    <button
-      role="button"
-      aria-label="menu"
-      fxHide.gt-sm
-      mat-icon-button
-      style="margin-right: 6px"
-      matTooltip="Menu"
-      (click)="toggleSidenav.emit()"
-    >
-      <mat-icon>menu</mat-icon>
-    </button>
+  <!-- Mobile Menu Toggle -->
+  <button
+    role="button"
+    aria-label="menu"
+    fxHide.gt-sm
+    mat-icon-button
+    style="margin-right: 6px"
+    matTooltip="Menu"
+    (click)="toggleSidenav.emit()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
 
-    <!-- Logo/Home -->
-    <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
-      <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
-    </a>
+  <!-- Logo/Home -->
+  <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
+    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
+  </a>
 
-    <!-- Space Divider -->
-    <span fxHide.lt-md style="flex: 1 1 auto"></span>
+  <!-- Space Divider -->
+  <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
-    <app-search-bar fxHide.lt-md></app-search-bar>
+  <app-search-bar></app-search-bar>
 
-    <!-- Search Icon (Mobile)-->
-    <button
-      role="button"
-      aria-label="search"
-      mat-icon-button
-      fxHide.gt-sm
-      matTooltip="Search"
-      (click)="toggleMobileSearchBar()"
-    >
-      <mat-icon *ngIf="!showMobileSearch">search</mat-icon>
-      <mat-icon *ngIf="showMobileSearch">close</mat-icon>
-    </button>
-
-    <!--Navigation buttons-->
-    <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
-    <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
-    <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
-    <ng-container
-      *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
-    ></ng-container>
-  </mat-toolbar-row>
-  <mat-toolbar-row class="mobile-search-row" *ngIf="showMobileSearch">
-    <app-search-bar [showFilters]="showMobileSearch"></app-search-bar>
-  </mat-toolbar-row>
+  <!--Navigation buttons-->
+  <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
+  <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
+  <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
+  <ng-container
+    *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
+  ></ng-container>
 </mat-toolbar>
 
 <!--templates-->
@@ -72,7 +54,7 @@
     fxHide.lt-md
     (click)="this.homeScrollService.scrollTo('Categories')"
   >
-    Research Categories
+    Categories
   </button>
   <!--
     Research Categories Button if we're not on the homepage. This will render an expansion panel dropdown list
@@ -86,7 +68,7 @@
     fxHide.lt-md
     [matMenuTriggerFor]="browseMenu"
   >
-    Research Categories
+    Categories
   </button>
 
   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
@@ -124,7 +106,7 @@
     fxHide.lt-md
     (click)="this.homeScrollService.scrollTo('Activities')"
   >
-    Research Activities
+    Activities
   </button>
 
   <!--
@@ -139,7 +121,7 @@
     fxHide.lt-md
     [matMenuTriggerFor]="researchActivityMenu"
   >
-    Research Activities
+    Activities
   </button>
 
   <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
