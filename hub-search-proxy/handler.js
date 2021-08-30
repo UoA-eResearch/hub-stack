@@ -56,6 +56,7 @@ module.exports.search = async (event, context) => {
     let size = 10;
     let from = 0;
     let queryFilters = {};
+    let queryFiltersCount = 0;
     let contentTypes = VALID_CONTENT_TYPES.slice();
     let sort = [];
     
@@ -70,6 +71,9 @@ module.exports.search = async (event, context) => {
     }
     if (requestBody.hasOwnProperty('filters')) {
       queryFilters = requestBody.filters;
+      for (let key of Object.keys(queryFilters)) {
+        queryFiltersCount += queryFilters[key].length
+      }      
     }
     if (requestBody.hasOwnProperty('includeContentTypes') && requestBody.includeContentTypes.length > 0) {
       contentTypes = requestBody.includeContentTypes.map(contentType => contentType.toLowerCase());
@@ -80,8 +84,8 @@ module.exports.search = async (event, context) => {
       }
     }
     if (requestBody.hasOwnProperty('sort')) {
-      if(!(requestBody.sort === "A-Z" || requestBody.sort === "Z-A" || requestBody.sort === "")) {
-        throw new Error('Sort options are A-Z or Z-A. Pass empty string or no sort property for sorting by score.')
+      if(!(requestBody.sort === "A-Z" || requestBody.sort === "Z-A" || requestBody.sort === "" || requestBody.sort === "relevance")) {
+        throw new Error('Sort options are A-Z, Z-A, or relevance.')
       }
       if (requestBody.sort === "A-Z") {
         sort.push({ "fields.title.en-US.raw": "asc" });
@@ -102,12 +106,10 @@ module.exports.search = async (event, context) => {
       "fields.icon",
       "fields.banner",
       "sys.contentType",
-      "fields.stage.en-US",
       "fields.category.en-US",
-      "fields.relatedOrgs.en-US"
     ];
 
-    if(queryString.length === 0 && Object.keys(queryFilters).length === 0) {
+    if(queryString.length === 0 && queryFiltersCount === 0) {
       // query with no filters and no query string (fetch all searchable results)
 
       query = { 
@@ -142,7 +144,7 @@ module.exports.search = async (event, context) => {
         sort: sort
       };
 
-    } else if(queryString.length === 0 && Object.keys(queryFilters).length > 0) {
+    } else if(queryString.length === 0 && queryFiltersCount > 0) {
       // query with filters but no query string
 
       let queryParts = [];
@@ -165,25 +167,30 @@ module.exports.search = async (event, context) => {
         _source: {
           includes: includeInResult
         },
-        query: { 
-          bool: {
-            must: queryParts,
-            should: {
-              multi_match: {
-                query : "subhub",
-                fields : [ "sys.contentType.sys.id^2"]  // boost match score for entries that are subhubs
+        query: {
+          function_score: {
+            query: {
+              bool: {
+                minimum_should_match: 1,
+                should: queryParts,
+                filter: [
+                  {
+                    term: {
+                      "fields.searchable.en-US": true
+                    }
+                  },
+                  {
+                    terms: {
+                      "sys.contentType.sys.id": contentTypes
+                    }
+                  }
+                ]
               }
             },
-            filter: [
+            functions: [
               {
-                term: {
-                  "fields.searchable.en-US": true
-                }
-              },
-              {
-                terms: {
-                  "sys.contentType.sys.id": contentTypes
-                }
+                filter: {"match":{"sys.contentType.sys.id": "subhub"}},
+                weight: 2 // boost match score for entries that are subhubs
               }
             ]
           }
@@ -215,15 +222,15 @@ module.exports.search = async (event, context) => {
         }).join(' ');
       }
 
-      let queryParts = [
-        {
-          simple_query_string: {
-            query: formattedQueryString,
-            default_operator: "and",
-            analyzer: "hub_analyzer"
-          }
+      const simpleQuery = {
+        simple_query_string: {
+          query: formattedQueryString,
+          default_operator: "and",
+          analyzer: "hub_analyzer"
         }
-      ]
+      }
+
+      let queryParts = []
 
       // add our search filters
       for (const filter in queryFilters) {
@@ -238,14 +245,19 @@ module.exports.search = async (event, context) => {
           )
         }
       }
+
+      let minimum_should_match = 0;
+      if (queryParts.length > 0) { minimum_should_match = 1 };
     
       query = { 
         _source: {
           includes: includeInResult
         },
-        query: { 
+        query: {
           bool: {
-            must: queryParts,
+            must: simpleQuery,
+            minimum_should_match: minimum_should_match,
+            should: queryParts,
             filter: [
               {
                 term: {
@@ -269,7 +281,6 @@ module.exports.search = async (event, context) => {
             analyzer: "hub_analyzer"
           }},
           fields: {
-            "fields.title.en-US": {},
             "fields.summary.en-US": {}
           }
         }
@@ -310,14 +321,6 @@ module.exports.update = async (event, context) => {
     content_type: "category",
     select: ['sys.id', 'fields.name']
   });
-  const stages = await deliveryApiClient.getEntries({
-    content_type: "stage",
-    select: ['sys.id', 'fields.name']
-  });
-  const organisations = await deliveryApiClient.getEntries({
-    content_type: "OrgUnit",
-    select: ['sys.id', 'fields.name']
-  });
 
   // add banner url
   if (doc.fields.hasOwnProperty('banner')) {
@@ -336,22 +339,6 @@ module.exports.update = async (event, context) => {
     for (let item of doc.fields.category['en-US']) {
       const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
       if (cat) {item['name'] = cat.fields.name;}
-    }
-  }
-
-  // add research stage names
-  if (doc.fields.hasOwnProperty('stage')) {
-    for (let item of doc.fields.stage['en-US']) {
-      const stage = stages.items.find((c) => { return c.sys.id === item.sys.id; });
-      if (stage) {item['name'] = stage.fields.name;}
-    }
-  }
-
-  // add related organisations names
-  if (doc.fields.hasOwnProperty('relatedOrgs')) {
-    for (let item of doc.fields.relatedOrgs['en-US']) {
-      const org = organisations.items.find((c) => { return c.sys.id === item.sys.id; });
-      if (org) {item['name'] = org.fields.name;}
     }
   }
 
@@ -419,14 +406,6 @@ module.exports.bulk = async () => {
     content_type: "category",
     select: ['sys.id', 'fields.name']
   });
-  const stages = await deliveryApiClient.getEntries({
-    content_type: "stage",
-    select: ['sys.id', 'fields.name']
-  });
-  const organisations = await deliveryApiClient.getEntries({
-    content_type: "OrgUnit",
-    select: ['sys.id', 'fields.name']
-  });
   
   try {
     // contentful export and filter entries
@@ -466,23 +445,7 @@ module.exports.bulk = async () => {
           const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
           if (cat) {item['name'] = cat.fields.name;}
         }
-      }
-
-      // add research stage names
-      if (entry.fields.hasOwnProperty('stage')) {
-        for (let item of entry.fields.stage['en-US']) {
-          const stage = stages.items.find((c) => { return c.sys.id === item.sys.id; });
-          if (stage) {item['name'] = stage.fields.name;}
-        }
-      }
-
-      // add related organisations names
-      if (entry.fields.hasOwnProperty('relatedOrgs')) {
-        for (let item of entry.fields.relatedOrgs['en-US']) {
-          const org = organisations.items.find((c) => { return c.sys.id === item.sys.id; });
-          if (org) {item['name'] = org.fields.name;}
-        }
-      }     
+      }    
     };
     
     // perform the upload

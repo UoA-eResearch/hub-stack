@@ -13,14 +13,19 @@ export interface SearchFilters {
   category: string[]
 }
 
+export interface SearchResults {
+  totalResults: number;
+  results: SearchResult[];
+}
+
 export interface SearchResult {
   title: string;
   summary: string;
   slug: string;
   ssoProtected: boolean;
   contentType: ContentType;
-  icon: string;
+  chips: string[];
 }
 
 export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
-export type ContentType = 'Article' | 'SubHub'
+export type ContentType = 'article' | 'caseStudy' | 'equipment' | 'event' | 'funding' | 'service' | 'software' | 'subHub'
