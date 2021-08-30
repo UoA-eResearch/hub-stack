@@ -78,14 +78,15 @@
             <!-- Divider -->
             <div fxHide.lt-md fxFlex></div>
 
-            <!-- Filtering Options -->
+            <!-- Sort Options -->
             <mat-label id="order-label">Order By:</mat-label>
             <div fxFlexOrder.lt-sm="1" fxFlex="25%">
-                <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" ngDefaultControl
+                <mat-select (selectionChange)="updateSortOrder()" [(ngModel)]="sortOrder" ngDefaultControl
                     placeholder="Relevance">
                     <div>
-                        <mat-option value="">Relevance</mat-option>
-                        <mat-option value="A-Z">Alphabetical</mat-option>
+                        <mat-option value="relevance">Relevance</mat-option>
+                        <mat-option value="A-Z">A-Z</mat-option>
+                        <mat-option value="Z-A">Z-A</mat-option>
                     </div>
                 </mat-select>
             </div>
