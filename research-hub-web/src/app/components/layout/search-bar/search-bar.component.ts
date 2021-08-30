@@ -12,6 +12,7 @@ import { filter } from 'rxjs/operators';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   @ViewChild('searchBarContainer') searchBarContainer: ElementRef;
+  @ViewChild('searchBox') searchBox: ElementRef;
 
   public searchText: string;
   public activeFilters: SearchFilters;
@@ -64,6 +65,22 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public toggleMobileSearch(): void {
     this.showMobileSearch = !this.showMobileSearch;
     this.showFilters = this.showMobileSearch;
+    if (this.showFilters) {
+      this.focus();
+    }
+  }
+
+  public search(): void {
+    this.router.navigate(
+      ['/search'],
+      {
+        queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters)
+      }
+    );
+  }
+
+  public focus(): void {
+    this.renderer.selectRootElement(this.searchBox.nativeElement).focus();
   }
 
 }

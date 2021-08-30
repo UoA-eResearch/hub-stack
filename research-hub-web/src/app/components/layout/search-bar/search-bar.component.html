@@ -6,19 +6,18 @@
       show: showMobileSearch
     }"
   >
-    <form class="search-bar-inner">
+    <form action class="search-bar-inner">
       <button
         *ngIf="!showMobileSearch"
         mat-icon-button
         aria-label="Search"
         color="primary"
-        [routerLink]="'/search'"
-        [queryParams]="
-          searchService.generateQueryParams(searchText, activeFilters)
-        "
+        (click)="search()"
+        (keydown.enter)="search()"
       >
         <mat-icon>search</mat-icon>
       </button>
+
       <button
         *ngIf="showMobileSearch"
         mat-icon-button
@@ -28,13 +27,15 @@
       >
         <mat-icon>arrow_back</mat-icon>
       </button>
+
       <input
-        id="searchBox"
+        #searchBox
         type="search"
         [(ngModel)]="searchText"
         [ngModelOptions]="{ standalone: true }"
         placeholder="Search for anything"
       />
+
       <mat-chip-list>
         <mat-chip
           *ngIf="countActiveFilters() > 0"
@@ -45,6 +46,7 @@
           <mat-icon matChipRemove>cancel</mat-icon>
         </mat-chip>
       </mat-chip-list>
+
       <button
         mat-icon-button
         color="primary"
@@ -63,6 +65,7 @@
       </div>
     </form>
   </div>
+
   <!-- Search Icon (Mobile)-->
   <button
     role="button"
