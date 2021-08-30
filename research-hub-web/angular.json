@@ -24,7 +24,9 @@
               "src/styles.scss",
               "src/app/components/error-routing/error-routing.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/tagManager.js"
+            ],
             "allowedCommonJsDependencies": [
               "graphql-tag",
               "crypto-js",
@@ -61,10 +63,18 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "index": {
+                "input": "src/index.prod.html",
+                "output": "index.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/tagManager.js",
+                  "with": "src/tagManager.prod.js"
                 }
               ]
             },
@@ -219,6 +229,10 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
+              "index": {
+                "input": "src/index.prod.html",
+                "output": "index.html"
+              },
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -333,13 +347,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.json",
-              "tsconfig.spec.json"
-            ],
-            "exclude": []
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
@@ -356,6 +369,7 @@
   },
   "defaultProject": "research-hub-web",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }

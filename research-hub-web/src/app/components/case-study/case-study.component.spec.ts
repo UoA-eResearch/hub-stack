@@ -9,12 +9,12 @@ import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/tes
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { CaseStudyComponent } from './case-study.component';
-import { AppComponentService } from '@app/app.component.service';
+import { PageTitleService } from '@services/page-title.service';
 import { CaseStudy, CaseStudyCollection } from '@app/graphql/schema';
 
 describe('CaseStudyComponent', () => {
   let component: CaseStudyComponent;
-  let appComponentService: AppComponentService;
+  let appComponentService: PageTitleService;
   let fixture: ComponentFixture<CaseStudyComponent>;
   let controller: ApolloTestingController;
 
@@ -56,7 +56,7 @@ describe('CaseStudyComponent', () => {
         MockModule(BrowserAnimationsModule),
         RouterTestingModule.withRoutes([])
       ], providers: [
-        MockProvider(AppComponentService)
+        MockProvider(PageTitleService)
       ]
     })
     .compileComponents();

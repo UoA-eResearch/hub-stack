@@ -1,0 +1,42 @@
+@import "mixins";
+@import "variables";
+
+mat-expansion-panel-header {
+  padding: 0 16px;
+  font-size: 20px;
+  height: 60px;
+}
+
+mat-list-item {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 60px;
+}
+
+mat-expansion-panel {
+  width: 85vw;
+  box-shadow: none !important;
+}
+
+mat-sidenav-container {
+  margin-top: 64px;
+  @media (max-width: 599px) {
+    margin-top: 56px;
+    height: calc(100vh - 56px);
+  }
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-flow: column;
+
+  div.outlet-min-height {
+    min-height: 100vh;
+  }
+}
+
+mat-sidenav {
+  @media (max-width: 599px) {
+    min-width: 85vw
+  }
+}
+

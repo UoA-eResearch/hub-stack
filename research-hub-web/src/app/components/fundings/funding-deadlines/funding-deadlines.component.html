@@ -1,4 +1,4 @@
 <div *ngIf="fundingDeadlines | async as fundingDeadlines">
-  <ngx-contentful-rich-text id="body" style="word-break:break-word;" [document]="fundingDeadlines.deadlines?.json"
+  <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" [document]="fundingDeadlines.deadlines?.json"
       [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
 </div>

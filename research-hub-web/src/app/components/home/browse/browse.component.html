@@ -1,4 +1,4 @@
-<div id="research-categories" *ngIf="allCategories$ | async as allCategories">
+ <div id="research-categories" *ngIf="allCategories$ | async; let allCategories">
   <app-content-container>
     <app-content-title [title]="title" [description]="description"></app-content-title>
 

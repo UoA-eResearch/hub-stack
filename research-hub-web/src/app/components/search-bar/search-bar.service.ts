@@ -232,38 +232,64 @@ export class SearchBarService {
         pageTypes = ["event"]
       }
 
-      // Create the search query
-        let query = {
-          query: this.getSearchText(),
-          size: 10,
-          from: (this.getCurrentPage() - 1) * 10,
-          sort: this.getSort(),
-          filters: {
-            relatedOrgs: this.getOrganisation(),
-            stage: this.getStage(),
-            category: categories
-          },
-          includeContentTypes : pageTypes
-        };
+      let searchText = this.getSearchText() !== undefined ? this.getSearchText() : '';
 
-        // Send the POST request
-        this.http.post(environment.searchUrl, query).subscribe(data => {
-          let array = [];
-          data["result"]["hits"]["hits"].forEach(element => {
-            let result = {
-              "title": element._source.fields.title["en-US"],
-              "summary" : element._source.fields.summary["en-US"],
-              "slug" : element._source.fields.slug["en-US"],
-              "ssoProtected" : element._source.fields.ssoProtected["en-US"],
-              "__typename" : element._source.sys.contentType.sys.id,
-              "icon": element._source.fields.icon?.["en-US"]["url"]
-            }
-            array.push(result);
-          });
-            
-          // Create the results
-          this.setResults(array);
-          this.setTotalPages(data["result"]["hits"]["total"]["value"]);
-        })
+      // Create the search query
+      let query = {
+        query: searchText,
+        size: 10,
+        from: (this.getCurrentPage() - 1) * 10,
+        sort: this.getSort(),
+        filters: {
+          relatedOrgs: this.getOrganisation(),
+          stage: this.getStage(),
+          category: categories
+        },
+        includeContentTypes : pageTypes
+      };
+
+      // Send the POST request
+      this.http.post(environment.searchUrl, query).subscribe(data => {
+        let array = [];
+        data["result"]["hits"]["hits"].forEach(element => {
+          let result = {
+            "title": element._source.fields.title["en-US"],
+            "summary" : element._source.fields.summary["en-US"],
+            "slug" : element._source.fields.slug["en-US"],
+            "ssoProtected" : element._source.fields.ssoProtected["en-US"],
+            "__typename" : element._source.sys.contentType.sys.id,
+            "icon": element._source.fields.icon?.["en-US"]["url"]
+          }
+          array.push(result);
+        });
+        
+        const resultsTotal = data["result"]["hits"]["total"]["value"];
+
+        // Create the results
+        this.setResults(array);
+        this.setTotalPages(resultsTotal);
+      
+        // prepare to send virtual page view for GA site search tracking:
+        // url-safe the search text -replace non-alphanumeric, extra whitespaces etc, then join words with +
+        const cleanedQuery = searchText.replace(/[\W_]+/g," ").trim().split(' ').join('+');
+        const searchCategories = this.getCategory().join('+');
+        const researchActivities = this.getStage().join('+');
+        const orgs = this.getOrganisation().join('+');
+        const sort = this.getSort() ? this.getSort() : 'relevance';
+
+        // push search query info to GTM dataLayer
+        // the searchQueryUrl (cleanedQuery) is used to create a virtual page view in GA, which then generates site search data
+        window.dataLayer.push({
+          event: 'search',
+          searchQuery: searchText,
+          searchQueryUrl: cleanedQuery,
+          resultsTotal: resultsTotal,
+          searchCategory: searchCategories,
+          researchActivities: researchActivities,
+          orgs: orgs,
+          sortedBy: sort
+        });
+      }
+    )
   }
 }

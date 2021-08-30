@@ -4,6 +4,13 @@ EXPOSE 4000
 WORKDIR /cer-graphql/
 ADD package.json .
 ADD package-lock.json .
-ADD index.js .
+ADD index.ts .
+ADD tsconfig.json .
+ADD authenticateByJwt.ts .
+ADD validateUnauthenticatedQuery.ts .
+ADD assertResultsArePublicItems.ts .
+ADD jest.config.js .
+
 RUN  npm install
-CMD ["node","index.js"]
+RUN npm run build
+CMD ["node","build/index.js"]

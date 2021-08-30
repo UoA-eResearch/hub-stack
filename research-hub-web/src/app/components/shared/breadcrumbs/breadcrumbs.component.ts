@@ -5,11 +5,9 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss']
 })
-export class BreadcrumbsComponent implements OnInit {
+export class BreadcrumbsComponent {
   @Input() contentItem;
   @Input() title;
 
   constructor() { }
-
-  ngOnInit(): void { }
 }

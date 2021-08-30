@@ -13,7 +13,8 @@
   background-color: white;
   .title-text {
     font-size: 24px;
-    color: $light-blue;
+    color: $dark-blue;
+    word-break: break-word;
   }
   .tile-button {
     color: $dark-blue;

@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy, Type } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { pluck, flatMap, catchError } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppComponentService } from '@app/app.component.service';
-import { BodyMediaService } from '@services/body-media.service';
+import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllEventsGQL,
   AllEventsSlugsGQL,
-  GetEventBySlugGQL,
-  EventCollection,
   Event,
+  EventCollection,
+  GetEventBySlugGQL
 } from '@graphql/schema';
+import { BodyMediaService } from '@services/body-media.service';
 import { CerGraphqlService } from '@services/cer-graphql.service';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
-import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Observable, Subscription } from 'rxjs';
+import { flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -43,21 +43,21 @@ export class EventsComponent implements OnInit, OnDestroy {
   public isMobile: Boolean;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
-  
+
   constructor(
     public route: ActivatedRoute,
     public allEventsGQL: AllEventsGQL,
     public allEventSlugsGQL: AllEventsSlugsGQL,
     public getEventBySlugGQL: GetEventBySlugGQL,
     public cerGraphQLService: CerGraphqlService,
-    public appComponentService: AppComponentService,
+    public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
     private deviceService: DeviceDetectorService
-  ) { 
+  ) {
     this.detectDevice();
     this.detectWebP();
-   }
+  }
 
   // Detect if device is Mobile
   detectDevice() {
@@ -75,10 +75,10 @@ export class EventsComponent implements OnInit, OnDestroy {
      * Check if there is a slug URL parameter present. If so, this is
      * passed to the getEventBySlug() method.
      */
-      this.route$ = this.route.params.subscribe(params => {
-        this.slug = params.slug || this.route.snapshot.data.slug;
-        this._loadContent();
-      });
+    this.route$ = this.route.params.subscribe(params => {
+      this.slug = params.slug || this.route.snapshot.data.slug;
+      this._loadContent();
+    });
   }
 
   /**
@@ -93,16 +93,16 @@ export class EventsComponent implements OnInit, OnDestroy {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllEventSlugs().subscribe(data => {
         let slugs = [];
-          data.items.forEach(data => {
-            slugs.push(data.slug)
-          })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404'])}
+        data.items.forEach(data => {
+          slugs.push(data.slug)
+        })
+        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
       });
       this.event = this.getEventBySlug(this.slug);
       this.getEventBySlug(this.slug).subscribe(data => {
 
         // If Call To Action is an email address
-        if (data.callToAction.match( /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        if (data.callToAction.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           data['callToAction'] = 'mailto:' + data['callToAction'];
         }
 
@@ -111,20 +111,20 @@ export class EventsComponent implements OnInit, OnDestroy {
         data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
         data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
         data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
-        
+
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
         }
 
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.appComponentService.setTitle(data.title);
+        this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
-      this.appComponentService.setTitle('Events');
+      this.pageTitleService.title = 'Events';
       this.allEvents$ = this.getAllEvents();
-      try { this.event$.unsubscribe(); } catch {}
+      try { this.event$.unsubscribe(); } catch { }
     }
   }
 
@@ -177,6 +177,6 @@ export class EventsComponent implements OnInit, OnDestroy {
       this.event$.unsubscribe();
       this.route$.unsubscribe();
       this.bodyLinks$.unsubscribe();
-    } catch {}
+    } catch { }
   }
 }
