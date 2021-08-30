@@ -7,6 +7,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { HumanCasePipe } from '@pipes/human-case.pipe';
 import { RichTextToHTML } from '@pipes/rich-text.pipe';
+import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
 import { BodyMediaComponent } from './body-media/body-media.component';
@@ -38,6 +39,7 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     ConfirmDialogComponent,
     HumanCasePipe,
     RichTextToHTML,
+    ContentTypeDisplayNamePipe,
     CollectionListComponent,
     BodyMediaComponent,
     CardsComponent,
@@ -53,6 +55,7 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     ErrorDialogComponent,
     HumanCasePipe,
     RichTextToHTML,
+    ContentTypeDisplayNamePipe,
     CollectionListComponent,
     CardsComponent,
     BreadcrumbsComponent,
