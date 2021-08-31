@@ -44,24 +44,69 @@
       </div>
     </mat-tab>
   </mat-tab-group>
+
   <span style="flex: 1 1 auto"></span>
   <mat-divider></mat-divider>
+
   <div class="search-filters-footer">
-    Filters:
-    {{
-      activeFilters.category.length === 1
-        ? activeFilters.category.length + " category"
-        : activeFilters.category.length + " categories"
-    }},
-    {{
-      activeFilters.stage.length === 1
-        ? activeFilters.stage.length + " activity"
-        : activeFilters.stage.length + " activities"
-    }},
-    {{
-      activeFilters.relatedOrgs.length === 1
-        ? activeFilters.relatedOrgs.length + " organisation"
-        : activeFilters.relatedOrgs.length + " organisations"
-    }}
+    <span>Filters: </span>
+    <mat-chip-list>
+      <mat-chip
+        *ngIf="activeFilters.category.length > 0"
+        [removable]="true"
+        (removed)="activeFilters.category = []"
+      >
+        {{
+          activeFilters.category.length === 1
+            ? activeFilters.category.length + " category"
+            : activeFilters.category.length + " categories"
+        }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip
+        *ngIf="activeFilters.stage.length > 0"
+        [removable]="true"
+        (removed)="activeFilters.stage = []"
+      >
+        {{
+          activeFilters.stage.length === 1
+            ? activeFilters.stage.length + " activity"
+            : activeFilters.stage.length + " activities"
+        }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip
+        *ngIf="activeFilters.relatedOrgs.length > 0"
+        [removable]="true"
+        (removed)="activeFilters.relatedOrgs = []"
+      >
+        {{
+          activeFilters.relatedOrgs.length === 1
+            ? activeFilters.relatedOrgs.length + " organisation"
+            : activeFilters.relatedOrgs.length + " organisations"
+        }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip
+        *ngIf="
+          activeFilters.category.length > 0 ||
+          activeFilters.relatedOrgs.length > 0 ||
+          activeFilters.stage.length > 0
+        "
+        (click)="clearFilters()"
+      >
+        Clear All
+      </mat-chip>
+    </mat-chip-list>
+
+    <span style="flex: 1 1 auto"></span>
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="search.emit(activeFilters)"
+    >
+      Search
+    </button>
   </div>
 </div>

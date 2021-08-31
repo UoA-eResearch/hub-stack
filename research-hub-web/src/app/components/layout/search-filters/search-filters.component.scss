@@ -34,8 +34,15 @@
   }
 
   .search-filters-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
     margin: 10px 0px;
     padding: 0px 10px;
+    height: 32px;
     color: black;
+    span {
+      margin-right: 10px;
+    }
   }
 }

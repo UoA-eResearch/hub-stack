@@ -48,14 +48,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  public clearFilters(): void {
-    this.activeFilters = {
-      category: [],
-      stage: [],
-      relatedOrgs: []
-    };
-  }
-
   public countActiveFilters(): number {
     return this.activeFilters.category.length
       + this.activeFilters.relatedOrgs.length

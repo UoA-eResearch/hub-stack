@@ -36,24 +36,19 @@
         placeholder="Search for anything"
       />
 
-      <mat-chip-list>
-        <mat-chip
-          *ngIf="countActiveFilters() > 0"
-          [removable]="true"
-          (removed)="clearFilters()"
-        >
-          Reset Filters ({{ countActiveFilters() }})
-          <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip>
-      </mat-chip-list>
-
       <button
         mat-icon-button
         color="primary"
         fxHide.lt-md
         (click)="showFilters = !showFilters"
       >
-        <mat-icon>tune</mat-icon>
+        <mat-icon
+          [matBadge]="countActiveFilters()"
+          [matBadgeHidden]="!(countActiveFilters() > 0)"
+          matBadgeSize="medium"
+          matBadgeColor="accent"
+          >tune</mat-icon
+        >
       </button>
 
       <!--Filter content-->
@@ -61,6 +56,7 @@
         <app-search-filters
           *ngIf="showFilters"
           [(activeFilters)]="activeFilters"
+          (search)="search()"
         ></app-search-filters>
       </div>
     </form>
@@ -73,7 +69,7 @@
     mat-icon-button
     fxHide.gt-sm
     matTooltip="Search"
-    [ngClass]="{show: !showMobileSearch}"
+    [ngClass]="{ show: !showMobileSearch }"
     (click)="toggleMobileSearch()"
   >
     <mat-icon>search</mat-icon>
