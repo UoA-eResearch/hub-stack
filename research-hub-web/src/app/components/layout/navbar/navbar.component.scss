@@ -4,7 +4,7 @@
 mat-toolbar {
   color: white;
   position: fixed;
-  position: -webkit-sticky;
+  position: -webkit-fixed;
   top: 0;
   z-index: 1000;
   @media (min-width: 960px) {
