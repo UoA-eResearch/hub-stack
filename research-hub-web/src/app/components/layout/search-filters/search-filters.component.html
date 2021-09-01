@@ -52,7 +52,7 @@
     <span>Filters: </span>
     <mat-chip-list>
       <mat-chip
-        *ngIf="activeFilters.category.length > 0"
+        *ngIf="activeFilters.category.length > 0 && !isMobile"
         [removable]="true"
         (removed)="activeFilters.category = []"
       >
@@ -64,7 +64,7 @@
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
       <mat-chip
-        *ngIf="activeFilters.stage.length > 0"
+        *ngIf="activeFilters.stage.length > 0 && !isMobile"
         [removable]="true"
         (removed)="activeFilters.stage = []"
       >
@@ -76,7 +76,7 @@
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
       <mat-chip
-        *ngIf="activeFilters.relatedOrgs.length > 0"
+        *ngIf="activeFilters.relatedOrgs.length > 0 && !isMobile"
         [removable]="true"
         (removed)="activeFilters.relatedOrgs = []"
       >

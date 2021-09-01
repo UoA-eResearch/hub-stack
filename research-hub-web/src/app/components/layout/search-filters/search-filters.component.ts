@@ -1,10 +1,11 @@
 import { state, style } from '@angular/animations';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
 import { FilterType } from '@app/global/global-variables';
 import { SearchFilters } from '@app/global/searchTypes';
 import { AllCategoriesGQL, AllOrganisationsGQL, AllStagesGQL, Category, OrgUnit, Stage } from '@app/graphql/schema';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -12,7 +13,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './search-filters.component.html',
   styleUrls: ['./search-filters.component.scss']
 })
-export class SearchFiltersComponent implements OnInit {
+export class SearchFiltersComponent implements OnInit, OnDestroy {
   @Input() activeFilters: SearchFilters = { category: [], stage: [], relatedOrgs: [] };
   @Output() activeFiltersChange: EventEmitter<SearchFilters> = new EventEmitter<SearchFilters>();
   @Output() search: EventEmitter<SearchFilters> = new EventEmitter<SearchFilters>();
@@ -21,16 +22,27 @@ export class SearchFiltersComponent implements OnInit {
   public allStages$: Observable<Stage[]>;
   public allOrgUnits$: Observable<OrgUnit[]>;
 
+  public isMobile = false;
+
+  private subscriptions = new Subscription();
+
   constructor(
     private allCategoriesGQL: AllCategoriesGQL,
     private allStagesGQL: AllStagesGQL,
-    private allOrgUnitsGQL: AllOrganisationsGQL
+    private allOrgUnitsGQL: AllOrganisationsGQL,
+    private breakpointObserver: BreakpointObserver
   ) { }
 
   ngOnInit(): void {
     this.allCategories$ = this.getAllCategories();
     this.allStages$ = this.getAllStages();
     this.allOrgUnits$ = this.getAllOrgUnits();
+
+    this.subscriptions.add(this.breakpointObserver.observe('(max-width: 960px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches))
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   private getAllCategories(): Observable<Category[]> {
