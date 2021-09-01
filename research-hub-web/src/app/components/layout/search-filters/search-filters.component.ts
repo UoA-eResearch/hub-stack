@@ -63,6 +63,10 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     ) as Observable<OrgUnit[]>;
   }
 
+  public onSearch(event: Event) {
+    this.search.emit(this.activeFilters)
+  }
+
   public clearFilters(): void {
     this.activeFilters.category = [];
     this.activeFilters.stage = [];

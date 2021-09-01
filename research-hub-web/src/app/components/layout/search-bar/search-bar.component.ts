@@ -67,6 +67,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   public search(): void {
+    if (this.isMobile) {
+      this.toggleMobileSearch();
+    }
     this.router.navigate(
       ['/search'],
       {

@@ -64,12 +64,12 @@
 
   <!-- Search Icon (Mobile)-->
   <button
+    *ngIf="isMobile"
     role="button"
     aria-label="search"
     mat-icon-button
     fxHide.gt-sm
     matTooltip="Search"
-    [ngClass]="{ show: !isMobile }"
     (click)="toggleMobileSearch()"
   >
     <mat-icon>search</mat-icon>
