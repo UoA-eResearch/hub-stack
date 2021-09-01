@@ -1,3 +1,4 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { SearchFilters } from '@app/global/searchTypes';
@@ -17,6 +18,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public searchText: string;
   public activeFilters: SearchFilters;
   public showMobileSearch = false;
+  public isMobile = false;
   public showFilters = false;
 
   private subscriptions = new Subscription();
@@ -24,7 +26,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   constructor(
     public searchService: SearchService,
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.renderer.listen('window', 'click', (e: Event) => {
       if (
@@ -42,6 +45,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.router.events.pipe(
       filter(event => event instanceof NavigationStart)
     ).subscribe(() => this.showFilters = false));
+    this.subscriptions.add(this.breakpointObserver.observe('(max-width: 960px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches));
   }
 
   ngOnDestroy(): void {
