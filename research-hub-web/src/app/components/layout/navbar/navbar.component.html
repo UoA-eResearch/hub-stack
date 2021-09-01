@@ -29,6 +29,8 @@
 
   <app-search-bar #searchBar></app-search-bar>
 
+  <span fxHide.lt-md style="flex: 1 1 auto"></span>
+
   <!--Navigation buttons-->
   <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
   <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
