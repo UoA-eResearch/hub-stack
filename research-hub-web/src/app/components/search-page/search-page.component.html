@@ -76,11 +76,11 @@
             </span>
 
             <!-- Divider -->
-            <div fxHide.lt-md fxFlex></div>
+            <div fxHide.lt-sm fxFlex></div>
 
             <!-- Sort Options -->
             <mat-label id="order-label">Order By:</mat-label>
-            <div fxFlexOrder.lt-sm="1" fxFlex="25%">
+            <div id="order-picker" fxFlexOrder.lt-sm="1" fxFlex="25%">
                 <mat-select (selectionChange)="updateSortOrder()" [(ngModel)]="sortOrder" ngDefaultControl
                     placeholder="Relevance">
                     <div>
