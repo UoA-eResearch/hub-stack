@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment'
 import { HttpClient } from '@angular/common/http';
-import { delay, map, tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Params } from '@angular/router';
 import { SearchFilters, SearchQuery, SearchResult, SearchResults, SortOrder } from '@app/global/searchTypes';
 
