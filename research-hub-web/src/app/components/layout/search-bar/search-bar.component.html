@@ -1,36 +1,77 @@
-<div class="search-bar-outer" [ngClass]="{ 'white-bottom': showFilters }">
-  <form class="search-bar-inner">
-    <button
-      mat-icon-button
-      aria-label="Search"
-      color="primary"
-      [routerLink]="'/search'"
-      [queryParams]="
-        searchService.generateQueryParams(searchText, activeFilters)
-      "
-    >
-      <mat-icon>search</mat-icon>
-    </button>
-    <input [(ngModel)]="searchText" [ngModelOptions]="{ standalone: true }" />
-    <mat-chip-list>
-      <mat-chip
-        *ngIf="countActiveFilters() > 0"
-        [removable]="true"
-        (removed)="clearFilters()"
+<div #searchBarContainer>
+  <div
+    class="search-bar-outer"
+    [ngClass]="{
+      'white-bottom': showFilters && !isMobile,
+      show: isMobile && showMobileSearch
+    }"
+  >
+    <form action class="search-bar-inner">
+      <button
+        *ngIf="!isMobile"
+        mat-icon-button
+        aria-label="Search"
+        color="primary"
+        (click)="search()"
+        (keydown.enter)="search()"
       >
-        Reset Filters ({{ countActiveFilters() }})
-        <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>
-    </mat-chip-list>
-    <button
-      mat-icon-button
-      color="primary"
-      (click)="showFilters = !showFilters"
-    >
-      <mat-icon>tune</mat-icon>
-    </button>
-    <div *ngIf="showFilters" class="filter-content">
-      <app-search-filters [(activeFilters)]="activeFilters"></app-search-filters>
-    </div>
-  </form>
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button
+        *ngIf="isMobile"
+        mat-icon-button
+        aria-label="Search"
+        color="primary"
+        (click)="toggleMobileSearch()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <input
+        #searchBox
+        type="search"
+        [(ngModel)]="searchText"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Search for anything"
+      />
+
+      <button
+        mat-icon-button
+        color="primary"
+        fxHide.lt-md
+        (click)="showFilters = !showFilters"
+      >
+        <mat-icon
+          [matBadge]="countActiveFilters()"
+          [matBadgeHidden]="!(countActiveFilters() > 0)"
+          matBadgeSize="medium"
+          matBadgeColor="accent"
+          >tune</mat-icon
+        >
+      </button>
+
+      <!--Filter content-->
+      <div class="filter-content">
+        <app-search-filters
+          *ngIf="showFilters"
+          [(activeFilters)]="activeFilters"
+          (search)="search()"
+        ></app-search-filters>
+      </div>
+    </form>
+  </div>
+
+  <!-- Search Icon (Mobile)-->
+  <button
+    *ngIf="isMobile"
+    role="button"
+    aria-label="search"
+    mat-icon-button
+    fxHide.gt-sm
+    matTooltip="Search"
+    (click)="toggleMobileSearch()"
+  >
+    <mat-icon>search</mat-icon>
+  </button>
 </div>

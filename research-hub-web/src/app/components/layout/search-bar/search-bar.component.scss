@@ -1,40 +1,61 @@
+@import "mixins";
+@import "variables";
+
+$mobile-max-width: 960px;
+
 .search-bar-outer {
   height: 64px;
   width: 500px;
+  flex-grow: 2;
   padding: 10px 0px;
+  @media (max-width: $mobile-max-width) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 56px;
+    width: 100vw;
+    padding: 0;
+    display: none;
+  }
+
+  .search-bar-inner:focus-within {
+    background-color: white;
+  }
 
   .search-bar-inner {
-    align-self: flex-start;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    border: 1px solid white;
+    border: none;
     padding: 2px;
     border-radius: 5px;
+    @media (max-width: $mobile-max-width) {
+      border-radius: 0;
+    }
     background-color: white;
     height: 100%;
 
     input {
       border: none;
       background: transparent;
-      flex-grow: 2;
+      flex-grow: 1;
+      flex-shrink: 1;
       font-size: 20px;
       font: "National";
-    }
-
-    input:focus {
-      outline: none;
-    }
-
-    button {
-      margin-left: 10px;
-      margin-right: 10px;
+      &:focus {
+        outline: none;
+      }
     }
 
     .filter-content {
       position: absolute;
       top: 64px;
+      @media (max-width: $mobile-max-width) {
+        top: 56px;
+        height: calc(100vh - 56px);
+      }
       z-index: 1000;
       background-color: white;
     }
@@ -43,4 +64,8 @@
 
 .white-bottom {
   background: linear-gradient(to bottom, transparent 50%, white 50%);
+}
+
+.show {
+  display: block;
 }

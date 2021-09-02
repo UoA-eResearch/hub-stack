@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment'
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Params } from '@angular/router';
 import { SearchFilters, SearchQuery, SearchResult, SearchResults, SortOrder } from '@app/global/searchTypes';
 
@@ -18,12 +18,11 @@ export class SearchService {
   ) { }
 
   public search(query: SearchQuery): Observable<SearchResults> {
-    this.updateSearchSubjects(query);
-
     return this.http.post(
       environment.searchUrl,
       query
     ).pipe(
+      tap(() => this.updateSearchSubjects(query)),
       map(data => {
         const totalResults = data["result"]["hits"]["total"]["value"];
         const results: SearchResult[] = [];
@@ -31,7 +30,7 @@ export class SearchService {
           const summary = element.highlight?.["fields.summary.en-US"] ?
             element.highlight["fields.summary.en-US"].join(' ') :
             element._source.fields.summary["en-US"];
-          
+
           const result: SearchResult = {
             title: element._source.fields.title["en-US"],
             summary: summary,
@@ -59,13 +58,13 @@ export class SearchService {
       q: searchText,
     }
 
-    if (filters?.category) {
+    if (filters?.category?.length > 0) {
       params.cat = filters.category
     }
-    if (filters?.relatedOrgs) {
+    if (filters?.relatedOrgs?.length > 0) {
       params.org = filters.relatedOrgs
     }
-    if (filters?.stage) {
+    if (filters?.stage?.length > 0) {
       params.ra = filters.stage
     }
     if (sortOrder) {

@@ -1,5 +1,6 @@
 <!-- Main Navbar -->
 <mat-toolbar
+  aria-label="Top Toolbar"
   id="top-bar"
   #topbar
   color="primary"
@@ -26,21 +27,9 @@
   <!-- Space Divider -->
   <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
-  <app-search-bar></app-search-bar>
+  <app-search-bar #searchBar></app-search-bar>
 
-  <!-- Search Icon (Mobile)-->
-  <button
-    role="button"
-    aria-label="search"
-    (click)="searchBarService.setSearchText('')"
-    (keydown.enter)="searchBarService.setSearchText('')"
-    mat-icon-button
-    fxHide.gt-sm
-    routerLink="/search"
-    matTooltip="Search"
-  >
-    <mat-icon>search</mat-icon>
-  </button>
+  <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
   <!--Navigation buttons-->
   <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
@@ -67,7 +56,7 @@
     fxHide.lt-md
     (click)="this.homeScrollService.scrollTo('Categories')"
   >
-    Research Categories
+    Categories
   </button>
   <!--
     Research Categories Button if we're not on the homepage. This will render an expansion panel dropdown list
@@ -81,7 +70,7 @@
     fxHide.lt-md
     [matMenuTriggerFor]="browseMenu"
   >
-    Research Categories
+    Categories
   </button>
 
   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
@@ -119,7 +108,7 @@
     fxHide.lt-md
     (click)="this.homeScrollService.scrollTo('Activities')"
   >
-    Research Activities
+    Activities
   </button>
 
   <!--
@@ -134,7 +123,7 @@
     fxHide.lt-md
     [matMenuTriggerFor]="researchActivityMenu"
   >
-    Research Activities
+    Activities
   </button>
 
   <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
