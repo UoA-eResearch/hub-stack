@@ -2,8 +2,8 @@
 @import "mixins";
 @import "styles-common";
 
-div.mat-card-avatar mat-icon {
-  color: $dark-blue;
+cdk-virtual-scroll-viewport { 
+  height: 100vh; 
 }
 
 div.collection {
@@ -97,25 +97,6 @@ mat-card {
   right: 0;
   top: 0;
   padding: 0px 15px;
-}
-
-/**
- * Pagination Controls
- */
-::ng-deep.ngx-pagination {
-  .current {
-    background: $dark-blue !important;
-  }
-  text-align: center;
-  padding: 0;
-
-  a:focus,
-  a:active,
-  a.active,
-  a:hover {
-    background: #fafafa !important;
-    outline: none !important;
-  }
 }
 
 /**

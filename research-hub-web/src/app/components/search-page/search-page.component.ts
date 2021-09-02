@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   CategoryCollection,
   OrgUnitCollection,
@@ -11,7 +11,7 @@ import { SearchBarService } from '@app/components/search-bar/search-bar.service'
 import { FilterType } from '@app/global/global-variables';
 import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType, SearchResults } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import supportsWebP from 'supports-webp';
 
@@ -71,8 +71,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     }));
 
     this.searchResultsSub = this.search().subscribe(results => {
-      // for endless scroll functionality, we want to append the results to the results list
-      console.log('got results..')
       this.searchResults.push(...results.results);
       this.totalResults = results.totalResults;
     });
@@ -96,7 +94,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
    * @returns a SearchResults observable
    *
    */
-  private search(size: number = 10, from: number = 0) : Observable<SearchResults> {
+  private search(size: number = 1000, from: number = 0) : Observable<SearchResults> {
     console.log("Searching..")
 
     const contentTypes : ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
