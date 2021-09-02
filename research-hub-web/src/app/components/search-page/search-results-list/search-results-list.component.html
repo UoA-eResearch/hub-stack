@@ -1,7 +1,7 @@
 <ng-container *ngIf="results">
     <!-- Search Results Container -->
     <mat-nav-list role="list" [ngClass]="{'loading': loading, 'loaded': !loading}">
-        <cdk-virtual-scroll-viewport itemSize="128">
+        <cdk-virtual-scroll-viewport itemSize="107">
             <a *cdkVirtualFor="let result of results"
                 class="result-item"
                 [ngClass]="{'ssoProtected': result.ssoProtected }">
