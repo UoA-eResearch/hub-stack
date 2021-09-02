@@ -2,8 +2,8 @@
 @import "mixins";
 @import "styles-common";
 
-div.mat-card-avatar mat-icon {
-  color: $dark-blue;
+cdk-virtual-scroll-viewport { 
+  height: 100vh; 
 }
 
 div.collection {
@@ -38,7 +38,7 @@ div.collection {
  * Mat Card
  */
 mat-card {
-  box-shadow: 0px 0px 15px #cfcfcf !important;
+  background-color: $light-grey;
 }
 
 /**
@@ -61,10 +61,21 @@ mat-card {
     display: inline-block;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
-    border-bottom: 2px solid rgba(0, 0, 0, 0);
+    border-bottom: 1px solid rgba(0, 0, 0, 0);
     &:hover {
-      border-bottom: 2px solid $body-grey;
+      border-bottom: 1px solid $dark-blue;
     }
+    font-size: 22px;
+    color: $dark-blue;
+  }
+  .card-summary {
+    margin-top: 0px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: $dark-grey;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
   /**
     * Lock Icon
@@ -77,12 +88,14 @@ mat-card {
 
   // card chips
   .mat-chip {
-    background-color: $silver;
-    color: white;
-    min-height: 18px;
+    background-color: #e0e9f0;
+    color: $dark-blue;
+    min-height: 20px;
     font-size: 14px;
     cursor: pointer;
     white-space: pre;
+    border: 1px solid $dark-blue;
+    border-radius: 16px;
   }
 }
 
@@ -97,25 +110,6 @@ mat-card {
   right: 0;
   top: 0;
   padding: 0px 15px;
-}
-
-/**
- * Pagination Controls
- */
-::ng-deep.ngx-pagination {
-  .current {
-    background: $dark-blue !important;
-  }
-  text-align: center;
-  padding: 0;
-
-  a:focus,
-  a:active,
-  a.active,
-  a:hover {
-    background: #fafafa !important;
-    outline: none !important;
-  }
 }
 
 /**
