@@ -8,7 +8,9 @@ import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { SearchBarService } from '../search-bar/search-bar.service';
+import { BreadcrumbsComponent } from '../shared/breadcrumbs/breadcrumbs.component';
 import { SearchPageComponent } from './search-page.component';
+import { SearchResultsListComponent } from './search-results-list/search-results-list.component';
 
 describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
@@ -19,7 +21,9 @@ describe('SearchPageComponent', () => {
       declarations: [
         SearchPageComponent,
         MockComponent(NgxSkeletonLoaderComponent),
-        MockComponent(SearchBarComponent)
+        MockComponent(SearchBarComponent),
+        MockComponent(BreadcrumbsComponent),
+        MockComponent(SearchResultsListComponent)
       ],
       imports: [
         RouterTestingModule,

@@ -26,6 +26,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatBadgeModule} from '@angular/material/badge';
 @NgModule({
   imports: [
     CommonModule,
@@ -52,7 +53,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatStepperModule,
     MatTooltipModule,
     MatRadioModule,
-    MatTabsModule
+    MatTabsModule,
+    MatBadgeModule
   ],
   declarations: [],
   exports: [
@@ -80,7 +82,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatTooltipModule,
     MatRadioModule,
     MatSlideToggleModule,
-    MatTabsModule
+    MatTabsModule,
+    MatBadgeModule
   ]
 })
 export class MaterialModule {
