@@ -1,12 +1,11 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from '@apollo/client/utilities';
 import { MaterialModule } from '@app/app.material.module';
-import { SearchFilters, SearchQuery, SearchResult, SearchResults } from '@app/global/searchTypes';
+import { SearchFilters } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { MockModule, MockProvider  } from 'ng-mocks';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { SearchFiltersComponent } from '../search-filters/search-filters.component';
 
 import { SearchBarComponent } from './search-bar.component';
