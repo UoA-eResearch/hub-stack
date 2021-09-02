@@ -9,14 +9,13 @@ import { Subscription } from 'rxjs';
 export class SearchResultsListComponent implements OnInit, OnChanges {
   public pageNumber;
   public loading: Boolean = false;
-  public itemsPerPage = 10;
 
   @Input() results;
 
   constructor() { }
 
   ngOnInit() {
-    this.loading = true;
+    this.results ? this.loading = false : this.loading = true;
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -26,10 +25,5 @@ export class SearchResultsListComponent implements OnInit, OnChanges {
     } catch(e) {
       console.debug(`Error: ${e}`)
     }
-  }
-
-  // Scrolling to top of page on search
-  scrollToTop() {
-    document.querySelector('mat-sidenav-content').scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

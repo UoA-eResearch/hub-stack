@@ -91,12 +91,12 @@
                 </mat-select>
             </div>
         </div>
-        <app-search-results-list [results]="searchResults"></app-search-results-list>
+        <app-search-results-list *ngIf="totalResults > 0" [results]="searchResults"></app-search-results-list>
     </div>
 
     <!-- No results message -->
     <div *ngIf="totalResults === 0" class="no-results">
-        <p>Sorry, your search for "<i><b>{{ searchBarService.getSearchText() }}</b></i>" did not match anything on the ResearchHub.</p>
+        <p>Sorry, your search for "<i><b>{{ searchText }}</b></i>" did not match anything on the ResearchHub.</p>
         <p>
             <br><b>Suggestions:</b><br>
             Widen your filters<br>
