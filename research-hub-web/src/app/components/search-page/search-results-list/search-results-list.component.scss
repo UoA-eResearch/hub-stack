@@ -3,8 +3,7 @@
 @import "styles-common";
 
 cdk-virtual-scroll-viewport { 
-  height: 100vh; 
-  
+  height: 100vh;
 }
 
 .result-item {
@@ -22,7 +21,7 @@ mat-card {
  * Material Overrides
  */
 .card-content {
-  width: 90%;
+  width: 100%;
   p {
     @include size(medium) {
       display: inline-block;
@@ -68,9 +67,7 @@ mat-card {
     min-height: 20px;
     font-size: 14px;
     cursor: pointer;
-    white-space: pre;
     border: 1px solid $dark-blue;
-    border-radius: 16px;
   }
 }
 

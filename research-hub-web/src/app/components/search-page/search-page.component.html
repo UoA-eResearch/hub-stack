@@ -1,7 +1,7 @@
 <div class="search-page-container">
 
     <!-- Search Header Filter Options -->
-    <ng-container class="search-header grey-background">
+    <ng-container class="search-header">
         <div class="banner-container"
             [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'"
             [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
@@ -66,9 +66,9 @@
 
     <!-- Search Results -->
     <div id="search-results" ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" >
-        <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-list-filter">
+        <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-controls">
 
-            <!-- Results -->
+            <!-- Total Results -->
             <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
                 <h3 style="margin-bottom: 0" class="search-results-text">{{ totalResults }}&nbsp;&nbsp;</h3>
                 <p *ngIf="totalResults !== 1; else onlyOne" style="margin-bottom: 0">Results</p>
@@ -99,7 +99,7 @@
         <p>Sorry, your search for "<i><b>{{ searchText }}</b></i>" did not match anything on the ResearchHub.</p>
         <p>
             <br><b>Suggestions:</b><br>
-            Widen your filters<br>
+            Widen your filters or modify your search query<br>
             Let us know what you were looking for via our <a href="{{ feedbackUrl }}">Feedback page</a><br>
             You can try the Staff Service Centre in the <a href="{{ staffIntranet }}">Staff Intranet</a><br>
         </p>
