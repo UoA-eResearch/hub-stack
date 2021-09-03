@@ -14,6 +14,7 @@ import { SearchService } from '@services/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import supportsWebP from 'supports-webp';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-page',
@@ -49,31 +50,34 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private deviceService: DeviceDetectorService,
-    ) {
-      this.detectDevice();
-      this.detectWebP();
-      this.router.onSameUrlNavigation ='reload';
-    }
+  ) {
+    this.detectDevice();
+    this.detectWebP();
+    this.router.onSameUrlNavigation = 'reload';
+  }
 
   ngOnInit() {
     this.allStages$ = this.searchBarService.getAllStages();
     this.allCategories$ = this.searchBarService.getAllCategories();
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
-    
-    this.subscriptions.add(this.route.queryParamMap.subscribe(params => {
-      this.searchText = params.get('q') || '';
-      this.activeFilters = {
-        category: params.getAll('cat'),
-        stage: params.getAll('ra'),
-        relatedOrgs: params.getAll('org')
-      }
-      this.sortOrder = params.get('sort') as SortOrder || 'relevance';
-    }));
 
-    this.searchResultsSub = this.search().subscribe(results => {
-      this.searchResults.push(...results.results);
-      this.totalResults = results.totalResults;
-    });
+    this.subscriptions.add(this.route.queryParamMap
+      .pipe(
+        tap(params => {
+          this.searchText = params.get('q') || '';
+          this.activeFilters = {
+            category: params.getAll('cat'),
+            stage: params.getAll('ra'),
+            relatedOrgs: params.getAll('org')
+          }
+          this.sortOrder = params.get('sort') as SortOrder || 'relevance';
+        }),
+        switchMap(() => this.search())
+      ).subscribe(results => {
+        this.searchResults.push(...results.results);
+        this.totalResults = results.totalResults;
+      })
+    );
   }
 
   detectDevice() {
@@ -94,10 +98,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
    * @returns a SearchResults observable
    *
    */
-  private search(size: number = 1000, from: number = 0) : Observable<SearchResults> {
+  private search(size: number = 1000, from: number = 0): Observable<SearchResults> {
     console.log("Searching..")
 
-    const contentTypes : ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
+    const contentTypes: ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
 
     const searchQuery: SearchQuery = {
       query: this.searchText,
@@ -111,7 +115,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     console.log(searchQuery);
 
     return this.searchService.search(searchQuery);
-  }  
+  }
 
   public clearFilters() {
     this.activeFilters = {
@@ -120,7 +124,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       relatedOrgs: []
     };
     this.searchService.searchFilters.next(this.activeFilters);
-    this.router.navigate(['search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
+    this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
   }
 
   public removeFilterById(filterId: string, filterType: FilterType) {
@@ -134,17 +138,17 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.activeFilters.stage = this.activeFilters.stage.filter(filter => filter !== filterId);
       }
     }
-    if (filterType === FilterType.Organisation) {      
+    if (filterType === FilterType.Organisation) {
       if (this.activeFilters.relatedOrgs.indexOf(filterId) !== -1) {
         this.activeFilters.relatedOrgs = this.activeFilters.relatedOrgs.filter(filter => filter !== filterId);
-      }      
+      }
     }
     this.searchService.searchFilters.next(this.activeFilters);
-    this.router.navigate(['search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
+    this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
   }
 
   public updateSortOrder() {
-    this.router.navigate(['search'], {queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder)});
+    this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
   }
 
   ngOnDestroy() {
