@@ -56,12 +56,42 @@
 
     <!-- Skeleton Loader -->
     <div
-        *ngIf="false"
+        *ngIf="loading"
         ngClass.gt-sm="search-content site-padding-2 section"
         ngClass.lt-md="site-padding search-content section">
-        <ngx-skeleton-loader
-            count="10" [theme]="{ height: '80px' }" animation="pulse">
+        <ngx-skeleton-loader animation="progress" [theme]="{
+            width: '100%',
+            height: '50px',
+            'border-radius': '0px',
+            'margin-bottom': '5px'
+            }">
         </ngx-skeleton-loader>
+        <div *ngFor="let i of [].constructor(6)" class="skeleton-wrapper">
+            <div class="wrapper">
+            <ngx-skeleton-loader animation="progress-dark" [theme]="{
+            width: '50%',
+            height: '24px',
+            'border-radius': '0px',
+            'margin-bottom': '8px',
+            'margin-top': '12px'
+            }"></ngx-skeleton-loader>
+            </div>
+            <div class="wrapper">
+            <ngx-skeleton-loader  animation="progress-dark" [theme]="{
+            width: '100%',
+            height: '15px',
+            'border-radius': '0px',
+            'margin-bottom': '2px'
+            }"></ngx-skeleton-loader>
+            </div>
+            <div class="wrapper">
+            <ngx-skeleton-loader  animation="progress-dark" [theme]="{
+            width: '30%',
+            'border-radius': '10px',
+            height: '15px'
+            }"></ngx-skeleton-loader>
+            </div>
+        </div>
     </div>
 
     <!-- Search Results -->
