@@ -40,6 +40,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public activeFilters: SearchFilters;
   public searchResultsSub: Subscription;
   public sortOrder: SortOrder;
+  public loading: boolean = true;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -74,6 +75,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         }),
         switchMap(() => this.search())
       ).subscribe(results => {
+        this.loading = false;
         this.searchResults.push(...results.results);
         this.totalResults = results.totalResults;
       })
@@ -100,6 +102,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
    */
   private search(size: number = 1000, from: number = 0): Observable<SearchResults> {
     console.log("Searching..")
+    this.loading = true;
 
     const contentTypes: ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
 
