@@ -1,28 +1,24 @@
 <ng-container *ngIf="results">
     <!-- Search Results Container -->
-    <mat-nav-list role="list" [ngClass]="{'loading': loading, 'loaded': !loading}">
+    <mat-list role="list" [ngClass]="{'loading': loading, 'loaded': !loading}">
         <cdk-virtual-scroll-viewport itemSize="107">
-            <a *cdkVirtualFor="let result of results"
-                class="result-item"
-                [ngClass]="{'ssoProtected': result.ssoProtected }">
-
+            <mat-card *cdkVirtualFor="let result of results" fxLayout="row" role="listitem" class="result-item">
                 <!-- Result Item -->
-                <mat-card fxLayout="row" role="listitem">
-                    <span class="card-content">
-                        <span class="card-label">{{ result.contentType | contentTypeDisplayName }}</span>
-                        <p class="card-title" [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]" [innerHTML]=result.title>
-                            &nbsp;
-                            <mat-icon *ngIf="result.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
-                        </p>
+                <span class="card-content">
+                    <span class="card-label">{{ result.contentType | contentTypeDisplayName }}</span>
+                    
+                    <p class="card-title" [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]">
+                        <span>{{ result.title }}</span>&nbsp;
+                        <mat-icon *ngIf="result.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
+                    </p>
 
-                        <p class="card-summary" [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]" [innerHTML]=result.summary></p>
+                    <p class="card-summary" [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]" [innerHTML]=result.summary></p>
 
-                        <mat-chip-list class="result-chips" *ngIf="result.chips" aria-label="result chips">
-                            <mat-chip *ngFor="let chip of result.chips" aria-label="result chip">{{chip}}</mat-chip>
-                        </mat-chip-list>
-                    </span>
-                </mat-card>
-            </a>
+                    <mat-chip-list class="result-chips" *ngIf="result.chips" aria-label="result chips">
+                        <mat-chip *ngFor="let chip of result.chips" aria-label="result chip">{{chip}}</mat-chip>
+                    </mat-chip-list>
+                </span>
+            </mat-card>
         </cdk-virtual-scroll-viewport>
-    </mat-nav-list>
+    </mat-list>
 </ng-container>
