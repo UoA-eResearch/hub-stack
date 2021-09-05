@@ -6,22 +6,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './search-results-list.component.html',
   styleUrls: ['./search-results-list.component.scss']
 })
-export class SearchResultsListComponent implements OnInit, OnChanges {
+export class SearchResultsListComponent implements OnChanges {
   public pageNumber;
-  public loading: Boolean = false;
 
   @Input() results;
-
-  constructor() { }
-
-  ngOnInit() {
-    this.results ? this.loading = false : this.loading = true;
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     try { 
       this.results = changes['results'].currentValue;
-      this.loading = false;
     } catch(e) {
       console.debug(`Error: ${e}`)
     }
