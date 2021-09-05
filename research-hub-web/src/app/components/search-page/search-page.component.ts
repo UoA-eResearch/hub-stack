@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import supportsWebP from 'supports-webp';
 import { switchMap, tap } from 'rxjs/operators';
+import { ScrollDispatcher } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-search-page',
@@ -126,7 +127,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       stage: [],
       relatedOrgs: []
     };
-    this.searchService.searchFilters.next(this.activeFilters);
     this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
   }
 
@@ -146,7 +146,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.activeFilters.relatedOrgs = this.activeFilters.relatedOrgs.filter(filter => filter !== filterId);
       }
     }
-    this.searchService.searchFilters.next(this.activeFilters);
     this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
   }
 
