@@ -2,50 +2,40 @@
 <mat-list
   role="list"
   *ngIf="results"
-  [ngClass]="{ loading: loading, loaded: !loading }"
 >
-  <cdk-virtual-scroll-viewport itemSize="107">
-    <ng-container
-      *cdkVirtualFor="let result of results"
-      fxLayout="row"
-      role="listitem"
-      class="result-item"
-    >
-      <!-- Result Item -->
-      <mat-card class="card-content mat-elevation-z0">
+    <!-- Result Item -->
+    <mat-card *ngFor="let result of results" class="card-content mat-elevation-z0" role="listitem">
         <span class="card-label">{{
-          result.contentType | contentTypeDisplayName
+            result.contentType | contentTypeDisplayName
         }}</span>
 
         <p
-          class="card-title"
-          [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
+            class="card-title"
+            [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
         >
-          <span>{{ result.title }}</span
-          >&nbsp;
-          <mat-icon *ngIf="result.ssoProtected" matTooltip="SSO Login Required"
+            <span>{{ result.title }}</span
+            >&nbsp;
+            <mat-icon *ngIf="result.ssoProtected" matTooltip="SSO Login Required"
             >lock</mat-icon
-          >
+            >
         </p>
 
         <p
-          class="card-summary"
-          [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
-          [innerHTML]="result.summary"
+            class="card-summary"
+            [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
+            [innerHTML]="result.summary"
         ></p>
 
         <mat-chip-list
-          class="result-chips"
-          *ngIf="result.chips"
-          aria-label="result chips"
+            class="result-chips"
+            *ngIf="result.chips"
+            aria-label="result chips"
         >
-          <mat-chip
+            <mat-chip
             *ngFor="let chip of result.chips"
             aria-label="result chip"
             >{{ chip }}</mat-chip
-          >
+            >
         </mat-chip-list>
-      </mat-card>
-    </ng-container>
-  </cdk-virtual-scroll-viewport>
+    </mat-card>
 </mat-list>
