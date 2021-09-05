@@ -1,137 +1,218 @@
 <div class="search-page-container">
-
-    <!-- Search Header Filter Options -->
-    <ng-container class="search-header">
-        <div class="banner-container"
-            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'"
-            [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
-        </div>
-    </ng-container>
-
-    <!-- Breadcrumbs -->
-    <div class="site-padding" ngClass.lt-md="site-padding-mobile">
-        <app-breadcrumbs [contentItem]="" [title]="'Search'"></app-breadcrumbs>
-    </div>
-
-    <!-- Active Filters -->
-    <div ngClass.gt-sm="site-padding-2 section" ngClass.lt-md="site-padding section"  *ngIf="activeFilters.category.length > 0 || activeFilters.stage.length > 0 || activeFilters.relatedOrgs.length > 0">
-        <mat-chip-list fxFlex="row wrap" *ngIf="{ allCategories: allCategories$ | async, allStages: allStages$ | async, allOrganisations: allOrganisations$ | async } as i">
-
-            <!-- Clear All -->
-            <mat-chip (click)="clearFilters()" class="clear">
-                Clear All
-            </mat-chip>
-
-            <!-- Categories -->
-            <span  *ngIf="i.allCategories">
-                <span *ngFor="let filter of i.allCategories.items">
-                    <mat-chip *ngIf="activeFilters.category.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.ResearchCategory)">
-                        {{ filter.name }}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                </span>
-            </span>
-
-            <!-- Activities -->
-            <span *ngIf="i.allStages">
-                <span *ngFor="let filter of i.allStages.items">
-                    <mat-chip *ngIf="activeFilters.stage.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.ResearchActivity)">
-                        {{ filter.name }}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                </span>
-            </span>
-
-            <!-- Organisation -->
-            <span *ngIf="i.allOrganisations">
-                <span *ngFor="let filter of i.allOrganisations.items">
-                    <mat-chip *ngIf="activeFilters.relatedOrgs.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.Organisation)">
-                        {{ filter.name }}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                </span>
-            </span>
-        </mat-chip-list>
-    </div>
-
-    <!-- Skeleton Loader -->
+  <!-- Search Header Filter Options -->
+  <ng-container class="search-header">
     <div
-        *ngIf="loading"
-        ngClass.gt-sm="search-content site-padding-2 section"
-        ngClass.lt-md="site-padding search-content section">
-        <ngx-skeleton-loader animation="progress" [theme]="{
-            width: '100%',
-            height: '50px',
-            'border-radius': '0px',
-            'margin-bottom': '5px'
-            }">
-        </ngx-skeleton-loader>
-        <div *ngFor="let i of [].constructor(6)" class="skeleton-wrapper">
-            <div class="wrapper">
-            <ngx-skeleton-loader animation="progress-dark" [theme]="{
+      class="banner-container"
+      [ngClass]="
+        bannerImageUrl === undefined
+          ? 'no-banner'
+          : isMobile
+          ? 'mobile-banner'
+          : 'standard-banner'
+      "
+      [ngStyle]="
+        bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
+      "
+    ></div>
+  </ng-container>
+
+  <!-- Breadcrumbs -->
+  <div class="site-padding" ngClass.lt-md="site-padding-mobile">
+    <app-breadcrumbs [contentItem]="" [title]="'Search'"></app-breadcrumbs>
+  </div>
+
+  <!-- Active Filters -->
+  <div
+    ngClass.gt-sm="site-padding-2 section"
+    ngClass.lt-md="site-padding section"
+    *ngIf="
+      activeFilters.category.length > 0 ||
+      activeFilters.stage.length > 0 ||
+      activeFilters.relatedOrgs.length > 0
+    "
+  >
+    <mat-chip-list
+      fxFlex="row wrap"
+      *ngIf="
+        {
+          allCategories: allCategories$ | async,
+          allStages: allStages$ | async,
+          allOrganisations: allOrganisations$ | async
+        };
+        let i
+      "
+    >
+      <!-- Clear All -->
+      <mat-chip (click)="clearFilters()" class="clear"> Clear All </mat-chip>
+
+      <!-- Categories -->
+      <span *ngIf="i.allCategories">
+        <span *ngFor="let filter of i.allCategories.items">
+          <mat-chip
+            *ngIf="activeFilters.category.includes(filter.sys.id)"
+            [removable]="true"
+            (removed)="
+              removeFilterById(filter.sys.id, filterTypes.ResearchCategory)
+            "
+          >
+            {{ filter.name }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </span>
+      </span>
+
+      <!-- Activities -->
+      <span *ngIf="i.allStages">
+        <span *ngFor="let filter of i.allStages.items">
+          <mat-chip
+            *ngIf="activeFilters.stage.includes(filter.sys.id)"
+            [removable]="true"
+            (removed)="
+              removeFilterById(filter.sys.id, filterTypes.ResearchActivity)
+            "
+          >
+            {{ filter.name }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </span>
+      </span>
+
+      <!-- Organisation -->
+      <span *ngIf="i.allOrganisations">
+        <span *ngFor="let filter of i.allOrganisations.items">
+          <mat-chip
+            *ngIf="activeFilters.relatedOrgs.includes(filter.sys.id)"
+            [removable]="true"
+            (removed)="
+              removeFilterById(filter.sys.id, filterTypes.Organisation)
+            "
+          >
+            {{ filter.name }}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+        </span>
+      </span>
+    </mat-chip-list>
+  </div>
+
+  <!-- Skeleton Loader -->
+  <div
+    *ngIf="loading"
+    ngClass.gt-sm="search-content site-padding-2 section"
+    ngClass.lt-md="site-padding search-content section"
+  >
+    <ngx-skeleton-loader
+      animation="progress"
+      [theme]="{
+        width: '100%',
+        height: '50px',
+        'border-radius': '0px',
+        'margin-bottom': '5px'
+      }"
+    >
+    </ngx-skeleton-loader>
+    <div *ngFor="let i of [].constructor(6)" class="skeleton-wrapper">
+      <div class="wrapper">
+        <ngx-skeleton-loader
+          animation="progress-dark"
+          [theme]="{
             width: '50%',
             height: '24px',
             'border-radius': '0px',
             'margin-bottom': '8px',
             'margin-top': '12px'
-            }"></ngx-skeleton-loader>
-            </div>
-            <div class="wrapper">
-            <ngx-skeleton-loader  animation="progress-dark" [theme]="{
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+      <div class="wrapper">
+        <ngx-skeleton-loader
+          animation="progress-dark"
+          [theme]="{
             width: '100%',
             height: '15px',
             'border-radius': '0px',
             'margin-bottom': '2px'
-            }"></ngx-skeleton-loader>
-            </div>
-            <div class="wrapper">
-            <ngx-skeleton-loader  animation="progress-dark" [theme]="{
+          }"
+        ></ngx-skeleton-loader>
+      </div>
+      <div class="wrapper">
+        <ngx-skeleton-loader
+          animation="progress-dark"
+          [theme]="{
             width: '30%',
             'border-radius': '10px',
             height: '15px'
-            }"></ngx-skeleton-loader>
-            </div>
-        </div>
+          }"
+        ></ngx-skeleton-loader>
+      </div>
     </div>
+  </div>
 
-    <!-- Search Results -->
-    <div id="search-results" ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" >
-        <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-controls">
-
-            <!-- Total Results -->
-            <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
-                <h3 style="margin-bottom: 0" class="search-results-text">{{ totalResults }}&nbsp;&nbsp;</h3>
-                <p *ngIf="totalResults !== 1; else onlyOne" style="margin-bottom: 0">Results</p>
-                <ng-template #onlyOne><p style="margin-bottom: 0">Result</p></ng-template>
-            </span>
-
-            <!-- Divider -->
-            <div fxHide.lt-sm fxFlex></div>
-
-            <!-- Sort Options -->
-            <mat-label id="order-label">Order By:</mat-label>
-            <div id="order-picker" fxFlexOrder.lt-sm="1" fxFlex="25%">
-                <mat-select (selectionChange)="updateSortOrder()" [(ngModel)]="sortOrder" ngDefaultControl
-                    placeholder="Relevance">
-                    <div>
-                        <mat-option value="relevance">Relevance</mat-option>
-                        <mat-option value="A-Z">A-Z</mat-option>
-                        <mat-option value="Z-A">Z-A</mat-option>
-                    </div>
-                </mat-select>
-            </div>
-        </div>
-        <app-search-results-list *ngIf="totalResults > 0" [results]="searchResults"></app-search-results-list>
-    </div>
-
-    <!-- No results message -->
-    <div *ngIf="totalResults === 0" class="no-results">
-        <p>Sorry, your search for "<i><b>{{ searchText }}</b></i>" did not match anything on the ResearchHub.</p>
-        <p>
-            <br><b>Suggestions:</b><br>
-            Widen your filters or modify your search query<br>
-            Let us know what you were looking for via our <a href="{{ feedbackUrl }}">Feedback page</a><br>
-            You can try the Staff Service Centre in the <a href="{{ staffIntranet }}">Staff Intranet</a><br>
+  <!-- Search Results -->
+  <div
+    id="search-results"
+    ngClass.gt-sm="search-content site-padding-2 section"
+    ngClass.lt-md="site-padding search-content section"
+  >
+    <div
+      fxLayout="row"
+      fxLayoutGap="5%"
+      fxLayout.lt-sm="column"
+      class="result-controls"
+    >
+      <!-- Total Results -->
+      <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
+        <h3 style="margin-bottom: 0" class="search-results-text">
+          {{ totalResults }}&nbsp;&nbsp;
+        </h3>
+        <p *ngIf="totalResults !== 1; else onlyOne" style="margin-bottom: 0">
+          Results
         </p>
+        <ng-template #onlyOne
+          ><p style="margin-bottom: 0">Result</p></ng-template
+        >
+      </span>
+
+      <!-- Divider -->
+      <div fxHide.lt-sm fxFlex></div>
+
+      <!-- Sort Options -->
+      <mat-label id="order-label">Order By:</mat-label>
+      <div id="order-picker" fxFlexOrder.lt-sm="1" fxFlex="25%">
+        <mat-select
+          (selectionChange)="updateSortOrder()"
+          [(ngModel)]="sortOrder"
+          ngDefaultControl
+          placeholder="Relevance"
+        >
+          <div>
+            <mat-option value="relevance">Relevance</mat-option>
+            <mat-option value="A-Z">A-Z</mat-option>
+            <mat-option value="Z-A">Z-A</mat-option>
+          </div>
+        </mat-select>
+      </div>
     </div>
+    <app-search-results-list
+      *ngIf="totalResults > 0"
+      [results]="searchResults"
+    ></app-search-results-list>
+  </div>
+
+  <!-- No results message -->
+  <div *ngIf="totalResults === 0" class="no-results">
+    <p>
+      Sorry, your search for "<i
+        ><b>{{ searchText }}</b></i
+      >" did not match anything on the ResearchHub.
+    </p>
+    <p>
+      <br /><b>Suggestions:</b><br />
+      Widen your filters or modify your search query<br />
+      Let us know what you were looking for via our
+      <a href="{{ feedbackUrl }}">Feedback page</a><br />
+      You can try the Staff Service Centre in the
+      <a href="{{ staffIntranet }}">Staff Intranet</a><br />
+    </p>
+  </div>
 </div>
