@@ -39,15 +39,15 @@
           allStages: allStages$ | async,
           allOrganisations: allOrganisations$ | async
         };
-        let i
+        let allFilters
       "
     >
       <!-- Clear All -->
       <mat-chip (click)="clearFilters()" class="clear"> Clear All </mat-chip>
 
       <!-- Categories -->
-      <span *ngIf="i.allCategories">
-        <span *ngFor="let filter of i.allCategories.items">
+      <span *ngIf="allFilters.allCategories">
+        <span *ngFor="let filter of allFilters.allCategories.items">
           <mat-chip
             *ngIf="activeFilters.category.includes(filter.sys.id)"
             [removable]="true"
@@ -62,8 +62,8 @@
       </span>
 
       <!-- Activities -->
-      <span *ngIf="i.allStages">
-        <span *ngFor="let filter of i.allStages.items">
+      <span *ngIf="allFilters.allStages">
+        <span *ngFor="let filter of allFilters.allStages.items">
           <mat-chip
             *ngIf="activeFilters.stage.includes(filter.sys.id)"
             [removable]="true"
@@ -78,8 +78,8 @@
       </span>
 
       <!-- Organisation -->
-      <span *ngIf="i.allOrganisations">
-        <span *ngFor="let filter of i.allOrganisations.items">
+      <span *ngIf="allFilters.allOrganisations">
+        <span *ngFor="let filter of allFilters.allOrganisations.items">
           <mat-chip
             *ngIf="activeFilters.relatedOrgs.includes(filter.sys.id)"
             [removable]="true"
@@ -93,59 +93,6 @@
         </span>
       </span>
     </mat-chip-list>
-  </div>
-
-  <!-- Skeleton Loader -->
-  <div
-    *ngIf="loading"
-    ngClass.gt-sm="search-content site-padding-2 section"
-    ngClass.lt-md="site-padding search-content section"
-  >
-    <ngx-skeleton-loader
-      animation="progress"
-      [theme]="{
-        width: '100%',
-        height: '50px',
-        'border-radius': '0px',
-        'margin-bottom': '5px'
-      }"
-    >
-    </ngx-skeleton-loader>
-    <div *ngFor="let i of [].constructor(6)" class="skeleton-wrapper">
-      <div class="wrapper">
-        <ngx-skeleton-loader
-          animation="progress-dark"
-          [theme]="{
-            width: '50%',
-            height: '24px',
-            'border-radius': '0px',
-            'margin-bottom': '8px',
-            'margin-top': '12px'
-          }"
-        ></ngx-skeleton-loader>
-      </div>
-      <div class="wrapper">
-        <ngx-skeleton-loader
-          animation="progress-dark"
-          [theme]="{
-            width: '100%',
-            height: '15px',
-            'border-radius': '0px',
-            'margin-bottom': '2px'
-          }"
-        ></ngx-skeleton-loader>
-      </div>
-      <div class="wrapper">
-        <ngx-skeleton-loader
-          animation="progress-dark"
-          [theme]="{
-            width: '30%',
-            'border-radius': '10px',
-            height: '15px'
-          }"
-        ></ngx-skeleton-loader>
-      </div>
-    </div>
   </div>
 
   <!-- Search Results -->
@@ -196,6 +143,7 @@
     <app-search-results-list
       *ngIf="totalResults > 0"
       [results]="searchResults"
+      [loading]="loading"
     ></app-search-results-list>
   </div>
 
