@@ -14,7 +14,7 @@ import { SearchService } from '@services/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import supportsWebP from 'supports-webp';
-import { filter, map, mergeMap, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
+import { filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 
 @Component({
@@ -39,6 +39,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public searchText: string;
   public activeFilters: SearchFilters;
   public sortOrder: SortOrder;
+
   public loading: boolean = true;
 
   private subscriptions: Subscription = new Subscription();
@@ -51,7 +52,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private deviceService: DeviceDetectorService,
     private scrollDispatcher: ScrollDispatcher,
-    private ngZone: NgZone
+    private ngZone: NgZone,
   ) {
     this.detectDevice();
     this.detectWebP();
@@ -75,27 +76,34 @@ export class SearchPageComponent implements OnInit, OnDestroy {
           this.sortOrder = params.get('sort') as SortOrder || 'relevance';
         }),
         switchMap(() => this.search())
-      ).subscribe(results => {
+      ).subscribe(searchResults => {
+        this.searchResults = this.searchResults.concat(...searchResults.results);
+        this.totalResults = searchResults.totalResults;
         this.loading = false;
-        this.searchResults.push(...results.results);
-        this.totalResults = results.totalResults;
       })
     );
 
     this.subscriptions.add(this.scrollDispatcher.scrolled().pipe(
       map((event: CdkScrollable) => event.measureScrollOffset("bottom")),
       pairwise(),
-      filter(([y1, y2]) => (y2 < y1 && y2 < 250)),
+      filter(([y1, y2]) => (y2 < y1 && y2 < 500)),
       throttleTime(200),
       switchMap(() => {
-        return this.search(10, this.searchResults.length)
+        return this.ngZone.run(() => {
+          if (this.searchResults.length < this.totalResults) {
+            return this.search(10, this.searchResults.length);
+          } else {
+            return EMPTY;
+          }
+        })
       })
-    )
-    .subscribe((results) => {
-      this.ngZone.run(() => {
-        this.searchResults = this.searchResults.concat(results.results);
-        this.loading = false;
-      })
+    ).subscribe((results) => {
+      if (results) {
+        this.ngZone.run(() => {
+          this.searchResults = this.searchResults.concat(results.results);
+          this.loading = false;
+        })
+      }
     }))
   }
 
