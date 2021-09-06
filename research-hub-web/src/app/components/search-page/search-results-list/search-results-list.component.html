@@ -1,8 +1,8 @@
 <!-- Search Results Container -->
-<mat-list role="list" *ngIf="results">
+<mat-list role="list" *ngIf="searchResults && searchResults.results.length > 0">
   <!-- Result Item -->
   <mat-card
-    *ngFor="let result of results"
+    *ngFor="let result of searchResults.results"
     class="card-content mat-elevation-z0"
     role="listitem"
   >
@@ -39,22 +39,8 @@
   </mat-card>
 </mat-list>
 <!-- Skeleton Loader -->
-<div
-  *ngIf="loading"
-  ngClass.gt-sm="search-content site-padding-2 section"
-  ngClass.lt-md="site-padding search-content section"
->
-  <ngx-skeleton-loader
-    animation="progress"
-    [theme]="{
-      width: '100%',
-      height: '50px',
-      'border-radius': '0px',
-      'margin-bottom': '5px'
-    }"
-  >
-  </ngx-skeleton-loader>
-  <div *ngFor="let i of [].constructor(6)" class="skeleton-wrapper">
+<div *ngIf="loading">
+  <div *ngFor="let i of [].constructor(10)" class="skeleton-wrapper">
     <div class="wrapper">
       <ngx-skeleton-loader
         animation="progress-dark"
@@ -90,3 +76,9 @@
     </div>
   </div>
 </div>
+<button
+  mat-flat-button
+  *ngIf="searchResults.totalResults === searchResults.results.length"
+>
+  Go back to top
+</button>

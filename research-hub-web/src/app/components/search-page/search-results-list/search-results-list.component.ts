@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SearchResults } from '@app/global/searchTypes';
+import { SearchResult, SearchResults } from '@app/global/searchTypes';
 
 @Component({
   selector: 'app-search-results-list',
@@ -8,5 +8,5 @@ import { SearchResults } from '@app/global/searchTypes';
 })
 export class SearchResultsListComponent {
   @Input() loading = false;
-  @Input() results: SearchResults;
+  @Input() searchResults: SearchResults;
 }
