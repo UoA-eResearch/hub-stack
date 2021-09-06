@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import {
   CategoryCollection,
   OrgUnitCollection,
   StageCollection,
 } from '@app/graphql/schema';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
@@ -14,8 +14,8 @@ import { SearchService } from '@services/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import supportsWebP from 'supports-webp';
-import { switchMap, tap } from 'rxjs/operators';
-import { ScrollDispatcher } from '@angular/cdk/scrolling';
+import { filter, map, mergeMap, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
+import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-search-page',
@@ -26,7 +26,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public allCategories$: Observable<CategoryCollection>;
   public allStages$: Observable<StageCollection>;
   public allOrganisations$: Observable<OrgUnitCollection>;
-  public sortType = this.searchBarService.getSort();
   public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
   public filterTypes = FilterType;
@@ -39,7 +38,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public totalResults: number;
   public searchText: string;
   public activeFilters: SearchFilters;
-  public searchResultsSub: Subscription;
   public sortOrder: SortOrder;
   public loading: boolean = true;
 
@@ -52,6 +50,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private deviceService: DeviceDetectorService,
+    private scrollDispatcher: ScrollDispatcher,
+    private ngZone: NgZone
   ) {
     this.detectDevice();
     this.detectWebP();
@@ -81,6 +81,22 @@ export class SearchPageComponent implements OnInit, OnDestroy {
         this.totalResults = results.totalResults;
       })
     );
+
+    this.subscriptions.add(this.scrollDispatcher.scrolled().pipe(
+      map((event: CdkScrollable) => event.measureScrollOffset("bottom")),
+      pairwise(),
+      filter(([y1, y2]) => (y2 < y1 && y2 < 250)),
+      throttleTime(200),
+      switchMap(() => {
+        return this.search(10, this.searchResults.length)
+      })
+    )
+    .subscribe((results) => {
+      this.ngZone.run(() => {
+        this.searchResults = this.searchResults.concat(results.results);
+        this.loading = false;
+      })
+    }))
   }
 
   detectDevice() {
@@ -101,7 +117,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
    * @returns a SearchResults observable
    *
    */
-  private search(size: number = 1000, from: number = 0): Observable<SearchResults> {
+  private search(size: number = 10, from: number = 0): Observable<SearchResults> {
     console.log("Searching..")
     this.loading = true;
 
@@ -155,6 +171,5 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
-    this.searchResultsSub.unsubscribe();
   }
 }
