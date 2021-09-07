@@ -1,5 +1,6 @@
 // TODO: Insert nonprod values
 export const environment = {
+  env: 'test',
   production: true,
   cerGraphQLUrl: 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service',
   cerGraphQLPreviewUrl: 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-preview-service/',
