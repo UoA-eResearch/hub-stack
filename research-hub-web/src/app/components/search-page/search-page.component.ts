@@ -64,6 +64,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.allCategories$ = this.searchBarService.getAllCategories();
     this.allOrganisations$ = this.searchBarService.getAllOrganisations();
 
+    /**
+     * this subscription reacts to changes to the search parameters, i.e. new searches
+     */
     this.subscriptions.add(this.route.queryParamMap
       .pipe(
         tap(params => {
@@ -74,15 +77,20 @@ export class SearchPageComponent implements OnInit, OnDestroy {
             relatedOrgs: params.getAll('org')
           }
           this.sortOrder = params.get('sort') as SortOrder || 'relevance';
+          this.searchResults = [];
+          this.totalResults = 0;
         }),
         switchMap(() => this.search())
       ).subscribe(searchResults => {
-        this.searchResults = this.searchResults.concat(...searchResults.results);
+        this.searchResults = searchResults.results;
         this.totalResults = searchResults.totalResults;
         this.loading = false;
       })
     );
 
+    /**
+     * this subscription implements infinite scrolling
+     */
     this.subscriptions.add(this.scrollDispatcher.scrolled().pipe(
       map((event: CdkScrollable) => event.measureScrollOffset("bottom")),
       pairwise(),
