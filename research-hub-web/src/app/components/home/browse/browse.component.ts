@@ -10,9 +10,8 @@ import { pluck } from 'rxjs/operators';
   styleUrls: ['./browse.component.scss']
 })
 export class BrowseComponent implements OnInit {
-  @Input() description: string;
-
-  public title = 'Research Categories';
+  public title: string = 'Research Categories';
+  public description: string = 'The ResearchHub is your gateway to research support at the University of Auckland. Explore by topic.';
   public allCategories$: Observable<CategoryCollection>;
   public events;
 
