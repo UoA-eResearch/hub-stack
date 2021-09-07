@@ -110,12 +110,10 @@
   >
     <!-- Total Results -->
     <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
-      <div class="search-results-text">
-        {{ totalResults }}&nbsp;&nbsp;
-      </div>
+      <div class="search-results-text">{{ totalResults }}&nbsp;&nbsp;</div>
       <div>
-        Result{{ totalResults !== 1 ? 's' : ''}} for
-        <span class="search-text">"{{searchText}}"</span>
+        Result{{ totalResults !== 1 ? "s" : "" }} for
+        <span class="search-text">"{{ searchText }}"</span>
       </div>
     </span>
 
@@ -143,7 +141,10 @@
     [searchResults]="{ results: searchResults, totalResults: totalResults }"
     [loading]="loading"
   ></app-search-results-list>
-  <div *ngIf="totalResults === searchResults.length">No More Results</div>
+  <!--Load more or no results message-->
+  <div class="load-more" *ngIf="!loading && (searchResults.length === totalResults)">
+    <div>No More Results</div>
+  </div>
   <!-- No results message -->
   <div *ngIf="totalResults === 0" class="no-results">
     <p>
