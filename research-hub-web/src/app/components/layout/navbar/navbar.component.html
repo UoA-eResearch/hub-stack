@@ -44,8 +44,10 @@
   <!--Navigation buttons-->
   <ng-container *ngTemplateOutlet="search"></ng-container>
   <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
-  <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
-  <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
+  <button mat-button fxHide.lt-md [routerLink]="'/categories'">Categories</button>
+  <button mat-button fxHide.lt-md [routerLink]="'/activities'">Activities</button>
+  <!-- <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
+  <ng-container *ngTemplateOutlet="researchActivities"></ng-container> -->
   <ng-container
     *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
   ></ng-container>
