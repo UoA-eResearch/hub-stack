@@ -110,13 +110,13 @@
   >
     <!-- Total Results -->
     <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
-      <h3 style="margin-bottom: 0" class="search-results-text">
+      <div class="search-results-text">
         {{ totalResults }}&nbsp;&nbsp;
-      </h3>
-      <p *ngIf="totalResults !== 1; else onlyOne" style="margin-bottom: 0">
-        Results
-      </p>
-      <ng-template #onlyOne><p style="margin-bottom: 0">Result</p></ng-template>
+      </div>
+      <div>
+        Result{{ totalResults !== 1 ? 's' : ''}} for
+        <span class="search-text">"{{searchText}}"</span>
+      </div>
     </span>
 
     <!-- Divider -->

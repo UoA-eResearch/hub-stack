@@ -33,10 +33,16 @@
     border: 1px solid $silver-lining;
   }
   span {
-    h3 {
+    .search-results-text {
+      color: $dark-blue;
       font-size: 24px;
+      font-weight: 500;
+      font-style: italic;
     }
-    p {
+    .search-text {
+      font-style: italic;
+    }
+    div {
       font-size: 18px;
     }
   }
