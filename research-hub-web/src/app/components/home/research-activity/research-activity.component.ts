@@ -13,9 +13,8 @@ import { pluck } from 'rxjs/operators';
   styleUrls: ['./research-activity.component.scss']
 })
 export class ResearchActivityComponent implements OnInit {
-  @Input() description: string;
-
-  public title = 'Research Activities';
+  public title: string = 'Research Activities';
+  public description: string = 'From project inception to completion, explore what resources are available at each stage of the research lifecycle.';
   public allStages$: Observable<StageCollection>;
 
   constructor(
