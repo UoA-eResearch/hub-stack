@@ -34,6 +34,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         e.target !== this.searchBarContainer.nativeElement
         && !this.searchBarContainer.nativeElement.contains(e.target)
       ) {
+        this.showMobileSearch = false;
         this.showFilters = false;
       }
     });
@@ -61,15 +62,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public toggleMobileSearch(): void {
     this.showMobileSearch = !this.showMobileSearch;
     this.showFilters = this.showMobileSearch;
-    if (this.showFilters) {
+    if (this.showMobileSearch) {
       this.focus();
     }
   }
 
   public search(): void {
-    if (this.isMobile) {
-      this.toggleMobileSearch();
-    }
     this.router.navigate(
       ['/search'],
       {
