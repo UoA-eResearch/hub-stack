@@ -134,7 +134,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
    *
    */
   private search(size: number = 10, from: number = 0): Observable<SearchResults> {
-    console.log("Searching..")
     this.loading = true;
 
     const contentTypes: ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
@@ -147,8 +146,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       sort: this.sortOrder,
       includeContentTypes: contentTypes
     };
-
-    console.log(searchQuery);
 
     return this.searchService.search(searchQuery);
   }
