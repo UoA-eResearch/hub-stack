@@ -12,12 +12,8 @@ import { map } from 'rxjs/operators';
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('featured') featured: QueryList<ElementRef>;
-  @ViewChild('categories') categories: QueryList<ElementRef>;
-  @ViewChild('activities') activities: QueryList<ElementRef>;
 
   public featuredItemsDescription: string;
-  public browseDescription: string;
-  public researchActivitiesDescription: string;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -32,16 +28,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         map(x => x.data.homepageCollection.items[0])
       ).subscribe(result => {
         this.featuredItemsDescription = result.featuredItemsDescription;
-        this.browseDescription = result.researchCategories;
-        this.researchActivitiesDescription = result.researchActivities;
       })
     )
   }
 
   ngAfterViewInit(): void {
     this.homeScrollService.setFeatured(this.featured['nativeElement']);
-    this.homeScrollService.setCategories(this.categories['nativeElement']);
-    this.homeScrollService.setActivities(this.activities['nativeElement']);
   }
 
   ngOnDestroy(): void {
