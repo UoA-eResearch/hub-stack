@@ -13,7 +13,6 @@
         aria-label="Search"
         color="primary"
         (click)="search()"
-        (keydown.enter)="search()"
       >
         <mat-icon>search</mat-icon>
       </button>
@@ -33,6 +32,7 @@
         type="search"
         [(ngModel)]="searchText"
         [ngModelOptions]="{ standalone: true }"
+        (keydown.enter)="search()"
         placeholder="Search for anything"
       />
 
