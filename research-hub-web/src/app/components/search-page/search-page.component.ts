@@ -14,7 +14,7 @@ import { SearchService } from '@services/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import supportsWebP from 'supports-webp';
-import { filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
+import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 
 @Component({
@@ -96,7 +96,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       pairwise(),
       filter(([y1, y2]) => (y2 < y1 && y2 < 500)),
       throttleTime(200),
-      switchMap(() => {
+      concatMap(() => {
         return this.ngZone.run(() => {
           if (this.searchResults.length < this.totalResults) {
             return this.search(10, this.searchResults.length);
