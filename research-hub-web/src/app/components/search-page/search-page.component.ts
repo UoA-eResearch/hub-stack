@@ -1,14 +1,6 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import {
-  CategoryCollection,
-  OrgUnitCollection,
-  StageCollection,
-} from '@app/graphql/schema';
 import { EMPTY, Observable } from 'rxjs';
-import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { FilterType } from '@app/global/global-variables';
 import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType, SearchResults } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,12 +15,8 @@ import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent implements OnInit, OnDestroy {
-  public allCategories$: Observable<CategoryCollection>;
-  public allStages$: Observable<StageCollection>;
-  public allOrganisations$: Observable<OrgUnitCollection>;
   public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
-  public filterTypes = FilterType;
 
   public bannerImageUrl: string = 'https://images.ctfassets.net/vbuxn5csp0ik/dLNmMgxMJVJjdDATTpWZn/433ae5de80f78868c4fb37a256ed2801/1500_UoA_13Oct09_001.jpg';
   public isMobile: Boolean;
@@ -45,9 +33,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    public searchBarService: SearchBarService,
     public searchService: SearchService,
-    public location: Location,
     private route: ActivatedRoute,
     private router: Router,
     private deviceService: DeviceDetectorService,
@@ -60,10 +46,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.allStages$ = this.searchBarService.getAllStages();
-    this.allCategories$ = this.searchBarService.getAllCategories();
-    this.allOrganisations$ = this.searchBarService.getAllOrganisations();
-
     /**
      * this subscription reacts to changes to the search parameters, i.e. new searches
      */
@@ -148,38 +130,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     };
 
     return this.searchService.search(searchQuery);
-  }
-
-  public clearFilters() {
-    this.activeFilters = {
-      category: [],
-      stage: [],
-      relatedOrgs: []
-    };
-    this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
-  }
-
-  public removeFilterById(filterId: string, filterType: FilterType) {
-    if (filterType === FilterType.ResearchCategory) {
-      if (this.activeFilters.category.indexOf(filterId) !== -1) {
-        this.activeFilters.category = this.activeFilters.category.filter(filter => filter !== filterId);
-      }
-    }
-    if (filterType === FilterType.ResearchActivity) {
-      if (this.activeFilters.stage.indexOf(filterId) !== -1) {
-        this.activeFilters.stage = this.activeFilters.stage.filter(filter => filter !== filterId);
-      }
-    }
-    if (filterType === FilterType.Organisation) {
-      if (this.activeFilters.relatedOrgs.indexOf(filterId) !== -1) {
-        this.activeFilters.relatedOrgs = this.activeFilters.relatedOrgs.filter(filter => filter !== filterId);
-      }
-    }
-    this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
-  }
-
-  public updateSortOrder() {
-    this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
   }
 
   ngOnDestroy() {
