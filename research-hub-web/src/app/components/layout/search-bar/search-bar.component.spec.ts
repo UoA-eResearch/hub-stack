@@ -1,38 +1,35 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@app/app.material.module';
-import { SearchFilters } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { MockModule, MockProvider  } from 'ng-mocks';
-import { BehaviorSubject } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { SearchFiltersComponent } from '../search-filters/search-filters.component';
 
 import { SearchBarComponent } from './search-bar.component';
 
-xdescribe('SearchBarComponent', () => {
+describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
   let fixture: ComponentFixture<SearchBarComponent>;
 
   beforeEach(async () => {
-    const searchText$ = new BehaviorSubject<string>('');
-    const searchFilters$ = new BehaviorSubject<SearchFilters>({category: [], relatedOrgs: [], stage: []});
-
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([]),
-        MockModule(MaterialModule)
+        MockModule(MaterialModule),
+        MockModule(FormsModule)
       ],
       declarations: [
         SearchBarComponent,
         SearchFiltersComponent
       ],
       providers: [
-        MockProvider(SearchService, {
-          searchText: searchText$,
-          searchFilters: searchFilters$
-        }),
-        MockProvider(BreakpointObserver)
+        MockProvider(SearchService),
+        MockProvider(BreakpointObserver, {
+          observe: () => EMPTY
+        })
       ]
     })
     .compileComponents();
