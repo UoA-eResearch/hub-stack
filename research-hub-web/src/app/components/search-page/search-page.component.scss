@@ -5,7 +5,7 @@
 /**
  * banner Image
  */
- .no-banner {
+.no-banner {
   display: none;
 }
 
@@ -21,60 +21,9 @@
   padding: 20vh 0px;
 }
 
-// Results controls container
-.result-controls {
-  width: 100%;
-  @include size(medium) {
-    width: 100%;
-  }
-  mat-select {
-    padding: 10px;
-    background: $input-grey;
-    border: 1px solid $silver-lining;
-  }
-  span {
-    .search-results-text {
-      color: $dark-blue;
-      font-size: 24px;
-      font-weight: 500;
-      font-style: italic;
-    }
-    .search-text {
-      font-style: italic;
-    }
-    div {
-      font-size: 18px;
-    }
-  }
-}
-
-#order-label {
-  margin: 0% !important;
-  padding-right: 10px;
-  padding-top: 20px;
-}
-
-#order-picker {
-  padding-top: 10px;
-}
-
 .no-results {
   @extend .section-2;
   text-align: center;
-}
-
-// Filter Chip Indicator
-.mat-chip {
-  background-color: $dark-blue !important;
-  color: white !important;
-  font-size: 14px;
-  &.clear {
-    background-color: rgba(0, 0, 0, 0.3) !important;
-  }
-}
-
-.mat-icon {
-  color: white !important;
 }
 
 .load-more {

@@ -6,12 +6,14 @@ import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { SearchResultsListComponent } from './search-results-list/search-results-list.component';
+import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component';
 
 @NgModule({
   declarations: [
     SearchPageComponent,
     SearchBarComponent,
-    SearchResultsListComponent
+    SearchResultsListComponent,
+    SearchFilterBarComponent
   ],
   imports: [
     CommonModule,
