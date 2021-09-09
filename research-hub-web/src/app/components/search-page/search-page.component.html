@@ -1,4 +1,4 @@
-<div class="search-page-container">
+<div #searchTop class="search-page-container">
   <!-- Search Header Filter Options -->
   <ng-container class="search-header">
     <div
@@ -42,10 +42,13 @@
   <!--Load more or no results message-->
   <div
     class="eol"
-    *ngIf="!loading && searchResults.length === totalResults"
+    *ngIf="
+      !loading && searchResults.length === totalResults && totalResults !== 0
+    "
   >
     <div>No More Results</div>
   </div>
+
   <!-- No results message -->
   <div *ngIf="totalResults === 0" class="no-results">
     <p>
@@ -63,3 +66,13 @@
     </p>
   </div>
 </div>
+
+<!-- Floating up button -->
+<button
+  mat-mini-fab
+  matTooltip="Scroll to top"
+  class="floating-button"
+  (click)="searchTop.scrollIntoView({ behavior: 'smooth' })"
+>
+  <mat-icon>arrow_drop_up</mat-icon>
+</button>
