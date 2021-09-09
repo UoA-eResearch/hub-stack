@@ -1,6 +1,8 @@
 @import "variables";
 
 .sticky-bar {
+  @include mat-elevation(0);
+  @include mat-elevation-transition();
   @media (min-width: 961px) {
     position: sticky;
     top: -1px; // this is a trick to get the IntersectionObserver to react to the sticky state change https://stackoverflow.com/questions/16302483/event-to-detect-when-positionsticky-is-triggered
