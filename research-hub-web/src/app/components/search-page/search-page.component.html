@@ -1,140 +1,65 @@
 <div class="search-page-container">
-
-    <!-- Search Header Filter Options -->
-    <div class="search-header search-page-container grey-background">
-        <div fxLayout="column" ngClass.gt-sm="top-padding site-padding-2" ngClass.lt-md="top-padding site-padding">
-
-            <!-- Search Bar (wrapped in <h1> for WCAG)-->
-            <h1><app-search-bar type="search" name="search-bar" ngDefaultControl #searchText role="textbox" placeholder="Search"></app-search-bar></h1>
-
-            <!-- Vertical divider -->
-            <br>
-
-            <!-- Research Category Filters -->
-            <div id="search-filters" class="search-filters" fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column" fxLayoutGap="2%">
-                <div fxFlex>
-                    <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="categoryFilter" [(value)]="categoryFilter"
-                        name="categoryFilter" ngDefaultControl multiple placeholder="Research Categories">
-                        <mat-select-trigger>Research Categories</mat-select-trigger>
-                        <div *ngIf="allCategories$ | async as allCategories">
-                            <mat-option *ngFor="let item of allCategories.items" value="{{ item.sys.id }}">{{ item.name }}</mat-option>
-                        </div>
-                    </mat-select>
-                </div>
-
-                <!-- Research Activity Filters -->
-                <div fxFlex>
-                    <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="stageFilter" name="stageFilter" ngDefaultControl
-                        multiple placeholder="Research Activities">
-                        <mat-select-trigger>Research Activities</mat-select-trigger>
-                        <div *ngIf="allStages$ | async as allStages">
-                            <mat-option *ngFor="let item of allStages.items" value="{{ item.sys.id }}">{{ item.name }}</mat-option>
-                        </div>
-                    </mat-select>
-                </div>
-
-                <!-- Organisation Filters -->
-                <div fxFlex>
-                    <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="organisationFilter" name="organisationFilter"
-                        ngDefaultControl multiple placeholder="Organisations">
-                        <mat-select-trigger>Organisations</mat-select-trigger>
-                        <div *ngIf="allOrganisations$ | async as allOrganisations">
-                            <mat-option *ngFor="let item of allOrganisations.items" value="{{ item.sys.id }}" style="word-wrap: break-word; line-height: 1.2em;">{{ item.name }}</mat-option>
-                        </div>
-                    </mat-select>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Active Filters -->
-    <div ngClass.gt-sm="site-padding-2 section" ngClass.lt-md="site-padding section"  *ngIf="categoryFilter.length > 0 || stageFilter.length > 0 || organisationFilter.length > 0">
-        <mat-chip-list fxFlex="row wrap" *ngIf="{ allCategories: allCategories$ | async, allStages: allStages$ | async, allOrganisations: allOrganisations$ | async } as i">
-
-            <!-- Clear All -->
-            <mat-chip (click)="clear()" class="clear">
-                Clear All
-            </mat-chip>
-
-            <!-- Categories -->
-            <span  *ngIf="i.allCategories">
-                <span *ngFor="let filter of i.allCategories.items">
-                    <mat-chip *ngIf="categoryFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.ResearchCategory)">
-                        {{ filter.name }}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                </span>
-            </span>
-
-            <!-- Activities -->
-            <span *ngIf="i.allStages">
-                <span *ngFor="let filter of i.allStages.items">
-                    <mat-chip *ngIf="stageFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.ResearchActivity)">
-                        {{ filter.name }}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                </span>
-            </span>
-
-            <!-- Organisation -->
-            <span *ngIf="i.allOrganisations">
-                <span *ngFor="let filter of i.allOrganisations.items">
-                    <mat-chip *ngIf="organisationFilter.includes(filter.sys.id)" [removable]="true" (removed)="removeFilterById(filter.sys.id, filterTypes.Organisation)">
-                        {{ filter.name }}
-                        <mat-icon matChipRemove>cancel</mat-icon>
-                    </mat-chip>
-                </span>
-            </span>
-        </mat-chip-list>
-    </div>
-
-    <!-- Skeleton Loader -->
+  <!-- Search Header Filter Options -->
+  <ng-container class="search-header">
     <div
-        *ngIf="0 >= allCurrentPages.length && searchBarService.getTotalPages() != 0"
-        ngClass.gt-sm="search-content site-padding-2 section"
-        ngClass.lt-md="site-padding search-content section">
-        <ngx-skeleton-loader
-            count="10" [theme]="{ height: '80px' }" animation="pulse">
-        </ngx-skeleton-loader>
-    </div>
+      class="banner-container"
+      [ngClass]="
+        bannerImageUrl === undefined
+          ? 'no-banner'
+          : isMobile
+          ? 'mobile-banner'
+          : 'standard-banner'
+      "
+      [ngStyle]="
+        bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
+      "
+    ></div>
+  </ng-container>
 
-    <!-- Search Results -->
-    <div id="search-results" ngClass.gt-sm="search-content site-padding-2 section" ngClass.lt-md="site-padding search-content section" *ngIf="allCurrentPages.length > 0">
-        <div fxLayout="row" fxLayoutGap="5%" fxLayout.lt-sm="column" class="result-list-filter">
+  <!-- Breadcrumbs -->
+  <div class="site-padding" ngClass.lt-md="site-padding-mobile">
+    <app-breadcrumbs [contentItem]="" [title]="'Search'"></app-breadcrumbs>
+  </div>
+</div>
 
-            <!-- Results -->
-            <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
-                <h3 style="margin-bottom: 0" class="search-results-text">{{ this.searchBarService.getTotalPages() }}&nbsp;&nbsp;</h3>
-                <p *ngIf="this.searchBarService.getTotalPages() !== 1; else onlyOne" style="margin-bottom: 0">Results</p>
-                <ng-template #onlyOne><p style="margin-bottom: 0">Result</p></ng-template>
-            </span>
+<app-search-filter-bar
+  [searchText]="searchText"
+  [totalResults]="totalResults"
+  [(sortOrder)]="sortOrder"
+  [(activeFilters)]="activeFilters"
+></app-search-filter-bar>
 
-            <!-- Divider -->
-            <div fxHide.lt-md fxFlex></div>
-
-            <!-- Filtering Options -->
-            <mat-label id="order-label">Order By:</mat-label>
-            <div fxFlexOrder.lt-sm="1" fxFlex="25%">
-                <mat-select (selectionChange)="updateSearchFilters()" [(ngModel)]="sortType" ngDefaultControl
-                    placeholder="Relevance">
-                    <div>
-                        <mat-option value="">Relevance</mat-option>
-                        <mat-option value="A-Z">Alphabetical</mat-option>
-                    </div>
-                </mat-select>
-            </div>
-        </div>
-        <app-collection-list [type]="'search'" [collection]="allCurrentPages"></app-collection-list>
-    </div>
-
-    <!-- No results message -->
-    <div *ngIf="searchBarService.getTotalPages() == 0" class="no-results">
-        <p>Sorry, your search for "<i><b>{{ searchBarService.getSearchText() }}</b></i>" did not match anything on the ResearchHub.</p>
-        <p>
-            <br><b>Suggestions:</b><br>
-            Widen your filters<br>
-            Let us know what you were looking for via our <a href="{{ feedbackUrl }}">Feedback page</a><br>
-            You can try the Staff Service Centre in the <a href="{{ staffIntranet }}">Staff Intranet</a><br>
-        </p>
-    </div>
+<!-- Search Results -->
+<div
+  id="search-results"
+  ngClass.gt-sm="search-content site-padding-2 section"
+  ngClass.lt-md="site-padding search-content section"
+>
+  <app-search-results-list
+    [searchResults]="{ results: searchResults, totalResults: totalResults }"
+    [loading]="loading"
+  ></app-search-results-list>
+  <!--Load more or no results message-->
+  <div
+    class="eol"
+    *ngIf="!loading && searchResults.length === totalResults"
+  >
+    <div>No More Results</div>
+  </div>
+  <!-- No results message -->
+  <div *ngIf="totalResults === 0" class="no-results">
+    <p>
+      Sorry, your search for "<i
+        ><b>{{ searchText }}</b></i
+      >" did not match anything on the ResearchHub.
+    </p>
+    <p>
+      <br /><b>Suggestions:</b><br />
+      Widen your filters or modify your search query<br />
+      Let us know what you were looking for via our
+      <a href="{{ feedbackUrl }}">Feedback page</a><br />
+      You can try the Staff Service Centre in the
+      <a href="{{ staffIntranet }}">Staff Intranet</a><br />
+    </p>
+  </div>
 </div>

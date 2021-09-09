@@ -1,13 +1,8 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CollectionListComponent } from './collection-list.component';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { SharedModule } from '../app.shared.module';
-import { SearchBarService } from '../../search-bar/search-bar.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { MockModule, MockProvider } from 'ng-mocks';
+import { MockModule } from 'ng-mocks';
 
 describe('CollectionListComponent', () => {
   let component: CollectionListComponent;
@@ -17,14 +12,8 @@ describe('CollectionListComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CollectionListComponent],
       imports: [
-        ApolloTestingModule,
-        RouterTestingModule,
-        MockModule(CommonModule),
         MockModule(SharedModule),
         HttpClientTestingModule
-      ],
-      providers: [
-        MockProvider(SearchBarService),
       ]
     })
       .compileComponents();
@@ -46,7 +35,7 @@ describe('CollectionListComponent', () => {
 
   describe("getDefaultIcon (function)", () => {
 
-    it("Should return the lnguage icon name for a subhub", () => {
+    it("Should return the language icon name for a subhub", () => {
       expect(component.getDefaultTypeIcon('SubHub')).toEqual('language');
     });
 

@@ -1,0 +1,78 @@
+<!-- Search Results Container -->
+<mat-list role="list" *ngIf="searchResults && searchResults.results.length > 0">
+  <!-- Result Item -->
+  <mat-card
+    *ngFor="let result of searchResults.results"
+    class="card-content"
+    role="listitem"
+  >
+    <span class="card-label">{{
+      result.contentType | contentTypeDisplayName
+    }}</span>
+
+    <p
+      class="card-title"
+      [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
+    >
+      <span>{{ result.title }}</span
+      >&nbsp;
+      <mat-icon *ngIf="result.ssoProtected" matTooltip="SSO Login Required"
+        >lock</mat-icon
+      >
+    </p>
+
+    <p
+      class="card-summary"
+      [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
+      [innerHTML]="result.summary"
+    ></p>
+
+    <mat-chip-list
+      class="result-chips"
+      *ngIf="result.chips"
+      aria-label="result chips"
+    >
+      <mat-chip *ngFor="let chip of result.chips" aria-label="result chip">{{
+        chip
+      }}</mat-chip>
+    </mat-chip-list>
+  </mat-card>
+</mat-list>
+<!-- Skeleton Loader -->
+<div *ngIf="loading">
+  <div *ngFor="let i of [].constructor(10)" class="skeleton-wrapper">
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="progress-dark"
+        [theme]="{
+          width: '50%',
+          height: '24px',
+          'border-radius': '0px',
+          'margin-bottom': '8px',
+          'margin-top': '12px'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="progress-dark"
+        [theme]="{
+          width: '100%',
+          height: '15px',
+          'border-radius': '0px',
+          'margin-bottom': '2px'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="progress-dark"
+        [theme]="{
+          width: '30%',
+          'border-radius': '10px',
+          height: '15px'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+  </div>
+</div>
