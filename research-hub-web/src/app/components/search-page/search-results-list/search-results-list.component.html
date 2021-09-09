@@ -32,9 +32,12 @@
       *ngIf="result.chips"
       aria-label="result chips"
     >
-      <mat-chip *ngFor="let chip of result.chips" aria-label="result chip">{{
-        chip.name
-      }}</mat-chip>
+      <mat-chip
+        *ngFor="let chip of result.chips"
+        aria-label="result chip"
+        (click)="searchCategory.emit(chip.id)"
+        >{{ chip.name }}</mat-chip
+      >
     </mat-chip-list>
   </mat-card>
 </mat-list>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchResults } from '@app/global/searchTypes';
 
 @Component({
@@ -9,4 +9,6 @@ import { SearchResults } from '@app/global/searchTypes';
 export class SearchResultsListComponent {
   @Input() loading = false;
   @Input() searchResults: SearchResults = null;
+
+  @Output() searchCategory = new EventEmitter<string>();
 }
