@@ -16,16 +16,16 @@
         <div>
           <mat-card-title class="card-title">
             <a selected class="title-text" [routerLink]="['/search']"
-              (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
-              (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">{{
+              (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id]);searchBarService.setStage([])"
+              (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id]);searchBarService.setStage([])">{{
               item.name }}</a>
           </mat-card-title>
           <mat-card-content class="card-summary">{{ item.description }}</mat-card-content>
         </div>
         <mat-card-actions>
           <a class="tile-button" [routerLink]="['/search']"
-            (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])"
-            (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id])">
+            (click)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id]);searchBarService.setStage([])"
+            (keydown.enter)="searchBarService.setSearchText('');searchBarService.setCategory([item.sys.id]);searchBarService.setStage([])">
             <button role="button" aria-label="view-category" mat-flat-button class="standard-button">
               <span>View Category</span>
             </button>

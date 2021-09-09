@@ -29,7 +29,7 @@
             *ngFor="let item of allStages"
             (click)="sidenav.toggle()"
             [routerLink]="'/search'"
-            (click)="searchByCategory(item.sys.id)"
+            (click)="searchByActivity(item.sys.id)"
           >
             {{ item.name }}
           </mat-list-item>

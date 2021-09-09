@@ -31,8 +31,12 @@
   <button
     role="button"
     aria-label="search"
-    (click)="searchBarService.setSearchText('')"
-    (keydown.enter)="searchBarService.setSearchText('')"
+    (click)="searchBarService.setSearchText('');
+      searchBarService.setCategory([]);
+      searchBarService.setStage([])"
+    (keydown.enter)="searchBarService.setSearchText('');
+      searchBarService.setCategory([]);
+      searchBarService.setStage([])"
     mat-icon-button
     fxHide.gt-sm
     routerLink="/search"
@@ -95,11 +99,13 @@
       [routerLink]="'/search'"
       (click)="
         searchBarService.setSearchText('');
-        searchBarService.setCategory([item.sys.id])
+        searchBarService.setCategory([item.sys.id]);
+        searchBarService.setStage([])
       "
       (keydown.enter)="
         searchBarService.setSearchText('');
-        searchBarService.setCategory([item.sys.id])
+        searchBarService.setCategory([item.sys.id]);
+        searchBarService.setStage([])
       "
     >
       {{ item.name }}
@@ -148,11 +154,13 @@
       [routerLink]="'/search'"
       (click)="
         searchBarService.setSearchText('');
-        searchBarService.setStage([item.sys.id])
+        searchBarService.setStage([item.sys.id]);
+        searchBarService.setCategory([])
       "
       (keydown.enter)="
         searchBarService.setSearchText('');
-        searchBarService.setStage([item.sys.id])
+        searchBarService.setStage([item.sys.id]);
+        searchBarService.setCategory([])
       "
     >
       {{ item.name }}
