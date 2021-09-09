@@ -18,7 +18,7 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  padding: 20vh 0px;
+  padding: 10vh 0px;
 }
 
 .no-results {
@@ -30,4 +30,13 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 15vw;
+  @media (max-width: 960px) {
+    right: 20px;
+  }
 }

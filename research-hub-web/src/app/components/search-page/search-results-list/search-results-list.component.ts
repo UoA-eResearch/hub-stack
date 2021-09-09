@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchResults } from '@app/global/searchTypes';
+import { SearchService } from '@services/search.service';
 
 @Component({
   selector: 'app-search-results-list',
@@ -9,4 +10,8 @@ import { SearchResults } from '@app/global/searchTypes';
 export class SearchResultsListComponent {
   @Input() loading = false;
   @Input() searchResults: SearchResults = null;
+
+  constructor(
+    public searchService: SearchService
+  ) { }
 }
