@@ -42,7 +42,9 @@
   <!--Load more or no results message-->
   <div
     class="eol"
-    *ngIf="!loading && searchResults.length === totalResults"
+    *ngIf="
+      !loading && searchResults.length === totalResults && totalResults !== 0
+    "
   >
     <div>No More Results</div>
   </div>
