@@ -274,6 +274,8 @@ module.exports.search = async (event, context) => {
         },
         sort: sort,
         highlight: {
+          pre_tags : ["<b>"],
+          post_tags : ["</b>"],
           fragment_size: 300,
           highlight_query: {simple_query_string: {
             query: queryString,

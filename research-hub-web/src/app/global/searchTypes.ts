@@ -24,7 +24,12 @@ export interface SearchResult {
   slug: string;
   ssoProtected: boolean;
   contentType: ContentType;
-  chips: string[];
+  chips: SearchResultChip[];
+}
+
+export interface SearchResultChip {
+  name: string;
+  id: string;
 }
 
 export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
