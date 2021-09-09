@@ -1,6 +1,6 @@
 <div *ngIf="featuredItems$ | async; let featuredItems">
   <app-content-container>
-    <app-content-title [title]="'Featured'" [description]="description" [lightColorText]="true"></app-content-title>
+    <app-content-title [title]="title"></app-content-title>
     <ng-container *ngIf="featuredItems.items.length > 0">
       <app-cards [flex]="'row'" [contentItem]="featuredItems"></app-cards>
     </ng-container>
