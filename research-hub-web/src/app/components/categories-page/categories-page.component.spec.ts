@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategoriesPageComponent } from './categories-page.component';
-import { SearchBarService } from '../../search-bar/search-bar.service';
+import { SearchBarService } from './../search-bar/search-bar.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
