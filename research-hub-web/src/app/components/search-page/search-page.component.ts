@@ -1,14 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  CategoryCollection,
-  OrgUnitCollection,
-  StageCollection,
-} from '@app/graphql/schema';
-import { Observable } from 'rxjs';
-import { Location } from '@angular/common';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { FilterType } from '@app/global/global-variables';
+import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType, SearchResults } from '@app/global/searchTypes';
+import { SearchService } from '@services/search.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import supportsWebP from 'supports-webp';
+import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
+import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-search-page',
@@ -16,105 +15,124 @@ import { FilterType } from '@app/global/global-variables';
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent implements OnInit, OnDestroy {
-  public allCategories$: Observable<CategoryCollection>;
-  public allStages$: Observable<StageCollection>;
-  public allOrganisations$: Observable<OrgUnitCollection>;
-  public resultSub$: Subscription;
-  public sortType = this.searchBarService.getSort();
-  public allCurrentPages = [];
-  public categoryFilter = this.searchBarService.getCategory();
-  public stageFilter = this.searchBarService.getStage();
-  public organisationFilter = this.searchBarService.getOrganisation();
   public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
-  public filterTypes = FilterType;
-  public categoryChangeSub;
-  public stageChangeSub;
-  public organisationChangeSub;
+
+  public bannerImageUrl: string = 'https://images.ctfassets.net/vbuxn5csp0ik/dLNmMgxMJVJjdDATTpWZn/433ae5de80f78868c4fb37a256ed2801/1500_UoA_13Oct09_001.jpg';
+  public isMobile: Boolean;
+  public supportsWebp: Boolean;
+
+  public searchResults: SearchResult[] = [];
+  public totalResults: number;
+  public searchText: string;
+  public activeFilters: SearchFilters;
+  public sortOrder: SortOrder;
+
+  public loading: boolean = true;
+
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
-    public searchBarService: SearchBarService,
-    public location: Location
-    ) { }
-
-  async ngOnInit() {
-    this.allStages$ = this.searchBarService.getAllStages();
-    this.allCategories$ = this.searchBarService.getAllCategories();
-    this.allOrganisations$ = this.searchBarService.getAllOrganisations();
-
-    this.categoryChangeSub = this.searchBarService.searchCategoryChange.subscribe(searchCategory => {
-      this.categoryFilter = searchCategory;
-    });
-
-    this.stageChangeSub = this.searchBarService.searchStageChange.subscribe(searchStage => {
-      this.stageFilter = searchStage;
-    });
-
-    this.organisationChangeSub = this.searchBarService.searchOrganisationChange.subscribe(searchOrganisation => {
-      this.organisationFilter = searchOrganisation;
-    });
-
-    this.searchBarService.createResultsList();
-    this.initialPages();
+    public searchService: SearchService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private deviceService: DeviceDetectorService,
+    private scrollDispatcher: ScrollDispatcher,
+    private ngZone: NgZone,
+  ) {
+    this.detectDevice();
+    this.detectWebP();
+    this.router.onSameUrlNavigation = 'reload';
   }
 
-  // Clear All Filters
-  public clear () {
-    this.categoryFilter = [];
-    this.stageFilter = [];
-    this.organisationFilter = [];
-    this.searchBarService.setCategory([]);
-    this.searchBarService.setStage([]);
-    this.searchBarService.setOrganisation([]);
-    this.searchBarService.setContentType([]);
-    this.searchBarService.createResultsList();
+  ngOnInit() {
+    /**
+     * this subscription reacts to changes to the search parameters, i.e. new searches
+     */
+    this.subscriptions.add(this.route.queryParamMap
+      .pipe(
+        tap(params => {
+          this.searchText = params.get('q') || '';
+          this.activeFilters = {
+            category: params.getAll('cat'),
+            stage: params.getAll('ra'),
+            relatedOrgs: params.getAll('org')
+          }
+          this.sortOrder = params.get('sort') as SortOrder || 'relevance';
+          this.searchResults = [];
+          this.totalResults = 0;
+        }),
+        switchMap(() => this.search())
+      ).subscribe(searchResults => {
+        this.searchResults = searchResults.results;
+        this.totalResults = searchResults.totalResults;
+        this.loading = false;
+      })
+    );
+
+    /**
+     * this subscription implements infinite scrolling
+     */
+    this.subscriptions.add(this.scrollDispatcher.scrolled().pipe(
+      map((event: CdkScrollable) => event.measureScrollOffset("bottom")),
+      pairwise(),
+      filter(([y1, y2]) => (y2 < y1 && y2 < 500)),
+      throttleTime(200),
+      concatMap(() => {
+        return this.ngZone.run(() => {
+          if (this.searchResults.length < this.totalResults) {
+            return this.search(10, this.searchResults.length);
+          } else {
+            return EMPTY;
+          }
+        })
+      })
+    ).subscribe((results) => {
+      if (results) {
+        this.ngZone.run(() => {
+          this.searchResults = this.searchResults.concat(results.results);
+          this.loading = false;
+        })
+      }
+    }))
   }
 
-  // Create the initial page lsit
-  public async initialPages() {
+  detectDevice() {
+    this.isMobile = this.deviceService.isMobile();
+  }
 
-    // Updating results when searched
-    this.resultSub$ = this.searchBarService.resultsChange.subscribe(data => {
-      this.allCurrentPages = data.map(x => ({ ...x }));
+  detectWebP() {
+    supportsWebP.then(supported => {
+      this.supportsWebp = supported;
     });
   }
 
-  // Update search filters
-  public updateSearchFilters() {
-    this.searchBarService.setSort(this.sortType);
-    this.searchBarService.setStage(this.stageFilter);
-    this.searchBarService.setCategory(this.categoryFilter);
-    this.searchBarService.setOrganisation(this.organisationFilter);
-    this.searchBarService.setCurrentPage(1);
-    this.searchBarService.createResultsList();
-    this.initialPages();
-  }
+  /**
+   * Executes a search using the current search text, filters and sort order.
+   *
+   * @param size - The maximum amount of hits to be returned
+   * @param from - The offset from the first result
+   * @returns a SearchResults observable
+   *
+   */
+  private search(size: number = 10, from: number = 0): Observable<SearchResults> {
+    this.loading = true;
 
-  public removeFilterById(filterId: string, filterType: FilterType) {
-    let filter;
-    if (filterType === FilterType.ResearchCategory) {
-      filter = this.categoryFilter;
-    }
-    if (filterType === FilterType.ResearchActivity) {
-      filter = this.stageFilter;
-    }
-    if (filterType === FilterType.Organisation) {
-      filter = this.organisationFilter;
-    }
+    const contentTypes: ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
 
-    const index = filter.indexOf(filterId);
-    if (index > -1) {
-      filter.splice(index, 1);
-    }
+    const searchQuery: SearchQuery = {
+      query: this.searchText,
+      size: size,
+      from: from,
+      filters: this.activeFilters,
+      sort: this.sortOrder,
+      includeContentTypes: contentTypes
+    };
 
-    this.updateSearchFilters();
+    return this.searchService.search(searchQuery);
   }
 
   ngOnDestroy() {
-    this.resultSub$.unsubscribe();
-    this.categoryChangeSub.unsubscribe();
-    this.stageChangeSub.unsubscribe();
-    this.organisationChangeSub.unsubscribe();
-    this.allCurrentPages = [];
+    this.subscriptions.unsubscribe();
   }
 }

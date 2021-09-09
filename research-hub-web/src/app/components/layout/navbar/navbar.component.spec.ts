@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockInstance, MockModule, MockProvider, MockService } from 'ng-mocks';
+import { MockComponent, MockInstance, MockModule, MockProvider, MockService } from 'ng-mocks';
 import { AppLayoutModule } from '../layout.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -9,21 +9,25 @@ import { LoginService } from '@uoa/auth';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { NavbarComponent } from './navbar.component';
 import { EMPTY } from 'rxjs';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
-  
-  beforeEach(async () => {    
+
+  beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavbarComponent ],
+      declarations: [
+        NavbarComponent,
+        MockComponent(SearchBarComponent)
+      ],
       imports: [
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([]),
         MockModule(AppLayoutModule),
-        MockModule(MaterialModule),
+        MockModule(MaterialModule)
       ],
-      providers: [ 
+      providers: [
         MockProvider(SearchBarService),
         MockProvider(LoginService),
         MockProvider(HomeScrollService)
