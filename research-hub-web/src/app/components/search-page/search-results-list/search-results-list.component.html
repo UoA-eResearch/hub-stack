@@ -5,6 +5,7 @@
     *ngFor="let result of searchResults.results"
     class="card-content"
     role="listitem"
+    [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
   >
     <span class="card-label">{{
       result.contentType | contentTypeDisplayName
@@ -12,7 +13,6 @@
 
     <p
       class="card-title"
-      [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
     >
       <span>{{ result.title }}</span
       >&nbsp;
@@ -23,7 +23,6 @@
 
     <p
       class="card-summary"
-      [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
       [innerHTML]="result.summary"
     ></p>
 
