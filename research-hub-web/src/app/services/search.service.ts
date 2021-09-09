@@ -37,7 +37,9 @@ export class SearchService {
             slug: element._source.fields.slug["en-US"],
             ssoProtected: element._source.fields.ssoProtected["en-US"],
             contentType : element._source.sys.contentType.sys.id,
-            chips: element._source.fields.category?.["en-US"].map(x => x.name)
+            chips: element._source.fields.category?.["en-US"].map(x => {
+              return {name: x.name, id: x.sys.id};
+            })
           };
 
           results.push(result);
