@@ -132,6 +132,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     return this.searchService.search(searchQuery);
   }
 
+  public searchCategory(id: string) {
+    this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams('', { category: [id], stage: [], relatedOrgs: [] }) });
+  }
+
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
