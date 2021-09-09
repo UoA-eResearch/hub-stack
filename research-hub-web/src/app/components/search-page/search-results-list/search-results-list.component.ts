@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchResults } from '@app/global/searchTypes';
+import { SearchService } from '@services/search.service';
 
 @Component({
   selector: 'app-search-results-list',
@@ -10,5 +11,7 @@ export class SearchResultsListComponent {
   @Input() loading = false;
   @Input() searchResults: SearchResults = null;
 
-  @Output() searchCategory = new EventEmitter<string>();
+  constructor(
+    public searchService: SearchService
+  ) { }
 }
