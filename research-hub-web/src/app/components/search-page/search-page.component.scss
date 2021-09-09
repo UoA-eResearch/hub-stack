@@ -36,4 +36,7 @@
   position: fixed;
   bottom: 20px;
   right: 15vw;
+  @media (max-width: 960px) {
+    right: 20px;
+  }
 }
