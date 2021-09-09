@@ -1,29 +1,39 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import {
   AllStagesGQL,
-  StageCollection
+  StageCollection,
+  GetHomepageGQL
 } from '@graphql/schema';
-import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, pluck } from 'rxjs/operators';
 
 @Component({
   selector: 'app-activities-page',
   templateUrl: './activities-page.component.html',
   styleUrls: ['./activities-page.component.scss']
 })
-export class ActivitiesPageComponent implements OnInit {
+export class ActivitiesPageComponent implements OnInit, OnDestroy {
   public title: string = 'Research Activities';
-  public description: string = 'From project inception to completion, explore what resources are available at each stage of the research lifecycle.';
+  public description: string;
   public allStages$: Observable<StageCollection>;
+  private subscriptions: Subscription = new Subscription();
 
   constructor(
     public allStagesGQL: AllStagesGQL,
+    private getHomepageGQL: GetHomepageGQL,
     public searchBarService: SearchBarService
   ) { }
 
   async ngOnInit() {
     this.allStages$ = this.getAllStages();
+    this.subscriptions.add(
+      this.getHomepageGQL.fetch().pipe(
+        map(x => x.data.homepageCollection.items[0])
+      ).subscribe(result => {
+        this.description = result.researchActivities;
+      })
+    )
   }
 
   // Get all research stages
@@ -32,5 +42,9 @@ export class ActivitiesPageComponent implements OnInit {
       return this.allStagesGQL.fetch()
         .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
     } catch (e) { console.error('Error loading all stages:', e) };
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
