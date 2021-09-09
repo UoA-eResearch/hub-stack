@@ -77,7 +77,13 @@ export class SideNavComponent implements OnInit, OnDestroy {
   searchByCategory(id: string) {
     this.searchBarService.setSearchText('');
     this.searchBarService.setCategory([id]);
-    console.log(id);
+    this.searchBarService.setStage([]);
+  }
+
+  searchByActivity(id: string) {
+    this.searchBarService.setSearchText('');
+    this.searchBarService.setCategory([]);
+    this.searchBarService.setStage([id]);
   }
 
   ngOnDestroy(): void {
