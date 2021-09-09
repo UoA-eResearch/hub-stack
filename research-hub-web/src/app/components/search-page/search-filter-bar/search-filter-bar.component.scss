@@ -12,24 +12,23 @@
   .result-controls {
     width: 100%;
     margin: 10px 0;
+    .result-total {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .applied-filters {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 1 1 auto;
+    }
     mat-select {
       padding: 10px;
       background: $input-grey;
       border: 1px solid $silver-lining;
-    }
-    span {
-      .search-results-text {
-        color: $dark-blue;
-        font-size: 24px;
-        font-weight: 500;
-        font-style: italic;
-      }
-      .search-text {
-        font-style: italic;
-      }
-      div {
-        font-size: 18px;
-      }
     }
   }
   .active-filters {

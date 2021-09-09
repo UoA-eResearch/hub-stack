@@ -2,23 +2,41 @@
 <div #stickyBar class="sticky-bar">
   <div
     fxLayout="row"
-    fxLayoutGap="5%"
+    fxLayoutGap="10px"
     fxLayout.lt-sm="column"
     class="result-controls"
     ngClass.gt-sm="site-padding-2"
     ngClass.lt-md="site-padding"
   >
     <!-- Total Results -->
-    <span fxLayout="row" fxFlexOrder.lt-sm="2" fxLayoutAlign="center end">
-      <div class="search-results-text">{{ totalResults }}&nbsp;&nbsp;</div>
-      <div>
-        Result{{ totalResults !== 1 ? "s" : "" }} for
-        <span class="search-text">"{{ searchText }}"</span>
-      </div>
-    </span>
+    <div class="result-total">
+      <span>
+        <b>{{ totalResults }}&nbsp;</b>Result{{
+          totalResults !== 1 ? "s " : " "
+        }}
+        for "{{ searchText }}"
+      </span>
+    </div>
 
-    <!-- Divider -->
-    <div fxHide.lt-sm fxFlex></div>
+    <div class="applied-filters">
+      <span>
+        Filters:
+        <ng-container *ngIf="activeFilters?.category?.length > 0">
+          <b>{{activeFilters.category.length}}</b>
+          {{activeFilters.category.length === 1 ? 'category' : 'categories'}}
+        </ng-container>
+
+        <ng-container *ngIf="activeFilters?.stage?.length > 0">
+          <b>{{activeFilters.stage.length}}</b>
+          {{activeFilters.stage.length === 1 ? 'activity' : 'activities'}}
+        </ng-container>
+
+        <ng-container *ngIf="activeFilters?.relatedOrgs?.length > 0">
+          <b>{{activeFilters.relatedOrgs.length}}</b>
+          {{activeFilters.relatedOrgs.length === 1 ? 'organisation' : 'organisations'}}
+        </ng-container>
+      </span>
+    </div>
 
     <!-- Sort Options -->
     <mat-label id="order-label">Order By:</mat-label>
@@ -29,11 +47,9 @@
         ngDefaultControl
         placeholder="Relevance"
       >
-        <div>
-          <mat-option value="relevance">Relevance</mat-option>
-          <mat-option value="A-Z">A-Z</mat-option>
-          <mat-option value="Z-A">Z-A</mat-option>
-        </div>
+        <mat-option value="relevance">Relevance</mat-option>
+        <mat-option value="A-Z">A-Z</mat-option>
+        <mat-option value="Z-A">Z-A</mat-option>
       </mat-select>
     </div>
   </div>
