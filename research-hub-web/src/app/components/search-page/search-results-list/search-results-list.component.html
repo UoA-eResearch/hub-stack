@@ -11,9 +11,7 @@
       result.contentType | contentTypeDisplayName
     }}</span>
 
-    <p
-      class="card-title"
-    >
+    <p class="card-title">
       <span>{{ result.title }}</span
       >&nbsp;
       <mat-icon *ngIf="result.ssoProtected" matTooltip="SSO Login Required"
@@ -21,10 +19,7 @@
       >
     </p>
 
-    <p
-      class="card-summary"
-      [innerHTML]="result.summary"
-    ></p>
+    <p class="card-summary" [innerHTML]="result.summary"></p>
 
     <mat-chip-list
       class="result-chips"
@@ -34,7 +29,14 @@
       <mat-chip
         *ngFor="let chip of result.chips"
         aria-label="result chip"
-        (click)="searchCategory.emit(chip.id)"
+        routerLink="/search"
+        [queryParams]="
+          searchService.generateQueryParams('', {
+            category: [chip.id],
+            stage: [],
+            relatedOrgs: []
+          })
+        "
         >{{ chip.name }}</mat-chip
       >
     </mat-chip-list>
