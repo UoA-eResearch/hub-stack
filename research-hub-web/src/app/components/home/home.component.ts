@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild } from '@angular/core';
-import { GetHomepageGQL } from '@app/graphql/schema';
+import { GetHomepageGQL, Homepage } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('featured') featured: QueryList<ElementRef>;
 
-  public featuredItemsDescription: string;
+  public homePage: Homepage;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.getHomepageGQL.fetch().pipe(
         map(x => x.data.homepageCollection.items[0])
       ).subscribe(result => {
-        this.featuredItemsDescription = result.featuredItemsDescription;
+        this.homePage = result as Homepage;
       })
     )
   }

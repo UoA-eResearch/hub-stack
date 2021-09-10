@@ -14,10 +14,11 @@ import supportsWebP from 'supports-webp';
 })
 export class BannerImageComponent implements OnInit {
   public bannerImageUrl$: Observable<string>;
+  public logoImageUrl$: Observable<string>;
 
   public searchText = '';
-  public title = "Welcome to the ResearchHub";
-  public summary = "The ResearchHub connects you with people, resources, and services from across the University to enhance and accelerate your research.";
+  public title = "Find Services, Resources and People to accelerate your research";
+  public aucklandUniUrl = 'https://auckland.ac.nz';
 
   constructor(
     public homeScrollService: HomeScrollService,
@@ -32,6 +33,8 @@ export class BannerImageComponent implements OnInit {
       // we detect webP in the async request for the URL, because it seems to be required for css background to work properly
       switchMap(async url => (await supportsWebP) ? url + '?fm=webp' : url)
     )
+
+    // TODO: get UoA logo image url from CMS
   }
 
   // Adding search bar in here for now
