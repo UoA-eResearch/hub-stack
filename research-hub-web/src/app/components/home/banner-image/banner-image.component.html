@@ -1,65 +1,27 @@
-<div class="min-height-fullscreen">
+<div>
   <div
     class="banner-container-home"
     *ngIf="bannerImageUrl$ | async; let url;"
     style.background-image="linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url( {{ url }}  )"
   >
     <!-- Homepage Banner -->
-    <div class="banner-content-home">
-      <div class="banner-text">
-        <!-- Title & Summary -->
-        <h1 class="page-title" role="heading" aria-level="1">
-          <b>Research</b><span style="font-weight: 100 !important">Hub</span>
-        </h1>
-        <p class="page-summary">{{ summary }}</p>
-        <br />
-        <div class="initial-search-outer">
-          <mat-form-field class="initial-search">
-            <!-- Search Bar -->
-            <input
-              role="textbox"
-              autofocus
-              matInput
-              (keydown.enter)="search()"
-              [(ngModel)]="searchText"
-              placeholder="Search"
-            />
-            <button
-              role="button"
-              matSuffix
-              *ngIf="searchText"
-              (click)="clearSearchText()"
-              (keydown.enter)="clearSearchText()"
-              mat-icon-button
-            >
-              <mat-icon>close</mat-icon>
-            </button>
-            <button
-              matSuffix
-              role="button"
-              aria-label="search"
-              (keydown.enter)="search()"
-              (click)="search()"
-              mat-icon-button
-            >
-              <mat-icon>search</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <br /><br />
-        <span
-          class="explore"
-          (click)="this.homeScrollService.scrollTo('Featured')"
-          (keydown.enter)="this.homeScrollService.scrollTo('Featured')"
-        >
-          <p class="page-summary">Explore</p>
-          <img
-            class="explore-arrow"
-            src="assets/components/white-arrow.png"
-            width="25"
-            alt="explore-arrow"
-          />
-        </span>
+    <div 
+      class="banner-content-home site-padding"
+      ngClass.lt-md="site-padding-mobile"
+      fxLayout="row wrap"
+      fxLayoutAlign="space-between center"
+      fxLayoutAlign.lt-md="center space-around"
+      fxLayoutGap="2vw"
+    >
+      <div class="banner-text" fxFlex="5 0 70%" fxFlex.lt-md="1 1 auto">
+        <!-- Title -->
+        <h1 class="page-title" role="heading" aria-level="1">{{ title }}</h1>
+      </div>
+      <div class="logo-img-container" fxFlex="1 0 auto">
+        <!-- UoA Logo -->
+        <a [href]="aucklandUniUrl" target="_blank" >
+          <img class="logo-img" src="assets/imgs/UOA-VR-RGB.png" alt="uoa-logo">
+        </a>
       </div>
     </div>
   </div>
