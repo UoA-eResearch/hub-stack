@@ -14,6 +14,7 @@ import { filter } from 'rxjs/operators';
 export class SearchBarComponent implements OnInit, OnDestroy {
   @ViewChild('searchBarContainer') searchBarContainer: ElementRef;
   @ViewChild('searchBox') searchBox: ElementRef;
+  @ViewChild('filterContent') filterContent: ElementRef
 
   public searchText: string;
   public activeFilters: SearchFilters;
@@ -33,6 +34,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       if (
         e.target !== this.searchBarContainer.nativeElement
         && !this.searchBarContainer.nativeElement.contains(e.target)
+        && e.target !== this.filterContent.nativeElement
+        && !this.filterContent.nativeElement.contains(e.target)
       ) {
         this.showMobileSearch = false;
         this.showFilters = false;
