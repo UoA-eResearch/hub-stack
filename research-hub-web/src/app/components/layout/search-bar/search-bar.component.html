@@ -50,15 +50,6 @@
           >tune</mat-icon
         >
       </button>
-
-      <!--Filter content-->
-      <div class="filter-content">
-        <app-search-filters
-          *ngIf="showFilters"
-          [(activeFilters)]="activeFilters"
-          (search)="search()"
-        ></app-search-filters>
-      </div>
     </form>
   </div>
 
@@ -74,4 +65,13 @@
   >
     <mat-icon>search</mat-icon>
   </button>
+</div>
+
+<!--Filter content-->
+<div class="filter-content">
+  <app-search-filters
+    *ngIf="showFilters"
+    [(activeFilters)]="activeFilters"
+    (search)="search()"
+  ></app-search-filters>
 </div>

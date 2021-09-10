@@ -3,11 +3,19 @@
 
 $mobile-max-width: 960px;
 
+:host {
+  position: relative;
+  @media (max-width: $mobile-max-width) {
+    position: static;
+  }
+}
+
 .search-bar-outer {
   height: 64px;
   width: 500px;
-  flex-grow: 2;
-  padding: 10px 0px;
+  padding: 7px 0px;
+  position: relative;
+  z-index: 1000;
   @media (max-width: $mobile-max-width) {
     position: absolute;
     top: 0;
@@ -38,23 +46,11 @@ $mobile-max-width: 960px;
       background: transparent;
       flex-grow: 1;
       flex-shrink: 1;
-      font-size: 18px;
+      font-size: 20px;
       font: "National";
       &:focus {
         outline: none;
       }
-    }
-
-    .filter-content {
-      position: absolute;
-      top: 64px;
-      @media (max-width: $mobile-max-width) {
-        top: 56px;
-        height: calc(100vh - 56px);
-      }
-      z-index: 999;
-      background-color: white;
-      @include mat-elevation(5);
     }
   }
 }
@@ -65,4 +61,19 @@ $mobile-max-width: 960px;
 
 .show {
   display: block;
+}
+
+.filter-content {
+  position: absolute;
+  top: 64px;
+  left: -255px;
+  border-radius: 0 0 5px 5px;
+  @media (max-width: $mobile-max-width) {
+    top: 56px;
+    left: 0px;
+    height: calc(100vh - 56px);
+  }
+  z-index: 999;
+  background-color: white;
+  @include mat-elevation(5);
 }
