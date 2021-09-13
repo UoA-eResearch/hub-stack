@@ -79,12 +79,18 @@
 
           <mat-card-title>
             <h4>
-              <a class="card-title" *ngIf="content.maoriName" href="{{ content.link }}" target="_blank"
+              <a class="card-title" *ngIf="content.link && content.maoriName; else maoriNameNoLink" href="{{ content.link }}" target="_blank"
                 style="font-weight: lighter">{{ content['maoriName'] }}&nbsp;</a>
-              <a class="card-title" href="{{ content.link }}" target="_blank">{{ content['name'] }}</a>
+              <a class="card-title" *ngIf="content.link; else noLink" href="{{ content.link }}" target="_blank">{{ content['name'] }}</a>
               <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
             </h4>
           </mat-card-title>
+          <ng-template #maoriNameNoLink>
+            <span class="card-title" *ngIf="content.maoriName" style="font-weight: lighter">{{ content['maoriName'] }}</span>
+          </ng-template>
+          <ng-template #noLink>
+            <span class="card-title" *ngIf="content.name">{{ content['name'] }}</span>
+          </ng-template>
 
           <mat-card-content>
             <span *ngIf="content.__typename == 'Person'" class="card-summary contact-card-summary">
