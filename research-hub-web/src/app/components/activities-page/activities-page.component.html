@@ -18,11 +18,19 @@
 
           <!-- Panel Button -->
           <div class="inner-panel">
-            <div selected [routerLink]="['/search']"
-              (click)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id]);searchBarService.setCategory([])"
-              (keydown.enter)="searchBarService.setSearchText('');searchBarService.setStage([item.sys.id]);searchBarService.setCategory([])">
+            <div>
+              <a routerLink="/search"
+              [queryParams]="
+                searchService.generateQueryParams('', {
+                  category: [],
+                  stage: [item.sys.id],
+                  relatedOrgs: []
+                })
+              ">
               <h3>{{ item.name }}</h3>
               <p>{{ item.description }}</p>
+              </a>
+              
             </div>
           </div>
 
