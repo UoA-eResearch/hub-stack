@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { SearchQuery, SearchResults } from '@app/global/searchTypes';
 import { environment } from '@environments/environment';
-import { skip, switchMap } from 'rxjs/operators';
+import { skip } from 'rxjs/operators';
 
 import { SearchService } from './search.service';
 
