@@ -3,11 +3,20 @@
 
 $mobile-max-width: 960px;
 
+// position the host element relative so we can position filter content relative to the host element instead of the body
+:host {
+  position: relative;
+  @media (max-width: $mobile-max-width) {
+    position: static;
+  }
+}
+
 .search-bar-outer {
   height: 64px;
   width: 500px;
-  flex-grow: 2;
-  padding: 10px 0px;
+  padding: 7px 0px;
+  position: relative;
+  z-index: 1000;
   @media (max-width: $mobile-max-width) {
     position: absolute;
     top: 0;
@@ -18,23 +27,19 @@ $mobile-max-width: 960px;
     display: none;
   }
 
-  .search-bar-inner:focus-within {
-    background-color: white;
-  }
-
   .search-bar-inner {
+    background-color: white;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
-    border: none;
+    border: 1px solid transparent;
     padding: 2px;
     border-radius: 5px;
     @media (max-width: $mobile-max-width) {
       border-radius: 0;
     }
-    background-color: white;
     height: 100%;
 
     input {
@@ -48,17 +53,6 @@ $mobile-max-width: 960px;
         outline: none;
       }
     }
-
-    .filter-content {
-      position: absolute;
-      top: 64px;
-      @media (max-width: $mobile-max-width) {
-        top: 56px;
-        height: calc(100vh - 56px);
-      }
-      z-index: 1000;
-      background-color: white;
-    }
   }
 }
 
@@ -68,4 +62,19 @@ $mobile-max-width: 960px;
 
 .show {
   display: block;
+}
+
+.filter-content {
+  position: absolute;
+  top: 64px;
+  left: -255px;
+  border-radius: 0 0 5px 5px;
+  @media (max-width: $mobile-max-width) {
+    top: 56px;
+    left: 0px;
+    height: calc(100vh - 56px);
+  }
+  z-index: 999;
+  background-color: white;
+  @include mat-elevation(5);
 }

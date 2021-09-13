@@ -62,7 +62,7 @@ hr {
     }
   }
   ol li::marker {
-    content: counters(ol-counter, '.');
+    content: counters(ol-counter, ".");
     position: absolute;
     color: $light-blue;
     font-weight: bold;
@@ -101,8 +101,6 @@ hr {
     margin-left: 0;
   }
 }
-
-
 
 /*
  * Text styles
@@ -194,6 +192,13 @@ mat-expansion-panel {
 }
 .cdk-virtual-scroll-content-wrapper {
   position: relative !important;
+}
+
+app-search-filters {
+  div.mat-list-text {
+    font-size: 18px;
+    font-weight: normal;
+  }
 }
 
 /**
@@ -359,7 +364,8 @@ h2.maori-proverb {
 /**
  *  Search bar
  */
-.mat-form-field-ripple, .mat-form-field-underline {
+.mat-form-field-ripple,
+.mat-form-field-underline {
   background-color: rgba(200, 200, 200, 0.6) !important;
 }
 
