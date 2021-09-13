@@ -2,7 +2,7 @@
   <app-content-container>
     <app-content-title [title]="title"></app-content-title>
     <ng-container *ngIf="featuredItems.items.length > 0">
-      <app-cards [flex]="'row'" [contentItem]="featuredItems"></app-cards>
+      <app-cards [flex]="'row wrap'" [contentItem]="featuredItems"></app-cards>
     </ng-container>
   </app-content-container>
 </div>
