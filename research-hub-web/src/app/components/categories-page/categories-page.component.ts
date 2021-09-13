@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
+import { SearchService } from '@services/search.service';
 import {
   AllCategoriesGQL,
   CategoryCollection,
@@ -22,7 +22,7 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
     private getHomepageGQL: GetHomepageGQL,
-    public searchBarService: SearchBarService
+    public searchService: SearchService
   ) { }
 
   async ngOnInit() {
@@ -41,10 +41,6 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
       return this.allCategoriesGQL.fetch()
         .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
     } catch (e) { console.error('Error loading all Categories:', e) };
-  }
-
-  getSearchQueryParams(item: any) {
-    return { researchCategories: [item.displayOrder] };
   }
 
   ngOnDestroy(): void {
