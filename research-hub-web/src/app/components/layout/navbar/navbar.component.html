@@ -1,10 +1,10 @@
 <!-- Main Navbar -->
 <mat-toolbar
+  aria-label="Top Toolbar"
   id="top-bar"
   #topbar
   color="primary"
   class="mat-elevation-z6"
-  [ngStyle]="{ 'background-color': isHome ? '' : '' }"
 >
   <!-- Mobile Menu Toggle -->
   <button
@@ -24,29 +24,11 @@
     <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
   </a>
 
-  <!-- Space Divider -->
+  <app-search-bar #searchBar></app-search-bar>
+
   <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
-  <!-- Search Icon (Mobile)-->
-  <button
-    role="button"
-    aria-label="search"
-    (click)="searchBarService.setSearchText('');
-      searchBarService.setCategory([]);
-      searchBarService.setStage([])"
-    (keydown.enter)="searchBarService.setSearchText('');
-      searchBarService.setCategory([]);
-      searchBarService.setStage([])"
-    mat-icon-button
-    fxHide.gt-sm
-    routerLink="/search"
-    matTooltip="Search"
-  >
-    <mat-icon>search</mat-icon>
-  </button>
-
   <!--Navigation buttons-->
-  <ng-container *ngTemplateOutlet="search"></ng-container>
   <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
   <button mat-button fxHide.lt-md [routerLink]="'/categories'">Categories</button>
   <button mat-button fxHide.lt-md [routerLink]="'/activities'">Activities</button>
@@ -73,7 +55,7 @@
     fxHide.lt-md
     (click)="this.homeScrollService.scrollTo('Categories')"
   >
-    Research Categories
+    Categories
   </button>
   <!--
     Research Categories Button if we're not on the homepage. This will render an expansion panel dropdown list
@@ -87,7 +69,7 @@
     fxHide.lt-md
     [matMenuTriggerFor]="browseMenu"
   >
-    Research Categories
+    Categories
   </button>
 
   <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
@@ -127,7 +109,7 @@
     fxHide.lt-md
     (click)="this.homeScrollService.scrollTo('Activities')"
   >
-    Research Activities
+    Activities
   </button>
 
   <!--
@@ -142,7 +124,7 @@
     fxHide.lt-md
     [matMenuTriggerFor]="researchActivityMenu"
   >
-    Research Activities
+    Activities
   </button>
 
   <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
@@ -234,18 +216,5 @@
     (keydown.enter)="loginService.doLogin(currentUrl)"
   >
     Sign In
-  </button>
-</ng-template>
-
-<!-- Search Button -->
-<ng-template #search>
-  <button
-    role="button"
-    aria-label="search"
-    mat-button
-    fxHide.lt-md
-    routerLink="/search"
-  >
-    Search
   </button>
 </ng-template>
