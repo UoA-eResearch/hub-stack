@@ -3,8 +3,9 @@ import { ApolloTestingModule } from 'apollo-angular/testing';
 import { MockModule } from 'ng-mocks';
 import { SearchFiltersComponent } from './search-filters.component';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
-import { HarnessLoader } from '@angular/cdk/testing';
+import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { MatSelectionListHarness } from '@angular/material/list/testing';
+import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
@@ -99,9 +100,39 @@ describe('SearchFiltersComponent', () => {
   it('selecting filter should set activeFilters', async () => {
     component.allCategories = allCategoriesStub;
     const selectionList = await loader.getHarness(MatSelectionListHarness);
-    const items = await selectionList.getItems({text: allCategoriesStub[0].name});
+    const items = await selectionList.getItems({ text: allCategoriesStub[0].name });
     await items[0].select();
 
     expect(component.activeFilters).toEqual({ category: [allCategoriesStub[0].sys.id], stage: [], relatedOrgs: [] });
+  });
+
+  it('deselecting filters should change activeFilters', async () => {
+    component.allCategories = allCategoriesStub;
+    component.activeFilters = {category: [allCategoriesStub[0].sys.id], stage: [], relatedOrgs: []}
+    const selectionList = await loader.getHarness(MatSelectionListHarness);
+    const items = await selectionList.getItems({selected: true});
+
+    expect(items.length)
+      .withContext('setting activeFilters input should select mat-selection-list items')
+      .toBeGreaterThan(0);
+
+    await parallel(() => items.map(item => item.toggle()));
+
+    expect(component.activeFilters).toEqual({category: [], stage: [], relatedOrgs: []});
+  })
+
+  it('clicking search button should send filters to output', async () => {
+    spyOn(component.search, 'emit');
+
+    const button = await loader.getHarness(MatButtonHarness);
+    const text = await button.getText();
+
+    expect(text)
+      .withContext('there should be a button with text "Search"')
+      .toBe('Search');
+
+    await button.click();
+
+    expect(component.search.emit).toHaveBeenCalled();
   });
 });
