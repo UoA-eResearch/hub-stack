@@ -4,37 +4,12 @@
       <mat-list-item (click)="sidenav.toggle()" [routerLink]="'/events'"
         >Events</mat-list-item
       >
-      <mat-expansion-panel hideToggle *ngIf="currentUrl !== '/search'">
-        <mat-expansion-panel-header>
-          Research Categories
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <mat-list-item
-            *ngFor="let item of allCategories"
-            (click)="sidenav.toggle()"
-            [routerLink]="'/search'"
-            (click)="searchByCategory(item.sys.id)"
-          >
-            {{ item.name }}
-          </mat-list-item>
-        </mat-nav-list>
-      </mat-expansion-panel>
-      <mat-divider></mat-divider>
-      <mat-expansion-panel hideToggle *ngIf="currentUrl !== '/search'">
-        <mat-expansion-panel-header>
-          Research Activities
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <mat-list-item
-            *ngFor="let item of allStages"
-            (click)="sidenav.toggle()"
-            [routerLink]="'/search'"
-            (click)="searchByActivity(item.sys.id)"
-          >
-            {{ item.name }}
-          </mat-list-item>
-        </mat-nav-list>
-      </mat-expansion-panel>
+      <mat-list-item (click)="sidenav.toggle()" [routerLink]="'/categories'"
+        >Categories</mat-list-item
+      >
+      <mat-list-item (click)="sidenav.toggle()" [routerLink]="'/activities'"
+        >Activities</mat-list-item
+      >
       <mat-divider></mat-divider>
       <ng-container
         *ngIf="loggedIn$ | async; then isSignedIn; else signinlist"

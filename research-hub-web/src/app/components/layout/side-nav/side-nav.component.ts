@@ -1,8 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { Category, Stage } from '@app/graphql/schema';
 import { LoginService, UserInfoDto } from '@uoa/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -15,8 +13,6 @@ import { filter, switchMap, tap } from 'rxjs/operators';
 })
 export class SideNavComponent implements OnInit, OnDestroy {
   @ViewChild('sidenav') sideNav: MatSidenav;
-  @Input() allCategories: Category[] = [];
-  @Input() allStages: Stage[] = [];
   public currentUrl: string;
 
   public userInfo$: Observable<UserInfoDto>;
@@ -26,7 +22,6 @@ export class SideNavComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    public searchBarService: SearchBarService,
     public loginService: LoginService
   ) { }
 
@@ -74,20 +69,7 @@ export class SideNavComponent implements OnInit, OnDestroy {
     this.sideNav.toggle();
   }
 
-  searchByCategory(id: string) {
-    this.searchBarService.setSearchText('');
-    this.searchBarService.setCategory([id]);
-    this.searchBarService.setStage([]);
-  }
-
-  searchByActivity(id: string) {
-    this.searchBarService.setSearchText('');
-    this.searchBarService.setCategory([]);
-    this.searchBarService.setStage([id]);
-  }
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-
 }
