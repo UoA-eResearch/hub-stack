@@ -1,0 +1,77 @@
+<div #searchBarContainer>
+  <div
+    class="search-bar-outer"
+    [ngClass]="{
+      'white-bottom': showFilters && !isMobile,
+      show: isMobile && showMobileSearch
+    }"
+  >
+    <form action class="search-bar-inner">
+      <button
+        *ngIf="!isMobile"
+        mat-icon-button
+        aria-label="Search"
+        color="primary"
+        (click)="search()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button
+        *ngIf="isMobile"
+        mat-icon-button
+        aria-label="Search"
+        color="primary"
+        (click)="toggleMobileSearch()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+
+      <input
+        #searchBox
+        type="search"
+        [(ngModel)]="searchText"
+        [ngModelOptions]="{ standalone: true }"
+        (keydown.enter)="search()"
+        placeholder="Search for anything"
+      />
+
+      <button
+        mat-icon-button
+        color="primary"
+        fxHide.lt-md
+        (click)="showFilters = !showFilters"
+      >
+        <mat-icon
+          [matBadge]="countActiveFilters()"
+          [matBadgeHidden]="!(countActiveFilters() > 0)"
+          matBadgeSize="medium"
+          matBadgeColor="accent"
+          >tune</mat-icon
+        >
+      </button>
+    </form>
+  </div>
+
+  <!-- Search Icon (Mobile)-->
+  <button
+    *ngIf="isMobile"
+    role="button"
+    aria-label="search"
+    mat-icon-button
+    fxHide.gt-sm
+    matTooltip="Search"
+    (click)="toggleMobileSearch()"
+  >
+    <mat-icon>search</mat-icon>
+  </button>
+</div>
+
+<!--Filter content-->
+<div #filterContent class="filter-content">
+  <app-search-filters
+    *ngIf="showFilters"
+    [(activeFilters)]="activeFilters"
+    (search)="search()"
+  ></app-search-filters>
+</div>

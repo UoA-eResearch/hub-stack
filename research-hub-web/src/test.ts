@@ -13,7 +13,9 @@ import {
 } from '@angular/platform-browser-dynamic/testing';
 import { ngMocks } from 'ng-mocks';
 import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { SearchService } from '@services/search.service';
+import { SearchFilters } from '@app/global/searchTypes';
 
 // ng-mocks
 ngMocks.autoSpy('jasmine');
@@ -29,12 +31,20 @@ ngMocks.defaultMock(SearchBarService, () => ({
   totalPagesChange: new Subject<any>()
 }));
 
+const searchText$ = new BehaviorSubject<string>('');
+const searchFilters$ = new BehaviorSubject<SearchFilters>({ category: [], relatedOrgs: [], stage: [] });
+
+ngMocks.defaultMock(SearchService, () => ({
+  searchText: searchText$,
+  searchFilters: searchFilters$
+}));
+
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare var __karma__: any;
 declare var require: any;
 
 // Prevent Karma from running prematurely.
-__karma__.loaded = function () {};
+__karma__.loaded = function () { };
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(

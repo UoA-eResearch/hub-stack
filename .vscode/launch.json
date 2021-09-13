@@ -19,6 +19,19 @@
             "url": "http://localhost:4200/",
             "webRoot": "${workspaceFolder}/research-hub-web/",
             "preLaunchTask": "research-hub-web - start"
+        },
+        {
+            "type": "pwa-chrome",
+            "request": "attach",
+            "name": "Attach to Karma",
+            "address": "localhost",
+            "port": 9222,
+            "timeout": 600000,
+            "sourceMaps": true,
+            "webRoot": "${workspaceFolder}/research-hub-web/",
+            "pathMapping": {
+                "/_karma_webpack_": "${workspaceFolder}/research-hub-web/"
+            }
         }
     ]
 }

@@ -2,46 +2,23 @@
 @import "mixins";
 @import "styles-common";
 
-// Grey bakground for a section of homepage content
-.grey-background {
-  padding-bottom: 20px;
-  background-color: #eeeeee;
+/**
+ * banner Image
+ */
+.no-banner {
+  display: none;
 }
 
-// Search controls container
-.search-header {
-  .search-filters {
-    text-align: center;
-    mat-select {
-      padding: 10px;
-      background: #fafafa;
-      border: 1px solid $input-grey;
-      * {
-        color: $dark-blue !important;
-      }
-    }
-  }
+.mobile-banner {
+  background-repeat: no-repeat;
+  padding: 20vh 0px;
 }
 
-// Results controls container
-.result-list-filter {
-  width: 100%;
-  @include size(medium) {
-    width: 100%;
-  }
-  mat-select {
-    padding: 10px;
-    background: $input-grey;
-    border: 1px solid $silver-lining;
-  }
-  span {
-    h3 {
-      font-size: 24px;
-    }
-    p {
-      font-size: 18px;
-    }
-  }
+.standard-banner {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding: 10vh 0px;
 }
 
 .no-results {
@@ -49,11 +26,17 @@
   text-align: center;
 }
 
-// Filter Chip Indicator
-.mat-chip {
-  background-color: $dark-blue !important;
-  color: white !important;
-  &.clear {
-    background-color: rgba(0, 0, 0, 0.3) !important;
+.eol {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 15vw;
+  @media (max-width: 960px) {
+    right: 20px;
   }
 }
