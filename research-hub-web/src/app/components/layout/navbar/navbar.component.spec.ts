@@ -3,7 +3,6 @@ import { MockComponent, MockInstance, MockModule, MockProvider, MockService } fr
 import { AppLayoutModule } from '../layout.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SearchBarService } from '../../search-bar/search-bar.service';
 import { MaterialModule } from '@app/app.material.module';
 import { LoginService } from '@uoa/auth';
 import { HomeScrollService } from '@services/home-scroll.service';
@@ -28,7 +27,6 @@ describe('NavbarComponent', () => {
         MockModule(MaterialModule)
       ],
       providers: [
-        MockProvider(SearchBarService),
         MockProvider(LoginService),
         MockProvider(HomeScrollService)
       ]

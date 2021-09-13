@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockInstance, MockModule, MockProvider } from 'ng-mocks';
-import { SearchBarService } from '../../search-bar/search-bar.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MaterialModule } from '@app/app.material.module';
 import { LoginService } from '@uoa/auth';
@@ -28,7 +27,6 @@ describe('MobileSideNavComponent', () => {
         MockModule(MaterialModule),
       ],
       providers: [
-        MockProvider(SearchBarService),
         MockProvider(LoginService)
       ]
     })
