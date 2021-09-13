@@ -1,32 +1,107 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MaterialModule } from '@app/app.material.module';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { MockModule } from 'ng-mocks';
 import { SearchFiltersComponent } from './search-filters.component';
-
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { HarnessLoader } from '@angular/cdk/testing';
+import { MatSelectionListHarness } from '@angular/material/list/testing';
+import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule } from '@angular/forms';
+import { Category } from '@app/graphql/schema';
 
 describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent;
   let fixture: ComponentFixture<SearchFiltersComponent>;
+  let loader: HarnessLoader
+
+  const allCategoriesStub: Category[] = [
+    {
+      sys: {
+        id: 'testcategory 1',
+        environmentId: '',
+        firstPublishedAt: null,
+        publishedAt: null,
+        publishedVersion: null,
+        spaceId: '',
+        __typename: 'Sys'
+      },
+      name: 'test Category 1',
+      description: '',
+      displayOrder: 0,
+      contentfulMetadata: {
+        tags: []
+      },
+      __typename: 'Category',
+      linkedFrom: null,
+      maoriName: null
+    },
+    {
+      sys: {
+        id: 'testcategory 2',
+        environmentId: '',
+        firstPublishedAt: null,
+        publishedAt: null,
+        publishedVersion: null,
+        spaceId: '',
+        __typename: 'Sys'
+      },
+      name: 'test Category 2',
+      description: '',
+      displayOrder: 0,
+      contentfulMetadata: {
+        tags: []
+      },
+      __typename: 'Category',
+      linkedFrom: null,
+      maoriName: null
+    }
+  ];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchFiltersComponent ],
+      declarations: [SearchFiltersComponent],
       imports: [
         ApolloTestingModule,
-        MockModule(MaterialModule)
+        MatListModule,
+        FormsModule,
+        MockModule(MatTabsModule),
+        MockModule(MatChipsModule),
       ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchFiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    loader = TestbedHarnessEnvironment.loader(fixture);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('#clearFilters should reset all filters', () => {
+    expect(component.activeFilters)
+      .withContext('filters should be empty at first')
+      .toEqual({ category: [], stage: [], relatedOrgs: [] });
+
+    component.activeFilters = { category: ['abc'], stage: ['def'], relatedOrgs: ['ghi'] };
+    component.clearFilters();
+
+    expect(component.activeFilters)
+      .toEqual({ category: [], stage: [], relatedOrgs: [] });
+  });
+
+  it('selecting filter should set activeFilters', async () => {
+    component.allCategories = allCategoriesStub;
+    const selectionList = await loader.getHarness(MatSelectionListHarness);
+    const items = await selectionList.getItems({text: allCategoriesStub[0].name});
+    await items[0].select();
+
+    expect(component.activeFilters).toEqual({ category: [allCategoriesStub[0].sys.id], stage: [], relatedOrgs: [] });
   });
 });
