@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
+import { SearchService } from '@services/search.service';
 import {
   AllStagesGQL,
   StageCollection,
@@ -22,7 +22,7 @@ export class ActivitiesPageComponent implements OnInit, OnDestroy {
   constructor(
     public allStagesGQL: AllStagesGQL,
     private getHomepageGQL: GetHomepageGQL,
-    public searchBarService: SearchBarService
+    public searchService: SearchService
   ) { }
 
   async ngOnInit() {
