@@ -6,7 +6,6 @@ import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockComponent, MockProvider } from 'ng-mocks';
-import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('ActivitiesPageComponent', () => {
@@ -49,8 +48,7 @@ describe('ActivitiesPageComponent', () => {
       ],
       imports: [
         HttpClientTestingModule,
-        ApolloTestingModule,
-        RouterTestingModule.withRoutes([])
+        ApolloTestingModule
       ],
       providers: [ MockProvider(SearchService) ]
     })

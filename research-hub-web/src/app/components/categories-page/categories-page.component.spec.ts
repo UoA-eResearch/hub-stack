@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategoriesPageComponent } from './categories-page.component';
-import { SearchBarService } from './../search-bar/search-bar.service';
+import { SearchService } from '@services/search.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockComponent, MockProvider } from 'ng-mocks';
+
 
 describe('CategoriesPageComponent', () => {
   let component: CategoriesPageComponent;
@@ -100,8 +101,11 @@ describe('CategoriesPageComponent', () => {
       declarations: [
         CategoriesPageComponent
       ],
-      imports: [ HttpClientTestingModule, ApolloTestingModule ],
-      providers: [ MockProvider(SearchBarService) ]
+      imports: [
+        HttpClientTestingModule,
+        ApolloTestingModule
+      ],
+      providers: [ MockProvider(SearchService) ]
     })
     .compileComponents();
   });
