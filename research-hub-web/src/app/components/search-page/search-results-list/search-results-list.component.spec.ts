@@ -12,7 +12,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatListModule } from '@angular/material/list';
 import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatListHarness } from '@angular/material/list/testing';
 import { By } from '@angular/platform-browser';
 import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 
