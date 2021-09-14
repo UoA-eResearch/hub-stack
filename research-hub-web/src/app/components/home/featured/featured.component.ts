@@ -11,7 +11,7 @@ type HomepageFeaturedItems = GetAllFeaturedItemsQuery['featuredItemsCollection']
   styleUrls: ['./featured.component.scss']
 })
 export class FeaturedComponent implements OnInit {
-  public title: string = 'Highlights from our Research Community';
+  @Input() title: string;
   public featuredItems$: Observable<HomepageFeaturedItems>;
 
   constructor(
