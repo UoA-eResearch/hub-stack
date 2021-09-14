@@ -1,12 +1,26 @@
-<div>
+<div *ngIf="homePage$ | async as homePage">
   <!--Image-->
-  <app-banner-image></app-banner-image>
+  <app-banner-image
+    [title]="homePage.title"
+    [bannerImageUrl]="homePage.image.url"
+    [logoImageUrl]="homePage.uniLogo.url"
+  >
+  </app-banner-image>
   <!-- Featured Component -->
-  <div #featured class="featured">
-    <app-featured></app-featured>
+  <div class="featured">
+    <app-featured
+      [title]="homePage.featuredItemsDescription"
+    >
+    </app-featured>
   </div>
   <!-- Contact -->
   <div id="contacts" class="grey-background">
-    <app-contact></app-contact>
+    <app-contact
+      [email]="homePage.contactEmail"
+      [phone]="homePage.contactNumber"
+      [description]="homePage.contactDescription.json"
+      [feedbackLink]="homePage.feedbackLink"
+    >
+    </app-contact>
   </div>
 </div>

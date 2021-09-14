@@ -1,8 +1,7 @@
 <div>
   <div
     class="banner-container-home"
-    *ngIf="bannerImageUrl$ | async; let url;"
-    style.background-image="linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url( {{ url }}  )"
+    style.background-image="linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url( {{ bannerImageUrl }}  )"
   >
     <!-- Homepage Banner -->
     <div 
@@ -20,7 +19,7 @@
       <div class="logo-img-container" fxFlex="1 0 auto">
         <!-- UoA Logo -->
         <a [href]="aucklandUniUrl" target="_blank" >
-          <img class="logo-img" src="assets/imgs/UOA-VR-RGB.png" alt="uoa-logo">
+          <img class="logo-img" src="{{logoImageUrl}}" alt="uoa-logo">
         </a>
       </div>
     </div>

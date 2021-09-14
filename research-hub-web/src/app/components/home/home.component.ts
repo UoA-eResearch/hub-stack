@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GetHomepageGQL, Homepage } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -9,13 +9,8 @@ import { map } from 'rxjs/operators';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
-
-  @ViewChild('featured') featured: QueryList<ElementRef>;
-
-  public homePage: Homepage;
-
-  private subscriptions: Subscription = new Subscription();
+export class HomeComponent implements OnInit {
+  public homePage$: Observable<Homepage>;
 
   constructor(
     public homeScrollService: HomeScrollService,
@@ -23,20 +18,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.getHomepageGQL.fetch().pipe(
-        map(x => x.data.homepageCollection.items[0])
-      ).subscribe(result => {
-        this.homePage = result as Homepage;
-      })
-    )
-  }
-
-  ngAfterViewInit(): void {
-    this.homeScrollService.setFeatured(this.featured['nativeElement']);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.homePage$ = this.getHomepageGQL.fetch().pipe(
+      map(x => x.data.homepageCollection.items[0]) 
+    ) as Observable<Homepage>;
   }
 }
