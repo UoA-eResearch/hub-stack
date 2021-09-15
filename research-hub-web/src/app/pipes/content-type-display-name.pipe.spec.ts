@@ -1,4 +1,4 @@
-import { ContentTypeDisplayNamePipe } from './content-type-display-name.pipe';
+import { ContentTypeDisplayNamePipe } from './content-type-display-name.pipe'; 
 
 describe('ContentTypeDisplayNamePipe', () => {
   let pipe: ContentTypeDisplayNamePipe;
@@ -18,7 +18,7 @@ describe('ContentTypeDisplayNamePipe', () => {
     expect(pipe.transform('subHub')).toBe('Topic');
   });
 
-  it('Should return other for unknown type', () => {
-    expect(pipe.transform('blahblah')).toBe('Other');
+  it('Should use human case pipe for any other type', () => {
+    expect(pipe.transform('blahBlah')).toBe('Blah Blah');
   })
 });

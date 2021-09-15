@@ -2,8 +2,48 @@
 @import "mixins";
 @import "styles-common";
 
+/** 
+ * Container
+ */
+#research-categories {
+  width: 95vw;
+  margin: 60px auto;
+  @extend .site-padding;
+}
+
+/** 
+ * Title
+ */
+h2 {
+  font-size: 36px;
+  text-align: center;
+  @include size(large) {
+    text-align: left;
+    font-size: 48px;
+  }
+}
+
+p {
+  font-size: 16px;
+  position: relative;
+  word-wrap: break-word;
+  margin: 0 auto;
+  text-align: center;
+  @include size(large) {
+    text-align: left;
+    font-size: 20px;
+  }
+}
+
+div.light-color {
+  h2, p {
+    color: white;
+  }
+}
+
+
 /**
- * Browse and guide tiles
+ * Research Category tiles
  */
 .tile-content {
   height: 100%;

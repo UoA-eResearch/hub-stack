@@ -24,129 +24,20 @@
     <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
   </a>
 
-  <!-- Space Divider -->
-  <span fxHide.lt-md style="flex: 1 1 auto"></span>
-
   <app-search-bar #searchBar></app-search-bar>
 
   <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
   <!--Navigation buttons-->
   <button mat-button fxHide.lt-md [routerLink]="'/events'">Events</button>
-  <ng-container *ngTemplateOutlet="researchCategories"></ng-container>
-  <ng-container *ngTemplateOutlet="researchActivities"></ng-container>
+  <button mat-button fxHide.lt-md [routerLink]="'/categories'">Categories</button>
+  <button mat-button fxHide.lt-md [routerLink]="'/activities'">Activities</button>
   <ng-container
     *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
   ></ng-container>
 </mat-toolbar>
 
 <!--templates-->
-
-<!--Research Categories template-->
-<ng-template #researchCategories>
-  <!--
-    Research Categories Button if we are on the homepage. This will scroll down to the homepage section that displays
-    the Research Categories
-  -->
-  <button
-    *ngIf="isHome"
-    role="button"
-    aria-label="categories"
-    mat-button
-    fxHide.lt-md
-    (click)="this.homeScrollService.scrollTo('Categories')"
-  >
-    Categories
-  </button>
-  <!--
-    Research Categories Button if we're not on the homepage. This will render an expansion panel dropdown list
-    of all the Research Categories
-  -->
-  <button
-    *ngIf="!isHome && currentUrl !== '/search'"
-    role="button"
-    aria-label="categories"
-    mat-button
-    fxHide.lt-md
-    [matMenuTriggerFor]="browseMenu"
-  >
-    Categories
-  </button>
-
-  <mat-menu #browseMenu="matMenu" [overlapTrigger]="false">
-    <button
-      role="button"
-      aria-label="category"
-      mat-menu-item
-      *ngFor="let item of allCategories"
-      [routerLink]="'/search'"
-      (click)="
-        searchBarService.setSearchText('');
-        searchBarService.setCategory([item.sys.id])
-      "
-      (keydown.enter)="
-        searchBarService.setSearchText('');
-        searchBarService.setCategory([item.sys.id])
-      "
-    >
-      {{ item.name }}
-    </button>
-  </mat-menu>
-</ng-template>
-
-<!--Research Activities template-->
-<ng-template #researchActivities>
-  <!--
-    Research Activities Button if we are on the homepage. This will scroll down to the homepage section that displays
-    the Research Activities
-  -->
-  <button
-    *ngIf="isHome"
-    role="button"
-    aria-label="activities"
-    mat-button
-    fxHide.lt-md
-    (click)="this.homeScrollService.scrollTo('Activities')"
-  >
-    Activities
-  </button>
-
-  <!--
-    Research Activites Button if we're not on the homepage. This will render an expansion panel dropdown list
-    of all the Research Activities
-  -->
-  <button
-    *ngIf="!isHome && currentUrl !== '/search'"
-    role="button"
-    aria-label="activities"
-    mat-button
-    fxHide.lt-md
-    [matMenuTriggerFor]="researchActivityMenu"
-  >
-    Activities
-  </button>
-
-  <mat-menu #researchActivityMenu="matMenu" [overlapTrigger]="false">
-    <button
-      role="button"
-      aria-label="activity"
-      mat-menu-item
-      *ngFor="let item of allStages"
-      [routerLink]="'/search'"
-      (click)="
-        searchBarService.setSearchText('');
-        searchBarService.setStage([item.sys.id])
-      "
-      (keydown.enter)="
-        searchBarService.setSearchText('');
-        searchBarService.setStage([item.sys.id])
-      "
-    >
-      {{ item.name }}
-    </button>
-  </mat-menu>
-</ng-template>
-
 <ng-template #isSignedIn>
   <ng-container *ngIf="userInfo$ | async; let userInfo">
     <button

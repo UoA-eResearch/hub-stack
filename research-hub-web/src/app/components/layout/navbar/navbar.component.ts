@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { Category, Stage } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { LoginService, UserInfoDto } from '@uoa/auth';
 import { from, Observable, Subscription } from 'rxjs';
@@ -14,8 +12,6 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  @Input() allCategories: Category[] = [];
-  @Input() allStages: Stage[] = [];
 
   @Output() toggleSidenav: EventEmitter<void> = new EventEmitter<void>();
 
@@ -33,7 +29,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public homeScrollService: HomeScrollService,
-    public searchBarService: SearchBarService,
     public loginService: LoginService
   ) { }
 
@@ -83,9 +78,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.showMobileSearch = !this.showMobileSearch;
   }
 
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-
 }
