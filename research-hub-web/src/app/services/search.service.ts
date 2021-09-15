@@ -78,6 +78,6 @@ export class SearchService {
 
   private updateSearchSubjects(query: SearchQuery) {
     this.searchText.next(query.query);
-    this.searchFilters.next(query.filters);
+    this.searchFilters.next(Object.assign({}, query.filters));
   }
 }
