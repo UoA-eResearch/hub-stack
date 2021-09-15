@@ -2,8 +2,8 @@
   <!--Image-->
   <app-banner-image
     [title]="homePage.title"
-    [bannerImageUrl]="homePage.image.url"
-    [logoImageUrl]="homePage.uniLogo.url"
+    [bannerImageUrl]="homePage.image?.url"
+    [logoImageUrl]="homePage.uniLogo?.url"
   >
   </app-banner-image>
   <!-- Featured Component -->
@@ -17,7 +17,7 @@
   <div id="contacts" class="grey-background">
     <app-contact
       [email]="homePage.contactEmail"
-      [description]="homePage.contactDescription.json"
+      [description]="homePage.contactDescription?.json"
       [feedbackLink]="homePage.feedbackLink"
     >
     </app-contact>
