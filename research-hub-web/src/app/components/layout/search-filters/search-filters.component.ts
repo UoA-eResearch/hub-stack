@@ -18,9 +18,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   @Output() activeFiltersChange: EventEmitter<SearchFilters> = new EventEmitter<SearchFilters>();
   @Output() search: EventEmitter<SearchFilters> = new EventEmitter<SearchFilters>();
 
-  public allCategories$: Observable<Category[]>;
-  public allStages$: Observable<Stage[]>;
-  public allOrgUnits$: Observable<OrgUnit[]>;
+  public allCategories: Category[];
+  public allStages: Stage[];
+  public allOrgUnits: OrgUnit[];
 
   public isMobile = false;
 
@@ -34,9 +34,9 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.allCategories$ = this.getAllCategories();
-    this.allStages$ = this.getAllStages();
-    this.allOrgUnits$ = this.getAllOrgUnits();
+    this.subscriptions.add(this.getAllCategories().subscribe(categories => this.allCategories = categories));
+    this.subscriptions.add(this.getAllStages().subscribe(stages => this.allStages = stages));
+    this.subscriptions.add(this.getAllOrgUnits().subscribe(orgUnits => this.allOrgUnits = orgUnits));
 
     this.subscriptions.add(this.breakpointObserver.observe('(max-width: 960px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches))
   }
