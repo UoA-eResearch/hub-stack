@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowseComponent } from './browse.component';
-import { SearchBarService } from '../../search-bar/search-bar.service';
+import { CategoriesPageComponent } from './categories-page.component';
+import { SearchService } from '@services/search.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockComponent, MockProvider } from 'ng-mocks';
-import { ContentContainerComponent } from '../content-container/content-container.component';
-import { ContentTitleComponent } from '../content-title/content-title.component';
 
-describe('BrowseComponent', () => {
-  let component: BrowseComponent;
-  let fixture: ComponentFixture<BrowseComponent>;
+
+describe('CategoriesPageComponent', () => {
+  let component: CategoriesPageComponent;
+  let fixture: ComponentFixture<CategoriesPageComponent>;
   const mockCategories$: Observable<CategoryCollection> = of({
     'items': [
       {
@@ -100,18 +99,19 @@ describe('BrowseComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        BrowseComponent,
-        MockComponent(ContentContainerComponent),
-        MockComponent(ContentTitleComponent)
+        CategoriesPageComponent
       ],
-      imports: [ HttpClientTestingModule, ApolloTestingModule ],
-      providers: [ MockProvider(SearchBarService) ]
+      imports: [
+        HttpClientTestingModule,
+        ApolloTestingModule
+      ],
+      providers: [ MockProvider(SearchService) ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BrowseComponent);
+    fixture = TestBed.createComponent(CategoriesPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -113,12 +113,15 @@ export enum ResearchActivityId {
 
   export const ContentTypeDisplayNames = {
     'article': 'Article',
-    'caseStudy': 'Case Study',
+    'casestudy': 'Case Study',
     'equipment': 'Equipment',
     'event': 'Event',
     'funding': 'Funding',
     'service': 'Service',
     'software': 'Software',
-    'subHub': 'Topic'
+    'subhub': 'Topic',
+    'officialdocuments': 'Document',
+    'orgunit': 'Unit',
+    'person': 'Contact'
   };
   

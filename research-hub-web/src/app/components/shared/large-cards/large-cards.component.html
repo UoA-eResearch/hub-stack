@@ -15,8 +15,7 @@
 
             <mat-card class="subhub-card" role="listitem">
                 <ng-container *ngIf="subHub.banner; then image; else noImage"></ng-container>
-                <span *ngIf="subHub.__typename == 'SubHub'" class="card-label">Topic</span>
-                <span *ngIf="subHub.__typename != 'SubHub'" class="card-label">{{ subHub.__typename | humanCase }}</span>
+                <span class="card-label">{{ subHub.__typename | contentTypeDisplayName }}</span>
                 <mat-card-title class="card-title">
                     <h4>
                         <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']">
