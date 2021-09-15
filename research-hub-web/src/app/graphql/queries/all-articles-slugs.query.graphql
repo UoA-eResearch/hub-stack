@@ -1,5 +1,5 @@
 query AllArticlesSlugs {
-    articleCollection {
+    articleCollection(limit: 250) {
         items {
             slug
         }
