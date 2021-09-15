@@ -9,7 +9,6 @@ export class ContactComponent {
   @Input() description: JSON;
   @Input() feedbackLink: string;
   @Input() email: string;
-  @Input() phone: string;
   
   public title = "Contact";
 
