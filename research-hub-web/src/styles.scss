@@ -50,8 +50,11 @@ hr {
   }
   ul li {
     position: relative;
+    line-height:30px;
+    padding-left: 1em;
+    list-style-type: disc;
     p {
-      padding-left: 15px;
+      display: inline;
     }
   }
   ol li {
