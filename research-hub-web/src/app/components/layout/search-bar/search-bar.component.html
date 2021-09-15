@@ -9,6 +9,7 @@
     <form action class="search-bar-inner">
       <button
         *ngIf="!isMobile"
+        type="button"
         mat-icon-button
         aria-label="Search"
         color="primary"
@@ -19,6 +20,8 @@
 
       <button
         *ngIf="isMobile"
+        id="searchBackButton"
+        type="button"
         mat-icon-button
         aria-label="Search"
         color="primary"
@@ -37,6 +40,8 @@
       />
 
       <button
+        id="settingsButton"
+        type="button"
         mat-icon-button
         color="primary"
         fxHide.lt-md
