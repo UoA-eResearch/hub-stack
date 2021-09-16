@@ -44,13 +44,13 @@ jobs:
       #   working-directory: ./cer-graphql
       #   run: npm run dev
 
-      - name: Generate GraphQL Schema
-        working-directory: ./research-hub-web
-        run: npm run generate
-
       - name: Install Node.js dependencies research-hub-web
         working-directory: ./research-hub-web
         run: npm ci
+
+      - name: Generate GraphQL Schema
+        working-directory: ./research-hub-web
+        run: npm run generate
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
