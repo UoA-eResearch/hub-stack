@@ -47,6 +47,10 @@ jobs:
       - name: Install Node.js dependencies research-hub-web
         working-directory: ./research-hub-web
         run: npm ci
+      
+      - name: Install GraphQL
+        working-directory: ./research-hub-web
+        run: npm ci graphql
 
       - name: Install GraphQL codegen cli
         working-directory: ./research-hub-web
