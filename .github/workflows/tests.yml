@@ -50,7 +50,7 @@ jobs:
       
       - name: Install GraphQL
         working-directory: ./research-hub-web
-        run: npm i graphql
+        run: npm install --save graphql
 
       - name: Install GraphQL codegen cli
         working-directory: ./research-hub-web
