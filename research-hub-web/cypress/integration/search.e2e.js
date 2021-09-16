@@ -3,24 +3,11 @@ describe('ResearchHubs Search Page', () => {
         cy.visit('/search?q=');
     });
 
-    /**
-     * Disabled for search redesign
-     */
-    // it('search filters should exist', () => {
-    //     cy.get('#search-filters').should('exist');
-    // });
+    it('search filters should exist', () => {
+        cy.get('.sticky-bar').should('exist');
+    });
 
-    /**
-     * Disabled for search redesign
-     */
-    // it('displays order by filtering', () => {
-    //     cy.get('#filtering-options').should('exist');
-    // });
-
-    /**
-     * Disabled for search redesign
-     */
-    // it('displays pagination', () => {
-    //     cy.get('#pagination').should('exist');
-    // });
-})
+    it('search order selector should exist', () => {
+        cy.get('#order-picker').should('exist');
+    });
+});
