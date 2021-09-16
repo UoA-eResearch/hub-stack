@@ -24,8 +24,6 @@ jobs:
       - name: Set branch-based environment variables
         uses: iamtheyammer/branch-env-vars@v1.0.3
         with:
-        # optional, just an example of setting a setting
-          bevOverwrite: true
           SCHEMA_PATH: |
             prod:https://rhubcpapi.auckland.ac.nz/cer-graphql-service/
             test:https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
