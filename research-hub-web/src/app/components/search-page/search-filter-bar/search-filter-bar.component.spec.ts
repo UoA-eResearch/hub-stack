@@ -6,12 +6,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockModule } from 'ng-mocks';
-
 import { SearchFilterBarComponent } from './search-filter-bar.component';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatChipsModule } from '@angular/material/chips';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('SearchFilterBarComponent', () => {
   let component: SearchFilterBarComponent;
@@ -23,6 +22,7 @@ describe('SearchFilterBarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [SearchFilterBarComponent],
       imports: [
+        ApolloTestingModule,
         RouterTestingModule.withRoutes([]),
         HttpClientTestingModule,
         MatSelectModule,
