@@ -9,11 +9,13 @@ $mobile-max-width: 960px;
   @media (max-width: $mobile-max-width) {
     position: static;
   }
+  flex-grow: 2;
 }
 
 .search-bar-outer {
   height: 64px;
-  width: 500px;
+  margin: auto;
+  max-width: 500px;
   padding: 7px 0px;
   position: relative;
   z-index: 1000;
