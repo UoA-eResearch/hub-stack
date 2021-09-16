@@ -12,24 +12,12 @@ import {
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 import { ngMocks } from 'ng-mocks';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { SearchService } from '@services/search.service';
 import { SearchFilters } from '@app/global/searchTypes';
 
 // ng-mocks
 ngMocks.autoSpy('jasmine');
-
-// default mock return values for SearchBarService
-ngMocks.defaultMock(SearchBarService, () => ({
-  /**
-   * this is just to get the test to run. EMPTY doesn't work for some reason
-   * check https://ng-mocks.sudo.eu/extra/mock-observables
-   */
-  searchCategoryChange: new Subject<any>(),
-  searchTextChange: new Subject<any>(),
-  totalPagesChange: new Subject<any>()
-}));
 
 const searchText$ = new BehaviorSubject<string>('');
 const searchFilters$ = new BehaviorSubject<SearchFilters>({ category: [], relatedOrgs: [], stage: [] });

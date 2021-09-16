@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockProvider, MockModule, MockPipe, MockComponent } from 'ng-mocks';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SearchBarService } from '../../search-bar/search-bar.service';
+import { SearchService } from '@services/search.service';
 import { SearchResultsListComponent } from './search-results-list.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
@@ -36,7 +36,7 @@ describe('SearchResultsListComponent', () => {
         MatChipsModule
       ],
       providers: [
-        MockProvider(SearchBarService),
+        MockProvider(SearchService),
       ]
     })
       .compileComponents();
