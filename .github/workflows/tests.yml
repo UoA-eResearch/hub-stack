@@ -10,9 +10,7 @@ on:
       - dev*
   pull_request:
     branches:
-      - prod
-      - test
-      - dev*
+      - master
 
 jobs: 
   run-unit-tests:
