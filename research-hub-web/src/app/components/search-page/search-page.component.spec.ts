@@ -6,8 +6,8 @@ import { MaterialModule } from '@app/app.material.module';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
-import { SearchBarComponent } from '../search-bar/search-bar.component';
-import { SearchBarService } from '../search-bar/search-bar.service';
+import { SearchBarComponent } from '../layout/search-bar/search-bar.component';
+import { SearchService } from '@services/search.service';
 import { BreadcrumbsComponent } from '../shared/breadcrumbs/breadcrumbs.component';
 import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component';
 import { SearchPageComponent } from './search-page.component';
@@ -35,7 +35,7 @@ describe('SearchPageComponent', () => {
         MockModule(FormsModule),
       ],
       providers: [
-        SearchBarService
+        SearchService
       ]
     })
     .compileComponents();
