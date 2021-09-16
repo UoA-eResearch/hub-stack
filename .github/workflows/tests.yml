@@ -58,7 +58,7 @@ jobs:
 
       - name: Generate GraphQL Schema
         working-directory: ./research-hub-web
-        run: graphql-codegen
+        run: npm run generate
 
       - name: Install Angular CLI
         run: npm install -g @angular/cli
