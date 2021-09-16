@@ -25,13 +25,13 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
-      - name: Set branch-based environment variables
-        uses: iamtheyammer/branch-env-vars@v1.0.3
-        with:
-          SCHEMA_PATH: |
-            prod:https://rhubcpapi.auckland.ac.nz/cer-graphql-service/
-            test:https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
-            dev*:https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
+      # - name: Set branch-based environment variables
+      #   uses: iamtheyammer/branch-env-vars@v1.0.3
+      #   with:
+      #     SCHEMA_PATH: |
+      #       prod:https://rhubcpapi.auckland.ac.nz/cer-graphql-service/
+      #       test:https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
+      #       dev*:https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
 
       - name: Set up Node.js
         uses: actions/setup-node@v1
