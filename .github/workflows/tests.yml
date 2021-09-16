@@ -48,6 +48,10 @@ jobs:
         working-directory: ./research-hub-web
         run: npm ci
 
+      - name: Install GraphQL codegen cli
+        working-directory: ./research-hub-web
+        run: npm install @graphql-codegen/cli
+
       - name: Generate GraphQL Schema
         working-directory: ./research-hub-web
         run: graphql-codegen
