@@ -22,13 +22,13 @@ jobs:
       - name: Set environment for branch
         run: |
           if [[ $GITHUB_REF == 'refs/heads/prod' ]]; then
-            echo "SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
+            echo "SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
           fi
           if [[ $GITHUB_REF == 'refs/heads/test' ]]; then
-            echo "SCHEMA_PATH=https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
+            echo "SCHEMA_PATH=https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
           fi
           if [[ $GITHUB_REF == 'refs/heads/dev-luke' ]]; then
-            echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
+            echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
           fi
 
       - run: echo "${{ env.GITHUB_CONTEXT }}"
