@@ -33,14 +33,14 @@ jobs:
         # run: |
         #   echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
         run: |
-          if [[ ${{ github.ref }} == refs/heads/dev-luke ]]; then
+          if [[ ${{ github.base_ref }} == refs/heads/dev* ]]; then
             echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
           fi
 
       - name: Use env
         run: |
           echo "${{ env.SCHEMA_PATH }}"
-          echo "${{ github.ref }}"
+          echo "${{ github.base_ref }}"
 
       - name: Check out Git repository
         uses: actions/checkout@v2
