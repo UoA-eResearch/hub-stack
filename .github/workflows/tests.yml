@@ -19,19 +19,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "This is a test"
       - name: Set environment for branch
+        # run: |
+        #   if [[ $GITHUB_REF == 'refs/heads/prod' ]]; then
+        #     echo "SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
+        #   fi
+        #   if [[ $GITHUB_REF == 'refs/heads/test' ]]; then
+        #     echo "SCHEMA_PATH=https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
+        #   fi
+        #   if [[ $GITHUB_REF == 'refs/heads/dev-luke' ]]; then
+        #     echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
+        #   fi
+        # run: |
+        #   echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
         run: |
-          if [[ $GITHUB_REF == 'refs/heads/prod' ]]; then
-            echo "SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
-          fi
-          if [[ $GITHUB_REF == 'refs/heads/test' ]]; then
-            echo "SCHEMA_PATH=https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
-          fi
-          if [[ $GITHUB_REF == 'refs/heads/dev-luke' ]]; then
+          if [[ ${{ github.ref }} == refs/heads/dev-luke ]]; then
             echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
           fi
+
+      - name: Use env
+        run: |
           echo "${{ env.SCHEMA_PATH }}"
+          echo "${{ github.ref }}"
 
       - name: Check out Git repository
         uses: actions/checkout@v2
@@ -48,14 +57,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
-
-      # - name: Install Node.js dependencies cer-graphql
-      #   working-directory: ./cer-graphql
-      #   run: npm ci
-
-      # - name: Run cer-graphql
-      #   working-directory: ./cer-graphql
-      #   run: npm run dev
 
       - name: Install Node.js dependencies research-hub-web
         working-directory: ./research-hub-web
