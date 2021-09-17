@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: echo "This is a test"
       - name: Set environment for branch
         run: |
           if [[ $GITHUB_REF == 'refs/heads/prod' ]]; then
