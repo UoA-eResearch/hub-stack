@@ -33,7 +33,7 @@ jobs:
         # run: |
         #   echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
         run: |
-          if [[ ${{ github.base_ref }} == dev* ]]; then
+          if [[ ${{ github.base_ref }} == dev* || ${{ github.ref }} == refs/heads/dev* ]]; then
             echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
           fi
 
