@@ -27,7 +27,7 @@ jobs:
           if [[ $GITHUB_REF == 'refs/heads/test' ]]; then
             echo "SCHEMA_PATH=https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
           fi
-          if [[ $GITHUB_REF == 'refs/heads/dev*' ]]; then
+          if [[ $GITHUB_REF == 'refs/heads/dev-luke' ]]; then
             echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
           fi
 
