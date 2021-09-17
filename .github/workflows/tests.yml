@@ -31,7 +31,7 @@ jobs:
             echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
           fi
 
-      - run: echo "$GITHUB_CONTEXT"
+      - run: echo "${{ env.GITHUB_CONTEXT }}"
 
       - name: Check out Git repository
         uses: actions/checkout@v2
