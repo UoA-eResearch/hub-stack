@@ -13,15 +13,24 @@ on:
       - prod
       - dev*
 
-env:
-  SCHEMA_PATH: https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
-
 jobs: 
   run-unit-tests:
     name: Run unit tests
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set environment for branch
+        run: |
+          if [[ $GITHUB_REF == 'refs/heads/prod' ]]; then
+            echo "SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
+          fi
+          if [[ $GITHUB_REF == 'refs/heads/test' ]]; then
+            echo "SCHEMA_PATH=https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
+          fi
+          if [[ $GITHUB_REF == 'refs/heads/dev*' ]]; then
+            echo "SCHEMA_PATH=https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> "$GITHUB_ENV"
+          fi
+
       - name: Check out Git repository
         uses: actions/checkout@v2
 
