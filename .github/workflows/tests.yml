@@ -30,8 +30,7 @@ jobs:
             if [[ ${{ github.ref }} == refs/heads/prod ]]; then
               echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
             fi
-          else if [[ $${{ github.event_name == pull_request }} ]]; then
-            echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
+          else echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV #default to prod for pull_request
           fi
 
       - name: Use env
