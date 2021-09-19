@@ -1,13 +1,11 @@
-test
-![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=test)
-![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=test)
-
-prod
-![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=prod)
-![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=prod)
-
 # ResearchHub Stack (monorepo)
 Contains the complete [Research Hub](https://research-hub.auckland.ac.nz/), stack being developed for migration to [AWS](http://aws.auckland.ac.nz/) and [Contentful](https://contentful.com/).
+
+## Dev Luke ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=dev-luke) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=dev-luke)
+
+## Test Environment ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=test) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=test)
+
+## Prod Environment ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=prod) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=prod)
 
 ## Stack Components
 This repository contains the 4 projects comprising the AWS version of the ResearchHub stack.
