@@ -1,17 +1,17 @@
 # ResearchHub Stack (monorepo)
 Contains the complete [Research Hub](https://research-hub.auckland.ac.nz/), stack being developed for migration to [AWS](http://aws.auckland.ac.nz/) and [Contentful](https://contentful.com/).
 
-## Dev Luke ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=dev-luke) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=dev-luke)
-
-## Test Environment ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=test) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=test)
-
-## Prod Environment ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=prod) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=prod)
-
 ## Stack Components
 This repository contains the 4 projects comprising the AWS version of the ResearchHub stack.
 
 ###  1. [research-hub-web/](research-hub-web/)
 The front end for the [Research Hub](https://research-hub.auckland.ac.nz/), built with [Angular](https://angular.io/) and [Angular Material](https://material.angular.io/).
+
+#### Dev Luke ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=dev-luke) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=dev-luke)
+
+#### Test Environment ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=test) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=test)
+
+#### Prod Environment ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/tests.yml/badge.svg?branch=prod) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/linting.yml/badge.svg?branch=prod)
 
 ### 2. [cer-graphql/](cer-graphql/)
 An [Apollo GraphQL server](https://www.apollographql.com/docs/apollo-server/) used to proxy and authorise requests sent from `research-hub-web` to Contentful the external data sources.
