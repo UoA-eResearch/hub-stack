@@ -64,6 +64,7 @@ jobs:
       #   run: npm install -g @angular/cli
 
       - name: Cypress run
+        working-directory: ./research-hub-web
         uses: cypress-io/github-action@v2
         with:
           build: npm run build
