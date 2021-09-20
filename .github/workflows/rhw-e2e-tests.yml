@@ -40,7 +40,8 @@ jobs:
             echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV #default to prod for pull_request
             echo "BRANCH_NAME=prod" >> $GITHUB_ENV
           fi
-          echo "${{env.BRANCH_NAME}}"
+          
+      -run: echo "${{env.BRANCH_NAME}}"
       
       - name: Check out Git repository
         uses: actions/checkout@v2
