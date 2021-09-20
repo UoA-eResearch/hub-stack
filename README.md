@@ -7,7 +7,7 @@ This repository contains the 4 projects comprising the AWS version of the Resear
 ###  1. [research-hub-web/](research-hub-web/)
 The front end for the [Research Hub](https://research-hub.auckland.ac.nz/), built with [Angular](https://angular.io/) and [Angular Material](https://material.angular.io/).
 
-Example badges: ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/rhw-unit-tests.yml/badge.svg?branch=dev-luke) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/rhw-linting.yml/badge.svg?branch=dev-luke)
+Example badges: ![Unit tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/rhw-unit-tests.yml/badge.svg?branch=dev-workflows) ![E2e tests](https://github.com/UoA-eResearch/hub-stack/actions/workflows/rhw-e2e-tests.yml/badge.svg?branch=dev-workflows) ![Linting](https://github.com/UoA-eResearch/hub-stack/actions/workflows/rhw-linting.yml/badge.svg?branch=dev-workflows)
 
 
 ### 2. [cer-graphql/](cer-graphql/)
