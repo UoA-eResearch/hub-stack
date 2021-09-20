@@ -1,4 +1,4 @@
-name: Unit tests
+name: unit tests
 
 on:
   # Trigger the workflow on push or pull request,
@@ -30,24 +30,12 @@ jobs:
             if [[ ${{ github.ref }} == refs/heads/prod ]]; then
               echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
             fi
-          else echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV #default to prod for pull_request
+          else
+            echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV #default to prod for pull_request
           fi
-
-      - name: Use env
-        run: |
-          echo "${{ env.SCHEMA_PATH }}"
-          echo "${{ github.base_ref }}"
 
       - name: Check out Git repository
         uses: actions/checkout@v2
-
-      # - name: Set branch-based environment variables
-      #   uses: iamtheyammer/branch-env-vars@v1.0.3
-      #   with:
-      #     SCHEMA_PATH: |
-      #       prod:https://rhubcpapi.auckland.ac.nz/cer-graphql-service/
-      #       test:https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
-      #       dev*:https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service/
 
       - name: Set up Node.js
         uses: actions/setup-node@v1
