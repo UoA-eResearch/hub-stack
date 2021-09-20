@@ -76,3 +76,4 @@ jobs:
           working-directory: ./research-hub-web
           start: npm run start -- -c ${{env.BRANCH_NAME}}
           wait-on: 'http://localhost:4200'
+          wait-on-timeout: 240
