@@ -29,15 +29,17 @@ jobs:
             fi
             if [[ ${{ github.ref }} == refs/heads/test ]]; then
               echo "SCHEMA_PATH=https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
+              echo "BRANCH_NAME=test" >> $GITHUB_ENV
+
             fi
             if [[ ${{ github.ref }} == refs/heads/prod ]]; then
               echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV
+              echo "BRANCH_NAME=prod" >> $GITHUB_ENV
             fi
           else
             echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV #default to prod for pull_request
+            echo "BRANCH_NAME=prod" >> $GITHUB_ENV
           fi
-
-      - run: echo ${{env.BRANCH_NAME}}
       
       - name: Check out Git repository
         uses: actions/checkout@v2
@@ -66,10 +68,10 @@ jobs:
       # - name: Install Angular CLI
       #   run: npm install -g @angular/cli
 
-      # - name: Cypress run
-      #   uses: cypress-io/github-action@v2
-      #   with:
-      #     working-directory: ./research-hub-web
-      #     build: npm run build
-      #     start: npm run start -- -c ${{env.BRANCH_NAME}}
-      #     wait-on: 'http://localhost:4200'
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          working-directory: ./research-hub-web
+          build: npm run build
+          start: npm run start -- -c ${{env.BRANCH_NAME}}
+          wait-on: 'http://localhost:4200'
