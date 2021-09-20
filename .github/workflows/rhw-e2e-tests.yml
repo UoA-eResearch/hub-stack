@@ -74,6 +74,5 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           working-directory: ./research-hub-web
-          build: npm run build -- -c ${{env.BRANCH_NAME}}
           start: npm run start -- -c ${{env.BRANCH_NAME}}
           wait-on: 'http://localhost:4200'
