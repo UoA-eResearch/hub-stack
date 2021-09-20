@@ -64,7 +64,9 @@ jobs:
         run: npm install -g @angular/cli
       
       - name: Start server
+        working-directory: ./research-hub-web
         run: ng serve
 
       - name: Run e2e tests
+        working-directory: ./research-hub-web
         run: npm run e2e-ci
