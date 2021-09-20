@@ -36,35 +36,37 @@ jobs:
             echo "SCHEMA_PATH=SCHEMA_PATH=https://rhubcpapi.auckland.ac.nz/cer-graphql-service/" >> $GITHUB_ENV #default to prod for pull_request
           fi
 
-      - name: Check out Git repository
-        uses: actions/checkout@v2
+      - run: echo "${{env.SCHEMA_PATH}}"
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
+      # - name: Check out Git repository
+      #   uses: actions/checkout@v2
 
-      - name: Install Node.js dependencies research-hub-web
-        working-directory: ./research-hub-web
-        run: npm ci
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: 14
+
+      # - name: Install Node.js dependencies research-hub-web
+      #   working-directory: ./research-hub-web
+      #   run: npm ci
       
-      - name: Install GraphQL
-        working-directory: ./research-hub-web
-        run: npm install --save graphql
+      # - name: Install GraphQL
+      #   working-directory: ./research-hub-web
+      #   run: npm install --save graphql
 
-      - name: Install GraphQL codegen cli
-        working-directory: ./research-hub-web
-        run: npm install -g @graphql-codegen/cli
+      # - name: Install GraphQL codegen cli
+      #   working-directory: ./research-hub-web
+      #   run: npm install -g @graphql-codegen/cli
 
-      - name: Generate GraphQL Schema
-        working-directory: ./research-hub-web
-        run: npm run generate
+      # - name: Generate GraphQL Schema
+      #   working-directory: ./research-hub-web
+      #   run: npm run generate
       
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli
+      # - name: Install Angular CLI
+      #   run: npm install -g @angular/cli
       
-      - name: Start server
-        run: ng serve
+      # - name: Start server
+      #   run: ng serve
 
-      - name: Run e2e tests
-        run: npm run e2e-ci
+      # - name: Run e2e tests
+      #   run: npm run e2e-ci
