@@ -41,7 +41,7 @@ jobs:
             echo "BRANCH_NAME=prod" >> $GITHUB_ENV
           fi
           
-      -run: echo "${{env.BRANCH_NAME}}"
+      - run: echo "${{env.BRANCH_NAME}}"
       
       - name: Check out Git repository
         uses: actions/checkout@v2
