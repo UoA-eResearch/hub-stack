@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { LoginService, UserInfoDto } from '@uoa/auth';
@@ -12,9 +12,6 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-
-  @Output() toggleSidenav: EventEmitter<void> = new EventEmitter<void>();
-
   @ViewChild('searchBar') searchBar: SearchBarComponent;
 
   public isHome = false;

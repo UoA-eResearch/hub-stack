@@ -32,7 +32,8 @@ import { SearchFiltersComponent } from './search-filters/search-filters.componen
   exports: [
     NavbarComponent,
     NotificationComponent,
-    SideNavComponent
+    SideNavComponent,
+    FooterComponent
   ]
 })
 export class AppLayoutModule { }
