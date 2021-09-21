@@ -24,7 +24,7 @@
 
     <mat-chip-list
       class="result-chips"
-      *ngIf="result.chips"
+      *ngIf="result.chips && result.chips.length > 0"
       aria-label="result chips"
     >
       <mat-chip
