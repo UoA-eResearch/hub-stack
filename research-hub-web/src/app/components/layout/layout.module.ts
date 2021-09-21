@@ -7,7 +7,6 @@ import { SharedModule } from '../shared/app.shared.module';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotificationComponent } from './notification/notification.component';
-import { SideNavComponent } from './side-nav/side-nav.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchFiltersComponent } from './search-filters/search-filters.component';
 
@@ -17,7 +16,6 @@ import { SearchFiltersComponent } from './search-filters/search-filters.componen
   declarations: [
     NavbarComponent,
     NotificationComponent,
-    SideNavComponent,
     FooterComponent,
     SearchBarComponent,
     SearchFiltersComponent
@@ -32,7 +30,6 @@ import { SearchFiltersComponent } from './search-filters/search-filters.componen
   exports: [
     NavbarComponent,
     NotificationComponent,
-    SideNavComponent,
     FooterComponent
   ]
 })
