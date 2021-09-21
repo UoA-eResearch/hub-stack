@@ -27,10 +27,10 @@
 
             <!-- Panel Image -->
             <div fxHide.lt-md class="research-category-img">
-                <img srcset="{{ item.image?.url }}?w=1000&fm=webp,
-                             {{ item.image?.url }}?w=1000"
-                     src="{{ item.image?.url }}?w=1000"
-                     alt="{{ item.name }}">
+              <picture>
+                <source srcset="{{ item.image?.url }}?w=1000&fm=webp" type="image/webp">
+                <img src="{{ item.image?.url }}?w=1000" alt="{{ item.name }}">
+              </picture>
             </div>
           </div>
         </div>
