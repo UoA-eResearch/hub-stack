@@ -12,14 +12,9 @@
     <div *ngFor="let item of allCategories.items" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
 
       <!-- Individual Category Card -->
-      <mat-card fxLayout="column" fxLayoutAlign="space-between" class="tile-content"
-        routerLink="/search"
-          [queryParams]="
-            searchService.generateQueryParams('', {
-              category: [item.sys.id],
-              stage: [],
-              relatedOrgs: []
-            })"
+      <mat-card tabindex="0" fxLayout="column" fxLayoutAlign="space-between" class="tile-content" 
+        (keydown.enter)="search(item.sys.id)"
+        (click)="search(item.sys.id)"        
       >
         <div>
           <mat-card-title class="card-title title-text">{{ item.name }}</mat-card-title>

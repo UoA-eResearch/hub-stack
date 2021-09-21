@@ -7,6 +7,7 @@ import {
 } from '@app/graphql/schema';
 import { Observable, Subscription } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories-page',
@@ -22,7 +23,8 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
     private getHomepageGQL: GetHomepageGQL,
-    public searchService: SearchService
+    public searchService: SearchService,
+    private router: Router
   ) { }
 
   async ngOnInit() {
@@ -41,6 +43,15 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
       return this.allCategoriesGQL.fetch()
         .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
     } catch (e) { console.error('Error loading all Categories:', e) };
+  }
+
+  public search(id: string): void {
+    this.router.navigate(
+      ['/search'],
+      {
+        queryParams: this.searchService.generateQueryParams('', {category: [id], stage: [], relatedOrgs: []})
+      }
+    );
   }
 
   ngOnDestroy(): void {

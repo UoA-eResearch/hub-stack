@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { SearchResults } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 
@@ -12,6 +13,20 @@ export class SearchResultsListComponent {
   @Input() searchResults: SearchResults = null;
 
   constructor(
-    public searchService: SearchService
+    public searchService: SearchService,
+    private router: Router
   ) { }
+
+  public navigate(contentType: string, slug: string) {
+    this.router.navigate([contentType.toLowerCase() + '/' + slug]);
+  }
+
+  public search(id: string): void {
+    this.router.navigate(
+      ['/search'],
+      {
+        queryParams: this.searchService.generateQueryParams('', {category: [id], stage: [], relatedOrgs: []})
+      }
+    );
+  }
 }

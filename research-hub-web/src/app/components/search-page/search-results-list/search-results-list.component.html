@@ -5,7 +5,8 @@
     *ngFor="let result of searchResults.results"
     class="card-content"
     role="listitem"
-    [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"
+    [routerLink]="['/' + result.contentType.toLowerCase() + '/' + result.slug]"
+    (keydown.enter)="navigate(result.contentType, result.slug)"
   >
     <span class="card-label">{{
       result.contentType | contentTypeDisplayName
@@ -29,14 +30,10 @@
       <mat-chip
         *ngFor="let chip of result.chips"
         aria-label="result chip"
-        routerLink="/search"
-        [queryParams]="
-          searchService.generateQueryParams('', {
-            category: [chip.id],
-            stage: [],
-            relatedOrgs: []
-          })
-        "
+        tabIndex="0"
+        matTooltip="Search in {{chip.name}}"
+        (keydown.enter)="search(chip.id)"
+        (click)="search(chip.id)"
         >{{ chip.name }}</mat-chip
       >
     </mat-chip-list>
