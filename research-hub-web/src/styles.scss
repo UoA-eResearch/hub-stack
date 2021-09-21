@@ -204,6 +204,13 @@ app-search-filters {
     white-space: normal;
     line-height: 24px;
   }
+  mat-tab-header {
+    .mat-tab-label-content {
+      font-size: 16px;
+      font-weight: normal;
+      color: black;
+    }
+  }
 }
 
 /**
@@ -364,18 +371,6 @@ h2.maori-proverb {
 
 .mini-hr {
   margin-bottom: 32px;
-}
-
-/**
- *  Search bar
- */
-.mat-form-field-ripple,
-.mat-form-field-underline {
-  background-color: rgba(200, 200, 200, 0.6) !important;
-}
-
-.mat-focused .mat-form-field-label {
-  color: rgba(200, 200, 200, 0.6) !important;
 }
 
 /**
