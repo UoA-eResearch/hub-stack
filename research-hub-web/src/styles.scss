@@ -403,3 +403,21 @@ h2.maori-proverb {
   font-size: 0.9em;
 }
 
+.easter-egg {
+  background: linear-gradient(146deg, #ff0000, #ff9900, #ccff00, #33ff00, #00ff66, #00ffff, #0066ff, #3300ff, #cc00ff, #ff0099);
+  background-size: 400% 100%; 
+  color: #ffffff;
+  animation: pulse 5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 200% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
