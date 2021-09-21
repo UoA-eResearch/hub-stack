@@ -3,10 +3,6 @@
 
 mat-toolbar {
   color: white;
-  position: fixed;
-  position: -webkit-fixed;
-  top: 0;
-  z-index: 1000;
   @media (min-width: 960px) {
     padding: 0 25px;
   }
@@ -19,7 +15,7 @@ mat-toolbar {
     }
     button-menu {
       display: block;
-      @media (max-width: 1100px) {
+      @media (max-width: 960px) {
         display: none;
       }
     }
@@ -27,7 +23,7 @@ mat-toolbar {
   mat-toolbar-row.navbar-row-show-small {
     display: none;
     height: 36px;
-    @media (max-width: 1100px) {
+    @media (max-width: 960px) {
       display: flex;
       //justify-content: space-around;
     }

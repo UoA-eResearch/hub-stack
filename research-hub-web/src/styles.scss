@@ -4,12 +4,6 @@
 @import "styles-common";
 @import "mixins";
 
-app-root {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
 /**
  * Native Elements
  */
