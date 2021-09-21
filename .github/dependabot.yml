@@ -1,0 +1,31 @@
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/research-hub-web'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 1
+    reviewers:
+      - rosemcc
+      - Trombach
+    allow:
+      - dependency-type: 'direct'
+  - package-ecosystem: 'npm'
+    directory: '/cer-graphql'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 1
+    reviewers:
+      - uoa-noel
+    allow:
+      - dependency-type: 'direct'
+  - package-ecosystem: 'npm'
+    directory: '/hub-search-proxy'
+    schedule:
+      interval: 'weekly'
+    open-pull-requests-limit: 1
+    reviewers:
+      - rosemcc
+    allow:
+      - dependency-type: 'direct'
+    
