@@ -6,51 +6,46 @@
   color="primary"
   class="mat-elevation-z6"
 >
-  <!-- Mobile Menu Toggle -->
-  <button
-    role="button"
-    aria-label="menu"
-    fxHide.gt-sm
-    mat-icon-button
-    style="margin-right: 6px"
-    matTooltip="Menu"
-    (click)="toggleSidenav.emit()"
-  >
-    <mat-icon>menu</mat-icon>
-  </button>
+  <mat-toolbar-row class="main-navbar-row">
+    <!-- Logo/Home -->
+    <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
+      <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
+    </a>
 
-  <!-- Logo/Home -->
-  <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
-    <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
-  </a>
+    <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
-  <span fxHide.lt-md style="flex: 1 1 auto"></span>
+    <app-search-bar #searchBar></app-search-bar>
 
-  <app-search-bar #searchBar></app-search-bar>
+    <span fxHide.lt-md style="flex: 1 1 auto"></span>
 
-  <span fxHide.lt-md style="flex: 1 1 auto"></span>
-
-  <!--Navigation buttons-->
-  <button mat-button fxHide.lt-md [routerLink]="'/categories'">Categories</button>
-  <button mat-button fxHide.lt-md [routerLink]="'/activities'">Activities</button>
-  <ng-container
-    *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
-  ></ng-container>
+    <!--Navigation buttons-->
+    <button mat-button fxHide.lt-md [routerLink]="'/categories'">
+      Categories
+    </button>
+    <button mat-button fxHide.lt-md [routerLink]="'/activities'">
+      Activities
+    </button>
+      <ng-container
+        *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
+      ></ng-container>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="navbar-row-show-small">
+    <button mat-button [routerLink]="'/categories'">Categories</button>
+    <button mat-button [routerLink]="'/activities'">Activities</button>
+  </mat-toolbar-row>
 </mat-toolbar>
 
 <!--templates-->
 <ng-template #isSignedIn>
   <ng-container *ngIf="userInfo$ | async; let userInfo">
     <button
-      fxHide
-      fxShow.gt-sm
       role="button"
       class="button-menu"
       aria-label="user-info"
       mat-button
       [matMenuTriggerFor]="userMenu"
     >
-      <mat-icon fxHide fxShow.gt-sm matPrefix style="margin-right: 5px"
+      <mat-icon matPrefix style="margin-right: 5px"
         >person</mat-icon
       >
       <span fxHide fxShow.gt-md>
@@ -99,7 +94,6 @@
   <button
     role="button"
     aria-label="sign-in"
-    fxHide.lt-md
     mat-button
     (click)="loginService.doLogin(currentUrl)"
     (keydown.enter)="loginService.doLogin(currentUrl)"
