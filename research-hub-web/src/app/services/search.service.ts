@@ -50,6 +50,13 @@ export class SearchService {
           results
         }
 
+        // Push to Tag Manager
+        window.dataLayer.push({
+          event: 'search',
+          searchQuery: query.query,
+          resultsTotal: totalResults
+        });
+
         return searchResults;
       })
     );
