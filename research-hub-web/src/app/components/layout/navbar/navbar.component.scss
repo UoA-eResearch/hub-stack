@@ -3,12 +3,34 @@
 
 mat-toolbar {
   color: white;
-  position: fixed;
-  position: -webkit-fixed;
-  top: 0;
-  z-index: 1000;
   @media (min-width: 960px) {
     padding: 0 25px;
+  }
+  mat-toolbar-row.main-navbar-row {
+    .mat-button {
+      line-height: 64px;
+      padding: 0 16px;
+      min-width: 64px;
+      font-weight: 100;
+    }
+    button-menu {
+      display: block;
+      @media (max-width: 960px) {
+        display: none;
+      }
+    }
+  }
+  mat-toolbar-row.navbar-row-show-small {
+    display: none;
+    height: 36px;
+    @media (max-width: 960px) {
+      display: flex;
+      //justify-content: space-around;
+    }
+    .mat-button {
+      font-weight: 100;
+      flex: 1;
+    }
   }
 }
 
@@ -73,10 +95,4 @@ mat-toolbar {
   @extend .menu-button;
   top: 2.4px;
   right: 10.5px;
-}
-.mat-button {
-  line-height: 64px !important;
-  padding: 0 16px !important;
-  min-width: 64px !important;
-  font-weight: 100;
 }

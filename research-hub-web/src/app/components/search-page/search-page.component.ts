@@ -133,7 +133,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   }
 
   scrollToTop() {
-    document.querySelector('mat-sidenav-content').scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   ngOnDestroy() {
