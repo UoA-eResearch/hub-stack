@@ -103,8 +103,6 @@ module.exports.search = async (event, context) => {
       "fields.ssoProtected",
       "fields.searchable",
       "fields.keywords",
-      "fields.icon",
-      "fields.banner",
       "sys.contentType",
       "fields.category.en-US",
     ];
@@ -324,18 +322,6 @@ module.exports.update = async (event, context) => {
     select: ['sys.id', 'fields.name']
   });
 
-  // add banner url
-  if (doc.fields.hasOwnProperty('banner')) {
-    const bannerUrl = await getImageUrl(doc.fields.banner['en-US'].sys.id);
-    doc.fields.banner['en-US']['url'] = bannerUrl;
-  }
-
-  // add icon url
-  if (doc.fields.hasOwnProperty('icon')) {
-    const iconUrl = await getImageUrl(doc.fields.icon['en-US'].sys.id);
-    doc.fields.icon['en-US']['url'] = iconUrl;
-  }
-
   // add category names
   if (doc.fields.hasOwnProperty('category')) {
     for (let item of doc.fields.category['en-US']) {
@@ -429,17 +415,6 @@ module.exports.bulk = async () => {
 
     console.log('Transforming entries...');
     for(let entry of validEntries) {
-      // add banner urls
-      if (entry.fields.hasOwnProperty('banner')) {
-        const bannerUrl = await getImageUrl(entry.fields.banner['en-US'].sys.id);
-        entry.fields.banner['en-US']['url'] = bannerUrl;
-      }
-
-      // add icon urls
-      if (entry.fields.hasOwnProperty('icon')) {
-        const iconUrl = await getImageUrl(entry.fields.icon['en-US'].sys.id);
-        entry.fields.icon['en-US']['url'] = iconUrl;
-      }
 
       // add category names
       if (entry.fields.hasOwnProperty('category')) {
@@ -507,14 +482,5 @@ function formatResponse(status, body) {
           "Access-Control-Allow-Origin": process.env.CORS_ACCESS_CONTROL_ALLOW_ORIGINS,
           "Content-Type": "application/json"
       }
-  }
-}
-
-async function getImageUrl(assetId) {
-  try {
-    const asset = await deliveryApiClient.getAsset(assetId);
-    return asset.fields.file.url;
-  } catch(error) {
-    console.log(error);
   }
 }
