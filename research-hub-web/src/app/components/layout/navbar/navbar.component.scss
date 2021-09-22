@@ -23,7 +23,7 @@ mat-toolbar {
   mat-toolbar-row.navbar-row-show-small {
     display: none;
     height: 36px;
-    @media (max-width: 960px) {
+    @media (max-width: 1100px) {
       display: flex;
       //justify-content: space-around;
     }
@@ -95,4 +95,10 @@ mat-toolbar {
   @extend .menu-button;
   top: 2.4px;
   right: 10.5px;
+}
+
+@media (max-width: 1100px) {
+  .hide-small {
+    display: none;
+  }
 }
