@@ -12,6 +12,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatListModule } from '@angular/material/list';
 import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { By } from '@angular/platform-browser';
 import { NgxSkeletonLoaderComponent } from 'ngx-skeleton-loader';
 
@@ -33,7 +34,8 @@ describe('SearchResultsListComponent', () => {
         MatCardModule,
         RouterTestingModule.withRoutes([]),
         MockModule(MatListModule),
-        MatChipsModule
+        MatChipsModule,
+        MatTooltipModule
       ],
       providers: [
         MockProvider(SearchService),

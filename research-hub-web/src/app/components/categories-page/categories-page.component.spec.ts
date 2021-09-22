@@ -3,9 +3,10 @@ import { CategoriesPageComponent } from './categories-page.component';
 import { SearchService } from '@services/search.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-import { CategoryCollection, AllCategoriesGQL } from '@graphql/schema';
+import { CategoryCollection } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
-import { MockComponent, MockProvider } from 'ng-mocks';
+import { MockProvider } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('CategoriesPageComponent', () => {
@@ -102,6 +103,7 @@ describe('CategoriesPageComponent', () => {
         CategoriesPageComponent
       ],
       imports: [
+        RouterTestingModule.withRoutes([]),
         HttpClientTestingModule,
         ApolloTestingModule
       ],
