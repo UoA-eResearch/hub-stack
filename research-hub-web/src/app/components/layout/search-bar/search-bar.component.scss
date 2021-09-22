@@ -6,11 +6,10 @@ $mobile-max-width: 960px;
 // position the host element relative so we can position filter content relative to the host element instead of the body
 :host {
   position: relative;
-  flex-grow: 2;
   @media (max-width: $mobile-max-width) {
     position: static;
-    flex-grow: 0;
   }
+  flex-grow: 2;
 }
 
 .search-bar-outer {
