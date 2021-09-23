@@ -44,7 +44,6 @@
         type="button"
         mat-icon-button
         color="primary"
-        fxHide.lt-md
         (click)="showFilters = !showFilters"
       >
         <mat-icon
@@ -62,9 +61,9 @@
   <button
     *ngIf="isMobile"
     role="button"
+    class="mobile-search-button"
     aria-label="search"
     mat-icon-button
-    fxHide.gt-sm
     matTooltip="Search"
     (click)="toggleMobileSearch()"
   >
