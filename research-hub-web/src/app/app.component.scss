@@ -1,3 +1,5 @@
+@import "variables";
+
 :host {
   display: flex;
   flex-direction: column;
@@ -20,6 +22,11 @@ div.main-content {
   overflow-y: auto;
   background-color: #fafafa;
   color: rgba(0,0,0,.87);
+  // the order of these 2 media queries matters!
+  @media (max-width: $navbar-second-row-breakpoint) {
+    margin-top: 100px;
+    height: calc(100vh - 100px);
+  }
   @media (max-width: 960px) {
     margin-top: 92px;
     height: calc(100vh - 92px);
