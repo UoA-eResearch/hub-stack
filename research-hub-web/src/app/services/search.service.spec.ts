@@ -87,6 +87,7 @@ describe('SearchService', () => {
       stage: []
     }
   };
+  window.dataLayer = [];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
