@@ -1,3 +1,5 @@
+@import "variables";
+
 .search-filters-container {
   font-size: 16px;
   display: flex;
@@ -5,7 +7,7 @@
   height: auto;
   min-height: 514px;
   width: 1010px;
-  @media (max-width: 960px) {
+  @media (max-width: $navbar-second-row-breakpoint) {
     height: calc(100vh - 112px);
     width: 100vw;
   }
@@ -14,7 +16,7 @@
     padding: 10px;
     overflow: auto;
     flex: 1;
-    @media (max-width: 960px) {
+    @media (max-width: $navbar-second-row-breakpoint) {
       height: calc(100vh - 112px - 49px);
     }
   }
@@ -28,7 +30,7 @@
 
     mat-list-option {
       width: 325px;
-      @media (max-width: 960px) {
+      @media (max-width: $navbar-second-row-breakpoint) {
         width: 100%
       }
     }

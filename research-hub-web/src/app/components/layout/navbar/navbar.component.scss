@@ -3,7 +3,7 @@
 
 mat-toolbar {
   color: white;
-  @media (min-width: 960px) {
+  @media (min-width: $navbar-second-row-breakpoint) {
     padding: 0 25px;
   }
   mat-toolbar-row.main-navbar-row {
@@ -15,7 +15,7 @@ mat-toolbar {
     }
     button-menu {
       display: block;
-      @media (max-width: 960px) {
+      @media (max-width: $navbar-second-row-breakpoint) {
         display: none;
       }
     }

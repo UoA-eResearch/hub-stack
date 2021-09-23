@@ -39,7 +39,7 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.getAllStages().subscribe(stages => this.allStages = stages));
     this.subscriptions.add(this.getAllOrgUnits().subscribe(orgUnits => this.allOrgUnits = orgUnits));
 
-    this.subscriptions.add(this.breakpointObserver.observe('(max-width: 960px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches))
+    this.subscriptions.add(this.breakpointObserver.observe('(max-width: 1100px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches))
   }
 
   ngOnDestroy(): void {

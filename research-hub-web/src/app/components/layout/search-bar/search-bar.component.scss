@@ -1,12 +1,10 @@
 @import "mixins";
 @import "variables";
 
-$mobile-max-width: 960px;
-
 // position the host element relative so we can position filter content relative to the host element instead of the body
 :host {
   position: relative;
-  @media (max-width: $mobile-max-width) {
+  @media (max-width: $navbar-second-row-breakpoint) {
     position: static;
   }
 }
@@ -17,7 +15,7 @@ $mobile-max-width: 960px;
   padding: 7px 0px;
   position: relative;
   z-index: 1000;
-  @media (max-width: $mobile-max-width) {
+  @media (max-width: $navbar-second-row-breakpoint) {
     position: absolute;
     top: 0;
     left: 0;
@@ -37,7 +35,7 @@ $mobile-max-width: 960px;
     border: 1px solid transparent;
     padding: 2px;
     border-radius: 5px;
-    @media (max-width: $mobile-max-width) {
+    @media (max-width: $navbar-second-row-breakpoint) {
       border-radius: 0;
     }
     height: 100%;
@@ -64,12 +62,19 @@ $mobile-max-width: 960px;
   display: block;
 }
 
+.mobile-search-button {
+  display: none;
+  @media (max-width: $navbar-second-row-breakpoint) {
+    display: block;
+  }
+}
+
 .filter-content {
   position: absolute;
   top: 64px;
   left: -255px;
   border-radius: 0 0 5px 5px;
-  @media (max-width: $mobile-max-width) {
+  @media (max-width: $navbar-second-row-breakpoint) {
     top: 56px;
     left: 0px;
     height: calc(100vh - 56px);
@@ -77,4 +82,10 @@ $mobile-max-width: 960px;
   z-index: 999;
   background-color: white;
   @include mat-elevation(5);
+}
+
+#settingsButton {
+  @media (max-width: $navbar-second-row-breakpoint) {
+    display: none;
+  }
 }
