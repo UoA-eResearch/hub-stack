@@ -11,7 +11,7 @@ import { SearchFilters, SearchQuery, SearchResult, SearchResults, SortOrder } fr
 })
 export class SearchService {
   public searchText: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({category: [], stage: [], relatedOrgs: []});
+  public searchFilters: BehaviorSubject<SearchFilters> = new BehaviorSubject<SearchFilters>({ category: [], stage: [], relatedOrgs: [] });
 
   constructor(
     private http: HttpClient
@@ -36,9 +36,9 @@ export class SearchService {
             summary: summary,
             slug: element._source.fields.slug["en-US"],
             ssoProtected: element._source.fields.ssoProtected["en-US"],
-            contentType : element._source.sys.contentType.sys.id,
+            contentType: element._source.sys.contentType.sys.id,
             chips: element._source.fields.category?.["en-US"].map(x => {
-              return {name: x.name, id: x.sys.id};
+              return { name: x.name, id: x.sys.id };
             })
           };
 
@@ -50,15 +50,9 @@ export class SearchService {
           results
         }
 
-        // Push to Tag Manager
-        window.dataLayer.push({
-          event: 'search',
-          searchQuery: query.query,
-          resultsTotal: totalResults
-        });
-
         return searchResults;
-      })
+      }),
+      tap((results) => this.pushToDataLayer(query.query, results.totalResults))
     );
   }
 
@@ -86,5 +80,14 @@ export class SearchService {
   private updateSearchSubjects(query: SearchQuery) {
     this.searchText.next(query.query);
     this.searchFilters.next(Object.assign({}, query.filters));
+  }
+
+  private pushToDataLayer(query: string, totalResults: number) {
+    // Push to Tag Manager
+    window.dataLayer.push({
+      event: 'search',
+      searchQuery: query,
+      resultsTotal: totalResults
+    });
   }
 }
