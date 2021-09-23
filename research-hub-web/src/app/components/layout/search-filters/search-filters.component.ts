@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators';
 })
 export class SearchFiltersComponent implements OnInit, OnDestroy {
   @Input() activeFilters: SearchFilters = { category: [], stage: [], relatedOrgs: [] };
+  @Input() activeFiltersCount: number = 0;
   @Output() activeFiltersChange: EventEmitter<SearchFilters> = new EventEmitter<SearchFilters>();
   @Output() search: EventEmitter<SearchFilters> = new EventEmitter<SearchFilters>();
 

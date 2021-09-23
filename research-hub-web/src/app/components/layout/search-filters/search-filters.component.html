@@ -47,6 +47,9 @@
 
   <div class="search-filters-footer">
     <span>Filters: </span>
+    <span *ngIf="isMobile && activeFiltersCount > 0">{{
+      activeFiltersCount
+    }}</span>
     <mat-chip-list>
       <mat-chip
         *ngIf="activeFilters.category.length > 0 && !isMobile"
