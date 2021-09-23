@@ -21,19 +21,31 @@
     <div class="applied-filters">
       <span>
         Filters:
+        <b
+          *ngIf="
+            activeFilters.category.length === 0 &&
+            activeFilters.stage.length == 0 &&
+            activeFilters.relatedOrgs.length === 0
+          "
+          >0</b
+        >
         <ng-container *ngIf="activeFilters?.category?.length > 0">
-          <b>{{activeFilters.category.length}}</b>
-          {{activeFilters.category.length === 1 ? 'category' : 'categories'}}
+          <b>{{ activeFilters.category.length }}</b>
+          {{ activeFilters.category.length === 1 ? "category" : "categories" }}
         </ng-container>
 
         <ng-container *ngIf="activeFilters?.stage?.length > 0">
-          <b>{{activeFilters.stage.length}}</b>
-          {{activeFilters.stage.length === 1 ? 'activity' : 'activities'}}
+          <b>{{ activeFilters.stage.length }}</b>
+          {{ activeFilters.stage.length === 1 ? "activity" : "activities" }}
         </ng-container>
 
         <ng-container *ngIf="activeFilters?.relatedOrgs?.length > 0">
-          <b>{{activeFilters.relatedOrgs.length}}</b>
-          {{activeFilters.relatedOrgs.length === 1 ? 'organisation' : 'organisations'}}
+          <b>{{ activeFilters.relatedOrgs.length }}</b>
+          {{
+            activeFilters.relatedOrgs.length === 1
+              ? "organisation"
+              : "organisations"
+          }}
         </ng-container>
       </span>
     </div>
