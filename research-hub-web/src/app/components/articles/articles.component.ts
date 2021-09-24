@@ -115,6 +115,8 @@ export class ArticlesComponent implements OnInit, OnDestroy {
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+        } else {
+          this.bannerImageUrl = undefined;
         }
 
         this.bodyMediaService.setBodyMedia(data.bodyText?.links);
