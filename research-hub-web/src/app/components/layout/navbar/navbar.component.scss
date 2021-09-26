@@ -12,6 +12,9 @@ mat-toolbar {
       padding: 0 16px;
       min-width: 64px;
       font-weight: 100;
+      @media (max-width: $navbar-second-row-breakpoint) {
+        line-height: 20px;
+      }
     }
     button-menu {
       display: block;
@@ -70,9 +73,9 @@ mat-toolbar {
  * Hub Logo
  */
 .hub-logo {
-  height: 30px;
+  height: 28px;
   img {
-    height: 30px;
+    height: 28px;
     @include size(small) {
       height: 32px;
       img {
