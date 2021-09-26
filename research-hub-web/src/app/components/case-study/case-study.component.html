@@ -61,26 +61,6 @@
                     <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
                         [style]="caseStudy.banner ? bannerTextStyling : ''">
                         <small>{{ caseStudy.summary }}</small></p>
-
-                    <!-- Call To Action -->
-                    <div class="section" *ngIf="caseStudy.callToAction">
-                        <div *ngIf="caseStudy.banner">
-                            <a href="{{ caseStudy.callToAction }}" target="_blank">
-                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button-banner">
-                                    <span *ngIf="caseStudy.callToActionLabel">{{ caseStudy.callToActionLabel }}</span>
-                                    <span *ngIf="!caseStudy.callToActionLabel">View Equipment</span>
-                                </button>
-                            </a>
-                        </div>
-                        <div *ngIf="!caseStudy.banner">
-                            <a href="{{ caseStudy.callToAction }}" target="_blank">
-                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button">
-                                    <span *ngIf="caseStudy.callToActionLabel">{{ caseStudy.callToActionLabel }}</span>
-                                    <span *ngIf="!caseStudy.callToActionLabel">View Equipment</span>
-                                </button>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
 
