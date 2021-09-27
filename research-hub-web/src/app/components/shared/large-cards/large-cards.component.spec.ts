@@ -2,11 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@app/app.material.module';
 import { MockModule, MockPipe } from 'ng-mocks';
-import { HumanCasePipe } from '../../../pipes/human-case.pipe';
+import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 import { LargeCardsComponent } from './large-cards.component';
 
 describe('LargeCardsComponent', () => {
-  let pipe: HumanCasePipe;
   let component: LargeCardsComponent;
   let fixture: ComponentFixture<LargeCardsComponent>;
 
@@ -14,7 +13,7 @@ describe('LargeCardsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         LargeCardsComponent,
-        MockPipe(HumanCasePipe)
+        MockPipe(ContentTypeDisplayNamePipe)
       ],
       imports: [
         RouterTestingModule,
