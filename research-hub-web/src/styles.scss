@@ -139,6 +139,18 @@ a {
   color: $link-light-bg-color;
   font-family: $font-family;
 }
+
+// show icon for external links
+// page below is good for checking
+// http://localhost:4200/research-impact/planning-for-impact
+mat-card-title a:not([href^="/"]):after,
+ngx-contentful-rich-text mat-card-title a:not([href^="/"]):after,
+ngx-contentful-rich-text a:not([href^="/"]) .ng-star-inserted:after {
+  font-family: "Material Icons";
+  content: " \e895";
+  font-size: 0.8em;
+}
+
 span {
   font-family: $font-family;
 }
