@@ -1,0 +1,91 @@
+@import "mixins";
+@import "variables";
+
+// position the host element relative so we can position filter content relative to the host element instead of the body
+:host {
+  position: relative;
+  @media (max-width: $navbar-second-row-breakpoint) {
+    position: static;
+  }
+}
+
+.search-bar-outer {
+  height: 64px;
+  width: 500px;
+  padding: 7px 0px;
+  position: relative;
+  z-index: 1000;
+  @media (max-width: $navbar-second-row-breakpoint) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 56px;
+    width: 100vw;
+    padding: 0;
+    display: none;
+  }
+
+  .search-bar-inner {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid transparent;
+    padding: 2px;
+    border-radius: 5px;
+    @media (max-width: $navbar-second-row-breakpoint) {
+      border-radius: 0;
+    }
+    height: 100%;
+
+    input {
+      border: none;
+      background: transparent;
+      flex-grow: 1;
+      flex-shrink: 1;
+      font-size: 16px;
+      font: "National";
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.white-bottom {
+  background: linear-gradient(to bottom, transparent 50%, white 50%);
+}
+
+.show {
+  display: block;
+}
+
+.mobile-search-button {
+  display: none;
+  @media (max-width: $navbar-second-row-breakpoint) {
+    display: block;
+  }
+}
+
+.filter-content {
+  position: absolute;
+  top: 64px;
+  left: -255px;
+  border-radius: 0 0 5px 5px;
+  @media (max-width: $navbar-second-row-breakpoint) {
+    top: 56px;
+    left: 0px;
+    height: calc(100vh - 56px);
+  }
+  z-index: 999;
+  background-color: white;
+  @include mat-elevation(5);
+}
+
+#settingsButton {
+  @media (max-width: $navbar-second-row-breakpoint) {
+    display: none;
+  }
+}

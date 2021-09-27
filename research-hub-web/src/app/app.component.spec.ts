@@ -4,7 +4,6 @@ import { AppComponent } from './app.component';
 import { PageTitleService } from './services/page-title.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-import { SearchBarService } from './components/search-bar/search-bar.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatMenuModule } from '@angular/material/menu'
 import { MockModule, MockProvider } from 'ng-mocks';
@@ -25,7 +24,6 @@ describe('AppComponent', () => {
         MockModule(AppLayoutModule)
       ],
       providers: [
-        MockProvider(SearchBarService),
         MockProvider(PageTitleService),
         MockProvider(DeviceDetectorService)
       ]
