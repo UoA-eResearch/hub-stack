@@ -25,7 +25,7 @@ export class ActivitiesPageComponent implements OnInit, OnDestroy {
     public searchService: SearchService
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.allStages$ = this.getAllStages();
     this.subscriptions.add(
       this.getHomepageGQL.fetch().pipe(
