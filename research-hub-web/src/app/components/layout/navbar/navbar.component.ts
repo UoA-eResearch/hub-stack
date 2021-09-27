@@ -14,7 +14,6 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
 export class NavbarComponent implements OnInit, OnDestroy {
   @ViewChild('searchBar') searchBar: SearchBarComponent;
 
-  public isHome = false;
   public currentUrl = '/';
   public showMobileSearch = false;
 
@@ -35,7 +34,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         filter((event: RouterEvent) => event instanceof NavigationEnd)
       ).subscribe({
         next: (event: NavigationEnd) => {
-          this.isHome = event.urlAfterRedirects ? (event.urlAfterRedirects === '/home') : false;
           this.currentUrl = event.urlAfterRedirects;
           this.searchBar.focus();
         }
