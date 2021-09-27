@@ -1,0 +1,53 @@
+{
+  "mappings": {
+    "properties": {
+      "fields": {
+        "properties": {
+          "title": {
+            "properties": {
+              "en-US": {
+                "type": "text",
+                "fields": {
+                  "raw": {
+                    "type": "keyword",
+                    "normalizer": "keyword_normalizer"
+                  }
+                  
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "hub_analyzer": {
+          "type": "custom", 
+          "tokenizer": "standard",
+          "char_filter": [
+            "html_strip"
+          ],
+          "filter": [
+            "lowercase",
+            "asciifolding",
+            "stop", 
+            "apostrophe"
+          ]
+        }
+      },
+      "normalizer": {
+        "keyword_normalizer": {
+          "type": "custom",
+          "filter": [
+            "lowercase",
+            "asciifolding",
+            "trim"
+          ]
+        }
+      }
+    }
+  }
+}

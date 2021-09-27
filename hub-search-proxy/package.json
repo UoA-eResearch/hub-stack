@@ -22,13 +22,13 @@
     "nodemon": "^2.0.3",
     "serverless-domain-manager": "^4.1.1",
     "serverless-mocha-plugin": "^1.12.0",
-    "serverless-offline": "^6.1.4"
+    "serverless-offline": "^8.2.0"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.11.0",
     "aws-elasticsearch-connector": "^9.0.3",
     "aws-sdk": "^2.841.0",
     "contentful": "^8.2.0",
-    "contentful-export": "^7.11.7"
+    "contentful-export": "^7.13.13"
   }
 }

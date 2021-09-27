@@ -13,7 +13,7 @@ describe('ResearchHubs services Pages', () => {
     });
 
     it('service displays body text', () => {
-        cy.get('#service-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
+      cy.get('#bodyMediaList > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').text().should('not.be.empty');
     });
 
     it('service displays specifications table', () => {
@@ -33,11 +33,11 @@ describe('ResearchHubs services Pages', () => {
     it('displays a list of contacts', () => {
         cy.get('#contacts .card-title').text().should('not.be.empty');
     });
-    
+
     it('displays a list of documents', () => {
         cy.get('#documents mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });
-    
+
     it('displays a list of organisations', () => {
         cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
     });

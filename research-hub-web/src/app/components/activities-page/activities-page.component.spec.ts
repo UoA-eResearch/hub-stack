@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ResearchActivityComponent } from './research-activity.component';
-import { SearchBarService } from '../../search-bar/search-bar.service';
+import { ActivitiesPageComponent } from './activities-page.component';
+import { SearchService } from '@services/search.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockComponent, MockProvider } from 'ng-mocks';
-import { ContentContainerComponent } from '../content-container/content-container.component';
-import { ContentTitleComponent } from '../content-title/content-title.component';
 
-describe('ResearchActivityComponent', () => {
-  let component: ResearchActivityComponent;
-  let fixture: ComponentFixture<ResearchActivityComponent>;
+
+describe('ActivitiesPageComponent', () => {
+  let component: ActivitiesPageComponent;
+  let fixture: ComponentFixture<ActivitiesPageComponent>;
   const mockStages$: Observable<StageCollection> = of({
     'items': [
         {
@@ -45,18 +44,19 @@ describe('ResearchActivityComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        ResearchActivityComponent,
-        MockComponent(ContentContainerComponent),
-        MockComponent(ContentTitleComponent)
+        ActivitiesPageComponent
       ],
-      imports: [ HttpClientTestingModule, ApolloTestingModule ],
-      providers: [ MockProvider(SearchBarService) ]
+      imports: [
+        HttpClientTestingModule,
+        ApolloTestingModule
+      ],
+      providers: [ MockProvider(SearchService) ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResearchActivityComponent);
+    fixture = TestBed.createComponent(ActivitiesPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -27,10 +27,7 @@
         <mat-card role="listitem">
           <ng-container *ngIf="content.banner; then image; else noImage">
           </ng-container>
-          <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
-          <span *ngIf="content.__typename == 'OfficialDocuments'" class="card-label">Document</span>
-          <span *ngIf="content.__typename != 'SubHub' && content.__typename != 'OfficialDocuments'"
-            class="card-label">{{ content.__typename | humanCase }}</span>
+          <span class="card-label">{{ content.__typename | contentTypeDisplayName }}</span>
 
           <mat-card-title>
             <h4 *ngIf="content.__typename != 'OfficialDocuments'">
