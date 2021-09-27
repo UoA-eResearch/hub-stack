@@ -1,9 +1,7 @@
 <div id="research-categories" *ngIf="allCategories$ | async; let allCategories">
-  <div>
-    <h2>{{ title }}</h2>
-    <p>{{ description }}</p>
-    <div [ngClass]="'main-underline'"></div>
-  </div>
+  <h2>{{ title }}</h2>
+  <p>{{ description }}</p>
+  <div [ngClass]="'main-underline'"></div>
 
   <!-- Category Cards Container -->
   <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap" ngClass.lt-md="site-padding-mobile">
