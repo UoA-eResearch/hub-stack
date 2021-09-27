@@ -56,6 +56,7 @@ module.exports.search = async (event, context) => {
     let size = 10;
     let from = 0;
     let queryFilters = {};
+    let queryFiltersCount = 0;
     let contentTypes = VALID_CONTENT_TYPES.slice();
     let sort = [];
     
@@ -70,6 +71,9 @@ module.exports.search = async (event, context) => {
     }
     if (requestBody.hasOwnProperty('filters')) {
       queryFilters = requestBody.filters;
+      for (let key of Object.keys(queryFilters)) {
+        queryFiltersCount += queryFilters[key].length
+      }      
     }
     if (requestBody.hasOwnProperty('includeContentTypes') && requestBody.includeContentTypes.length > 0) {
       contentTypes = requestBody.includeContentTypes.map(contentType => contentType.toLowerCase());
@@ -80,8 +84,8 @@ module.exports.search = async (event, context) => {
       }
     }
     if (requestBody.hasOwnProperty('sort')) {
-      if(!(requestBody.sort === "A-Z" || requestBody.sort === "Z-A" || requestBody.sort === "")) {
-        throw new Error('Sort options are A-Z or Z-A. Pass empty string or no sort property for sorting by score.')
+      if(!(requestBody.sort === "A-Z" || requestBody.sort === "Z-A" || requestBody.sort === "" || requestBody.sort === "relevance")) {
+        throw new Error('Sort options are A-Z, Z-A, or relevance.')
       }
       if (requestBody.sort === "A-Z") {
         sort.push({ "fields.title.en-US.raw": "asc" });
@@ -92,22 +96,23 @@ module.exports.search = async (event, context) => {
     }
 
     let query;
+    const includeInResult = [
+      "fields.slug",
+      "fields.title",
+      "fields.summary",
+      "fields.ssoProtected",
+      "fields.searchable",
+      "fields.keywords",
+      "sys.contentType",
+      "fields.category.en-US",
+    ];
 
-    if(queryString.length === 0 && Object.keys(queryFilters).length === 0) {
+    if(queryString.length === 0 && queryFiltersCount === 0) {
       // query with no filters and no query string (fetch all searchable results)
 
       query = { 
         _source: {
-          includes: [
-            "fields.slug",
-            "fields.title",
-            "fields.summary",
-            "fields.ssoProtected",
-            "fields.searchable",
-            "fields.keywords",
-            "fields.icon",
-            "sys.contentType"
-          ]
+          includes: includeInResult
         },
         query: {
           bool: {
@@ -137,7 +142,7 @@ module.exports.search = async (event, context) => {
         sort: sort
       };
 
-    } else if(queryString.length === 0 && Object.keys(queryFilters).length > 0) {
+    } else if(queryString.length === 0 && queryFiltersCount > 0) {
       // query with filters but no query string
 
       let queryParts = [];
@@ -158,36 +163,32 @@ module.exports.search = async (event, context) => {
     
       query = { 
         _source: {
-          includes: [
-            "fields.slug",
-            "fields.title",
-            "fields.summary",
-            "fields.ssoProtected",
-            "fields.searchable",
-            "fields.keywords",
-            "fields.icon",
-            "sys.contentType"
-          ]
+          includes: includeInResult
         },
-        query: { 
-          bool: {
-            must: queryParts,
-            should: {
-              multi_match: {
-                query : "subhub",
-                fields : [ "sys.contentType.sys.id^2"]  // boost match score for entries that are subhubs
+        query: {
+          function_score: {
+            query: {
+              bool: {
+                minimum_should_match: 1,
+                should: queryParts,
+                filter: [
+                  {
+                    term: {
+                      "fields.searchable.en-US": true
+                    }
+                  },
+                  {
+                    terms: {
+                      "sys.contentType.sys.id": contentTypes
+                    }
+                  }
+                ]
               }
             },
-            filter: [
+            functions: [
               {
-                term: {
-                  "fields.searchable.en-US": true
-                }
-              },
-              {
-                terms: {
-                  "sys.contentType.sys.id": contentTypes
-                }
+                filter: {"match":{"sys.contentType.sys.id": "subhub"}},
+                weight: 2 // boost match score for entries that are subhubs
               }
             ]
           }
@@ -219,15 +220,15 @@ module.exports.search = async (event, context) => {
         }).join(' ');
       }
 
-      let queryParts = [
-        {
-          simple_query_string: {
-            query: formattedQueryString,
-            default_operator: "and",
-            analyzer: "hub_analyzer"
-          }
+      const simpleQuery = {
+        simple_query_string: {
+          query: formattedQueryString,
+          default_operator: "and",
+          analyzer: "hub_analyzer"
         }
-      ]
+      }
+
+      let queryParts = []
 
       // add our search filters
       for (const filter in queryFilters) {
@@ -242,23 +243,19 @@ module.exports.search = async (event, context) => {
           )
         }
       }
+
+      let minimum_should_match = 0;
+      if (queryParts.length > 0) { minimum_should_match = 1 };
     
       query = { 
         _source: {
-          includes: [
-            "fields.slug",
-            "fields.title",
-            "fields.summary",
-            "fields.ssoProtected",
-            "fields.searchable",
-            "fields.keywords",
-            "fields.icon",
-            "sys.contentType"
-          ]
+          includes: includeInResult
         },
-        query: { 
+        query: {
           bool: {
-            must: queryParts,
+            must: simpleQuery,
+            minimum_should_match: minimum_should_match,
+            should: queryParts,
             filter: [
               {
                 term: {
@@ -273,7 +270,20 @@ module.exports.search = async (event, context) => {
             ]
           }
         },
-        sort: sort
+        sort: sort,
+        highlight: {
+          pre_tags : ["<b>"],
+          post_tags : ["</b>"],
+          fragment_size: 300,
+          highlight_query: {simple_query_string: {
+            query: queryString,
+            default_operator: "and",
+            analyzer: "hub_analyzer"
+          }},
+          fields: {
+            "fields.summary.en-US": {}
+          }
+        }
       };
     }
 
@@ -307,11 +317,17 @@ module.exports.search = async (event, context) => {
 
 module.exports.update = async (event, context) => {
   let doc = JSON.parse(event.body);
+  const categories = await deliveryApiClient.getEntries({
+    content_type: "category",
+    select: ['sys.id', 'fields.name']
+  });
 
-  // add icon url
-  if (doc.fields.hasOwnProperty('icon')) {
-    const iconUrl = await getIconUrl(doc.fields.icon['en-US'].sys.id);
-    doc.fields.icon['en-US']['url'] = iconUrl;
+  // add category names
+  if (doc.fields.hasOwnProperty('category')) {
+    for (let item of doc.fields.category['en-US']) {
+      const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
+      if (cat) {item['name'] = cat.fields.name;}
+    }
   }
 
   const params = {
@@ -374,6 +390,10 @@ module.exports.delete = async (event, context) => {
  */
 module.exports.bulk = async () => {  
   let validEntries;
+  const categories = await deliveryApiClient.getEntries({
+    content_type: "category",
+    select: ['sys.id', 'fields.name']
+  });
   
   try {
     // contentful export and filter entries
@@ -393,21 +413,25 @@ module.exports.bulk = async () => {
 
     console.log(`Found ${validEntries.length} entries to upload.`);
 
-    // add icon urls
-    for(var i = 0; i < validEntries.length; i++) {
-      if (validEntries[i].fields.hasOwnProperty('icon')) {
-        const iconUrl = await getIconUrl(validEntries[i].fields.icon['en-US'].sys.id);
-        validEntries[i].fields.icon['en-US']['url'] = iconUrl;
-      }
-    };
+    console.log('Transforming entries...');
+    for(let entry of validEntries) {
 
+      // add category names
+      if (entry.fields.hasOwnProperty('category')) {
+        for (let item of entry.fields.category['en-US']) {
+          const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
+          if (cat) {item['name'] = cat.fields.name;}
+        }
+      }    
+    };
+    
     // perform the upload
     console.log(`Uploading documents to index: ${ELASTICSEARCH_INDEX_NAME}`);
     const bulkBody = validEntries.flatMap((doc) => [
       { update: { _index: ELASTICSEARCH_INDEX_NAME, _id: doc.sys.id } },
       { doc: doc, doc_as_upsert: true },
     ]);
-    const { body: bulkResponse } = await esClient.bulk({ refresh: true, body: bulkBody });
+    const { body: bulkResponse } = await esClient.bulk({ refresh: true, body: bulkBody });        
     const erroredDocuments = []
     if (bulkResponse.errors) {
       // The items array has the same order of the dataset we just indexed.
@@ -458,14 +482,5 @@ function formatResponse(status, body) {
           "Access-Control-Allow-Origin": process.env.CORS_ACCESS_CONTROL_ALLOW_ORIGINS,
           "Content-Type": "application/json"
       }
-  }
-}
-
-async function getIconUrl (iconId) {
-  try {
-    const asset = await deliveryApiClient.getAsset(iconId);
-    return asset.fields.file.url
-  } catch(error) {
-    console.log(error);
   }
 }

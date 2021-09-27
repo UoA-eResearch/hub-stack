@@ -14,7 +14,7 @@ import { map } from 'rxjs/operators';
       <div class="notification-bar-content">
         <div [innerHTML]="this.notification | richTextToHTML"></div>
       </div>
-      <mat-icon (click)="close()">close</mat-icon>
+      <mat-icon tabindex="0" (click)="close()" (keydown.enter)="close()">close</mat-icon>
     </div>
   `,
   styleUrls: ['notification.component.scss'],

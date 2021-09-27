@@ -4,12 +4,6 @@
 @import "styles-common";
 @import "mixins";
 
-app-root {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
 /**
  * Native Elements
  */
@@ -65,7 +59,7 @@ hr {
     }
   }
   ol li::marker {
-    content: counters(ol-counter, '.');
+    content: counters(ol-counter, ".");
     position: absolute;
     color: $light-blue;
     font-weight: bold;
@@ -104,8 +98,6 @@ hr {
     margin-left: 0;
   }
 }
-
-
 
 /*
  * Text styles
@@ -173,14 +165,6 @@ mat-card.mat-card {
   margin: 8px 0;
   border-radius: 0%;
 }
-mat-icon,
-.mat-icon-button,
-svg {
-  font-size: 24px !important;
-  width: 24px !important;
-  height: 24px !important;
-  line-height: 24px !important;
-}
 mat-expansion-panel {
   margin: 8px 0;
 }
@@ -199,14 +183,25 @@ mat-expansion-panel {
   height: 56px;
 }
 
-.search-results-text {
-  color: $dark-blue !important;
-  font-weight: 500;
-  font-style: italic;
-}
 .chip-avatar {
   margin-right: 16px;
   border-radius: 50%;
+}
+
+app-search-filters {
+  div.mat-list-text {
+    font-size: 18px;
+    font-weight: normal;
+    white-space: normal;
+    line-height: 24px;
+  }
+  mat-tab-header {
+    .mat-tab-label-content {
+      font-size: 16px;
+      font-weight: normal;
+      color: black;
+    }
+  }
 }
 
 /**
@@ -256,18 +251,6 @@ mat-expansion-panel {
   color: white;
   background-color: $dark-blue;
   font-size: mat-font-size($app-base-typography, body-1);
-}
-
-/*
- * Search Results Filters Styling
- */
-::ng-deep.search-filters .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
-  color: unset;
-}
-
-::ng-deep.search-filters .mat-option-pseudo-checkbox.mat-pseudo-checkbox-checked {
-  text-decoration: none !important;
-  outline: none !important;
 }
 
 /**
@@ -379,21 +362,6 @@ h2.maori-proverb {
 
 .mini-hr {
   margin-bottom: 32px;
-}
-
-/**
- *  Search bar
- */
-.mat-form-field-ripple, .mat-form-field-underline {
-  background-color: rgba(200, 200, 200, 0.6) !important;
-}
-
-.mat-focused .mat-form-field-label {
-  color: rgba(200, 200, 200, 0.6) !important;
-}
-
-input {
-  caret-color: rgba(200, 200, 200, 0.6) !important;
 }
 
 /**
