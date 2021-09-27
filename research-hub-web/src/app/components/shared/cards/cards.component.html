@@ -12,8 +12,8 @@
       <!-- Templates -->
       <ng-template #image>
         <picture>
-          <source srcset="{{ content.banner?.url }}?w=1000&fm=webp" type="image/webp">
           <img mat-card-image src="{{ content.banner?.url }}?w=1000" alt="{{ content.title }}">
+          <source srcset="{{ content.banner?.url }}?w=1000&fm=webp" type="image/webp">
         </picture>
       </ng-template>
       <ng-template #noImage>
