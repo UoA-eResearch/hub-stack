@@ -390,15 +390,12 @@ h2.maori-proverb {
 }
 
 // Pre-launch style tweeks
-.mat-button {
-  font-size: 0.9em;
-}
 
 .easter-egg {
   background: linear-gradient(146deg, #ff0000, #ff9900, #ccff00, #33ff00, #00ff66, #00ffff, #0066ff, #3300ff, #cc00ff, #ff0099);
   background-size: 400% 100%; 
   color: #ffffff;
-  animation: pulse 5s infinite;
+  animation: pulse 10s infinite;
 }
 
 @keyframes pulse {
