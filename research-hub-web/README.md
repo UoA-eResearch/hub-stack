@@ -13,6 +13,7 @@ The front end for the [Research Hub](https://research-hub.auckland.ac.nz/). Depl
 * [AWS CloudFront](https://aws.amazon.com/cloudfront/): S3 assets are distributed via this CDN
 * [AWS Cognito](https://aws.amazon.com/cognito/): Used for user authentication
 * [Contentful](https://contentful.com/): Headless Content Management System where the site's content is hosted
+* [Sentry.io](sentry.io): Error and performance monitoring
 
 ## Local Development
 
