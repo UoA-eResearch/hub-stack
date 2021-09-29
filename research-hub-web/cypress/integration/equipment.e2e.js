@@ -13,7 +13,7 @@ describe('ResearchHubs Equipment  Pages', () => {
     });
 
     it('equipment displays body text', () => {
-        cy.get('#equipment-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
+      cy.get('#bodyMediaList > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').text().should('not.be.empty');
     });
 
     it('equipment displays specifications table', () => {

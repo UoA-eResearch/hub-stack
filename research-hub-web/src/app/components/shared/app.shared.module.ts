@@ -7,6 +7,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { HumanCasePipe } from '@pipes/human-case.pipe';
 import { RichTextToHTML } from '@pipes/rich-text.pipe';
+import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
 import { BodyMediaComponent } from './body-media/body-media.component';
@@ -18,6 +19,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -31,13 +33,15 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     NgxPaginationModule,
     MarkdownToHtmlModule,
     NgxSkeletonLoaderModule,
-    NgxContentfulRichTextModule
+    NgxContentfulRichTextModule,
+    ScrollingModule
   ],
   declarations: [
     ErrorDialogComponent,
     ConfirmDialogComponent,
     HumanCasePipe,
     RichTextToHTML,
+    ContentTypeDisplayNamePipe,
     CollectionListComponent,
     BodyMediaComponent,
     CardsComponent,
@@ -53,6 +57,7 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     ErrorDialogComponent,
     HumanCasePipe,
     RichTextToHTML,
+    ContentTypeDisplayNamePipe,
     CollectionListComponent,
     CardsComponent,
     BreadcrumbsComponent,
@@ -60,7 +65,8 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     VideoCardComponent,
     NgxPaginationModule,
     MarkdownToHtmlModule,
-    NgxSkeletonLoaderModule
+    NgxSkeletonLoaderModule,
+    ScrollingModule
   ],
   providers: [],
 })

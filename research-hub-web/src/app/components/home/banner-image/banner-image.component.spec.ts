@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockProvider } from 'ng-mocks';
-import { SearchBarService } from '../../search-bar/search-bar.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { BannerImageComponent } from './banner-image.component';
@@ -16,9 +14,6 @@ describe('BannerImageComponent', () => {
       imports: [
         ApolloTestingModule,
         RouterTestingModule.withRoutes([]),
-      ],
-      providers: [
-        MockProvider(SearchBarService)
       ]
     })
     .compileComponents();
