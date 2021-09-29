@@ -24,7 +24,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   public showNotification = false;
   public hasBeenDismissed = false;
-  public notification: JSON | null;
+  public notification: JSON | null = null;
 
   constructor(
     private getNotificationGQL: GetNotificationGQL
