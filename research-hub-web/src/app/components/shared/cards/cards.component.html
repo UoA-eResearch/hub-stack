@@ -11,11 +11,10 @@
 
       <!-- Templates -->
       <ng-template #image>
-        <img mat-card-image
-              srcset="{{ content.banner?.url }}?w=1000&fm=webp,
-                      {{ content.banner?.url }}?w=1000"
-              src="{{ content.banner?.url }}?w=1000"
-              alt="{{ content.title }}-banner">
+        <picture>
+          <source srcset="{{ content.banner?.url }}?w=1000&fm=webp" type="image/webp">
+          <img mat-card-image src="{{ content.banner?.url }}?w=1000" alt="{{ content.title }}">
+        </picture>
       </ng-template>
       <ng-template #noImage>
         <div style="margin-top: 12px;"></div>
