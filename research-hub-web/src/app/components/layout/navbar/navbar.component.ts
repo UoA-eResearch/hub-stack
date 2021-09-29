@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { Category, Stage } from '@app/graphql/schema';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { LoginService, UserInfoDto } from '@uoa/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-navbar',
@@ -13,13 +12,10 @@ import { filter, switchMap, tap } from 'rxjs/operators';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  @Input() allCategories: Category[] = [];
-  @Input() allStages: Stage[] = [];
+  @ViewChild('searchBar') searchBar: SearchBarComponent;
 
-  @Output() toggleSidenav: EventEmitter<void> = new EventEmitter<void>();
-
-  public isHome = false;
   public currentUrl = '/';
+  public showMobileSearch = false;
 
   public userInfo$: Observable<UserInfoDto>;
   public loggedIn$: Observable<boolean>;
@@ -29,7 +25,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public homeScrollService: HomeScrollService,
-    public searchBarService: SearchBarService,
     public loginService: LoginService
   ) { }
 
@@ -39,8 +34,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         filter((event: RouterEvent) => event instanceof NavigationEnd)
       ).subscribe({
         next: (event: NavigationEnd) => {
-          this.isHome = event.urlAfterRedirects ? (event.urlAfterRedirects === '/home') : false;
           this.currentUrl = event.urlAfterRedirects;
+          this.searchBar.focus();
         }
       })
     );
@@ -74,11 +69,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // }
   }
 
-
-
+  public toggleMobileSearchBar(): void {
+    this.showMobileSearch = !this.showMobileSearch;
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-
 }

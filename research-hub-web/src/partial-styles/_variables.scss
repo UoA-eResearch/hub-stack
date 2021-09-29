@@ -24,6 +24,8 @@ $height-footer-xs: 270px;
 $padding-site: 5vw;
 $padding-site-top: 4vh;
 
+$navbar-second-row-breakpoint: 1100px;
+
 /**
   * Material design colors generated with: http://mcg.mbitson.com/
   */
@@ -327,7 +329,7 @@ $research-activity-palette-discover: (
 * generate theme colors
 */
 $hub-app-primary: mat-palette($hub-teal);
-$hub-app-accent: mat-palette($hub-pink);
+$hub-app-accent: mat-palette($hub-teal);
 $hub-app-warn: mat-palette($hub-pink);
 
 /**

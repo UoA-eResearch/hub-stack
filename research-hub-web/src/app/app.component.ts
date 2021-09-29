@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { AllCategoriesGQL, AllStagesGQL, Category, Stage } from './graphql/schema';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { PageTitleService } from './services/page-title.service';
 
 @Component({
@@ -14,23 +13,15 @@ import { PageTitleService } from './services/page-title.service';
 export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
-  public allCategories: Category[];
-  public allStages: Stage[];
-
   constructor(
     private router: Router,
-    public titleService: PageTitleService,
-    private allCategoriesGQL: AllCategoriesGQL,
-    private allStagesGQL: AllStagesGQL
+    public titleService: PageTitleService
   ) { }
 
 
   ngOnInit(): void {
     this.subscribeToRouterEvents();
     this.titleService.title = ''; //sets title to welcome message
-
-    this.subscriptions.add(this.getAllCategories().subscribe((allCategories) => this.allCategories = allCategories));
-    this.subscriptions.add(this.getAllStages().subscribe((allStages) => this.allStages = allStages));
   }
 
   private subscribeToRouterEvents() {
@@ -55,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   private resetScrollPosition() {
     if (typeof document === 'object' && document) {
-      const sidenavContent = document.querySelector('.mat-drawer-content');
+      const sidenavContent = document.querySelector('.main-content');
       if (sidenavContent) {
         sidenavContent.scrollTop = 0;
       }
@@ -70,18 +61,6 @@ export class AppComponent implements OnInit, OnDestroy {
     if (url.match('^/#/')) {
       this.router.navigateByUrl(url.replace('#/', ''), { replaceUrl: true });
     }
-  }
-
-  private getAllCategories(): Observable<Category[]> {
-    return this.allCategoriesGQL.fetch().pipe(
-      map((result) => result.data.categoryCollection.items)
-    ) as Observable<Category[]>;
-  }
-
-  private getAllStages(): Observable<Stage[]> {
-    return this.allStagesGQL.fetch().pipe(
-      map((result) => result.data.stageCollection.items)
-    ) as Observable<Stage[]>;
   }
 
   ngOnDestroy() {

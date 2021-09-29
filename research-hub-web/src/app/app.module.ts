@@ -15,7 +15,6 @@ import { onError } from 'apollo-link-error';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './components/layout/layout.module';
-import { SearchBarService } from './components/search-bar/search-bar.service';
 import { SharedModule } from './components/shared/app.shared.module';
 /**
  * Generated from Fragment matcher graphql-code-generator plugin
@@ -66,7 +65,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   ],
   providers: [
     CerGraphqlService,
-    SearchBarService,
     PageTitleService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
     { provide: StorageService, useClass: AppStorageService },
