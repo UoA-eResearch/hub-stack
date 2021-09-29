@@ -31,15 +31,3 @@
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
-.standard-button-banner {
-  @extend .standard-button;
-  color: white !important;
-  border: 3px solid white !important;
-  background-color: rgba(0, 0, 0, 0.1) !important;
-}
-.standard-button-banner:hover {
-  color: $body-grey !important;
-  border-radius: 50px !important;
-  background-color: white !important;
-  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-}
