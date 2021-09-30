@@ -80,7 +80,7 @@
                     <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
                 </mat-card-title>
                 <mat-card-content><span class="card-summary">{{ contentItem['summary'] }}</span></mat-card-content>
-                <span *ngIf="contentItem['__typename'] != 'Person'" class="call-to-action"
+                <span *ngIf="contentItem['__typename'] !== 'Person'" class="call-to-action"
                     style="display: flex; align-items: center;max-width: fit-content">
                     <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
                         View {{ contentItem['__typename'] | humanCase }}&nbsp;&nbsp;</a>
@@ -168,8 +168,8 @@
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
-                                    <th role="columnheader" *ngIf="i == 0" [innerHTML]="column | MarkdownToHtml"></th>
-                                    <td role="cell" *ngIf="i != 0" [innerHTML]="column | MarkdownToHtml"></td>
+                                    <th role="columnheader" *ngIf="i === 0" [innerHTML]="column | MarkdownToHtml"></th>
+                                    <td role="cell" *ngIf="i !== 0" [innerHTML]="column | MarkdownToHtml"></td>
                                 </ng-container>
                             </tr>
                         </table>
@@ -181,8 +181,8 @@
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
-                                    <th role="columnheader" *ngIf="j == 0" [innerHTML]="column | MarkdownToHtml"></th>
-                                    <td role="cell" *ngIf="j != 0" [innerHTML]="column | MarkdownToHtml"></td>
+                                    <th role="columnheader" *ngIf="j === 0" [innerHTML]="column | MarkdownToHtml"></th>
+                                    <td role="cell" *ngIf="j !== 0" [innerHTML]="column | MarkdownToHtml"></td>
                                 </ng-container>
                             </tr>
                         </table>
@@ -194,9 +194,9 @@
                         <table class="body-table">
                             <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
                                 <ng-container *ngFor="let column of row; let j = index">
-                                    <th role="columnheader" *ngIf="j == 0 || i == 0"
+                                    <th role="columnheader" *ngIf="j === 0 || i === 0"
                                         [innerHTML]="column | MarkdownToHtml"></th>
-                                    <td role="cell" *ngIf="j != 0 && i != 0" [innerHTML]="column | MarkdownToHtml"></td>
+                                    <td role="cell" *ngIf="j !== 0 && i !== 0" [innerHTML]="column | MarkdownToHtml"></td>
                                 </ng-container>
                             </tr>
                         </table>
