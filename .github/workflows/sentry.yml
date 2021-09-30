@@ -2,8 +2,12 @@ name: Sentry Release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - dev
+      - test
+      - prod
+    paths:
+      - 'research-hub-web/**'
 
 jobs:
   sentry-release:
@@ -13,19 +17,17 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
-      - run: echo ${{ github.ref }}
-      - name: Set Version Number
-        id: set-version
-        run: echo ::set-output name=version::${GITHUB_REF#refs/*/}
-      - name: Output Version
-        run: echo ${{ steps.set-version.outputs.version }}
-      # - name: Notify Sentry
-      #   # https://github.com/getsentry/action-release
-      #   uses: getsentry/action-release@v1.1.6
-      #   env:
-      #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      #     SENTRY_ORG: university-of-auckland-7o
-      #     SENTRY_PROJECT: research-hub
-      #   with:
-      #     environment: prod
-      #     version: github.ref.
+      - name: Get Branch
+        id: var
+        run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
+      - name: Output Branch
+        run: echo ${{ steps.var.outputs.branch }}
+      - name: Notify Sentry
+        # https://github.com/getsentry/action-release
+        uses: getsentry/action-release@v1.1.6
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: university-of-auckland-7o
+          SENTRY_PROJECT: research-hub
+        with:
+          environment: ${{ steps.var.outputs.branch }}
