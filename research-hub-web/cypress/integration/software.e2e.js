@@ -13,7 +13,7 @@ describe('ResearchHubs Software Pages', () => {
     });
 
     it('displays body text', () => {
-        cy.get('#software-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
+      cy.get('#bodyMediaList > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').text().should('not.be.empty');
     });
 
     it('displays a specifications table', () => {

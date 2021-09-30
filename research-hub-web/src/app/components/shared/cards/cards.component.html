@@ -11,11 +11,10 @@
 
       <!-- Templates -->
       <ng-template #image>
-        <img mat-card-image
-              srcset="{{ content.banner?.url }}?w=1000&fm=webp,
-                      {{ content.banner?.url }}?w=1000"
-              src="{{ content.banner?.url }}?w=1000"
-              alt="{{ content.title }}-banner">
+        <picture>
+          <source srcset="{{ content.banner?.url }}?w=1000&fm=webp" type="image/webp">
+          <img mat-card-image src="{{ content.banner?.url }}?w=1000" alt="{{ content.title }}">
+        </picture>
       </ng-template>
       <ng-template #noImage>
         <div style="margin-top: 12px;"></div>
@@ -28,10 +27,7 @@
         <mat-card role="listitem">
           <ng-container *ngIf="content.banner; then image; else noImage">
           </ng-container>
-          <span *ngIf="content.__typename == 'SubHub'" class="card-label">Topic</span>
-          <span *ngIf="content.__typename == 'OfficialDocuments'" class="card-label">Document</span>
-          <span *ngIf="content.__typename != 'SubHub' && content.__typename != 'OfficialDocuments'"
-            class="card-label">{{ content.__typename | humanCase }}</span>
+          <span class="card-label">{{ content.__typename | contentTypeDisplayName }}</span>
 
           <mat-card-title>
             <h4 *ngIf="content.__typename != 'OfficialDocuments'">
@@ -79,12 +75,18 @@
 
           <mat-card-title>
             <h4>
-              <a class="card-title" *ngIf="content.maoriName" href="{{ content.link }}" target="_blank"
+              <a class="card-title" *ngIf="content.link && content.maoriName; else maoriNameNoLink" href="{{ content.link }}" target="_blank"
                 style="font-weight: lighter">{{ content['maoriName'] }}&nbsp;</a>
-              <a class="card-title" href="{{ content.link }}" target="_blank">{{ content['name'] }}</a>
+              <a class="card-title" *ngIf="content.link; else noLink" href="{{ content.link }}" target="_blank">{{ content['name'] }}</a>
               <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
             </h4>
           </mat-card-title>
+          <ng-template #maoriNameNoLink>
+            <span class="card-title" *ngIf="content.maoriName" style="font-weight: lighter">{{ content['maoriName'] }}</span>
+          </ng-template>
+          <ng-template #noLink>
+            <span class="card-title" *ngIf="content.name">{{ content['name'] }}</span>
+          </ng-template>
 
           <mat-card-content>
             <span *ngIf="content.__typename == 'Person'" class="card-summary contact-card-summary">

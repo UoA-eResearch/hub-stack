@@ -3,7 +3,7 @@
     *ngIf="allSoftware$ | async as allSoftware"
     class="site-padding margin-bottom top-padding"
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [type]="'content'" [collection]="allSoftware"></app-collection-list>
+    <app-collection-list [collection]="allSoftware"></app-collection-list>
 </div>
 
 <div id="software-container" *ngIf="software | async as software">

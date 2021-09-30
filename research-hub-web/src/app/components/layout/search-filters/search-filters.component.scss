@@ -1,0 +1,52 @@
+@import "variables";
+
+.search-filters-container {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 514px;
+  width: 1010px;
+  @media (max-width: $navbar-second-row-breakpoint) {
+    height: calc(100vh - 112px);
+    width: 100vw;
+  }
+
+  .list-container {
+    padding: 10px;
+    overflow: auto;
+    flex: 1;
+    @media (max-width: $navbar-second-row-breakpoint) {
+      height: calc(100vh - 112px - 49px);
+    }
+  }
+
+  mat-selection-list {
+    @media (min-width: 961px) {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    mat-list-option {
+      width: 325px;
+      @media (max-width: $navbar-second-row-breakpoint) {
+        width: 100%
+      }
+    }
+  }
+
+  .search-filters-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 10px 0px;
+    padding: 0px 10px;
+    height: 32px;
+    color: black;
+    span {
+      margin-right: 10px;
+      font-weight: normal;
+    }
+  }
+}

@@ -3,6 +3,41 @@
 @import "styles-common";
 
 /**
+* Title
+*/
+#research-activities {
+  width: 95vw;
+  margin: 60px auto;
+  @extend .site-padding;
+}
+h2 {
+  font-size: 36px;
+  text-align: center;
+  @include size(large) {
+    text-align: left;
+    font-size: 48px;
+  }
+}
+
+p {
+  font-size: 16px;
+  position: relative;
+  word-wrap: break-word;
+  margin: 0 auto;
+  text-align: center;
+  @include size(large) {
+    text-align: left;
+    font-size: 20px;
+  }
+}
+
+div.light-color {
+  h2, p {
+    color: white;
+  }
+}
+
+/**
  * Custom Text
  */
 .text {
@@ -12,8 +47,6 @@
     text-align: left;
   }
 }
-
-
 
 /**
  * Research Activity Container
@@ -92,6 +125,7 @@
         font-size: 16px;
         margin: 0 auto;
         word-wrap: break-word;
+        text-align: center;
         @include size(medium) {
           width: 100%;
           font-style: italic;
