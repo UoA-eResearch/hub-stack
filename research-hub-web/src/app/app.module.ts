@@ -9,9 +9,9 @@ import { environment } from '@environments/environment';
 import { AuthModule, CognitoConfigService, LoginService, StorageService } from '@uoa/auth';
 import { BypassErrorService, ErrorPagesModule } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpLink } from 'apollo-angular/http';
+import { onError } from '@apollo/client/link/error';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { onError } from 'apollo-link-error';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './components/layout/layout.module';
@@ -52,7 +52,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    HttpLinkModule,
     ErrorPagesModule,
     AppLayoutModule
   ],
