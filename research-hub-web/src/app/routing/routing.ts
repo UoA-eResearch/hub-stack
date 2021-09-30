@@ -34,6 +34,14 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@app/components/search-page/search-page.module').then((m) => m.SearchPageModule),
   },
   {
+    path: 'categories',
+    loadChildren: () => import('@app/components/categories-page/categories-page.module').then((m) => m.CategoriesPageModule),
+  },
+  {
+    path: 'activities',
+    loadChildren: () => import('@app/components/activities-page/activities-page.module').then((m) => m.ActivitiesPageModule),
+  },
+  {
     path: 'equipment',
     loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
   },

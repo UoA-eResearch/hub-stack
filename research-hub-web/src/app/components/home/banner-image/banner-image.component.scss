@@ -1,111 +1,60 @@
 @import "mixins";
 @import "variables";
-
-div.min-height-fullscreen {
-  min-height: 100vh;
-}
+@import 'styles-common';
 
 .banner-container-home {
-  height: 100vh;
-  text-align: center;
+  height: 40vh;
   max-height: auto;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
+  @include size(medium) {
+    height: 30vh;
+  }
+  @include size(extra-small) {
+    height: 60vh;
+  }
 
   .banner-content-home {
-    margin: 20vh 2.5vh;
     display: inline-block;
+    height: 40vh;
+    width: 95vw;
+    @extend .site-padding;
     @include size(medium) {
-      margin: 25vh 10vh;
-      display: inline-block;
+      height: 30vh;
     }
+    @include size(extra-small) {
+      height: 60vh;
+    }
+
     .banner-text {
-      width: auto !important;
-      .page-summary,
       .page-title {
-        text-shadow: 0px 0px 8px $dark-grey;
         margin: 0 auto;
         font-weight: lighter;
         color: white !important;
-        @include size(medium) {
-          width: 45vw !important;
-        }
-      }
-      .page-title {
-        color: #ffffff;
-        margin-bottom: 32px;
         font-size: 48px;
+        text-align: center;
+        @include size(large) {
+          font-size: 54px;
+        }
         @include size(medium) {
-          font-size: 92px;
+          text-align: left;
         }
       }
-      .page-summary {
-        font-size: 20px;
-        word-wrap: break-word;
-        color: $light-grey;
-        line-height: 100%;
+    }
+
+    .logo-img-container {
+      margin: 0 auto;
+      display: none;
+      @include size(medium) {
+        display: block;
+      }
+      .logo-img {
+        height: 130px;
+        width: auto;
+        display: block;        
       }
     }
   }
-}
-
-/**
- * Explore arrow animation
- */
-@keyframes explore {
-  0% {
-    margin-top: 5px;
-  }
-  50% {
-    margin-top: 16px;
-  }
-  100% {
-    margin-top: 5px;
-  }
-}
-@keyframes explore2 {
-  0% {
-    margin-top: 0px;
-  }
-  50% {
-    margin-top: 3px;
-  }
-  100% {
-    margin-top: 0px;
-  }
-}
-/*
- * Explore Arrow
- */
-.explore {
-  cursor: pointer;
-  p {
-    animation: explore2 1.5s infinite;
-  }
-  .explore-arrow {
-    animation: explore 1.5s infinite;
-  }
-}
-
-// Set background
-.background {
-  height: 100vh;
-}
-
-/*
- * Initial Search
- */
-.initial-search {
-  padding: 0px 1em;
-  width: 60vw;
-  margin: 0 auto;
-  font-size: 20px;
-  color: #fafafa;
-  border: 1px solid rgba(78, 78, 78, 0.6);
-  @include size(medium) {
-    width: 30vw;
-  }
-  background-color: rgba(202, 202, 202, 0.4);
 }
