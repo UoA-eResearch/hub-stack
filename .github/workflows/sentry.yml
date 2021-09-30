@@ -1,0 +1,31 @@
+name: Sentry Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  sentry-release:
+    name: Create Sentry Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - run: echo ${{ github.ref }}
+      - name: Set Version Number
+        id: set-version
+        run: echo ::set-output name=version::${GITHUB_REF#refs/*/}
+      - name: Output Version
+        run: echo ${{ steps.set-version.outputs.version }}
+      # - name: Notify Sentry
+      #   # https://github.com/getsentry/action-release
+      #   uses: getsentry/action-release@v1.1.6
+      #   env:
+      #     SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      #     SENTRY_ORG: university-of-auckland-7o
+      #     SENTRY_PROJECT: research-hub
+      #   with:
+      #     environment: prod
+      #     version: github.ref.
