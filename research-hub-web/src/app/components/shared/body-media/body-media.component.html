@@ -6,9 +6,10 @@
             <ng-template #image>
                 <div class="embedded-asset-block section-2" ngClass.xs="embedded-asset-block-mobile">
                     <a href="{{ contentItem.url }}">
-                        <img *ngIf="contentItem.url" srcset="{{ contentItem.url }}?w=1500&fm=webp,
-                                     {{ contentItem.url }}?w=1500" src="{{ contentItem.url }}?w=1500"
-                            alt="{{ contentItem.title }}" />
+                        <picture *ngIf="contentItem.url">
+                            <source srcset="{{ contentItem.url }}?w=1500&fm=webp" type="image/webp">
+                            <img src="{{ contentItem.url }}?w=1500" alt="{{ contentItem.title }}" />
+                        </picture>
                     </a><br>{{ contentItem.title }}
                     <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description
                         }}</small>
