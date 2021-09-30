@@ -78,4 +78,3 @@ The generator can be executed in several ways:
 * `npm run generate`: Regenerates **once** and then exits
 * `npm run generate-watch`: Regenerates once, then watches for any changes to `.graphql` files in the [queries](./src/app/graphql/queries/) folder
 * `npm run dev`: As mentioned in the [Local Development Section](#local-development), this command also executes `npm run generate-watch`
-
