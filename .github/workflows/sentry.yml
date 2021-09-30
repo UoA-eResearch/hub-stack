@@ -6,8 +6,10 @@ on:
       - dev
       - test
       - prod
-    paths:
-      - 'research-hub-web/**'
+    paths-ignore:
+      - 'cer-graphql/**'
+      - 'hub-search-proxy/**'
+      - 'terraform/**'
 
 jobs:
   sentry-release:
