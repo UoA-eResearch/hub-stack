@@ -4,6 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 export const environment = {
   env: 'dev',
+  sentryTracesSampleRate: 1.0,
   production: false,
   cerGraphQLUrl: 'http://localhost:4000/',
   auth: {
