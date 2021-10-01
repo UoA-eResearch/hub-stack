@@ -17,10 +17,7 @@ Sentry.init({
     })
   ],
   environment: environment.env,
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 0.1,
+  tracesSampleRate: environment.sentryTracesSampleRate,
   ignoreErrors: [
     // 'Authentication required to view protected content.'
   ]
