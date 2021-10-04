@@ -122,11 +122,9 @@
 
                 <!-- Call To Action -->
                 <div class="section" *ngIf="equipment.callToAction">
-                    <a href="{{ equipment.callToAction }}" target="_blank">
-                        <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button">
-                            <span *ngIf="equipment.callToActionLabel">{{ equipment.callToActionLabel }}</span>
-                            <span *ngIf="!equipment.callToActionLabel">View Equipment</span>
-                        </button>
+                    <a href="{{ equipment.callToAction }}" target="_blank" mat-flat-button class="standard-button">
+                        <span *ngIf="equipment.callToActionLabel">{{ equipment.callToActionLabel }}</span>
+                        <span *ngIf="!equipment.callToActionLabel">View Equipment</span>
                     </a>
                 </div>
                 <div *ngIf="!equipment.callToAction" class="main-underline-navy"></div>
