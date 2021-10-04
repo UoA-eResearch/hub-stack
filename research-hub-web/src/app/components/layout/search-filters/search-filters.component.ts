@@ -2,11 +2,12 @@ import { state, style } from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatSelectionList } from '@angular/material/list';
+import { Event, NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { FilterType } from '@app/global/global-variables';
 import { SearchFilters } from '@app/global/searchTypes';
 import { AllCategoriesGQL, AllOrganisationsGQL, AllStagesGQL, Category, OrgUnit, Stage } from '@app/graphql/schema';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-filters',
@@ -31,14 +32,23 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     private allCategoriesGQL: AllCategoriesGQL,
     private allStagesGQL: AllStagesGQL,
     private allOrgUnitsGQL: AllOrganisationsGQL,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.add(this.getAllCategories().subscribe(categories => this.allCategories = categories));
-    this.subscriptions.add(this.getAllStages().subscribe(stages => this.allStages = stages));
-    this.subscriptions.add(this.getAllOrgUnits().subscribe(orgUnits => this.allOrgUnits = orgUnits));
-
+    this.router.events.pipe(
+      // Wait until the first navigation has occurred before sending requests.
+      // This is because on the preview environment all requests require authentication.
+      // We need to let the LoginSuccessGuard to perform code exchange first before
+      // being able to send authenticated requests. 
+      // See routing.ts. 
+      first(event => event instanceof NavigationEnd)
+    ).subscribe(_ => {
+      this.subscriptions.add(this.getAllCategories().subscribe(categories => this.allCategories = categories));
+      this.subscriptions.add(this.getAllStages().subscribe(stages => this.allStages = stages));
+      this.subscriptions.add(this.getAllOrgUnits().subscribe(orgUnits => this.allOrgUnits = orgUnits));
+    });
     this.subscriptions.add(this.breakpointObserver.observe('(max-width: 1100px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches))
   }
 

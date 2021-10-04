@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { GetNotificationGQL } from '@app/graphql/schema';
 import { Subscription } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, first, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notification',
@@ -27,21 +28,30 @@ export class NotificationComponent implements OnInit, OnDestroy {
   public notification: JSON | null = null;
 
   constructor(
-    private getNotificationGQL: GetNotificationGQL
+    private getNotificationGQL: GetNotificationGQL,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.getNotificationGQL.fetch().pipe(
-        map((result) => result.data.homepageCollection.items[0].notification),
-        filter((result) => result !== null)
-      ).subscribe((result) => {
-        this.notification = result.json;
+    this.router.events.pipe(
+      // Wait until the first navigation has occurred before sending requests.
+      // This is because on the preview environment all requests require authentication.
+      // We need to let the LoginSuccessGuard to perform code exchange first before
+      // being able to send authenticated requests. 
+      // See routing.ts. 
+      first(event => event instanceof NavigationEnd)
+    ).subscribe(_ => {
+      this.subscriptions.add(
+        this.getNotificationGQL.fetch().pipe(
+          map((result) => result.data.homepageCollection.items[0].notification),
+          filter((result) => result !== null)
+        ).subscribe((result) => {
+          this.notification = result.json;
 
-        this.showNotification = true;
-      })
-    );
-
+          this.showNotification = true;
+        })
+      );
+    });
   }
 
   close(): void {
