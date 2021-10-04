@@ -1,6 +1,6 @@
 
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -16,6 +16,7 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './components/layout/layout.module';
 import { SharedModule } from './components/shared/app.shared.module';
+import * as Sentry from "@sentry/angular";
 /**
  * Generated from Fragment matcher graphql-code-generator plugin
  * For more information see:
@@ -29,14 +30,6 @@ import { AppStorageService } from './services/app-storage.service';
 import { CerGraphqlService } from './services/cer-graphql.service';
 import { PageTitleService } from './services/page-title.service';
 import { ServicesModule } from './services/services.module';
-
-
-
-
-
-
-
-
 
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -67,6 +60,22 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     PageTitleService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
     { provide: StorageService, useClass: AppStorageService },
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: false,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
