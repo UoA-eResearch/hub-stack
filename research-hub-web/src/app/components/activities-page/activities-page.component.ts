@@ -7,6 +7,7 @@ import {
 } from '@graphql/schema';
 import { Observable, Subscription } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
+import { PageTitleService } from '@services/page-title.service';
 
 @Component({
   selector: 'app-activities-page',
@@ -22,10 +23,12 @@ export class ActivitiesPageComponent implements OnInit, OnDestroy {
   constructor(
     public allStagesGQL: AllStagesGQL,
     private getHomepageGQL: GetHomepageGQL,
-    public searchService: SearchService
+    public searchService: SearchService,
+    public pageTitleService: PageTitleService
   ) { }
 
   ngOnInit() {
+    this.pageTitleService.title = this.title;
     this.allStages$ = this.getAllStages();
     this.subscriptions.add(
       this.getHomepageGQL.fetch().pipe(
