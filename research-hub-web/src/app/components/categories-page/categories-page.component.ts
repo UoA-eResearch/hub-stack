@@ -8,6 +8,7 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { PageTitleService } from '@services/page-title.service';
 
 @Component({
   selector: 'app-categories-page',
@@ -22,12 +23,14 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
 
   constructor(
     public allCategoriesGQL: AllCategoriesGQL,
+    public pageTitleService: PageTitleService,
     private getHomepageGQL: GetHomepageGQL,
     public searchService: SearchService,
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.pageTitleService.title = this.title;
     this.allCategories$ = this.getAllCategories();
     this.subscriptions.add(
       this.getHomepageGQL.fetch().pipe(
