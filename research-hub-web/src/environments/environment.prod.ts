@@ -1,6 +1,8 @@
 // TODO: Insert prod values
 // Also: Insert values in environment.prod-preview.ts
 export const environment = {
+  env: 'prod',
+  sentryTracesSampleRate: 0.2,
   production: true,
   cerGraphQLUrl: 'https://rhubcpapi.auckland.ac.nz/cer-graphql-service',
   cerGraphQLPreviewUrl: 'https://rhubcpapi.auckland.ac.nz/cer-graphql-preview-service/',

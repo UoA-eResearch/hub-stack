@@ -1,5 +1,7 @@
 import { environment } from "./environment.dev";
 
+
+environment.env = 'dev-preview';
 environment.cerGraphQLUrl = environment.cerGraphQLPreviewUrl;
 environment.auth.redirectUri = "https://research-hub-dev-preview.connect.test.amazon.auckland.ac.nz";
 environment.auth.logout_uri = "https://research-hub-dev-preview.connect.test.amazon.auckland.ac.nz";

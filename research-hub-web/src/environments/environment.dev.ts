@@ -1,5 +1,7 @@
 // TODO: Insert nonprod values
 export const environment = {
+  env: 'dev',
+  sentryTracesSampleRate: 1.0,
   production: true,
   cerGraphQLUrl: 'https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-service',
   cerGraphQLPreviewUrl: 'https://rhubcpapi-dev.connect.test.amazon.auckland.ac.nz/cer-graphql-preview-service/',
