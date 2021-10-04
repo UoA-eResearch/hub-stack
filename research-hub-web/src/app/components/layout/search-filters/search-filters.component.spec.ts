@@ -11,6 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
 import { Category } from '@app/graphql/schema';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SearchFiltersComponent', () => {
   let component: SearchFiltersComponent;
@@ -69,6 +70,7 @@ describe('SearchFiltersComponent', () => {
         FormsModule,
         MockModule(MatTabsModule),
         MockModule(MatChipsModule),
+        RouterTestingModule.withRoutes([])
       ]
     })
       .compileComponents();

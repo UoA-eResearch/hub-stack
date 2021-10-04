@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { MockModule } from 'ng-mocks';
 import { AppLayoutModule } from '../layout.module';
@@ -14,7 +15,8 @@ describe('NotificationComponent', () => {
       declarations: [ NotificationComponent ],
       imports: [
         ApolloTestingModule,
-        MockModule(AppLayoutModule)
+        MockModule(AppLayoutModule),
+        RouterTestingModule.withRoutes([])
       ]
     })
     .compileComponents();
