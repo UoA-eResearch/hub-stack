@@ -1,16 +1,19 @@
 @import "variables";
+@import "mixins";
+@import "styles-common";
+@import "~@angular/material/theming";
 
-/**
- * Mat Card
- */
-mat-card {
-  box-shadow: 0px 0px 15px #a5a5a5 !important;
-}
 
 /**
  * SubHub Card
  */
 .subhub-card {
+  @include mat-elevation-transition;
+  @include mat-elevation(1);
+  &:hover {
+    @include mat-elevation(8);
+  }
+  cursor: pointer;
   background: $light-blue;
   img {
     object-fit: cover;
@@ -18,15 +21,15 @@ mat-card {
   }
   .card-title {
     display: inline-block;
-    a {
+    margin: 16px auto;
+    h4 {
       display: inline;
       font-size: 20px;
       color: white;
       border-bottom: solid 2px transparent;
     }
-    a:hover {
+    h4:hover {
       border-bottom: solid 2px white;
-      cursor: pointer;
     }
   }
 }
