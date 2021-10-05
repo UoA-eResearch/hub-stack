@@ -13,8 +13,7 @@
 $hub-app-theme: mat.define-light-theme((
   color: (
     primary: $hub-app-primary,
-    accent: $hub-app-accent,
-    warn: $hub-app-warn
+    accent: $hub-app-accent
   )
 ));
 @include mat.all-component-themes($hub-app-theme);
