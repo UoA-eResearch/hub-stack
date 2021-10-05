@@ -63,84 +63,52 @@ $hub-dark-blue: (
     )
 );
 
-$hub-pink: (
-  50: #0080a7,
-  100: #0080a7,
-  200: #0080a7,
-  300: #0080a7,
-  400: #0080a7,
-  500: #0080a7,
-  600: #0080a7,
-  700: #0080a7,
-  800: #0080a7,
-  900: #0080a7,
-  A100: #0080a7,
-  A200: #0080a7,
-  A400: #0080a7,
-  A700: #0080a7,
+$hub-light-blue: (
+  50 : #e0f3f8,
+  100 : #b3e1ee,
+  200 : #80cde3,
+  300 : #4db8d8,
+  400 : #26a9cf,
+  500 : #009ac7,
+  600 : #0092c1,
+  700 : #0088ba,
+  800 : #007eb3,
+  900 : #006ca6,
+  A100 : #d0ecff,
+  A200 : #9dd8ff,
+  A400 : #6ac3ff,
+  A700 : #51b9ff,
   contrast: (
-    50: #000000,
-    100: #000000,
-    200: #000000,
-    300: #000000,
-    400: #ffffff,
-    500: #ffffff,
-    600: #ffffff,
-    700: #ffffff,
-    800: #ffffff,
-    900: #ffffff,
-    A100: #000000,
-    A200: #000000,
-    A400: #000000,
-    A700: #ffffff,
-  ),
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
 );
-$hub-navy: (
-  50: #0080a7,
-  100: #0080a7,
-  200: #0080a7,
-  300: #0080a7,
-  400: #0080a7,
-  500: #0080a7,
-  600: #0080a7,
-  700: #0080a7,
-  800: #0080a7,
-  900: #0080a7,
-  A100: #0080a7,
-  A200: #0080a7,
-  A400: #0080a7,
-  A700: #0080a7,
-  contrast: (
-    50: #000000,
-    100: #000000,
-    200: #000000,
-    300: #ffffff,
-    400: #ffffff,
-    500: #ffffff,
-    600: #ffffff,
-    700: #ffffff,
-    800: #ffffff,
-    900: #ffffff,
-    A100: #000000,
-    A200: #000000,
-    A400: #ffffff,
-    A700: #ffffff,
-  ),
-);
+
+
 
 /**
 * generate theme colors
 */
 $hub-app-primary: mat.define-palette($hub-dark-blue);
-$hub-app-accent: mat.define-palette($hub-dark-blue);
-$hub-app-warn: mat.define-palette($hub-pink);
+$hub-app-accent: mat.define-palette($hub-light-blue);
 
 /**
 * Site wide colors
 */
 $color-primary: map-get($hub-app-primary, 500);
 $color-accent: map-get($hub-app-accent, A200);
-$color-pink: map-get($hub-pink, 500);
 $color-icon: #757575;
 $color-background: #ffffff;
 $color-content-header: $light-blue;
