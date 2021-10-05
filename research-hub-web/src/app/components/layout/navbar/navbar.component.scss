@@ -7,13 +7,22 @@ mat-toolbar {
     padding: 0 25px;
   }
   mat-toolbar-row.main-navbar-row {
+    /*
+     * Hub Logo
+     */
+    .hub-logo {
+      line-height: 64px;
+      img {
+        height: 24px;
+      }
+    }
     .mat-button {
       line-height: 64px;
       padding: 0 16px;
       min-width: 64px;
       font-weight: 100;
       @media (max-width: $navbar-second-row-breakpoint) {
-        line-height: 20px;
+        line-height: 56px;
       }
     }
     button-menu {
@@ -65,22 +74,6 @@ mat-toolbar {
     p {
       font-size: 0.7em !important;
       color: white;
-    }
-  }
-}
-
-/*
- * Hub Logo
- */
-.hub-logo {
-  height: 28px;
-  img {
-    height: 28px;
-    @include size(small) {
-      height: 32px;
-      img {
-        height: 32px;
-      }
     }
   }
 }

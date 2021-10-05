@@ -1,7 +1,7 @@
+@use "~@angular/material" as mat;
 @import "variables";
 @import "mixins";
 @import "styles-common";
-@import "~@angular/material/theming";
 
 /**
  * Material Overrides
@@ -11,10 +11,10 @@ mat-card {
 
 }
 .card-content {
-  @include mat-elevation-transition;
-  @include mat-elevation(0);
+  @include mat.elevation-transition;
+  @include mat.elevation(0);
   &:hover {
-    @include mat-elevation(4);
+    @include mat.elevation(4);
   }
   cursor: pointer;
   width: 100%;

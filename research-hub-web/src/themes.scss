@@ -1,14 +1,21 @@
-@import "~@angular/material/theming";
+@use "~@angular/material" as mat;
+@use "app/components/layout/navbar/_navbar-theme.scss" as navbar;
 @import "variables";
 
 /**
  * Include the common styles for Angular Material. Be sure that you only ever include this mixin once!
  */
-@include mat-core();
+@include mat.core();
 
 /**
  * Create the hub app theme
 */
-$hub-app-theme: mat-light-theme($hub-app-primary, $hub-app-accent, $hub-app-warn);
-@include angular-material-theme($hub-app-theme);
-$mat-theme-ignore-duplication-warnings: true;
+$hub-app-theme: mat.define-light-theme((
+  color: (
+    primary: $hub-app-primary,
+    accent: $hub-app-accent,
+    warn: $hub-app-warn
+  )
+));
+@include mat.all-component-themes($hub-app-theme);
+@include navbar.theme($hub-app-theme);
