@@ -12,6 +12,7 @@ import { BreadcrumbsComponent } from '../shared/breadcrumbs/breadcrumbs.componen
 import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component';
 import { SearchPageComponent } from './search-page.component';
 import { SearchResultsListComponent } from './search-results-list/search-results-list.component';
+import { PageTitleService } from '@services/page-title.service';
 
 describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
@@ -35,7 +36,8 @@ describe('SearchPageComponent', () => {
         MockModule(FormsModule),
       ],
       providers: [
-        SearchService
+        MockProvider(SearchService),
+        MockProvider(PageTitleService),
       ]
     })
     .compileComponents();
