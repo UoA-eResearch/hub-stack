@@ -36,7 +36,7 @@ describe('SearchPageComponent', () => {
         MockModule(FormsModule),
       ],
       providers: [
-        MockProvider(SearchService),
+        SearchService,
         MockProvider(PageTitleService),
       ]
     })
