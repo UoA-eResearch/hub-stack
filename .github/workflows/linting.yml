@@ -6,9 +6,13 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'research-hub-web/**'
   pull_request:
     branches:
       - master
+    paths:
+      - 'research-hub-web/**'
 
 jobs:
   run-linters:
