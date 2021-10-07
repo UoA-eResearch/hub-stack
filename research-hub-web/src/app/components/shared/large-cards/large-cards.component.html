@@ -1,16 +1,16 @@
 <div id="subhub-children" class="site-padding" ngClass.lt-md="site-padding-mobile">
     <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap">
         <mat-nav-list role="navigation" class="margin-bottom-2" ngClass.lt-md="margin-bottom" fxFlex="24%"
-        aria-label="Topic Child Pages"
-        *ngFor="let subHub of contentItem.items">
+            aria-label="Topic Child Pages"
+            *ngFor="let subHub of contentItem.items"
+        >
 
             <!-- Templates -->
             <ng-template #image>
-                <img mat-card-image 
-                     srcset="{{ subHub.banner?.url }}?w=1000&fm=webp,
-                             {{ subHub.banner?.url }}?w=1000"
-                     src="{{ subHub.banner?.url }}?w=1000"
-                     alt="{{ subHub.title }}-banner">
+                <picture>
+                    <source srcset="{{ subHub.banner?.url }}?w=1000&fm=webp" type="image/webp">
+                    <img mat-card-image src="{{ subHub.banner?.url }}?w=1000" alt="{{ subHub.title }}">
+                </picture>
             </ng-template>
             <ng-template #noImage><div style="margin-top: 15px;"></div></ng-template>
 
