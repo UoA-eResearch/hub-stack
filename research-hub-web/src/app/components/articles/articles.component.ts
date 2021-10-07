@@ -15,7 +15,7 @@ import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, of, Subscription, throwError } from 'rxjs';
-import { filter, flatMap, map, mergeMap, pluck, tap } from 'rxjs/operators';
+import { mergeMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
