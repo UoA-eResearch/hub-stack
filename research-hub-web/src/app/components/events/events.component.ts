@@ -14,8 +14,8 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, Subscription } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { Observable, of, Subscription, throwError } from 'rxjs';
+import { mergeMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -34,7 +34,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   };
 
   public slug: string;
-  public event;
+  public event: Event;
   public event$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -90,37 +90,35 @@ export class EventsComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all Events.
      */
     if (!!this.slug) {
-      // Check if the article slug is valid otherwise redirect to 404
-      this.getAllEventSlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.event = this.getEventBySlug(this.slug);
-      this.getEventBySlug(this.slug).subscribe(data => {
+      this.event$ = this.getEventBySlug(this.slug).subscribe({
+        next: data => {
+          this.event = data;
 
-        // If Call To Action is an email address
-        if (data.callToAction.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          data['callToAction'] = 'mailto:' + data['callToAction'];
+          // If Call To Action is an email address
+          if (data.callToAction.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            data['callToAction'] = 'mailto:' + data['callToAction'];
+          }
+
+          // Strip nulls from related collection data.
+          data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+          data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+          data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+          data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+
+          // Set banner image URL for webp format if webp is supported
+          if (data.banner?.url) {
+            this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+          } else {
+            this.bannerImageUrl = undefined;
+          }
+
+          this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+          this.pageTitleService.title = data.title;
+        },
+        error: (err) => {
+          console.warn(err);
+          this.router.navigate(['error', 404])
         }
-
-        // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
-
-        // Set banner image URL for webp format if webp is supported
-        if (data.banner?.url) {
-          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
-        }
-
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -162,16 +160,16 @@ export class EventsComponent implements OnInit, OnDestroy {
    * Function that returns an individual Event from the EventCollection by it's slug
    * as an observable of type Event. This is then unwrapped with the async pipe.
    *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /Events.
-   *
    * @param slug The Event's slug. Retrieved from the route parameter of the same name.
    */
   public getEventBySlug(slug: string): Observable<Event> {
-    try {
-      return this.getEventBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.eventCollection.items)) as Observable<Event>;
-    } catch (e) { console.error(`Error loading Event ${slug}:`, e); }
+    return this.getEventBySlugGQL.fetch({ slug }).pipe(
+      mergeMap(x =>
+        x.data.eventCollection.items.length === 0
+          ? throwError(`Could not load event with slug "${slug}"`)
+          : of(x.data.eventCollection.items[0])
+      )
+    ) as Observable<Event>;
   }
 
   ngOnDestroy() {
