@@ -14,7 +14,7 @@ import { filter, map, tap } from 'rxjs/operators';
       <div class="notification-bar-content">
         <div aria-label="notification" tabindex="0" [innerHTML]="notification | richTextToHTML"></div>
       </div>
-      <mat-icon aria-label="close notification" tabindex="0" (click)="close()" (keydown.enter)="close()">close</mat-icon>
+      <button mat-button aria-label="close-notification" (click)="close()" (keydown.enter)="close()"><mat-icon>close</mat-icon></button>
     </div>
   `,
   styleUrls: ['notification.component.scss'],
