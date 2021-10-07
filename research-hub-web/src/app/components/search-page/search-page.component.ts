@@ -8,6 +8,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import supportsWebP from 'supports-webp';
 import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
+import { PageTitleService } from '@services/page-title.service';
 
 @Component({
   selector: 'app-search-page',
@@ -39,6 +40,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     private deviceService: DeviceDetectorService,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
+    public pageTitleService: PageTitleService
   ) {
     this.detectDevice();
     this.detectWebP();
@@ -46,6 +48,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.pageTitleService.title = 'Search Results';
     /**
      * this subscription reacts to changes to the search parameters, i.e. new searches
      */

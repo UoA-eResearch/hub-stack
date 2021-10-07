@@ -7,6 +7,7 @@ import { CategoryCollection } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
+import { PageTitleService } from '@services/page-title.service';
 
 
 describe('CategoriesPageComponent', () => {
@@ -107,7 +108,10 @@ describe('CategoriesPageComponent', () => {
         HttpClientTestingModule,
         ApolloTestingModule
       ],
-      providers: [ MockProvider(SearchService) ]
+      providers: [
+        MockProvider(SearchService),
+        MockProvider(PageTitleService),
+      ]
     })
     .compileComponents();
   });
