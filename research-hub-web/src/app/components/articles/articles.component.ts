@@ -14,8 +14,8 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, Subscription } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { Observable, of, Subscription, throwError } from 'rxjs';
+import { filter, flatMap, map, mergeMap, pluck, tap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -36,7 +36,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   public isMobile: Boolean;
   public bannerTextStyling;
   public slug: string;
-  public article;
+  public article: Article;
   public article$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -95,37 +95,35 @@ export class ArticlesComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all articles.
      */
     if (!!this.slug) {
-      // Check if the article slug is valid otherwise redirect to 404
-      this.getAllArticlesSlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.article = this.getArticleBySlug(this.slug);
-      this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
+      this.article$ = this.getArticleBySlug(this.slug).subscribe({
+        next: data => {
+          this.article = data;
 
-        // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+          // Strip nulls from related collection data.
+          data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+          data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+          data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+          data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
 
-        // If Call To Action is an email address
-        if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          data['callToAction'] = 'mailto:' + data['callToAction'];
+          // If Call To Action is an email address
+          if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            data['callToAction'] = 'mailto:' + data['callToAction'];
+          }
+
+          // Set banner image URL for webp format if webp is supported
+          if (data.banner?.url) {
+            this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+          } else {
+            this.bannerImageUrl = undefined;
+          }
+
+          this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+          this.pageTitleService.title = data.title;
+        },
+        error: err => {
+          console.warn(err);
+          this.router.navigate(['error', 404])
         }
-        
-        // Set banner image URL for webp format if webp is supported
-        if (data.banner?.url) {
-          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
-        }
-
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -150,33 +148,19 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function that returns all articles slugs from the ArticleCollection as an observable
-   * of type ArticleCollection. This is then unwrapped with the async pipe.
-   *
-   * This function called to determine if a valid slug has been searched otherwise redirect
-   *
-   */
-  public getAllArticlesSlugs(): Observable<ArticleCollection> {
-    try {
-      return this.allArticlesSlugsGQL.fetch()
-        .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all articles:', e) };
-  }
-
-  /**
    * Function that returns an individual article from the ArticleCollection by it's slug
    * as an observable of type Article. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /articles.
    *
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getArticleBySlug(slug: string): Observable<Article> {
-    try {
-      return this.getArticleBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
-    } catch (e) { console.error(`Error loading article ${slug}:`, e); }
+    return this.getArticleBySlugGQL.fetch({ slug }).pipe(
+      mergeMap(x =>
+        x.data.articleCollection.items.length === 0
+          ? throwError(`Could not load article with slug "${slug}"`)
+          : of(x.data.articleCollection.items[0])
+      )
+    ) as Observable<Article>;
   }
 
   ngOnDestroy() {
