@@ -12,9 +12,9 @@ import { filter, map, tap } from 'rxjs/operators';
       fxLayout="row"
     >
       <div class="notification-bar-content">
-        <div [innerHTML]="notification | richTextToHTML"></div>
+        <div aria-label="notification" tabindex="0" [innerHTML]="notification | richTextToHTML"></div>
       </div>
-      <mat-icon tabindex="0" (click)="close()" (keydown.enter)="close()">close</mat-icon>
+      <button mat-button aria-label="close-notification" (click)="close()" (keydown.enter)="close()"><mat-icon>close</mat-icon></button>
     </div>
   `,
   styleUrls: ['notification.component.scss'],

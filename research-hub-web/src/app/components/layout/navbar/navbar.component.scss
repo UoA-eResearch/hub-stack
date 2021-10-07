@@ -97,3 +97,24 @@ mat-toolbar {
     display: none;
   }
 }
+
+
+/*
+ * Skip links
+ */
+ .skip-link {
+  background: white;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 6px 6px;
+  position: fixed;
+  top: -100%;
+  z-index: 1001;
+  &:focus,
+  &:active {
+    top:auto
+  }
+  &:hover {
+    text-decoration:underline
+  }
+}

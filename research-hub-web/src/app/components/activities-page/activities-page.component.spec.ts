@@ -6,6 +6,7 @@ import { ApolloTestingModule } from 'apollo-angular/testing';
 import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockComponent, MockProvider } from 'ng-mocks';
+import { PageTitleService } from '@services/page-title.service';
 
 
 describe('ActivitiesPageComponent', () => {
@@ -50,7 +51,10 @@ describe('ActivitiesPageComponent', () => {
         HttpClientTestingModule,
         ApolloTestingModule
       ],
-      providers: [ MockProvider(SearchService) ]
+      providers: [
+        MockProvider(SearchService),
+        MockProvider(PageTitleService),
+      ]
     })
     .compileComponents();
   });
