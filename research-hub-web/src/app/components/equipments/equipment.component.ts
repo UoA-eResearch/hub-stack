@@ -168,7 +168,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     return this.getEquipmentBySlugGQL.fetch({ slug }).pipe(
       mergeMap(x =>
         x.data.equipmentCollection.items.length === 0
-          ? throwError(`Could not load case study with slug "${slug}"`)
+          ? throwError(`Could not load equipment with slug "${slug}"`)
           : of(x.data.equipmentCollection.items[0])
       )
     ) as Observable<Equipment>;
