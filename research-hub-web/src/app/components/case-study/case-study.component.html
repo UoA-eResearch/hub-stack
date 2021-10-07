@@ -6,7 +6,7 @@
     <app-collection-list [collection]="allCaseStudies"></app-collection-list>
 </div>
 
-<div id="case-study-container" *ngIf="caseStudy | async as caseStudy">
+<div id="case-study-container" *ngIf="caseStudy">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
