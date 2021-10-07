@@ -6,7 +6,7 @@
     <app-collection-list [collection]="allEquipment"></app-collection-list>
 </div>
 
-<div id="equipment-container" *ngIf="equipment | async as equipment">
+<div id="equipment-container" *ngIf="equipment">
 
     <!-- Templates -->
     <ng-template #breadcrumbs>
@@ -37,9 +37,9 @@
                     <td>Model</td>
                     <td [innerHTML]="equipment.model"></td>
                 </tr>
-                <tr *ngIf="equipment.year" role="row">
+                <tr *ngIf="equipment.yearOfManufacture" role="row">
                     <td>Year</td>
-                    <td [innerHTML]="equipment.year"></td>
+                    <td [innerHTML]="equipment.yearOfManufacture"></td>
                 </tr>
             </table>
         </div>
@@ -62,9 +62,9 @@
                     <td role="cell">Availability</td>
                     <td [innerHTML]="equipment.availability" role="cell"></td>
                 </tr>
-                <tr *ngIf="equipment.costToUse" role="row">
+                <tr *ngIf="equipment.cost" role="row">
                     <td role="cell">Cost</td>
-                    <td [innerHTML]="equipment.costToUse" role="cell"></td>
+                    <td [innerHTML]="equipment.cost" role="cell"></td>
                 </tr>
                 <tr *ngIf="equipment.access" role="row">
                     <td role="cell">Access</td>
