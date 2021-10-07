@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { HomeScrollService } from '@services/home-scroll.service';
@@ -16,6 +17,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   public currentUrl = '/';
   public showMobileSearch = false;
+  public skipLinkPathSearch: string;
+  public skipLinkPathMainContent: string;
 
   public userInfo$: Observable<UserInfoDto>;
   public loggedIn$: Observable<boolean>;
@@ -25,7 +28,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public homeScrollService: HomeScrollService,
-    public loginService: LoginService
+    public loginService: LoginService,
+    public location: Location,
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +40,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         next: (event: NavigationEnd) => {
           this.currentUrl = event.urlAfterRedirects;
           this.searchBar.focus();
+
+          // set the skip link urls dynamically
+          this.skipLinkPathSearch = `${this.location.path(false)}#search`;
+          this.skipLinkPathMainContent = `${this.location.path(false)}#main-content`;
         }
       })
     );
@@ -47,7 +55,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.userInfo$ = this.loginService.userInfo$.pipe(
       filter(userInfo => userInfo !== null && userInfo !== undefined),
       tap(userInfo => this.sendGoogleAnalyticsUserInfo(userInfo))
-    );
+);   
   }
 
   private sendGoogleAnalyticsUserInfo(userInfo: UserInfoDto): void {

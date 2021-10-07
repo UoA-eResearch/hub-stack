@@ -7,6 +7,9 @@
   class="mat-elevation-z6"
 >
   <mat-toolbar-row class="main-navbar-row">
+    <a class="skip-link" [href]="skipLinkPathSearch">Skip to search</a>
+    <a class="skip-link" [href]="skipLinkPathMainContent">Skip to main content</a>
+
     <!-- Logo/Home -->
     <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
       <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
