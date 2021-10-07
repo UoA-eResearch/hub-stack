@@ -1,4 +1,4 @@
-<div *ngIf="_contentItem?.items?.length > 0" role="article">
+<div *ngIf="_contentItem?.items?.length > 0">
 
   <!-- Title of card collection -->
   <h3 *ngIf="title">{{ title }}
@@ -7,7 +7,10 @@
 
     <!-- Items List -->
     <div fxLayout="{{ flex }}" fxLayout.lt-md="column wrap" fxLayoutGap="1%">
-      <mat-nav-list role="list" fxFlex="19%" *ngFor="let content of _contentItem.items" class="collection">
+      <mat-nav-list role="navigation" fxFlex="19%"
+        aria-label="Collection list"
+        *ngFor="let content of _contentItem.items" class="collection"
+      >
 
       <!-- Templates -->
       <ng-template #image>
@@ -24,14 +27,17 @@
       </ng-container>
 
       <ng-template #standard>
-        <mat-card role="listitem">
+        <mat-card role="list-item">
           <ng-container *ngIf="content.banner; then image; else noImage">
           </ng-container>
           <span class="card-label">{{ content.__typename | contentTypeDisplayName }}</span>
 
           <mat-card-title>
             <h4 *ngIf="content.__typename !== 'OfficialDocuments'">
-              <a class="card-title" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">
+              <a class="card-title"
+                [attr.role]="'Link to ' + (content.ssoProtected ? 'protected ' : '') + (content.__typename | contentTypeDisplayName)"
+                [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']"
+              >
                 {{ content['title'] }}
               </a>
               <mat-icon *ngIf="content.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
@@ -49,7 +55,7 @@
 
           <span *ngIf="content.__typename !== 'OfficialDocuments'" class="call-to-action"
             style="display: flex; align-items: center;max-width: fit-content">
-            <a [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">Read
+            <a tabindex="-1" [routerLink]="'/' + content['__typename'].toLowerCase() + '/' + content['slug']">Read
               More&nbsp;&nbsp;</a>
             <img class="arrow" alt="link-arrow" style="height: 20px; width: auto"
               src="assets/components/dark-arrow.png">
