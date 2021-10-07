@@ -98,14 +98,26 @@ export class AppModule {
       if (networkError) {
         console.log("API returned networkError", networkError);
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
-          this.loginService.doLogin(this.router.url);
+          this.loginService.doLogin(this.router.url).then((result) => {
+            // Workaround fix for blank page load issue
+            // when auth library returns a token instead of navigating to target url
+            if (result) {
+              location.reload();
+            }            
+          });
           return;
         }
       }
       if (graphQLErrors) {
         console.log("API returned graphQLErrors", graphQLErrors);
         if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
-          this.loginService.doLogin(this.router.url);
+          this.loginService.doLogin(this.router.url).then((result) => {
+            // Workaround fix for blank page load issue
+            // when auth library returns a token instead of navigating to target url
+            if (result) {
+              location.reload();
+            }
+          });
           return;
         }
       }
