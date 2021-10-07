@@ -14,8 +14,8 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, Subscription } from 'rxjs';
-import { catchError, flatMap, pluck } from 'rxjs/operators';
+import { Observable, of, Subscription, throwError } from 'rxjs';
+import { mergeMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -36,7 +36,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
   public isMobile: Boolean;
   public bannerTextStyling;
   public slug: string;
-  public caseStudy;
+  public caseStudy: CaseStudy;
   public caseStudy$: Subscription;
   public route$: Subscription;
   public bodyLinks$: Subscription;
@@ -95,34 +95,30 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
      * therefore run the corresponding query. If not, return all CaseStudy.
      */
     if (!!this.slug) {
-      this.getAllCaseStudySlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.caseStudy = this.getCaseStudyBySlug(this.slug);
+      this.caseStudy$ = this.getCaseStudyBySlug(this.slug).subscribe({
+        next: data => {
+          this.caseStudy = data;
 
-      /**
-       * If the page is SSO Protected then check if the user is authenticated
-       */
-      this.caseStudy$ = this.getCaseStudyBySlug(this.slug).subscribe(data => {
-        // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+          // Strip nulls from related collection data.
+          data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+          data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+          data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+          data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
 
-        // Set banner image URL for webp format if webp is supported
-        if (data.banner?.url) {
-          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
+          // Set banner image URL for webp format if webp is supported
+          if (data.banner?.url) {
+            this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+          } else {
+            this.bannerImageUrl = undefined;
+          }
+
+          this.bodyMediaService.setBodyMedia(data.bodyText.links);
+          this.pageTitleService.title = data.title;
+        },
+        error: (err) => {
+          console.warn(err);
+          this.router.navigate(['error', 404])
         }
-
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
     } else {
@@ -164,16 +160,16 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
    * Function that returns an individual CaseStudy from the CaseStudyCollection by it's slug
    * as an observable of type CaseStudy. This is then unwrapped with the async pipe.
    *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /CaseStudy.
-   *
    * @param slug The CaseStudy's slug. Retrieved from the route parameter of the same name.
    */
   public getCaseStudyBySlug(slug: string): Observable<CaseStudy> {
-    try {
-      return this.getCaseStudyBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.caseStudyCollection.items), catchError(() => (this.router.navigate(['/error/500'])))) as Observable<CaseStudy>;
-    } catch (e) { console.error(`Error loading CaseStudy ${slug}:`, e); }
+    return this.getCaseStudyBySlugGQL.fetch({ slug }).pipe(
+      mergeMap(x =>
+        x.data.caseStudyCollection.items.length === 0
+          ? throwError(`Could not load case study with slug "${slug}"`)
+          : of(x.data.caseStudyCollection.items[0])
+      )
+    ) as Observable<CaseStudy>;
   }
 
   ngOnDestroy() {
