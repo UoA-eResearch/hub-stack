@@ -24,6 +24,9 @@ mat-toolbar {
       @media (max-width: $navbar-second-row-breakpoint) {
         line-height: 56px;
       }
+      ::ng-deep.mat-button-wrapper {
+        white-space: nowrap;
+      }
     }
     button-menu {
       display: block;
