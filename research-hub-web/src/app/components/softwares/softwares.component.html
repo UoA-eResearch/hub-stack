@@ -85,8 +85,8 @@
                 <div><ng-container *ngTemplateOutlet="titleSummary"></ng-container></div>
 
                 <!-- Call To Action -->
-                <div class="section" *ngIf="software.callToAction">
-                    <a href="{{ software.callToAction }}" target="_blank" class="standard-button">
+                <div *ngIf="software.callToAction">
+                    <a href="{{ software.callToAction }}" target="_blank" mat-flat-button class="standard-button section">
                         <span *ngIf="software.callToActionLabel">{{ software.callToActionLabel }}</span>
                         <span *ngIf="!software.callToActionLabel">View Software</span>
                     </a>

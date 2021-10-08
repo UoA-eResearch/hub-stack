@@ -98,7 +98,7 @@
 
                 <!-- Call To Action -->
                 <div *ngIf="event.callToAction">
-                    <a href="{{ event.callToAction }}" target="_blank" class="standard-button section">
+                    <a href="{{ event.callToAction }}" target="_blank" mat-flat-button class="standard-button section">
                         <span *ngIf="event.callToActionLabel">{{ event.callToActionLabel }}</span>
                         <span *ngIf="!event.callToActionLabel">View Event</span>
                     </a>
