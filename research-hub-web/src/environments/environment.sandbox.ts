@@ -1,4 +1,6 @@
 export const environment = {
+  env: 'sandbox',
+  sentryTracesSampleRate: 1.0,
   production: true,
   cerGraphQLUrl: 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/',
   cerGraphQLPreviewUrl: 'https://rhubcpapi.sandbox.amazon.auckland.ac.nz/cer-graphql-preview-service/',
