@@ -11,15 +11,12 @@
     <p [innerHTML]="description | richTextToHTML">
     </p>
     <br />
-    <a href="{{ feedbackLink }}">
-      <button
-        role="button"
-        mat-flat-button
-        aria-label="provide-feedback"
-        class="standard-button"
-      >
-        <span>Provide Feedback</span>
-      </button>
+    <a href="{{ feedbackLink }}"
+      mat-flat-button
+      aria-label="provide-feedback"
+      class="standard-button"
+    >
+      <span>Provide Feedback</span>
     </a>
   </div>
 </app-content-container>
