@@ -95,7 +95,7 @@
 
                 <!-- Call To Action -->
                 <div *ngIf="funding.callToAction">
-                    <a href="{{ funding.callToAction }}" target="_blank" class="standard-button section">
+                    <a href="{{ funding.callToAction }}" target="_blank" mat-flat-button class="standard-button section">
                         <span *ngIf="funding.callToActionLabel">{{ funding.callToActionLabel }}</span>
                         <span *ngIf="!funding.callToActionLabel">View Funding</span>
                     </a>
