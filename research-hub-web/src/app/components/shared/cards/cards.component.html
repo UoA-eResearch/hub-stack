@@ -66,11 +66,6 @@
             >
               {{ content["title"] }}
             </a>
-            <mat-icon
-              *ngIf="content.ssoProtected"
-              matTooltip="SSO Login Required"
-              >&nbsp;lock</mat-icon
-            >
             <a
               *ngIf="content.__typename === 'OfficialDocuments'"
               class="card-title"
