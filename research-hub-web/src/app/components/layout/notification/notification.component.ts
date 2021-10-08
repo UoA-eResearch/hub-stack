@@ -10,9 +10,10 @@ import { filter, map, tap } from 'rxjs/operators';
       *ngIf="notification && showNotification && !hasBeenDismissed"
       class="notification-bar-container mat-elevation-z6"
       fxLayout="row"
+      role="notification" aria-labelledby="notification-text" tabindex="0"
     >
       <div class="notification-bar-content">
-        <div aria-label="notification" tabindex="0" [innerHTML]="notification | richTextToHTML"></div>
+        <div id="notification-text" [innerHTML]="notification | richTextToHTML"></div>
       </div>
       <button mat-button aria-label="close-notification" (click)="close()" (keydown.enter)="close()"><mat-icon>close</mat-icon></button>
     </div>
