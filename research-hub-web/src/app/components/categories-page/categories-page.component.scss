@@ -18,7 +18,8 @@
 /**
  * Title
  */
-h2 {
+h1 {
+  color: $dark-blue;
   font-size: 36px;
   text-align: center;
   @include size(large) {
