@@ -1,35 +1,63 @@
-<div id="subhub-children" class="site-padding" ngClass.lt-md="site-padding-mobile">
-    <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap">
-        <mat-nav-list role="navigation" class="margin-bottom-2" ngClass.lt-md="margin-bottom" fxFlex="24%"
-            aria-label="Topic Child Pages"
-            *ngFor="let subHub of contentItem.items"
-        >
+<div
+  id="subhub-children"
+  class="site-padding"
+  ngClass.lt-md="site-padding-mobile"
+>
+  <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap">
+    <mat-nav-list
+      role="navigation"
+      class="margin-bottom-2"
+      ngClass.lt-md="margin-bottom"
+      fxFlex="24%"
+      aria-label="Topic Child Pages"
+      *ngFor="let subHub of contentItem.items"
+    >
+      <!-- Templates -->
+      <ng-template #image>
+        <picture>
+          <source
+            srcset="{{ subHub.banner?.url }}?w=1000&fm=webp"
+            type="image/webp"
+          />
+          <img
+            mat-card-image
+            src="{{ subHub.banner?.url }}?w=1000"
+            alt="{{ subHub.title }}"
+          />
+        </picture>
+      </ng-template>
+      <ng-template #noImage><div style="margin-top: 15px"></div></ng-template>
 
-            <!-- Templates -->
-            <ng-template #image>
-                <picture>
-                    <source srcset="{{ subHub.banner?.url }}?w=1000&fm=webp" type="image/webp">
-                    <img mat-card-image src="{{ subHub.banner?.url }}?w=1000" alt="{{ subHub.title }}">
-                </picture>
-            </ng-template>
-            <ng-template #noImage><div style="margin-top: 15px;"></div></ng-template>
-
-            <a [routerLink]="'/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']"
-                [attr.aria-label]="'Link to' + subHub.title" role="list-item"
-            >   
-                <mat-card class="subhub-card">
-                    <ng-container *ngIf="subHub.banner; then image; else noImage"></ng-container>
-                    <span class="card-label">{{ subHub.__typename | contentTypeDisplayName }}</span>
-                    <mat-card-title class="card-title">
-                        <h4>
-                            {{ subHub.title }}
-                            <mat-icon *ngIf="subHub.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
-                        </h4>
-                    </mat-card-title>
-                    <mat-card-content class="content-item-summary"><p>{{ subHub.summary }}</p></mat-card-content>
-                    <br>
-                </mat-card>
-            </a>
-        </mat-nav-list>
-    </div>
+      <a
+        [routerLink]="
+          '/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']
+        "
+        [attr.aria-label]="'Link to' + subHub.title"
+        role="list-item"
+      >
+        <mat-card class="subhub-card">
+          <ng-container
+            *ngIf="subHub.banner; then image; else noImage"
+          ></ng-container>
+          <span class="card-label">{{
+            subHub.__typename | contentTypeDisplayName
+          }}</span>
+          <mat-card-title class="card-title">
+            <a
+              >{{ subHub.title }}
+              <mat-icon
+                *ngIf="subHub.ssoProtected"
+                matTooltip="SSO Login Required"
+                >&nbsp;lock</mat-icon
+              ></a
+            >
+          </mat-card-title>
+          <mat-card-content class="content-item-summary"
+            ><p>{{ subHub.summary }}</p></mat-card-content
+          >
+          <br />
+        </mat-card>
+      </a>
+    </mat-nav-list>
+  </div>
 </div>
