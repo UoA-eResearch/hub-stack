@@ -51,11 +51,11 @@ export const appRoutes: Routes = [
   },
   {
     path: 'casestudies',
-    loadChildren: () => import('@components/case-study/case-study.module').then(m => m.CaseStudyModule)
+    loadChildren: () => import('@app/components/casestudys/casestudys.module').then(m => m.CasestudysModule)
   },
   {
     path: 'casestudy/:slug',
-    loadChildren: () => import('@components/case-study/case-study.module').then(m => m.CaseStudyModule)
+    loadChildren: () => import('@app/components/casestudys/casestudys.module').then(m => m.CasestudysModule)
   },
   {
     path: 'articles',

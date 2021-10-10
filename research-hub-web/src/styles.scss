@@ -44,7 +44,7 @@ hr {
   }
   ul li {
     position: relative;
-    line-height:30px;
+    line-height: 30px;
     padding-left: 1em;
     list-style-type: disc;
     p {
@@ -131,6 +131,18 @@ a {
   color: $link-light-bg-color;
   font-family: $font-family;
 }
+
+// show icon for external links
+// page below is good for checking
+// http://localhost:4200/research-impact/planning-for-impact
+mat-card-title a:not([href^="/"]):after,
+ngx-contentful-rich-text mat-card-title a:not([href^="/"]):after,
+ngx-contentful-rich-text a:not([href^="/"]) .ng-star-inserted:after {
+  font-family: "Material Icons";
+  content: " \e895";
+  font-size: 0.8em;
+}
+
 span {
   font-family: $font-family;
 }
@@ -393,7 +405,7 @@ h2.maori-proverb {
 
 .easter-egg {
   background: linear-gradient(146deg, #ff0000, #ff9900, #ccff00, #33ff00, #00ff66, #00ffff, #0066ff, #3300ff, #cc00ff, #ff0099);
-  background-size: 400% 100%; 
+  background-size: 400% 100%;
   color: #ffffff;
   animation: pulse 10s infinite;
 }
@@ -423,4 +435,17 @@ h2.maori-proverb {
   border-radius: 50px !important;
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+/**
+ * Fix picture tag on mat card top margin globally
+ * mat-card currently doesn't handle picture tags very nicely.
+ * By default, mat-card applied a style to an img element to remove top-margin.
+ * The style doesn't get applied automatically for img within picture so we apply it globally here.
+ * https://github.com/angular/components/blob/6e1f522d6a50d6f589d069775bc771b5590bff4c/src/material/card/card.scss#L191
+ * I created a bug report here https://github.com/angular/components/issues/23649
+ */
+mat-card picture:first-child img.mat-card-image {
+  margin-top: -16px;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
