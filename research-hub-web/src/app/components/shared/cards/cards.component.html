@@ -146,38 +146,19 @@
           <mat-card-title>
             <a
               class="card-title"
-              *ngIf="content.link && content.maoriName; else maoriNameNoLink"
+              *ngIf="content.link"
               href="{{ content.link }}"
-              target="_blank"
-              style="font-weight: lighter"
-              >{{ content["maoriName"] }}&nbsp;</a
             >
-            <a
-              class="card-title"
-              *ngIf="content.link; else noLink"
-              href="{{ content.link }}"
-              target="_blank"
-              >{{ content["name"] }}</a
-            >
-            <mat-icon
-              *ngIf="content.ssoProtected"
-              matTooltip="SSO Login Required"
-              >&nbsp;lock</mat-icon
-            >
+              <span *ngIf="content.name">{{ content["name"] }}</span>
+              <span *ngIf="content.maoriName && content.name">, </span>
+              <span *ngIf="content.maoriName">{{ content["maoriName"] }}</span>
+            </a>
+            <span class="card-title" *ngIf="!content.link">
+              <span *ngIf="content.name">{{ content["name"] }}</span>
+              <span *ngIf="content.maoriName && content.name">, </span>
+              <span *ngIf="content.maoriName">{{ content["maoriName"] }}</span>
+            </span>
           </mat-card-title>
-          <ng-template #maoriNameNoLink>
-            <span
-              class="card-title"
-              *ngIf="content.maoriName"
-              style="font-weight: lighter"
-              >{{ content["maoriName"] }}</span
-            >
-          </ng-template>
-          <ng-template #noLink>
-            <span class="card-title" *ngIf="content.name">{{
-              content["name"]
-            }}</span>
-          </ng-template>
 
           <mat-card-content>
             <span

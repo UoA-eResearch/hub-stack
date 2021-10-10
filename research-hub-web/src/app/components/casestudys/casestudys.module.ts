@@ -19,4 +19,4 @@ import { CaseStudyReferencesComponent } from './case-study-references/case-study
     NgxContentfulRichTextModule
   ]
 })
-export class CaseStudyModule { }
+export class CasestudysModule { }
