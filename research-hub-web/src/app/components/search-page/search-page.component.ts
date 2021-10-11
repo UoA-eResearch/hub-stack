@@ -44,7 +44,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   ) {
     this.detectDevice();
     this.detectWebP();
-    this.router.onSameUrlNavigation = 'reload';
   }
 
   ngOnInit() {
