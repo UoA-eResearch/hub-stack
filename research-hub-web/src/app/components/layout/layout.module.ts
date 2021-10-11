@@ -9,6 +9,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { NotificationComponent } from './notification/notification.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SearchFiltersComponent } from './search-filters/search-filters.component';
+import { LayoutComponent } from './layout.component';
 
 
 
@@ -18,7 +19,8 @@ import { SearchFiltersComponent } from './search-filters/search-filters.componen
     NotificationComponent,
     FooterComponent,
     SearchBarComponent,
-    SearchFiltersComponent
+    SearchFiltersComponent,
+    LayoutComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { SearchFiltersComponent } from './search-filters/search-filters.componen
   exports: [
     NavbarComponent,
     NotificationComponent,
-    FooterComponent
+    FooterComponent,
+    LayoutComponent
   ]
 })
 export class AppLayoutModule { }
