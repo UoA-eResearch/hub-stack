@@ -22,7 +22,7 @@ describe('ResearchHubs Funding Pages', () => {
     });
 
     it('displays a list of contacts', () => {
-        cy.get('#contacts .card-title').text().should('not.be.empty');
+        cy.get('#contacts .card-title span').text().should('not.be.empty');
     });
 
     it('displays a list of organisations', () => {
