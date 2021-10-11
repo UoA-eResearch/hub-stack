@@ -44,7 +44,7 @@
     <button
       role="button"
       class="button-menu"
-      aria-label="user-info"
+      aria-label="User Info"
       mat-button
       [matMenuTriggerFor]="userMenu"
     >
@@ -77,7 +77,6 @@
       <div fxLayout="row" fxLayoutAlign="end">
         <button
           role="button"
-          aria-label="sign-out"
           mat-raised-button
           class="sign-out-button"
           (click)="loginService.logout()"
@@ -94,7 +93,6 @@
 <ng-template #signIn>
   <a
     role="button"
-    aria-label="sign-in"
     mat-button
     (click)="loginService.doLogin(currentUrl)"
     (keydown.enter)="loginService.doLogin(currentUrl)"
