@@ -32,7 +32,7 @@
         [routerLink]="
           '/' + subHub['__typename'].toLowerCase() + '/' + subHub['slug']
         "
-        [attr.aria-label]="'Link to' + subHub.title"
+        [attr.aria-label]="'Link to ' + subHub.title"
         role="list-item"
       >
         <mat-card class="subhub-card">
@@ -43,14 +43,14 @@
             subHub.__typename | contentTypeDisplayName
           }}</span>
           <mat-card-title class="card-title">
-            <a
+            <span
               >{{ subHub.title }}
               <mat-icon
                 *ngIf="subHub.ssoProtected"
                 matTooltip="SSO Login Required"
                 >&nbsp;lock</mat-icon
-              ></a
-            >
+              >
+            </span>
           </mat-card-title>
           <mat-card-content class="content-item-summary"
             ><p>{{ subHub.summary }}</p></mat-card-content
