@@ -56,24 +56,6 @@ mat-card  {
    }
 }
 
-
-/**
- * Custom Button Styles
- */
-.standard-button {
-   @extend .standard-button;
-   border: 3px solid $light-blue!important;
-   background-color: $light-blue!important;
-}
-.standard-button:hover {
-   color: $light-blue!important;
-   border-radius: 50px!important;
-   background-color: white!important;
-   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-}
-
-
-
 /**
  * Funding Application Documents
  */

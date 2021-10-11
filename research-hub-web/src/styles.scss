@@ -401,6 +401,41 @@ h2.maori-proverb {
   }
 }
 
+// Pre-launch style tweeks
+
+.easter-egg {
+  background: linear-gradient(146deg, #ff0000, #ff9900, #ccff00, #33ff00, #00ff66, #00ffff, #0066ff, #3300ff, #cc00ff, #ff0099);
+  background-size: 400% 100%;
+  color: #ffffff;
+  animation: pulse 10s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 200% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+/**
+ * Custom Button Styles
+ */
+ .standard-button-banner {
+  @extend .standard-button;
+  color: white !important;
+  border: 3px solid white !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+.standard-button-banner:hover {
+  color: $body-grey !important;
+  border-radius: 50px !important;
+  background-color: white !important;
+  transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
 /**
  * Fix picture tag on mat card top margin globally
  * mat-card currently doesn't handle picture tags very nicely.
