@@ -76,6 +76,7 @@ functions:
             headers:
               - Content-Type
               - Authorization
+              - sentry-trace
             allowCredentials: false
   update:
     handler: handler.update
