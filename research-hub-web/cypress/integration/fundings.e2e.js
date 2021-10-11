@@ -26,6 +26,6 @@ describe('ResearchHubs Funding Pages', () => {
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
+        cy.get('#organisations mat-nav-list:first-child a').text().should('not.be.empty');
     });
 });

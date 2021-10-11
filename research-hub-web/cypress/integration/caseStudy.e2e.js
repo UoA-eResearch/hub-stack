@@ -25,7 +25,7 @@ describe('ResearchHubs Case Study Pages', () => {
     });
 
     it('displays a list of documents', () => {
-        cy.get('#documents mat-nav-list:first-child h4 a').text().should('not.be.empty');
+        cy.get('#documents mat-nav-list:first-child a').text().should('not.be.empty');
     });
 
 });
