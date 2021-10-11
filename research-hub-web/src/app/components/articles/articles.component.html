@@ -63,13 +63,13 @@
                         <div *ngIf="article.banner">
                             <a href="{{ article.callToAction }}" mat-flat-button class="standard-button-banner">
                                 <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
-                                <span *ngIf="!article.callToActionLabel">View Equipment</span>
+                                <span *ngIf="!article.callToActionLabel">View Article</span>
                             </a>
                         </div>
                         <div *ngIf="!article.banner">
                             <a href="{{ article.callToAction }}" target="_blank" mat-flat-button class="standard-button">
                                 <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
-                                <span *ngIf="!article.callToActionLabel">View Equipment</span>
+                                <span *ngIf="!article.callToActionLabel">View Article</span>
                             </a>
                         </div>
                     </div>
