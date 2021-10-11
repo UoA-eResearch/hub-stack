@@ -7,8 +7,10 @@ import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
-    RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' })
+    RouterModule.forRoot(appRoutes, {
+      scrollPositionRestoration: 'enabled',
+      relativeLinkResolution: 'legacy'
+    })
   ],
   exports: [
     RouterModule
