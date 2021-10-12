@@ -1,5 +1,5 @@
 <div id="research-categories" *ngIf="allCategories$ | async; let allCategories">
-  <h2>{{ title }}</h2>
+  <h1>{{ title }}</h1>
   <p>{{ description }}</p>
   <div [ngClass]="'main-underline'"></div>
 
@@ -7,10 +7,12 @@
   <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap" ngClass.lt-md="site-padding-mobile">
 
     <!-- Category Cards Content -->
-    <div *ngFor="let item of allCategories.items" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
+    <mat-nav-list *ngFor="let item of allCategories.items" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
 
       <!-- Individual Category Card -->
-      <mat-card tabindex="0" fxLayout="column" fxLayoutAlign="space-between" class="tile-content" 
+      <mat-card tabindex="0" fxLayout="column" fxLayoutAlign="space-between" class="tile-content"
+        role="link"
+        [attr.aria-label]="'Search in ' + item.name"
         (keydown.enter)="search(item.sys.id)"
         (click)="search(item.sys.id)"        
       >
@@ -20,6 +22,6 @@
         </div>
       </mat-card>
 
-    </div>
+    </mat-nav-list>
   </div>
 </div>

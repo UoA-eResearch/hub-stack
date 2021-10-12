@@ -14,6 +14,9 @@ describe('NavbarComponent', () => {
   let component: NavbarComponent;
   let fixture: ComponentFixture<NavbarComponent>;
 
+  beforeAll(MockInstance.remember);
+  afterAll(MockInstance.restore);
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [

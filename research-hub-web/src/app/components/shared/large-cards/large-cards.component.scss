@@ -1,32 +1,31 @@
+@use "~@angular/material" as mat;
 @import "variables";
-
-/**
- * Mat Card
- */
-mat-card {
-  box-shadow: 0px 0px 15px #a5a5a5 !important;
-}
+@import "mixins";
+@import "styles-common";
 
 /**
  * SubHub Card
  */
 .subhub-card {
+  @include mat.elevation-transition;
+  @include mat.elevation(1);
+  &:hover {
+    @include mat.elevation(8);
+  }
+  cursor: pointer;
   background: $light-blue;
   img {
     object-fit: cover;
     max-height: 200px;
   }
   .card-title {
-    display: inline-block;
-    a {
-      display: inline;
-      font-size: 20px;
-      color: white;
+    font-size: 20px;
+    color: white;
+    span {
       border-bottom: solid 2px transparent;
-    }
-    a:hover {
-      border-bottom: solid 2px white;
-      cursor: pointer;
+      &:hover {
+        border-bottom: solid 2px white;
+      }
     }
   }
 }

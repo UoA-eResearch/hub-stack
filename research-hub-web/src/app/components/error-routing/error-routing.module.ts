@@ -66,9 +66,9 @@ export class ErrorRoutingModule extends UoaErrorsConfig {
             value.content += `
                 <br><br>
                 <a href="/">
-                <div role="button" class="standard-button">
-                    <p>ResearchHub Home</p>
-                </div>
+                    <div role="button">
+                        <span>ResearchHub Home</span>
+                    </div>
                 </a>`;
         }
     }
