@@ -45,7 +45,8 @@
                                         <img class="download-arrow" style="height: 10px; width: auto"
                                             src="assets/components/navy-download.png" alt="download-arrow">Download
                                         File</a>&nbsp;
-                                    <span *ngIf="contentItem.size * 0.001 < 1000" class="file-size">{{ contentItem.size * 0.001 | number: '1.0-0' }}&nbsp;kB</span>
+                                    <span *ngIf="contentItem.size * 0.001 < 1" class="file-size">{{ contentItem.size | number: '1.0-0' }}&nbsp;B</span>
+                                    <span *ngIf="contentItem.size * 0.001 < 1000 && contentItem.size * 0.001 >= 1" class="file-size">{{ contentItem.size * 0.001 | number: '1.0-0' }}&nbsp;kB</span>
                                     <span *ngIf="contentItem.size * 0.001 >= 1000" class="file-size">{{ contentItem.size * 0.000001 | number: '1.0-0' }}&nbsp;MB</span>
                                 </div>
                             </mat-card-content>
