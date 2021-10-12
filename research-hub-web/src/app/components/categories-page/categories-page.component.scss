@@ -1,8 +1,9 @@
+@use "~@angular/material" as mat;
 @import "variables";
 @import "mixins";
 @import "styles-common";
 
-/** 
+/**
  * Container
  */
 #research-categories {
@@ -14,10 +15,11 @@
 
 
 
-/** 
+/**
  * Title
  */
-h2 {
+h1 {
+  color: $dark-blue;
   font-size: 36px;
   text-align: center;
   @include size(large) {
@@ -49,10 +51,10 @@ div.light-color {
  * Research Category tiles
  */
 .tile-content {
-  @include mat-elevation-transition;
-  @include mat-elevation(1);
+  @include mat.elevation-transition;
+  @include mat.elevation(1);
   &:hover {
-    @include mat-elevation(4);
+    @include mat.elevation(4);
   }
   cursor: pointer;
   height: 100%;

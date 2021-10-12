@@ -10,7 +10,8 @@
   margin: 60px auto;
   @extend .site-padding;
 }
-h2 {
+h1 {
+  color: $dark-blue;
   font-size: 36px;
   text-align: center;
   @include size(large) {
@@ -32,7 +33,7 @@ p {
 }
 
 div.light-color {
-  h2, p {
+  p {
     color: white;
   }
 }
@@ -107,12 +108,11 @@ div.light-color {
           outline: none;
         }
       }
-      h3 {
+      h2 {
         width: 90vw;
         line-height: 1.05;
         margin: 5px auto;
         font-size: 36px;
-        font-style: italic;
         font-weight: bold;
         word-wrap: break-word;
         @include size(medium) {
@@ -128,7 +128,6 @@ div.light-color {
         text-align: center;
         @include size(medium) {
           width: 100%;
-          font-style: italic;
           font-size: 20px;
         }
       }
@@ -147,7 +146,7 @@ div.light-color {
       width: 55vw;
       margin-left: -8vw;
 
-      > img {
+      img {
         object-fit: cover;
         width: 100%;
         height: 240px;

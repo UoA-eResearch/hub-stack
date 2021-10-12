@@ -21,12 +21,7 @@ mat-card {
   * Mat-Card Title
   */
 .mat-card-title {
-  h4 {
-    font: 400 16px/20px National;
-    letter-spacing: normal;
-    margin: 0 0 16px
-  }
-  display: inline-block;
+  line-height: 20px;
   a:hover {
     border-bottom: solid 2px $dark-grey;
   }
@@ -58,6 +53,7 @@ mat-icon {
 }
 
 .contact-card-summary {
+  font-size: 16px;
   a {
     color: $light-blue !important;
     display: inline-block;
@@ -67,9 +63,11 @@ mat-icon {
     text-overflow: ellipsis;
   }
   mat-icon {
-    font-size: 12px !important;
-    color: $body-grey !important;
-    width: 16px !important;
-    vertical-align: middle;
+    color: $body-grey;
+    font-size: 16px !important;
+    height: 16px;
+    width: 16px;
+    vertical-align: bottom;
+    margin-right: 5px;
   }
 }
