@@ -62,17 +62,17 @@
                     <div class="section" *ngIf="article.callToAction">
                         <div *ngIf="article.banner">
                             <a href="{{ article.callToAction }}" target="_blank">
-                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button-banner">
+                                <button role="button" aria-label="view-article" mat-flat-button class="standard-button-banner">
                                     <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
-                                    <span *ngIf="!article.callToActionLabel">View Equipment</span>
+                                    <span *ngIf="!article.callToActionLabel">View Article</span>
                                 </button>
                             </a>
                         </div>
                         <div *ngIf="!article.banner">
                             <a href="{{ article.callToAction }}" target="_blank">
-                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button">
+                                <button role="button" aria-label="view-article" mat-flat-button class="standard-button">
                                     <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
-                                    <span *ngIf="!article.callToActionLabel">View Equipment</span>
+                                    <span *ngIf="!article.callToActionLabel">View Article</span>
                                 </button>
                             </a>
                         </div>
