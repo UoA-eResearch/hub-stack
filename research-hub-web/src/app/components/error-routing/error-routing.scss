@@ -6,8 +6,12 @@
     color: $dark-blue !important;
     font-weight: bold !important;
   }
+
+  /**
+   * ResearchHub home button
+   */
   a div {
-    p {
+    span {
       font-weight: bold;
       margin-bottom: 5px;
       color: white !important;
@@ -25,7 +29,7 @@
     border-radius: 50px !important;
     background-color: white !important;
     transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-    p {
+    span {
       margin-bottom: 5px;
       color: $dark-blue !important;
     }
