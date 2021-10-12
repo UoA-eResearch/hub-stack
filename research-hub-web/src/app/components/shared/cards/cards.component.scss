@@ -63,9 +63,11 @@ mat-icon {
     text-overflow: ellipsis;
   }
   mat-icon {
-    font-size: 12px !important;
-    color: $body-grey !important;
-    width: 16px !important;
-    vertical-align: middle;
+    color: $body-grey;
+    font-size: 16px !important;
+    height: 16px;
+    width: 16px;
+    vertical-align: bottom;
+    margin-right: 5px;
   }
 }
