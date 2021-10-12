@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
+import { NavigationEnd, ResolveEnd, Router, RouterEvent } from '@angular/router';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { LoginService, UserInfoDto } from '@uoa/auth';
 import { from, Observable, Subscription } from 'rxjs';
@@ -17,8 +17,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   public currentUrl: string = '/';
   public showMobileSearch: boolean = false;
-  public skipLinkPathSearch: string = '/';
-  public skipLinkPathMainContent: string = '/';
+  public skipLinkPathSearch: string;
+  public skipLinkPathMainContent: string;
 
   public userInfo$: Observable<UserInfoDto>;
   public loggedIn$: Observable<boolean>;
@@ -43,11 +43,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       ).subscribe({
         next: (event: NavigationEnd) => {
           this.currentUrl = event.urlAfterRedirects;
-          this.searchBar.focus();
 
-          // set the skip link urls dynamically
-          this.skipLinkPathSearch = `${this.location.path(false)}#search`;
-          this.skipLinkPathMainContent = `${this.location.path(false)}#main-content`;
+          setTimeout(() => {
+            // set the skip link urls dynamically
+            // we have to wait for dynamic urls (e.g. subhub child pages) to resolve
+            this.skipLinkPathSearch = `${this.location.path(false)}#search`;
+            this.skipLinkPathMainContent = `${this.location.path(false)}#main-content`;
+          }, 500);
         }
       })
     );
