@@ -35,19 +35,10 @@ export class CerGraphqlService {
     this.hasPushedSubhubRoutes = true;
     const routes = this.router.config;
     await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
-    // Check if there's a wildcard route in our configuration...
-    const wildcardRouteIdx = routes.findIndex((route) => route.path === "**");
-    let  newRoutes;
-    if (wildcardRouteIdx > -1) {
-      // ...if so, insert the new routes before the wildcard route, so during routing
-      // the new routes are matched before the wildcard route.
-      const routesBeforeWildcard = routes.slice(0, wildcardRouteIdx);
-      const wildcardRouteAndAfter = routes.slice(wildcardRouteIdx, routes.length);
-      newRoutes = routesBeforeWildcard.concat(this._subHubMap.routes, wildcardRouteAndAfter);
-    } else {
-      newRoutes = routes.concat(this._subHubMap.routes);
-    }
-    this.router.resetConfig(newRoutes);
+
+    routes.find((route => route.path === ''))?.children?.push(...this._subHubMap.routes);
+
+    this.router.resetConfig(routes);
   }
 
   /**

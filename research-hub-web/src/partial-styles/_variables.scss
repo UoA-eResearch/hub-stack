@@ -375,9 +375,9 @@ $app-base-typography: mat-typography-config(
   // bolder body text
   $body-1: mat-typography-level(16px, 22px, 400),
   // base body text <p> ?
-  $caption: mat-typography-level(12px, 20px, 400),
+  $caption: mat-typography-level(16px, 20px, 400),
   // smaller body and hint text
-  $button: mat-typography-level(14px, 14px, 500),
+  $button: mat-typography-level(16px, 14px, 500),
   $input: mat-typography-level(16px, 1.125, 400) // Line-height must be unit-less fraction of the font-size.,
 );
 
