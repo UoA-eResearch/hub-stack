@@ -15,10 +15,10 @@ import { SearchBarComponent } from '../search-bar/search-bar.component';
 export class NavbarComponent implements OnInit, OnDestroy {
   @ViewChild('searchBar') searchBar: SearchBarComponent;
 
-  public currentUrl = '/';
-  public showMobileSearch = false;
-  public skipLinkPathSearch: string;
-  public skipLinkPathMainContent: string;
+  public currentUrl: string = '/';
+  public showMobileSearch: boolean = false;
+  public skipLinkPathSearch: string = '/';
+  public skipLinkPathMainContent: string = '/';
 
   public userInfo$: Observable<UserInfoDto>;
   public loggedIn$: Observable<boolean>;
@@ -30,7 +30,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     public homeScrollService: HomeScrollService,
     public loginService: LoginService,
     public location: Location,
-  ) { }
+  ) {
+    // set the initial skip link paths
+    this.skipLinkPathSearch = `${this.location.path(false)}#search`;
+    this.skipLinkPathMainContent = `${this.location.path(false)}#main-content`;
+  }
 
   ngOnInit(): void {
     this.subscriptions.add(
