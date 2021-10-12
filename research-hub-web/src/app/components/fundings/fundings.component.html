@@ -138,7 +138,8 @@
                                         <a href="{{ item.url }}">
                                             <img class="download-arrow" style="height: 10px; width: auto"
                                             src="assets/components/navy-download.png" alt="download-arrow">Download File</a>&nbsp;
-                                        <span class="file-size">{{ item.size | number: '1.0-0' }}&nbsp;kB</span>
+                                            <span *ngIf="item.size * 0.001 < 1000" class="file-size">{{ item.size * 0.001 | number: '1.0-0' }}&nbsp;kB</span>
+                                            <span *ngIf="item.size * 0.001 >= 1000" class="file-size">{{ item.size * 0.000001 | number: '1.0-0' }}&nbsp;MB</span>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
