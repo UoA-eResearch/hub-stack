@@ -44,7 +44,7 @@ export const appRoutes: Routes = [
       },
       {
         path: 'activities',
-        loadChildren: () => import('@app/components/activities-page/activities-page.module').then((m) => m.ActivitiesPageModule),
+        loadChildren: () => import('@components/activities-page/activities-page.module').then((m) => m.ActivitiesPageModule),
       },
       {
         path: 'equipment',
@@ -59,12 +59,8 @@ export const appRoutes: Routes = [
         loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
       },
       {
-        path: 'event/:slug',
-        loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
-      },
-      {
-        path: 'events',
-        loadChildren: () => import('@app/components/events/events.module').then(m => m.EventsModule)
+        path: 'event',
+        loadChildren: () => import('@components/events/events.module').then(m => m.EventsModule)
       },
       {
         path: 'funding/:slug',

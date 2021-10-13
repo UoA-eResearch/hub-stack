@@ -20,10 +20,10 @@ import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-events',
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss']
+  templateUrl: './event.component.html',
+  styleUrls: ['./event.component.scss']
 })
-export class EventsComponent implements OnInit, OnDestroy {
+export class EventComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
