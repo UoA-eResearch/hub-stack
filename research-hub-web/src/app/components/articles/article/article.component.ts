@@ -20,8 +20,8 @@ import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-articles',
-  templateUrl: './articles.component.html',
-  styleUrls: ['./articles.component.scss']
+  templateUrl: './article.component.html',
+  styleUrls: ['./article.component.scss']
 })
 export class ArticlesComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
@@ -116,7 +116,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
         if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           data['callToAction'] = 'mailto:' + data['callToAction'];
         }
-        
+
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
