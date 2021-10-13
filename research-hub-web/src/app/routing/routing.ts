@@ -55,11 +55,7 @@ export const appRoutes: Routes = [
         loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
       },
       {
-        path: 'casestudies',
-        loadChildren: () => import('@components/casestudys/casestudys.module').then(m => m.CasestudysModule)
-      },
-      {
-        path: 'casestudy/:slug',
+        path: 'casestudy',
         loadChildren: () => import('@components/casestudys/casestudys.module').then(m => m.CasestudysModule)
       },
       {
