@@ -36,11 +36,11 @@ export const appRoutes: Routes = [
       },
       {
         path: 'search',
-        loadChildren: () => import('@app/components/search-page/search-page.module').then((m) => m.SearchPageModule),
+        loadChildren: () => import('@components/search-page/search-page.module').then((m) => m.SearchPageModule),
       },
       {
         path: 'categories',
-        loadChildren: () => import('@app/components/categories-page/categories-page.module').then((m) => m.CategoriesPageModule),
+        loadChildren: () => import('@components/categories-page/categories-page.module').then((m) => m.CategoriesPageModule),
       },
       {
         path: 'activities',
@@ -48,11 +48,7 @@ export const appRoutes: Routes = [
       },
       {
         path: 'equipment',
-        loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
-      },
-      {
-        path: 'equipment/:slug',
-        loadChildren: () => import('@app/components/equipments/equipments.module').then(m => m.EquipmentsModule)
+        loadChildren: () => import('@components/equipments/equipments.module').then(m => m.EquipmentsModule)
       },
       {
         path: 'casestudy',
