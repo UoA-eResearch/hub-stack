@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockProvider } from 'ng-mocks';
 import { ContentContainerComponent } from './content-container/content-container.component';
 import { ContentTitleComponent } from './content-title/content-title.component';
 import { FeaturedComponent } from './featured/featured.component';
 import { HomeComponent } from './home.component';
 import { BannerImageComponent } from './banner-image/banner-image.component';
 import { ContactComponent } from './contact/contact.component';
+import { PageTitleService } from '@services/page-title.service';
 
 
 describe('HomeComponent', () => {
@@ -21,6 +22,9 @@ describe('HomeComponent', () => {
         MockComponent(ContentContainerComponent),
         MockComponent(BannerImageComponent),
         MockComponent(ContactComponent)
+      ],
+      providers: [
+        MockProvider(PageTitleService),
       ]
     })
     .compileComponents();
