@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AllArticlesGQL, ArticleCollection } from '@app/graphql/schema';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -7,17 +8,23 @@ import { map } from 'rxjs/operators';
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.scss']
 })
-export class ArticleListComponent implements OnInit {
+export class ArticleListComponent implements OnInit, OnDestroy {
   public articles: ArticleCollection
+
+  private subscription = new Subscription();
 
   constructor(
     private allArticlesGQL: AllArticlesGQL
   ) { }
 
   ngOnInit(): void {
-    this.allArticlesGQL.fetch().pipe(
+    this.subscription.add(this.allArticlesGQL.fetch().pipe(
       map((result) => result.data.articleCollection as ArticleCollection)
-    ).subscribe(collection => this.articles = collection)
+    ).subscribe(collection => this.articles = collection));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }
