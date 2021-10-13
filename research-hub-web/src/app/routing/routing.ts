@@ -63,10 +63,6 @@ export const appRoutes: Routes = [
         loadChildren: () => import('@components/events/events.module').then(m => m.EventsModule)
       },
       {
-        path: 'funding/:slug',
-        loadChildren: () => import('@app/components/fundings/fundings.module').then(m => m.FundingsModule)
-      },
-      {
         path: 'funding',
         loadChildren: () => import('@app/components/fundings/fundings.module').then(m => m.FundingsModule)
       },

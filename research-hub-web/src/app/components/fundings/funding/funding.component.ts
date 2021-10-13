@@ -20,10 +20,10 @@ import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-fundings',
-  templateUrl: './fundings.component.html',
-  styleUrls: ['./fundings.component.scss']
+  templateUrl: './funding.component.html',
+  styleUrls: ['./funding.component.scss']
 })
-export class FundingsComponent implements OnInit, OnDestroy {
+export class FundingComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
