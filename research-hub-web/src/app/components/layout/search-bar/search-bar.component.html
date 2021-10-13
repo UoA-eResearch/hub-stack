@@ -14,6 +14,7 @@
         aria-label="Search"
         color="primary"
         (click)="search()"
+        tabindex="-1"
       >
         <mat-icon>search</mat-icon>
       </button>
@@ -31,6 +32,7 @@
       </button>
 
       <input
+        id="search"
         #searchBox
         type="search"
         [(ngModel)]="searchText"
@@ -42,6 +44,7 @@
       <button
         id="settingsButton"
         type="button"
+        aria-label="Search Filters"
         mat-icon-button
         color="primary"
         (click)="showFilters = !showFilters"

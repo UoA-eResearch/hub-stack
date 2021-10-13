@@ -7,8 +7,11 @@
   class="mat-elevation-z6"
 >
   <mat-toolbar-row class="main-navbar-row">
+    <a role="button" class="skip-link" [href]="skipLinkPathSearch">Skip to search</a>
+    <a role="button" class="skip-link" [href]="skipLinkPathMainContent">Skip to main content</a>
+
     <!-- Logo/Home -->
-    <a fxFlex.lt-md class="hub-logo" [routerLink]="'/'">
+    <a aria-label="ResearchHub home" class="hub-logo" mat-button [routerLink]="'/'">
       <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
     </a>
 
@@ -19,19 +22,19 @@
     <span class="hide-small" style="flex: 1 1 auto"></span>
 
     <!--Navigation buttons-->
-    <button mat-button class="hide-small" [routerLink]="'/categories'">
+    <a mat-button class="hide-small" [routerLink]="'/categories'">
       Categories
-    </button>
-    <button mat-button class="hide-small" [routerLink]="'/activities'">
+    </a>
+    <a mat-button class="hide-small" [routerLink]="'/activities'">
       Activities
-    </button>
-      <ng-container
-        *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
-      ></ng-container>
+    </a>
+    <ng-container
+      *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
+    ></ng-container>
   </mat-toolbar-row>
   <mat-toolbar-row class="navbar-row-show-small">
-    <button mat-button [routerLink]="'/categories'">Categories</button>
-    <button mat-button [routerLink]="'/activities'">Activities</button>
+    <a mat-button [routerLink]="'/categories'">Categories</a>
+    <a mat-button [routerLink]="'/activities'">Activities</a>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -41,13 +44,11 @@
     <button
       role="button"
       class="button-menu"
-      aria-label="user-info"
+      aria-label="User Info"
       mat-button
       [matMenuTriggerFor]="userMenu"
     >
-      <mat-icon matPrefix style="margin-right: 5px"
-        >person</mat-icon
-      >
+      <mat-icon matPrefix style="margin-right: 5px">person</mat-icon>
       <span fxHide fxShow.gt-md>
         {{ userInfo?.firstName + " " + userInfo?.lastName }}
       </span>
@@ -76,7 +77,6 @@
       <div fxLayout="row" fxLayoutAlign="end">
         <button
           role="button"
-          aria-label="sign-out"
           mat-raised-button
           class="sign-out-button"
           (click)="loginService.logout()"
@@ -91,13 +91,12 @@
 
 <!--Sign in button template-->
 <ng-template #signIn>
-  <button
+  <a
     role="button"
-    aria-label="sign-in"
     mat-button
     (click)="loginService.doLogin(currentUrl)"
     (keydown.enter)="loginService.doLogin(currentUrl)"
   >
     Sign In
-  </button>
+  </a>
 </ng-template>

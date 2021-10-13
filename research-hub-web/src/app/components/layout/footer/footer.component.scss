@@ -1,3 +1,4 @@
+@use "~@angular/material" as mat;
 @import "variables";
 @import "mixins";
 @import "styles-common";
@@ -9,8 +10,8 @@ footer {
     min-height: $height-footer;
   }
   background: $dark-grey;
-  font-size: mat-font-size($app-base-typography, button);
-  font-weight: mat-font-weight($app-base-typography, caption);
+  font-size: mat.font-size($app-base-typography, button);
+  font-weight: mat.font-weight($app-base-typography, caption);
   color: #a1a1a1;
 
   .footer-content {
@@ -43,8 +44,8 @@ footer {
   a {
     text-align: left;
     text-decoration: none;
-    font-size: mat-font-size($app-base-typography, button);
-    font-weight: mat-font-weight($app-base-typography, caption);
+    font-size: mat.font-size($app-base-typography, button);
+    font-weight: mat.font-weight($app-base-typography, caption);
     color: #a1a1a1;
   }
   .footer-xs a {
