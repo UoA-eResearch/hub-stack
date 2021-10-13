@@ -1,11 +1,10 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { PageTitleService } from '../../services/page-title.service';
-import { ArticlesComponent } from './articles.component';
+import { PageTitleService } from '@services/page-title.service';
+import { ArticlesComponent } from './article.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterModule, ActivatedRoute, convertToParamMap, Router } from '@angular/router';
-import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { ArticleCollection, AllArticlesGQL, Article } from '@graphql/schema';
+import { ArticleCollection, Article } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
