@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FundingsComponent } from './fundings.component';
+import { FundingListComponent } from './funding-list/funding-list.component';
+import { FundingComponent } from './funding/funding.component';
 
 
 const routes: Routes = [
-  { path: '', component: FundingsComponent }
+  { path: '', component: FundingListComponent },
+  { path: ':slug', component: FundingComponent}
 ];
 
 @NgModule({
