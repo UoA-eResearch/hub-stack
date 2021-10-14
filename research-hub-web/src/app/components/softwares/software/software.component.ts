@@ -84,62 +84,39 @@ export class SoftwareComponent implements OnInit, OnDestroy {
    * Function that loads the Software/collection depending on if a slug is present.
    */
   private async _loadContent() {
-    /**
-     * If this.slug is defined, we're loading an individual Software,
-     * therefore run the corresponding query. If not, return all Software.
-     */
-    if (!!this.slug) {
-      // Check if the article slug is valid otherwise redirect to 404
-      this.getAllSoftwareSlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.software = this.getSoftwareBySlug(this.slug);
-      this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
-        // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+    // Check if the article slug is valid otherwise redirect to 404
+    this.getAllSoftwareSlugs().subscribe(data => {
+      let slugs = [];
+      data.items.forEach(data => {
+        slugs.push(data.slug)
+      })
+      if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
+    });
+    this.software = this.getSoftwareBySlug(this.slug);
+    this.software$ = this.getSoftwareBySlug(this.slug).subscribe(data => {
+      // Strip nulls from related collection data.
+      data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+      data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+      data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+      data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
 
-        // Set banner image URL for webp format if webp is supported
-        if (data.banner?.url) {
-          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
-        }
+      // Set banner image URL for webp format if webp is supported
+      if (data.banner?.url) {
+        this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+      } else {
+        this.bannerImageUrl = undefined;
+      }
 
-        // If Call To Action is an email address
-        if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          data['callToAction'] = 'mailto:' + data['callToAction'];
-        }
+      // If Call To Action is an email address
+      if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        data['callToAction'] = 'mailto:' + data['callToAction'];
+      }
 
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.pageTitleService.title = data.title;
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-    } else {
-      this.pageTitleService.title = 'Software';
-      this.allSoftware$ = this.getAllSoftware();
-      try { this.software$.unsubscribe(); } catch { }
-    }
-  }
+      this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+      this.pageTitleService.title = data.title;
+    });
+    this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
 
-  /**
-   * Function that returns all Software from the SoftwareCollection as an observable
-   * of type SoftwareCollection. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting Software/slug-name.
-   */
-  public getAllSoftware(): Observable<SoftwareCollection> {
-    try {
-      return this.allSoftwareGQL.fetch()
-        .pipe(pluck('data', 'softwareCollection')) as Observable<SoftwareCollection>
-    } catch (e) { console.error('Error loading all Software:', e) };
   }
 
   /**
