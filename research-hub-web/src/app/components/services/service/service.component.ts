@@ -84,11 +84,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
    * Function that loads the Service/collection depending on if a slug is present.
    */
   private async _loadContent() {
-    /**
-     * If this.slug is defined, we're loading an individual Service,
-     * therefore run the corresponding query. If not, return all Services.
-     */
-    if (!!this.slug) {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllServicesSlugs().subscribe(data => {
         let slugs = [];
@@ -122,25 +117,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-    } else {
-      this.pageTitleService.title = 'Services';
-      this.allServices$ = this.getAllServices();
-      try { this.service$.unsubscribe(); } catch { }
-    }
-  }
 
-  /**
-   * Function that returns all Services from the ServiceCollection as an observable
-   * of type ServiceCollection. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting Service/slug-name.
-   */
-  public getAllServices(): Observable<ServiceCollection> {
-    try {
-      return this.allServicesGQL.fetch()
-        .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
-    } catch (e) { console.error('Error loading all Services:', e) };
   }
 
   /**
