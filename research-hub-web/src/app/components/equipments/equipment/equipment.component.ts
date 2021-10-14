@@ -91,44 +91,39 @@ export class EquipmentComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual Equipment,
      * therefore run the corresponding query. If not, return all Equipment.
      */
-    if (!!this.slug) {
-      // Check if the equipment slug is valid otherwise redirect to 404
-      this.getAllEquipmentSlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.equipment = this.getEquipmentBySlug(this.slug);
-      this.equipment$ = this.getEquipmentBySlug(this.slug).subscribe(data => {
-        // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+    // Check if the equipment slug is valid otherwise redirect to 404
+    this.getAllEquipmentSlugs().subscribe(data => {
+      let slugs = [];
+      data.items.forEach(data => {
+        slugs.push(data.slug)
+      })
+      if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
+    });
+    this.equipment = this.getEquipmentBySlug(this.slug);
+    this.equipment$ = this.getEquipmentBySlug(this.slug).subscribe(data => {
+      // Strip nulls from related collection data.
+      data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+      data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+      data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+      data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
 
-        // If Call To Action is an email address
-        if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          data['callToAction'] = 'mailto:' + data['callToAction'];
-        }
+      // If Call To Action is an email address
+      if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        data['callToAction'] = 'mailto:' + data['callToAction'];
+      }
 
-        // Set banner image URL for webp format if webp is supported
-        if (data.banner?.url) {
-          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
-        }
+      // Set banner image URL for webp format if webp is supported
+      if (data.banner?.url) {
+        this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+      } else {
+        this.bannerImageUrl = undefined;
+      }
 
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.pageTitleService.title = data.title;
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-    } else {
-      this.pageTitleService.title = 'Equipment';
-      this.allEquipment$ = this.getAllEquipment();
-      try { this.equipment$.unsubscribe(); } catch { }
-    }
+      this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+      this.pageTitleService.title = data.title;
+    });
+    this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+
   }
 
   /**
