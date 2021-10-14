@@ -1,31 +1,27 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { SubhubsComponent } from './subhubs.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { SubhubsRoutingModule } from './subhubs-routing.module';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
-import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
   SubHub,
   SubHubCollection,
-  AllSubHubGQL,
   AllContentItemParentSubHubsGQL,
-  SubHubOrder,
 } from "@graphql/schema";
 import { PageTitleService } from '@services/page-title.service';
 import { MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SubhubComponent } from './subhub.component';
 
 
 describe('SubhubsComponent', () => {
-  let component: SubhubsComponent;
-  let fixture: ComponentFixture<SubhubsComponent>;
+  let component: SubhubComponent;
+  let fixture: ComponentFixture<SubhubComponent>;
   let backend: ApolloTestingController;
   let controller: ApolloTestingController;
   let subHubSpy: any; // returns mock query data
@@ -504,7 +500,7 @@ describe('SubhubsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [SubhubsComponent],
+      declarations: [SubhubComponent],
       imports: [
         ApolloTestingModule,
         MockModule(CommonModule),
@@ -522,7 +518,7 @@ describe('SubhubsComponent', () => {
 
   beforeEach(() => {
     controller = TestBed.inject(ApolloTestingController);
-    fixture = TestBed.createComponent(SubhubsComponent);
+    fixture = TestBed.createComponent(SubhubComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -545,7 +541,7 @@ describe('SubhubsComponent', () => {
   describe('When a url slug is present', async () => {
     beforeEach(() => {
       controller = TestBed.inject(ApolloTestingController);
-      fixture = TestBed.createComponent(SubhubsComponent);
+      fixture = TestBed.createComponent(SubhubComponent);
       component = fixture.componentInstance;
       TestBed.inject(ActivatedRoute).params = of({
         slug: 'first-subhub'
