@@ -33,7 +33,6 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
         // For each type of node, first filter out null values, then find matching node.
         case 'embedded-asset-block':
           this.contentItem = this.returnVal$.assets['block'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
-          this.contentItem['size'] = Math.round(this.contentItem['size'] / 1000) + (Math.round(this.contentItem['size'] % 1000) / 100);
           break;
         case 'embedded-entry-block':
           this.contentItem = this.returnVal$.entries['block'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
