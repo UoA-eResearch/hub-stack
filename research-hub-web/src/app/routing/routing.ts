@@ -64,7 +64,7 @@ export const appRoutes: Routes = [
       },
       {
         path: 'funding',
-        loadChildren: () => import('@app/components/fundings/fundings.module').then(m => m.FundingsModule)
+        loadChildren: () => import('@components/fundings/fundings.module').then(m => m.FundingsModule)
       },
       {
         path: 'subhub/:slug',
