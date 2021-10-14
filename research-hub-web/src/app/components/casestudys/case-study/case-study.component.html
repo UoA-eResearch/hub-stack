@@ -1,11 +1,3 @@
-<!-- If we're displaying a collection of caseStudys-->
-<div
-    *ngIf="allCaseStudies$ | async as allCaseStudies"
-    class="site-padding margin-bottom top-padding"
-    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allCaseStudies"></app-collection-list>
-</div>
-
 <div id="case-study-container" *ngIf="caseStudy | async as caseStudy">
 
     <!-- Templates -->
