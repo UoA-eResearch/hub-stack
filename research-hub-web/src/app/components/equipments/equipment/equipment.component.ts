@@ -127,20 +127,6 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Function that returns all Equipment from the EquipmentCollection as an observable
-   * of type EquipmentCollection. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting Equipment/slug-name.
-   */
-  public getAllEquipment(): Observable<EquipmentCollection> {
-    try {
-      return this.allEquipmentGQL.fetch()
-        .pipe(pluck('data', 'equipmentCollection')) as Observable<EquipmentCollection>
-    } catch (e) { console.error('Error loading all Equipment:', e) };
-  }
-
-  /**
    * Function that returns all equipment slugs from the EquipmentCollection as an observable
    * of type EquipmentCollection. This is then unwrapped with the async pipe.
    *
