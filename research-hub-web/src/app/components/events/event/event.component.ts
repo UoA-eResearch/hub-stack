@@ -85,11 +85,6 @@ export class EventComponent implements OnInit, OnDestroy {
    * Function that loads the Event/collection depending on if a slug is present.
    */
   private async _loadContent() {
-    /**
-     * If this.slug is defined, we're loading an individual Event,
-     * therefore run the corresponding query. If not, return all Events.
-     */
-    if (!!this.slug) {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllEventSlugs().subscribe(data => {
         let slugs = [];
@@ -123,25 +118,7 @@ export class EventComponent implements OnInit, OnDestroy {
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-    } else {
-      this.pageTitleService.title = 'Events';
-      this.allEvents$ = this.getAllEvents();
-      try { this.event$.unsubscribe(); } catch { }
-    }
-  }
 
-  /**
-   * Function that returns all Events from the EventCollection as an observable
-   * of type EventCollection. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting Event/slug-name.
-   */
-  public getAllEvents(): Observable<EventCollection> {
-    try {
-      return this.allEventsGQL.fetch()
-        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
-    } catch (e) { console.error('Error loading all Events:', e) };
   }
 
   /**
