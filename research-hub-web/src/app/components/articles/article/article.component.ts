@@ -94,59 +94,40 @@ export class ArticlesComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual article,
      * therefore run the corresponding query. If not, return all articles.
      */
-    if (!!this.slug) {
-      // Check if the article slug is valid otherwise redirect to 404
-      this.getAllArticlesSlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.article = this.getArticleBySlug(this.slug);
-      this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
 
-        // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+    this.getAllArticlesSlugs().subscribe(data => {
+      let slugs = [];
+      data.items.forEach(data => {
+        slugs.push(data.slug)
+      })
+      if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
+    });
+    this.article = this.getArticleBySlug(this.slug);
+    this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
 
-        // If Call To Action is an email address
-        if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-          data['callToAction'] = 'mailto:' + data['callToAction'];
-        }
+      // Strip nulls from related collection data.
+      data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+      data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+      data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+      data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
 
-        // Set banner image URL for webp format if webp is supported
-        if (data.banner?.url) {
-          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
-        }
+      // If Call To Action is an email address
+      if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        data['callToAction'] = 'mailto:' + data['callToAction'];
+      }
 
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-        this.pageTitleService.title = data.title;
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-    } else {
-      this.pageTitleService.title = 'Articles';
-      this.allArticles$ = this.getAllArticles();
-      try { this.article$.unsubscribe(); } catch { }
-    }
-  }
+      // Set banner image URL for webp format if webp is supported
+      if (data.banner?.url) {
+        this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+      } else {
+        this.bannerImageUrl = undefined;
+      }
 
-  /**
-   * Function that returns all articles from the ArticleCollection as an observable
-   * of type ArticleCollection. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting article/slug-name.
-   */
-  public getAllArticles(): Observable<ArticleCollection> {
-    try {
-      return this.allArticlesGQL.fetch()
-        .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all articles:', e) };
+      this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+      this.pageTitleService.title = data.title;
+    });
+    this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
+
   }
 
   /**
