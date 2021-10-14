@@ -84,11 +84,6 @@ export class FundingComponent implements OnInit, OnDestroy {
    * Function that loads the Funding/collection depending on if a slug is present.
    */
   private async _loadContent() {
-    /**
-     * If this.slug is defined, we're loading an individual Funding,
-     * therefore run the corresponding query. If not, return all Fundings.
-     */
-    if (!!this.slug) {
       // Check if the article slug is valid otherwise redirect to 404
       this.getAllFundingSlugs().subscribe(data => {
         let slugs = [];
@@ -123,25 +118,7 @@ export class FundingComponent implements OnInit, OnDestroy {
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-    } else {
-      this.pageTitleService.title = 'Fundings';
-      this.allFundings$ = this.getAllFundings();
-      try { this.funding$.unsubscribe(); } catch { }
-    }
-  }
 
-  /**
-   * Function that returns all Fundings from the FundingCollection as an observable
-   * of type FundingCollection. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting Funding/slug-name.
-   */
-  public getAllFundings(): Observable<FundingCollection> {
-    try {
-      return this.allFundingGQL.fetch()
-        .pipe(pluck('data', 'fundingCollection')) as Observable<FundingCollection>
-    } catch (e) { console.error('Error loading all Fundings:', e) };
   }
 
   /**

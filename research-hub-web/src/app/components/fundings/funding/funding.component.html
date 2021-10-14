@@ -1,11 +1,3 @@
-<!-- If we're displaying a collection of Fundings-->
-<div
-    *ngIf="allFundings$ | async as allFundings"
-    class="site-padding margin-bottom top-padding"
-    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allFundings"></app-collection-list>
-</div>
-
 <div id="funding-container" *ngIf="funding | async as funding">
 
     <!-- Templates -->
