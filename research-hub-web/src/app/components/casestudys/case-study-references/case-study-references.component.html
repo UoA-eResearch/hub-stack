@@ -1,8 +1,13 @@
 <div *ngIf="caseStudyReferences | async as caseStudyReferences">
   <h2>References</h2>
-  <ngx-contentful-rich-text *ngIf="caseStudyReferences.references !== null; else noReferences" id="bodyMediaList" style="word-break:break-word;"
+  <p *ngIf="caseStudyReferences.references !== null; else noReferences"
+    id="bodyMediaList" class="section-2" style="word-break:break-word;"
+    [innerHTML]="caseStudyReferences.references?.json | richTextToHTML">
+  </p>
+
+  <!-- <ngx-contentful-rich-text *ngIf="caseStudyReferences.references !== null; else noReferences" id="bodyMediaList" style="word-break:break-word;"
     [document]="caseStudyReferences.references?.json" [nodeRenderers]="nodeRenderers">
-  </ngx-contentful-rich-text>
+  </ngx-contentful-rich-text> -->
   <ng-template #noReferences>
     <p>It looks like there aren't any references here.</p>
   </ng-template>

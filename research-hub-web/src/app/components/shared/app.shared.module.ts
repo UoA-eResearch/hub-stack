@@ -20,6 +20,7 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { BlocksEmbeddedAssetComponent } from './body-media/blocks-embedded-asset/blocks-embedded-asset.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
-    VideoCardComponent
+    VideoCardComponent,
+    BlocksEmbeddedAssetComponent
   ],
   exports: [
     FlexLayoutModule,

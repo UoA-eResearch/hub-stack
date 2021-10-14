@@ -12,8 +12,8 @@ export class RichTextToHTML implements PipeTransform {
     transform(value: any): string {
         const options = {
             renderNode: {
-                [BLOCKS.EMBEDDED_ENTRY]: (node) => `<p>Embedded Asset Block: ${node.data.target.sys.id} | ${node.nodeType}</p>`,
-                [BLOCKS.EMBEDDED_ASSET]: (node) => `<p>Embedded Asset Block: ${node.data.target.sys.id} | ${node.nodeType}</p>`,
+                [BLOCKS.EMBEDDED_ENTRY]: (node) => `<p>Embedded Entry Block: ${node.data.target.sys.id} | ${node.nodeType}</p>`,
+                [BLOCKS.EMBEDDED_ASSET]: (node) => `<app-blocks-embedded-asset>${node}</app-blocks-embedded-asset>`,
                 [INLINES.EMBEDDED_ENTRY]: (node) => `<p>Embedded Entry Inline: ${node.data.target.sys.id} | ${node.nodeType}</p>`,
                 [INLINES.ENTRY_HYPERLINK]: (node) => `<p>Entry Hyperlink: ${node.data.target.sys.id} | ${node.nodeType}</p>`,
             }

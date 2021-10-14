@@ -7,15 +7,15 @@
 </div>
 
 <div id="case-study-container" *ngIf="caseStudy | async as caseStudy">
-
     <!-- Templates -->
     <ng-template #breadcrumbs>
         <app-breadcrumbs [contentItem]="parentSubHubs" [title]="caseStudy.title"></app-breadcrumbs>
     </ng-template>
 
     <ng-template #caseStudyBody>
-        <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;" [document]="caseStudy.bodyText?.json"
-            [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
+        <p id="bodyMediaList" class="section-2" style="word-break:break-word;" [innerHTML]="caseStudy.bodyText?.json | richTextToHTML"></p>
+        <!-- <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;" [document]="caseStudy.bodyText?.json"
+            [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text> -->
     </ng-template>
 
     <ng-template #caseStudyReferences>
