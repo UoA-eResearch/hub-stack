@@ -19,10 +19,10 @@ import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-subhubs',
-  templateUrl: './subhubs.component.html',
-  styleUrls: ['./subhubs.component.scss']
+  templateUrl: './subhub.component.html',
+  styleUrls: ['./subhub.component.scss']
 })
-export class SubhubsComponent implements OnInit, OnDestroy {
+export class SubhubComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
