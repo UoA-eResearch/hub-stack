@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockModule } from 'ng-mocks';
 import { ContentContainerComponent } from '../content-container/content-container.component';
 import { ContentTitleComponent } from '../content-title/content-title.component';
 import { ContactComponent } from './contact.component';
+import { SharedModule } from './../../shared/app.shared.module';
 
 describe('ContactComponent', () => {
   let component: ContactComponent;
@@ -13,7 +14,11 @@ describe('ContactComponent', () => {
       declarations: [ 
         ContactComponent,
         MockComponent(ContentContainerComponent),
-        MockComponent(ContentTitleComponent) ]
+        MockComponent(ContentTitleComponent)
+      ],
+      imports: [
+        MockModule(SharedModule)
+      ]
     })
     .compileComponents();
   });

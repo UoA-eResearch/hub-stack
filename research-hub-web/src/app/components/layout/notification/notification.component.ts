@@ -1,20 +1,21 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { GetNotificationGQL } from '@app/graphql/schema';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notification',
   template: `
     <div
-      *ngIf="showNotification && !hasBeenDismissed"
+      *ngIf="notification && showNotification && !hasBeenDismissed"
       class="notification-bar-container mat-elevation-z6"
       fxLayout="row"
+      role="notification" aria-labelledby="notification-text" tabindex="0"
     >
       <div class="notification-bar-content">
-        <div [innerHTML]="this.notification | richTextToHTML"></div>
+        <div id="notification-text" [innerHTML]="notification | richTextToHTML"></div>
       </div>
-      <mat-icon (click)="close()">close</mat-icon>
+      <button mat-button aria-label="close-notification" (click)="close()" (keydown.enter)="close()"><mat-icon>close</mat-icon></button>
     </div>
   `,
   styleUrls: ['notification.component.scss'],
@@ -24,18 +25,20 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   public showNotification = false;
   public hasBeenDismissed = false;
-  public notification: JSON;
+  public notification: JSON | null = null;
 
   constructor(
-    private getNotification: GetNotificationGQL
+    private getNotificationGQL: GetNotificationGQL
   ) { }
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.getNotification.fetch().pipe(
-        map((result) => result.data.homepageCollection.items[0].notification)
+      this.getNotificationGQL.fetch().pipe(
+        map((result) => result.data.homepageCollection.items[0].notification),
+        filter((result) => result !== null)
       ).subscribe((result) => {
         this.notification = result.json;
+
         this.showNotification = true;
       })
     );

@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { NavigationEnd, Router, RouterEvent } from '@angular/router';
-import { SearchBarService } from '@app/components/search-bar/search-bar.service';
-import { Category, Stage } from '@app/graphql/schema';
+import { Location } from '@angular/common';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { NavigationEnd, ResolveEnd, Router, RouterEvent } from '@angular/router';
 import { HomeScrollService } from '@services/home-scroll.service';
 import { LoginService, UserInfoDto } from '@uoa/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-navbar',
@@ -13,13 +13,12 @@ import { filter, switchMap, tap } from 'rxjs/operators';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  @Input() allCategories: Category[] = [];
-  @Input() allStages: Stage[] = [];
+  @ViewChild('searchBar') searchBar: SearchBarComponent;
 
-  @Output() toggleSidenav: EventEmitter<void> = new EventEmitter<void>();
-
-  public isHome = false;
-  public currentUrl = '/';
+  public currentUrl: string = '/';
+  public showMobileSearch: boolean = false;
+  public skipLinkPathSearch: string;
+  public skipLinkPathMainContent: string;
 
   public userInfo$: Observable<UserInfoDto>;
   public loggedIn$: Observable<boolean>;
@@ -29,9 +28,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public homeScrollService: HomeScrollService,
-    public searchBarService: SearchBarService,
-    public loginService: LoginService
-  ) { }
+    public loginService: LoginService,
+    public location: Location,
+  ) {
+    // set the initial skip link paths
+    this.skipLinkPathSearch = `${this.location.path(false)}#search`;
+    this.skipLinkPathMainContent = `${this.location.path(false)}#main-content`;
+  }
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -39,8 +42,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
         filter((event: RouterEvent) => event instanceof NavigationEnd)
       ).subscribe({
         next: (event: NavigationEnd) => {
-          this.isHome = event.urlAfterRedirects ? (event.urlAfterRedirects === '/home') : false;
           this.currentUrl = event.urlAfterRedirects;
+
+          setTimeout(() => {
+            // set the skip link urls dynamically
+            // we have to wait for dynamic urls (e.g. subhub child pages) to resolve
+            this.skipLinkPathSearch = `${this.location.path(false)}#search`;
+            this.skipLinkPathMainContent = `${this.location.path(false)}#main-content`;
+          }, 500);
         }
       })
     );
@@ -52,7 +61,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.userInfo$ = this.loginService.userInfo$.pipe(
       filter(userInfo => userInfo !== null && userInfo !== undefined),
       tap(userInfo => this.sendGoogleAnalyticsUserInfo(userInfo))
-    );
+);   
   }
 
   private sendGoogleAnalyticsUserInfo(userInfo: UserInfoDto): void {
@@ -74,11 +83,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // }
   }
 
-
-
+  public toggleMobileSearchBar(): void {
+    this.showMobileSearch = !this.showMobileSearch;
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
-
 }

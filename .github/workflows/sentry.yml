@@ -1,0 +1,33 @@
+name: Sentry Release
+
+on:
+  push:
+    branches:
+      - dev
+      - test
+      - prod
+    paths:
+      - 'research-hub-web/**'
+
+jobs:
+  sentry-release:
+    name: Create Sentry Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+      - name: Get Branch
+        id: var
+        run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
+      - name: Output Branch
+        run: echo ${{ steps.var.outputs.branch }}
+      - name: Notify Sentry
+        # https://github.com/getsentry/action-release
+        uses: getsentry/action-release@v1.1.6
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: university-of-auckland-7o
+          SENTRY_PROJECT: research-hub
+        with:
+          environment: ${{ steps.var.outputs.branch }}
