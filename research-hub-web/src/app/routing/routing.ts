@@ -76,15 +76,11 @@ export const appRoutes: Routes = [
       },
       {
         path: 'service',
-        loadChildren: () => import('@app/components/services/services.module').then(m => m.ServicesModule)
-      },
-      {
-        path: 'software/:slug',
-        loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+        loadChildren: () => import('@components/services/services.module').then(m => m.ServicesModule)
       },
       {
         path: 'software',
-        loadChildren: () => import('@app/components/softwares/softwares.module').then(m => m.SoftwaresModule)
+        loadChildren: () => import('@components/softwares/softwares.module').then(m => m.SoftwaresModule)
       },
     ]
   },
@@ -94,6 +90,6 @@ export const appRoutes: Routes = [
    */
   {
     path: '**',
-    loadChildren: () =>  import("@app/components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
+    loadChildren: () =>  import("@components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
   }
 ];

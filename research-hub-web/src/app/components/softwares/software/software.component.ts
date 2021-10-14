@@ -20,10 +20,10 @@ import supportsWebP from 'supports-webp';
 
 @Component({
   selector: 'app-software',
-  templateUrl: './softwares.component.html',
-  styleUrls: ['./softwares.component.scss']
+  templateUrl: './software.component.html',
+  styleUrls: ['./software.component.scss']
 })
-export class SoftwaresComponent implements OnInit, OnDestroy {
+export class SoftwareComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,

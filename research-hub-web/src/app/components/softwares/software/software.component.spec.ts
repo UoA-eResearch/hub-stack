@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { PageTitleService } from '@services/page-title.service';
-import { SoftwaresComponent } from './softwares.component';
+import { SoftwareComponent } from './software.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -13,8 +13,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockModule, MockProvider } from 'ng-mocks';
 
 describe('SoftwaresComponent', () => {
-  let component: SoftwaresComponent;
-  let fixture: ComponentFixture<SoftwaresComponent>;
+  let component: SoftwareComponent;
+  let fixture: ComponentFixture<SoftwareComponent>;
   let controller: ApolloTestingController;
 
   const mockAllSoftware$: Observable<SoftwareCollection> = of({
@@ -47,7 +47,7 @@ describe('SoftwaresComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
-        SoftwaresComponent
+        SoftwareComponent
       ],
       imports: [
         RouterTestingModule,
@@ -65,7 +65,7 @@ describe('SoftwaresComponent', () => {
 
   beforeEach(() => {
     controller = TestBed.inject(ApolloTestingController);
-    fixture = TestBed.createComponent(SoftwaresComponent);
+    fixture = TestBed.createComponent(SoftwareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -88,7 +88,7 @@ describe('SoftwaresComponent', () => {
   describe('When a url slug is present', async () => {
     beforeEach(() => {
       controller = TestBed.inject(ApolloTestingController);
-      fixture = TestBed.createComponent(SoftwaresComponent);
+      fixture = TestBed.createComponent(SoftwareComponent);
       component = fixture.componentInstance;
       TestBed.inject(ActivatedRoute).params = of({
         slug: 'death-star'
