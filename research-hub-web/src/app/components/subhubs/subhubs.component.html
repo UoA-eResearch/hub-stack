@@ -3,7 +3,7 @@
     *ngIf="allSubHubs$ | async as allSubHubs"
     class="site-padding margin-bottom top-padding"
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [type]="'content'" [collection]="allSubHubs"></app-collection-list>
+    <app-collection-list [collection]="allSubHubs"></app-collection-list>
 </div>
 
 <div style="overflow-x: hidden" class="results" *ngIf="subHub | async as subHub">
@@ -70,7 +70,7 @@
             </div>
 
             <!-- SubHub Children -->
-            <div *ngIf="subHub.internalPagesCollection.items.length > 0 || subHub.externalPagesCollection.items.length > 0" class="subHub-children section-2">
+            <div *ngIf="subHub.internalPagesCollection.items.length > 0 || subHub.externalPagesCollection.items.length > 0" class="subHub-children">
                 <ng-container *ngTemplateOutlet="subHubChildren"></ng-container>
             </div>
 

@@ -7,7 +7,9 @@ import { SharedModule } from '../shared/app.shared.module';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotificationComponent } from './notification/notification.component';
-import { SideNavComponent } from './side-nav/side-nav.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchFiltersComponent } from './search-filters/search-filters.component';
+import { LayoutComponent } from './layout.component';
 
 
 
@@ -15,8 +17,10 @@ import { SideNavComponent } from './side-nav/side-nav.component';
   declarations: [
     NavbarComponent,
     NotificationComponent,
-    SideNavComponent,
-    FooterComponent
+    FooterComponent,
+    SearchBarComponent,
+    SearchFiltersComponent,
+    LayoutComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,8 @@ import { SideNavComponent } from './side-nav/side-nav.component';
   exports: [
     NavbarComponent,
     NotificationComponent,
-    SideNavComponent
+    FooterComponent,
+    LayoutComponent
   ]
 })
 export class AppLayoutModule { }

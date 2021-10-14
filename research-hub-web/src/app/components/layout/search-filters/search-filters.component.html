@@ -1,0 +1,108 @@
+<div class="search-filters-container">
+  <mat-tab-group>
+    <mat-tab [label]="'Categories'">
+      <div class="list-container">
+        <mat-selection-list #categories [(ngModel)]="activeFilters.category">
+          <ng-container *ngFor="let category of allCategories">
+            <mat-list-option
+              [value]="category.sys.id"
+              checkboxPosition="before"
+            >
+              {{ category.name }}
+            </mat-list-option>
+          </ng-container>
+        </mat-selection-list>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'Activities'">
+      <div class="list-container">
+        <mat-selection-list #stages [(ngModel)]="activeFilters.stage">
+          <mat-list-option
+            *ngFor="let stage of allStages"
+            [value]="stage.sys.id"
+            checkboxPosition="before"
+          >
+            {{ stage.name }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'Organisations'">
+      <div class="list-container">
+        <mat-selection-list #stages [(ngModel)]="activeFilters.relatedOrgs">
+          <mat-list-option
+            *ngFor="let orgUnit of allOrgUnits"
+            [value]="orgUnit.sys.id"
+            checkboxPosition="before"
+          >
+            {{ orgUnit.name }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+  <span style="flex: 1 1 auto"></span>
+  <mat-divider></mat-divider>
+
+  <div class="search-filters-footer">
+    <span>Filters: </span>
+    <span *ngIf="isMobile && activeFiltersCount > 0">{{
+      activeFiltersCount
+    }}</span>
+    <mat-chip-list>
+      <mat-chip
+        *ngIf="activeFilters.category.length > 0 && !isMobile"
+        [removable]="true"
+        (removed)="activeFilters.category = []"
+      >
+        {{
+          activeFilters.category.length === 1
+            ? activeFilters.category.length + " category"
+            : activeFilters.category.length + " categories"
+        }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip
+        *ngIf="activeFilters.stage.length > 0 && !isMobile"
+        [removable]="true"
+        (removed)="activeFilters.stage = []"
+      >
+        {{
+          activeFilters.stage.length === 1
+            ? activeFilters.stage.length + " activity"
+            : activeFilters.stage.length + " activities"
+        }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip
+        *ngIf="activeFilters.relatedOrgs.length > 0 && !isMobile"
+        [removable]="true"
+        (removed)="activeFilters.relatedOrgs = []"
+      >
+        {{
+          activeFilters.relatedOrgs.length === 1
+            ? activeFilters.relatedOrgs.length + " organisation"
+            : activeFilters.relatedOrgs.length + " organisations"
+        }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+      <mat-chip
+        *ngIf="
+          activeFilters.category.length > 0 ||
+          activeFilters.relatedOrgs.length > 0 ||
+          activeFilters.stage.length > 0
+        "
+        (click)="clearFilters()"
+      >
+        Clear All
+      </mat-chip>
+    </mat-chip-list>
+
+    <span style="flex: 1 1 auto"></span>
+
+    <button mat-raised-button color="primary" (click)="onSearch($event)">
+      Search
+    </button>
+  </div>
+</div>

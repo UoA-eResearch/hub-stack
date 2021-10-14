@@ -13,7 +13,7 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('article displays body text', () => {
-        cy.get('#article-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
+        cy.get('#bodyMediaList > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').text().should('not.be.empty');
     });
 
     it('displays a list of related items', () => {
@@ -21,16 +21,16 @@ describe('ResearchHubs Article Pages', () => {
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in mat-nav-list:first-child mat-card-title > h4 > a').click();
+        cy.get('#you-might-be-interested-in mat-nav-list:first-child mat-card-title > a').click();
         cy.get('h1.content-title').text().should('not.be.empty');
     });
 
     it('displays a list of documents', () => {
-        cy.get('#documents mat-nav-list:first-child h4 a').text().should('not.be.empty');
+        cy.get('#documents mat-nav-list:first-child a').text().should('not.be.empty');
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
+        cy.get('#organisations mat-nav-list:first-child a').text().should('not.be.empty');
     });
 
 });

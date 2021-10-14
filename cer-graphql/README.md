@@ -40,3 +40,4 @@ If you wish to use a different AWS profile, use the following command and pass i
 
 ## Authentication Process
 ![Architecture Overview](./documentation/cer-graphql-auth-process.png)
+

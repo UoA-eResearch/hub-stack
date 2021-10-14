@@ -1,0 +1,70 @@
+@use "~@angular/material" as mat;
+@import "variables";
+@import "mixins";
+@import "styles-common";
+
+/**
+ * Container
+ */
+#research-categories {
+  width: 95vw;
+  margin: 60px auto;
+  @extend .site-padding;
+}
+
+
+
+
+/**
+ * Title
+ */
+h1 {
+  color: $dark-blue;
+  font-size: 36px;
+  text-align: center;
+  @include size(large) {
+    text-align: left;
+    font-size: 48px;
+  }
+}
+
+p {
+  font-size: 16px;
+  position: relative;
+  word-wrap: break-word;
+  margin: 0 auto;
+  text-align: center;
+  @include size(large) {
+    text-align: left;
+    font-size: 20px;
+  }
+}
+
+div.light-color {
+  h2, p {
+    color: white;
+  }
+}
+
+
+/**
+ * Research Category tiles
+ */
+.tile-content {
+  @include mat.elevation-transition;
+  @include mat.elevation(1);
+  &:hover {
+    @include mat.elevation(4);
+  }
+  cursor: pointer;
+  height: 100%;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  background-color: $light-grey;
+  .title-text {
+    font-size: 24px;
+    color: $dark-blue;
+    word-break: break-word;
+  }
+}

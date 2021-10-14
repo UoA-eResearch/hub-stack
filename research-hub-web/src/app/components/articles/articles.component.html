@@ -3,7 +3,7 @@
     *ngIf="allArticles$ | async as allArticles"
     class="site-padding margin-bottom top-padding"
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [type]="'content'" [collection]="allArticles"></app-collection-list>
+    <app-collection-list [collection]="allArticles"></app-collection-list>
 </div>
 
 <div id="article-container" *ngIf="article | async as article">
@@ -61,19 +61,15 @@
                     <!-- Call To Action -->
                     <div class="section" *ngIf="article.callToAction">
                         <div *ngIf="article.banner">
-                            <a href="{{ article.callToAction }}" target="_blank">
-                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button-banner">
-                                    <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
-                                    <span *ngIf="!article.callToActionLabel">View Equipment</span>
-                                </button>
+                            <a href="{{ article.callToAction }}" mat-flat-button class="standard-button-banner">
+                                <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
+                                <span *ngIf="!article.callToActionLabel">View Article</span>
                             </a>
                         </div>
                         <div *ngIf="!article.banner">
-                            <a href="{{ article.callToAction }}" target="_blank">
-                                <button role="button" aria-label="view-equipment" mat-flat-button class="standard-button">
-                                    <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
-                                    <span *ngIf="!article.callToActionLabel">View Equipment</span>
-                                </button>
+                            <a href="{{ article.callToAction }}" target="_blank" mat-flat-button class="standard-button">
+                                <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
+                                <span *ngIf="!article.callToActionLabel">View Article</span>
                             </a>
                         </div>
                     </div>

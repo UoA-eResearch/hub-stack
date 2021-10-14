@@ -1,9 +1,21 @@
 query GetHomepage {
   homepageCollection(limit: 1) {
     items {
-      featuredItemsDescription
       researchCategories
       researchActivities
+      featuredItemsDescription
+      contactEmail
+      feedbackLink
+      uniLogo {
+        url
+      }
+      image {
+        url
+      }
+      title
+      contactDescription {
+        json
+      }
     }
   }
 }

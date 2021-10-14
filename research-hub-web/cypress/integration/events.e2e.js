@@ -13,7 +13,7 @@ describe('ResearchHubs Events Pages', () => {
     });
 
     it('event displays body text', () => {
-        cy.get('#event-container ng-component.ng-star-inserted p .ng-star-inserted').text().should('not.be.empty');
+      cy.get('#bodyMediaList > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').text().should('not.be.empty');
     });
 
     it('event displays specifications table', () => {
@@ -22,11 +22,11 @@ describe('ResearchHubs Events Pages', () => {
     });
 
     it('displays a list of contacts', () => {
-        cy.get('#contacts .card-title').text().should('not.be.empty');
+        cy.get('#contacts .card-title span').text().should('not.be.empty');
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations mat-nav-list:first-child h4 a').text().should('not.be.empty');
+        cy.get('#organisations mat-nav-list:first-child a').text().should('not.be.empty');
     });
 
 });

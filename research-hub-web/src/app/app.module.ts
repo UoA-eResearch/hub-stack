@@ -1,6 +1,6 @@
 
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,14 +9,14 @@ import { environment } from '@environments/environment';
 import { AuthModule, CognitoConfigService, LoginService, StorageService } from '@uoa/auth';
 import { BypassErrorService, ErrorPagesModule } from '@uoa/error-pages';
 import { Apollo } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpLink } from 'apollo-angular/http';
+import { onError } from '@apollo/client/link/error';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { onError } from 'apollo-link-error';
 import { StorageServiceModule } from 'ngx-webstorage-service';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './components/layout/layout.module';
-import { SearchBarService } from './components/search-bar/search-bar.service';
 import { SharedModule } from './components/shared/app.shared.module';
+import * as Sentry from "@sentry/angular";
 /**
  * Generated from Fragment matcher graphql-code-generator plugin
  * For more information see:
@@ -30,14 +30,6 @@ import { AppStorageService } from './services/app-storage.service';
 import { CerGraphqlService } from './services/cer-graphql.service';
 import { PageTitleService } from './services/page-title.service';
 import { ServicesModule } from './services/services.module';
-
-
-
-
-
-
-
-
 
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -60,16 +52,30 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    HttpLinkModule,
     ErrorPagesModule,
     AppLayoutModule
   ],
   providers: [
     CerGraphqlService,
-    SearchBarService,
     PageTitleService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
     { provide: StorageService, useClass: AppStorageService },
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: false,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
@@ -92,14 +98,26 @@ export class AppModule {
       if (networkError) {
         console.log("API returned networkError", networkError);
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
-          this.loginService.doLogin(this.router.url);
+          this.loginService.doLogin(this.router.url).then((result) => {
+            // Workaround fix for blank page load issue
+            // when auth library returns a token instead of navigating to target url
+            if (result) {
+              location.reload();
+            }            
+          });
           return;
         }
       }
       if (graphQLErrors) {
         console.log("API returned graphQLErrors", graphQLErrors);
         if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
-          this.loginService.doLogin(this.router.url);
+          this.loginService.doLogin(this.router.url).then((result) => {
+            // Workaround fix for blank page load issue
+            // when auth library returns a token instead of navigating to target url
+            if (result) {
+              location.reload();
+            }
+          });
           return;
         }
       }

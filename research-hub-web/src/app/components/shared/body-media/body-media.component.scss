@@ -85,8 +85,27 @@
 }
 .mat-card:hover .download-arrow {
   -webkit-animation: download 0.5s ease-in-out forwards;
+  animation: download 0.5s ease-in-out forwards;
 }
 
+@keyframes download {
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  40% {
+    opacity: 0;
+    transform: translate(0px, 10px);
+  }
+  60% {
+    opacity: 0;
+    transform: translate(0px, -10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
 @-webkit-keyframes download {
   0% {
     opacity: 1;

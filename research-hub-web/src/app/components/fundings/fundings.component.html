@@ -3,7 +3,7 @@
     *ngIf="allFundings$ | async as allFundings"
     class="site-padding margin-bottom top-padding"
     ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [type]="'content'" [collection]="allFundings"></app-collection-list>
+    <app-collection-list [collection]="allFundings"></app-collection-list>
 </div>
 
 <div id="funding-container" *ngIf="funding | async as funding">
@@ -95,11 +95,9 @@
 
                 <!-- Call To Action -->
                 <div *ngIf="funding.callToAction">
-                    <a href="{{ funding.callToAction }}" target="_blank">
-                        <button role="button" mat-flat-button aria-label="view-funding" class="standard-button section">
-                            <span *ngIf="funding.callToActionLabel">{{ funding.callToActionLabel }}</span>
-                            <span *ngIf="!funding.callToActionLabel">View Funding</span>
-                        </button>
+                    <a href="{{ funding.callToAction }}" target="_blank" mat-flat-button class="standard-button section">
+                        <span *ngIf="funding.callToActionLabel">{{ funding.callToActionLabel }}</span>
+                        <span *ngIf="!funding.callToActionLabel">View Funding</span>
                     </a>
                 </div>
                 <div class="mini-hr" *ngIf="!funding.callToAction"><hr/></div>
@@ -140,7 +138,9 @@
                                         <a href="{{ item.url }}">
                                             <img class="download-arrow" style="height: 10px; width: auto"
                                             src="assets/components/navy-download.png" alt="download-arrow">Download File</a>&nbsp;
-                                        <span class="file-size">{{ item.size }}&nbsp;kB</span>
+                                            <span *ngIf="item.size * 0.001 < 1" class="file-size">{{ item.size | number: '1.0-0' }}&nbsp;B</span>
+                                            <span *ngIf="item.size * 0.001 < 1000 && item.size * 0.001 >= 1" class="file-size">{{ item.size * 0.001 | number: '1.0-0' }}&nbsp;kB</span>
+                                            <span *ngIf="item.size * 0.001 >= 1000" class="file-size">{{ item.size * 0.000001 | number: '1.0-0' }}&nbsp;MB</span>
                                     </div>
                                 </mat-card-content>
                             </mat-card>
