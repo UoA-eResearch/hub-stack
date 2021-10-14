@@ -94,56 +94,37 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
      * If this.slug is defined, we're loading an individual CaseStudy,
      * therefore run the corresponding query. If not, return all CaseStudy.
      */
-    if (!!this.slug) {
-      this.getAllCaseStudySlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.caseStudy = this.getCaseStudyBySlug(this.slug);
+    this.getAllCaseStudySlugs().subscribe(data => {
+      let slugs = [];
+      data.items.forEach(data => {
+        slugs.push(data.slug)
+      })
+      if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
+    });
+    this.caseStudy = this.getCaseStudyBySlug(this.slug);
 
-      /**
-       * If the page is SSO Protected then check if the user is authenticated
-       */
-      this.caseStudy$ = this.getCaseStudyBySlug(this.slug).subscribe(data => {
-        // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+    /**
+     * If the page is SSO Protected then check if the user is authenticated
+     */
+    this.caseStudy$ = this.getCaseStudyBySlug(this.slug).subscribe(data => {
+      // Strip nulls from related collection data.
+      data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+      data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+      data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+      data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
 
-        // Set banner image URL for webp format if webp is supported
-        if (data.banner?.url) {
-          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
-        }
+      // Set banner image URL for webp format if webp is supported
+      if (data.banner?.url) {
+        this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+      } else {
+        this.bannerImageUrl = undefined;
+      }
 
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
-        this.pageTitleService.title = data.title;
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-    } else {
-      this.pageTitleService.title = 'Case Studies';
-      this.allCaseStudies$ = this.getAllCaseStudy();
-      try { this.caseStudy$.unsubscribe(); } catch { }
-    }
-  }
+      this.bodyMediaService.setBodyMedia(data.bodyText.links);
+      this.pageTitleService.title = data.title;
+    });
+    this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
 
-  /**
-   * Function that returns all CaseStudy from the CaseStudyCollection as an observable
-   * of type CaseStudyCollection. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting CaseStudy/slug-name.
-   */
-  public getAllCaseStudy(): Observable<CaseStudyCollection> {
-    try {
-      return this.allCaseStudyGQL.fetch()
-        .pipe(pluck('data', 'caseStudyCollection')) as Observable<CaseStudyCollection>
-    } catch (e) { console.error('Error loading all CaseStudy:', e) };
   }
 
   /**
