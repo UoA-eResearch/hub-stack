@@ -89,11 +89,6 @@ export class SubhubComponent implements OnInit, OnDestroy {
    * Function that loads the SubHub/collection depending on if a slug is present.
    */
   private async _loadContent() {
-    /**
-     * If this.slug is defined, we're loading an individual SubHub,
-     * therefore run the corresponding query. If not, return all SubHub.
-     */
-    if (!!this.slug) {
       this.subHub = this.getSubHubBySlug(this.slug);
       this.subHub$ = this.getSubHubBySlug(this.slug).subscribe(data => {
         // Remove nulls from server in case of error.
@@ -110,25 +105,7 @@ export class SubhubComponent implements OnInit, OnDestroy {
         }
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-    } else {
-      this.pageTitleService.title = 'SubHub';
-      this.allSubHubs$ = this.getAllSubHubs();
-      try { this.subHub$.unsubscribe(); } catch { }
-    }
-  }
 
-  /**
-   * Function that returns all SubHub from the SubHubCollection as an observable
-   * of type SubHubCollection. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e. the
-   * user is visiting SubHub/slug-name.
-   */
-  public getAllSubHubs(): Observable<SubHubCollection> {
-    try {
-      return this.allSubHubGQL.fetch()
-        .pipe(pluck('data', 'subHubCollection')) as Observable<SubHubCollection>
-    } catch (e) { console.error('Error loading all SubHub:', e) };
   }
 
   /**
