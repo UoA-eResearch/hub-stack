@@ -8,6 +8,7 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 })
 export class BodyMediaComponent extends NodeRenderer implements OnInit {
   public contentItem;
+  public data;
 
   constructor() { super(); }
 
@@ -15,32 +16,15 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
     /**
      * Inherit data passed from the 'super' content page
      */
-    this.contentItem = this.node.data.target.contentItem;
-    
-    // /**
-    //  * Get BodyMedia for current content from BodyMedia service
-    //  */
-    // this.returnVal$ = this.bodyMediaService.getBodyMedia();
-
-    // switch(this.data.nodeType) {
-    //   // For each type of node, first filter out null values, then find matching node.
-    //   case 'embedded-asset-block':
-    //     this.contentItem = this.returnVal$.assets['block'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
-    //     break;
-    //   case 'embedded-entry-block':
-    //     this.contentItem = this.returnVal$.entries['block'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
-    //     break;
-    //   case 'embedded-entry-inline':
-    //     this.contentItem = this.returnVal$.entries['inline'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
-    //     break;
-    //   case 'entry-hyperlink':
-    //     this.contentItem = this.returnVal$.entries['hyperlink'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
-    //     break;
-    //   case 'asset-hyperlink':
-    //     this.contentItem = this.returnVal$.assets['hyperlink'].filter(x => x).find(x => x.sys.id == this.data.data.target.sys.id);
-    //     break;
-    //   case 'blockquote':
-    //     this.contentItem = this.data.content[0];
-    // }
+    try {
+      this.data = this.node;
+      if(this.node.nodeType === "blockquote") {
+        this.contentItem = this.node.content[0];
+      } else {
+        this.contentItem = this.node.data.target?.contentItem;
+      }
+    } catch(err) {
+      console.error(err);
+    }
   }
 }

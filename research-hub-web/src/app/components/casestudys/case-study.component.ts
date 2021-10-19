@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { BlocksEmbeddedAssetComponent } from '@components/shared/body-media/blocks-embedded-asset/blocks-embedded-asset.component';
+import { BlocksEmbeddedEntryComponent } from '@components/shared/body-media/blocks-embedded-entry/blocks-embedded-entry.component';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllCaseStudiesGQL,
@@ -17,8 +19,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, Subscription } from 'rxjs';
 import { catchError, flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
-import { BlocksEmbeddedAssetComponent } from '@components/shared/body-media/blocks-embedded-asset/blocks-embedded-asset.component';
-import { BlocksEmbeddedEntryComponent } from '@components/shared/body-media/blocks-embedded-entry/blocks-embedded-entry.component';
+
 
 @Component({
   selector: 'app-case-study',
