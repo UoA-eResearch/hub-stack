@@ -16,10 +16,48 @@ query GetFundingBySlug($slug: String) {
                 url
             }
             summary
+            purpose {
+                json 
+                links {
+                    entries {
+                        inline { 
+                            ...PublicFields
+                            sys {
+                                id
+                            } 
+                        }
+                        hyperlink { 
+                            ...PublicFields 
+                            sys {
+                                id
+                            }
+                        }
+                    }
+                }
+            }
             type
             funding
             eligibility
             eligibleExpenses
+            deadlines {
+                json 
+                links {
+                    entries {
+                        inline { 
+                            ...PublicFields
+                            sys {
+                                id
+                            } 
+                        }
+                        hyperlink { 
+                            ...PublicFields 
+                            sys {
+                                id
+                            }
+                        }
+                    }
+                }
+            }
             bodyText {
                 json 
                 links {

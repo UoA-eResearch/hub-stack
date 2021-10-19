@@ -122,6 +122,9 @@ export class FundingsComponent implements OnInit, OnDestroy {
         }
 
         data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
+        data.purpose = this.bodyMediaService.resolveNodeData(data.purpose);
+        data.deadlines = this.bodyMediaService.resolveNodeData(data.deadlines);
+
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

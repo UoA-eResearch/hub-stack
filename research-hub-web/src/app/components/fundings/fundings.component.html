@@ -52,8 +52,14 @@
                 </tr>
                 <tr role="row">
                     <td role="cell">Deadlines</td>
-                    <!-- <td role="cell" [innerHTML]="funding.deadlines.json | richTextToHTML"></td>  removed for now as it is not working for inline entries -->
-                    <td role="cell"><app-funding-deadlines></app-funding-deadlines></td>
+                    <td role="cell">
+                        <div *ngIf="funding.deadlines">
+                            <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;"
+                                [document]="funding.deadlines?.json"
+                                [nodeRenderers]="nodeRenderers"
+                            ></ngx-contentful-rich-text>
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -104,7 +110,12 @@
             </div>
 
             <!-- Funding Purpose -->
-            <app-funding-purpose></app-funding-purpose>
+            <div *ngIf="funding.purpose">
+                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" 
+                    [document]="funding.purpose?.json"
+                    [nodeRenderers]="nodeRenderers"
+                ></ngx-contentful-rich-text>
+            </div>
 
             <!-- Specifications Table -->
             <div class="section-2" *ngIf="
