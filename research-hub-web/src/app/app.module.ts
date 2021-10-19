@@ -29,7 +29,6 @@ import { AppAuthConfigService } from './services/app-auth-config.service';
 import { AppStorageService } from './services/app-storage.service';
 import { CerGraphqlService } from './services/cer-graphql.service';
 import { PageTitleService } from './services/page-title.service';
-import { ServicesModule } from './services/services.module';
 
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -44,7 +43,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ServicesModule,
     SharedModule,
     StorageServiceModule,
     RoutingModule,
