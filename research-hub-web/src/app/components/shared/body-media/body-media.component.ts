@@ -21,7 +21,7 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
       if(this.node.nodeType === "blockquote") {
         this.contentItem = this.node.content[0];
       } else {
-        this.contentItem = this.node.data.target?.contentItem;
+        this.contentItem = this.node.data.contentItem;
       }
     } catch(err) {
       console.error(err);

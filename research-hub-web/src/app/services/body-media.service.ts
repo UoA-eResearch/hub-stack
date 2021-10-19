@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NodeData } from '@contentful/rich-text-types';
 
 @Injectable({
   providedIn: 'root'
@@ -20,58 +21,46 @@ export class BodyMediaService {
    * @param richText 
    * @returns the modified richText
    */
-  resolveNodeData(richText): any {    
+  resolveNodeData(richText): any {
     // create maps for each link type
-    const assetBlockMap = new Map();
-    // loop through the assets blocks and add them to the map
-    for (const asset of richText.links.assets.block) {
-      assetBlockMap.set(asset.sys.id, asset);
-    }
+    const assetBlockMap = new Map(
+      richText.links.assets?.block?.map((asset) => [asset.sys.id, asset])
+    );
 
-    const entryBlockMap = new Map();
-    // loop through the entries blocks and add them to the map
-    for (const entry of richText.links.entries.block) {
-      entryBlockMap.set(entry.sys.id, entry);
-    }
+    const entryBlockMap = new Map(
+      richText.links.entries?.block?.map((entry) => [entry.sys.id, entry])
+    );
 
-    const entryInlineMap = new Map();
-    // loop through the entry inlines and add them to the map
-    for (const entry of richText.links.entries.inline) {
-      entryInlineMap.set(entry.sys.id, entry);
-    }
+    const entryInlineMap = new Map(
+      richText.links.entries?.inline?.map((entry) => [entry.sys.id, entry])
+    );
 
-    const entryHyperlinkMap = new Map();
-    // loop through the entry hyperlinks and add them to the map
-    for (const entry of richText.links.entries.hyperlink) {
-      entryHyperlinkMap.set(entry.sys.id, entry);
-    }
-
-    const assetHyperlinkMap = new Map();
-    // loop through the asset hyperlinks and add them to the map
-    for (const asset of richText.links.assets.hyperlink) {
-      assetHyperlinkMap.set(asset.sys.id, asset);
-    }
+    const entryHyperlinkMap = new Map(
+      richText.links.entries?.hyperlink?.map((entry) => [entry.sys.id, entry])
+    );
+    
+    const assetHyperlinkMap = new Map(
+      richText.links.assets?.hyperlink?.map((asset) => [asset.sys.id, asset])
+    );
 
     //populate the rich text nodes with the entries and assets data
     richText.json.content.forEach(node => {
       switch(node.nodeType) {
-        // For each type of node, first filter out null values, then find matching node.
+        // For each type of node find matching contentItem and assign to 
         case 'embedded-asset-block':
-          node.data.target.contentItem = assetBlockMap.get(node.data.target.sys.id);
+          node.data.contentItem = assetBlockMap.get(node.data.target.sys.id);
           break;
         case 'embedded-entry-block':
-          node.data.target.contentItem = entryBlockMap.get(node.data.target.sys.id);
+          node.data.contentItem = entryBlockMap.get(node.data.target.sys.id);
           break;
         case 'embedded-entry-inline':
-          node.data.target.contentItem = entryInlineMap.get(node.data.target.sys.id);
+          node.data.contentItem = entryInlineMap.get(node.data.target.sys.id);
           break;
         case 'entry-hyperlink':
-          node.data.target.contentItem = entryHyperlinkMap.get(node.data.target.sys.id);
+          node.data.contentItem = entryHyperlinkMap.get(node.data.target.sys.id);
           break;
         case 'asset-hyperlink':
-          node.data.target.contentItem = assetHyperlinkMap.get(node.data.target.sys.id);
-          break;
-        case 'blockquote':
+          node.data.contentItem = assetHyperlinkMap.get(node.data.target.sys.id);
           break;
       }
     });

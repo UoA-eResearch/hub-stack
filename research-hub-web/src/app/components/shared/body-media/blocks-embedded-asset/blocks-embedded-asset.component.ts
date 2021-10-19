@@ -13,6 +13,6 @@ export class BlocksEmbeddedAssetComponent extends NodeRenderer implements OnInit
   constructor() { super(); }
 
   ngOnInit(): void {
-    this.contentItem = this.node.data.target.contentItem;
+    this.contentItem = this.node.data.contentItem;
   }
 }
