@@ -1,0 +1,30 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AllFundingGQL, FundingCollection } from '@app/graphql/schema';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+@Component({
+  selector: 'app-funding-list',
+  templateUrl: './funding-list.component.html',
+  styleUrls: ['./funding-list.component.scss']
+})
+export class FundingListComponent implements OnInit, OnDestroy {
+  public fundings: FundingCollection;
+
+  private subscription = new Subscription();
+
+  constructor(
+    private allFundingGQL: AllFundingGQL
+  ) { }
+
+  ngOnInit(): void {
+    this.subscription.add(this.allFundingGQL.fetch().pipe(
+      map((result) => result.data.fundingCollection as FundingCollection)
+    ).subscribe((collection) => this.fundings = collection));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+}
