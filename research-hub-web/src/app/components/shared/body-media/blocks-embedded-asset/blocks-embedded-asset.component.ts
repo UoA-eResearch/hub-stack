@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
+import { BodyMediaService} from '@services/body-media.service';
 
 @Component({
   selector: 'app-blocks-embedded-asset',
@@ -7,22 +8,11 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
   styleUrls: ['./blocks-embedded-asset.component.scss']
 })
 export class BlocksEmbeddedAssetComponent extends NodeRenderer implements OnInit {
-  public data;
   public contentItem;
 
   constructor() { super(); }
 
   ngOnInit(): void {
-    /**
-     * Inherit data passed from the 'super' content page
-     */
-     this.data = this.node;
-
-     console.log(this.node)
-     console.log('************************')
-     console.log(this.data)
-
-     this.contentItem = this.data.data;
+    this.contentItem = this.node.data.target.contentItem;
   }
-
 }

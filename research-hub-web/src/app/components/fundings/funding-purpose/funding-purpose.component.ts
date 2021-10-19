@@ -58,7 +58,7 @@ export class FundingPurposeComponent implements OnInit, OnDestroy {
   private async _loadContent() {
     this.fundingPurpose = this.getFundingPurposeBySlug(this.slug);
     this.getFundingPurposeBySlug(this.slug).subscribe(data => {
-      this.bodyMediaService.setBodyMedia(data.purpose?.links);
+      data.purpose = this.bodyMediaService.resolveNodeData(data.purpose);
     });
   }
 

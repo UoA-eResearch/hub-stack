@@ -58,7 +58,7 @@ export class FundingDeadlinesComponent implements OnInit, OnDestroy {
   private async _loadContent() {
     this.fundingDeadlines = this.getFundingDeadlinesBySlug(this.slug);
     this.getFundingDeadlinesBySlug(this.slug).subscribe(data => {
-      this.bodyMediaService.setBodyMedia(data.deadlines?.links);
+      data.deadlines = this.bodyMediaService.resolveNodeData(data.deadlines);
     });
   }
 

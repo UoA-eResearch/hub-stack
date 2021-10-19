@@ -60,7 +60,7 @@ export class CaseStudyReferencesComponent implements OnInit, OnDestroy {
   private async _loadContent() {
     this.caseStudyReferences = this.getCaseStudyReferencesBySlug(this.slug);
     this.getCaseStudyReferencesBySlug(this.slug).subscribe(data => {
-      this.bodyMediaService.setBodyMedia(data.references?.links);
+      data.references = this.bodyMediaService.resolveNodeData(data.references);
     });
   }
 

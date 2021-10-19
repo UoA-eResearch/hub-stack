@@ -119,7 +119,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           this.bannerImageUrl = undefined;
         }
 
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

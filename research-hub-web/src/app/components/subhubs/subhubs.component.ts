@@ -99,7 +99,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
         // Remove nulls from server in case of error.
         data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
         data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
         this.pageTitleService.title = data.title;
 
         // Set banner image URL for webp format if webp is supported

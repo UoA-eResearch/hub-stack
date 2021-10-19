@@ -17,6 +17,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, Subscription } from 'rxjs';
 import { catchError, flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
+import { BlocksEmbeddedAssetComponent } from '@components/shared/body-media/blocks-embedded-asset/blocks-embedded-asset.component';
+import { BlocksEmbeddedEntryComponent } from '@components/shared/body-media/blocks-embedded-entry/blocks-embedded-entry.component';
 
 @Component({
   selector: 'app-case-study',
@@ -26,8 +28,8 @@ import supportsWebP from 'supports-webp';
 export class CaseStudyComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
-    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
-    [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [BLOCKS.EMBEDDED_ASSET]: BlocksEmbeddedAssetComponent,
+    [BLOCKS.EMBEDDED_ENTRY]: BlocksEmbeddedEntryComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
     [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
@@ -121,7 +123,9 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
           this.bannerImageUrl = undefined;
         }
 
-        this.bodyMediaService.setBodyMedia(data.bodyText.links);
+        data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
+        //do for references too
+        //data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

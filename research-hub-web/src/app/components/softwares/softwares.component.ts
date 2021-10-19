@@ -117,7 +117,7 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
           data['callToAction'] = 'mailto:' + data['callToAction'];
         }
 
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

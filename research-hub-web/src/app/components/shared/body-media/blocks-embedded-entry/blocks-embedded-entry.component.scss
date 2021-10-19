@@ -1,0 +1,22 @@
+@import "variables";
+@import "mixins";
+@import "styles-common";
+
+/**
+ * Card Image
+ */
+ .mat-card-image {
+  min-height: 80px;
+  max-height: 152px;
+  margin-bottom: 5px;
+  min-width: 100%;
+  object-fit: cover;
+}
+
+.embedded-entry-block .mat-card-title a {
+  font-size: 18px;
+  color: $light-blue;
+}
+.embedded-entry-block .mat-card-title a:hover {
+  border-bottom: solid 2px $light-blue;
+}
