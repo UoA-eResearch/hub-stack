@@ -20,7 +20,14 @@
     </ng-template>
 
     <ng-template #caseStudyReferences>
-        <app-case-study-references></app-case-study-references>
+        <h2>References</h2>
+        <ngx-contentful-rich-text *ngIf="caseStudy.references !== null; else noReferences" id="bodyMediaList" style="word-break:break-word;"
+          [document]="caseStudy.references?.json"
+          [nodeRenderers]="nodeRenderers"
+        ></ngx-contentful-rich-text>
+        <ng-template #noReferences>
+          <p>It looks like there aren't any references here.</p>
+        </ng-template>
     </ng-template>
 
     <ng-template #relatedItems let-hide="hideImage" let-flex="flex">

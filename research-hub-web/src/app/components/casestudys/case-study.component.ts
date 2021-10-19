@@ -125,8 +125,8 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
         }
 
         data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
-        //do for references too
-        //data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
+        data.references = this.bodyMediaService.resolveNodeData(data.references);
+        
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
