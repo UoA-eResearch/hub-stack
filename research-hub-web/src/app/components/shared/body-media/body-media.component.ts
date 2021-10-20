@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BodyMediaService } from '@services/body-media.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 
 @Component({
@@ -10,7 +11,7 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
   public contentItem;
   public data;
 
-  constructor() { super(); }
+  constructor(public bodyMediaService: BodyMediaService) { super(); }
 
   ngOnInit() {
     /**
@@ -21,7 +22,7 @@ export class BodyMediaComponent extends NodeRenderer implements OnInit {
       if(this.node.nodeType === "blockquote") {
         this.contentItem = this.node.content[0];
       } else {
-        this.contentItem = this.node.data.contentItem;
+        this.contentItem = this.bodyMediaService.getContentItem(this.node);
       }
     } catch(err) {
       console.error(err);

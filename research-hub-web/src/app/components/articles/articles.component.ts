@@ -127,7 +127,9 @@ export class ArticlesComponent implements OnInit, OnDestroy {
           this.bannerImageUrl = undefined;
         }
 
-        data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
+        // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
+        this.bodyMediaService.buildLinkMaps(data.bodyText);
+
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

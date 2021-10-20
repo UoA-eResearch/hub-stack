@@ -10,9 +10,9 @@ import { BodyMediaService} from '@services/body-media.service';
 export class BlocksEmbeddedAssetComponent extends NodeRenderer implements OnInit {
   public contentItem;
 
-  constructor() { super(); }
+  constructor(public bodyMediaService: BodyMediaService) { super(); }
 
   ngOnInit(): void {
-    this.contentItem = this.node.data.contentItem;
+    this.contentItem = this.bodyMediaService.getContentItem(this.node);
   }
 }

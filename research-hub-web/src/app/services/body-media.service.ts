@@ -1,71 +1,68 @@
 import { Injectable } from '@angular/core';
-import { NodeData } from '@contentful/rich-text-types';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BodyMediaService {
+  private assetBlockMap = new Map();
+  private assetHyperlinkMap = new Map();
+  private entryBlockMap = new Map();
+  private entryHyperlinkMap = new Map();
+  private entryInlineMap = new Map();
+
   
   constructor() { }
+  
+  buildLinkMaps(links) {
+    console.log(links)
 
-  /**
-   * The Rich Text field response from the Contentful GraphQL API is different than the Contentful Delivery API response.
-   * It contains two top-level nodes; json (JSON structure of the Rich Text field) and links (all referenced assets/entries).
-   * The references are not automatically resolved inside of the Rich Text JSON from the GraphQL API. 
-   * 
-   * This method resolves the links by merging them into the rich text json as a new field called 'contentItem'.
-   * 
-   * This subsequently enables the use of the ngx-contentful-rich-text library to render the rich text with our
-   * custom components.
-   * 
-   * @param richText 
-   * @returns the modified richText
-   */
-  resolveNodeData(richText): any {
     // create maps for each link type
-    const assetBlockMap = new Map(
-      richText.links.assets?.block?.map((asset) => [asset.sys.id, asset])
-    );
-
-    const entryBlockMap = new Map(
-      richText.links.entries?.block?.map((entry) => [entry.sys.id, entry])
-    );
-
-    const entryInlineMap = new Map(
-      richText.links.entries?.inline?.map((entry) => [entry.sys.id, entry])
-    );
-
-    const entryHyperlinkMap = new Map(
-      richText.links.entries?.hyperlink?.map((entry) => [entry.sys.id, entry])
-    );
-    
-    const assetHyperlinkMap = new Map(
-      richText.links.assets?.hyperlink?.map((asset) => [asset.sys.id, asset])
-    );
-
-    //populate the rich text nodes with the entries and assets data
-    richText.json.content.forEach(node => {
-      switch(node.nodeType) {
-        // For each type of node find matching contentItem and assign to 
-        case 'embedded-asset-block':
-          node.data.contentItem = assetBlockMap.get(node.data.target.sys.id);
-          break;
-        case 'embedded-entry-block':
-          node.data.contentItem = entryBlockMap.get(node.data.target.sys.id);
-          break;
-        case 'embedded-entry-inline':
-          node.data.contentItem = entryInlineMap.get(node.data.target.sys.id);
-          break;
-        case 'entry-hyperlink':
-          node.data.contentItem = entryHyperlinkMap.get(node.data.target.sys.id);
-          break;
-        case 'asset-hyperlink':
-          node.data.contentItem = assetHyperlinkMap.get(node.data.target.sys.id);
-          break;
+    if(links.assets) {
+      for (const asset of links.assets.block) {
+        this.assetBlockMap.set(asset.sys.id, asset);
       }
-    });
+      console.log(this.assetBlockMap)
+      for (const asset of links.assets.hyperlink) {
+        this.assetHyperlinkMap.set(asset.sys.id, asset);
+      }
+      console.log(this.assetHyperlinkMap)
+    }
 
-    return richText;
+    if(links.entries) {
+      for (const entry of links.entries.block) {
+        this.entryBlockMap.set(entry.sys.id, entry);
+      }
+      console.log(this.entryBlockMap)
+      for (const entry of links.entries.inline) {
+        this.entryInlineMap.set(entry.sys.id, entry);
+      }
+      console.log(this.entryInlineMap)
+      for (const entry of links.entries.hyperlink) {
+        this.entryHyperlinkMap.set(entry.sys.id, entry);
+      }
+      console.log(this.entryHyperlinkMap)
+    }    
+  }
+
+  getContentItem(node): any {
+    switch(node.nodeType) {
+      // For each type of node find matching contentItem
+      case 'embedded-asset-block':
+        console.log(this.assetBlockMap)
+        return this.assetBlockMap.get(node.data.target.sys.id);
+      case 'embedded-entry-block':
+        console.log(this.entryBlockMap)
+        return this.entryBlockMap.get(node.data.target.sys.id);
+      case 'embedded-entry-inline':
+        console.log(this.entryInlineMap)
+        return this.entryInlineMap.get(node.data.target.sys.id);
+      case 'entry-hyperlink':
+        console.log(this.entryHyperlinkMap)
+        return this.entryHyperlinkMap.get(node.data.target.sys.id);
+      case 'asset-hyperlink':
+        console.log(this.assetHyperlinkMap)
+        return this.assetHyperlinkMap.get(node.data.target.sys.id);
+    }
   }
 }
-

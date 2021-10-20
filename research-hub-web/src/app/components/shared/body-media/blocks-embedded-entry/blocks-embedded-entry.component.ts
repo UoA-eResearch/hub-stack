@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BodyMediaService } from '@services/body-media.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 
 @Component({
@@ -9,9 +10,10 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 export class BlocksEmbeddedEntryComponent extends NodeRenderer implements OnInit {
   public contentItem;
 
-  constructor() { super(); }
+  constructor(public bodyMediaService: BodyMediaService) { super(); }
 
   ngOnInit(): void {
-    this.contentItem = this.node.data.contentItem;
+    console.log(this.node);
+    this.contentItem = this.bodyMediaService.getContentItem(this.node);
   }
 }

@@ -119,7 +119,9 @@ export class SoftwaresComponent implements OnInit, OnDestroy {
           data['callToAction'] = 'mailto:' + data['callToAction'];
         }
 
-        data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
+        // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
+        this.bodyMediaService.buildLinkMaps(data.bodyText);
+        
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

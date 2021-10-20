@@ -121,9 +121,10 @@ export class FundingsComponent implements OnInit, OnDestroy {
           this.bannerImageUrl = undefined;
         }
 
-        data.bodyText = this.bodyMediaService.resolveNodeData(data.bodyText);
-        data.purpose = this.bodyMediaService.resolveNodeData(data.purpose);
-        data.deadlines = this.bodyMediaService.resolveNodeData(data.deadlines);
+        // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
+        this.bodyMediaService.buildLinkMaps(data.bodyText);
+        this.bodyMediaService.buildLinkMaps(data.purpose);
+        this.bodyMediaService.buildLinkMaps(data.deadlines);
 
         this.pageTitleService.title = data.title;
       });
