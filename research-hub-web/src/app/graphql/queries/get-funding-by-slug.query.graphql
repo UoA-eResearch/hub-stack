@@ -1,109 +1,151 @@
 query GetFundingBySlug($slug: String) {
-    fundingCollection(limit: 1, where: {slug: $slug}) {
-        items {
-            __typename
-            sys {
+  fundingCollection(limit: 1, where: { slug: $slug }) {
+    items {
+      __typename
+      sys {
+        id
+      }
+      title
+      slug
+      ssoProtected
+      searchable
+      banner {
+        url
+      }
+      icon {
+        url
+      }
+      summary
+      purpose {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
                 id
+              }
             }
-            title
-            slug
-            ssoProtected
-            searchable
-            banner {
-                url
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
             }
-            icon {
-                url
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
+              }
             }
-            summary
-            purpose {
-                json 
-                links {
-                    entries {
-                        inline { 
-                            ...PublicFields
-                            sys {
-                                id
-                            } 
-                        }
-                        hyperlink { 
-                            ...PublicFields 
-                            sys {
-                                id
-                            }
-                        }
-                    }
-                }
+          }
+          assets {
+            block {
+              ...AssetFields
             }
-            type
-            funding
-            eligibility
-            eligibleExpenses
-            deadlines {
-                json 
-                links {
-                    entries {
-                        inline { 
-                            ...PublicFields
-                            sys {
-                                id
-                            } 
-                        }
-                        hyperlink { 
-                            ...PublicFields 
-                            sys {
-                                id
-                            }
-                        }
-                    }
-                }
+            hyperlink {
+              ...AssetFields
             }
-            bodyText {
-                json 
-                links {
-                    entries {
-                        block { 
-                            ...PublicFields
-                            sys {
-                                id
-                            }
-                        }
-                        inline { 
-                            ...PublicFields
-                            sys {
-                                id
-                            } 
-                        }
-                        hyperlink { 
-                            ...PublicFields 
-                            sys {
-                                id
-                            }
-                        }
-                    }
-                    assets {
-                        block { ...AssetFields }
-                        hyperlink { ...AssetFields }
-                    }
-                }
-            }
-            applicationDocumentsCollection {
-                items { ...AssetFields }
-            }
-            relatedContactsCollection {
-                items { ...PublicFields }
-            }
-            relatedOrgsCollection {
-                items { ...PublicFields }
-            }
-            relatedItemsCollection {
-                items { ...PublicFields }
-            }
-            relatedDocsCollection {
-                items { ...PublicFields }
-            }
-            callToAction
-            callToActionLabel
+          }
         }
+      }
+      type
+      funding
+      eligibility
+      eligibleExpenses
+      deadlines {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+          }
+          assets {
+            block {
+              ...AssetFields
+            }
+            hyperlink {
+              ...AssetFields
+            }
+          }
+        }
+      }
+      bodyText {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+          }
+          assets {
+            block {
+              ...AssetFields
+            }
+            hyperlink {
+              ...AssetFields
+            }
+          }
+        }
+      }
+      applicationDocumentsCollection {
+        items {
+          ...AssetFields
+        }
+      }
+      relatedContactsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedOrgsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedItemsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedDocsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      callToAction
+      callToActionLabel
     }
+  }
 }
