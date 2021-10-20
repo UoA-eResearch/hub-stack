@@ -13,7 +13,6 @@ export class BlocksEmbeddedEntryComponent extends NodeRenderer implements OnInit
   constructor(public bodyMediaService: BodyMediaService) { super(); }
 
   ngOnInit(): void {
-    console.log(this.node);
     this.contentItem = this.bodyMediaService.getContentItem(this.node);
   }
 }
