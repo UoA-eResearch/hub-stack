@@ -1,4 +1,4 @@
-<div *ngIf="_contentItem?.items?.length > 0">
+<div *ngIf="contentItem?.items?.length > 0">
   <!-- Title of card collection -->
   <h3 *ngIf="title">
     {{ title }}
@@ -11,7 +11,7 @@
       role="navigation"
       fxFlex="19%"
       aria-label="Collection list"
-      *ngFor="let content of _contentItem.items"
+      *ngFor="let content of contentItem.items"
       class="collection"
     >
       <!-- Templates -->
@@ -42,7 +42,7 @@
 
       <ng-template #standard>
         <mat-card role="list-item">
-          <ng-container *ngIf="content.banner; then image; else noImage">
+          <ng-container *ngIf="!hideImage; then image; else noImage">
           </ng-container>
           <span class="card-label">{{
             content.__typename | contentTypeDisplayName
