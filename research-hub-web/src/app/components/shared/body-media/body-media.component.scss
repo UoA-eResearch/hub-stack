@@ -172,15 +172,11 @@
   border-bottom: solid 2px $light-blue;
 }
 
-small {
-  color: #757575;
-}
-
 /**
  *  Entry Inline
  */
 .embedded-entry-inline {
-  color: #018193;
+  color: $light-blue;
   display: inline-block !important;
 }
 

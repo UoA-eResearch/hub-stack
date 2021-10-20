@@ -3,27 +3,35 @@
     <!-- Entry Inline -->
     <span *ngSwitchCase="'embedded-entry-inline'">
         <span>
-            <a class="embedded-entry-inline" href="/{{ contentItem.__typename.toLowerCase() }}/{{ contentItem.slug }}">
-                <b>&nbsp;{{ contentItem.title }}&nbsp;&nbsp;</b>
+            <a class="embedded-entry-inline" [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
+                {{ contentItem.title }}
             </a>
         </span>
     </span>
 
     <!-- Entry Hyperlink -->
     <span *ngSwitchCase="'entry-hyperlink'">
-        <span><a href="contentItem.url"><b>{{ contentItem.title }}</b></a></span>
+        <span>
+            <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
+                <b>{{ data.content[0].value }}</b>
+            </a>
+        </span>
     </span>
 
     <!-- Asset Hyperlink -->
     <span *ngSwitchCase="'asset-hyperlink'">
-        <span><a href="contentItem.url"> <b>{{ contentItem.title }}</b></a></span>
+        <span>
+            <a href="{{ contentItem.url }}" target="_blank">
+                <b>{{ data.content[0].value }}</b>
+            </a>
+        </span>
     </span>
 
     <!-- Blockquote -->
     <span *ngSwitchCase="'blockquote'">
         <div class="blockquote-container" ngClass.xs="blockquote-mobile">
             <span><span class="blockquote">
-                    <p>{{ contentItem.content[0].value }}</p>
+                    <p>{{ data.content[0].value }}</p>
                 </span></span>
         </div>
     </span>
