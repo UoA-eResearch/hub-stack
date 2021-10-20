@@ -1,82 +1,90 @@
 query GetEquipmentBySlug($slug: String) {
-      equipmentCollection(limit: 1, where: {slug: $slug}) {
-        items {
-          __typename
-          sys {
-            id
-          }
-          title
-          slug
-          ssoProtected
-          searchable
-          banner {
-            title
-            description
-            url
-          }
-          icon {
-            title
-            description
-            url
-          }
-          summary
-          callToAction
-          callToActionLabel
-          bodyText {
-            json
-            links {
-              entries {
-                block { 
-                  ...PublicFields
-                  sys {
-                      id
-                  }
-                }
-                inline { 
-                  ...PublicFields
-                  sys {
-                      id
-                  } 
-                }
-                hyperlink { 
-                  ...PublicFields 
-                  sys {
-                      id
-                  }
-                }
+  equipmentCollection(limit: 1, where: { slug: $slug }) {
+    items {
+      __typename
+      sys {
+        id
+      }
+      title
+      slug
+      ssoProtected
+      searchable
+      banner {
+        title
+        description
+        url
+      }
+      icon {
+        title
+        description
+        url
+      }
+      summary
+      callToAction
+      callToActionLabel
+      bodyText {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
+                id
               }
-              assets {
-                block {
-                    ...AssetFields
-                }
-                hyperlink {
-                    ...AssetFields
-                }
+            }
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
               }
             }
           }
-          manufacturer
-          model
-          yearOfManufacture
-          audience
-          availability
-          cost
-          access
-          relatedItemsCollection {
-            items { ...PublicFields }
-          }
-          relatedContactsCollection {
-            items { ...PublicFields }
-          }
-          relatedOrgsCollection {
-            items { ...PublicFields }
-          }
-          relatedDocsCollection {
-            items { ...PublicFields }
-          }
-          location {
-            json
+          assets {
+            block {
+              ...AssetFields
+            }
+            hyperlink {
+              ...AssetFields
+            }
           }
         }
       }
+      manufacturer
+      model
+      yearOfManufacture
+      audience
+      availability
+      cost
+      access
+      relatedItemsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedContactsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedOrgsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedDocsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      location {
+        json
+      }
     }
+  }
+}
