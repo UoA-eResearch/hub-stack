@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Type } from '@angular/core';
+import { Component, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
@@ -14,8 +14,8 @@ import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { NodeRenderer } from 'ngx-contentful-rich-text';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, Subscription } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -23,7 +23,7 @@ import supportsWebP from 'supports-webp';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss']
 })
-export class ArticlesComponent implements OnInit, OnDestroy {
+export class ArticlesComponent implements OnInit {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
     [BLOCKS.QUOTE]: BodyMediaComponent,
     [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
@@ -34,13 +34,8 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   };
 
   public isMobile: Boolean;
-  public bannerTextStyling;
-  public slug: string;
-  public article;
-  public article$: Subscription;
-  public route$: Subscription;
-  public bodyLinks$: Subscription;
-  public allArticles$: Observable<ArticleCollection>;
+  public bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
+  public article$: Observable<Article>;
   public parentSubHubs;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
@@ -70,101 +65,66 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     });
   }
 
-  async ngOnInit() {
-    /**
-     * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getArticleBySlug() method.
-     */
-    this.route$ = this.route.params.subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
+  ngOnInit() {
+    this.article$ = this.route.params.pipe(
+      map((params) => {
+        return (params.slug || this.route.snapshot.data.slug) as string;
+      }),
+      switchMap((slug) => this.loadArticle(slug))
+    );
 
-    /**
-     * Set styling for text if banner is present
-     */
-    this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   }
 
   /**
    * Function that loads the article/collection depending on if a slug is present.
    */
-  private async _loadContent() {
-    /**
-     * If this.slug is defined, we're loading an individual article,
-     * therefore run the corresponding query. If not, return all articles.
-     */
+  private loadArticle(slug: string): Observable<Article> {
+    return this.getArticleBySlug(slug).pipe(
+      map(data => {
 
-    this.getAllArticlesSlugs().subscribe(data => {
-      let slugs = [];
-      data.items.forEach(data => {
-        slugs.push(data.slug)
+        // Strip nulls from related collection data.
+        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
+        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+
+        // If Call To Action is an email address
+        if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+          data['callToAction'] = 'mailto:' + data['callToAction'];
+        }
+
+        // Set banner image URL for webp format if webp is supported
+        if (data.banner?.url) {
+          this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+        } else {
+          this.bannerImageUrl = undefined;
+        }
+
+        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        this.pageTitleService.title = data.title;
+
+        return data;
       })
-      if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-    });
-    this.article = this.getArticleBySlug(this.slug);
-    this.article$ = this.getArticleBySlug(this.slug).subscribe(data => {
+    );
 
-      // Strip nulls from related collection data.
-      data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-      data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
-      data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-      data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+    // NOTE: this should be moved to the breadcrumb component
+    // this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
 
-      // If Call To Action is an email address
-      if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-        data['callToAction'] = 'mailto:' + data['callToAction'];
-      }
-
-      // Set banner image URL for webp format if webp is supported
-      if (data.banner?.url) {
-        this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-      } else {
-        this.bannerImageUrl = undefined;
-      }
-
-      this.bodyMediaService.setBodyMedia(data.bodyText?.links);
-      this.pageTitleService.title = data.title;
-    });
-    this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-
-  }
-
-  /**
-   * Function that returns all articles slugs from the ArticleCollection as an observable
-   * of type ArticleCollection. This is then unwrapped with the async pipe.
-   *
-   * This function called to determine if a valid slug has been searched otherwise redirect
-   *
-   */
-  public getAllArticlesSlugs(): Observable<ArticleCollection> {
-    try {
-      return this.allArticlesSlugsGQL.fetch()
-        .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all articles:', e) };
   }
 
   /**
    * Function that returns an individual article from the ArticleCollection by it's slug
    * as an observable of type Article. This is then unwrapped with the async pipe.
    *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /articles.
-   *
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getArticleBySlug(slug: string): Observable<Article> {
-    try {
-      return this.getArticleBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.articleCollection.items)) as Observable<Article>;
-    } catch (e) { console.error(`Error loading article ${slug}:`, e); }
-  }
-
-  ngOnDestroy() {
-    try {
-      this.article$.unsubscribe();
-      this.route$.unsubscribe();
-      this.bodyLinks$.unsubscribe();
-    } catch { }
+    return this.getArticleBySlugGQL.fetch({ slug }).pipe(
+      mergeMap(x =>
+        x.data.articleCollection.items.length === 0
+          ? throwError(`Could not load article with slug "${slug}"`)
+          : of(x.data.articleCollection.items[0])
+      )
+    ) as Observable<Article>;
   }
 }
