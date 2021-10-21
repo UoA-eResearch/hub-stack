@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
 import { BlocksEmbeddedAssetComponent } from '@components/shared/body-media/blocks-embedded-asset/blocks-embedded-asset.component';
 import { BlocksEmbeddedEntryComponent } from '@components/shared/body-media/blocks-embedded-entry/blocks-embedded-entry.component';
+import { InlinesEmbeddedEntryComponent } from '@components/shared/body-media/inlines-embedded-entry/inlines-embedded-entry.component';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllSubHubGQL,
@@ -30,7 +31,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
     [BLOCKS.EMBEDDED_ASSET]: BlocksEmbeddedAssetComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BlocksEmbeddedEntryComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
-    [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
+    [INLINES.EMBEDDED_ENTRY]: InlinesEmbeddedEntryComponent,
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
   };
 

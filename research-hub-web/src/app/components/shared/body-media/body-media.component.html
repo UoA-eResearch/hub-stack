@@ -1,14 +1,5 @@
 <span [ngSwitch]="data.nodeType" *ngIf="contentItem">
 
-    <!-- Entry Inline -->
-    <span *ngSwitchCase="'embedded-entry-inline'">
-        <span>
-            <a class="embedded-entry-inline" [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
-                {{ contentItem.title }}
-            </a>
-        </span>
-    </span>
-
     <!-- Entry Hyperlink -->
     <span *ngSwitchCase="'entry-hyperlink'">
         <span>
