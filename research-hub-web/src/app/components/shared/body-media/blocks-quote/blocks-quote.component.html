@@ -1,1 +1,10 @@
-<p>blocks-quote works!</p>
+<!-- Blockquote -->
+<span *ngIf="contentItem">
+  <div class="blockquote-container" ngClass.xs="blockquote-mobile">
+    <span
+      ><span class="blockquote">
+        <p>{{ contentItem.content[0].value }}</p>
+      </span></span
+    >
+  </div>
+</span>

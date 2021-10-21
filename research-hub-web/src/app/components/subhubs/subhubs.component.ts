@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
+import { BlocksQuoteComponent } from '@components/shared/body-media/blocks-quote/blocks-quote.component';
 import { BlocksEmbeddedAssetComponent } from '@components/shared/body-media/blocks-embedded-asset/blocks-embedded-asset.component';
 import { BlocksEmbeddedEntryComponent } from '@components/shared/body-media/blocks-embedded-entry/blocks-embedded-entry.component';
 import { InlinesEmbeddedEntryComponent } from '@components/shared/body-media/inlines-embedded-entry/inlines-embedded-entry.component';
@@ -27,7 +28,7 @@ import supportsWebP from 'supports-webp';
 })
 export class SubhubsComponent implements OnInit, OnDestroy {
   nodeRenderers: Record<string, Type<NodeRenderer>> = {
-    [BLOCKS.QUOTE]: BodyMediaComponent,
+    [BLOCKS.QUOTE]: BlocksQuoteComponent,
     [BLOCKS.EMBEDDED_ASSET]: BlocksEmbeddedAssetComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BlocksEmbeddedEntryComponent,
     [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
