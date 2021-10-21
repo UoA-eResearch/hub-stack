@@ -106,7 +106,7 @@ export class SubhubsComponent implements OnInit, OnDestroy {
         data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
         
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
-        this.bodyMediaService.buildLinkMaps(data.bodyText.links);
+        this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
 
         this.pageTitleService.title = data.title;
 

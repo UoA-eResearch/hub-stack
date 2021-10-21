@@ -125,9 +125,9 @@ export class FundingsComponent implements OnInit, OnDestroy {
         }
 
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
-        this.bodyMediaService.buildLinkMaps(data.bodyText.links);
-        this.bodyMediaService.buildLinkMaps(data.purpose.links);
-        this.bodyMediaService.buildLinkMaps(data.deadlines.links);
+        this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
+        this.bodyMediaService.buildLinkMaps(data.purpose?.links);
+        this.bodyMediaService.buildLinkMaps(data.deadlines?.links);
 
         this.pageTitleService.title = data.title;
       });
