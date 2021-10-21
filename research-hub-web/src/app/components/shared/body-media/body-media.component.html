@@ -9,21 +9,4 @@
         </span>
     </span>
 
-    <!-- Asset Hyperlink -->
-    <span *ngSwitchCase="'asset-hyperlink'">
-        <span>
-            <a href="{{ contentItem.url }}" target="_blank">
-                <b>{{ data.content[0].value }}</b>
-            </a>
-        </span>
-    </span>
-
-    <!-- Blockquote -->
-    <span *ngSwitchCase="'blockquote'">
-        <div class="blockquote-container" ngClass.xs="blockquote-mobile">
-            <span><span class="blockquote">
-                    <p>{{ contentItem.content[0].value }}</p>
-                </span></span>
-        </div>
-    </span>
 </span>

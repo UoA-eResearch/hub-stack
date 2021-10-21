@@ -4,6 +4,7 @@ import { BodyMediaComponent } from '@components/shared/body-media/body-media.com
 import { BlocksQuoteComponent } from '@components/shared/body-media/blocks-quote/blocks-quote.component';
 import { BlocksEmbeddedAssetComponent } from '@components/shared/body-media/blocks-embedded-asset/blocks-embedded-asset.component';
 import { BlocksEmbeddedEntryComponent } from '@components/shared/body-media/blocks-embedded-entry/blocks-embedded-entry.component';
+import { InlinesAssetHyperlinkComponent } from '@components/shared/body-media/inlines-asset-hyperlink/inlines-asset-hyperlink.component';
 import { InlinesEmbeddedEntryComponent } from '@components/shared/body-media/inlines-embedded-entry/inlines-embedded-entry.component';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
@@ -32,7 +33,7 @@ export class FundingsComponent implements OnInit, OnDestroy {
     [BLOCKS.QUOTE]: BlocksQuoteComponent,
     [BLOCKS.EMBEDDED_ASSET]: BlocksEmbeddedAssetComponent,
     [BLOCKS.EMBEDDED_ENTRY]: BlocksEmbeddedEntryComponent,
-    [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
+    [INLINES.ASSET_HYPERLINK]: InlinesAssetHyperlinkComponent,
     [INLINES.EMBEDDED_ENTRY]: InlinesEmbeddedEntryComponent,
     [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
   };
