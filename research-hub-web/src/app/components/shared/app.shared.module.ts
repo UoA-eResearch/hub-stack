@@ -23,6 +23,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { BlocksEmbeddedAssetComponent } from './body-media/blocks-embedded-asset/blocks-embedded-asset.component';
 import { BlocksEmbeddedEntryComponent } from './body-media/blocks-embedded-entry/blocks-embedded-entry.component';
 import { InlinesEmbeddedEntryComponent } from './body-media/inlines-embedded-entry/inlines-embedded-entry.component';
+import { BlocksQuoteComponent } from './body-media/blocks-quote/blocks-quote.component';
+import { InlinesAssetHyperlinkComponent } from './body-media/inlines-asset-hyperlink/inlines-asset-hyperlink.component';
+import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
 
 
 @NgModule({
@@ -53,7 +56,10 @@ import { InlinesEmbeddedEntryComponent } from './body-media/inlines-embedded-ent
     VideoCardComponent,
     BlocksEmbeddedAssetComponent,
     BlocksEmbeddedEntryComponent,
-    InlinesEmbeddedEntryComponent
+    InlinesEmbeddedEntryComponent,
+    BlocksQuoteComponent,
+    InlinesAssetHyperlinkComponent,
+    InlinesEntryHyperlinkComponent
   ],
   exports: [
     FlexLayoutModule,
