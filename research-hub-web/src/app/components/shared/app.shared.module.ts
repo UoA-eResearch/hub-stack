@@ -10,7 +10,6 @@ import { RichTextToHTML } from '@pipes/rich-text.pipe';
 import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
-import { BodyMediaComponent } from './body-media/body-media.component';
 import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
@@ -20,10 +19,10 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { BlocksQuoteComponent } from './body-media/blocks-quote/blocks-quote.component';
 import { BlocksEmbeddedAssetComponent } from './body-media/blocks-embedded-asset/blocks-embedded-asset.component';
 import { BlocksEmbeddedEntryComponent } from './body-media/blocks-embedded-entry/blocks-embedded-entry.component';
 import { InlinesEmbeddedEntryComponent } from './body-media/inlines-embedded-entry/inlines-embedded-entry.component';
-import { BlocksQuoteComponent } from './body-media/blocks-quote/blocks-quote.component';
 import { InlinesAssetHyperlinkComponent } from './body-media/inlines-asset-hyperlink/inlines-asset-hyperlink.component';
 import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
 
@@ -49,7 +48,6 @@ import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyper
     RichTextToHTML,
     ContentTypeDisplayNamePipe,
     CollectionListComponent,
-    BodyMediaComponent,
     CardsComponent,
     BreadcrumbsComponent,
     LargeCardsComponent,
