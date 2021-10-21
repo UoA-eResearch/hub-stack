@@ -4,8 +4,7 @@ import { NodeRenderer } from 'ngx-contentful-rich-text';
 
 @Component({
   selector: 'app-inlines-asset-hyperlink',
-  templateUrl: './inlines-asset-hyperlink.component.html',
-  styleUrls: ['./inlines-asset-hyperlink.component.scss']
+  templateUrl: './inlines-asset-hyperlink.component.html'
 })
 export class InlinesAssetHyperlinkComponent extends NodeRenderer implements OnInit {
   public contentItem;
