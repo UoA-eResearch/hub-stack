@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BodyMediaService } from '@services/body-media.service';
 import { INLINES } from '@contentful/rich-text-types';
-import { MockProvider } from 'ng-mocks';
+import { MockInstance, MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { InlinesEmbeddedEntryComponent } from './inlines-embedded-entry.component';
+import { SharedModule } from '@components/shared/app.shared.module';
 
 describe('InlinesEmbeddedEntryComponent', () => {
   let component: InlinesEmbeddedEntryComponent;
@@ -15,7 +16,7 @@ describe('InlinesEmbeddedEntryComponent', () => {
     "data": {
       "target": {
         "sys": {
-          "id": "51CsS9cFmuRN2s0wOcWuuF",
+          "id": "HeKy7SqHliY1CaHSoYuX3",
           "type": "Link",
           "linkType": "Entry"
         }
@@ -23,50 +24,56 @@ describe('InlinesEmbeddedEntryComponent', () => {
     }
   };
 
-  const links = {
-    "entries": {
-      "block": [],
-      "inline": [{
-        "__typename": "Service",
-        "icon": null,
-        "slug": "researchspace",
-        "title": "ResearchSpace: The University of Auckland Research Repository",
-        "summary": "The University of Auckland Research Repository is an online open access archive for the University of Auckland. It contains the research outputs of University of Auckland staff and postgraduate research students, including full text theses.",
-        "ssoProtected": false,
-        "searchable": true,
-        "sys": {
-          "id": "51CsS9cFmuRN2s0wOcWuuF",
-          "__typename": "Sys"
-        }
-      }],
-      "hyperlink": [],
-      "__typename": "ArticleBodyTextEntries"
-    },
-    "assets": {
-      "block": [],
-      "hyperlink": [],
-      "__typename": "ArticleBodyTextAssets"
-    },
-    "__typename": "ArticleBodyTextLinks"
+  const contentItem = {
+    "__typename": "Service",
+    "icon": null,
+    "slug": "clinical-research-centre",
+    "title": " Faculty of Medical and Health Sciences Clinical Research Centre",
+    "summary": "These excellent facilities are available to staff and postgraduate students in the Faculty to carry out research involving human participants, as long as appropriate ethics approvals are in place.",
+    "ssoProtected": false,
+    "searchable": true,
+    "sys": {
+      "id": "HeKy7SqHliY1CaHSoYuX3",
+      "__typename": "Sys"
+    }
   }
+  
+  MockInstance.scope();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ InlinesEmbeddedEntryComponent ],
-      imports: [ RouterTestingModule ],
+      imports: [
+        RouterTestingModule,
+        MockModule(SharedModule)
+      ],
       providers: [ MockProvider(BodyMediaService) ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
+    MockInstance(BodyMediaService, (instance) => {
+      instance.getContentItem = jasmine.createSpy().and.returnValue(contentItem);
+    });
+
     fixture = TestBed.createComponent(InlinesEmbeddedEntryComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
     component.node = node;
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call body media service', () => {
+    expect(component.bodyMediaService.getContentItem).toHaveBeenCalled();
+  });
+
+  it('should have content item', () => {
+    expect(component.contentItem).toBeTruthy();
+  });
+
+  afterAll(MockInstance.restore);
 });
