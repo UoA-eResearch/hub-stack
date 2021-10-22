@@ -1,1 +1,23 @@
-<p>contact-card works!</p>
+<mat-card [attr.href]="person.link ? person.link : null">
+  <span class="card-label">Contact</span>
+
+  <div style="margin-top: 12px;"></div>
+
+  <mat-card-title>
+    <a class="card-title">
+      <span *ngIf="person.name">{{ person.name }}</span>
+    </a>
+  </mat-card-title>
+
+  <mat-card-content>
+    <span class="contact-card-summary">
+      <p style="word-wrap: break-word">{{ person.role }}</p>
+      <a *ngIf="person.email" href="mailto:{{ person.email }}">
+        <mat-icon>email</mat-icon>{{ person.email }}
+      </a>
+      <a *ngIf="person.phone" href="tel:{{ person.phone }}">
+        <mat-icon>phone</mat-icon>{{ person.phone }}
+      </a>
+    </span>
+  </mat-card-content>
+</mat-card>

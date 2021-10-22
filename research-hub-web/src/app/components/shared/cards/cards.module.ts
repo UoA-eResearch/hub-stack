@@ -4,6 +4,8 @@ import { StandardCardComponent } from './standard-card/standard-card.component';
 import { DocumentCardComponent } from './document-card/document-card.component';
 import { ContactCardComponent } from './contact-card/contact-card.component';
 import { OrgUnitCardComponent } from './org-unit-card/org-unit-card.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 
 
@@ -15,7 +17,15 @@ import { OrgUnitCardComponent } from './org-unit-card/org-unit-card.component';
     OrgUnitCardComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatCardModule,
+    MatIconModule
+  ],
+  exports: [
+    StandardCardComponent,
+    DocumentCardComponent,
+    ContactCardComponent,
+    OrgUnitCardComponent
   ]
 })
 export class CardsModule { }

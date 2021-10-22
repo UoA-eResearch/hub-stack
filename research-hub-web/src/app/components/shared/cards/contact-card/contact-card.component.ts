@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Person } from '@app/graphql/schema';
 
 @Component({
   selector: 'app-contact-card',
   templateUrl: './contact-card.component.html',
-  styleUrls: ['./contact-card.component.scss']
+  styleUrls: [
+    './contact-card.component.scss',
+    '../cards-common.scss'
+  ]
 })
-export class ContactCardComponent implements OnInit {
+export class ContactCardComponent {
+  @Input() person: Person;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
