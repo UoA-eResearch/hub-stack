@@ -96,7 +96,8 @@
                         fxLayout="column" fxFlex="20%" fxFlexOrder="1" fxFlexOrder.lt-md="2">
 
                         <!-- Contacts -->
-                        <ng-container *ngTemplateOutlet="relatedContacts; context: { flex: 'column', hide: 'true' }"></ng-container>
+                        <!-- <ng-container *ngTemplateOutlet="relatedContacts; context: { flex: 'column', hide: 'true' }"></ng-container> -->
+                        <app-contact-card *ngFor="let person of article.relatedContactsCollection.items" [person]="person"></app-contact-card>
 
                         <!-- Official Documents -->
                         <ng-container *ngTemplateOutlet="officialDocuments; context: { flex: 'column', hide: 'true'}"></ng-container>

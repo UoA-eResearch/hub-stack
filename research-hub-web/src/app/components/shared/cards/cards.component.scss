@@ -18,56 +18,10 @@ mat-card {
 }
 
 /**
-  * Mat-Card Title
-  */
-.mat-card-title {
-  line-height: 20px;
-  a:hover {
-    border-bottom: solid 2px $dark-grey;
-  }
-}
-.mat-card a {
-  color: $dark-grey !important;
-}
-
-/**
   * Lock Icon
   */
 mat-icon {
   color: $dark-grey !important;
   font-size: 14px !important;
   vertical-align: middle;
-}
-
-/**
- * Card Label
- */
-.card-label {
-  background: $dark-blue;
-  color: rgb(255, 255, 255);
-  position: absolute;
-  font-size: 14px;
-  left: 0;
-  top: 0;
-  padding: 0px 15px;
-}
-
-.contact-card-summary {
-  font-size: 16px;
-  a {
-    color: $light-blue !important;
-    display: inline-block;
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  mat-icon {
-    color: $body-grey;
-    font-size: 16px !important;
-    height: 16px;
-    width: 16px;
-    vertical-align: bottom;
-    margin-right: 5px;
-  }
 }
