@@ -19,8 +19,11 @@
  */
 .mat-card-title {
   line-height: 20px;
-  a:hover {
-    border-bottom: solid 2px $dark-grey;
+  a {
+    color: $dark-grey !important;
+    &:hover {
+      border-bottom: solid 2px $dark-grey;
+    }
   }
 }
 
