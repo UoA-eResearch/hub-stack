@@ -2,11 +2,21 @@
     <span [ngSwitch]="contentItem.contentType">
     <ng-template #image>
         <div class="embedded-asset-block section-2" ngClass.xs="embedded-asset-block-mobile">
-            <a href="{{ contentItem.url }}">
-                <picture *ngIf="contentItem.url">
+            <a *ngIf="contentItem.url" href="{{ contentItem.url }}">
+                <picture>
                     <source srcset="{{ contentItem.url }}?w=1500&fm=webp" type="image/webp">
                     <img src="{{ contentItem.url }}?w=1500" alt="{{ contentItem.title }}" />
                 </picture>
+            </a><br>{{ contentItem.title }}
+            <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description
+                }}</small>
+        </div>
+    </ng-template>
+
+    <ng-template #svg>
+        <div class="embedded-asset-block section-2" ngClass.xs="embedded-asset-block-mobile">
+            <a *ngIf="contentItem.url" href="{{ contentItem.url }}">
+                <img src="{{ contentItem.url }}?w=1500" alt="{{ contentItem.title }}" />
             </a><br>{{ contentItem.title }}
             <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description
                 }}</small>
@@ -25,6 +35,9 @@
     </span>
     <span *ngSwitchCase="'image/webp'">
         <ng-container *ngTemplateOutlet="image"></ng-container>
+    </span>
+    <span *ngSwitchCase="'image/svg+xml'">
+        <ng-container *ngTemplateOutlet="svg"></ng-container>
     </span>
 
     <!-- Asset File -->
