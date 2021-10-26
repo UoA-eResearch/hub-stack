@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { OrgUnit } from '@app/graphql/schema';
 
 @Component({
@@ -13,9 +12,7 @@ import { OrgUnit } from '@app/graphql/schema';
 export class OrgUnitCardComponent {
   @Input() orgUnit: OrgUnit;
 
-  constructor(
-    private router: Router
-  ) { }
+  constructor() { }
 
   public navigateTo(url: string) {
     location.href = url;
