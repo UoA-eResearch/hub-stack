@@ -20,7 +20,6 @@ import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CardsModule } from './cards/cards.module';
 
 
 @NgModule({
@@ -35,8 +34,7 @@ import { CardsModule } from './cards/cards.module';
     MarkdownToHtmlModule,
     NgxSkeletonLoaderModule,
     NgxContentfulRichTextModule,
-    ScrollingModule,
-    CardsModule
+    ScrollingModule
   ],
   declarations: [
     ErrorDialogComponent,
@@ -68,8 +66,7 @@ import { CardsModule } from './cards/cards.module';
     NgxPaginationModule,
     MarkdownToHtmlModule,
     NgxSkeletonLoaderModule,
-    ScrollingModule,
-    CardsModule
+    ScrollingModule
   ],
   providers: [],
 })

@@ -7,6 +7,7 @@ import { OrgUnitCardComponent } from './org-unit-card/org-unit-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from '../shared/app.shared.module';
 
 
 
@@ -21,7 +22,8 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     MatCardModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   exports: [
     StandardCardComponent,

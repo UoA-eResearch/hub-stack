@@ -1,0 +1,63 @@
+<mat-card
+  [routerLink]="['/', contentItem.__typename.toLowerCase(), contentItem.slug]"
+>
+  <ng-container
+    *ngTemplateOutlet="
+      contentItem?.banner ? image : noImage;
+      context: {
+        $implicit: contentItem?.banner?.url,
+        title: contentItem?.title
+      }
+    "
+  ></ng-container>
+  <span class="card-label">{{
+    contentItem.__typename | contentTypeDisplayName
+  }}</span>
+
+  <mat-card-title>
+    <a
+      class="card-title"
+      [routerLink]="[
+        '/',
+        contentItem.__typename.toLowerCase(),
+        contentItem.slug
+      ]"
+    >
+      {{ contentItem.title }}
+    </a>
+    <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">
+      &nbsp;lock
+    </mat-icon>
+  </mat-card-title>
+  <mat-card-content
+    ><span class="card-summary">
+      <p>{{ contentItem.summary }}</p>
+    </span></mat-card-content
+  >
+
+  <!-- <span
+    class="call-to-action"
+    style="display: flex; align-items: center; max-width: fit-content"
+  >
+    <a tabindex="-1" [routerLink]="['/', contentItem.__typename.toLowerCase(), contentItem.slug]">
+      Read More&nbsp;&nbsp;
+    </a>
+    <img
+      class="arrow"
+      alt="link-arrow"
+      style="height: 20px; width: auto"
+      src="assets/components/dark-arrow.png"
+    />
+  </span> -->
+</mat-card>
+
+<!-- Templates -->
+<ng-template #image let-url let-title="title">
+  <picture>
+    <source srcset="{{ url }}?w=1000&fm=webp" type="image/webp" />
+    <img mat-card-image src="{{ url }}?w=1000" alt="{{ title }}" />
+  </picture>
+</ng-template>
+<ng-template #noImage>
+  <div style="margin-top: 12px"></div>
+</ng-template>
