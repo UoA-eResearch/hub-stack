@@ -35,4 +35,5 @@ mat-card {
   &:hover {
     @include mat.elevation(6);
   }
+  cursor: pointer;
 }
