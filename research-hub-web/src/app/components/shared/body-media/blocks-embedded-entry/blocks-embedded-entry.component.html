@@ -20,11 +20,9 @@
                 <a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">
                     <mat-card class="embedded-entry-block">
                         <mat-card-title>
-                            <a
-                                href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}"
-                                target="_blank">
+                            <span>
                                 {{ contentItem.title }}&nbsp;
-                            </a>
+                            </span>
                             <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
                         </mat-card-title>
                         <mat-card-content><span class="card-summary"><p>{{ contentItem.summary }}</p></span>
@@ -99,25 +97,18 @@
 
         <!-- Default Entry Block Template -->
         <span *ngSwitchDefault>
-            <mat-card class="embedded-entry-block">
-                <ng-container *ngIf="contentItem.banner; then image; else noImage"></ng-container>
-                <mat-card-title>
-                    <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
+            <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
+                <mat-card class="embedded-entry-block">
+                    <ng-container *ngIf="contentItem.banner; then image; else noImage"></ng-container>
+                    <mat-card-title>
                         <span>
                             {{ contentItem['title'] }}
                             <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
                         </span>
-                    </a>
-                </mat-card-title>
-                <mat-card-content><span class="card-summary"><p>{{ contentItem['summary'] }}</p></span></mat-card-content>
-                <span *ngIf="contentItem['__typename'] !== 'Person'" class="call-to-action"
-                    style="display: flex; align-items: center;max-width: fit-content">
-                    <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
-                        View {{ contentItem['__typename'] | humanCase }}&nbsp;&nbsp;</a>
-                    <img class="arrow" style="height: 20px; width: auto" src="assets/components/teal-arrow.png"
-                        alt="call-to-action-arrow">
-                </span>
-            </mat-card>
+                    </mat-card-title>
+                    <mat-card-content><span class="card-summary"><p>{{ contentItem['summary'] }}</p></span></mat-card-content>
+                </mat-card>
+            </a>
         </span>
     </span>
 </span>

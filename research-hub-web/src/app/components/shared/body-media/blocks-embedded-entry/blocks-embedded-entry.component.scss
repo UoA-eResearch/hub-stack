@@ -1,3 +1,4 @@
+@use "~@angular/material" as mat;
 @import "variables";
 @import "mixins";
 @import "styles-common";
@@ -14,11 +15,11 @@
   object-fit: cover;
 }
 
-.embedded-entry-block .mat-card-title a {
+.embedded-entry-block .mat-card-title span {
   font-size: 18px;
   color: $light-blue;
 }
-.embedded-entry-block .mat-card-title a:hover {
+.embedded-entry-block .mat-card-title span:hover {
   border-bottom: solid 2px $light-blue;
 }
 
@@ -36,6 +37,16 @@
     width: 100%;
     padding-right: 30px;
     background: #ffffff;
+  }
+}
+
+/**
+ * Elevation
+ */
+ mat-card {
+  @include mat.elevation-transition();
+  &:hover {
+    @include mat.elevation(6);
   }
 }
 
