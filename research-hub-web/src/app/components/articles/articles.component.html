@@ -173,7 +173,7 @@
         fxLayout="column"
         fxFlexOrder="3"
       >
-        <h3>
+        <h3 *ngIf="article.relatedItemsCollection.items > 0">
           Explore Related
           <hr />
         </h3>
