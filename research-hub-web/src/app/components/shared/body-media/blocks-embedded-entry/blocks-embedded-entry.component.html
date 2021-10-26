@@ -1,32 +1,33 @@
 <!-- Entry Block -->
 <span *ngIf="contentItem">
 
-  <!-- Templates -->
-  <ng-template #image>
-      <img mat-card-image srcset="{{ contentItem.banner?.url }}?w=1000&fm=webp,
-                    {{ contentItem.banner?.url }}?w=1000" src="{{ contentItem.banner?.url }}?w=1000"
-          alt="{{ contentItem.title }}-banner">
-  </ng-template>
-  <ng-template #noImage>
-      <div style="margin-top: 10px;"></div>
-  </ng-template>
+    <!-- Templates -->
+    <ng-template #image>
+        <img mat-card-image srcset="{{ contentItem.banner?.url }}?w=1000&fm=webp,
+                        {{ contentItem.banner?.url }}?w=1000" src="{{ contentItem.banner?.url }}?w=1000"
+            alt="{{ contentItem.title }}-banner">
+    </ng-template>
+    <ng-template #noImage>
+        <div style="margin-top: 10px;"></div>
+    </ng-template>
 
-  <!-- Different Types of Entry Content -->
-  <span [ngSwitch]="contentItem.__typename">
+    <!-- Different Types of Entry Content -->
+    <span [ngSwitch]="contentItem.__typename">
 
         <!-- Link Card -->
         <span *ngSwitchCase="'LinkCard'">
             <div>
                 <a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">
                     <mat-card class="embedded-entry-block">
-                        <mat-card-title><a
+                        <mat-card-title>
+                            <a
                                 href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}"
                                 target="_blank">
                                 {{ contentItem.title }}&nbsp;
                             </a>
                             <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
                         </mat-card-title>
-                        <mat-card-content><span class="card-summary">{{ contentItem.summary }}</span>
+                        <mat-card-content><span class="card-summary"><p>{{ contentItem.summary }}</p></span>
                         </mat-card-content>
                     </mat-card>
                 </a>
@@ -102,11 +103,13 @@
                 <ng-container *ngIf="contentItem.banner; then image; else noImage"></ng-container>
                 <mat-card-title>
                     <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
-                        {{ contentItem['title'] }}
+                        <span>
+                            {{ contentItem['title'] }}
+                            <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
+                        </span>
                     </a>
-                    <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
                 </mat-card-title>
-                <mat-card-content><span class="card-summary">{{ contentItem['summary'] }}</span></mat-card-content>
+                <mat-card-content><span class="card-summary"><p>{{ contentItem['summary'] }}</p></span></mat-card-content>
                 <span *ngIf="contentItem['__typename'] !== 'Person'" class="call-to-action"
                     style="display: flex; align-items: center;max-width: fit-content">
                     <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
@@ -116,5 +119,5 @@
                 </span>
             </mat-card>
         </span>
-  </span>
+    </span>
 </span>

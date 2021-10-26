@@ -57,6 +57,15 @@
   margin: 0px;
 }
 
+/**
+* Lock Icon
+*/
+mat-icon {
+  color: $light-blue !important;
+  font-size: 14px !important;
+  vertical-align: middle;
+  line-height: 20px;
+}
 
 /**
  * Table
