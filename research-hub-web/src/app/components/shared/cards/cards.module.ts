@@ -6,6 +6,7 @@ import { ContactCardComponent } from './contact-card/contact-card.component';
 import { OrgUnitCardComponent } from './org-unit-card/org-unit-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -19,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    RouterModule
   ],
   exports: [
     StandardCardComponent,
