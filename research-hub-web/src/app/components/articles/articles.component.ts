@@ -1,12 +1,5 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BlocksQuoteComponent } from '@components/shared/body-media/blocks-quote/blocks-quote.component';
-import { BlocksEmbeddedAssetComponent } from '@components/shared/body-media/blocks-embedded-asset/blocks-embedded-asset.component';
-import { BlocksEmbeddedEntryComponent } from '@components/shared/body-media/blocks-embedded-entry/blocks-embedded-entry.component';
-import { InlinesAssetHyperlinkComponent } from '@components/shared/body-media/inlines-asset-hyperlink/inlines-asset-hyperlink.component';
-import { InlinesEmbeddedEntryComponent } from '@components/shared/body-media/inlines-embedded-entry/inlines-embedded-entry.component';
-import { InlinesEntryHyperlinkComponent } from '@components/shared/body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllArticlesGQL,
   AllArticlesSlugsGQL,
@@ -17,7 +10,7 @@ import {
 import { BodyMediaService } from '@services/body-media.service';
 import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
-import { NodeRenderer } from 'ngx-contentful-rich-text';
+import { NodeRenderer, MarkRenderer } from 'ngx-contentful-rich-text';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, Subscription } from 'rxjs';
 import { flatMap, pluck } from 'rxjs/operators';
@@ -30,15 +23,8 @@ import supportsWebP from 'supports-webp';
   styleUrls: ['./articles.component.scss']
 })
 export class ArticlesComponent implements OnInit, OnDestroy {
-  nodeRenderers: Record<string, Type<NodeRenderer>> = {
-    [BLOCKS.QUOTE]: BlocksQuoteComponent,
-    [BLOCKS.EMBEDDED_ASSET]: BlocksEmbeddedAssetComponent,
-    [BLOCKS.EMBEDDED_ENTRY]: BlocksEmbeddedEntryComponent,
-    [INLINES.ASSET_HYPERLINK]: InlinesAssetHyperlinkComponent,
-    [INLINES.EMBEDDED_ENTRY]: InlinesEmbeddedEntryComponent,
-    [INLINES.ENTRY_HYPERLINK]: InlinesEntryHyperlinkComponent,
-  };
-
+  public nodeRenderers: Record<string, Type<NodeRenderer>>;
+  public markRenderers: Record<string, Type<MarkRenderer>>;
   public isMobile: Boolean;
   public bannerTextStyling;
   public slug: string;
@@ -64,6 +50,9 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   ) {
     this.detectDevice();
     this.detectWebP();
+
+    this.nodeRenderers = this.bodyMediaService.nodeRenderers;
+    this.markRenderers = this.bodyMediaService.markRenderers;
   }
 
   detectDevice() {

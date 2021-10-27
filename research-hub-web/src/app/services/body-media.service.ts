@@ -1,9 +1,32 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
+import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
+import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
+
+/** Custom Rich Text Renderers */
+import { BlocksQuoteComponent } from '@components/shared/body-media/blocks-quote/blocks-quote.component';
+import { BlocksEmbeddedAssetComponent } from '@components/shared/body-media/blocks-embedded-asset/blocks-embedded-asset.component';
+import { BlocksEmbeddedEntryComponent } from '@components/shared/body-media/blocks-embedded-entry/blocks-embedded-entry.component';
+import { InlinesAssetHyperlinkComponent } from '@components/shared/body-media/inlines-asset-hyperlink/inlines-asset-hyperlink.component';
+import { InlinesEmbeddedEntryComponent } from '@components/shared/body-media/inlines-embedded-entry/inlines-embedded-entry.component';
+import { InlinesEntryHyperlinkComponent } from '@components/shared/body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
+import { MarksCodeComponent } from '@components/shared/body-media/marks-code/marks-code.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BodyMediaService {
+  public nodeRenderers: Record<string, Type<NodeRenderer>> = {
+    [BLOCKS.QUOTE]: BlocksQuoteComponent,
+    [BLOCKS.EMBEDDED_ASSET]: BlocksEmbeddedAssetComponent,
+    [BLOCKS.EMBEDDED_ENTRY]: BlocksEmbeddedEntryComponent,
+    [INLINES.ASSET_HYPERLINK]: InlinesAssetHyperlinkComponent,
+    [INLINES.EMBEDDED_ENTRY]: InlinesEmbeddedEntryComponent,
+    [INLINES.ENTRY_HYPERLINK]: InlinesEntryHyperlinkComponent,
+  };
+  public markRenderers: Record<string, Type<MarkRenderer>> = {
+    [MARKS.CODE]: MarksCodeComponent
+  };
+
   private assetBlockMap = new Map();
   private assetHyperlinkMap = new Map();
   private entryBlockMap = new Map();

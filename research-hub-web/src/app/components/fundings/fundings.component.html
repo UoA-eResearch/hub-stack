@@ -57,6 +57,7 @@
                             <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;"
                                 [document]="funding.deadlines?.json"
                                 [nodeRenderers]="nodeRenderers"
+                                [markRenderers]="markRenderers"
                             ></ngx-contentful-rich-text>
                         </div>
                     </td>
@@ -114,6 +115,7 @@
                 <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" 
                     [document]="funding.purpose?.json"
                     [nodeRenderers]="nodeRenderers"
+                    [markRenderers]="markRenderers"
                 ></ngx-contentful-rich-text>
             </div>
 
@@ -129,8 +131,11 @@
 
             <!-- Funding Body -->
             <div class="section">
-                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" [document]="funding.bodyText?.json"
-                    [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
+                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;"
+                    [document]="funding.bodyText?.json"
+                    [nodeRenderers]="nodeRenderers"
+                    [markRenderers]="markRenderers"
+                ></ngx-contentful-rich-text>
             </div>
 
             <!-- Funding Application Documents -->
