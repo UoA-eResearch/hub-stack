@@ -24,13 +24,13 @@
               "src/app/components/error-routing/error-routing.scss"
             ],
             "scripts": [
-              "src/tagManager.js"
+              "src/tagManager.js",
+              "node_modules/marked/lib/marked.js"
             ],
             "allowedCommonJsDependencies": [
               "graphql-tag",
               "crypto-js",
-              "zen-observable",
-              "markdown-to-html-pipe"
+              "zen-observable"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

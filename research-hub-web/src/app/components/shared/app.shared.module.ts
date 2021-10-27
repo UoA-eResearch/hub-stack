@@ -14,7 +14,7 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { LargeCardsComponent } from './large-cards/large-cards.component';
 import { VideoCardComponent } from './video-card/video-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
+import { MarkdownModule } from 'ngx-markdown';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -35,10 +35,10 @@ import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyper
     MaterialModule,
     RouterModule,
     NgxPaginationModule,
-    MarkdownToHtmlModule,
     NgxSkeletonLoaderModule,
     NgxContentfulRichTextModule,
-    ScrollingModule
+    ScrollingModule,
+    MarkdownModule.forRoot()
   ],
   declarations: [
     ErrorDialogComponent,
@@ -71,7 +71,6 @@ import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyper
     LargeCardsComponent,
     VideoCardComponent,
     NgxPaginationModule,
-    MarkdownToHtmlModule,
     NgxSkeletonLoaderModule,
     ScrollingModule,
     NgxContentfulRichTextModule
