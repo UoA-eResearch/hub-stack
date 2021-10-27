@@ -46,7 +46,6 @@
     "@angular/router": "12.2.7",
     "@apollo/client": "^3.4.13",
     "@apollo/link-context": "^2.0.0-beta.3",
-    "@contentful/rich-text-html-renderer": "^14.1.1",
     "@contentful/rich-text-types": "^14.1.1",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@sentry/angular": "^6.13.2",
