@@ -52,7 +52,9 @@
                 </tr>
                 <tr *ngIf="event.location" role="row">
                     <td role="cell">Location</td>
-                    <td role="cell" [innerHTML]="event.location.json | richTextToHTML"></td>
+                    <td role="cell">
+                        <ngx-contentful-rich-text [document]="event.location.json"></ngx-contentful-rich-text>
+                    </td>
                 </tr>
                 <tr *ngIf="event.access" role="row">
                     <td role="cell">Access</td>
