@@ -24,6 +24,7 @@ import { BlocksEmbeddedEntryComponent } from './body-media/blocks-embedded-entry
 import { InlinesEmbeddedEntryComponent } from './body-media/inlines-embedded-entry/inlines-embedded-entry.component';
 import { InlinesAssetHyperlinkComponent } from './body-media/inlines-asset-hyperlink/inlines-asset-hyperlink.component';
 import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
+import { MarksCodeComponent } from './body-media/marks-code/marks-code.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyper
     InlinesEmbeddedEntryComponent,
     BlocksQuoteComponent,
     InlinesAssetHyperlinkComponent,
-    InlinesEntryHyperlinkComponent
+    InlinesEntryHyperlinkComponent,
+    MarksCodeComponent
   ],
   exports: [
     FlexLayoutModule,

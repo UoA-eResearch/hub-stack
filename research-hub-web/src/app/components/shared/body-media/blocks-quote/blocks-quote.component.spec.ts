@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BodyMediaService } from '@services/body-media.service';
 import { BLOCKS, Text as richText } from '@contentful/rich-text-types';
-import { MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlocksQuoteComponent } from './blocks-quote.component';
 
@@ -29,8 +27,7 @@ describe('BlocksQuoteComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ BlocksQuoteComponent ],
-      imports: [ RouterTestingModule ],
-      providers: [ MockProvider(BodyMediaService) ]
+      imports: [ RouterTestingModule ]
     })
     .compileComponents();
   });
