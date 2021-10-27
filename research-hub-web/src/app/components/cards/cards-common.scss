@@ -37,7 +37,6 @@ mat-card {
   &:hover {
     @include mat.elevation(6);
   }
-  cursor: pointer;
 }
 
 @media screen and (max-width: 599px) {
