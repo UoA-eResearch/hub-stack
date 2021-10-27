@@ -31,9 +31,10 @@
  * Elevation
  */
 mat-card {
+  width: 350px;
+  cursor: pointer;
   @include mat.elevation-transition();
   &:hover {
     @include mat.elevation(6);
   }
-  cursor: pointer;
 }
