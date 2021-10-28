@@ -1,5 +1,5 @@
 import { Injectable, Type } from '@angular/core';
-import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
+import { Block, BLOCKS, Inline, INLINES, MARKS } from '@contentful/rich-text-types';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
 
 /** Custom Rich Text Renderers */
@@ -10,6 +10,20 @@ import { InlinesAssetHyperlinkComponent } from '@components/shared/body-media/in
 import { InlinesEmbeddedEntryComponent } from '@components/shared/body-media/inlines-embedded-entry/inlines-embedded-entry.component';
 import { InlinesEntryHyperlinkComponent } from '@components/shared/body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
 import { MarksCodeComponent } from '@components/shared/body-media/marks-code/marks-code.component';
+import { ArticleBodyTextLinks, Asset, CaseStudyBodyTextLinks, CaseStudyReferencesLinks, Entry, EquipmentBodyTextLinks, EventBodyTextLinks, FundingBodyTextLinks, FundingDeadlinesLinks, FundingPurposeLinks, ServiceBodyTextLinks, SoftwareBodyTextLinks, SubHubBodyTextLinks } from '@app/graphql/schema';
+
+type BodyTextLinks
+  = ArticleBodyTextLinks
+  | SubHubBodyTextLinks
+  | SoftwareBodyTextLinks
+  | ServiceBodyTextLinks
+  | FundingPurposeLinks
+  | FundingDeadlinesLinks
+  | FundingBodyTextLinks
+  | EventBodyTextLinks
+  | EquipmentBodyTextLinks
+  | CaseStudyReferencesLinks
+  | CaseStudyBodyTextLinks
 
 @Injectable({
   providedIn: 'root'
@@ -27,21 +41,21 @@ export class BodyMediaService {
     [MARKS.CODE]: MarksCodeComponent
   };
 
-  private assetBlockMap = new Map();
-  private assetHyperlinkMap = new Map();
-  private entryBlockMap = new Map();
-  private entryHyperlinkMap = new Map();
-  private entryInlineMap = new Map();
-  
+  private assetBlockMap = new Map<string, Asset>();
+  private assetHyperlinkMap = new Map<string, Asset>();
+  private entryBlockMap = new Map<string, Entry>();
+  private entryHyperlinkMap = new Map<string, Entry>();
+  private entryInlineMap = new Map<string, Entry>();
+
   constructor() { }
-  
+
   /**
    * create maps for each link type so it can be used by our custom rich text rendering components
    * (components that extend NodeRenderer) to lookup the corresponding content for a rich text node.
-   * @param links 
+   * @param links
    */
-  buildLinkMaps(links) {
-    if(links.assets) {
+  buildLinkMaps(links: BodyTextLinks) {
+    if (links.assets) {
       for (const asset of links.assets.block) {
         this.assetBlockMap.set(asset.sys.id, asset);
       }
@@ -50,7 +64,7 @@ export class BodyMediaService {
       }
     }
 
-    if(links.entries) {
+    if (links.entries) {
       for (const entry of links.entries.block) {
         this.entryBlockMap.set(entry.sys.id, entry);
       }
@@ -63,8 +77,8 @@ export class BodyMediaService {
     }
   }
 
-  getContentItem(node): any {
-    switch(node.nodeType) {
+  getContentItem(node: Block | Inline): Asset | Entry {
+    switch (node.nodeType) {
       // For each type of node find matching contentItem
       case 'embedded-asset-block':
         return this.assetBlockMap.get(node.data.target.sys.id);
