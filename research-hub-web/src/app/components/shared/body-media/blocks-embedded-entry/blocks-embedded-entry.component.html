@@ -106,6 +106,9 @@
             <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
                 <mat-card class="embedded-entry-block">
                     <ng-container *ngIf="contentItem.banner; then image; else noImage"></ng-container>
+                    <span class="card-label">{{
+                        contentItem.__typename | contentTypeDisplayName
+                      }}</span>
                     <mat-card-title>
                         <span>
                             {{ contentItem['title'] }}
