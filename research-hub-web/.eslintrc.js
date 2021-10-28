@@ -37,7 +37,8 @@ module.exports = {
             style: "camelCase",
             type: "attribute"
           }
-        ]
+        ],
+        "indent": ["error", 2]
       }
     },
     {
