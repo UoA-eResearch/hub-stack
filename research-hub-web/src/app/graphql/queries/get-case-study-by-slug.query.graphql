@@ -11,8 +11,6 @@ query GetCaseStudyBySlug($slug: String) {
       ssoProtected
       searchable
       banner {
-        title
-        description
         url
       }
       summary

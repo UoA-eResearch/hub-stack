@@ -13,8 +13,6 @@ query GetArticleBySlug($slug: String) {
       callToAction
       callToActionLabel
       banner {
-        title
-        description
         url
       }
       summary

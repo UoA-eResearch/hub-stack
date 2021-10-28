@@ -10,8 +10,6 @@ query GetServiceBySlug($slug: String) {
       ssoProtected
       searchable
       banner {
-        title
-        description
         url
       }
       icon {
