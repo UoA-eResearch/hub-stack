@@ -2,7 +2,8 @@ module.exports = {
   root: true,
   ignorePatterns: [
     "cypress/**/*",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/schema.ts"
   ],
   overrides: [
     {
@@ -48,7 +49,9 @@ module.exports = {
       extends: [
         "plugin:@angular-eslint/template/recommended"
       ],
-      rules: {}
+      rules: {
+        // indent: ["error", 2] // INVESTIGATE: causes exception
+      }
     }
   ]
 }
