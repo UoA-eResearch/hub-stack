@@ -1,10 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { NavigationStart, Router } from '@angular/router';
 import { SearchFilters } from '@app/global/searchTypes';
+import { SearchAutocompleteService } from '@services/search-autocomplete.service';
 import { SearchService } from '@services/search.service';
-import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { filter, map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-bar',
@@ -16,16 +18,21 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @ViewChild('searchBox') searchBox: ElementRef;
   @ViewChild('filterContent') filterContent: ElementRef
 
-  public searchText: string;
+  // public searchText: string;
+  public searchText: FormControl = new FormControl();
   public activeFilters: SearchFilters;
   public showMobileSearch = false;
   public isMobile = false;
   public showFilters = false;
 
+  private autoCompleteTerms: string[] = ['test', 'test2', 'frog', 'dog'];
+  public filteredTerms: Observable<string[]>;
+
   private subscriptions = new Subscription();
 
   constructor(
     public searchService: SearchService,
+    public searchAutocompleteService: SearchAutocompleteService,
     private renderer: Renderer2,
     private router: Router,
     private breakpointObserver: BreakpointObserver
@@ -44,7 +51,13 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptions.add(this.searchService.searchText.subscribe(text => this.searchText = text));
+    //this.autoCompleteTerms = this.searchAutocompleteService.autocompleteTerms;
+    this.filteredTerms = this.searchText.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this.filter(value))
+      );
+    //this.subscriptions.add(this.searchService.searchText.subscribe(text => this.searchText = text));
     this.subscriptions.add(this.searchService.searchFilters.subscribe(filters => this.activeFilters = filters));
     this.subscriptions.add(this.router.events.pipe(
       filter(event => event instanceof NavigationStart)
@@ -74,13 +87,19 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.router.navigate(
       ['/search'],
       {
-        queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters)
+        queryParams: this.searchService.generateQueryParams(this.searchText.value, this.activeFilters)
       }
     );
   }
 
   public focus(): void {
     this.renderer.selectRootElement(this.searchBox.nativeElement).focus();
+  }
+
+  private filter(value: string): string[] {
+    const filterValue = value.toLowerCase(); // TO DO - further text cleaning
+
+    return this.autoCompleteTerms.filter(term => term.toLowerCase().includes(filterValue));
   }
 
 }
