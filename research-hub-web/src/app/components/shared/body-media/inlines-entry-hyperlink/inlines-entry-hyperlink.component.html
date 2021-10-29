@@ -2,12 +2,7 @@
 <span *ngIf="contentItem">
   <span>
     <a
-      [routerLink]="
-        '/' +
-        contentItem['__typename'].toLowerCase() +
-        '/' +
-        contentItem['slug']
-      "
+      [routerLink]="['/', contentItem.__typename.toLowerCase(), contentItem.slug]"
     >
       <b>{{ data.content[0].value }}</b>
     </a>
