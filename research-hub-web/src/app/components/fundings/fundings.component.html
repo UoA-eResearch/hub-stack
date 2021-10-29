@@ -52,8 +52,15 @@
                 </tr>
                 <tr role="row">
                     <td role="cell">Deadlines</td>
-                    <!-- <td role="cell" [innerHTML]="funding.deadlines.json | richTextToHTML"></td>  removed for now as it is not working for inline entries -->
-                    <td role="cell"><app-funding-deadlines></app-funding-deadlines></td>
+                    <td role="cell">
+                        <div *ngIf="funding.deadlines">
+                            <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;"
+                                [document]="funding.deadlines?.json"
+                                [nodeRenderers]="nodeRenderers"
+                                [markRenderers]="markRenderers"
+                            ></ngx-contentful-rich-text>
+                        </div>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -104,7 +111,13 @@
             </div>
 
             <!-- Funding Purpose -->
-            <app-funding-purpose></app-funding-purpose>
+            <div *ngIf="funding.purpose">
+                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" 
+                    [document]="funding.purpose?.json"
+                    [nodeRenderers]="nodeRenderers"
+                    [markRenderers]="markRenderers"
+                ></ngx-contentful-rich-text>
+            </div>
 
             <!-- Specifications Table -->
             <div class="section-2" *ngIf="
@@ -118,8 +131,11 @@
 
             <!-- Funding Body -->
             <div class="section">
-                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" [document]="funding.bodyText?.json"
-                    [nodeRenderers]="nodeRenderers"></ngx-contentful-rich-text>
+                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;"
+                    [document]="funding.bodyText?.json"
+                    [nodeRenderers]="nodeRenderers"
+                    [markRenderers]="markRenderers"
+                ></ngx-contentful-rich-text>
             </div>
 
             <!-- Funding Application Documents -->
@@ -130,17 +146,18 @@
                         <a href="{{ item.url }}">
                             <mat-card>
                                 <mat-card-title class="card-title">
-                                    <a href="{{ item.url }}">{{ item.title }}</a>
+                                    <span>{{ item.title }}</span>
                                 </mat-card-title>
                                 <mat-card-content class="card-summary">
                                     <div>{{ item.description }}</div>
                                     <div class="download">
-                                        <a href="{{ item.url }}">
+                                        <span>
                                             <img class="download-arrow" style="height: 10px; width: auto"
-                                            src="assets/components/navy-download.png" alt="download-arrow">Download File</a>&nbsp;
-                                            <span *ngIf="item.size * 0.001 < 1" class="file-size">{{ item.size | number: '1.0-0' }}&nbsp;B</span>
-                                            <span *ngIf="item.size * 0.001 < 1000 && item.size * 0.001 >= 1" class="file-size">{{ item.size * 0.001 | number: '1.0-0' }}&nbsp;kB</span>
-                                            <span *ngIf="item.size * 0.001 >= 1000" class="file-size">{{ item.size * 0.000001 | number: '1.0-0' }}&nbsp;MB</span>
+                                            src="assets/components/navy-download.png">&nbsp;Download File&nbsp;
+                                        </span>
+                                        <span *ngIf="item.size * 0.001 < 1" class="file-size">{{ item.size | number: '1.0-0' }}&nbsp;B</span>
+                                        <span *ngIf="item.size * 0.001 < 1000 && item.size * 0.001 >= 1" class="file-size">{{ item.size * 0.001 | number: '1.0-0' }}&nbsp;kB</span>
+                                        <span *ngIf="item.size * 0.001 >= 1000" class="file-size">{{ item.size * 0.000001 | number: '1.0-0' }}&nbsp;MB</span>
                                     </div>
                                 </mat-card-content>
                             </mat-card>

@@ -1,3 +1,4 @@
+@use "~@angular/material" as mat;
 @import "variables";
 @import "mixins";
 @import "styles-common";
@@ -78,15 +79,11 @@ mat-card  {
    margin: 0 auto;
    text-align: left;
    background-color: $light-grey;
-   transition: background-color 0.2s ease-in-out
-}
-.file .mat-card:hover {
-   background-color: $input-grey;
-   transition: background-color 0.2s ease-in-out
-}
-.file .mat-card:hover .file-size{
-   background-color: #c9c9c9;
-   transition: background-color 0.2s ease-in-out
+   transition: background-color 0.2s ease-in-out;
+   @include mat.elevation-transition();
+   &:hover {
+      @include mat.elevation(6);
+  }
 }
 
 /**
@@ -94,21 +91,41 @@ mat-card  {
 */
 .download {
    margin-top: 10px;
+   line-height: 28px;
 }
-.download a {
+.download span {
    color: $light-blue;
 }
-.mat-card-title a {
+.mat-card-title span {
    color: $light-blue;
    border-bottom: solid 2px transparent;
 }
-.mat-card-title a:hover {
+.mat-card-title span:hover {
    border-bottom: solid 2px $light-blue;
 }
 .mat-card:hover .download-arrow {
    -webkit-animation: download 0.5s ease-in-out forwards;
+   animation: download 0.5s ease-in-out forwards;
 }
 
+@keyframes download {
+   0% {
+     opacity: 1;
+     transform: translate(0px, 0px);
+   }
+   40% {
+     opacity: 0;
+     transform: translate(0px, 10px);
+   }
+   60% {
+     opacity: 0;
+     transform: translate(0px, -10px);
+   }
+   100% {
+     opacity: 1;
+     transform: translate(0px, 0px);
+   }
+ }
 @-webkit-keyframes download {
    0% {opacity: 1; transform: translate(0px, 0px)}
    40% {opacity: 0; transform: translate(0px, 10px)}
