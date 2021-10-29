@@ -12,7 +12,7 @@ import { InlinesEntryHyperlinkComponent } from '@components/shared/body-media/in
 import { MarksCodeComponent } from '@components/shared/body-media/marks-code/marks-code.component';
 import { ArticleBodyTextLinks, Asset, CaseStudyBodyTextLinks, CaseStudyReferencesLinks, Entry, EquipmentBodyTextLinks, EventBodyTextLinks, FundingBodyTextLinks, FundingDeadlinesLinks, FundingPurposeLinks, ServiceBodyTextLinks, SoftwareBodyTextLinks, SubHubBodyTextLinks } from '@app/graphql/schema';
 
-type BodyTextLinks
+export type BodyTextLinks
   = ArticleBodyTextLinks
   | SubHubBodyTextLinks
   | SoftwareBodyTextLinks

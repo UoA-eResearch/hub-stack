@@ -1,52 +1,53 @@
 import { TestBed } from '@angular/core/testing';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 
-import { BodyMediaService } from './body-media.service';
+import { BodyMediaService, BodyTextLinks } from './body-media.service';
 
 describe('BodyMediaService', () => {
   let service: BodyMediaService;
 
-  const links = {
+  const links: BodyTextLinks = {
     "entries": {
       "block": [{
-        "title": "Sherpa Romeo",
-        "summary": "Online resource that provides summaries of publisher copyright and open access archiving policies on a journal-by-journal basis.",
-        "url": "https://v2.sherpa.ac.uk/romeo/",
-        "document": null,
-        "__typename": "LinkCard",
-        "sys": {
-          "id": "53FJu74kjVsH21A0RU2nTH",
-          "__typename": "Sys"
+          contentfulMetadata: {
+            tags: null
+          },
+          "sys": {
+            "id": "53FJu74kjVsH21A0RU2nTH",
+            "__typename": "Sys",
+            environmentId: '',
+            firstPublishedAt: '',
+            publishedAt: '',
+            publishedVersion: 0,
+            spaceId: ''
         }
       }],
       "inline": [{
-        "__typename": "Service",
-        "icon": null,
-        "slug": "researchspace",
-        "title": "ResearchSpace: The University of Auckland Research Repository",
-        "summary": "The University of Auckland Research Repository is an online open access archive for the University of Auckland. It contains the research outputs of University of Auckland staff and postgraduate research students, including full text theses.",
-        "ssoProtected": false,
-        "searchable": true,
+        contentfulMetadata: {
+          tags: null
+        },
         "sys": {
           "id": "51CsS9cFmuRN2s0wOcWuuF",
-          "__typename": "Sys"
+          "__typename": "Sys",
+          environmentId: '',
+          firstPublishedAt: '',
+          publishedAt: '',
+          publishedVersion: 0,
+          spaceId: ''
         }
       }],
       "hyperlink": [{
-        "__typename": "Event",
-        "icon": null,
-        "slug": "abstract-writing",
-        "title": "Abstract writing",
-        "summary": "Learn how to write an effective abstract for conferences, events and publications.",
-        "banner": {
-          "url": "https://images.ctfassets.net/vbuxn5csp0ik/2jexqL203EBahwKg3o5dwF/c1ef0120b72788c164f31344ec6191a4/abstract-writing.jpg",
-          "__typename": "Asset"
+        contentfulMetadata: {
+          tags: null
         },
-        "ssoProtected": false,
-        "searchable": true,
         "sys": {
           "id": "64qNrnSsvnM8ixdxOkUF4y",
-          "__typename": "Sys"
+          "__typename": "Sys",
+          environmentId: '',
+          firstPublishedAt: '',
+          publishedAt: '',
+          publishedVersion: 0,
+          spaceId: ''
         }
       }],
       "__typename": "ArticleBodyTextEntries"
@@ -55,26 +56,50 @@ describe('BodyMediaService', () => {
       "block": [{
         "sys": {
           "id": "2hQxPdQ5m0ezjjQ7jJibHw",
-          "__typename": "Sys"
+          "__typename": "Sys",
+          environmentId: '',
+          firstPublishedAt: '',
+          publishedAt: '',
+          publishedVersion: 0,
+          spaceId: ''
         },
         "title": "FAIR and CARE Principles image",
         "description": "Image for the FAIR and CARE principles for research data",
         "url": "https://images.ctfassets.net/vbuxn5csp0ik/2hQxPdQ5m0ezjjQ7jJibHw/3545283a16312f6b9fbdc8e4ec7e1367/FAIR-CARE-principles.png",
         "size": 840711,
         "contentType": "image/png",
-        "__typename": "Asset"
+        "__typename": "Asset",
+        contentfulMetadata: {
+          tags: null
+        },
+        fileName: '',
+        height: 0,
+        linkedFrom: null,
+        width: 0
       }],
       "hyperlink": [{
         "sys": {
           "id": "5IfxoF4WQ4Ks71q2HeLbgC",
-          "__typename": "Sys"
+          "__typename": "Sys",
+          environmentId: '',
+          firstPublishedAt: '',
+          publishedAt: '',
+          publishedVersion: 0,
+          spaceId: ''
         },
         "title": "Light Background",
         "description": "Homepage Image",
         "url": "https://images.ctfassets.net/vbuxn5csp0ik/5IfxoF4WQ4Ks71q2HeLbgC/dbcc0df7c1ef3cf813ecc1d9bbfb384e/ClockTowerint.jpg",
         "size": 1917128,
         "contentType": "image/jpeg",
-        "__typename": "Asset"
+        "__typename": "Asset",
+        contentfulMetadata: {
+          tags: null
+        },
+        fileName: '',
+        height: 0,
+        linkedFrom: null,
+        width: 0
       }],
       "__typename": "ArticleBodyTextAssets"
     },
