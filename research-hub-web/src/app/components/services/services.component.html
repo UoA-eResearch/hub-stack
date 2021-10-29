@@ -1,129 +1,191 @@
 <!-- If we're displaying a collection of Services-->
 <div
-    *ngIf="allServices$ | async as allServices"
-    class="site-padding margin-bottom top-padding"
-    ngClass.lt-md="site-padding-mobile margin-bottom top-padding">
-    <app-collection-list [collection]="allServices"></app-collection-list></div>
+  *ngIf="allServices$ | async as allServices"
+  class="site-padding margin-bottom top-padding"
+  ngClass.lt-md="site-padding-mobile margin-bottom top-padding"
+>
+  <app-collection-list [collection]="allServices"></app-collection-list>
+</div>
 
 <!-- If we're displaying an individual service -->
 <div id="service-container" *ngIf="service | async as service">
+  <!-- Banner -->
+  <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
-    <!-- Templates -->
-    <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="service.title"></app-breadcrumbs></ng-template>
+  <div
+    class="site-padding margin-bottom"
+    ngClass.lt-md="site-padding-mobile top-padding"
+  >
+    <app-breadcrumbs
+      [contentItem]="parentSubHubs"
+      [title]="service.title"
+    ></app-breadcrumbs>
 
-    <ng-template #dynamicBanner>
-        <div class="banner-container"
-            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'"
-            [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
-        </div>
-    </ng-template>
+    <!-- Title and Summary -->
+    <div fxLayout="column">
+      <ng-container
+        *ngTemplateOutlet="titleSummary; context: { $implicit: service }"
+      ></ng-container>
 
-    <ng-template #specificationsTable>
-        <div id="specifications-table" class="specifications" *ngIf="service.audience ||
-                   service.cost ||
-                   service.access ||
-                   service.availability">
-            <table class="specifications-table margin-bottom" role="table">
-                <tr role="row">
-                <th role="columnheader">Details</th>
-                <th role="columnheader">Description</th>
-                </tr>
-                <tr *ngIf="service.audience" role="row">
-                    <td role="cell">Audience</td>
-                    <td [innerHTML]="service.audience" role="cell"></td>
-                </tr>
-                <tr *ngIf="service.cost" role="row">
-                    <td role="cell">Cost</td>
-                    <td [innerHTML]="service.cost" role="cell"></td>
-                </tr>
-                <tr *ngIf="service.access" role="row">
-                    <td role="cell">Access</td>
-                    <td [innerHTML]="service.access" role="cell"></td>
-                </tr>
-                <tr *ngIf="service.availability" role="row">
-                    <td role="cell">Availability</td>
-                    <td [innerHTML]="service.availability" role="cell"></td>
-                </tr>
-            </table>
-        </div>
-    </ng-template>
-
-    <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'"
-            [contentItem]="service.relatedItemsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'"
-            [contentItem]="service.relatedOrgsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #relatedDocuments let-hide="hideImage" let-flex="flex">
-        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'"
-            [contentItem]="service.relatedDocsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'"
-            [contentItem]="service.relatedContactsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #titleSummary>
-        <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile">{{ service.title }}</h1>
-        <p class="content-summary" ngClass.lt-sm="content-summary-sm">{{ service.summary }}</p>
-    </ng-template>
-
-    <!-- Banner -->
-    <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
-
-    <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile top-padding">
-
-        <!-- Breadcrumbs -->
-        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-
-        <div>
-
-            <!-- Title and Summary -->
-            <div fxLayout="column">
-                <div><ng-container *ngTemplateOutlet="titleSummary"></ng-container></div>
-
-                <!-- Call To Action -->
-                <div *ngIf="service.callToAction">
-                    <a href="{{ service.callToAction }}" target="_blank" mat-flat-button class="standard-button section">
-                        <span *ngIf="service.callToActionLabel">{{ service.callToActionLabel }}</span>
-                        <span *ngIf="!service.callToActionLabel">View Service</span>
-                    </a>
-                </div>
-                <div class="mini-hr" *ngIf="!service.callToAction"><hr/></div>
-            </div>
-
-            <!-- Service Body -->
-            <div><ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word" [document]="service.bodyText.json"
-                    [nodeRenderers]="nodeRenderers" [markRenderers]="markRenderers"></ngx-contentful-rich-text></div>
-
-            <!-- Specifications Table -->
-            <div class="section-2" *ngIf="
-                    service.audience ||
-                    service.cost ||
-                    service.access ||
-                    service.availability">
-                <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-            </div>
-
-            <!-- Owners and User Facing Support -->
-            <div
-                *ngIf="
-                    service.relatedItemsCollection.items.length > 0 ||
-                    service.relatedDocsCollection.items.length > 0 ||
-                    service.relatedContactsCollection.items.length > 0 ||
-                    service.relatedOrgsCollection.items.length > 0"
-                    fxLayout="column">
-                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false, flex: 'row' }"></ng-container>
-                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: false, flex: 'row' }"></ng-container>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: false, flex: 'row' }"></ng-container>
-                    <ng-container *ngTemplateOutlet="relatedDocuments; context: { hideImage: true, flex: 'row' }"></ng-container>
-            </div>
-        </div>
+      <!-- Call To Action -->
+      <div *ngIf="service.callToAction">
+        <a
+          href="{{ service.callToAction }}"
+          target="_blank"
+          mat-flat-button
+          class="standard-button section"
+        >
+          <span *ngIf="service.callToActionLabel">{{
+            service.callToActionLabel
+          }}</span>
+          <span *ngIf="!service.callToActionLabel">View Service</span>
+        </a>
+      </div>
+      <div class="mini-hr" *ngIf="!service.callToAction"><hr /></div>
     </div>
-    <div class="section"></div>
+
+    <!-- Service Body -->
+    <ngx-contentful-rich-text
+      id="bodyMediaList"
+      style="word-break: break-word"
+      [document]="service.bodyText.json"
+      [nodeRenderers]="nodeRenderers"
+      [markRenderers]="markRenderers"
+    ></ngx-contentful-rich-text>
+
+    <!-- Specifications Table -->
+    <div
+      class="section-2"
+      *ngIf="
+        service.audience ||
+        service.cost ||
+        service.access ||
+        service.availability
+      "
+    >
+      <ng-container
+        *ngTemplateOutlet="specificationsTable; context: { $implicit: service }"
+      ></ng-container>
+    </div>
+
+    <!-- Owners and User Facing Support -->
+    <div
+      *ngIf="
+        service.relatedItemsCollection.items.length > 0 ||
+        service.relatedDocsCollection.items.length > 0 ||
+        service.relatedContactsCollection.items.length > 0 ||
+        service.relatedOrgsCollection.items.length > 0
+      "
+      fxLayout="column"
+    >
+      <h3>
+        Explore Related
+        <hr />
+      </h3>
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+        <app-standard-card
+          id="you-might-be-interested-in"
+          *ngFor="let content of service.relatedItemsCollection.items"
+          [contentItem]="content"
+        ></app-standard-card>
+      </div>
+
+      <h3 *ngIf="service?.relatedContactsCollection.items.length > 0">
+        Contacts
+        <hr />
+      </h3>
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+        <app-contact-card
+          *ngFor="let person of service.relatedContactsCollection.items"
+          [person]="person"
+        ></app-contact-card>
+      </div>
+
+      <h3 *ngIf="service?.relatedOrgsCollection.items.length > 0">
+        Organisations
+        <hr />
+      </h3>
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+        <app-org-unit-card
+          *ngFor="let orgUnit of service.relatedOrgsCollection.items"
+          [orgUnit]="orgUnit"
+        ></app-org-unit-card>
+      </div>
+
+      <h3 *ngIf="service?.relatedDocsCollection.items.length > 0">
+        Documents
+        <hr />
+      </h3>
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+        <app-document-card
+          *ngFor="let document of service.relatedDocsCollection.items"
+          [document]="document"
+        ></app-document-card>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Templates -->
+<ng-template #dynamicBanner>
+  <div
+    class="banner-container"
+    [ngClass]="
+      bannerImageUrl === undefined
+        ? 'no-banner'
+        : isMobile
+        ? 'mobile-banner'
+        : 'standard-banner'
+    "
+    [ngStyle]="
+      bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
+    "
+  ></div>
+</ng-template>
+
+<ng-template #specificationsTable let-service>
+  <div
+    id="specifications-table"
+    class="specifications"
+    *ngIf="
+      service.audience || service.cost || service.access || service.availability
+    "
+  >
+    <table class="specifications-table margin-bottom" role="table">
+      <tr role="row">
+        <th role="columnheader">Details</th>
+        <th role="columnheader">Description</th>
+      </tr>
+      <tr *ngIf="service.audience" role="row">
+        <td role="cell">Audience</td>
+        <td [innerHTML]="service.audience" role="cell"></td>
+      </tr>
+      <tr *ngIf="service.cost" role="row">
+        <td role="cell">Cost</td>
+        <td [innerHTML]="service.cost" role="cell"></td>
+      </tr>
+      <tr *ngIf="service.access" role="row">
+        <td role="cell">Access</td>
+        <td [innerHTML]="service.access" role="cell"></td>
+      </tr>
+      <tr *ngIf="service.availability" role="row">
+        <td role="cell">Availability</td>
+        <td [innerHTML]="service.availability" role="cell"></td>
+      </tr>
+    </table>
+  </div>
+</ng-template>
+
+<ng-template #titleSummary let-service>
+  <h1
+    role="heading"
+    aria-level="1"
+    class="content-title"
+    ngClass.lt-md="content-title-mobile"
+  >
+    {{ service.title }}
+  </h1>
+  <p class="content-summary" ngClass.lt-sm="content-summary-sm">
+    {{ service.summary }}
+  </p>
+</ng-template>
