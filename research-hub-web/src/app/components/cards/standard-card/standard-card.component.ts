@@ -10,6 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class StandardCardComponent {
   @Input() contentItem: any;
+  @Input() isSubhubChild = false;
 
   constructor() { }
 }
