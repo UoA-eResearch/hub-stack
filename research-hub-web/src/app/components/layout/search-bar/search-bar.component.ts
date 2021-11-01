@@ -62,14 +62,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.searchAutocompleteService.allTitles$.subscribe(titles => {
       this.autoCompleteTerms = [
         ...this.searchAutocompleteService.getAutocompleteTerms(),
-        ...titles.articleCollection.items.map(x => x.title),
-        ...titles.caseStudyCollection.items.map(x => x.title),
-        ...titles.equipmentCollection.items.map(x => x.title),
-        ...titles.eventCollection.items.map(x => x.title),
-        ...titles.fundingCollection.items.map(x => x.title),
-        ...titles.serviceCollection.items.map(x => x.title),
-        ...titles.softwareCollection.items.map(x => x.title),
-        ...titles.subHubCollection.items.map(x => x.title)
+        ...titles.articleCollection.map(x => x.title),
+        ...titles.caseStudyCollection.map(x => x.title),
+        ...titles.equipmentCollection.map(x => x.title),
+        ...titles.eventCollection.map(x => x.title),
+        ...titles.fundingCollection.map(x => x.title),
+        ...titles.serviceCollection.map(x => x.title),
+        ...titles.softwareCollection.map(x => x.title),
+        ...titles.subHubCollection.map(x => x.title)
       ];
     }));
 
@@ -113,14 +113,20 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Filters out the autocomplete terms to match a user's search text input.
+   * 
+   * The filtering process also handles lowercasing, and removal of diacritics/accents, so that for example,
+   * a user input of 'creme brulee' will match 'Crème Brulée' in the autocomplete list (and vice-versa).
+   * Ref: https://stackoverflow.com/a/37511463/9803180
+   * Ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes
    * 
    * @param value - the user input search term
    * @returns string[] of filtered autocomplete terms that match the user input
    */
   private filterTerms(value: string): string[] {
-    const filterValue = value.toLowerCase(); // TO DO - further text cleaning - diacritics
-
-    return this.autoCompleteTerms.filter(term => term.toLowerCase().includes(filterValue));
+    const filterValue = value.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+    return this.autoCompleteTerms.filter(
+      term => term.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(filterValue)
+    );
   }
-
 }
