@@ -25,7 +25,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public isMobile = false;
   public showFilters = false;
 
-  private autoCompleteTerms: string[] = ['test', 'test2', 'frog', 'dog'];
+  private autoCompleteTerms: string[] = [];
   public filteredTerms: Observable<string[]>;
 
   private subscriptions = new Subscription();
@@ -51,18 +51,34 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //this.autoCompleteTerms = this.searchAutocompleteService.autocompleteTerms;
-    this.filteredTerms = this.searchText.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => this.filter(value))
-      );
     //this.subscriptions.add(this.searchService.searchText.subscribe(text => this.searchText = text));
     this.subscriptions.add(this.searchService.searchFilters.subscribe(filters => this.activeFilters = filters));
     this.subscriptions.add(this.router.events.pipe(
       filter(event => event instanceof NavigationStart)
     ).subscribe(() => this.showFilters = false));
     this.subscriptions.add(this.breakpointObserver.observe('(max-width: 1100px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches));
+    
+    // Search autocomplete initialisation
+    this.subscriptions.add(this.searchAutocompleteService.allTitles$.subscribe(titles => {
+      this.autoCompleteTerms = [
+        ...this.searchAutocompleteService.getAutocompleteTerms(),
+        ...titles.articleCollection.items.map(x => x.title),
+        ...titles.caseStudyCollection.items.map(x => x.title),
+        ...titles.equipmentCollection.items.map(x => x.title),
+        ...titles.eventCollection.items.map(x => x.title),
+        ...titles.fundingCollection.items.map(x => x.title),
+        ...titles.serviceCollection.items.map(x => x.title),
+        ...titles.softwareCollection.items.map(x => x.title),
+        ...titles.subHubCollection.items.map(x => x.title)
+      ];
+    }));
+
+    // Create search autocomplete filtered terms based on the user input
+    this.filteredTerms = this.searchText.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this.filterTerms(value))
+      );
   }
 
   ngOnDestroy(): void {
@@ -96,8 +112,13 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.renderer.selectRootElement(this.searchBox.nativeElement).focus();
   }
 
-  private filter(value: string): string[] {
-    const filterValue = value.toLowerCase(); // TO DO - further text cleaning
+  /**
+   * 
+   * @param value - the user input search term
+   * @returns string[] of filtered autocomplete terms that match the user input
+   */
+  private filterTerms(value: string): string[] {
+    const filterValue = value.toLowerCase(); // TO DO - further text cleaning - diacritics
 
     return this.autoCompleteTerms.filter(term => term.toLowerCase().includes(filterValue));
   }

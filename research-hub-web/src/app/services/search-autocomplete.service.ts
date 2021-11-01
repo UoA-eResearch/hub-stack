@@ -1,33 +1,48 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { AllArticlesTitlesGQL, ArticleCollection } from '@app/graphql/schema';
+import { Observable } from 'rxjs';
+import { AllPageTitlesGQL, AllPageTitlesQuery } from '@app/graphql/schema';
 import { pluck } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchAutocompleteService {
-  public allArticles$: Observable<ArticleCollection>;
-  public autocompleteTerms: string[];
+  private popularSearches: string[] = [
+    "animal ethics",
+    "animal ethics application",
+    "drive",
+    "ethics",
+    "FIRST",
+    "grand challenges",
+    "human ethics",
+    "impact",
+    "internal funding",
+    "ORCID",
+    "PBRF",
+    "privacy",
+    "RDF",
+    "research storage",
+    "survey",
+    "thesis",
+    "TIF",
+    "virtual machine",
+  ];
+  public allTitles$: Observable<AllPageTitlesQuery>;
   
   constructor(
-    private allArticlesTitlesGQL: AllArticlesTitlesGQL,
-  ) { }
-
-  private getAllArticlesTitles(): Observable<ArticleCollection> {
-    try {
-      return this.allArticlesTitlesGQL.fetch()
-        .pipe(pluck('data', 'articleCollection')) as Observable<ArticleCollection>
-    } catch (e) { console.error('Error loading all article titles:', e) };
+    private allPageTitlesGQL: AllPageTitlesGQL,
+  ) {
+    this.allTitles$ = this.getAllPageTitles();
   }
 
-  private createAutocompleteTerms(): void {
+  private getAllPageTitles() {
     try {
-      this.autocompleteTerms = ['test', 'test2', 'frog', 'dog'];
-    } catch (e) { console.error('Error creating autocomplete terms list:', e) };
+      return this.allPageTitlesGQL.fetch()
+        .pipe(pluck('data')) as Observable<AllPageTitlesQuery>
+    } catch (e) { console.error('Error loading all page titles:', e) };
   }
 
   public getAutocompleteTerms(): string[] {
-    return this.autocompleteTerms;
+    return this.popularSearches;
   }
 }
