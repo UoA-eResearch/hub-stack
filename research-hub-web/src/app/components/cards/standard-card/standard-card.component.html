@@ -1,5 +1,6 @@
 <mat-card
   [routerLink]="['/', contentItem.__typename.toLowerCase(), contentItem.slug]"
+  [ngClass]="{'subhub-child-card': isSubhubChild}"
 >
   <ng-container
     *ngTemplateOutlet="
