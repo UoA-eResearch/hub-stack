@@ -1,47 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AllPageTitlesGQL, AllPageTitlesQuery, ArticleCollection, CaseStudyCollection, EquipmentCollection, EventCollection, FundingCollection, ServiceCollection, SoftwareCollection, SubHubCollection } from '@app/graphql/schema';
+import { AllPageTitlesGQL } from '@app/graphql/schema';
 import { pluck, map } from 'rxjs/operators';
 
 export interface PageTitles {
-  articleCollection: {
-      __typename?: "Article";
-      title: string;
-  }[];
-  caseStudyCollection: {
-      __typename?: "CaseStudy";
-      title: string;
-  }[];
-  equipmentCollection: {
-      __typename?: "Equipment";
-      title: string;
-  }[];
-  eventCollection: {
-    __typename?: "Event";
-    title: string;
-  }[];
-  fundingCollection: {
-    __typename?: "Funding";
-    title: string;
-  }[];
-  serviceCollection: {
-    __typename?: "Service";
-    title: string;
-  }[];
-  softwareCollection: {
-    __typename?: "Software";
-    title: string;
-  }[];
-  subHubCollection: {
-    __typename?: "SubHub";
-    title: string;
-  }[];
+  articleTitles: string[];
+  caseStudyTitles: string[];
+  equipmentTitles: string[];
+  eventTitles: string[];
+  fundingTitles: string[];
+  serviceTitles: string[];
+  softwareTitles: string[];
+  subHubTitles: string[];
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchAutocompleteService {
+  // Popular search terms used in the ResearchHub obtained from site search analytics
   private popularSearches: string[] = [
     "animal ethics",
     "animal ethics application",
@@ -62,6 +39,7 @@ export class SearchAutocompleteService {
     "TIF",
     "virtual machine",
   ];
+  // All published page titles in Contentful
   public allTitles$: Observable<PageTitles>;
   
   constructor(
@@ -75,14 +53,14 @@ export class SearchAutocompleteService {
       return this.allPageTitlesGQL.fetch()
         .pipe(pluck('data')).pipe(
           map(({articleCollection, caseStudyCollection, equipmentCollection, eventCollection, fundingCollection, serviceCollection, softwareCollection, subHubCollection}) => ({
-            articleCollection: articleCollection.items,
-            caseStudyCollection: caseStudyCollection.items,
-            equipmentCollection: equipmentCollection.items,
-            eventCollection: eventCollection.items,
-            fundingCollection: fundingCollection.items,
-            serviceCollection: serviceCollection.items,
-            softwareCollection: softwareCollection.items,
-            subHubCollection: subHubCollection.items          
+            articleTitles: articleCollection.items.map(x=>x.title),
+            caseStudyTitles: caseStudyCollection.items.map(x=>x.title),
+            equipmentTitles: equipmentCollection.items.map(x=>x.title),
+            eventTitles: eventCollection.items.map(x=>x.title),
+            fundingTitles: fundingCollection.items.map(x=>x.title),
+            serviceTitles: serviceCollection.items.map(x=>x.title),
+            softwareTitles: softwareCollection.items.map(x=>x.title),
+            subHubTitles: subHubCollection.items.map(x=>x.title)  
           }))          
         )
     } catch (e) { console.error('Error loading all page titles:', e) };

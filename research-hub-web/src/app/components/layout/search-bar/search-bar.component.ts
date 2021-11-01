@@ -62,14 +62,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.searchAutocompleteService.allTitles$.subscribe(titles => {
       this.autoCompleteTerms = [
         ...this.searchAutocompleteService.getAutocompleteTerms(),
-        ...titles.articleCollection.map(x => x.title),
-        ...titles.caseStudyCollection.map(x => x.title),
-        ...titles.equipmentCollection.map(x => x.title),
-        ...titles.eventCollection.map(x => x.title),
-        ...titles.fundingCollection.map(x => x.title),
-        ...titles.serviceCollection.map(x => x.title),
-        ...titles.softwareCollection.map(x => x.title),
-        ...titles.subHubCollection.map(x => x.title)
+        ...titles.articleTitles,
+        ...titles.caseStudyTitles,
+        ...titles.equipmentTitles,
+        ...titles.eventTitles,
+        ...titles.fundingTitles,
+        ...titles.serviceTitles,
+        ...titles.softwareTitles,
+        ...titles.subHubTitles
       ];
     }));
 
@@ -77,7 +77,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.filteredTerms = this.searchText.valueChanges
       .pipe(
         startWith(''),
-        map(value => this.filterTerms(value))
+        map(value => this.filterAutocompleteTerms(value))
       );
   }
 
@@ -123,7 +123,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
    * @param value - the user input search term
    * @returns string[] of filtered autocomplete terms that match the user input
    */
-  private filterTerms(value: string): string[] {
+  private filterAutocompleteTerms(value: string): string[] {
     const filterValue = value.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
     return this.autoCompleteTerms.filter(
       term => term.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(filterValue)
