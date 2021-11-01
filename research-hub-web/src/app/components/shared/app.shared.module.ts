@@ -11,9 +11,7 @@ import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pip
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
 import { BodyMediaComponent } from './body-media/body-media.component';
-import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { LargeCardsComponent } from './large-cards/large-cards.component';
 import { VideoCardComponent } from './video-card/video-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownToHtmlModule } from 'markdown-to-html-pipe';
@@ -44,9 +42,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     ContentTypeDisplayNamePipe,
     CollectionListComponent,
     BodyMediaComponent,
-    CardsComponent,
     BreadcrumbsComponent,
-    LargeCardsComponent,
     VideoCardComponent
   ],
   exports: [
@@ -59,9 +55,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     RichTextToHTML,
     ContentTypeDisplayNamePipe,
     CollectionListComponent,
-    CardsComponent,
     BreadcrumbsComponent,
-    LargeCardsComponent,
     VideoCardComponent,
     NgxPaginationModule,
     MarkdownToHtmlModule,
