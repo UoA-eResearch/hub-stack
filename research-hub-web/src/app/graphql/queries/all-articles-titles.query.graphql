@@ -1,7 +1,0 @@
-query AllArticlesTitles {
-    articleCollection(limit: 11000) {
-        items {
-            title
-        }
-    }
-}
