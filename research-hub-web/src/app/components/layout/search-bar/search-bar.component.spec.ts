@@ -1,8 +1,8 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { HarnessLoader, parallel } from '@angular/cdk/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatBadgeHarness } from '@angular/material/badge/testing';
 import { By } from '@angular/platform-browser';
@@ -11,7 +11,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { SearchService } from '@services/search.service';
 import { PageTitles, SearchAutocompleteService } from '@services/search-autocomplete.service';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
-import { EMPTY, Observable, of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { SearchFiltersComponent } from '../search-filters/search-filters.component';
 
 import { SearchBarComponent } from './search-bar.component';
@@ -45,8 +45,7 @@ describe('SearchBarComponent', () => {
         MatBadgeModule,
         MockModule(MatButtonModule),
         MockModule(MatIconModule),
-        MockModule(FormsModule),
-        MockModule(ReactiveFormsModule),
+        ReactiveFormsModule,
         MatAutocompleteModule
       ],
       declarations: [
@@ -201,19 +200,5 @@ describe('SearchBarComponent', () => {
     await button.click();
 
     expect(!component.showMobileSearch && !component.showFilters).toBeTrue()
-  })
-
-  it('Should filter the search autocomplete terms based on input', async () => {
-    fixture.detectChanges();
-    // const input: HTMLInputElement = fixture.debugElement.query(By.css('input')).nativeElement;
-    const input: HTMLInputElement = fixture.debugElement.nativeElement.querySelectorAll('input')[0];
-    input.dispatchEvent(new Event('focusin'));
-    input.value = 'Covfefé';
-    input.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      const matOptions = document.querySelectorAll('mat-option');
-      expect(matOptions.length).withContext('Expected to be reduced from 9 options to 1').toBe(1);
-    })
   })
 });
