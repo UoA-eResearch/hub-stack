@@ -1,11 +1,9 @@
-<div *ngIf="featuredItems$ | async as featuredItems">
-  <app-content-container>
-    <app-content-title [title]="title"></app-content-title>
-    <div fxFlex="row wrap" *ngIf="featuredItems?.items?.length > 0">
-      <app-standard-card
-        *ngFor="let item of featuredItems.items"
-        [contentItem]="item"
-      ></app-standard-card>
-    </div>
-  </app-content-container>
-</div>
+<app-content-container *ngIf="featuredItems$ | async as featuredItems">
+  <app-content-title [title]="title"></app-content-title>
+  <div fxLayout="row wrap" fxLayoutGap="50px" fxLayoutAlign="center">
+    <app-standard-card
+      *ngFor="let item of featuredItems.items"
+      [contentItem]="item"
+    ></app-standard-card>
+  </div>
+</app-content-container>
