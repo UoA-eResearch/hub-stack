@@ -2,21 +2,23 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { HarnessLoader, parallel } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatBadgeHarness } from '@angular/material/badge/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SearchService } from '@services/search.service';
+import { PageTitles, SearchAutocompleteService } from '@services/search-autocomplete.service';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
-import { EMPTY } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { SearchFiltersComponent } from '../search-filters/search-filters.component';
 
 import { SearchBarComponent } from './search-bar.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -25,6 +27,17 @@ describe('SearchBarComponent', () => {
   let loader: HarnessLoader;
   let router: Router;
 
+  const pageTitles: PageTitles = {
+    articleTitles: ['an article'],
+    caseStudyTitles: ['a caseStudy'],
+    equipmentTitles: ['an equipment'],
+    eventTitles: ['an event'],
+    fundingTitles: ['a funding'],
+    serviceTitles: ['a service'],
+    softwareTitles: ['a software'],
+    subHubTitles: ['a subHub']
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -32,7 +45,9 @@ describe('SearchBarComponent', () => {
         MatBadgeModule,
         MockModule(MatButtonModule),
         MockModule(MatIconModule),
-        MockModule(FormsModule)
+        MockModule(FormsModule),
+        MockModule(ReactiveFormsModule),
+        MatAutocompleteModule
       ],
       declarations: [
         SearchBarComponent,
@@ -49,6 +64,10 @@ describe('SearchBarComponent', () => {
               sort: 'relevance'
             }
           }
+        }),
+        MockProvider(SearchAutocompleteService, {
+          allTitles$: of(pageTitles),
+          getAutocompleteTerms: () => {return ['covfefe']}
         }),
         MockProvider(BreakpointObserver, {
           observe: () => EMPTY
@@ -182,5 +201,19 @@ describe('SearchBarComponent', () => {
     await button.click();
 
     expect(!component.showMobileSearch && !component.showFilters).toBeTrue()
+  })
+
+  it('Should filter the search autocomplete terms based on input', async () => {
+    fixture.detectChanges();
+    // const input: HTMLInputElement = fixture.debugElement.query(By.css('input')).nativeElement;
+    const input: HTMLInputElement = fixture.debugElement.nativeElement.querySelectorAll('input')[0];
+    input.dispatchEvent(new Event('focusin'));
+    input.value = 'Covfefé';
+    input.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const matOptions = document.querySelectorAll('mat-option');
+      expect(matOptions.length).withContext('Expected to be reduced from 9 options to 1').toBe(1);
+    })
   })
 });
