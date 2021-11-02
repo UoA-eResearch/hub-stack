@@ -48,7 +48,7 @@ export class SearchAutocompleteService {
     this.allTitles$ = this.getAllPageTitles();
   }
 
-  private getAllPageTitles() {
+  public getAllPageTitles() {
     try {
       return this.allPageTitlesGQL.fetch()
         .pipe(pluck('data')).pipe(
