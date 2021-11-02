@@ -1,6 +1,6 @@
 <mat-card
   [routerLink]="['/', contentItem.__typename.toLowerCase(), contentItem.slug]"
-  [ngClass]="{'subhub-child-card': isSubhubChild}"
+  [ngClass]="{ 'subhub-child-card': isSubhubChild }"
 >
   <ng-container
     *ngTemplateOutlet="
@@ -26,8 +26,9 @@
     >
       {{ contentItem.title }}
     </a>
+    &nbsp;
     <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">
-      &nbsp;lock
+      lock
     </mat-icon>
   </mat-card-title>
   <mat-card-content
@@ -35,21 +36,6 @@
       <p>{{ contentItem.summary }}</p>
     </span></mat-card-content
   >
-
-  <!-- <span
-    class="call-to-action"
-    style="display: flex; align-items: center; max-width: fit-content"
-  >
-    <a tabindex="-1" [routerLink]="['/', contentItem.__typename.toLowerCase(), contentItem.slug]">
-      Read More&nbsp;&nbsp;
-    </a>
-    <img
-      class="arrow"
-      alt="link-arrow"
-      style="height: 20px; width: auto"
-      src="assets/components/dark-arrow.png"
-    />
-  </span> -->
 </mat-card>
 
 <!-- Templates -->
