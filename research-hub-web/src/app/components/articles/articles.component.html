@@ -92,17 +92,12 @@
       [title]="article.title"
     ></app-breadcrumbs>
 
-    <div
-      fxLayout="row"
-      fxLayoutAlign="space-between"
-      fxLayout.lt-md="column wrap"
-      fxLayoutGap="5%"
-    >
+    <div fxLayout="row" fxLayoutAlign="space-evenly" fxLayout.lt-lg="column">
       <!-- Article Body -->
       <ngx-contentful-rich-text
         fxFlexOrder="2"
-        fxFlexOrder.xs="1"
-        fxFlex
+        fxFlexOrder.lt-lg="1"
+        fxFlex="1 1 40%"
         id="bodyMediaList"
         class="section-2"
         style="word-break: break-word"
@@ -118,55 +113,61 @@
           article.relatedContactsCollection.items.length > 0 ||
           article.relatedOrgsCollection.items.length > 0
         "
+        fxFlex.gt-lg="0 0 350px"
         fxLayout="column"
-        fxFlex="20%"
         fxFlexOrder="1"
-        fxFlexOrder.lt-md="2"
+        fxFlexOrder.lt-lg="2"
       >
         <h3 *ngIf="article?.relatedContactsCollection.items.length > 0">
           Contacts
           <hr />
         </h3>
-        <app-contact-card
-          *ngFor="let person of article.relatedContactsCollection.items"
-          [person]="person"
-        ></app-contact-card>
+        <div fxLayout.lt-lg="row wrap" fxLayoutGap.lt-lg="25px">
+          <app-contact-card
+            *ngFor="let person of article.relatedContactsCollection.items"
+            [person]="person"
+          ></app-contact-card>
+        </div>
 
-        <!-- Official Documents -->
         <h3 *ngIf="article?.relatedDocsCollection.items.length > 0">
           Documents
           <hr />
         </h3>
-        <app-document-card
-          *ngFor="let document of article.relatedDocsCollection.items"
-          [document]="document"
-        ></app-document-card>
-
+        <div fxLayout.lt-lg="row wrap" fxLayoutGap.lt-lg="25px">
+          <app-document-card
+            *ngFor="let document of article.relatedDocsCollection.items"
+            [document]="document"
+          ></app-document-card>
+        </div>
         <h3 *ngIf="article?.relatedOrgsCollection.items.length > 0">
           Organisations
           <hr />
         </h3>
-        <app-org-unit-card
-          *ngFor="let orgUnit of article.relatedOrgsCollection.items"
-          [orgUnit]="orgUnit"
-        ></app-org-unit-card>
+        <div fxLayout.lt-lg="row wrap" fxLayoutGap.lt-lg="25px">
+          <app-org-unit-card
+            *ngFor="let orgUnit of article.relatedOrgsCollection.items"
+            [orgUnit]="orgUnit"
+          ></app-org-unit-card>
+        </div>
       </div>
 
       <!-- Related items -->
       <div
         *ngIf="article.relatedItemsCollection.items.length > 0"
+        fxFlex.gt-lg="0 0 350px"
         fxLayout="column"
-        fxFlex="20%"
         fxFlexOrder="3"
       >
         <h3>
           Explore Related
           <hr />
         </h3>
-        <app-standard-card
-          *ngFor="let content of article.relatedItemsCollection.items"
-          [contentItem]="content"
-        ></app-standard-card>
+        <div fxLayout.lt-lg="row wrap" fxLayoutGap.lt-lg="25px">
+          <app-standard-card
+            *ngFor="let content of article.relatedItemsCollection.items"
+            [contentItem]="content"
+          ></app-standard-card>
+        </div>
       </div>
     </div>
   </div>
