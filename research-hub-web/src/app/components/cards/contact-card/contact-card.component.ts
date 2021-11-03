@@ -14,4 +14,8 @@ export class ContactCardComponent {
 
   constructor() { }
 
+  public navigateTo(url: string) {
+    location.href = url;
+  }
+
 }

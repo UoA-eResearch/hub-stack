@@ -1,4 +1,4 @@
-<mat-card [attr.href]="person.link ? person.link : null">
+<mat-card (click)="person.link ? navigateTo(person.link) : null">
   <span class="card-label">Contact</span>
 
   <div style="margin-top: 12px"></div>

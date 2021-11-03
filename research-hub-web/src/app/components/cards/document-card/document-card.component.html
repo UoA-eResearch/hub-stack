@@ -1,4 +1,10 @@
-<mat-card>
+<mat-card
+  (click)="
+    document.url || document.document?.url
+      ? navigateTo(document.url || document.document?.url)
+      : null
+  "
+>
   <span class="card-label">Document</span>
 
   <div style="margin-top: 12px"></div>
@@ -17,22 +23,4 @@
       <p>{{ document.summary }}</p>
     </span>
   </mat-card-content>
-
-  <!-- <span
-    *ngIf="document.url  || document.document"
-    class="call-to-action"
-    style="display: flex; align-items: center; max-width: fit-content"
-  >
-    <a
-      [attr.href]="document.url ?? document.document?.url"
-      target="_blank"
-      >View Document&nbsp;&nbsp;</a
-    >
-    <img
-      class="arrow"
-      alt="link-arrow"
-      style="height: 20px; width: auto"
-      src="assets/components/dark-arrow.png"
-    />
-  </span> -->
 </mat-card>

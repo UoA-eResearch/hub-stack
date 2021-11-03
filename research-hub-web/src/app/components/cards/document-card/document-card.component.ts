@@ -13,4 +13,8 @@ export class DocumentCardComponent {
   @Input() document: OfficialDocuments;
 
   constructor() { }
+
+  public navigateTo(url: string) {
+    location.href = url;
+  }
 }
