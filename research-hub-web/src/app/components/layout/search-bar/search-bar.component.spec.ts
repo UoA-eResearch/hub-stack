@@ -5,6 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatBadgeHarness } from '@angular/material/badge/testing';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -19,6 +20,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -66,7 +68,7 @@ describe('SearchBarComponent', () => {
         }),
         MockProvider(SearchAutocompleteService, {
           allTitles$: of(pageTitles),
-          getAutocompleteTerms: () => {return ['covfefe']}
+          getAutocompleteTerms: () => {return ['Covfefé']}
         }),
         MockProvider(BreakpointObserver, {
           observe: () => EMPTY
@@ -201,4 +203,24 @@ describe('SearchBarComponent', () => {
 
     expect(!component.showMobileSearch && !component.showFilters).toBeTrue()
   })
+
+  it('Should get the autocomplete terms from the autocomplete service', async () => {
+    await fixture.whenStable();
+    let filteredTerms: string[];
+
+    component.filteredTerms.subscribe((terms) => filteredTerms = terms);
+    expect(filteredTerms.length).toBe(9);
+  });
+
+  it('Should filter autocomplete terms correctly', async () => {
+    await fixture.whenStable();
+    let filteredTerms: string[];
+
+    component.filteredTerms.subscribe((terms) => filteredTerms = terms);
+
+    const input = await loader.getHarness(MatAutocompleteHarness.with({selector: '#search'}));
+    await input.enterText('covfefe');
+
+    expect(filteredTerms.length).toBe(1);
+  });
 });
