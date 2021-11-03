@@ -121,7 +121,12 @@
           Contacts
           <hr />
         </h3>
-        <div fxLayout.lt-lg="row wrap" fxLayoutGap.lt-lg="25px">
+        <div
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
           <app-contact-card
             *ngFor="let person of article.relatedContactsCollection.items"
             [person]="person"
@@ -132,7 +137,12 @@
           Documents
           <hr />
         </h3>
-        <div fxLayout.lt-lg="row wrap" fxLayoutGap.lt-lg="25px">
+        <div
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
           <app-document-card
             *ngFor="let document of article.relatedDocsCollection.items"
             [document]="document"
@@ -142,7 +152,12 @@
           Organisations
           <hr />
         </h3>
-        <div fxLayout.lt-lg="row wrap" fxLayoutGap.lt-lg="25px">
+        <div
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
           <app-org-unit-card
             *ngFor="let orgUnit of article.relatedOrgsCollection.items"
             [orgUnit]="orgUnit"
@@ -161,7 +176,12 @@
           Explore Related
           <hr />
         </h3>
-        <div fxLayout.lt-lg="row wrap" fxLayoutGap.lt-lg="25px">
+        <div
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
           <app-standard-card
             *ngFor="let content of article.relatedItemsCollection.items"
             [contentItem]="content"
