@@ -115,7 +115,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   /**
    * Filters out the autocomplete terms to match a user's search text input.
    * 
-   * The filtering process also handles lowercasing, and removal of diacritics/accents, so that for example,
+   * The filtering process also handles lowercasing, removes leading and trailing white space, and removal of diacritics/accents, so that for example,
    * a user input of 'creme brulee' will match 'Crème Brulée' in the autocomplete list (and vice-versa).
    * Ref: https://stackoverflow.com/a/37511463/9803180
    * Ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes
@@ -124,9 +124,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
    * @returns string[] of filtered autocomplete terms that match the user input
    */
   private filterAutocompleteTerms(value: string): string[] {
-    const filterValue = value.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+    const filterValue = value.trim().toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
     return this.autoCompleteTerms.filter(
-      term => term.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(filterValue)
+      term => term.trim().toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").includes(filterValue)
     );
   }
 }
