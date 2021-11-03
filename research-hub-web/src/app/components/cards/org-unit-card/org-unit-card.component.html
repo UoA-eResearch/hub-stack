@@ -1,4 +1,4 @@
-<mat-card role="listitem">
+<mat-card (click)="orgUnit.link ? navigateTo(orgUnit.link) : null">
   <span class="card-label">Unit</span>
 
   <div style="margin-top: 12px"></div>
@@ -14,18 +14,6 @@
   <mat-card-content>
     <span>
       <p style="word-wrap: break-word">{{ orgUnit.description }}</p>
-      <!-- <span
-        class="call-to-action"
-        style="display: flex; align-items: center; max-width: fit-content"
-      >
-        <a href="{{ orgUnit.link }}" target="_blank">See Unit&nbsp;&nbsp;</a>
-        <img
-          class="arrow"
-          alt="link-arrow"
-          style="height: 20px; width: auto"
-          src="assets/components/dark-arrow.png"
-        />
-      </span> -->
     </span>
   </mat-card-content>
 </mat-card>
