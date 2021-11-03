@@ -38,3 +38,9 @@ mat-card {
     @include mat.elevation(6);
   }
 }
+
+@media screen and (max-width: 599px) {
+  mat-card {
+    width: auto;
+  }
+}
