@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BodyMediaComponent } from '@components/shared/body-media/body-media.component';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import {
   AllFundingGQL,
   AllFundingSlugsGQL,
@@ -12,7 +10,7 @@ import {
 import { BodyMediaService } from '@services/body-media.service';
 import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
-import { NodeRenderer } from 'ngx-contentful-rich-text';
+import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, Subscription } from 'rxjs';
 import { flatMap, pluck } from 'rxjs/operators';
@@ -24,15 +22,8 @@ import supportsWebP from 'supports-webp';
   styleUrls: ['./fundings.component.scss']
 })
 export class FundingsComponent implements OnInit, OnDestroy {
-  nodeRenderers: Record<string, Type<NodeRenderer>> = {
-    [BLOCKS.QUOTE]: BodyMediaComponent,
-    [BLOCKS.EMBEDDED_ASSET]: BodyMediaComponent,
-    [BLOCKS.EMBEDDED_ENTRY]: BodyMediaComponent,
-    [INLINES.ASSET_HYPERLINK]: BodyMediaComponent,
-    [INLINES.EMBEDDED_ENTRY]: BodyMediaComponent,
-    [INLINES.ENTRY_HYPERLINK]: BodyMediaComponent,
-  };
-
+  public nodeRenderers: Record<string, Type<NodeRenderer>>;
+  public markRenderers: Record<string, Type<MarkRenderer>>;
   public slug: string;
   public funding;
   public funding$: Subscription;
@@ -57,6 +48,9 @@ export class FundingsComponent implements OnInit, OnDestroy {
   ) {
     this.detectDevice();
     this.detectWebP();
+    
+    this.nodeRenderers = this.bodyMediaService.nodeRenderers;
+    this.markRenderers = this.bodyMediaService.markRenderers;
   }
 
   detectDevice() {
@@ -119,7 +113,11 @@ export class FundingsComponent implements OnInit, OnDestroy {
           this.bannerImageUrl = undefined;
         }
 
-        this.bodyMediaService.setBodyMedia(data.bodyText?.links);
+        // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
+        this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
+        this.bodyMediaService.buildLinkMaps(data.purpose?.links);
+        this.bodyMediaService.buildLinkMaps(data.deadlines?.links);
+
         this.pageTitleService.title = data.title;
       });
       this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);

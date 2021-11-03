@@ -1,66 +1,78 @@
 query GetSubHubBySlug($slug: String) {
-    subHubCollection(limit: 1, where: {slug: $slug}) {
-        items {
-            slug
-            title
-            maoriProverb
-            summary
-            ssoProtected
-            searchable
-            banner {
-            url
+  subHubCollection(limit: 1, where: { slug: $slug }) {
+    items {
+      slug
+      title
+      maoriProverb
+      summary
+      ssoProtected
+      searchable
+      banner {
+        url
+      }
+      bodyText {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
+                id
+              }
             }
-            bodyText {
-            json
-            links {
-                entries {
-                    block { 
-                    ...PublicFields
-                    sys {
-                        id
-                    }
-                    }
-                    inline { 
-                    ...PublicFields
-                    sys {
-                        id
-                    } 
-                    }
-                    hyperlink { 
-                    ...PublicFields 
-                    sys {
-                        id
-                    }
-                    }
-                }
-                assets {
-                block {
-                    ...AssetFields
-                }
-                hyperlink {
-                    ...AssetFields
-                }
-                }
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
             }
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
+              }
             }
-            internalPagesCollection {
-                items { ...PublicFields }
+          }
+          assets {
+            block {
+              ...AssetFields
             }
-            externalPagesCollection {
-                items { ...PublicFields }
+            hyperlink {
+              ...AssetFields
             }
-            relatedItemsCollection {
-                items { ...PublicFields }
-            }
-            relatedContactsCollection {
-                items { ...PublicFields }
-            }
-            relatedOrgsCollection {
-                items { ...PublicFields }
-            }
-            relatedDocsCollection {
-                items { ...PublicFields }
-            }
+          }
         }
+      }
+      internalPagesCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      externalPagesCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedItemsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedContactsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedOrgsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedDocsCollection {
+        items {
+          ...PublicFields
+        }
+      }
     }
+  }
 }
