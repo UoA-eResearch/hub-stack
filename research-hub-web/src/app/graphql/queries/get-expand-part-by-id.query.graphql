@@ -1,0 +1,43 @@
+
+query GetExpandPartById($id: String!) {
+  expand(id: $id) {
+    __typename
+    sys {
+      id
+    }
+    title
+    bodyText {
+      json
+      links {
+        entries {
+          block {
+            ...PublicFields
+            sys {
+              id
+            }
+          }
+          inline {
+            ...PublicFields
+            sys {
+              id
+            }
+          }
+          hyperlink {
+            ...PublicFields
+            sys {
+              id
+            }
+          }
+        }
+        assets {
+          block {
+            ...AssetFields
+          }
+          hyperlink {
+            ...AssetFields
+          }
+        }
+      }
+    }
+  }
+}
