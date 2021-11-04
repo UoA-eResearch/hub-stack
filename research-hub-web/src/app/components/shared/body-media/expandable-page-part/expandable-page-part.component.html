@@ -1,1 +1,8 @@
-<p>{{ contentItem | json }}</p>
+<ng-container *ngIf="expandPart$ | async as expandPart">
+  <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;"
+    [document]="expandPart.bodyText?.json"
+    [nodeRenderers]="nodeRenderers"
+    [markRenderers]="markRenderers">
+  </ngx-contentful-rich-text>
+</ng-container>
+
