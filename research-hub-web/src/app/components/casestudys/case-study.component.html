@@ -63,23 +63,20 @@
       [title]="caseStudy.title"
     ></app-breadcrumbs>
 
-    <div
-      fxLayout="row"
-      fxLayoutAlign="space-between"
-      fxLayout.lt-md="column wrap"
-      fxLayoutGap="5%"
-    >
+    <div fxLayout="row" fxLayoutAlign="space-evenly" fxLayout.lt-lg="column">
       <!-- caseStudy Body and References -->
-      <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
-        <ngx-contentful-rich-text
-          id="bodyMediaList"
-          class="section-2"
-          style="word-break: break-word"
-          [document]="caseStudy.bodyText?.json"
-          [nodeRenderers]="nodeRenderers"
-          [markRenderers]="markRenderers"
-        ></ngx-contentful-rich-text>
-      </div>
+      <ngx-contentful-rich-text
+        fxFlexOrder="2"
+        fxFlexOrder.lt-lg="1"
+        fxFlex="1 1 35%"
+        fxFlexOrder.xs="1"
+        id="bodyMediaList"
+        class="section-2"
+        style="word-break: break-word"
+        [document]="caseStudy.bodyText?.json"
+        [nodeRenderers]="nodeRenderers"
+        [markRenderers]="markRenderers"
+      ></ngx-contentful-rich-text>
 
       <!-- Extra Links -->
       <div
@@ -88,56 +85,84 @@
           caseStudy.relatedContactsCollection.items.length > 0 ||
           caseStudy.relatedOrgsCollection.items.length > 0
         "
+        fxFlex.gt-lg="0 0 350px"
         fxLayout="column"
-        fxFlex="20%"
         fxFlexOrder="1"
-        fxFlexOrder.lt-md="2"
+        fxFlexOrder.lt-lg="2"
       >
         <h3 *ngIf="caseStudy?.relatedContactsCollection.items.length > 0">
           Contacts
           <hr />
         </h3>
-        <app-contact-card
-          *ngFor="let person of caseStudy.relatedContactsCollection.items"
-          [person]="person"
-        ></app-contact-card>
+        <div
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-contact-card
+            *ngFor="let person of caseStudy.relatedContactsCollection.items"
+            [person]="person"
+          ></app-contact-card>
+        </div>
 
         <!-- Official Documents -->
         <h3 *ngIf="caseStudy?.relatedDocsCollection.items.length > 0">
           Documents
           <hr />
         </h3>
-        <app-document-card
-          *ngFor="let document of caseStudy.relatedDocsCollection.items"
-          [document]="document"
-        ></app-document-card>
+        <div
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-document-card
+            *ngFor="let document of caseStudy.relatedDocsCollection.items"
+            [document]="document"
+          ></app-document-card>
+        </div>
 
         <h3 *ngIf="caseStudy?.relatedOrgsCollection.items.length > 0">
           Organisations
           <hr />
         </h3>
-        <app-org-unit-card
-          *ngFor="let orgUnit of caseStudy.relatedOrgsCollection.items"
-          [orgUnit]="orgUnit"
-        ></app-org-unit-card>
+        <div
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-org-unit-card
+            *ngFor="let orgUnit of caseStudy.relatedOrgsCollection.items"
+            [orgUnit]="orgUnit"
+          ></app-org-unit-card>
+        </div>
       </div>
 
       <!-- Related items -->
       <div
         *ngIf="caseStudy.relatedItemsCollection.items.length > 0"
+        fxFlex.gt-lg="0 0 350px"
         fxLayout="column"
-        fxFlex="20%"
         fxFlexOrder="3"
       >
         <h3>
           Explore Related
           <hr />
         </h3>
-        <app-standard-card
-          id="you-might-be-interested-in"
-          *ngFor="let content of caseStudy.relatedItemsCollection.items"
-          [contentItem]="content"
-        ></app-standard-card>
+        <div
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-standard-card
+            id="you-might-be-interested-in"
+            *ngFor="let content of caseStudy.relatedItemsCollection.items"
+            [contentItem]="content"
+          ></app-standard-card>
+        </div>
       </div>
     </div>
   </div>
