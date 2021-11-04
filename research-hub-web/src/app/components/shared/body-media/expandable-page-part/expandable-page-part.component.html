@@ -1,8 +1,22 @@
 <ng-container *ngIf="expandPart$ | async as expandPart">
-  <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;"
-    [document]="expandPart.bodyText?.json"
-    [nodeRenderers]="nodeRenderers"
-    [markRenderers]="markRenderers">
-  </ngx-contentful-rich-text>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    
+    <mat-expansion-panel-header>  
+      <mat-panel-title>
+        {{ expandPart.title }}
+      </mat-panel-title>
+
+      <mat-panel-description>
+        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    
+    <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;"
+      [document]="expandPart.bodyText?.json"
+      [nodeRenderers]="nodeRenderers"
+      [markRenderers]="markRenderers">
+    </ngx-contentful-rich-text>
+    
+  </mat-expansion-panel>
 </ng-container>
 
