@@ -26,6 +26,8 @@ export class ExpandablePagePartComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
 
+  public panelOpenState = false;
+
   constructor(
     private getExpandPartByIdGQL: GetExpandPartByIdGQL,
     public bodyMediaService: BodyMediaService,
