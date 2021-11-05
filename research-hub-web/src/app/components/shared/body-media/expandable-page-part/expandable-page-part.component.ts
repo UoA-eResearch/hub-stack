@@ -62,9 +62,18 @@ export class ExpandablePagePartComponent implements OnInit, OnDestroy {
       for (let i = 0; i < content.length; i++) {
         if (content[i].nodeType === 'paragraph') {
           for (let j = 0; j < content[i].content.length; j++) {
-            if (content[i].content[j].nodeType === 'text') {
+            if (
+              content[i].content[j].nodeType === 'text' ||
+              content[i].content[j].nodeType === 'entry-hyperlink' ||
+              content[i].content[j].nodeType === 'asset-hyperlink' ||
+              content[i].content[j].nodeType === 'hyperlink'
+              ) {
               if (summary.length <= maxLength) {
-                summary = summary + (content[i].content[j]?.value ? content[i].content[j].value : '');
+                if (content[i].content[j].nodeType === 'text') {                  
+                  summary = summary + (content[i].content[j]?.value ? content[i].content[j].value : '');
+                } else {
+                  summary = summary + (content[i].content[j]?.content[0]?.value ? content[i].content[j].content[0].value : '');
+                }
               } else {
                 break;
               }
@@ -72,9 +81,7 @@ export class ExpandablePagePartComponent implements OnInit, OnDestroy {
           }
         }
       }
-      summary = summary.length > maxLength ?
-      summary.substring(0, maxLength - 3) + "..." :
-      summary.substring(0, maxLength);
+      summary = summary.length > 0 ? summary.substring(0, maxLength - 3) + "..." : summary;
     } catch (e) {
       console.error(`Error creating expandable page part summary text for ${this.contentItem.sys.id}:`, e);
     }
