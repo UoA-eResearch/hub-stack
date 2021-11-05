@@ -6,16 +6,19 @@
         {{ expandPart.title }}
       </mat-panel-title>
 
-      <mat-panel-description>
-        Currently I am {{panelOpenState ? 'open' : 'closed'}}
+      <mat-panel-description *ngIf="panelOpenState === false">
+        {{ getSummaryText(expandPart.bodyText?.json) }}
       </mat-panel-description>
     </mat-expansion-panel-header>
     
-    <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;"
-      [document]="expandPart.bodyText?.json"
-      [nodeRenderers]="nodeRenderers"
-      [markRenderers]="markRenderers">
-    </ngx-contentful-rich-text>
+    <!-- Lazy render the rich text when the panel is opened -->
+    <ng-template [matExpansionPanelContent]>
+      <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;"
+        [document]="expandPart.bodyText?.json"
+        [nodeRenderers]="nodeRenderers"
+        [markRenderers]="markRenderers">
+      </ngx-contentful-rich-text>
+    </ng-template> 
     
   </mat-expansion-panel>
 </ng-container>
