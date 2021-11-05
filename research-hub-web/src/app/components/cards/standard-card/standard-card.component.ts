@@ -1,4 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Article, CaseStudy, Equipment, Event, Funding, Service, Software, SubHub } from '@app/graphql/schema';
+
+export type PossibleContentItems
+  = Article
+  | SubHub
+  | CaseStudy
+  | Equipment
+  | Event
+  | Funding
+  | Service
+  | Software
 
 @Component({
   selector: 'app-standard-card',
@@ -9,7 +20,7 @@ import { Component, Input, OnInit } from '@angular/core';
   ]
 })
 export class StandardCardComponent {
-  @Input() contentItem: any;
+  @Input() contentItem: PossibleContentItems;
   @Input() isSubhubChild = false;
 
   constructor() { }
