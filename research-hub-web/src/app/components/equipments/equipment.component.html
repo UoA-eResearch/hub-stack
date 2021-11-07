@@ -20,7 +20,7 @@
     ></app-breadcrumbs>
     <!-- Title and Summary -->
     <div fxLayout="column wrap">
-      <ng-container *ngTemplateOutlet="titleSummary"></ng-container>
+      <ng-container *ngTemplateOutlet="titleSummary; context: { $implicit: equipment }"></ng-container>
 
       <!-- Call To Action -->
       <div class="section" *ngIf="equipment.callToAction">
@@ -65,7 +65,7 @@
           equipment.yearOfManufacture
         "
       >
-        <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
+        <ng-container *ngTemplateOutlet="specificationsTable; context: { $implicit: equipment }"></ng-container>
       </div>
 
       <!-- Specifications Table 2 -->
@@ -79,7 +79,7 @@
           equipment.location
         "
       >
-        <ng-container *ngTemplateOutlet="specificationsTable2"></ng-container>
+        <ng-container *ngTemplateOutlet="specificationsTable2; context: { $implicit: equipment }"></ng-container>
       </div>
     </div>
 
@@ -160,7 +160,7 @@
   ></div>
 </ng-template>
 
-<ng-template #specificationsTable>
+<ng-template #specificationsTable let-equipment>
   <div id="specifications-table" class="specifications">
     <h4>Equipment</h4>
     <table class="specifications-table" role="table">
@@ -184,7 +184,7 @@
   </div>
 </ng-template>
 
-<ng-template #specificationsTable2>
+<ng-template #specificationsTable2 let-equipment>
   <div id="specifications-table2" class="specifications">
     <h4>User</h4>
     <table class="specifications-table" role="table">
@@ -221,7 +221,7 @@
   </div>
 </ng-template>
 
-<ng-template #titleSummary>
+<ng-template #titleSummary let-title>
   <h1
     role="heading"
     aria-level="1"
