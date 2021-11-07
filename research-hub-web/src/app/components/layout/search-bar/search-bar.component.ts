@@ -18,7 +18,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @ViewChild('searchBox') searchBox: ElementRef;
   @ViewChild('filterContent') filterContent: ElementRef
 
-  // public searchText: string;
   public searchText: FormControl = new FormControl();
   public activeFilters: SearchFilters;
   public showMobileSearch = false;
@@ -51,7 +50,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    //this.subscriptions.add(this.searchService.searchText.subscribe(text => this.searchText = text));
     this.subscriptions.add(this.searchService.searchFilters.subscribe(filters => this.activeFilters = filters));
     this.subscriptions.add(this.router.events.pipe(
       filter(event => event instanceof NavigationStart)

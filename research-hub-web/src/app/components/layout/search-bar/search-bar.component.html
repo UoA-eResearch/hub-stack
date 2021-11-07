@@ -41,7 +41,7 @@
         [formControl]="searchText"
       />
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let term of filteredTerms | async" [value]="term"
+        <mat-option class="search-autocomplete-options" *ngFor="let term of filteredTerms | async" [value]="term"
           (click)="search()"
         >
           {{ term }}
