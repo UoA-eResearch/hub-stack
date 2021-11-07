@@ -35,11 +35,18 @@
         id="search"
         #searchBox
         type="search"
-        [(ngModel)]="searchText"
-        [ngModelOptions]="{ standalone: true }"
         (keydown.enter)="search()"
         placeholder="Search for anything"
+        [matAutocomplete]="auto"
+        [formControl]="searchText"
       />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option class="search-autocomplete-options" *ngFor="let term of filteredTerms | async" [value]="term"
+          (click)="search()"
+        >
+          {{ term }}
+        </mat-option>
+      </mat-autocomplete>
 
       <button
         id="settingsButton"

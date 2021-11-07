@@ -1,0 +1,42 @@
+query AllPageTitles {
+  articleCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
+  caseStudyCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
+  equipmentCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
+  eventCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
+  fundingCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
+  serviceCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
+  softwareCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
+  subHubCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
+}

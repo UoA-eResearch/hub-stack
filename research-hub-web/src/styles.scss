@@ -216,6 +216,13 @@ app-search-filters {
   }
 }
 
+mat-option.search-autocomplete-options .mat-option-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
 /**
  * Browser Settings
  */
