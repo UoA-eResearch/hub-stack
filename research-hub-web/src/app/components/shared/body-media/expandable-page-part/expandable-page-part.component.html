@@ -1,11 +1,11 @@
 <mat-expansion-panel *ngIf="expandPart$ | async as expandPart" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
   
   <mat-expansion-panel-header>  
-    <mat-panel-title >
+    <mat-panel-title>
       {{ expandPart.title }}
     </mat-panel-title>
 
-    <mat-panel-description *ngIf="panelOpenState === false">
+    <mat-panel-description *ngIf="panelOpenState === false" ngClass.xs="description-xs">
       {{ getSummaryText(expandPart.bodyText?.json) }}
     </mat-panel-description>
   </mat-expansion-panel-header>
