@@ -1,22 +1,26 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { HarnessLoader, parallel } from '@angular/cdk/testing';
+import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatBadgeHarness } from '@angular/material/badge/testing';
+import { MatAutocompleteHarness } from '@angular/material/autocomplete/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SearchService } from '@services/search.service';
+import { PageTitles, SearchAutocompleteService } from '@services/search-autocomplete.service';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { SearchFiltersComponent } from '../search-filters/search-filters.component';
 
 import { SearchBarComponent } from './search-bar.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -25,6 +29,17 @@ describe('SearchBarComponent', () => {
   let loader: HarnessLoader;
   let router: Router;
 
+  const pageTitles: PageTitles = {
+    articleTitles: ['an article'],
+    caseStudyTitles: ['a caseStudy'],
+    equipmentTitles: ['an equipment'],
+    eventTitles: ['an event'],
+    fundingTitles: ['a funding'],
+    serviceTitles: ['a service'],
+    softwareTitles: ['a software'],
+    subHubTitles: ['a subHub']
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -32,7 +47,8 @@ describe('SearchBarComponent', () => {
         MatBadgeModule,
         MockModule(MatButtonModule),
         MockModule(MatIconModule),
-        MockModule(FormsModule)
+        ReactiveFormsModule,
+        MatAutocompleteModule
       ],
       declarations: [
         SearchBarComponent,
@@ -49,6 +65,10 @@ describe('SearchBarComponent', () => {
               sort: 'relevance'
             }
           }
+        }),
+        MockProvider(SearchAutocompleteService, {
+          allTitles$: of(pageTitles),
+          getAutocompleteTerms: () => {return ['Covfefé']}
         }),
         MockProvider(BreakpointObserver, {
           observe: () => EMPTY
@@ -183,4 +203,24 @@ describe('SearchBarComponent', () => {
 
     expect(!component.showMobileSearch && !component.showFilters).toBeTrue()
   })
+
+  it('Should get the autocomplete terms from the autocomplete service', async () => {
+    await fixture.whenStable();
+    let filteredTerms: string[];
+
+    component.filteredTerms.subscribe((terms) => filteredTerms = terms);
+    expect(filteredTerms.length).toBe(9);
+  });
+
+  it('Should filter autocomplete terms correctly', async () => {
+    await fixture.whenStable();
+    let filteredTerms: string[];
+
+    component.filteredTerms.subscribe((terms) => filteredTerms = terms);
+
+    const input = await loader.getHarness(MatAutocompleteHarness.with({selector: '#search'}));
+    await input.enterText('covfefe');
+
+    expect(filteredTerms.length).toBe(1);
+  });
 });
