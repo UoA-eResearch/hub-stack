@@ -20,7 +20,9 @@
     ></app-breadcrumbs>
     <!-- Title and Summary -->
     <div fxLayout="column wrap">
-      <ng-container *ngTemplateOutlet="titleSummary; context: { $implicit: equipment }"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="titleSummary; context: { $implicit: equipment }"
+      ></ng-container>
 
       <!-- Call To Action -->
       <div class="section" *ngIf="equipment.callToAction">
@@ -65,7 +67,12 @@
           equipment.yearOfManufacture
         "
       >
-        <ng-container *ngTemplateOutlet="specificationsTable; context: { $implicit: equipment }"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="
+            specificationsTable;
+            context: { $implicit: equipment }
+          "
+        ></ng-container>
       </div>
 
       <!-- Specifications Table 2 -->
@@ -79,7 +86,12 @@
           equipment.location
         "
       >
-        <ng-container *ngTemplateOutlet="specificationsTable2; context: { $implicit: equipment }"></ng-container>
+        <ng-container
+          *ngTemplateOutlet="
+            specificationsTable2;
+            context: { $implicit: equipment }
+          "
+        ></ng-container>
       </div>
     </div>
 
@@ -98,9 +110,13 @@
         Explore Related
         <hr />
       </h3>
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+      <div
+        id="you-might-be-interested-in"
+        fxLayout="row wrap"
+        fxLayout.xs="column"
+        fxLayoutGap="25px"
+      >
         <app-standard-card
-          id="you-might-be-interested-in"
           *ngFor="let content of equipment.relatedItemsCollection.items"
           [contentItem]="content"
         ></app-standard-card>

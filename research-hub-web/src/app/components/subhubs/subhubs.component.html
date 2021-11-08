@@ -92,6 +92,7 @@
         subHub.internalPagesCollection.items.length > 0 ||
         subHub.externalPagesCollection.items.length > 0
       "
+      id="subhub-children"
       fxLayout="row wrap"
       fxLayout.xs="column"
       fxLayoutGap="25px"
@@ -121,9 +122,13 @@
         Explore Related
         <hr />
       </h3>
-      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+      <div
+        id="you-might-be-interested-in"
+        fxLayout="row wrap"
+        fxLayout.xs="column"
+        fxLayoutGap="25px"
+      >
         <app-standard-card
-          id="you-might-be-interested-in"
           *ngFor="let content of subHub.relatedItemsCollection.items"
           [contentItem]="content"
         ></app-standard-card>
