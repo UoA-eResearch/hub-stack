@@ -45,6 +45,16 @@
       <div class="mini-hr" *ngIf="!funding.callToAction"><hr /></div>
     </div>
 
+    <!-- Funding Purpose -->
+    <ngx-contentful-rich-text
+      *ngIf="funding.purpose"
+      id="bodyMediaList"
+      style="word-break: break-word"
+      [document]="funding.purpose?.json"
+      [nodeRenderers]="nodeRenderers"
+      [markRenderers]="markRenderers"
+    ></ngx-contentful-rich-text>
+
     <!-- Specifications Table -->
     <div
       class="section-2"
