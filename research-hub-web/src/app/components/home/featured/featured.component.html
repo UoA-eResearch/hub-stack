@@ -1,6 +1,6 @@
 <app-content-container *ngIf="featuredItems$ | async as featuredItems">
   <app-content-title [title]="title"></app-content-title>
-  <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
+  <div fxLayout="row wrap" fxLayoutGap="20px grid" fxLayoutAlign="space-evenly">
     <app-standard-card
       *ngFor="let item of featuredItems.items"
       [contentItem]="item"
