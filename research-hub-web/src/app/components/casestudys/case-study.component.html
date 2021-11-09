@@ -176,6 +176,7 @@
           <hr />
         </h3>
         <div
+          id="you-might-be-interested-in"
           fxLayout.lg="column"
           fxLayoutGap.lg="0px"
           fxLayout.lt-lg="row wrap"
@@ -184,7 +185,6 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-standard-card
-            id="you-might-be-interested-in"
             *ngFor="let content of caseStudy.relatedItemsCollection.items"
             [contentItem]="content"
           ></app-standard-card>
