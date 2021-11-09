@@ -65,18 +65,36 @@
 
     <div fxLayout="row" fxLayoutAlign="space-evenly" fxLayout.lt-lg="column">
       <!-- caseStudy Body and References -->
-      <ngx-contentful-rich-text
+      <div
+        fxLayout="column"
         fxFlexOrder="2"
         fxFlexOrder.lt-lg="1"
         fxFlex="1 1 35%"
         fxFlexOrder.xs="1"
-        id="bodyMediaList"
-        class="section-2"
-        style="word-break: break-word"
-        [document]="caseStudy.bodyText?.json"
-        [nodeRenderers]="nodeRenderers"
-        [markRenderers]="markRenderers"
-      ></ngx-contentful-rich-text>
+      >
+        <ngx-contentful-rich-text
+          id="bodyMediaList"
+          class="section-2"
+          style="word-break: break-word"
+          [document]="caseStudy.bodyText?.json"
+          [nodeRenderers]="nodeRenderers"
+          [markRenderers]="markRenderers"
+        ></ngx-contentful-rich-text>
+
+        <h2>References</h2>
+        <ngx-contentful-rich-text
+          *ngIf="caseStudy.references; else noReferences"
+          id="bodyMediaList"
+          style="word-break: break-word"
+          [document]="caseStudy.references?.json"
+          [nodeRenderers]="nodeRenderers"
+          [markRenderers]="markRenderers"
+        ></ngx-contentful-rich-text>
+
+        <ng-template #noReferences>
+          <p>It looks like there aren't any references here.</p>
+        </ng-template>
+      </div>
 
       <!-- Extra Links -->
       <div
