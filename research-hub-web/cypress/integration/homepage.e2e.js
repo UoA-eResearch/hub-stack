@@ -25,7 +25,7 @@ describe('ResearchHubs Homepage', () => {
     it('displays contact section', () => {
         cy.get('app-contact').should('be.visible');
         cy.get('#contacts h2').text().should('not.be.empty');
-        cy.get('#contacts .feedback-container p').text().should('not.be.empty');
+        cy.get('#contacts .feedback-container span').text().should('not.be.empty');
     })
 
     it('displays footer', () => {

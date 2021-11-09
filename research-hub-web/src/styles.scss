@@ -53,9 +53,11 @@ hr {
   }
   ol li {
     position: relative;
+    line-height: 30px;
+    padding-left: 1em;
     counter-increment: ol-counter;
     p {
-      padding-left: 20px;
+      display: inline;
     }
   }
   ol li::marker {
@@ -213,6 +215,13 @@ app-search-filters {
     }
   }
 }
+
+mat-option.search-autocomplete-options .mat-option-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 
 /**
  * Browser Settings
