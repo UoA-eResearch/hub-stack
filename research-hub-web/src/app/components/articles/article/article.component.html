@@ -1,4 +1,4 @@
-<div id="article-container" *ngIf="article$ | async as article">
+<div id="article-container" *ngIf="article">
   <div
     class="banner-container"
     [ngClass]="
@@ -115,7 +115,8 @@
           <hr />
         </h3>
         <div
-          fxLayout.lg="column"
+          fxLayout="column"
+          fxLayoutGap="0px"
           fxLayout.lt-lg="row wrap"
           fxLayoutGap.lt-lg="25px"
           fxLayout.lt-sm="column"
@@ -133,7 +134,8 @@
         </h3>
         <div
           id="documents"
-          fxLayout.lg="column"
+          fxLayout="column"
+          fxLayoutGap="0px"
           fxLayout.lt-lg="row wrap"
           fxLayoutGap.lt-lg="25px"
           fxLayout.lt-sm="column"
@@ -149,7 +151,8 @@
           <hr />
         </h3>
         <div
-          fxLayout.lg="column"
+          fxLayout="column"
+          fxLayoutGap="0px"
           fxLayout.lt-lg="row wrap"
           fxLayoutGap.lt-lg="25px"
           fxLayout.lt-sm="column"
@@ -175,7 +178,8 @@
         </h3>
         <div
           id="you-might-be-interested-in"
-          fxLayout.lg="column"
+          fxLayout="column"
+          fxLayoutGap="0px"
           fxLayout.lt-lg="row wrap"
           fxLayoutGap.lt-lg="25px"
           fxLayout.lt-sm="column"

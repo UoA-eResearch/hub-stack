@@ -1,17 +1,11 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  AllArticlesGQL,
-  AllArticlesSlugsGQL,
-  Article,
-  GetArticleBySlugGQL
-} from '@graphql/schema';
+import { Article, GetArticleBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
-import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, Subscription, throwError } from 'rxjs';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -20,23 +14,22 @@ import supportsWebP from 'supports-webp';
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss']
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
 
+  private subscriptions = new Subscription();
+
   public isMobile: Boolean;
   public bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
-  public article$: Observable<Article>;
+  public article: Article;
   public parentSubHubs;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
 
   constructor(
     public route: ActivatedRoute,
-    public allArticlesGQL: AllArticlesGQL,
-    public allArticlesSlugsGQL: AllArticlesSlugsGQL,
     public getArticleBySlugGQL: GetArticleBySlugGQL,
-    public cerGraphQLService: CerGraphqlService,
     public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
@@ -60,18 +53,24 @@ export class ArticleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.article$ = this.route.params.pipe(
+    this.subscriptions.add(this.route.params.pipe(
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
       switchMap((slug) => this.loadArticle(slug))
-    );
-
+    ).subscribe({
+      next: (article: Article) => this.article = article,
+      error: (error) => {
+        console.error(error);
+        this.router.navigateByUrl('/error/404');
+      }
+    }));
   }
 
-  /**
-   * Function that loads the article/collection depending on if a slug is present.
-   */
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
+  }
+
   private loadArticle(slug: string): Observable<Article> {
     return this.getArticleBySlug(slug).pipe(
       map(data => {
