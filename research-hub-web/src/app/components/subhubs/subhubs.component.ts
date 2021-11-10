@@ -93,6 +93,10 @@ export class SubhubsComponent implements OnInit, OnDestroy {
         // Remove nulls from server in case of error.
         data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
         data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
+        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item);
+        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
         
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
