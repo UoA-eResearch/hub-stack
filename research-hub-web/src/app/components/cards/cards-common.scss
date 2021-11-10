@@ -22,7 +22,7 @@
   a {
     color: $dark-grey;
     &:hover {
-      text-decoration: underline;
+      border-bottom: solid 2px $dark-grey;
     }
   }
 }
