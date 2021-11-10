@@ -21,7 +21,7 @@ import supportsWebP from 'supports-webp';
   templateUrl: './software.component.html',
   styleUrls: ['./software.component.scss']
 })
-export class SoftwaresComponent implements OnInit, OnDestroy {
+export class SoftwareComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
   public slug: string;

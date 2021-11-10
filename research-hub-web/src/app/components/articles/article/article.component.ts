@@ -16,11 +16,11 @@ import { map, mergeMap, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
-  selector: 'app-articles',
+  selector: 'app-article',
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.scss']
 })
-export class ArticlesComponent implements OnInit {
+export class ArticleComponent implements OnInit {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
 
