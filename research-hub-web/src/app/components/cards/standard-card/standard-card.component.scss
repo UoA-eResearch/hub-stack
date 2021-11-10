@@ -9,6 +9,9 @@
   .mat-card-title {
     >a {
       color: white;
+      &:hover {
+        border-bottom: solid 2px white;
+      }
     }
   }
   .card-summary {
