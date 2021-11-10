@@ -9,13 +9,15 @@ import { ContentTitleComponent } from './content-title/content-title.component';
 import { ContentContainerComponent } from './content-container/content-container.component';
 import { BannerImageComponent } from './banner-image/banner-image.component';
 import { ContactComponent } from './contact/contact.component';
+import { CardsModule } from '../cards/cards.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
-    routing
+    routing,
+    CardsModule
   ],
   declarations: [
     HomeComponent,
