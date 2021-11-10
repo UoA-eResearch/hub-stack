@@ -20,10 +20,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  public isMobile: Boolean;
   public bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   public article: Article;
-  public parentSubHubs;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
 
@@ -32,18 +30,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
     public getArticleBySlugGQL: GetArticleBySlugGQL,
     public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
-    public router: Router,
-    private deviceService: DeviceDetectorService,
+    public router: Router
   ) {
-    this.detectDevice();
     this.detectWebP();
 
     this.nodeRenderers = this.bodyMediaService.nodeRenderers;
     this.markRenderers = this.bodyMediaService.markRenderers;
-  }
-
-  detectDevice() {
-    this.isMobile = this.deviceService.isMobile();
   }
 
   detectWebP() {
@@ -62,7 +54,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       next: (article: Article) => this.article = article,
       error: (error) => {
         console.error(error);
-        this.router.navigateByUrl('/error/404');
+        this.router.navigate(['error', 404]);
       }
     }));
   }
@@ -74,7 +66,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
   private loadArticle(slug: string): Observable<Article> {
     return this.getArticleBySlug(slug).pipe(
       map(data => {
-
         // Strip nulls from related collection data.
         data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
         data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item);
@@ -101,15 +92,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
         return data;
       })
     );
-
-    // NOTE: this should be moved to the breadcrumb component
-    // this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-
   }
 
   /**
    * Function that returns an individual article from the ArticleCollection by it's slug
-   * as an observable of type Article. This is then unwrapped with the async pipe.
+   * as an observable of type Article.
    *
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */

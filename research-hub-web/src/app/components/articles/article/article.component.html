@@ -1,13 +1,8 @@
 <div id="article-container" *ngIf="article">
   <div
     class="banner-container"
-    [ngClass]="
-      bannerImageUrl === undefined
-        ? ''
-        : isMobile
-        ? 'mobile-banner'
-        : 'standard-banner'
-    "
+    [ngClass]="{ 'standard-banner': bannerImageUrl }"
+    [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
     [ngStyle]="
       bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
     "
@@ -78,9 +73,7 @@
   </div>
 
   <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
-    <app-breadcrumbs
-      [title]="article.title"
-    ></app-breadcrumbs>
+    <app-breadcrumbs [title]="article.title"></app-breadcrumbs>
 
     <div fxLayout="row" fxLayoutAlign="space-around" fxLayout.lt-lg="column">
       <!-- Article Body -->
