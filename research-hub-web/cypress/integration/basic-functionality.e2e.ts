@@ -9,16 +9,14 @@ describe('ResearchHubs Basic Functionality', () => {
     });
 
     it('page loads and has title', () => {
-        cy.get('title').text().should('not.be.empty');
+        cy.get('title').should('not.be.empty');
     });
 
     it('an image asset is displayed', () => {
         cy.get('[alt="hub-logo"]')
             .should('be.visible')
-            .and(($img) => {
-                // "naturalWidth" and "naturalHeight" are set when the image loads
-                expect($img[0].naturalWidth).to.be.greaterThan(0);
-            });
+            .invoke('width')
+            .should('be.greaterThan', 0);
     });
 
 });
