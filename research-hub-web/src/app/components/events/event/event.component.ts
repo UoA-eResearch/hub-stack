@@ -17,11 +17,11 @@ import { flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
-  selector: 'app-events',
+  selector: 'app-event',
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.scss']
 })
-export class EventsComponent implements OnInit, OnDestroy {
+export class EventComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
   public slug: string;

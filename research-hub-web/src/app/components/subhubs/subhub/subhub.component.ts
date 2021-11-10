@@ -16,11 +16,11 @@ import { flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
-  selector: 'app-subhubs',
+  selector: 'app-subhub',
   templateUrl: './subhub.component.html',
   styleUrls: ['./subhub.component.scss']
 })
-export class SubhubsComponent implements OnInit, OnDestroy {
+export class SubhubComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
   public slug: string;

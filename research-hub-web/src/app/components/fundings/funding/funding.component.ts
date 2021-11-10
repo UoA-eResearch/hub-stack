@@ -17,11 +17,11 @@ import { flatMap, pluck } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
-  selector: 'app-fundings',
+  selector: 'app-funding',
   templateUrl: './funding.component.html',
   styleUrls: ['./funding.component.scss']
 })
-export class FundingsComponent implements OnInit, OnDestroy {
+export class FundingComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
   public slug: string;
