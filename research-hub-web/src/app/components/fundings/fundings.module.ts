@@ -5,6 +5,7 @@ import { FundingRoutingModule } from './funding-routing.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { FundingListComponent } from './funding-list/funding-list.component';
+import { CardsModule } from '../cards/cards.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FundingListComponent } from './funding-list/funding-list.component';
     CommonModule,
     FundingRoutingModule,
     SharedModule,
-    NgxContentfulRichTextModule
+    NgxContentfulRichTextModule,
+    CardsModule
   ]
 })
 export class FundingsModule { }

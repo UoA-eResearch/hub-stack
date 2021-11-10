@@ -5,15 +5,15 @@ describe('ResearchHubs Equipment Pages', () => {
     });
 
     it('can visit an equipment and display its title', () => {
-        cy.get('h1.content-title').text().should('not.be.empty');
+        cy.get('h1.content-title').should('not.be.empty');
     });
 
     it('can visit an equipment page and display its subtitle', () => {
-        cy.get('.content-summary').text().should('not.be.empty');
+        cy.get('.content-summary').should('not.be.empty');
     });
 
     it('equipment displays body text', () => {
-      cy.get('#bodyMediaList > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').text().should('not.be.empty');
+      cy.get('#bodyMediaList > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').should('not.be.empty');
     });
 
     it('equipment displays specifications table', () => {
@@ -27,16 +27,16 @@ describe('ResearchHubs Equipment Pages', () => {
     });
 
     it('displays a list of related items', () => {
-        cy.get('#you-might-be-interested-in mat-nav-list:first-child .card-title').text().should('not.be.empty');
+        cy.get('#you-might-be-interested-in mat-nav-list:first-child .card-title').should('not.be.empty');
     });
 
     it('clicking a related item takes you to its page', () => {
-        cy.get('#you-might-be-interested-in mat-nav-list:first-child mat-card-title > a').click();
-        cy.get('h1.content-title').text().should('not.be.empty');
-    });
+      cy.get('#you-might-be-interested-in>app-standard-card').first().click();
+      cy.get('h1.content-title').should('not.be.empty');
+});
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations mat-nav-list:first-child a').text().should('not.be.empty');
+        cy.get('#organisations mat-nav-list:first-child a').should('not.be.empty');
     });
 
 });

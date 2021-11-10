@@ -31,3 +31,9 @@
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
+
+@media (max-width: 1350px) {
+  .site-padding {
+    padding: 0 2.5vw;
+  }
+}

@@ -5,6 +5,7 @@ import { CaseStudyComponent } from './case-study/case-study.component';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { CaseStudyListComponent } from './case-study-list/case-study-list.component';
+import { CardsModule } from '../cards/cards.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { CaseStudyListComponent } from './case-study-list/case-study-list.compon
     CommonModule,
     CaseStudyRoutingModule,
     SharedModule,
-    NgxContentfulRichTextModule
+    NgxContentfulRichTextModule,
+    CardsModule
   ]
 })
 export class CasestudysModule { }
