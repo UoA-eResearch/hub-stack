@@ -6,6 +6,7 @@ import { SoftwareComponent } from './software/software.component';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { SoftwareListComponent } from './software-list/software-list.component';
+import { CardsModule } from '../cards/cards.module';
 
 @NgModule({
   declarations: [SoftwareComponent, SoftwareListComponent],
@@ -13,7 +14,8 @@ import { SoftwareListComponent } from './software-list/software-list.component';
     CommonModule,
     SoftwareRoutingModule,
     SharedModule,
-    NgxContentfulRichTextModule
+    NgxContentfulRichTextModule,
+    CardsModule
   ]
 })
 export class SoftwaresModule { }

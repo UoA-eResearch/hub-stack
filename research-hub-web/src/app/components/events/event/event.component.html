@@ -1,139 +1,191 @@
 <div id="event-container" *ngIf="event | async as event">
+  <!-- Banner -->
+  <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
-    <!-- Templates -->
-    <ng-template #breadcrumbs><app-breadcrumbs [contentItem]="parentSubHubs" [title]="event.title"></app-breadcrumbs></ng-template>
+  <div
+    class="site-padding margin-bottom"
+    ngClass.lt-md="site-padding-mobile top-padding"
+  >
+    <app-breadcrumbs
+      [contentItem]="parentSubHubs"
+      [title]="event.title"
+    ></app-breadcrumbs>
+    <!-- Title and Summary -->
+    <div fxLayout="column wrap">
+      <ng-container
+        *ngTemplateOutlet="titleSummary; context: { $implicit: event }"
+      ></ng-container>
 
-    <ng-template #dynamicBanner>
-        <div class="banner-container"
-            [ngClass]="bannerImageUrl === undefined ? 'no-banner' : isMobile ? 'mobile-banner' : 'standard-banner'"
-            [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
-        </div>
-    </ng-template>
-
-    <ng-template #titleSummary>
-        <h1 role="heading" aria-level="1" class="content-title"
-        ngClass.lt-md="content-title-mobile">{{ event.title }}</h1>
-        <p class="content-summary" ngClass.sm="content-summary-sm"
-        ngClass.xs="content-summary-xs">{{ event.summary }}</p>
-    </ng-template>
-
-    <ng-template #specificationsTable>
-        <div
-            id="specifications-table"
-            class="specifications section">
-            <table class="specifications-table" role="table">
-                <tr role="row">
-                <th role="columnheader">Details</th>
-                <th role="columnheader">Description</th>
-                </tr>
-                <tr *ngIf="event.audience" role="row">
-                    <td role="cell">Audience</td>
-                    <td role="cell">{{ event.audience }}</td>
-                </tr>
-                <tr *ngIf="event.mode" role="row">
-                    <td role="cell">Mode of Delivery</td>
-                    <td role="cell">{{ event.mode }}</td>
-                </tr>
-                <tr *ngIf="event.availability" role="row">
-                    <td role="cell">Availability</td>
-                    <td role="cell">{{ event.availability }}</td>
-                </tr>
-                <tr *ngIf="event.date && !event.availability" role="row">
-                    <td role="cell">Date</td>
-                    <td role="cell"> {{ event.date | date:'longDate'}} {{ event.date | date:'shortTime'}}</td>
-                </tr>
-                <tr *ngIf="event.location" role="row">
-                    <td role="cell">Location</td>
-                    <td role="cell">
-                        <ngx-contentful-rich-text [document]="event.location.json"></ngx-contentful-rich-text>
-                    </td>
-                </tr>
-                <tr *ngIf="event.access" role="row">
-                    <td role="cell">Access</td>
-                    <td [innerHTML]="event.access" role="cell"></td>
-                </tr>
-            </table>
-        </div>
-    </ng-template>
-
-    <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'"
-            [contentItem]="event.relatedItemsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'"
-            [contentItem]="event.relatedOrgsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #relatedDocs let-hide="hideImage" let-flex="flex">
-        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'"
-            [contentItem]="event.relatedDocsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'"
-            [contentItem]="event.relatedContactsCollection"></app-cards>
-    </ng-template>
-
-    <!-- Banner -->
-    <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
-
-    <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile top-padding">
-
-        <!-- Breadcrumbs -->
-        <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-
-        <div>
-
-            <!-- Title and Summary -->
-            <div fxLayout="column wrap">
-                <div><ng-container *ngTemplateOutlet="titleSummary"></ng-container></div>
-
-                <!-- Call To Action -->
-                <div *ngIf="event.callToAction">
-                    <a href="{{ event.callToAction }}" target="_blank" mat-flat-button class="standard-button section">
-                        <span *ngIf="event.callToActionLabel">{{ event.callToActionLabel }}</span>
-                        <span *ngIf="!event.callToActionLabel">View Event</span>
-                    </a>
-                </div>
-                <div class="mini-hr" *ngIf="!event.callToAction"><hr/></div>
-            </div>
-
-            <!-- Event Body -->
-            <div>
-                <ngx-contentful-rich-text id="bodyMediaList" style="word-break:break-word;" [document]="event.bodyText.json"
-                    [nodeRenderers]="nodeRenderers" [markRenderers]="markRenderers"></ngx-contentful-rich-text>
-            </div>
-
-            <!-- Specifications Table -->
-            <div class="section-2" *ngIf="
-                event.audience ||
-                event.mode ||
-                event.availability ||
-                event.date ||
-                event.access">
-                <ng-container *ngTemplateOutlet="specificationsTable"></ng-container>
-            </div>
-
-            <!-- Related -->
-            <div
-                class="event-owners section"
-                fxLayout="column">
-                <div *ngIf="event.relatedItemsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedItems; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
-                </div>
-                <div *ngIf="event.relatedContactsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedContacts; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
-                </div>
-                <div *ngIf="event.relatedOrgsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedOrganisations; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
-                </div>
-                <div  *ngIf="event.relatedDocsCollection?.items.length > 0" fxFlex>
-                    <ng-container *ngTemplateOutlet="relatedDocs; context: { hideImage: false, flex: 'row wrap' }"></ng-container>
-                </div>
-            </div>
-        </div>
+      <!-- Call To Action -->
+      <div *ngIf="event.callToAction">
+        <a
+          href="{{ event.callToAction }}"
+          target="_blank"
+          mat-flat-button
+          class="standard-button section"
+        >
+          <span *ngIf="event.callToActionLabel">{{
+            event.callToActionLabel
+          }}</span>
+          <span *ngIf="!event.callToActionLabel">View Event</span>
+        </a>
+      </div>
+      <div class="mini-hr" *ngIf="!event.callToAction"><hr /></div>
     </div>
-    <div class="section"></div>
+
+    <!-- Event Body -->
+    <ngx-contentful-rich-text
+      id="bodyMediaList"
+      style="word-break: break-word"
+      [document]="event.bodyText.json"
+      [nodeRenderers]="nodeRenderers"
+      [markRenderers]="markRenderers"
+    ></ngx-contentful-rich-text>
+
+    <!-- Specifications Table -->
+    <div
+      class="section-2"
+      *ngIf="
+        event.audience ||
+        event.mode ||
+        event.availability ||
+        event.date ||
+        event.access
+      "
+    >
+      <ng-container
+        *ngTemplateOutlet="specificationsTable; context: { $implicit: event }"
+      ></ng-container>
+    </div>
+
+    <!-- Related -->
+    <div class="event-owners section" fxLayout="column">
+      <h3>
+        Explore Related
+        <hr />
+      </h3>
+      <div
+        id="you-might-be-interested-in"
+        fxLayout="row wrap"
+        fxLayout.xs="column"
+        fxLayoutGap="25px"
+      >
+        <app-standard-card
+          *ngFor="let content of event.relatedItemsCollection.items"
+          [contentItem]="content"
+        ></app-standard-card>
+      </div>
+
+      <h3 *ngIf="event?.relatedContactsCollection.items.length > 0">
+        Contacts
+        <hr />
+      </h3>
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+        <app-contact-card
+          *ngFor="let person of event.relatedContactsCollection.items"
+          [person]="person"
+        ></app-contact-card>
+      </div>
+
+      <h3 *ngIf="event?.relatedOrgsCollection.items.length > 0">
+        Organisations
+        <hr />
+      </h3>
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+        <app-org-unit-card
+          *ngFor="let orgUnit of event.relatedOrgsCollection.items"
+          [orgUnit]="orgUnit"
+        ></app-org-unit-card>
+      </div>
+
+      <h3 *ngIf="event?.relatedDocsCollection.items.length > 0">
+        Documents
+        <hr />
+      </h3>
+      <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
+        <app-document-card
+          *ngFor="let document of event.relatedDocsCollection.items"
+          [document]="document"
+        ></app-document-card>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- Templates -->
+
+<ng-template #dynamicBanner>
+  <div
+    class="banner-container"
+    [ngClass]="
+      bannerImageUrl === undefined
+        ? 'no-banner'
+        : isMobile
+        ? 'mobile-banner'
+        : 'standard-banner'
+    "
+    [ngStyle]="
+      bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
+    "
+  ></div>
+</ng-template>
+
+<ng-template #titleSummary let-event>
+  <h1
+    role="heading"
+    aria-level="1"
+    class="content-title"
+    ngClass.lt-md="content-title-mobile"
+  >
+    {{ event.title }}
+  </h1>
+  <p
+    class="content-summary"
+    ngClass.sm="content-summary-sm"
+    ngClass.xs="content-summary-xs"
+  >
+    {{ event.summary }}
+  </p>
+</ng-template>
+
+<ng-template #specificationsTable let-event>
+  <div id="specifications-table" class="specifications section">
+    <table class="specifications-table" role="table">
+      <tr role="row">
+        <th role="columnheader">Details</th>
+        <th role="columnheader">Description</th>
+      </tr>
+      <tr *ngIf="event.audience" role="row">
+        <td role="cell">Audience</td>
+        <td role="cell">{{ event.audience }}</td>
+      </tr>
+      <tr *ngIf="event.mode" role="row">
+        <td role="cell">Mode of Delivery</td>
+        <td role="cell">{{ event.mode }}</td>
+      </tr>
+      <tr *ngIf="event.availability" role="row">
+        <td role="cell">Availability</td>
+        <td role="cell">{{ event.availability }}</td>
+      </tr>
+      <tr *ngIf="event.date && !event.availability" role="row">
+        <td role="cell">Date</td>
+        <td role="cell">
+          {{ event.date | date: "longDate" }}
+          {{ event.date | date: "shortTime" }}
+        </td>
+      </tr>
+      <tr *ngIf="event.location" role="row">
+        <td role="cell">Location</td>
+        <td role="cell">
+          <ngx-contentful-rich-text
+            [document]="event.location.json"
+          ></ngx-contentful-rich-text>
+        </td>
+      </tr>
+      <tr *ngIf="event.access" role="row">
+        <td role="cell">Access</td>
+        <td [innerHTML]="event.access" role="cell"></td>
+      </tr>
+    </table>
+  </div>
+</ng-template>

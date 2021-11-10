@@ -5,6 +5,7 @@ import { ArticlesComponent } from './article/article.component';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { ArticleListComponent } from './article-list/article-list.component';
+import { CardsModule } from '../cards/cards.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ArticleListComponent } from './article-list/article-list.component';
     CommonModule,
     ArticlesRoutingModule,
     SharedModule,
-    NgxContentfulRichTextModule
+    NgxContentfulRichTextModule,
+    CardsModule
   ]
 })
 export class ArticlesModule { }

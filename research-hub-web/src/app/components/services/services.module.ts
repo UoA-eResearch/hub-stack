@@ -6,6 +6,7 @@ import { ServiceComponent } from './service/service.component';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { ServiceListComponent } from './service-list/service-list.component';
+import { CardsModule } from '../cards/cards.module';
 
 @NgModule({
   declarations: [ServiceComponent, ServiceListComponent],
@@ -13,7 +14,8 @@ import { ServiceListComponent } from './service-list/service-list.component';
     CommonModule,
     ServiceRoutingModule,
     SharedModule,
-    NgxContentfulRichTextModule
+    NgxContentfulRichTextModule,
+    CardsModule
   ]
 })
 export class ServicesModule { }

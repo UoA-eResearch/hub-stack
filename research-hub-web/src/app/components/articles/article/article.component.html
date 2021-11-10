@@ -1,108 +1,192 @@
 <div id="article-container" *ngIf="article$ | async as article">
+  <div
+    class="banner-container"
+    [ngClass]="
+      bannerImageUrl === undefined
+        ? ''
+        : isMobile
+        ? 'mobile-banner'
+        : 'standard-banner'
+    "
+    [ngStyle]="
+      bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
+    "
+  >
+    <div class="banner-content">
+      <!-- Title -->
+      <h1
+        role="heading"
+        aria-level="1"
+        class="content-title"
+        ngClass.lt-md="content-title-mobile"
+        [style]="article.banner ? bannerTextStyling : ''"
+      >
+        {{ article.title }}
+      </h1>
 
-    <!-- Templates -->
-    <ng-template #breadcrumbs>
-        <app-breadcrumbs [contentItem]="parentSubHubs" [title]="article.title"></app-breadcrumbs>
-    </ng-template>
+      <!-- Maori Proverb -->
+      <h2
+        aria-level="2"
+        *ngIf="article.maoriProverb"
+        class="maori-proverb"
+        [style]="article.banner ? bannerTextStyling : ''"
+      >
+        <hr />
+        {{ article.maoriProverb }}
+        <hr />
+      </h2>
 
-    <ng-template #articleBody>
-        <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;" [document]="article.bodyText.json"
-            [nodeRenderers]="nodeRenderers" [markRenderers]="markRenderers"></ngx-contentful-rich-text>
-    </ng-template>
+      <!-- Summary -->
+      <p
+        class="content-summary"
+        ngClass.sm="content-summary-sm"
+        ngClass.xs="content-summary-xs"
+        [style]="article.banner ? bannerTextStyling : ''"
+      >
+        <small>{{ article.summary }}</small>
+      </p>
 
-    <ng-template #relatedItems let-hide="hideImage" let-flex="flex">
-        <app-cards id="you-might-be-interested-in" [flex]="flex" [hideImage]="hide" [title]="'Explore Related'"
-            [contentItem]="article.relatedItemsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #relatedOrganisations let-hide="hideImage" let-flex="flex">
-        <app-cards id="organisations" [flex]="flex" [hideImage]="hide" [title]="'Organisations'"
-            [contentItem]="article.relatedOrgsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #relatedContacts let-hide="hideImage" let-flex="flex">
-        <app-cards id="contacts" [flex]="flex" [hideImage]="hide" [title]="'Contacts'"
-            [contentItem]="article.relatedContactsCollection"></app-cards>
-    </ng-template>
-
-    <ng-template #officialDocuments let-hide="hideImage" let-flex="flex">
-        <app-cards id="documents" [flex]="flex" [hideImage]="hide" [title]="'Documents'"
-            [contentItem]="article.relatedDocsCollection"></app-cards>
-    </ng-template>
-
-        <div>
-            <div class="banner-container"
-                [ngClass]="bannerImageUrl === undefined ? '' : isMobile ? 'mobile-banner' : 'standard-banner'"
-                [ngStyle]="bannerImageUrl && {'background-image': 'url(' + bannerImageUrl + ')'}">
-
-                <div class="banner-content">
-
-                    <!-- Title -->
-                    <h1 role="heading" aria-level="1" class="content-title" ngClass.lt-md="content-title-mobile"
-                        [style]="article.banner ? bannerTextStyling : ''">{{ article.title }}</h1>
-
-                    <!-- Maori Proverb -->
-                    <h2 aria-level="2" *ngIf="article.maoriProverb" class="maori-proverb"
-                    [style]="article.banner ? bannerTextStyling : ''"><hr>{{ article.maoriProverb}}<hr></h2>
-
-                    <!-- Summary -->
-                    <p class="content-summary" ngClass.sm="content-summary-sm" ngClass.xs="content-summary-xs"
-                        [style]="article.banner ? bannerTextStyling : ''">
-                        <small>{{ article.summary }}</small></p>
-
-                    <!-- Call To Action -->
-                    <div class="section" *ngIf="article.callToAction">
-                        <div *ngIf="article.banner">
-                            <a href="{{ article.callToAction }}" mat-flat-button class="standard-button-banner">
-                                <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
-                                <span *ngIf="!article.callToActionLabel">View Article</span>
-                            </a>
-                        </div>
-                        <div *ngIf="!article.banner">
-                            <a href="{{ article.callToAction }}" target="_blank" mat-flat-button class="standard-button">
-                                <span *ngIf="article.callToActionLabel">{{ article.callToActionLabel }}</span>
-                                <span *ngIf="!article.callToActionLabel">View Article</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="site-padding" ngClass.lt-md="site-padding-mobile">
-
-                <!-- Breadcrumbs -->
-                <ng-container *ngTemplateOutlet="breadcrumbs"></ng-container>
-
-                <div fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column wrap" fxLayoutGap="5%">
-
-                    <!-- Article Body -->
-                    <div fxFlexOrder="2" fxFlexOrder.xs="1" fxFlex>
-                        <ng-container *ngTemplateOutlet="articleBody"></ng-container>
-                    </div>
-
-                    <!-- Extra Links -->
-                    <div *ngIf="
-                            article.relatedDocsCollection.items.length > 0 ||
-                            article.relatedContactsCollection.items.length > 0 ||
-                            article.relatedOrgsCollection.items.length > 0"
-                        fxLayout="column" fxFlex="20%" fxFlexOrder="1" fxFlexOrder.lt-md="2">
-
-                        <!-- Contacts -->
-                        <ng-container *ngTemplateOutlet="relatedContacts; context: { flex: 'column', hide: 'true' }"></ng-container>
-
-                        <!-- Official Documents -->
-                        <ng-container *ngTemplateOutlet="officialDocuments; context: { flex: 'column', hide: 'true'}"></ng-container>
-
-                        <!-- Organizations -->
-                        <ng-container *ngTemplateOutlet="relatedOrganisations; context: { flex: 'column', hide: 'true'}"></ng-container>
-
-                    </div>
-
-                    <!-- Related items -->
-                    <div *ngIf="article.relatedItemsCollection.items.length > 0" fxLayout="column" fxFlex="20%" fxFlexOrder="3">
-                        <ng-container *ngTemplateOutlet="relatedItems; context: { flex: 'column', hide: 'true'}"></ng-container></div>
-                </div>
-            </div>
+      <!-- Call To Action -->
+      <div class="section" *ngIf="article.callToAction">
+        <div *ngIf="article.banner">
+          <a
+            href="{{ article.callToAction }}"
+            mat-flat-button
+            class="standard-button-banner"
+          >
+            <span *ngIf="article.callToActionLabel">{{
+              article.callToActionLabel
+            }}</span>
+            <span *ngIf="!article.callToActionLabel">View Article</span>
+          </a>
         </div>
-    <div class="section"></div>
+        <div *ngIf="!article.banner">
+          <a
+            href="{{ article.callToAction }}"
+            target="_blank"
+            mat-flat-button
+            class="standard-button"
+          >
+            <span *ngIf="article.callToActionLabel">{{
+              article.callToActionLabel
+            }}</span>
+            <span *ngIf="!article.callToActionLabel">View Article</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
+    <app-breadcrumbs
+      [contentItem]="parentSubHubs"
+      [title]="article.title"
+    ></app-breadcrumbs>
+
+    <div fxLayout="row" fxLayoutAlign="space-around" fxLayout.lt-lg="column">
+      <!-- Article Body -->
+      <ngx-contentful-rich-text
+        fxFlexOrder="2"
+        fxFlexOrder.lt-lg="1"
+        fxFlex="1 1 35%"
+        fxFlexOrder.xs="1"
+        id="bodyMediaList"
+        class="section-2"
+        style="word-break: break-word"
+        [document]="article.bodyText.json"
+        [nodeRenderers]="nodeRenderers"
+        [markRenderers]="markRenderers"
+      ></ngx-contentful-rich-text>
+
+      <!-- Extra Links -->
+      <div
+        *ngIf="
+          article.relatedDocsCollection.items.length > 0 ||
+          article.relatedContactsCollection.items.length > 0 ||
+          article.relatedOrgsCollection.items.length > 0
+        "
+        fxFlex.gt-lg="0 0 350px"
+        fxLayout="column"
+        fxFlexOrder="1"
+        fxFlexOrder.lt-lg="2"
+      >
+        <h3 *ngIf="article?.relatedContactsCollection.items.length > 0">
+          Contacts
+          <hr />
+        </h3>
+        <div
+          fxLayout.lg="column"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-contact-card
+            *ngFor="let person of article.relatedContactsCollection.items"
+            [person]="person"
+          ></app-contact-card>
+        </div>
+
+        <h3 *ngIf="article?.relatedDocsCollection.items.length > 0">
+          Documents
+          <hr />
+        </h3>
+        <div
+          id="documents"
+          fxLayout.lg="column"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-document-card
+            *ngFor="let document of article.relatedDocsCollection.items"
+            [document]="document"
+          ></app-document-card>
+        </div>
+        <h3 *ngIf="article?.relatedOrgsCollection.items.length > 0">
+          Organisations
+          <hr />
+        </h3>
+        <div
+          fxLayout.lg="column"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-org-unit-card
+            *ngFor="let orgUnit of article.relatedOrgsCollection.items"
+            [orgUnit]="orgUnit"
+          ></app-org-unit-card>
+        </div>
+      </div>
+
+      <!-- Related items -->
+      <div
+        *ngIf="article.relatedItemsCollection.items.length > 0"
+        fxFlex.gt-lg="0 0 350px"
+        fxLayout="column"
+        fxFlexOrder="3"
+      >
+        <h3>
+          Explore Related
+          <hr />
+        </h3>
+        <div
+          id="you-might-be-interested-in"
+          fxLayout.lg="column"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-standard-card
+            *ngFor="let content of article.relatedItemsCollection.items"
+            [contentItem]="content"
+          ></app-standard-card>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
