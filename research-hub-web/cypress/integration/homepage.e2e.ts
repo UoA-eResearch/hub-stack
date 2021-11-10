@@ -18,17 +18,17 @@ describe('ResearchHubs Homepage', () => {
     // Only enable if featured items are enabled
     it('displays featured articles', () => {
         cy.get('app-featured').should('be.visible');
-        cy.get('app-content-title h2').text().should('not.be.empty');
-        cy.get('app-cards mat-nav-list:first-child a').text().should('not.be.empty');
+        cy.get('app-content-title h2').should('not.be.empty');
+        cy.get('app-cards mat-nav-list:first-child a').should('not.be.empty');
     })
 
     it('displays contact section', () => {
-        cy.get('app-contact').should('be.visible');
-        cy.get('#contacts h2').text().should('not.be.empty');
-        cy.get('#contacts .feedback-container span').text().should('not.be.empty');
+        cy.get('#contacts').should('be.visible');
+        cy.get('#contacts h2').should('not.be.empty');
+        cy.get('#contacts .feedback-container').should('not.be.empty');
     })
 
     it('displays footer', () => {
-        cy.get('.footer-content li:first-child a').text().should('not.be.empty');
+        cy.get('.footer-content li:first-child a').should('not.be.empty');
     })
 });
