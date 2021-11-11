@@ -1,19 +1,11 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  AllFundingGQL,
-  AllFundingSlugsGQL,
-  Funding,
-  FundingCollection,
-  GetFundingBySlugGQL
-} from '@graphql/schema';
+import { Funding, GetFundingBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
-import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, Subscription } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { Observable, of, Subscription, throwError } from 'rxjs';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -24,37 +16,24 @@ import supportsWebP from 'supports-webp';
 export class FundingComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
-  public slug: string;
-  public funding;
-  public funding$: Subscription;
-  public route$: Subscription;
-  public bodyLinks$: Subscription;
-  public allFundings$: Observable<FundingCollection>;
-  public parentSubHubs;
-  public isMobile: Boolean;
+
+  private subscriptions = new Subscription();
+
+  public funding: Funding;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
 
   constructor(
     public route: ActivatedRoute,
-    public allFundingGQL: AllFundingGQL,
-    public allFundingSlugsGQL: AllFundingSlugsGQL,
     public getFundingBySlugGQL: GetFundingBySlugGQL,
-    public cerGraphQLService: CerGraphqlService,
     public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
   ) {
-    this.detectDevice();
     this.detectWebP();
 
     this.nodeRenderers = this.bodyMediaService.nodeRenderers;
     this.markRenderers = this.bodyMediaService.markRenderers;
-  }
-
-  detectDevice() {
-    this.isMobile = this.deviceService.isMobile();
   }
 
   detectWebP() {
@@ -63,32 +42,28 @@ export class FundingComponent implements OnInit, OnDestroy {
     });
   }
 
-  async ngOnInit() {
-    /**
-     * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getFundingBySlug() method.
-    */
-    this.route$ = this.route.params.subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
+  ngOnInit() {
+    this.subscriptions.add(this.route.params.pipe(
+      map((params) => {
+        return (params.slug || this.route.snapshot.data.slug) as string;
+      }),
+      switchMap((slug) => this.loadFunding(slug))
+    ).subscribe({
+      next: (funding: Funding) => this.funding = funding,
+      error: (error) => {
+        console.error(error);
+        this.router.navigate(['error', 404]);
+      }
+    }));
   }
 
-  /**
-   * Function that loads the Funding/collection depending on if a slug is present.
-   */
-  private async _loadContent() {
-      // Check if the article slug is valid otherwise redirect to 404
-      this.getAllFundingSlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.funding = this.getFundingBySlug(this.slug);
-      this.getFundingBySlug(this.slug).subscribe(data => {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
+  private loadFunding(slug: string): Observable<Funding> {
+    return this.getFundingBySlug(slug).pipe(
+      map((data) => {
         // If Call To Action is an email address
         if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           data['callToAction'] = 'mailto:' + data['callToAction'];
@@ -114,46 +89,25 @@ export class FundingComponent implements OnInit, OnDestroy {
         this.bodyMediaService.buildLinkMaps(data.deadlines?.links);
 
         this.pageTitleService.title = data.title;
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
 
+        return data;
+      })
+    );
   }
 
   /**
-   * Function that returns all funding slugs from the FundingCollection as an observable
-   * of type FundingCollection. This is then unwrapped with the async pipe.
+   * Function that returns an individual funding page from the FundingCollection by it's slug
+   * as an observable of type Funding.
    *
-   * This function called to determine if a valid slug has been searched otherwise redirect
-   *
-   */
-  public getAllFundingSlugs(): Observable<FundingCollection> {
-    try {
-      return this.allFundingSlugsGQL.fetch()
-        .pipe(pluck('data', 'fundingCollection')) as Observable<FundingCollection>
-    } catch (e) { console.error('Error loading all fundings:', e) };
-  }
-
-  /**
-   * Function that returns an individual Funding from the FundingCollection by it's slug
-   * as an observable of type Funding. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /Funding.
-   *
-   * @param slug The Funding's slug. Retrieved from the route parameter of the same name.
+   * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getFundingBySlug(slug: string): Observable<Funding> {
-    try {
-      return this.getFundingBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.fundingCollection.items)) as Observable<Funding>;
-    } catch (e) { console.error(`Error loading Funding ${slug}:`, e); }
-  }
-
-  ngOnDestroy() {
-    try {
-      this.funding$.unsubscribe();
-      this.route$.unsubscribe();
-      this.bodyLinks$.unsubscribe();
-    } catch { }
+    return this.getFundingBySlugGQL.fetch({ slug }).pipe(
+      mergeMap(x =>
+        x.data.fundingCollection.items.length === 0
+          ? throwError(`Could not load funding page with slug "${slug}"`)
+          : of(x.data.fundingCollection.items[0])
+      )
+    ) as Observable<Funding>;
   }
 }
