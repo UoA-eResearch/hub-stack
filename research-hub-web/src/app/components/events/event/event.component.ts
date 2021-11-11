@@ -1,19 +1,11 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  AllEventsGQL,
-  AllEventsSlugsGQL,
-  Event,
-  EventCollection,
-  GetEventBySlugGQL
-} from '@graphql/schema';
+import { Event, GetEventBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
-import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, Subscription } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { Observable, of, Subscription, throwError } from 'rxjs';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -24,38 +16,24 @@ import supportsWebP from 'supports-webp';
 export class EventComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
-  public slug: string;
-  public event;
-  public event$: Subscription;
-  public route$: Subscription;
-  public bodyLinks$: Subscription;
-  public allEvents$: Observable<EventCollection>;
-  public parentSubHubs;
-  public isMobile: Boolean;
+
+  private subscriptions = new Subscription();
+
+  public event: Event;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
 
   constructor(
     public route: ActivatedRoute,
-    public allEventsGQL: AllEventsGQL,
-    public allEventSlugsGQL: AllEventsSlugsGQL,
     public getEventBySlugGQL: GetEventBySlugGQL,
-    public cerGraphQLService: CerGraphqlService,
     public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
   ) {
-    this.detectDevice();
     this.detectWebP();
 
     this.nodeRenderers = this.bodyMediaService.nodeRenderers;
     this.markRenderers = this.bodyMediaService.markRenderers;
-  }
-
-  // Detect if device is Mobile
-  detectDevice() {
-    this.isMobile = this.deviceService.isMobile();
   }
 
   detectWebP() {
@@ -64,32 +42,28 @@ export class EventComponent implements OnInit, OnDestroy {
     });
   }
 
-  async ngOnInit() {
-    /**
-     * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getEventBySlug() method.
-     */
-    this.route$ = this.route.params.subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
+  ngOnInit() {
+    this.subscriptions.add(this.route.params.pipe(
+      map((params) => {
+        return (params.slug || this.route.snapshot.data.slug) as string;
+      }),
+      switchMap((slug) => this.loadEvent(slug))
+    ).subscribe({
+      next: (event: Event) => this.event = event,
+      error: (error) => {
+        console.error(error);
+        this.router.navigate(['error', 404]);
+      }
+    }));
   }
 
-  /**
-   * Function that loads the Event/collection depending on if a slug is present.
-   */
-  private async _loadContent() {
-      // Check if the article slug is valid otherwise redirect to 404
-      this.getAllEventSlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.event = this.getEventBySlug(this.slug);
-      this.getEventBySlug(this.slug).subscribe(data => {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
+  private loadEvent(slug: string): Observable<Event> {
+    return this.getEventBySlug(slug).pipe(
+      map((data) => {
         // If Call To Action is an email address
         if (data.callToAction.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           data['callToAction'] = 'mailto:' + data['callToAction'];
@@ -112,46 +86,24 @@ export class EventComponent implements OnInit, OnDestroy {
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
 
         this.pageTitleService.title = data.title;
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
 
+        return data;
+      }));
   }
 
   /**
-   * Function that returns all event slugs from the EventCollection as an observable
-   * of type EventCollection. This is then unwrapped with the async pipe.
+   * Function that returns an individual event from the EventCollection by it's slug
+   * as an observable of type Event.
    *
-   * This function called to determine if a valid slug has been searched otherwise redirect
-   *
-   */
-  public getAllEventSlugs(): Observable<EventCollection> {
-    try {
-      return this.allEventSlugsGQL.fetch()
-        .pipe(pluck('data', 'eventCollection')) as Observable<EventCollection>
-    } catch (e) { console.error('Error loading all events:', e) };
-  }
-
-  /**
-   * Function that returns an individual Event from the EventCollection by it's slug
-   * as an observable of type Event. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /Events.
-   *
-   * @param slug The Event's slug. Retrieved from the route parameter of the same name.
+   * @param slug The event's slug. Retrieved from the route parameter of the same name.
    */
   public getEventBySlug(slug: string): Observable<Event> {
-    try {
-      return this.getEventBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.eventCollection.items)) as Observable<Event>;
-    } catch (e) { console.error(`Error loading Event ${slug}:`, e); }
-  }
-
-  ngOnDestroy() {
-    try {
-      this.event$.unsubscribe();
-      this.route$.unsubscribe();
-      this.bodyLinks$.unsubscribe();
-    } catch { }
+    return this.getEventBySlugGQL.fetch({ slug }).pipe(
+      mergeMap(x =>
+        x.data.eventCollection.items.length === 0
+          ? throwError(`Could not load event with slug "${slug}"`)
+          : of(x.data.eventCollection.items[0])
+      )
+    ) as Observable<Event>;
   }
 }
