@@ -1,4 +1,4 @@
-<div id="equipment-container" *ngIf="equipment | async as equipment">
+<div id="equipment-container" *ngIf="equipment">
   <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
   <div
@@ -153,13 +153,8 @@
 <ng-template #dynamicBanner>
   <div
     class="banner-container"
-    [ngClass]="
-      bannerImageUrl === undefined
-        ? 'no-banner'
-        : isMobile
-        ? 'mobile-banner'
-        : 'standard-banner'
-    "
+    [ngClass]="{ 'standard-banner': bannerImageUrl }"
+    [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
     [ngStyle]="
       bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
     "
