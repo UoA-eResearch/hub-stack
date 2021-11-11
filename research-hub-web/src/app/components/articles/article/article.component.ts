@@ -4,7 +4,6 @@ import { Article, GetArticleBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { Observable, of, Subscription, throwError } from 'rxjs';
 import { map, mergeMap, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
