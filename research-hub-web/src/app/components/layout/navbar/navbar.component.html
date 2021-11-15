@@ -57,21 +57,6 @@
 
     <!-- User Details -->
     <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-      <div class="user-detail-dropdown">
-        <img src="assets/imgs/uoa-logo-blue.svg" alt="uoa-logo-blue" />
-        <mat-list class="user-menu-list">
-          <mat-list-item>
-            <mat-icon mat-list-icon>person</mat-icon>
-            <p mat-line>
-              {{ userInfo?.firstName + " " + userInfo?.lastName }}
-            </p>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon mat-list-icon>note</mat-icon>
-            <p mat-line>{{ userInfo?.email }}</p>
-          </mat-list-item>
-        </mat-list>
-      </div>
 
       <!-- Sign Out Button-->
       <div fxLayout="row" fxLayoutAlign="end">
