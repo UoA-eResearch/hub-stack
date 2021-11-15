@@ -1,6 +1,7 @@
 <div>
   <div
     class="banner-container-home"
+    [ngClass]="isMobile ? 'mobile-banner' : 'standard-banner'"
     style.background-image="linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) ), url( {{ bannerImageUrl }}  )"
   >
     <!-- Homepage Banner -->
