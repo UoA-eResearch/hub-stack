@@ -1,19 +1,11 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  AllServicesGQL,
-  AllServicesSlugsGQL,
-  GetServiceBySlugGQL,
-  Service,
-  ServiceCollection
-} from '@graphql/schema';
+import { GetServiceBySlugGQL, Service } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
-import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, Subscription } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { Observable, of, Subscription, throwError } from 'rxjs';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -24,37 +16,24 @@ import supportsWebP from 'supports-webp';
 export class ServiceComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
-  public slug: string;
-  public service;
-  public service$: Subscription;
-  public route$: Subscription;
-  public bodyLinks$: Subscription;
-  public allServices$: Observable<ServiceCollection>;
-  public parentSubHubs;
-  public isMobile: Boolean;
+
+  private subscriptions = new Subscription();
+
+  public service: Service;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
 
   constructor(
     public route: ActivatedRoute,
-    public allServicesGQL: AllServicesGQL,
-    public allServicesSlugsGQL: AllServicesSlugsGQL,
     public getServiceBySlugGQL: GetServiceBySlugGQL,
-    public cerGraphQLService: CerGraphqlService,
     public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
   ) {
-    this.detectDevice();
     this.detectWebP();
 
     this.nodeRenderers = this.bodyMediaService.nodeRenderers;
     this.markRenderers = this.bodyMediaService.markRenderers;
-  }
-
-  detectDevice() {
-    this.isMobile = this.deviceService.isMobile();
   }
 
   detectWebP() {
@@ -63,32 +42,28 @@ export class ServiceComponent implements OnInit, OnDestroy {
     });
   }
 
-  async ngOnInit() {
-    /**
-     * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getServiceBySlug() method.
-     */
-    this.route$ = this.route.params.subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
+  ngOnInit() {
+    this.subscriptions.add(this.route.params.pipe(
+      map((params) => {
+        return (params.slug || this.route.snapshot.data.slug) as string;
+      }),
+      switchMap((slug) => this.loadService(slug))
+    ).subscribe({
+      next: (service: Service) => this.service = service,
+      error: (error) => {
+        console.error(error);
+        this.router.navigate(['error', 404]);
+      }
+    }));
   }
 
-  /**
-   * Function that loads the Service/collection depending on if a slug is present.
-   */
-  private async _loadContent() {
-      // Check if the article slug is valid otherwise redirect to 404
-      this.getAllServicesSlugs().subscribe(data => {
-        let slugs = [];
-        data.items.forEach(data => {
-          slugs.push(data.slug)
-        })
-        if (!slugs.includes(this.slug)) { this.router.navigate(['error/404']) }
-      });
-      this.service = this.getServiceBySlug(this.slug);
-      this.service$ = this.getServiceBySlug(this.slug).subscribe(data => {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 
+  private loadService(slug: string): Observable<Service> {
+    return this.getServiceBySlug(slug).pipe(
+      map(data => {
         // If Call To Action is an email address
         if (data.callToAction.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
           data['callToAction'] = 'mailto:' + data['callToAction'];
@@ -111,46 +86,24 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
 
         this.pageTitleService.title = data.title;
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
-
+        return data;
+      })
+    );
   }
 
   /**
-   * Function that returns all services slugs from the ServiceCollection as an observable
-   * of type ServiceCollection. This is then unwrapped with the async pipe.
+   * Function that returns an individual service from the ServiceCollection by it's slug
+   * as an observable of type Service.
    *
-   * This function called to determine if a valid slug has been searched otherwise redirect
-   *
-   */
-  public getAllServicesSlugs(): Observable<ServiceCollection> {
-    try {
-      return this.allServicesSlugsGQL.fetch()
-        .pipe(pluck('data', 'serviceCollection')) as Observable<ServiceCollection>
-    } catch (e) { console.error('Error loading all services:', e) };
-  }
-
-  /**
-   * Function that returns an individual Service from the ServiceCollection by it's slug
-   * as an observable of type Service. This is then unwrapped with the async pipe.
-   *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /Services.
-   *
-   * @param slug The Service's slug. Retrieved from the route parameter of the same name.
+   * @param slug The service's slug. Retrieved from the route parameter of the same name.
    */
   public getServiceBySlug(slug: string): Observable<Service> {
-    try {
-      return this.getServiceBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.serviceCollection.items)) as Observable<Service>;
-    } catch (e) { console.error(`Error loading Service ${slug}:`, e); }
-  }
-
-  ngOnDestroy() {
-    try {
-      this.service$.unsubscribe();
-      this.route$.unsubscribe();
-      this.bodyLinks$.unsubscribe();
-    } catch { }
+    return this.getServiceBySlugGQL.fetch({ slug }).pipe(
+      mergeMap(x =>
+        x.data.serviceCollection.items.length === 0
+          ? throwError(`Could not load article with slug "${slug}"`)
+          : of(x.data.serviceCollection.items[0])
+      )
+    ) as Observable<Service>;
   }
 }
