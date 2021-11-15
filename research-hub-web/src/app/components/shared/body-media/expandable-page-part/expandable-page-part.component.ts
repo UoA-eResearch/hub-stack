@@ -38,20 +38,25 @@ export class ExpandablePagePartComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.expandPart$ = this.getExpandPart();
-    this.subscriptions.add(this.expandPart$.subscribe(data => {
-      // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
-      this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
+    this.subscriptions.add(this.expandPart$.subscribe({
+      next: data => {
+        // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
+        this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
+      },
+      error: (error) => console.error(error) // handle error here
     }));
   }
 
   private getExpandPart(): Observable<Expand> {
-    try {
-      return this.getExpandPartByIdGQL.fetch({ id: this.contentItem.sys.id }).pipe(
-        pluck('data', 'expand')
-      ) as Observable<Expand>;
-    } catch (e) {
-      console.error(`Error loading expandable page part ${this.contentItem.sys.id}:`, e);
-    }
+    return this.getExpandPartByIdGQL.fetch({ id: this.contentItem.sys.id }).pipe(
+      map((result) => {
+        if (result.data.expand) {
+          return result.data.expand as Expand
+        } else {
+          throw new Error(`Could not find expandable page part for id ${this.contentItem.sys.id}`)
+        }
+      })
+    );
   }
 
   public getSummaryText(json: Scalars['JSON']): string {
