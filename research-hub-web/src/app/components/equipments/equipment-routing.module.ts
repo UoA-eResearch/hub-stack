@@ -5,8 +5,9 @@ import { EquipmentComponent } from './equipment/equipment.component';
 
 
 const routes: Routes = [
-  { path: '', component: EquipmentListComponent },
-  { path: ':slug', component: EquipmentComponent}
+  { path: '', component: EquipmentComponent },
+  { path: 'list', component: EquipmentListComponent },
+  { path: ':slug', component: EquipmentComponent }
 ];
 
 @NgModule({

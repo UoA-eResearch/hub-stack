@@ -5,8 +5,9 @@ import { SubhubComponent } from './subhub/subhub.component';
 
 
 const routes: Routes = [
-  { path: '', component: SubhubListComponent },
-  { path: ':slug', component: SubhubComponent}
+  { path: '', component: SubhubComponent },
+  { path: 'list', component: SubhubListComponent },
+  { path: ':slug', component: SubhubComponent }
 ];
 
 @NgModule({

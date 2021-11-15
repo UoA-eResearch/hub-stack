@@ -4,8 +4,9 @@ import { CaseStudyListComponent } from './case-study-list/case-study-list.compon
 import { CaseStudyComponent } from './case-study/case-study.component';
 
 const routes: Routes = [
-  { path: '', component: CaseStudyListComponent },
-  { path: ':slug', component: CaseStudyComponent}
+  { path: '', component: CaseStudyComponent },
+  { path: 'list', component: CaseStudyListComponent },
+  { path: ':slug', component: CaseStudyComponent }
 ];
 
 @NgModule({
