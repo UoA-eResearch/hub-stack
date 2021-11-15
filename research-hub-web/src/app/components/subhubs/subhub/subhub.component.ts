@@ -1,18 +1,11 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  AllSubHubGQL,
-  GetSubHubBySlugGQL,
-  SubHub,
-  SubHubCollection
-} from '@graphql/schema';
+import { GetSubHubBySlugGQL, SubHub } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
-import { CerGraphqlService } from '@services/cer-graphql.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { Observable, Subscription } from 'rxjs';
-import { flatMap, pluck } from 'rxjs/operators';
+import { Observable, of, Subscription, throwError } from 'rxjs';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -23,38 +16,25 @@ import supportsWebP from 'supports-webp';
 export class SubhubComponent implements OnInit, OnDestroy {
   public nodeRenderers: Record<string, Type<NodeRenderer>>;
   public markRenderers: Record<string, Type<MarkRenderer>>;
-  public slug: string;
-  public subHub;
-  public subHub$: Subscription;
-  public route$: Subscription;
-  public bodyLinks$: Subscription;
-  public allSubHubs$: Observable<SubHubCollection>;
-  public parentSubHubs;
-  public isMobile: Boolean;
-  public bannerTextStyling;
+
+  private subscriptions = new Subscription();
+
+  public subHub: SubHub;
+  public bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
 
   constructor(
     public route: ActivatedRoute,
-    public allSubHubGQL: AllSubHubGQL,
     public getSubHubBySlugGQL: GetSubHubBySlugGQL,
-    public cerGraphQLService: CerGraphqlService,
     public pageTitleService: PageTitleService,
     public bodyMediaService: BodyMediaService,
     public router: Router,
-    private deviceService: DeviceDetectorService
   ) {
-    this.detectDevice();
     this.detectWebP();
 
     this.nodeRenderers = this.bodyMediaService.nodeRenderers;
     this.markRenderers = this.bodyMediaService.markRenderers;
-  }
-
-  // Detect if device is Mobile
-  detectDevice() {
-    this.isMobile = this.deviceService.isMobile();
   }
 
   detectWebP() {
@@ -64,27 +44,27 @@ export class SubhubComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    /**
-     * Check if there is a slug URL parameter present. If so, this is
-     * passed to the getSubHubBySlug() method.
-     */
-    this.route$ = this.route.params.subscribe(params => {
-      this.slug = params.slug || this.route.snapshot.data.slug;
-      this._loadContent();
-    });
-
-    /**
-     * Set styling for text if banner is present
-     */
-    this.bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
+    this.subscriptions.add(this.route.params.pipe(
+      map((params) => {
+        return (params.slug || this.route.snapshot.data.slug) as string;
+      }),
+      switchMap((slug) => this.loadSubHub(slug))
+    ).subscribe({
+      next: (subHub: SubHub) => this.subHub = subHub,
+      error: (error) => {
+        console.error(error);
+        this.router.navigate(['error', 404]);
+      }
+    }));
   }
 
-  /**
-   * Function that loads the SubHub/collection depending on if a slug is present.
-   */
-  private async _loadContent() {
-      this.subHub = this.getSubHubBySlug(this.slug);
-      this.subHub$ = this.getSubHubBySlug(this.slug).subscribe(data => {
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  private loadSubHub(slug: string): Observable<SubHub> {
+    return this.getSubHubBySlug(slug).pipe(
+      map((data) => {
         // Remove nulls from server in case of error.
         data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
         data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
@@ -104,32 +84,28 @@ export class SubhubComponent implements OnInit, OnDestroy {
         } else {
           this.bannerImageUrl = undefined;
         }
-      });
-      this.parentSubHubs = await this.cerGraphQLService.getParentSubHubs(this.slug);
 
+        return data;
+      })
+    );
   }
 
   /**
-   * Function that returns an individual SubHub from the SubHubCollection by it's slug
-   * as an observable of type SubHub. This is then unwrapped with the async pipe.
+   * Function that returns an individual subhub from the SubHubCollection by it's slug
+   * as an observable of type SubHub.
    *
-   * This function is only called if no slug parameter is present in the URL, i.e.
-   * the user is visiting /SubHub.
-   *
-   * @param slug The SubHub's slug. Retrieved from the route parameter of the same name.
+   * @param slug The subhub's slug. Retrieved from the route parameter of the same name.
    */
   public getSubHubBySlug(slug: string): Observable<SubHub> {
-    try {
-      return this.getSubHubBySlugGQL.fetch({ slug: this.slug })
-        .pipe(flatMap(x => x.data.subHubCollection.items)) as Observable<SubHub>;
-    } catch (e) { console.error(`Error loading SubHub ${slug}:`, e); }
-  }
-
-  ngOnDestroy() {
-    try {
-      this.subHub$.unsubscribe();
-      this.route$.unsubscribe();
-      this.bodyLinks$.unsubscribe();
-    } catch { }
+    if (!slug) {
+      this.router.navigate(['subhub', 'list'])
+    }
+    return this.getSubHubBySlugGQL.fetch({ slug }).pipe(
+      mergeMap(x =>
+        x.data.subHubCollection.items.length === 0
+          ? throwError(`Could not load article with slug "${slug}"`)
+          : of(x.data.subHubCollection.items[0])
+      )
+    ) as Observable<SubHub>;
   }
 }
