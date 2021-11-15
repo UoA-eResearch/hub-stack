@@ -14,7 +14,11 @@ mat-toolbar {
       line-height: 64px;
       img {
         height: 24px;
+        @media (max-width: $navbar-second-row-breakpoint) {
+          height: 18px;
+        }
       }
+      
     }
     .mat-button {
       line-height: 64px;
