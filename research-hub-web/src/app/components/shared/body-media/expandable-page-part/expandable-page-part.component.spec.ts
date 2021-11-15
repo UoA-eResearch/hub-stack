@@ -43,6 +43,7 @@ describe('ExpandablePagePartComponent', () => {
       spaceId: ''
     },
     "title": "Another one",
+    "showSummary": true,
     "bodyText": {
       "json": {
         "nodeType": "document",
