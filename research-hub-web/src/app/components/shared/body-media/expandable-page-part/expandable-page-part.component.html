@@ -5,7 +5,7 @@
       {{ expandPart.title }}
     </mat-panel-title>
 
-    <mat-panel-description *ngIf="panelOpenState === false" ngClass.xs="description-xs">
+    <mat-panel-description *ngIf="panelOpenState === false && expandPart.showSummary" ngClass.xs="description-xs">
       {{ getSummaryText(expandPart.bodyText?.json) }}
     </mat-panel-description>
   </mat-expansion-panel-header>
