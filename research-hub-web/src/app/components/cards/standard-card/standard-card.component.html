@@ -47,5 +47,8 @@
   </picture>
 </ng-template>
 <ng-template #noImage>
-  <div style="margin-top: 12px"></div>
+  <picture>
+    <source srcset="{{ defaultImage.get(contentItem.__typename) }}?w=1000&fm=webp" type="image/webp" />
+    <img mat-card-image src="{{ defaultImage.get(contentItem.__typename) }}?w=1000" alt="default background" />
+  </picture>
 </ng-template>
