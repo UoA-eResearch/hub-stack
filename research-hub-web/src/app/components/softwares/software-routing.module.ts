@@ -5,8 +5,9 @@ import { SoftwareComponent } from './software/software.component';
 
 
 const routes: Routes = [
-  { path: '', component: SoftwareListComponent },
-  { path: ':slug', component: SoftwareComponent}
+  { path: '', component: SoftwareComponent },
+  { path: 'list', component: SoftwareListComponent },
+  { path: ':slug', component: SoftwareComponent }
 ];
 
 @NgModule({

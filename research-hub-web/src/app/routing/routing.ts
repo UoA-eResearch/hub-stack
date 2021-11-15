@@ -77,7 +77,7 @@ export const appRoutes: Routes = [
       {
         path: 'software',
         loadChildren: () => import('@components/softwares/softwares.module').then(m => m.SoftwaresModule)
-      },
+      }
     ]
   },
   /**

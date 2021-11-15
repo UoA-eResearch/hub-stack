@@ -5,8 +5,9 @@ import { FundingComponent } from './funding/funding.component';
 
 
 const routes: Routes = [
-  { path: '', component: FundingListComponent },
-  { path: ':slug', component: FundingComponent}
+  { path: '', component: FundingComponent },
+  { path: 'list', component: FundingListComponent },
+  { path: ':slug', component: FundingComponent }
 ];
 
 @NgModule({
