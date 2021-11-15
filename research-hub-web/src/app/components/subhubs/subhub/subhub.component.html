@@ -1,18 +1,13 @@
 <div
   style="overflow-x: hidden"
   class="results"
-  *ngIf="subHub | async as subHub"
+  *ngIf="subHub"
 >
   <div id="subhub-container" class="margin-bottom">
     <div
       class="banner-container"
-      [ngClass]="
-        bannerImageUrl === undefined
-          ? ''
-          : isMobile
-          ? 'mobile-banner'
-          : 'standard-banner'
-      "
+      [ngClass]="{ 'standard-banner': bannerImageUrl }"
+      [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
       [ngStyle]="
         bannerImageUrl && {
           'background-image': 'url(' + bannerImageUrl + ')'
