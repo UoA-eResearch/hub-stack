@@ -33,7 +33,6 @@ export class BannerImageComponent implements OnInit {
 
   detectDevice() {
     this.isMobile = this.deviceService.isMobile();
-    console.log(this.isMobile)
   }
 
   detectWebP() {
