@@ -3,7 +3,7 @@ import { Expand, GetExpandPartByIdGQL, Scalars } from '@app/graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { NodeRenderer, MarkRenderer } from 'ngx-contentful-rich-text';
 import { Observable, Subscription } from 'rxjs';
-import { pluck } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 /**
  * Exandable page part is a special type of rich text entry which itself contains rich text. For this reason it is
