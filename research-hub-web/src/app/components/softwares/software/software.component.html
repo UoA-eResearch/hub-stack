@@ -1,4 +1,4 @@
-<div id="software-container" *ngIf="software | async as software">
+<div id="software-container" *ngIf="software">
   <!-- Banner -->
   <ng-container *ngTemplateOutlet="dynamicBanner"></ng-container>
 
@@ -49,7 +49,7 @@
     <div
       class="section-2"
       *ngIf="
-        software.licensing ||
+        software.licencing ||
         software.cost ||
         software.access ||
         software.limitations
@@ -130,13 +130,8 @@
 <ng-template #dynamicBanner>
   <div
     class="banner-container"
-    [ngClass]="
-      bannerImageUrl === undefined
-        ? 'no-banner'
-        : isMobile
-        ? 'mobile-banner'
-        : 'standard-banner'
-    "
+    [ngClass]="{ 'standard-banner': bannerImageUrl }"
+    [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
     [ngStyle]="
       bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
     "
