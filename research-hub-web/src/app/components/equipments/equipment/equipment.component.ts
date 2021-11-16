@@ -4,8 +4,8 @@ import { Equipment, GetEquipmentBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, of, Subscription, throwError } from 'rxjs';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -101,11 +101,13 @@ export class EquipmentComponent implements OnInit, OnDestroy {
    */
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
     return this.getEquipmentBySlugGQL.fetch({ slug }).pipe(
-      mergeMap(x =>
-        x.data.equipmentCollection.items.length === 0
-          ? throwError(`Could not load equipment with slug "${slug}"`)
-          : of(x.data.equipmentCollection.items[0])
-      )
-    ) as Observable<Equipment>;
+      map(x => {
+        if (x.data.equipmentCollection.items.length === 0) {
+          throw new Error(`Could not load equipment with slug "${slug}"`)
+        } else {
+          return x.data.equipmentCollection.items[0] as Equipment
+        }
+      })
+    );
   }
 }

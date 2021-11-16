@@ -4,8 +4,8 @@ import { CaseStudy, GetCaseStudyBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, of, Subscription, throwError } from 'rxjs';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 
@@ -98,11 +98,13 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
    */
   public getCaseStudyBySlug(slug: string): Observable<CaseStudy> {
     return this.getCaseStudyBySlugGQL.fetch({ slug }).pipe(
-      mergeMap(x =>
-        x.data.caseStudyCollection.items.length === 0
-          ? throwError(`Could not load case study with slug "${slug}"`)
-          : of(x.data.caseStudyCollection.items[0])
-      )
-    ) as Observable<CaseStudy>;
+      map(x => {
+        if (x.data.caseStudyCollection.items.length === 0) {
+          throw new Error(`Could not load case study with slug "${slug}"`)
+        } else {
+          return x.data.caseStudyCollection.items[0] as CaseStudy
+        }
+      })
+    );
   }
 }
