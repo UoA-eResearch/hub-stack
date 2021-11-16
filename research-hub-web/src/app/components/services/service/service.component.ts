@@ -4,8 +4,8 @@ import { GetServiceBySlugGQL, Service } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, of, Subscription, throwError } from 'rxjs';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -99,11 +99,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
    */
   public getServiceBySlug(slug: string): Observable<Service> {
     return this.getServiceBySlugGQL.fetch({ slug }).pipe(
-      mergeMap(x =>
-        x.data.serviceCollection.items.length === 0
-          ? throwError(`Could not load article with slug "${slug}"`)
-          : of(x.data.serviceCollection.items[0])
-      )
-    ) as Observable<Service>;
+      map(x => {
+        if (x.data.serviceCollection.items.length === 0) {
+          throw new Error(`Could not load service with slug "${slug}"`)
+        } else {
+          return x.data.serviceCollection.items[0] as Service
+        }
+      })
+    );
   }
 }

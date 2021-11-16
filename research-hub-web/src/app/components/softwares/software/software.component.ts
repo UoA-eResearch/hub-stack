@@ -4,8 +4,8 @@ import { GetSoftwareBySlugGQL, Software } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, of, Subscription, throwError } from 'rxjs';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -98,11 +98,13 @@ export class SoftwareComponent implements OnInit, OnDestroy {
    */
   public getSoftwareBySlug(slug: string): Observable<Software> {
     return this.getSoftwareBySlugGQL.fetch({ slug }).pipe(
-      mergeMap(x =>
-        x.data.softwareCollection.items.length === 0
-          ? throwError(`Could not load article with slug "${slug}"`)
-          : of(x.data.softwareCollection.items[0])
-      )
-    ) as Observable<Software>;
+      map(x => {
+        if (x.data.softwareCollection.items.length === 0) {
+          throw new Error(`Could not load software with slug "${slug}"`)
+        } else {
+          return x.data.softwareCollection.items[0] as Software
+        }
+      })
+    );
   }
 }

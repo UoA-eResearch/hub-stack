@@ -4,8 +4,8 @@ import { GetSubHubBySlugGQL, SubHub } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, of, Subscription, throwError } from 'rxjs';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -101,11 +101,13 @@ export class SubhubComponent implements OnInit, OnDestroy {
       this.router.navigate(['subhub', 'list'])
     }
     return this.getSubHubBySlugGQL.fetch({ slug }).pipe(
-      mergeMap(x =>
-        x.data.subHubCollection.items.length === 0
-          ? throwError(`Could not load article with slug "${slug}"`)
-          : of(x.data.subHubCollection.items[0])
-      )
-    ) as Observable<SubHub>;
+      map(x => {
+        if (x.data.subHubCollection.items.length === 0) {
+          throw new Error(`Could not load subHub with slug "${slug}"`)
+        } else {
+          return x.data.subHubCollection.items[0] as SubHub
+        }
+      })
+    );
   }
 }
