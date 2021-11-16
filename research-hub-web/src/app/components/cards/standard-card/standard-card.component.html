@@ -46,9 +46,17 @@
     <img mat-card-image src="{{ url }}?w=1000" alt="{{ title }}" />
   </picture>
 </ng-template>
+
 <ng-template #defaultCardImage>
   <picture>
-    <source srcset="{{ defaultImage.get(contentItem.__typename) }}?w=1000&fm=webp" type="image/webp" />
-    <img mat-card-image src="{{ defaultImage.get(contentItem.__typename) }}?w=1000" alt="default background" />
+    <source
+      srcset="{{ defaultImage.get(contentItem.__typename) }}?w=1000&fm=webp"
+      type="image/webp"
+    />
+    <img
+      mat-card-image
+      src="{{ defaultImage.get(contentItem.__typename) }}?w=1000"
+      alt="default background"
+    />
   </picture>
 </ng-template>
