@@ -23,6 +23,7 @@ import { InlinesEmbeddedEntryComponent } from './body-media/inlines-embedded-ent
 import { InlinesAssetHyperlinkComponent } from './body-media/inlines-asset-hyperlink/inlines-asset-hyperlink.component';
 import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
 import { MarksCodeComponent } from './body-media/marks-code/marks-code.component';
+import { ExpandablePagePartComponent } from './body-media/expandable-page-part/expandable-page-part.component';
 
 
 @NgModule({
@@ -54,8 +55,7 @@ import { MarksCodeComponent } from './body-media/marks-code/marks-code.component
     InlinesAssetHyperlinkComponent,
     InlinesEntryHyperlinkComponent,
     MarksCodeComponent,
-    BreadcrumbsComponent,
-    VideoCardComponent
+    ExpandablePagePartComponent
   ],
   exports: [
     FlexLayoutModule,
