@@ -4,7 +4,7 @@
 >
   <ng-container
     *ngTemplateOutlet="
-      contentItem?.banner ? image : noImage;
+      contentItem?.banner ? image : defaultCardImage;
       context: {
         $implicit: contentItem?.banner?.url,
         title: contentItem?.title
@@ -46,7 +46,7 @@
     <img mat-card-image src="{{ url }}?w=1000" alt="{{ title }}" />
   </picture>
 </ng-template>
-<ng-template #noImage>
+<ng-template #defaultCardImage>
   <picture>
     <source srcset="{{ defaultImage.get(contentItem.__typename) }}?w=1000&fm=webp" type="image/webp" />
     <img mat-card-image src="{{ defaultImage.get(contentItem.__typename) }}?w=1000" alt="default background" />
