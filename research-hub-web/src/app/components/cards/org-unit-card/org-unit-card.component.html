@@ -1,0 +1,19 @@
+<mat-card (click)="orgUnit.link ? navigateTo(orgUnit.link) : null">
+  <span class="card-label">Unit</span>
+
+  <div style="margin-top: 12px"></div>
+
+  <mat-card-title>
+    <a class="card-title" [attr.href]="orgUnit.link ? orgUnit.link : null">
+      <span *ngIf="orgUnit.name">{{ orgUnit.name }}</span>
+      <span *ngIf="orgUnit.maoriName && orgUnit.name">, </span>
+      <span *ngIf="orgUnit.maoriName">{{ orgUnit.maoriName }}</span>
+    </a>
+  </mat-card-title>
+
+  <mat-card-content>
+    <span>
+      <p style="word-wrap: break-word">{{ orgUnit.description }}</p>
+    </span>
+  </mat-card-content>
+</mat-card>

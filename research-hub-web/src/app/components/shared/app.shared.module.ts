@@ -9,9 +9,7 @@ import { HumanCasePipe } from '@pipes/human-case.pipe';
 import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 import { CollectionListComponent } from './collection-list/collection-list.component';
 import { RouterModule } from '@angular/router';
-import { CardsComponent } from './cards/cards.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { LargeCardsComponent } from './large-cards/large-cards.component';
 import { VideoCardComponent } from './video-card/video-card.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownModule } from 'ngx-markdown';
@@ -48,9 +46,7 @@ import { ExpandablePagePartComponent } from './body-media/expandable-page-part/e
     HumanCasePipe,
     ContentTypeDisplayNamePipe,
     CollectionListComponent,
-    CardsComponent,
     BreadcrumbsComponent,
-    LargeCardsComponent,
     VideoCardComponent,
     BlocksEmbeddedAssetComponent,
     BlocksEmbeddedEntryComponent,
@@ -70,9 +66,7 @@ import { ExpandablePagePartComponent } from './body-media/expandable-page-part/e
     HumanCasePipe,
     ContentTypeDisplayNamePipe,
     CollectionListComponent,
-    CardsComponent,
     BreadcrumbsComponent,
-    LargeCardsComponent,
     VideoCardComponent,
     NgxPaginationModule,
     NgxSkeletonLoaderModule,

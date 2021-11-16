@@ -5,6 +5,7 @@ import { EquipmentRoutingModule } from './equipment-routing.module';
 import { EquipmentComponent } from './equipment.component';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
+import { CardsModule } from '../cards/cards.module';
 
 @NgModule({
   declarations: [EquipmentComponent],
@@ -12,7 +13,8 @@ import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
     CommonModule,
     EquipmentRoutingModule,
     SharedModule,
-    NgxContentfulRichTextModule
+    NgxContentfulRichTextModule,
+    CardsModule
   ]
 })
 export class EquipmentsModule { }
