@@ -56,7 +56,7 @@ export class BodyMediaService {
    * @param links
    */
   buildLinkMaps(links: BodyTextLinks) {
-    if (links.assets) {
+    if (links?.assets) {
       for (const asset of links.assets.block) {
         this.assetBlockMap.set(asset.sys.id, asset);
       }
@@ -65,7 +65,7 @@ export class BodyMediaService {
       }
     }
 
-    if (links.entries) {
+    if (links?.entries) {
       for (const entry of links.entries.block) {
         this.entryBlockMap.set(entry.sys.id, entry);
       }

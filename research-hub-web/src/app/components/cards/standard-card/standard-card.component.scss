@@ -1,0 +1,36 @@
+@import "variables";
+
+.subhub-child-card {
+  background-color: $light-blue;
+  .card-label {
+    color: $dark-blue;
+    background: rgb(255, 255, 255);
+  }
+  .mat-card-title {
+    >a {
+      color: white;
+      &:hover {
+        border-bottom: solid 2px white;
+      }
+    }
+  }
+  .card-summary {
+    >p {
+      color: white;
+    }
+  }
+  mat-icon {
+    color: white;
+  }
+}
+
+mat-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+img {
+  object-fit: cover;
+  height: 200px;
+}
