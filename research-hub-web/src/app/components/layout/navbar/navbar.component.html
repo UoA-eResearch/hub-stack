@@ -50,10 +50,20 @@
     >
       <mat-icon matPrefix style="margin-right: 5px">person</mat-icon>
       <span fxHide fxShow.gt-md>
-        {{ userInfo?.firstName + " " + userInfo?.lastName }}
+        {{ userInfo?.firstName }}
       </span>
       <span fxHide fxShow.lt-lg>{{ userInfo?.firstName }}</span>
     </button>
+
+        <button
+          role="button"
+          mat-raised-button
+          class="sign-out-button"
+          (click)="loginService.logout()"
+          (keydown.enter)="loginService.logout()"
+        >
+          Sign&nbsp;Out
+        </button>
 
     <!-- User Details -->
     <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
