@@ -103,6 +103,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getArticleBySlug(slug: string): Observable<Article> {
+    if (!slug) {
+      this.router.navigate(['article', 'list'])
+    }
     return this.getArticleBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.articleCollection.items.length === 0) {

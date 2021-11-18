@@ -100,6 +100,9 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
    * @param slug The case study's slug. Retrieved from the route parameter of the same name.
    */
   public getCaseStudyBySlug(slug: string): Observable<CaseStudy> {
+    if (!slug) {
+      this.router.navigate(['casestudy', 'list'])
+    }
     return this.getCaseStudyBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.caseStudyCollection.items.length === 0) {

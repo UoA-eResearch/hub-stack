@@ -101,6 +101,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
    * @param slug The service's slug. Retrieved from the route parameter of the same name.
    */
   public getServiceBySlug(slug: string): Observable<Service> {
+    if (!slug) {
+      this.router.navigate(['service', 'list'])
+    }
     return this.getServiceBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.serviceCollection.items.length === 0) {
