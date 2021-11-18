@@ -101,6 +101,14 @@
             </div>
         </span>
 
+        <!-- Expandable - a special type which is a nested rich text field within this rich text field. 
+            For this reason we only fetch the expand ID, and use that in it's own component to fetch the nested rich text 
+            and then render it separately. (So that we don't end up in some kind of graphql infinity loop).
+        -->
+        <span *ngSwitchCase="'Expand'">
+            <app-expandable-page-part [contentItem]="contentItem"></app-expandable-page-part>
+        </span>
+
         <!-- Default Entry Block Template -->
         <span *ngSwitchDefault>
             <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
