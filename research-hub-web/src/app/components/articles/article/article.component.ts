@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Article, GetArticleBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
+import { GraphQLError } from 'graphql';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
 import { Observable, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -52,8 +53,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (article: Article) => this.article = article,
       error: (error) => {
-        console.error(error);
-        this.router.navigate(['error', 404]);
+        if (error! instanceof GraphQLError) {
+          console.error(error);
+          this.router.navigate(['error', 404]);
+        }
       }
     }));
   }
