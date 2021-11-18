@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Event, GetEventBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
+import { GraphQLError } from 'graphql';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
 import { Observable, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -51,8 +52,10 @@ export class EventComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (event: Event) => this.event = event,
       error: (error) => {
-        console.error(error);
-        this.router.navigate(['error', 404]);
+        if (error! instanceof GraphQLError) {
+          console.error(error);
+          this.router.navigate(['error', 404]);
+        }
       }
     }));
   }
