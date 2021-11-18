@@ -101,6 +101,9 @@ export class EventComponent implements OnInit, OnDestroy {
    * @param slug The event's slug. Retrieved from the route parameter of the same name.
    */
   public getEventBySlug(slug: string): Observable<Event> {
+    if (!slug) {
+      this.router.navigate(['event', 'list'])
+    }
     return this.getEventBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.eventCollection.items.length === 0) {

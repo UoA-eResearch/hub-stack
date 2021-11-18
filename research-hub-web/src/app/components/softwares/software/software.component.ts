@@ -100,6 +100,9 @@ export class SoftwareComponent implements OnInit, OnDestroy {
    * @param slug The software's slug. Retrieved from the route parameter of the same name.
    */
   public getSoftwareBySlug(slug: string): Observable<Software> {
+    if (!slug) {
+      this.router.navigate(['software', 'list'])
+    }
     return this.getSoftwareBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.softwareCollection.items.length === 0) {

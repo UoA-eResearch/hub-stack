@@ -105,6 +105,9 @@ export class FundingComponent implements OnInit, OnDestroy {
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getFundingBySlug(slug: string): Observable<Funding> {
+    if (!slug) {
+      this.router.navigate(['funding', 'list'])
+    }
     return this.getFundingBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.fundingCollection.items.length === 0) {

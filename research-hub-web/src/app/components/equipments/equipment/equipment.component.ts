@@ -103,6 +103,9 @@ export class EquipmentComponent implements OnInit, OnDestroy {
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
+    if (!slug) {
+      this.router.navigate(['equipment', 'list'])
+    }
     return this.getEquipmentBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.equipmentCollection.items.length === 0) {
