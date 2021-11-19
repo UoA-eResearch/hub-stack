@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { SoftwareListComponent } from './software-list.component';
+import { SharedModule } from '@components/shared/app.shared.module';
+import { MockModule } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('SoftwareListComponent', () => {
   let component: SoftwareListComponent;
@@ -12,6 +15,8 @@ describe('SoftwareListComponent', () => {
       declarations: [ SoftwareListComponent ],
       imports: [
         ApolloTestingModule,
+        MockModule(SharedModule),
+        RouterTestingModule.withRoutes([])
       ]
     })
     .compileComponents();
