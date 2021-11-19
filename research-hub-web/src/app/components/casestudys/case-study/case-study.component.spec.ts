@@ -77,30 +77,30 @@ describe('CaseStudyComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all case studies', () => {
-    spyOn(component, 'getAllCaseStudy').and.returnValue(mockAllCaseStudy$);
-    component.getAllCaseStudy().subscribe(res => {
-      expect(res).toBeTruthy();
-    });
-  });
+  // it('Should get all case studies', () => {
+  //   spyOn(component, 'getAllCaseStudy').and.returnValue(mockAllCaseStudy$);
+  //   component.getAllCaseStudy().subscribe(res => {
+  //     expect(res).toBeTruthy();
+  //   });
+  // });
 
-  describe('When a url slug is present', async () => {
-    beforeEach(() => {
-      controller = TestBed.inject(ApolloTestingController);
-      fixture = TestBed.createComponent(CaseStudyComponent);
-      component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: 'death-star'
-      });
-      fixture.detectChanges();
-    });
+  // describe('When a url slug is present', async () => {
+  //   beforeEach(() => {
+  //     controller = TestBed.inject(ApolloTestingController);
+  //     fixture = TestBed.createComponent(CaseStudyComponent);
+  //     component = fixture.componentInstance;
+  //     TestBed.inject(ActivatedRoute).params = of({
+  //       slug: 'death-star'
+  //     });
+  //     fixture.detectChanges();
+  //   });
 
-    it('Should get a single case study data', () => {
-      spyOn(component, 'getCaseStudyBySlug').and.returnValue(mockCaseStudy$);
-      component.getCaseStudyBySlug(component.slug).subscribe(res => {
-        expect(res.slug).toEqual('death-star');
-      });
-    });
-  });
+  //   it('Should get a single case study data', () => {
+  //     spyOn(component, 'getCaseStudyBySlug').and.returnValue(mockCaseStudy$);
+  //     component.getCaseStudyBySlug(component.slug).subscribe(res => {
+  //       expect(res.slug).toEqual('death-star');
+  //     });
+  //   });
+  // });
 
 });

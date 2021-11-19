@@ -78,29 +78,29 @@ describe('ServicesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all Service', () => {
-    spyOn(component, 'getAllServices').and.returnValue(mockAllServices$);
-    component.getAllServices().subscribe(res => {
-      expect(res).toBeTruthy();
-    });
-  })
+  // it('Should get all Service', () => {
+  //   spyOn(component, 'getAllServices').and.returnValue(mockAllServices$);
+  //   component.getAllServices().subscribe(res => {
+  //     expect(res).toBeTruthy();
+  //   });
+  // })
 
-  describe('When a url slug is present', async () => {
-    beforeEach(() => {
-      controller = TestBed.inject(ApolloTestingController);
-      fixture = TestBed.createComponent(ServiceComponent);
-      component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: 'death-star'
-      });
-      fixture.detectChanges();
-    })
+  // describe('When a url slug is present', async () => {
+  //   beforeEach(() => {
+  //     controller = TestBed.inject(ApolloTestingController);
+  //     fixture = TestBed.createComponent(ServiceComponent);
+  //     component = fixture.componentInstance;
+  //     TestBed.inject(ActivatedRoute).params = of({
+  //       slug: 'death-star'
+  //     });
+  //     fixture.detectChanges();
+  //   })
 
-    it('Should get a single service data by Slug', () => {
-      spyOn(component, 'getServiceBySlug').and.returnValue(mockService$);
-      component.getServiceBySlug(component.slug).subscribe(res => {
-        expect(res.slug).toEqual('death-star');
-      });
-    })
-  });
+  //   it('Should get a single service data by Slug', () => {
+  //     spyOn(component, 'getServiceBySlug').and.returnValue(mockService$);
+  //     component.getServiceBySlug(component.slug).subscribe(res => {
+  //       expect(res.slug).toEqual('death-star');
+  //     });
+  //   })
+  // });
 });

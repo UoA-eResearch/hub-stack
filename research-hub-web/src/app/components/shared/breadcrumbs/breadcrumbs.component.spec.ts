@@ -31,7 +31,7 @@ describe('BreadcrumbsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BreadcrumbsComponent);
     component = fixture.componentInstance;
-    component.contentItem = breadCrumbs;
+    // component.contentItem = breadCrumbs;
     fixture.detectChanges();
   });
 
