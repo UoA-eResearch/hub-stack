@@ -78,29 +78,29 @@ describe('SoftwaresComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Should get all Software', () => {
-    spyOn(component, 'getAllSoftware').and.returnValue(mockAllSoftware$);
-    component.getAllSoftware().subscribe(res => {
-      expect(res).toBeTruthy();
-    });
-  })
+  // it('Should get all Software', () => {
+  //   spyOn(component, 'getAllSoftware').and.returnValue(mockAllSoftware$);
+  //   component.getAllSoftware().subscribe(res => {
+  //     expect(res).toBeTruthy();
+  //   });
+  // })
 
-  describe('When a url slug is present', async () => {
-    beforeEach(() => {
-      controller = TestBed.inject(ApolloTestingController);
-      fixture = TestBed.createComponent(SoftwareComponent);
-      component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: 'death-star'
-      });
-      fixture.detectChanges();
-    })
+  // describe('When a url slug is present', async () => {
+  //   beforeEach(() => {
+  //     controller = TestBed.inject(ApolloTestingController);
+  //     fixture = TestBed.createComponent(SoftwareComponent);
+  //     component = fixture.componentInstance;
+  //     TestBed.inject(ActivatedRoute).params = of({
+  //       slug: 'death-star'
+  //     });
+  //     fixture.detectChanges();
+  //   })
 
-    it('Should get a single software data by Slug', () => {
-      spyOn(component, 'getSoftwareBySlug').and.returnValue(mockSoftware$);
-      component.getSoftwareBySlug(component.slug).subscribe(res => {
-        expect(res.slug).toEqual('death-star');
-      });
-    })
-  });
+  //   it('Should get a single software data by Slug', () => {
+  //     spyOn(component, 'getSoftwareBySlug').and.returnValue(mockSoftware$);
+  //     component.getSoftwareBySlug(component.slug).subscribe(res => {
+  //       expect(res.slug).toEqual('death-star');
+  //     });
+  //   })
+  // });
 });
