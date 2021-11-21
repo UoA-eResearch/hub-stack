@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApolloError } from '@apollo/client/errors';
 import { GetSubHubBySlugGQL, SubHub } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
-import { GraphQLError } from 'graphql';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
 import { Observable, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -53,9 +53,14 @@ export class SubhubComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (subHub: SubHub) => this.subHub = subHub,
       error: (error: Error) => {
-        console.error(error)
-        if (error.message.includes('Not found')) {
+        if (error instanceof ApolloError && error.message.includes('Authentication required')) {
+          console.warn('Waiting for redirect to Login page');
+        } else if (error.message.includes('Not found')) {
+          console.error(error);
           this.router.navigate(['error', 404]);
+        } else {
+          console.error(error);
+          this.router.navigate(['error', 500]);
         }
       }
     }));
