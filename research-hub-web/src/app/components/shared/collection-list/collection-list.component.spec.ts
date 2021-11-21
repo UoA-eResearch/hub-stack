@@ -32,20 +32,4 @@ describe('CollectionListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  describe("getDefaultIcon (function)", () => {
-
-    it("Should return the language icon name for a subhub", () => {
-      expect(component.getDefaultTypeIcon('SubHub')).toEqual('language');
-    });
-
-    it("Should return the home manage accounts icon name for a service", () => {
-      expect(component.getDefaultTypeIcon('Service')).toEqual('manage_accounts');
-    });
-
-    it("Should return the article icon name by default", () => {
-      expect(component.getDefaultTypeIcon('')).toEqual('article');
-    });
-
-  });
 });

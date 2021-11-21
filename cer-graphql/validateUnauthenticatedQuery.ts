@@ -42,7 +42,6 @@ const GRAPHQL_INTROSPECTION_FIELDS = [
     'linkedFrom',
     'slug',
     'banner',
-    'icon',
     ...GRAPHQL_INTROSPECTION_FIELDS
   ]);
   
