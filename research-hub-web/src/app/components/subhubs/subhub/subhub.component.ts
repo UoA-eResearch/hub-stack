@@ -52,9 +52,9 @@ export class SubhubComponent implements OnInit, OnDestroy {
       switchMap((slug) => this.loadSubHub(slug))
     ).subscribe({
       next: (subHub: SubHub) => this.subHub = subHub,
-      error: (error) => {
-        if (error! instanceof GraphQLError) {
-          console.error(error);
+      error: (error: Error) => {
+        console.error(error)
+        if (error.message.includes('Not found')) {
           this.router.navigate(['error', 404]);
         }
       }
@@ -106,7 +106,7 @@ export class SubhubComponent implements OnInit, OnDestroy {
     return this.getSubHubBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.subHubCollection.items.length === 0) {
-          throw new Error(`Could not load subHub with slug "${slug}"`)
+          throw new Error(`Not found. Could not find subHub with slug "${slug}"`)
         } else {
           return x.data.subHubCollection.items[0] as SubHub
         }

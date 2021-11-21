@@ -52,9 +52,9 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       switchMap((slug) => this.loadEquipment(slug))
     ).subscribe({
       next: (equipment: Equipment) => this.equipment = equipment,
-      error: (error) => {
-        if (error! instanceof GraphQLError) {
-          console.error(error);
+      error: (error: Error) => {
+        console.error(error)
+        if (error.message.includes('Not found')) {
           this.router.navigate(['error', 404]);
         }
       }
@@ -109,7 +109,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     return this.getEquipmentBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.equipmentCollection.items.length === 0) {
-          throw new Error(`Could not load equipment with slug "${slug}"`)
+          throw new Error(`Not found. Could not find equipment with slug "${slug}"`)
         } else {
           return x.data.equipmentCollection.items[0] as Equipment
         }

@@ -52,9 +52,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
       switchMap((slug) => this.loadArticle(slug))
     ).subscribe({
       next: (article: Article) => this.article = article,
-      error: (error) => {
-        if (error! instanceof GraphQLError) {
-          console.error(error);
+      error: (error: Error) => {
+        console.error(error)
+        if (error.message.includes('Not found')) {
           this.router.navigate(['error', 404]);
         }
       }
@@ -109,7 +109,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     return this.getArticleBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.articleCollection.items.length === 0) {
-          throw new Error(`Could not load article with slug "${slug}"`)
+          throw new Error(`Not found. Could not find article with slug "${slug}"`)
         } else {
           return x.data.articleCollection.items[0] as Article
         }
