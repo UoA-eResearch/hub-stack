@@ -51,9 +51,9 @@ export class SoftwareComponent implements OnInit, OnDestroy {
       switchMap((slug) => this.loadSoftware(slug))
     ).subscribe({
       next: (software: Software) => this.software = software,
-      error: (error) => {
-        if (error! instanceof GraphQLError) {
-          console.error(error);
+      error: (error: Error) => {
+        console.error(error)
+        if (error.message.includes('Not found')) {
           this.router.navigate(['error', 404]);
         }
       }
@@ -106,7 +106,7 @@ export class SoftwareComponent implements OnInit, OnDestroy {
     return this.getSoftwareBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.softwareCollection.items.length === 0) {
-          throw new Error(`Could not load software with slug "${slug}"`)
+          throw new Error(`Not found. Could not find software with slug "${slug}"`)
         } else {
           return x.data.softwareCollection.items[0] as Software
         }

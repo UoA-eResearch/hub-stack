@@ -53,9 +53,9 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
       switchMap((slug) => this.loadCaseStudy(slug))
     ).subscribe({
       next: (caseStudy: CaseStudy) => this.caseStudy = caseStudy,
-      error: (error) => {
-        if (error! instanceof GraphQLError) {
-          console.error(error);
+      error: (error: Error) => {
+        console.error(error)
+        if (error.message.includes('Not found')) {
           this.router.navigate(['error', 404]);
         }
       }
@@ -106,7 +106,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     return this.getCaseStudyBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.caseStudyCollection.items.length === 0) {
-          throw new Error(`Could not load case study with slug "${slug}"`)
+          throw new Error(`Not found. Could not find case study with slug "${slug}"`)
         } else {
           return x.data.caseStudyCollection.items[0] as CaseStudy
         }

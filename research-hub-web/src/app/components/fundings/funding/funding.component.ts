@@ -51,9 +51,9 @@ export class FundingComponent implements OnInit, OnDestroy {
       switchMap((slug) => this.loadFunding(slug))
     ).subscribe({
       next: (funding: Funding) => this.funding = funding,
-      error: (error) => {
-        if (error! instanceof GraphQLError) {
-          console.error(error);
+      error: (error: Error) => {
+        console.error(error)
+        if (error.message.includes('Not found')) {
           this.router.navigate(['error', 404]);
         }
       }
@@ -111,7 +111,7 @@ export class FundingComponent implements OnInit, OnDestroy {
     return this.getFundingBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.fundingCollection.items.length === 0) {
-          throw new Error(`Could not load funding with slug "${slug}"`)
+          throw new Error(`Not found. Could not find funding with slug "${slug}"`)
         } else {
           return x.data.fundingCollection.items[0] as Funding
         }

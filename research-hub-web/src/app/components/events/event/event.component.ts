@@ -51,9 +51,9 @@ export class EventComponent implements OnInit, OnDestroy {
       switchMap((slug) => this.loadEvent(slug))
     ).subscribe({
       next: (event: Event) => this.event = event,
-      error: (error) => {
-        if (error! instanceof GraphQLError) {
-          console.error(error);
+      error: (error: Error) => {
+        console.error(error)
+        if (error.message.includes('Not found')) {
           this.router.navigate(['error', 404]);
         }
       }
@@ -107,7 +107,7 @@ export class EventComponent implements OnInit, OnDestroy {
     return this.getEventBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.eventCollection.items.length === 0) {
-          throw new Error(`Could not load event with slug "${slug}"`)
+          throw new Error(`Not found. Could not find event with slug "${slug}"`)
         } else {
           return x.data.eventCollection.items[0] as Event
         }
