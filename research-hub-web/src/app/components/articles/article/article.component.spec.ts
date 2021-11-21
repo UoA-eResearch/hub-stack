@@ -237,12 +237,6 @@ describe('ArticleComponent', () => {
     },
     'slug': 'first-article',
     'searchable': true,
-    'icon': {
-      'title': 'Pippy',
-      'description': 'Sam\'s dog Pippy',
-      'url': 'https://imgs.ctfassets.net/vbuxn5csp0ik/014fpqFg0KmnP8NWc9Jyxe/0a1a14a6a0dd438443f70d5f917568fc/Screen_Shot_2020-07-23_at_3.12.46_PM.png',
-      '__typename': 'Asset'
-    },
     'relatedItemsCollection': {
       'items': [
         {

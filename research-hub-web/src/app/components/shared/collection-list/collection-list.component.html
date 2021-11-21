@@ -34,28 +34,6 @@
           [ngClass]="{ ssoProtected: content.ssoProtected }"
         >
           <mat-card-header>
-            <div mat-card-avatar class="item-avatar">
-              <div *ngIf="content.icon; else avatarIcon">
-                <img
-                  srcset="
-                    {{content?.icon?.url}}?w=200&fm=webp,
-                    {{content?.icon?.url}}?w=200
-                  "
-                  src="{{ content?.icon?.url }}?w=200"
-                  alt="{{ content?.icon?.description }}"
-                  class="item-avatar"
-                  width="100%"
-                  height="100%"
-                />
-              </div>
-              <ng-template #avatarIcon>
-                <mat-icon
-                  class="item-avatar-icon"
-                  [innerHTML]="getDefaultTypeIcon(content.__typename)"
-                >
-                </mat-icon>
-              </ng-template>
-            </div>
             <mat-card-title>
               <p>
                 <span class="card-title">{{ content.title }}</span

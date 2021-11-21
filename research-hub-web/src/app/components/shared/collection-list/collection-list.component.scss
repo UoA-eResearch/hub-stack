@@ -2,36 +2,12 @@
 @import "mixins";
 @import "styles-common";
 
-div.mat-card-avatar mat-icon {
-  color: $dark-blue;
-}
-
 div.collection {
   margin: 24px 0 24px 0;
 }
 
 .result-item {
   cursor: pointer;
-
-  &.ssoProtected {
-  }
-  $avatar-size: 64px;
-
-  .item-avatar {
-    width: $avatar-size;
-    height: $avatar-size;
-    margin-right: $avatar-size * 0.15;
-    img {
-      object-fit: cover;
-      width: $avatar-size;
-      height: $avatar-size;
-    }
-  }
-  .item-avatar-icon {
-    padding: 16px 0;
-    font-size: $avatar-size !important;
-    color: $dark-blue !important;
-  }
 }
 
 /**
@@ -73,13 +49,6 @@ mat-card {
     font-size: 14px !important;
     vertical-align: middle;
   }
-}
-
-/**
- * Card Result Icon
- */
-.item-avatar-icon {
-  color: $light-blue !important;
 }
 
 /**
