@@ -59,7 +59,7 @@
 
     <!-- Related -->
     <div class="event-owners section" fxLayout="column">
-      <h3>
+      <h3 *ngIf="event?.relatedItemsCollection.items.length > 0">
         Explore Related
         <hr />
       </h3>

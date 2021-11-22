@@ -130,7 +130,7 @@
 
     <!-- Related -->
     <div class="funding-owners section" fxLayout="column">
-      <h3>
+      <h3 *ngIf="funding?.relatedItemsCollection.items.length > 0">
         Explore Related
         <hr />
       </h3>
