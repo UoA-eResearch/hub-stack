@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AllEventsGQL, EventCollection } from '@app/graphql/schema';
 import { PageTitleService } from '@services/page-title.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -22,9 +22,15 @@ export class EventListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.pageTitleService.title = this.title;
-    this.subscription.add(this.allEventsGQL.fetch().pipe(
+    this.subscription.add(
+      this.loadContent().subscribe((collection) => this.events = collection)
+    );
+  }
+
+  public loadContent(): Observable<EventCollection> {
+    return this.allEventsGQL.fetch().pipe(
       map((result) => result.data.eventCollection as EventCollection)
-    ).subscribe((collection) => this.events = collection));
+    )
   }
 
   ngOnDestroy(): void {

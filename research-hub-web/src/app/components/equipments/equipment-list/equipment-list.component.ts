@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AllEquipmentGQL, EquipmentCollection } from '@app/graphql/schema';
 import { PageTitleService } from '@services/page-title.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -22,9 +22,15 @@ export class EquipmentListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.pageTitleService.title = this.title;
-    this.subscription.add(this.allEquipmentGQL.fetch().pipe(
+    this.subscription.add(
+      this.loadContent().subscribe((collection) => this.equipment = collection)
+    );
+  }
+
+  public loadContent(): Observable<EquipmentCollection> {
+    return this.allEquipmentGQL.fetch().pipe(
       map((result) => result.data.equipmentCollection as EquipmentCollection)
-    ).subscribe((collection) => this.equipment = collection));
+    )
   }
 
   ngOnDestroy(): void {

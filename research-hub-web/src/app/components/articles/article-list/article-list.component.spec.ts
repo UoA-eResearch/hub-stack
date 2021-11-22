@@ -65,10 +65,13 @@ describe('ArticleListComponent', () => {
     expect(component).toBeTruthy();
   });
   
-  // it('Should get all articles', () => {
-  //   spyOn(component, 'getAllArticles').and.returnValue(mockAllArticles$);
-  //   component.getAllArticles().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // });
+  it('Should get all articles', () => {
+    spyOn(component, 'loadContent').and.returnValue(mockAllArticles$);
+
+    fixture.whenStable().then(() => {
+      component.loadContent().subscribe(res => {
+        expect(res.items.length).toBe(1);
+      });
+    })
+  });
 });

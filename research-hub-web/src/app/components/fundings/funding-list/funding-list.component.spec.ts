@@ -57,10 +57,13 @@ describe('FundingListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should get all fundings', () => {
-  //   spyOn(component, 'getAllFundings').and.returnValue(mockAllFunding$);
-  //   component.getAllFundings().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // })
+  it('should get all fundings', () => {
+    spyOn(component, 'loadContent').and.returnValue(mockAllFunding$);
+
+    fixture.whenStable().then(() => {
+      component.loadContent().subscribe(res => {
+        expect(res.items.length).toBe(1);
+      });
+    })
+  })
 });

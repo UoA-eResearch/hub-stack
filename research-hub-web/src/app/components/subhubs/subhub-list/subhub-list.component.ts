@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AllSubHubGQL, SubHubCollection } from '@app/graphql/schema';
 import { PageTitleService } from '@services/page-title.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -22,9 +22,15 @@ export class SubhubListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.pageTitleService.title = this.title;
-    this.subscription.add(this.allSubhubGQL.fetch().pipe(
+    this.subscription.add(
+      this.loadContent().subscribe((collection) => this.subhubs = collection)
+    );
+  }
+
+  public loadContent(): Observable<SubHubCollection> {
+    return this.allSubhubGQL.fetch().pipe(
       map((result) => result.data.subHubCollection as SubHubCollection)
-    ).subscribe((collection) => this.subhubs = collection));
+    )
   }
 
   ngOnDestroy(): void {

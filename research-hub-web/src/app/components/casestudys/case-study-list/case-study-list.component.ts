@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AllCaseStudiesGQL, CaseStudyCollection } from '@app/graphql/schema';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PageTitleService } from '@services/page-title.service';
 
@@ -22,9 +22,15 @@ export class CaseStudyListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.pageTitleService.title = this.title;
-    this.subscription.add(this.allCaseStudiesGQL.fetch().pipe(
+    this.subscription.add(
+      this.loadContent().subscribe((collection) => this.caseStudies = collection)
+    );
+  }
+
+  public loadContent(): Observable<CaseStudyCollection> {
+    return this.allCaseStudiesGQL.fetch().pipe(
       map((result) => result.data.caseStudyCollection as CaseStudyCollection)
-    ).subscribe((collection) => this.caseStudies = collection));
+    )
   }
 
   ngOnDestroy(): void {

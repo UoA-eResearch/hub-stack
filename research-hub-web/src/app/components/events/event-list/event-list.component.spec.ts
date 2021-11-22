@@ -57,10 +57,13 @@ describe('EventListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should get all events', () => {
-  //   spyOn(component, 'getAllEvents').and.returnValue(mockAllEvent$);
-  //   component.getAllEvents().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // })
+  it('should get all events', () => {
+    spyOn(component, 'loadContent').and.returnValue(mockAllEvent$);
+
+    fixture.whenStable().then(() => {
+      component.loadContent().subscribe(res => {
+        expect(res.items.length).toBe(1);
+      });
+    })
+  })
 });
