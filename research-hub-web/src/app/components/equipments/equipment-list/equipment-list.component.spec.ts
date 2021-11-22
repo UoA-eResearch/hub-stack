@@ -6,12 +6,28 @@ import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PageTitleService } from '@services/page-title.service';
 import { CollectionListComponent } from '@app/components/shared/collection-list/collection-list.component';
+import { EquipmentCollection } from '@app/graphql/schema';
+import { Observable, of } from 'rxjs';
 
 describe('EquipmentListComponent', () => {
   let component: EquipmentListComponent;
   let fixture: ComponentFixture<EquipmentListComponent>;
   let controller: ApolloTestingController;
 
+  const mockAllEquipment$: Observable<EquipmentCollection> = of({
+    'items': [
+      {
+        '__typename': 'Equipment',
+        'slug': 'death-star',
+        'title': 'Death Star',
+        'summary': 'Mobile space station and galactic superweapon.',
+        'ssoProtected': true,
+        'searchable': false
+      }
+    ],
+    '__typename': 'EquipmentCollection'
+  } as EquipmentCollection);
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -40,4 +56,11 @@ describe('EquipmentListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
+  // it('Should get all equipment', () => {
+  //   spyOn(component, 'getAllEquipment').and.returnValue(mockAllEquipment$);
+  //   component.getAllEquipment().subscribe(res => {
+  //     expect(res).toBeTruthy();
+  //   });
+  // })
 });

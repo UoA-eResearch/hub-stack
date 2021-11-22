@@ -6,11 +6,27 @@ import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PageTitleService } from '@services/page-title.service';
 import { CollectionListComponent } from '@app/components/shared/collection-list/collection-list.component';
+import { CaseStudyCollection } from '@app/graphql/schema';
+import { Observable, of } from 'rxjs';
 
 describe('CaseStudyListComponent', () => {
   let component: CaseStudyListComponent;
   let fixture: ComponentFixture<CaseStudyListComponent>;
   let controller: ApolloTestingController;
+
+  const mockAllCaseStudy$: Observable<CaseStudyCollection> = of({
+    'items': [
+      {
+        '__typename': 'CaseStudy',
+        'slug': 'death-star',
+        'title': 'Death Star',
+        'summary': 'Mobile space station and galactic superweapon.',
+        'ssoProtected': true,
+        'searchable': false
+      }
+    ],
+    '__typename': 'CaseStudyCollection'
+  } as CaseStudyCollection);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -40,4 +56,11 @@ describe('CaseStudyListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('Should get all case studies', () => {
+  //   spyOn(component, 'getAllCaseStudy').and.returnValue(mockAllCaseStudy$);
+  //   component.getAllCaseStudy().subscribe(res => {
+  //     expect(res).toBeTruthy();
+  //   });
+  // });
 });
