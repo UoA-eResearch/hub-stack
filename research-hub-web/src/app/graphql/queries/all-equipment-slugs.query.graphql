@@ -1,7 +1,0 @@
-query AllEquipmentSlugs {
-    equipmentCollection {
-        items {
-            slug
-        }
-    }
-}

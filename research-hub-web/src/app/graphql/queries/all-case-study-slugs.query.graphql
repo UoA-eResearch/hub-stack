@@ -1,7 +1,0 @@
-query AllCaseStudySlugs {
-    caseStudyCollection {
-        items {
-            slug
-        }
-    }
-}
