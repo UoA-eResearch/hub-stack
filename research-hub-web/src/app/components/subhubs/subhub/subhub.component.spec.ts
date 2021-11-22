@@ -14,9 +14,10 @@ import {
   AllContentItemParentSubHubsGQL,
 } from "@graphql/schema";
 import { PageTitleService } from '@services/page-title.service';
-import { MockModule, MockProvider } from 'ng-mocks';
+import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SubhubComponent } from './subhub.component';
+import { BreadcrumbsComponent } from '@app/components/shared/breadcrumbs/breadcrumbs.component';
 
 
 describe('SubhubsComponent', () => {
@@ -500,7 +501,10 @@ describe('SubhubsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [SubhubComponent],
+      declarations: [
+        SubhubComponent,
+        MockComponent(BreadcrumbsComponent)
+      ],
       imports: [
         ApolloTestingModule,
         MockModule(CommonModule),

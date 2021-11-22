@@ -4,13 +4,14 @@ import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockModule, MockProvider } from 'ng-mocks';
+import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { CaseStudyComponent } from './case-study.component';
 import { PageTitleService } from '@services/page-title.service';
 import { CaseStudy, CaseStudyCollection } from '@app/graphql/schema';
+import { BreadcrumbsComponent } from '@app/components/shared/breadcrumbs/breadcrumbs.component';
 
 describe('CaseStudyComponent', () => {
   let component: CaseStudyComponent;
@@ -47,7 +48,10 @@ describe('CaseStudyComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ CaseStudyComponent ],
+      declarations: [
+        CaseStudyComponent,
+        MockComponent(BreadcrumbsComponent)
+      ],
       imports: [
         ApolloTestingModule,
         MockModule(CommonModule),

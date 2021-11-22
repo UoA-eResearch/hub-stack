@@ -10,7 +10,8 @@ import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockModule, MockProvider } from 'ng-mocks';
+import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
+import { BreadcrumbsComponent } from '@app/components/shared/breadcrumbs/breadcrumbs.component';
 
 describe('EventsComponent', () => {
   let component: EventComponent;
@@ -47,7 +48,8 @@ describe('EventsComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
-        EventComponent
+        EventComponent,
+        MockComponent(BreadcrumbsComponent)
       ],
       imports: [
         RouterTestingModule,
