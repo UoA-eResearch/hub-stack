@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Article } from '@app/graphql/schema';
 import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 import { MockModule, MockPipe } from 'ng-mocks';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { StandardCardComponent } from './standard-card.component';
 
 describe('StandardCardComponent', () => {
@@ -20,7 +20,8 @@ describe('StandardCardComponent', () => {
       ],
       imports: [
         MockModule(MatCardModule),
-        MockModule(MatIconModule)
+        MockModule(MatIconModule),
+        RouterTestingModule.withRoutes([])
       ]
     })
       .compileComponents();
@@ -36,6 +37,7 @@ describe('StandardCardComponent', () => {
       contentfulMetadata: {
         tags: [],
       },
+      icon: null,
       interestedPartiesCollection: null,
       keywords: null,
       linkedFrom: null,

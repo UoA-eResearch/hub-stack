@@ -9,8 +9,9 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { MockModule, MockProvider } from 'ng-mocks';
+import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BreadcrumbsComponent } from '@app/components/shared/breadcrumbs/breadcrumbs.component';
 
 describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
@@ -47,7 +48,8 @@ describe('EquipmentComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
-        EquipmentComponent
+        EquipmentComponent,
+        MockComponent(BreadcrumbsComponent)
       ],
       imports: [
         RouterTestingModule,

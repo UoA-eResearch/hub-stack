@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CollectionListComponent } from './collection-list.component';
 import { SharedModule } from '../app.shared.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MockModule } from 'ng-mocks';
 
 describe('CollectionListComponent', () => {
@@ -13,7 +14,8 @@ describe('CollectionListComponent', () => {
       declarations: [CollectionListComponent],
       imports: [
         MockModule(SharedModule),
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes([])
       ]
     })
       .compileComponents();
