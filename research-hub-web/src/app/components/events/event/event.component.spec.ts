@@ -85,9 +85,12 @@ describe('EventsComponent', () => {
 
     it('Should get a single Event data by Slug', () => {
       spyOn(component, 'getEventBySlug').and.returnValue(mockEvent$);
-      component.getEventBySlug(testSlug).subscribe(res => {
-        expect(res.slug).toEqual(testSlug);
-      });
+
+      fixture.whenStable().then(() => {
+        component.getEventBySlug(testSlug).subscribe(res => {
+          expect(res.slug).toEqual(testSlug);
+        });
+      })
     })
   });
 });
