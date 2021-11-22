@@ -57,10 +57,13 @@ describe('ServiceListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('Should get all Service', () => {
-  //   spyOn(component, 'getAllServices').and.returnValue(mockAllServices$);
-  //   component.getAllServices().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // })
+  it('Should get all Service', () => {
+    spyOn(component, 'loadContent').and.returnValue(mockAllServices$);
+
+    fixture.whenStable().then(() => {
+      component.loadContent().subscribe(res => {
+        expect(res.items.length).toBe(1);
+      });
+    })
+  })
 });

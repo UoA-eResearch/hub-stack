@@ -57,10 +57,13 @@ describe('CaseStudyListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('Should get all case studies', () => {
-  //   spyOn(component, 'getAllCaseStudy').and.returnValue(mockAllCaseStudy$);
-  //   component.getAllCaseStudy().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // });
+  it('Should get all case studies', () => {
+    spyOn(component, 'loadContent').and.returnValue(mockAllCaseStudy$);
+
+    fixture.whenStable().then(() => {
+      component.loadContent().subscribe(res => {
+        expect(res.items.length).toBe(1);
+      });
+    })
+  });
 });

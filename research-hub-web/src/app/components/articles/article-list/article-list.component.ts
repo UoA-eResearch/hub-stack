@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AllArticlesGQL, ArticleCollection } from '@app/graphql/schema';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PageTitleService } from '@services/page-title.service';
 
@@ -22,9 +22,15 @@ export class ArticleListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.pageTitleService.title = this.title;
-    this.subscription.add(this.allArticlesGQL.fetch().pipe(
+    this.subscription.add(
+      this.loadContent().subscribe((collection) => this.articles = collection)
+    );
+  }
+
+  public loadContent(): Observable<ArticleCollection> {
+    return this.allArticlesGQL.fetch().pipe(
       map((result) => result.data.articleCollection as ArticleCollection)
-    ).subscribe(collection => this.articles = collection));
+    )
   }
 
   ngOnDestroy(): void {

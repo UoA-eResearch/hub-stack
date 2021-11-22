@@ -57,10 +57,13 @@ describe('SoftwareListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('Should get all Software', () => {
-  //   spyOn(component, 'getAllSoftware').and.returnValue(mockAllSoftware$);
-  //   component.getAllSoftware().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // })
+  it('Should get all Software', () => {
+    spyOn(component, 'loadContent').and.returnValue(mockAllSoftware$);
+
+    fixture.whenStable().then(() => {
+      component.loadContent().subscribe(res => {
+        expect(res.items.length).toBe(1);
+      });
+    })
+  })
 });

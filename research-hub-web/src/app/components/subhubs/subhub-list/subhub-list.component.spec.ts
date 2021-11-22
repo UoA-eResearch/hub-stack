@@ -215,10 +215,13 @@ describe('SubhubListComponent', () => {
     expect(component).toBeTruthy();
   });
   
-  // it('Should get all SubHubs', () => {
-  //   spyOn(component, 'getAllSubHubs').and.returnValue(allMockSubHubs$);
-  //   component.getAllSubHubs().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // })
+  it('Should get all SubHubs', () => {
+    spyOn(component, 'loadContent').and.returnValue(allMockSubHubs$);
+
+    fixture.whenStable().then(() => {
+      component.loadContent().subscribe(res => {
+        expect(res.items.length).toBe(2);
+      });
+    })
+  })
 });
