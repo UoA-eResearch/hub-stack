@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CerGraphqlService } from '@services/cer-graphql.service';
+import { MockProvider } from 'ng-mocks';
 import { BreadcrumbsComponent } from './breadcrumbs.component';
 
 describe('BreadcrumbsComponent', () => {
@@ -23,7 +25,10 @@ describe('BreadcrumbsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ BreadcrumbsComponent ],
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule],
+      providers: [
+        MockProvider(CerGraphqlService),
+      ]
     })
     .compileComponents();
   });
@@ -31,7 +36,6 @@ describe('BreadcrumbsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(BreadcrumbsComponent);
     component = fixture.componentInstance;
-    // component.contentItem = breadCrumbs;
     fixture.detectChanges();
   });
 
