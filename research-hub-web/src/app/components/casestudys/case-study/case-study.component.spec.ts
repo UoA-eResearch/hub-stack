@@ -10,28 +10,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { CaseStudyComponent } from './case-study.component';
 import { PageTitleService } from '@services/page-title.service';
-import { CaseStudy, CaseStudyCollection } from '@app/graphql/schema';
+import { CaseStudy } from '@app/graphql/schema';
 import { BreadcrumbsComponent } from '@app/components/shared/breadcrumbs/breadcrumbs.component';
+import { CaseStudyListComponent } from '../case-study-list/case-study-list.component';
 
 describe('CaseStudyComponent', () => {
   let component: CaseStudyComponent;
-  let appComponentService: PageTitleService;
   let fixture: ComponentFixture<CaseStudyComponent>;
   let controller: ApolloTestingController;
-
-  const mockAllCaseStudy$: Observable<CaseStudyCollection> = of({
-    'items': [
-      {
-        '__typename': 'CaseStudy',
-        'slug': 'death-star',
-        'title': 'Death Star',
-        'summary': 'Mobile space station and galactic superweapon.',
-        'ssoProtected': true,
-        'searchable': false
-      }
-    ],
-    '__typename': 'CaseStudyCollection'
-  } as CaseStudyCollection);
 
   const mockCaseStudy$: Observable<CaseStudy> = of(
     {
@@ -42,9 +28,9 @@ describe('CaseStudyComponent', () => {
       'slug': 'death-star',
       'title': 'Death Star',
       'summary': 'Mobile space station and galactic superweapon.',
-      'ssoProtected': true,
+      'ssoProtected': false,
       'searchable': false
-    } as CaseStudy);
+    } as unknown as CaseStudy);
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -58,7 +44,9 @@ describe('CaseStudyComponent', () => {
         MockModule(MaterialModule),
         MockModule(SharedModule),
         MockModule(BrowserAnimationsModule),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([
+          { path: 'casestudy/list', component: CaseStudyListComponent }
+        ])
       ], providers: [
         MockProvider(PageTitleService)
       ]
@@ -81,30 +69,28 @@ describe('CaseStudyComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('Should get all case studies', () => {
-  //   spyOn(component, 'getAllCaseStudy').and.returnValue(mockAllCaseStudy$);
-  //   component.getAllCaseStudy().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // });
+  describe('When a url slug is present', async () => {
+    const testSlug: string = 'death-star';
 
-  // describe('When a url slug is present', async () => {
-  //   beforeEach(() => {
-  //     controller = TestBed.inject(ApolloTestingController);
-  //     fixture = TestBed.createComponent(CaseStudyComponent);
-  //     component = fixture.componentInstance;
-  //     TestBed.inject(ActivatedRoute).params = of({
-  //       slug: 'death-star'
-  //     });
-  //     fixture.detectChanges();
-  //   });
+    beforeEach(() => {
+      controller = TestBed.inject(ApolloTestingController);
+      fixture = TestBed.createComponent(CaseStudyComponent);
+      component = fixture.componentInstance;
+      TestBed.inject(ActivatedRoute).params = of({
+        slug: testSlug
+      });
+      fixture.detectChanges();
+      component.ngOnInit();
+    });
 
-  //   it('Should get a single case study data', () => {
-  //     spyOn(component, 'getCaseStudyBySlug').and.returnValue(mockCaseStudy$);
-  //     component.getCaseStudyBySlug(component.slug).subscribe(res => {
-  //       expect(res.slug).toEqual('death-star');
-  //     });
-  //   });
-  // });
-
+    it('Should get a single case study data', () => {
+      spyOn(component, 'getCaseStudyBySlug').and.returnValue(mockCaseStudy$);
+      
+      fixture.whenStable().then(() => {        
+        component.getCaseStudyBySlug(testSlug).subscribe(res => {
+          expect(res.slug).toEqual(testSlug);
+        });
+      })
+    });
+  });
 });

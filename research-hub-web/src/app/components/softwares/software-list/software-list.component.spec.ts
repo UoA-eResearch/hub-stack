@@ -6,11 +6,27 @@ import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PageTitleService } from '@services/page-title.service';
 import { CollectionListComponent } from '@app/components/shared/collection-list/collection-list.component';
+import { SoftwareCollection } from '@app/graphql/schema';
+import { Observable, of } from 'rxjs';
 
 describe('SoftwareListComponent', () => {
   let component: SoftwareListComponent;
   let fixture: ComponentFixture<SoftwareListComponent>;
   let controller: ApolloTestingController;
+
+  const mockAllSoftware$: Observable<SoftwareCollection> = of({
+    'items': [
+      {
+        '__typename': 'Software',
+        'slug': 'death-star',
+        'title': 'Death Star',
+        'summary': 'Mobile space station and galactic superweapon.',
+        'ssoProtected': true,
+        'searchable': false
+      }
+    ],
+    '__typename': 'SoftwareCollection'
+  } as SoftwareCollection);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -40,4 +56,11 @@ describe('SoftwareListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('Should get all Software', () => {
+  //   spyOn(component, 'getAllSoftware').and.returnValue(mockAllSoftware$);
+  //   component.getAllSoftware().subscribe(res => {
+  //     expect(res).toBeTruthy();
+  //   });
+  // })
 });

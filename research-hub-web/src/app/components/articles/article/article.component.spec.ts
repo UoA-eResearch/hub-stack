@@ -1,10 +1,10 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { PageTitleService } from '@services/page-title.service';
 import { ArticleComponent } from './article.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { ArticleCollection, Article } from '@graphql/schema';
+import { Article } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
@@ -12,33 +12,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { BreadcrumbsComponent } from '@app/components/shared/breadcrumbs/breadcrumbs.component';
+import { ArticleListComponent } from '../article-list/article-list.component';
 
 describe('ArticleComponent', () => {
   let component: ArticleComponent;
-  let appComponentService: PageTitleService;
   let fixture: ComponentFixture<ArticleComponent>;
   let controller: ApolloTestingController;
-  const mockAllArticles$: Observable<ArticleCollection> = of({
-    'items': [
-      {
-        '__typename': 'Article',
-        'slug': 'first-article',
-        'title': 'First article',
-        'summary': 'A brief description of the first article. I\'m writing some more stuff here just so that this seems a little more realistic. Sam was here. Have a good day.',
-        'ssoProtected': false,
-        'searchable': true
-      },
-      {
-        '__typename': 'Article',
-        'slug': 'top-secret-article',
-        'title': 'Top Secret Article',
-        'summary': 'For testing SSO',
-        'ssoProtected': true,
-        'searchable': true
-      }
-    ],
-    '__typename': 'ArticleCollection'
-  } as ArticleCollection);
 
   const mockArticle$: Observable<Article> = of({
     'title': 'First article',
@@ -258,7 +237,7 @@ describe('ArticleComponent', () => {
     '__typename': 'Article'
   } as unknown as Article);
 
-  beforeEach(waitForAsync(() => {
+  beforeEach(waitForAsync (() => {
     TestBed.configureTestingModule({
       declarations: [
         ArticleComponent,
@@ -270,7 +249,9 @@ describe('ArticleComponent', () => {
         MockModule(MaterialModule),
         MockModule(SharedModule),
         MockModule(BrowserAnimationsModule),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([
+          { path: 'article/list', component: ArticleListComponent }
+        ])
       ], providers: [
         MockProvider(PageTitleService)
       ]
@@ -284,7 +265,6 @@ describe('ArticleComponent', () => {
     fixture.detectChanges();
   });
 
-
   afterEach(() => {
     fixture.destroy();
   });
@@ -293,29 +273,28 @@ describe('ArticleComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('Should get all articles', () => {
-  //   spyOn(component, 'getAllArticles').and.returnValue(mockAllArticles$);
-  //   component.getAllArticles().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // })
+  describe('When a url slug is present', async () => {
+    const testSlug: string = 'first-article';
 
-  // describe('When a url slug is present', async () => {
-  //   beforeEach(() => {
-  //     controller = TestBed.inject(ApolloTestingController);
-  //     fixture = TestBed.createComponent(ArticleComponent);
-  //     component = fixture.componentInstance;
-  //     TestBed.inject(ActivatedRoute).params = of({
-  //       slug: 'first-article'
-  //     });
-  //     fixture.detectChanges();
-  //   });
+    beforeEach(() => {
+      controller = TestBed.inject(ApolloTestingController);
+      fixture = TestBed.createComponent(ArticleComponent);
+      component = fixture.componentInstance;
+      TestBed.inject(ActivatedRoute).params = of({
+        slug: testSlug
+      });
+      fixture.detectChanges();
+      component.ngOnInit();
+    });
 
-  //   it('Should get a single article data', () => {
-  //     spyOn(component, 'getArticleBySlug').and.returnValue(mockArticle$);
-  //     component.getArticleBySlug(component.slug).subscribe(res => {
-  //       expect(res.slug).toEqual('first-article');
-  //     });
-  //   });
-  // });
+    it('Should get a single article data', () => {
+      spyOn(component, 'getArticleBySlug').and.returnValue(mockArticle$);
+
+      fixture.whenStable().then(() => {
+        component.getArticleBySlug(testSlug).subscribe(res => {
+          expect(res.slug).toEqual(testSlug);
+        });
+      })
+    });
+  });
 });

@@ -4,7 +4,7 @@ import { EventComponent } from './event.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { EventCollection, Event } from '@graphql/schema';
+import { Event } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
@@ -12,25 +12,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { BreadcrumbsComponent } from '@app/components/shared/breadcrumbs/breadcrumbs.component';
+import { EventListComponent } from '../event-list/event-list.component';
 
 describe('EventsComponent', () => {
   let component: EventComponent;
   let fixture: ComponentFixture<EventComponent>;
   let controller: ApolloTestingController;
-
-  const mockAllEvent$: Observable<EventCollection> = of({
-    'items': [
-      {
-        '__typename': 'Event',
-        'slug': 'death-star',
-        'title': 'Death Star',
-        'summary': 'Mobile space station and galactic superweapon.',
-        'ssoProtected': true,
-        'searchable': false
-      }
-    ],
-    '__typename': 'EventCollection'
-  } as EventCollection);
 
   const mockEvent$: Observable<Event> = of(
     {
@@ -52,7 +39,9 @@ describe('EventsComponent', () => {
         MockComponent(BreadcrumbsComponent)
       ],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'event/list', component: EventListComponent }
+        ]),
         ApolloTestingModule,
         MockModule(CommonModule),
         MockModule(MaterialModule),
@@ -80,29 +69,25 @@ describe('EventsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should get all events', () => {
-  //   spyOn(component, 'getAllEvents').and.returnValue(mockAllEvent$);
-  //   component.getAllEvents().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // })
+  describe('When a url slug is present', async () => {
+    const testSlug: string = 'death-star';
 
-  // describe('When a url slug is present', async () => {
-  //   beforeEach(() => {
-  //     controller = TestBed.inject(ApolloTestingController);
-  //     fixture = TestBed.createComponent(EventComponent);
-  //     component = fixture.componentInstance;
-  //     TestBed.inject(ActivatedRoute).params = of({
-  //       slug: 'death-star'
-  //     });
-  //     fixture.detectChanges();
-  //   })
+    beforeEach(() => {
+      controller = TestBed.inject(ApolloTestingController);
+      fixture = TestBed.createComponent(EventComponent);
+      component = fixture.componentInstance;
+      TestBed.inject(ActivatedRoute).params = of({
+        slug: testSlug
+      });
+      fixture.detectChanges();
+      component.ngOnInit();
+    })
 
-  //   it('Should get a single Event data by Slug', () => {
-  //     spyOn(component, 'getEventBySlug').and.returnValue(mockEvent$);
-  //     component.getEventBySlug(component.slug).subscribe(res => {
-  //       expect(res.slug).toEqual('death-star');
-  //     });
-  //   })
-  // });
+    it('Should get a single Event data by Slug', () => {
+      spyOn(component, 'getEventBySlug').and.returnValue(mockEvent$);
+      component.getEventBySlug(testSlug).subscribe(res => {
+        expect(res.slug).toEqual(testSlug);
+      });
+    })
+  });
 });

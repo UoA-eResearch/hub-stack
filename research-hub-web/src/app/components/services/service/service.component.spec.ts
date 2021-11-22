@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { PageTitleService } from '@services/page-title.service';
 import { ServiceComponent } from './service.component';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { ServiceCollection, AllServicesGQL, Service } from '@graphql/schema';
+import { Service } from '@graphql/schema';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '@app/app.material.module';
 import { SharedModule } from '@components/shared/app.shared.module';
@@ -12,25 +12,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { BreadcrumbsComponent } from '@app/components/shared/breadcrumbs/breadcrumbs.component';
+import { ServiceListComponent } from '../service-list/service-list.component';
 
-describe('ServicesComponent', () => {
+describe('ServiceComponent', () => {
   let component: ServiceComponent;
   let fixture: ComponentFixture<ServiceComponent>;
   let controller: ApolloTestingController;
-
-  const mockAllServices$: Observable<ServiceCollection> = of({
-    'items': [
-      {
-        '__typename': 'Service',
-        'slug': 'death-star',
-        'title': 'Death Star',
-        'summary': 'Mobile space station and galactic superweapon.',
-        'ssoProtected': true,
-        'searchable': false
-      }
-    ],
-    '__typename': 'ServiceCollection'
-  } as ServiceCollection);
 
   const mockService$: Observable<Service> = of(
     {
@@ -52,7 +39,9 @@ describe('ServicesComponent', () => {
         MockComponent(BreadcrumbsComponent)
       ],
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'service/list', component: ServiceListComponent }
+        ]),
         ApolloTestingModule,
         MockModule(CommonModule),
         MockModule(MaterialModule),
@@ -80,29 +69,28 @@ describe('ServicesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('Should get all Service', () => {
-  //   spyOn(component, 'getAllServices').and.returnValue(mockAllServices$);
-  //   component.getAllServices().subscribe(res => {
-  //     expect(res).toBeTruthy();
-  //   });
-  // })
+  describe('When a url slug is present', async () => {
+    const testSlug: string = 'death-star';
 
-  // describe('When a url slug is present', async () => {
-  //   beforeEach(() => {
-  //     controller = TestBed.inject(ApolloTestingController);
-  //     fixture = TestBed.createComponent(ServiceComponent);
-  //     component = fixture.componentInstance;
-  //     TestBed.inject(ActivatedRoute).params = of({
-  //       slug: 'death-star'
-  //     });
-  //     fixture.detectChanges();
-  //   })
+    beforeEach(() => {
+      controller = TestBed.inject(ApolloTestingController);
+      fixture = TestBed.createComponent(ServiceComponent);
+      component = fixture.componentInstance;
+      TestBed.inject(ActivatedRoute).params = of({
+        slug: testSlug
+      });
+      fixture.detectChanges();
+      component.ngOnInit();
+    })
 
-  //   it('Should get a single service data by Slug', () => {
-  //     spyOn(component, 'getServiceBySlug').and.returnValue(mockService$);
-  //     component.getServiceBySlug(component.slug).subscribe(res => {
-  //       expect(res.slug).toEqual('death-star');
-  //     });
-  //   })
-  // });
+    it('Should get a single service data by Slug', () => {
+      spyOn(component, 'getServiceBySlug').and.returnValue(mockService$);
+
+      fixture.whenStable().then(() => {
+        component.getServiceBySlug(testSlug).subscribe(res => {
+          expect(res.slug).toEqual(testSlug);
+        });
+      })
+    })
+  });
 });
