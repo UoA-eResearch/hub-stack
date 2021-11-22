@@ -2,8 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { EquipmentListComponent } from './equipment-list.component';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { MockModule } from 'ng-mocks';
+import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
+import { PageTitleService } from '@services/page-title.service';
+import { CollectionListComponent } from '@app/components/shared/collection-list/collection-list.component';
 
 describe('EquipmentListComponent', () => {
   let component: EquipmentListComponent;
@@ -12,11 +14,17 @@ describe('EquipmentListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EquipmentListComponent ],
+      declarations: [
+        EquipmentListComponent,
+        MockComponent(CollectionListComponent)
+      ],
       imports: [
         ApolloTestingModule,
         MockModule(SharedModule),
         RouterTestingModule.withRoutes([])
+      ],
+      providers: [
+        MockProvider(PageTitleService),
       ]
     })
     .compileComponents();

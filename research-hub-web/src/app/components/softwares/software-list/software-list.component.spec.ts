@@ -2,8 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { SoftwareListComponent } from './software-list.component';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { MockModule } from 'ng-mocks';
+import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
+import { PageTitleService } from '@services/page-title.service';
+import { CollectionListComponent } from '@app/components/shared/collection-list/collection-list.component';
 
 describe('SoftwareListComponent', () => {
   let component: SoftwareListComponent;
@@ -12,11 +14,17 @@ describe('SoftwareListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SoftwareListComponent ],
+      declarations: [
+        SoftwareListComponent,
+        MockComponent(CollectionListComponent)
+      ],
       imports: [
         ApolloTestingModule,
         MockModule(SharedModule),
         RouterTestingModule.withRoutes([])
+      ],
+      providers: [
+        MockProvider(PageTitleService),
       ]
     })
     .compileComponents();
