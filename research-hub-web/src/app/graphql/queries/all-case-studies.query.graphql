@@ -1,5 +1,5 @@
 query AllCaseStudies {
-    caseStudyCollection {
+    caseStudyCollection(limit: 250) {
         items {
             ...PublicFields
         }
