@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AllFundingGQL, FundingCollection } from '@app/graphql/schema';
+import { PageTitleService } from '@services/page-title.service';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -10,14 +11,17 @@ import { map } from 'rxjs/operators';
 })
 export class FundingListComponent implements OnInit, OnDestroy {
   public fundings: FundingCollection;
+  public title: string = 'Funding Collection';
 
   private subscription = new Subscription();
 
   constructor(
-    private allFundingGQL: AllFundingGQL
+    private allFundingGQL: AllFundingGQL,
+    public pageTitleService: PageTitleService
   ) { }
 
   ngOnInit(): void {
+    this.pageTitleService.title = this.title;
     this.subscription.add(this.allFundingGQL.fetch().pipe(
       map((result) => result.data.fundingCollection as FundingCollection)
     ).subscribe((collection) => this.fundings = collection));
