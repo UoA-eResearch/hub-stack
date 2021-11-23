@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { FilterType } from '@app/global/global-variables';
-import { SearchFilters, SortOrder } from '@app/global/searchTypes';
+import { SearchFilters, SortOrder, FilterType } from '@app/global/searchTypes';
 import { AllCategoriesGQL, AllOrganisationsGQL, AllStagesGQL, CategoryCollection, OrgUnitCollection, StageCollection } from '@app/graphql/schema';
 import { SearchService } from '@services/search.service';
 import { Observable } from 'rxjs';

@@ -34,3 +34,9 @@ export interface SearchResultChip {
 
 export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
 export type ContentType = 'article' | 'caseStudy' | 'equipment' | 'event' | 'funding' | 'service' | 'software' | 'subHub'
+
+export enum FilterType {
+  ResearchActivity = 1,
+  ResearchCategory,
+  Organisation
+}
