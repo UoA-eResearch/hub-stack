@@ -5,7 +5,6 @@ import { PageTitleService } from './services/page-title.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatMenuModule } from '@angular/material/menu'
 import { MockModule, MockProvider } from 'ng-mocks';
 import { AppLayoutModule } from './components/layout/layout.module';
 
@@ -20,7 +19,6 @@ describe('AppComponent', () => {
         HttpClientTestingModule,
         ApolloTestingModule,
         RouterTestingModule.withRoutes([]),
-        MockModule(MatMenuModule),
         MockModule(AppLayoutModule)
       ],
       providers: [
