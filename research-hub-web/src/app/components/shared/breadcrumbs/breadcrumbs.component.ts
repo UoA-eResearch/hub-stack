@@ -19,9 +19,11 @@ export class BreadcrumbsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.pipe(
-      map((paramMap) => paramMap.get('slug')),
+    this.route.params.pipe(
+      map((params) => {
+        return (params.slug || this.route.snapshot.data.slug) as string;
+      }),
       mergeMap((slug: string) => from(this.cerGraphQLService.getParentSubHubs(slug)))
-    ).subscribe((result) => this.parentSubHubs = result);
+    ).subscribe((result) => this.parentSubHubs = result);    
   }
 }
