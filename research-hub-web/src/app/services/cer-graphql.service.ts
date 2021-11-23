@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, Routes } from '@angular/router';
 import { GetAllSubHubChildPagesSlugsGQL } from '@graphql/schema';
-import { map } from 'rxjs/operators';
 
 /**
  * The interface of the breadcrumbsArray object returned by this service's getParentSubHubs()
@@ -257,7 +256,8 @@ class SubHubMap {
       path: curPath,
       loadChildren: () => import(`../components/${curObject.typeName.toLowerCase()}s/${curObject.typeName.toLowerCase()}s.module`)
         .then(m => m[curObject.typeName.toLowerCase().charAt(0).toUpperCase() + curObject.typeName.toLowerCase().slice(1) + 'sModule']),
-      data: { slug: curObject.slug }
+      data: { slug: curObject.slug },
+      pathMatch: 'full'
     });
 
     if (curObject.isSubHub()) {

@@ -33,7 +33,6 @@ describe('InlinesEntryHyperlinkComponent', () => {
 
   const contentItem = {
     "__typename": "Event",
-    "icon": null,
     "slug": "abstract-writing",
     "title": "Abstract writing",
     "summary": "Learn how to write an effective abstract for conferences, events and publications.",
