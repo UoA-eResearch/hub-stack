@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatCardModule } from '@angular/material/card';
+import { MaterialModule } from '@app/app.material.module';
 import { Person } from '@app/graphql/schema';
 import { MockModule } from 'ng-mocks';
 
@@ -13,7 +13,7 @@ describe('ContactCardComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ContactCardComponent ],
       imports: [
-        MockModule(MatCardModule)
+        MockModule(MaterialModule)
       ]
     })
     .compileComponents();

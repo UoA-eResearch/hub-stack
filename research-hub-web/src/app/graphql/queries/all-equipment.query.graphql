@@ -1,5 +1,5 @@
 query AllEquipment {
-    equipmentCollection {
+    equipmentCollection(limit: 250) {
         items {
         ...PublicFields
         }

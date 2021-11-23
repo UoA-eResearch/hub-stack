@@ -1,7 +1,0 @@
-query AllSoftwareSlugs {
-    softwareCollection {
-        items {
-            slug
-        }
-    }
-}

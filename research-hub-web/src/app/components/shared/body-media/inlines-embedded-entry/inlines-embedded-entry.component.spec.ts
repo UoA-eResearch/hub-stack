@@ -26,7 +26,6 @@ describe('InlinesEmbeddedEntryComponent', () => {
 
   const contentItem = {
     "__typename": "Service",
-    "icon": null,
     "slug": "clinical-research-centre",
     "title": " Faculty of Medical and Health Sciences Clinical Research Centre",
     "summary": "These excellent facilities are available to staff and postgraduate students in the Faculty to carry out research involving human participants, as long as appropriate ethics approvals are in place.",

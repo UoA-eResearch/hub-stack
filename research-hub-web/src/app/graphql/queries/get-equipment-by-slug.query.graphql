@@ -12,11 +12,6 @@ query GetEquipmentBySlug($slug: String) {
       banner {
         url
       }
-      icon {
-        title
-        description
-        url
-      }
       summary
       callToAction
       callToActionLabel

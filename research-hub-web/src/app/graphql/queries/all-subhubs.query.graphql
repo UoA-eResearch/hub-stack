@@ -1,5 +1,5 @@
 query AllSubHub {
-    subHubCollection {
+    subHubCollection(limit: 250) {
         items {
             ...PublicFields
         }

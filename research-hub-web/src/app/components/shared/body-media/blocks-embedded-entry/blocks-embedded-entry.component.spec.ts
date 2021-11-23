@@ -5,7 +5,6 @@ import { MockInstance, MockModule, MockProvider } from 'ng-mocks';
 import { BlocksEmbeddedEntryComponent } from './blocks-embedded-entry.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SharedModule } from '@components/shared/app.shared.module';
-import { Entry } from '@app/graphql/schema';
 
 describe('BlocksEmbeddedEntryComponent', () => {
   let component: BlocksEmbeddedEntryComponent;

@@ -1,7 +1,0 @@
-query AllFundingSlugs {
-    fundingCollection {
-        items {
-            slug
-        }
-    }
-}
