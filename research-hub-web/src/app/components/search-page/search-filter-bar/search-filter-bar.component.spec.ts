@@ -10,6 +10,7 @@ import { SearchFilterBarComponent } from './search-filter-bar.component';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('SearchFilterBarComponent', () => {
@@ -27,6 +28,7 @@ describe('SearchFilterBarComponent', () => {
         HttpClientTestingModule,
         MatSelectModule,
         MatChipsModule,
+        MatIconModule,
         FormsModule,
         BrowserAnimationsModule
       ]

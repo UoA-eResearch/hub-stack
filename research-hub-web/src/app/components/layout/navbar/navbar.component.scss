@@ -33,12 +33,6 @@ mat-toolbar {
       }
       font-size: 0.7em;
     }
-    button-menu {
-      display: block;
-      @media (max-width: $navbar-second-row-breakpoint) {
-        display: none;
-      }
-    }
   }
   mat-toolbar-row.navbar-row-show-small {
     display: none;
@@ -54,14 +48,6 @@ mat-toolbar {
 }
 
 /**
- * User Detail Dropdown
- */
-.user-detail-dropdown {
-  margin-right: 8px;
-  margin-left: 8px;
-}
-
-/**
  * Sign Out Button
  */
 .sign-out-button {
@@ -70,42 +56,11 @@ mat-toolbar {
   margin-right: 8px;
 }
 
-/*
- * User Menu
- */
-.user-menu-list {
-  margin-bottom: 10.5px;
-  mat-list-item {
-    mat-icon {
-      color: white;
-    }
-    p {
-      font-size: 0.7em !important;
-      color: white;
-    }
-  }
-}
-
-/*
- * Button styles
- */
-.menu-button {
-  top: 4.8px;
-  right: 10.5px;
-  color: white !important;
-}
-.menu-button-xs {
-  @extend .menu-button;
-  top: 2.4px;
-  right: 10.5px;
-}
-
 @media (max-width: $navbar-second-row-breakpoint) {
   .hide-small {
     display: none;
   }
 }
-
 
 /*
  * Skip links
