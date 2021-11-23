@@ -47,9 +47,16 @@ export class ErrorRoutingModule extends UoaErrorsConfig {
             Thank you for your patience. Ngā mihi nui.</p>`
         };
 
+        this.ErrorPageContent['ErrorCode500'] = {
+            title: 'Internal Server Error',
+            content: `<p>Sorry, we ran into an error. Please try going back and reloading the page.</p>
+            <p> To report this error or if you require help, please contact
+            <a href=mailto:${this.contactEmail} target="_blank">${this.contactEmail}</a>.</p>`
+        };
+
         this.ErrorPageContent['ErrorCode501'] = {
             title: 'Cannot process request',
-            content: `<p>Sorry, we cannot connect you to the system. Try reloading the page, or going back and following the link again.</p>
+            content: `<p>Sorry, we cannot connect you to the system. Please try going back and reloading the page.</p>
             <p> To report this error or if you require help, please contact
             <a href=mailto:${this.contactEmail} target="_blank">${this.contactEmail}</a>.</p>`
         };
