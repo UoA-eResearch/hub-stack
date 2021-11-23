@@ -17,9 +17,9 @@ export class SubHubRoutesLoaderComponent implements OnInit {
   async ngOnInit(): Promise<boolean> {
     if (!this.cerGraphqlService.hasPushedSubhubRoutes) {
       // If we haven't pushed the subhub routes yet, the route may
-      // be a subhub route. Load subhub routes. 
+      // be a subhub route. Load subhub routes.
       await this.cerGraphqlService.pushSubHubRoutes();
-      const currentUrl = await this.router.url;
+      const currentUrl = this.router.url;
       // Then re-navigate and see if the route works.
       return this.router.navigateByUrl(currentUrl);
     } else {
