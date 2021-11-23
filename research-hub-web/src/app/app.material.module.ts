@@ -19,7 +19,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -48,7 +47,6 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule,
     MatExpansionModule,
     MatStepperModule,
     MatTooltipModule,
@@ -76,7 +74,6 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule,
     MatExpansionModule,
     MatStepperModule,
     MatTooltipModule,
