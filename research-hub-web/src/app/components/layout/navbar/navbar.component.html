@@ -7,11 +7,20 @@
   class="mat-elevation-z6"
 >
   <mat-toolbar-row class="main-navbar-row">
-    <a role="button" class="skip-link" [href]="skipLinkPathSearch">Skip to search</a>
-    <a role="button" class="skip-link" [href]="skipLinkPathMainContent">Skip to main content</a>
+    <a role="button" class="skip-link" [href]="skipLinkPathSearch"
+      >Skip to search</a
+    >
+    <a role="button" class="skip-link" [href]="skipLinkPathMainContent"
+      >Skip to main content</a
+    >
 
     <!-- Logo/Home -->
-    <a aria-label="ResearchHub home" class="hub-logo" mat-button [routerLink]="'/'">
+    <a
+      aria-label="ResearchHub home"
+      class="hub-logo"
+      mat-button
+      [routerLink]="'/'"
+    >
       <img [src]="'assets/imgs/hub-logo.svg'" alt="hub-logo" />
     </a>
 
@@ -43,49 +52,14 @@
   <ng-container *ngIf="userInfo$ | async; let userInfo">
     <button
       role="button"
-      class="button-menu"
-      aria-label="User Info"
       mat-button
-      [matMenuTriggerFor]="userMenu"
+      (click)="loginService.logout()"
+      (keydown.enter)="loginService.logout()"
+      [matTooltip]="userInfo?.firstName + ' ' + userInfo.lastName"
     >
-      <mat-icon matPrefix style="margin-right: 5px">person</mat-icon>
-      <span fxHide fxShow.gt-md>
-        {{ userInfo?.firstName + " " + userInfo?.lastName }}
-      </span>
-      <span fxHide fxShow.lt-lg>{{ userInfo?.firstName }}</span>
+      <mat-icon fxHide.xs matPrefix style="margin-right: 5px">person</mat-icon>
+      Sign&nbsp;Out
     </button>
-
-    <!-- User Details -->
-    <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-      <div class="user-detail-dropdown">
-        <img src="assets/imgs/uoa-logo-blue.svg" alt="uoa-logo-blue" />
-        <mat-list class="user-menu-list">
-          <mat-list-item>
-            <mat-icon mat-list-icon>person</mat-icon>
-            <p mat-line>
-              {{ userInfo?.firstName + " " + userInfo?.lastName }}
-            </p>
-          </mat-list-item>
-          <mat-list-item>
-            <mat-icon mat-list-icon>note</mat-icon>
-            <p mat-line>{{ userInfo?.email }}</p>
-          </mat-list-item>
-        </mat-list>
-      </div>
-
-      <!-- Sign Out Button-->
-      <div fxLayout="row" fxLayoutAlign="end">
-        <button
-          role="button"
-          mat-raised-button
-          class="sign-out-button"
-          (click)="loginService.logout()"
-          (keydown.enter)="loginService.logout()"
-        >
-          Sign Out
-        </button>
-      </div>
-    </mat-menu>
   </ng-container>
 </ng-template>
 
