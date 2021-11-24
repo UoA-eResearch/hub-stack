@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DeviceDetectorService } from 'ngx-device-detector';
 import { AppComponent } from './app.component';
 import { PageTitleService } from './services/page-title.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -22,8 +21,7 @@ describe('AppComponent', () => {
         MockModule(AppLayoutModule)
       ],
       providers: [
-        MockProvider(PageTitleService),
-        MockProvider(DeviceDetectorService)
+        MockProvider(PageTitleService)
       ]
     })
       .compileComponents();
