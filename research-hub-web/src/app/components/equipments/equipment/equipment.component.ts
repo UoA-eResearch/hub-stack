@@ -21,7 +21,6 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   public equipment: Equipment;
-  public isMobile: Boolean;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
 
