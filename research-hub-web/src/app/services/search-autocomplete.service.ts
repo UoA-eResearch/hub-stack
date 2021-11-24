@@ -20,24 +20,24 @@ export interface PageTitles {
 export class SearchAutocompleteService {
   // Popular search terms used in the ResearchHub obtained from site search analytics
   private popularSearches: string[] = [
-    "animal ethics",
-    "animal ethics application",
-    "drive",
-    "ethics",
+    "Animal Ethics",
+    "Animal Ethics Application",
+    "Drive",
+    "Ethics",
     "FIRST",
-    "grand challenges",
-    "human ethics",
-    "impact",
-    "internal funding",
+    "Grand Challenges",
+    "Human Ethics",
+    "Impact",
+    "Internal Funding",
     "ORCID",
     "PBRF",
-    "privacy",
+    "Privacy",
     "RDF",
-    "research storage",
-    "survey",
-    "thesis",
+    "Research Storage",
+    "Survey",
+    "Thesis",
     "TIF",
-    "virtual machine",
+    "Virtual Machine",
   ];
   // All published page titles in Contentful
   public allTitles$: Observable<PageTitles>;

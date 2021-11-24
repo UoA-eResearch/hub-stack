@@ -10,10 +10,9 @@ export class AppStorageService implements StorageService {
 
   constructor() {
     /**
-     * Due to a bug in Firefox with the IndexedDB driver (see https://github.com/localForage/localForage/issues/920),
-     * change driver to use localstorage instead.
+     * Supplying a list of drivers, in order of preference
      */
-    localforage.setDriver(localforage.LOCALSTORAGE);
+    localforage.setDriver([localforage.LOCALSTORAGE, localforage.INDEXEDDB, localforage.WEBSQL]);
   }
 
   getItem(key: string): Promise<any> {

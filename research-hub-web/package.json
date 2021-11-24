@@ -63,7 +63,6 @@
     "graphql-tag": "^2.12.5",
     "localforage": "^1.10.0",
     "ngx-contentful-rich-text": "^0.4.0",
-    "ngx-device-detector": "^2.1.1",
     "ngx-markdown": "^12.0.1",
     "ngx-pagination": "^5.1.1",
     "ngx-skeleton-loader": "^2.10.1",
