@@ -3,13 +3,8 @@
   <ng-container class="search-header">
     <div
       class="banner-container"
-      [ngClass]="
-        bannerImageUrl === undefined
-          ? 'no-banner'
-          : isMobile
-          ? 'mobile-banner'
-          : 'standard-banner'
-      "
+      [ngClass]="{ 'standard-banner': bannerImageUrl }"
+      [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
       [ngStyle]="
         bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
       "
@@ -18,7 +13,7 @@
 
   <!-- Breadcrumbs -->
   <div class="site-padding" ngClass.lt-md="site-padding-mobile">
-    <app-breadcrumbs [contentItem]="" [title]="'Search'"></app-breadcrumbs>
+    <app-breadcrumbs [title]="'Search'"></app-breadcrumbs>
   </div>
 </div>
 

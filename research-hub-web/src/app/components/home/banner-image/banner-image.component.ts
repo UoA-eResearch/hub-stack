@@ -6,15 +6,11 @@ import supportsWebP from 'supports-webp';
   templateUrl: './banner-image.component.html',
   styleUrls: ['./banner-image.component.scss']
 })
-export class BannerImageComponent implements OnInit {
-
+export class BannerImageComponent {
   @Input() bannerImageUrl: string;
   @Input() logoImageUrl: string;
   @Input() title: string;
 
-  public supportsWebp: Boolean;
-
-  //public title = "Find Services, Resources and People to accelerate your research";
   public aucklandUniUrl = 'https://auckland.ac.nz';
 
   constructor(
@@ -22,14 +18,10 @@ export class BannerImageComponent implements OnInit {
     this.detectWebP();
   }
 
-  ngOnInit(): void {
-    this.bannerImageUrl = this.supportsWebp ? this.bannerImageUrl + '?fm=webp' : this.bannerImageUrl;
-    this.logoImageUrl = this.supportsWebp ? this.logoImageUrl + '?fm=webp' : this.logoImageUrl;
-  }
-
   detectWebP() {
     supportsWebP.then(supported => {
-      this.supportsWebp = supported;
+      this.bannerImageUrl = supported ? this.bannerImageUrl + '?w=1900&fm=webp' : this.bannerImageUrl + '?w=1900';
+      this.logoImageUrl = supported ? this.logoImageUrl + '?fm=webp' : this.logoImageUrl;
     });
   }
 }

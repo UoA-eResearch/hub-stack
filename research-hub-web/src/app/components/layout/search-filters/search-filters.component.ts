@@ -1,8 +1,5 @@
-import { state, style } from '@angular/animations';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { MatSelectionList } from '@angular/material/list';
-import { FilterType } from '@app/global/global-variables';
 import { SearchFilters } from '@app/global/searchTypes';
 import { AllCategoriesGQL, AllOrganisationsGQL, AllStagesGQL, Category, OrgUnit, Stage } from '@app/graphql/schema';
 import { Observable, Subscription } from 'rxjs';

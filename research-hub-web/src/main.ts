@@ -19,7 +19,7 @@ Sentry.init({
   environment: environment.env,
   tracesSampleRate: environment.sentryTracesSampleRate,
   ignoreErrors: [
-    // 'Authentication required to view protected content.'
+    'Authentication required to view protected content.'
   ]
 });
 

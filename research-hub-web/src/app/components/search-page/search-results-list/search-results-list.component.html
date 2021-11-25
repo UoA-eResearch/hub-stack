@@ -27,16 +27,18 @@
       *ngIf="result.chips && result.chips.length > 0"
       aria-label="result chips"
     >
-      <mat-chip
-        *ngFor="let chip of result.chips"
-        aria-label="result chip"
-        tabIndex="0"
-        matTooltip="Search in {{chip.name}}"
-        (keydown.enter)="search(chip.id)"
-        (click)="search(chip.id)"
-        >{{ chip.name }}</mat-chip
-      >
+      <ng-container *ngFor="let chip of result.chips">
+        <mat-chip *ngIf="chip.name"
+          aria-label="result chip"
+          tabIndex="0"
+          matTooltip="Search in {{chip.name}}"
+          (keydown.enter)="search(chip.id)"
+          (click)="search(chip.id)"
+          >{{ chip.name }}</mat-chip
+        >
+      </ng-container>
     </mat-chip-list>
+    
   </mat-card>
 </mat-list>
 <!-- Skeleton Loader -->

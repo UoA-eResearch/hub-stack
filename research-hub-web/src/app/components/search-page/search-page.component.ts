@@ -3,8 +3,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType, SearchResults } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DeviceDetectorService } from 'ngx-device-detector';
+import { ActivatedRoute } from '@angular/router';
 import supportsWebP from 'supports-webp';
 import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
@@ -20,8 +19,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
 
   public bannerImageUrl: string = 'https://images.ctfassets.net/vbuxn5csp0ik/dLNmMgxMJVJjdDATTpWZn/433ae5de80f78868c4fb37a256ed2801/1500_UoA_13Oct09_001.jpg';
-  public isMobile: Boolean;
-  public supportsWebp: Boolean;
 
   public searchResults: SearchResult[] = [];
   public totalResults: number;
@@ -36,13 +33,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   constructor(
     public searchService: SearchService,
     private route: ActivatedRoute,
-    private router: Router,
-    private deviceService: DeviceDetectorService,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
     public pageTitleService: PageTitleService
   ) {
-    this.detectDevice();
     this.detectWebP();
   }
 
@@ -99,13 +93,9 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     }))
   }
 
-  detectDevice() {
-    this.isMobile = this.deviceService.isMobile();
-  }
-
   detectWebP() {
     supportsWebP.then(supported => {
-      this.supportsWebp = supported;
+      this.bannerImageUrl = supported ? this.bannerImageUrl  + '?w=1900&fm=webp' : this.bannerImageUrl + '?w=1900';
     });
   }
 

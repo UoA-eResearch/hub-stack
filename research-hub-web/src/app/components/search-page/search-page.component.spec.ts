@@ -13,6 +13,8 @@ import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.
 import { SearchPageComponent } from './search-page.component';
 import { SearchResultsListComponent } from './search-results-list/search-results-list.component';
 import { PageTitleService } from '@services/page-title.service';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from '../shared/app.shared.module';
 
 describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
@@ -34,6 +36,8 @@ describe('SearchPageComponent', () => {
         HttpClientTestingModule,
         MockModule(MaterialModule),
         MockModule(FormsModule),
+        MockModule(CommonModule),
+        MockModule(SharedModule)
       ],
       providers: [
         SearchService,
