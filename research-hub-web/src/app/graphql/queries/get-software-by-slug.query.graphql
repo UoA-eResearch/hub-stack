@@ -1,65 +1,77 @@
 query GetSoftwareBySlug($slug: String) {
-      softwareCollection(limit: 1, where: {slug: $slug}) {
-        items {
-          __typename 
-          sys {
-            id
-          }
-          title
-          slug
-          ssoProtected
-          banner {
-            url
-          }
-          summary
-          bodyText {
-              json 
-              links {
-                entries {
-                  block { 
-                    ...PublicFields
-                    sys {
-                      id
-                    }
-                  }
-                  inline { 
-                    ...PublicFields
-                    sys {
-                      id
-                    } 
-                  }
-                  hyperlink { 
-                    ...PublicFields 
-                    sys {
-                      id
-                    }
-                  }
-                }
-                assets {
-                  block { ...AssetFields }
-                  hyperlink { ...AssetFields }
-                }
+  softwareCollection(limit: 1, where: { slug: $slug }) {
+    items {
+      __typename
+      sys {
+        id
+      }
+      title
+      slug
+      ssoProtected
+      banner {
+        url
+      }
+      summary
+      bodyText {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
+                id
               }
             }
-          relatedContactsCollection {
-            items { ...PublicFields }
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
           }
-          relatedItemsCollection {
-            items { ...PublicFields }
+          assets {
+            block {
+              ...AssetFields
+            }
+            hyperlink {
+              ...AssetFields
+            }
           }
-          relatedOrgsCollection {
-            items { ...PublicFields }
-          }
-          relatedDocsCollection {
-            items { ...PublicFields }
-          }
-          searchable
-          callToAction
-          callToActionLabel
-          licencing
-          cost
-          access
-          limitations
         }
       }
+      relatedContactsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedItemsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedOrgsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedDocsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      searchable
+      callToAction
+      callToActionLabel
+      licencing
+      cost
+      access
+      limitations
     }
+  }
+}

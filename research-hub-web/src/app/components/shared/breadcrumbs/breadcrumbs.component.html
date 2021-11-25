@@ -1,9 +1,9 @@
 <div id="breadcrumbs" ngClass.lt-md="breadcrumbs-mobile">
-    <span class="breadcrumb-subhub">
+    <span id="home" class="breadcrumb-subhub">
         <a [routerLink]="'/'">Home</a>
     </span>
-    <span class="breadcrumb-subhub" *ngFor="let subHub of contentItem?.slice().reverse()">
-        <a [routerLink]="'/subhub/' + subHub.slug">{{ subHub.title }}</a>
+    <span class="breadcrumb-subhub" *ngFor="let subHub of parentSubHubs?.slice().reverse()">
+        <a [routerLink]="['/subhub', subHub.slug]">{{ subHub.title }}</a>
     </span>
     <span id="breadcrumb-current-page">{{ title }}</span>
 </div>

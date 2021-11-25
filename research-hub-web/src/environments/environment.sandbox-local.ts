@@ -7,7 +7,6 @@ environment.auth.logout_uri = "http://localhost:4200";
 environment.privateUrlKeyWords = {
   get whoNeedBearerToken() {
     return [
-      { url: 'apigw.sandbox.amazon.auckland.ac.nz', optional: false },
       { url: environment.cerGraphQLUrl, optional: true }
     ]
   },

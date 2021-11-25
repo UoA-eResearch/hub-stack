@@ -1,0 +1,10 @@
+<!-- Entry Hyperlink -->
+<span *ngIf="contentItem">
+  <span>
+    <a
+      [routerLink]="['/', contentItem.__typename.toLowerCase(), contentItem.slug]"
+    >
+      <b>{{ data.content[0].value }}</b>
+    </a>
+  </span>
+</span>

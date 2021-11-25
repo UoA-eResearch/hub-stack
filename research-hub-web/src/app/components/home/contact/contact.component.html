@@ -8,8 +8,7 @@
   </app-content-title>
   <!-- Feedback -->
   <div *ngIf="description && feedbackLink" class="feedback-container">
-    <p [innerHTML]="description | richTextToHTML">
-    </p>
+    <ngx-contentful-rich-text [document]="description"></ngx-contentful-rich-text>
     <br />
     <a href="{{ feedbackLink }}"
       mat-flat-button

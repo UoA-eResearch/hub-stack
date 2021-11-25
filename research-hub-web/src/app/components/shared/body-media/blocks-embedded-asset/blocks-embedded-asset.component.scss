@@ -1,0 +1,130 @@
+@use "~@angular/material" as mat;
+@import "variables";
+@import "mixins";
+@import "styles-common";
+
+/**
+ * Asset Block
+ */
+ .embedded-asset-block {
+  max-width: 100%;
+  text-align: center;
+}
+.embedded-asset-block img {
+  width: 70%;
+  object-fit: cover;
+}
+.asset-summary {
+  @extend .card-summary;
+  font-size: 12px;
+}
+
+/**
+  * Download Card
+  */
+.file {
+  @extend .section;
+}
+.file .mat-card {
+  width: 35%;
+  min-width: 200px;
+  margin: 0 auto;
+  text-align: left;
+  background-color: $light-grey;
+  transition: background-color 0.2s ease-in-out;
+  @include mat.elevation-transition();
+  &:hover {
+    @include mat.elevation(6);
+  }
+}
+
+/**
+ * Download Button
+ */
+.download {
+  margin-top: 10px;
+  line-height: 28px;
+}
+.download span {
+  color: $light-blue;
+}
+.mat-card-title span {
+  color: $light-blue;
+  border-bottom: solid 2px transparent;
+}
+.mat-card-title span:hover {
+  border-bottom: solid 2px $light-blue;
+}
+.mat-card:hover .download-arrow {
+  -webkit-animation: download 0.5s ease-in-out forwards;
+  animation: download 0.5s ease-in-out forwards;
+}
+
+@keyframes download {
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  40% {
+    opacity: 0;
+    transform: translate(0px, 10px);
+  }
+  60% {
+    opacity: 0;
+    transform: translate(0px, -10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
+@-webkit-keyframes download {
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+  40% {
+    opacity: 0;
+    transform: translate(0px, 10px);
+  }
+  60% {
+    opacity: 0;
+    transform: translate(0px, -10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0px, 0px);
+  }
+}
+
+/**
+ * File Size Label
+ */
+.file-size {
+  width: fit-content;
+  padding: 5px;
+  color: $dark-grey;
+  background: $input-grey;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/**
+ * Lock Icon
+ */
+mat-icon {
+  color: $dark-grey !important;
+  font-size: 14px !important;
+  vertical-align: middle;
+}
+
+/**
+ * If viewed on a mobile device
+ */
+.embedded-asset-block-mobile img,
+.embedded-asset-block-mobile .mat-card {
+  width: 100%;
+}
+
+small {
+  color: #757575;
+}

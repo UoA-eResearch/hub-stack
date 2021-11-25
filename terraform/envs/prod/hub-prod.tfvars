@@ -14,7 +14,7 @@ faculty          = "Science"
 business_service = "eResearch Services"
 
 # Website specific
-dns_entry              = "research-hub.auckland.ac.nz"  # research-hub.auckland.ac.nz
+dns_entry              = "research-hub.auckland.ac.nz"
 secondary_addresses    = []
 index_doc              = "index.html"
 acm_arn                = "arn:aws:acm:us-east-1:291148375163:certificate/c6705781-1c22-44c2-8621-67651509300a"
@@ -23,7 +23,7 @@ create_route53_entry   = false    # Prod uses on-prem DNS. see https://wiki.auck
 
 # Secondary website (if applicable)
 create_secondary              = true
-dns_entry_secondary           = "research-hub-preview.auckland.ac.nz"  # research-hub-preview.auckland.ac.nz
+dns_entry_secondary           = "research-hub-preview.auckland.ac.nz"
 secondary_addresses_secondary = []
 index_doc_secondary           = "index.html"
 acm_arn_secondary             = "arn:aws:acm:us-east-1:291148375163:certificate/be64d589-aecc-4495-b4c5-d9b23e622ef6"
@@ -32,7 +32,7 @@ acm_arn_secondary             = "arn:aws:acm:us-east-1:291148375163:certificate/
 two_fab_url = "https://apigw.prod.amazon.auckland.ac.nz/aws-token-grabber/"
 
 # Route53
-route53_hosted_zone_id = "ZLHJUA7WC63E9"  # Prod uses on-prem DNS
+route53_hosted_zone_id = "N/A"  # Prod uses on-prem DNS
 
 # Network
 vpc_id          = "vpc-0b478c527a885336d"

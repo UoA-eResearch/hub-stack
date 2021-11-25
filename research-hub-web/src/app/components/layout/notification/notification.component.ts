@@ -13,7 +13,9 @@ import { filter, map, tap } from 'rxjs/operators';
       role="notification" aria-labelledby="notification-text" tabindex="0"
     >
       <div class="notification-bar-content">
-        <div id="notification-text" [innerHTML]="notification | richTextToHTML"></div>
+        <div id="notification-text">
+          <ngx-contentful-rich-text [document]="notification"></ngx-contentful-rich-text>
+        </div>
       </div>
       <button mat-button aria-label="close-notification" (click)="close()" (keydown.enter)="close()"><mat-icon>close</mat-icon></button>
     </div>

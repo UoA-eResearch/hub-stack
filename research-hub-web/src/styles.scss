@@ -53,9 +53,12 @@ hr {
   }
   ol li {
     position: relative;
+    line-height: 30px;
+    padding-left: 1em;
+    list-style-type: decimal;
     counter-increment: ol-counter;
     p {
-      padding-left: 20px;
+      display: inline;
     }
   }
   ol li::marker {
@@ -175,28 +178,6 @@ mat-card.mat-card {
   margin: 8px 0;
   border-radius: 0%;
 }
-mat-expansion-panel {
-  margin: 8px 0;
-}
-.mat-expansion-indicator::after {
-  font-size: 8px !important;
-  width: 8px !important;
-  height: 8px !important;
-  margin-right: 16px !important;
-}
-.avatar-btn > span.mat-button-wrapper {
-  padding-top: 0 !important;
-  margin-bottom: 0 !important;
-}
-.avatar-btn > span.mat-button-wrapper > img {
-  width: 56px;
-  height: 56px;
-}
-
-.chip-avatar {
-  margin-right: 16px;
-  border-radius: 50%;
-}
 
 app-search-filters {
   div.mat-list-text {
@@ -213,6 +194,13 @@ app-search-filters {
     }
   }
 }
+
+mat-option.search-autocomplete-options .mat-option-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 
 /**
  * Browser Settings
@@ -251,16 +239,6 @@ app-search-filters {
   color: #ffffff;
   font-size: smaller;
   background-color: #004059;
-}
-
-/*
- * Top menu drop-down style
- */
-.mat-menu-content,
-.mat-menu-item {
-  color: white;
-  background-color: $dark-blue;
-  font-size: mat-font-size($app-base-typography, body-1);
 }
 
 /**

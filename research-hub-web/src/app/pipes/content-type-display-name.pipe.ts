@@ -1,6 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ContentTypeDisplayNames } from '@app/global/global-variables';
 import { HumanCasePipe } from './human-case.pipe';
+
+export const ContentTypeDisplayNames = {
+  'article': 'Article',
+  'casestudy': 'Case Study',
+  'equipment': 'Equipment',
+  'event': 'Event',
+  'funding': 'Funding',
+  'service': 'Service',
+  'software': 'Software',
+  'subhub': 'Topic',
+  'officialdocuments': 'Document',
+  'orgunit': 'Unit',
+  'person': 'Contact'
+};
 
 @Pipe({
   name: 'contentTypeDisplayName'
