@@ -57,7 +57,7 @@
     <div id="pagination">
       <pagination-controls
         class="page-control"
-        responsive="true"
+        [responsive]="true"
         (pageChange)="pageNumber = $event; scrollToTop()"
         screenReaderPaginationLabel="Pagination"
         screenReaderPageLabel="page"

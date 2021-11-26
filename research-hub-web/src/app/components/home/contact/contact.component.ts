@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Document } from '@contentful/rich-text-types';
 
 @Component({
   selector: 'app-contact',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent {
-  @Input() description: JSON;
+  @Input() description: Document;
   @Input() feedbackLink: string;
   @Input() email: string;
   

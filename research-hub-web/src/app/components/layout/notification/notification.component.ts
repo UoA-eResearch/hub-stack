@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { GetNotificationGQL } from '@app/graphql/schema';
+import { Document } from '@contentful/rich-text-types';
 import { Subscription } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notification',
@@ -27,7 +28,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   public showNotification = false;
   public hasBeenDismissed = false;
-  public notification: JSON | null = null;
+  public notification: Document | null = null;
 
   constructor(
     private getNotificationGQL: GetNotificationGQL
