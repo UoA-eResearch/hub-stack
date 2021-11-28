@@ -5,7 +5,7 @@ import { Funding, GetFundingBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -48,7 +48,10 @@ export class FundingComponent implements OnInit, OnDestroy {
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadFunding(slug))
+      switchMap((slug) => slug
+        ? this.loadFunding(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (funding: Funding) => this.funding = funding,
       error: (error: Error) => {
@@ -73,10 +76,6 @@ export class FundingComponent implements OnInit, OnDestroy {
   }
 
   private loadFunding(slug: string): Observable<Funding> {
-    if (!slug) {
-      throw new Error('No slug included in URL. Redirect to Collection page.')
-    }
-
     return this.getFundingBySlug(slug).pipe(
       map((data) => {
         // If Call To Action is an email address

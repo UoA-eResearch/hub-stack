@@ -5,7 +5,7 @@ import { Equipment, GetEquipmentBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -48,7 +48,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadEquipment(slug))
+      switchMap((slug) => slug
+        ? this.loadEquipment(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (equipment: Equipment) => this.equipment = equipment,
       error: (error: Error) => {
@@ -73,10 +76,6 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   }
 
   private loadEquipment(slug: string): Observable<Equipment> {
-    if (!slug) {
-      throw new Error('No slug included in URL. Redirect to Collection page.')
-    }
-
     return this.getEquipmentBySlug(slug).pipe(
       map((data) => {
         // Strip nulls from related collection data.

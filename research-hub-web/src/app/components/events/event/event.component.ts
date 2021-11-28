@@ -5,7 +5,7 @@ import { Event, GetEventBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -48,7 +48,10 @@ export class EventComponent implements OnInit, OnDestroy {
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadEvent(slug))
+      switchMap((slug) => slug
+        ? this.loadEvent(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (event: Event) => this.event = event,
       error: (error: Error) => {
@@ -73,10 +76,6 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   private loadEvent(slug: string): Observable<Event> {
-    if (!slug) {
-      throw new Error('No slug included in URL. Redirect to Collection page.')
-    }
-
     return this.getEventBySlug(slug).pipe(
       map((data) => {
         // If Call To Action is an email address
