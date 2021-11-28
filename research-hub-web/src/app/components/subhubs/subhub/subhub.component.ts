@@ -55,6 +55,9 @@ export class SubhubComponent implements OnInit, OnDestroy {
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to SubHub Collection page');
+          this.router.navigate(['subhub', 'list'])
         } else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
@@ -71,6 +74,10 @@ export class SubhubComponent implements OnInit, OnDestroy {
   }
 
   private loadSubHub(slug: string): Observable<SubHub> {
+    if (!slug) {
+      throw new Error('No slug included in URL. Redirect to Collection page.')
+    }
+
     return this.getSubHubBySlug(slug).pipe(
       map((data) => {
         // Remove nulls from server in case of error.
@@ -105,9 +112,6 @@ export class SubhubComponent implements OnInit, OnDestroy {
    * @param slug The subhub's slug. Retrieved from the route parameter of the same name.
    */
   public getSubHubBySlug(slug: string): Observable<SubHub> {
-    if (!slug) {
-      this.router.navigate(['subhub', 'list'])
-    }
     return this.getSubHubBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.subHubCollection.items.length === 0) {

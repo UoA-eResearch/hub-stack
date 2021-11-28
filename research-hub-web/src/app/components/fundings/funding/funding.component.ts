@@ -54,7 +54,10 @@ export class FundingComponent implements OnInit, OnDestroy {
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
-        } else if (error.message.includes('Not found')) {
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to Funding Collection page');
+          this.router.navigate(['funding', 'list'])
+        }  else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
         } else {
@@ -70,6 +73,10 @@ export class FundingComponent implements OnInit, OnDestroy {
   }
 
   private loadFunding(slug: string): Observable<Funding> {
+    if (!slug) {
+      throw new Error('No slug included in URL. Redirect to Collection page.')
+    }
+
     return this.getFundingBySlug(slug).pipe(
       map((data) => {
         // If Call To Action is an email address
@@ -110,9 +117,6 @@ export class FundingComponent implements OnInit, OnDestroy {
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getFundingBySlug(slug: string): Observable<Funding> {
-    if (!slug) {
-      this.router.navigate(['funding', 'list'])
-    }
     return this.getFundingBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.fundingCollection.items.length === 0) {

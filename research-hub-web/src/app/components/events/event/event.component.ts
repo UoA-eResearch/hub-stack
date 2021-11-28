@@ -54,7 +54,10 @@ export class EventComponent implements OnInit, OnDestroy {
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
-        } else if (error.message.includes('Not found')) {
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to Event Collection page');
+          this.router.navigate(['event', 'list'])
+        }  else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
         } else {
@@ -70,6 +73,10 @@ export class EventComponent implements OnInit, OnDestroy {
   }
 
   private loadEvent(slug: string): Observable<Event> {
+    if (!slug) {
+      throw new Error('No slug included in URL. Redirect to Collection page.')
+    }
+
     return this.getEventBySlug(slug).pipe(
       map((data) => {
         // If Call To Action is an email address
@@ -106,9 +113,6 @@ export class EventComponent implements OnInit, OnDestroy {
    * @param slug The event's slug. Retrieved from the route parameter of the same name.
    */
   public getEventBySlug(slug: string): Observable<Event> {
-    if (!slug) {
-      this.router.navigate(['event', 'list'])
-    }
     return this.getEventBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.eventCollection.items.length === 0) {
