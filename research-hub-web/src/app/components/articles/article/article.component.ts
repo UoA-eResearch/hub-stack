@@ -55,6 +55,9 @@ export class ArticleComponent implements OnInit, OnDestroy {
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to Articles Collection page');
+          this.router.navigate(['article', 'list'])
         } else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
@@ -71,6 +74,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   private loadArticle(slug: string): Observable<Article> {
+    if (!slug) {
+      throw new Error('No slug included in URL. Redirect to Collection page.')
+    }
+
     return this.getArticleBySlug(slug).pipe(
       map(data => {
         // Strip nulls from related collection data.
@@ -108,9 +115,6 @@ export class ArticleComponent implements OnInit, OnDestroy {
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getArticleBySlug(slug: string): Observable<Article> {
-    if (!slug) {
-      this.router.navigate(['article', 'list'])
-    }
     return this.getArticleBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.articleCollection.items.length === 0) {

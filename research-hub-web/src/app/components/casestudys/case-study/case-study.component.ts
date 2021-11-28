@@ -56,6 +56,9 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to Case Study Collection page');
+          this.router.navigate(['casestudy', 'list'])
         } else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
@@ -72,6 +75,10 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
   }
 
   private loadCaseStudy(slug: string): Observable<CaseStudy> {
+    if (!slug) {
+      throw new Error('No slug included in URL. Redirect to Collection page.')
+    }
+
     return this.getCaseStudyBySlug(slug).pipe(
       map(data => {
         // Strip nulls from related collection data.
@@ -105,9 +112,6 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
    * @param slug The case study's slug. Retrieved from the route parameter of the same name.
    */
   public getCaseStudyBySlug(slug: string): Observable<CaseStudy> {
-    if (!slug) {
-      this.router.navigate(['casestudy', 'list'])
-    }
     return this.getCaseStudyBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.caseStudyCollection.items.length === 0) {

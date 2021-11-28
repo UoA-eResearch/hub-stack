@@ -1,4 +1,4 @@
-query GetSubHubBySlug($slug: String) {
+query GetSubHubBySlug($slug: String!) {
   subHubCollection(limit: 1, where: { slug: $slug }) {
     items {
       slug

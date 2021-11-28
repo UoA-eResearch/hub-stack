@@ -1,4 +1,4 @@
-query GetEquipmentBySlug($slug: String) {
+query GetEquipmentBySlug($slug: String!) {
   equipmentCollection(limit: 1, where: { slug: $slug }) {
     items {
       __typename

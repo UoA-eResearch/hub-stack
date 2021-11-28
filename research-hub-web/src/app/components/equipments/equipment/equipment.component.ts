@@ -54,7 +54,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
-        } else if (error.message.includes('Not found')) {
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to Equipment Collection page');
+          this.router.navigate(['equipment', 'list'])
+        }  else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
         } else {
@@ -70,6 +73,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   }
 
   private loadEquipment(slug: string): Observable<Equipment> {
+    if (!slug) {
+      throw new Error('No slug included in URL. Redirect to Collection page.')
+    }
+
     return this.getEquipmentBySlug(slug).pipe(
       map((data) => {
         // Strip nulls from related collection data.
@@ -107,9 +114,6 @@ export class EquipmentComponent implements OnInit, OnDestroy {
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
-    if (!slug) {
-      this.router.navigate(['equipment', 'list'])
-    }
     return this.getEquipmentBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.equipmentCollection.items.length === 0) {
