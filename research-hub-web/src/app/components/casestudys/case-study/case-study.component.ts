@@ -5,7 +5,7 @@ import { CaseStudy, GetCaseStudyBySlugGQL } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -50,7 +50,10 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadCaseStudy(slug))
+      switchMap((slug) => slug
+        ? this.loadCaseStudy(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (caseStudy: CaseStudy) => this.caseStudy = caseStudy,
       error: (error: Error) => {
@@ -75,10 +78,6 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
   }
 
   private loadCaseStudy(slug: string): Observable<CaseStudy> {
-    if (!slug) {
-      throw new Error('No slug included in URL. Redirect to Collection page.')
-    }
-
     return this.getCaseStudyBySlug(slug).pipe(
       map(data => {
         // Strip nulls from related collection data.

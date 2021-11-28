@@ -5,7 +5,7 @@ import { GetSoftwareBySlugGQL, Software } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -48,12 +48,18 @@ export class SoftwareComponent implements OnInit, OnDestroy {
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadSoftware(slug))
+      switchMap((slug) => slug
+        ? this.loadSoftware(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (software: Software) => this.software = software,
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to Software Collection page');
+          this.router.navigate(['software', 'list'])
         } else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
@@ -105,9 +111,6 @@ export class SoftwareComponent implements OnInit, OnDestroy {
    * @param slug The software's slug. Retrieved from the route parameter of the same name.
    */
   public getSoftwareBySlug(slug: string): Observable<Software> {
-    if (!slug) {
-      this.router.navigate(['software', 'list'])
-    }
     return this.getSoftwareBySlugGQL.fetch({ slug }).pipe(
       map(x => {
         if (x.data.softwareCollection.items.length === 0) {

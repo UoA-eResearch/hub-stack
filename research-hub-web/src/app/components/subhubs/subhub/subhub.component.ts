@@ -5,7 +5,7 @@ import { GetSubHubBySlugGQL, SubHub } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -49,7 +49,10 @@ export class SubhubComponent implements OnInit, OnDestroy {
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadSubHub(slug))
+      switchMap((slug) => slug
+        ? this.loadSubHub(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (subHub: SubHub) => this.subHub = subHub,
       error: (error: Error) => {
@@ -74,10 +77,6 @@ export class SubhubComponent implements OnInit, OnDestroy {
   }
 
   private loadSubHub(slug: string): Observable<SubHub> {
-    if (!slug) {
-      throw new Error('No slug included in URL. Redirect to Collection page.')
-    }
-
     return this.getSubHubBySlug(slug).pipe(
       map((data) => {
         // Remove nulls from server in case of error.
