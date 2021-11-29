@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GetAllFeaturedItemsGQL, GetAllFeaturedItemsQuery } from '@graphql/schema';
+import { FeaturedItemsItemsCollection, GetAllFeaturedItemsGQL } from '@graphql/schema';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-type HomepageFeaturedItems = GetAllFeaturedItemsQuery['featuredItemsCollection']['items'][number]['itemsCollection'];
 
 @Component({
   selector: 'app-featured',
@@ -12,7 +10,7 @@ type HomepageFeaturedItems = GetAllFeaturedItemsQuery['featuredItemsCollection']
 })
 export class FeaturedComponent implements OnInit {
   @Input() title: string;
-  public featuredItems$: Observable<HomepageFeaturedItems>;
+  public featuredItems$: Observable<FeaturedItemsItemsCollection>;
 
   constructor(
     public getAllFeaturedItemsGQL: GetAllFeaturedItemsGQL
@@ -20,7 +18,7 @@ export class FeaturedComponent implements OnInit {
 
   ngOnInit() {
     this.featuredItems$ = this.getAllFeaturedItemsGQL.fetch().pipe(
-      map(x => x.data.featuredItemsCollection.items[0].itemsCollection)
+      map(x => x.data.featuredItemsCollection.items[0].itemsCollection as FeaturedItemsItemsCollection)
     );
   }
 }
