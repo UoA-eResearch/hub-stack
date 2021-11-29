@@ -11,7 +11,6 @@ export class FooterComponent {
   public homeUrl = '/';
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public aboutUrl = '/article/about';
-  public eResearchUrl = 'http://eresearch.auckland.ac.nz';
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
   public privacyUrl = 'https://www.auckland.ac.nz/en/privacy.html';
   public accessibilityUrl = 'https://www.auckland.ac.nz/en/accessibility.html';
