@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AllPageTitlesGQL } from '@app/graphql/schema';
+import { AllPageTitlesGQL, Maybe } from '@app/graphql/schema';
 import { pluck, map } from 'rxjs/operators';
 
 export interface PageTitles {
@@ -40,7 +40,7 @@ export class SearchAutocompleteService {
     "Virtual Machine",
   ];
   // All published page titles in Contentful
-  public allTitles$: Observable<PageTitles>;
+  public allTitles$: Observable<PageTitles> | undefined;
   
   constructor(
     private allPageTitlesGQL: AllPageTitlesGQL,
@@ -53,16 +53,16 @@ export class SearchAutocompleteService {
       return this.allPageTitlesGQL.fetch()
         .pipe(pluck('data')).pipe(
           map(({articleCollection, caseStudyCollection, equipmentCollection, eventCollection, fundingCollection, serviceCollection, softwareCollection, subHubCollection}) => ({
-            articleTitles: articleCollection.items.map(x=>x.title),
-            caseStudyTitles: caseStudyCollection.items.map(x=>x.title),
-            equipmentTitles: equipmentCollection.items.map(x=>x.title),
-            eventTitles: eventCollection.items.map(x=>x.title),
-            fundingTitles: fundingCollection.items.map(x=>x.title),
-            serviceTitles: serviceCollection.items.map(x=>x.title),
-            softwareTitles: softwareCollection.items.map(x=>x.title),
-            subHubTitles: subHubCollection.items.map(x=>x.title)  
-          }))          
-        )
+            articleTitles: articleCollection?.items.map(x=>x?.title),
+            caseStudyTitles: caseStudyCollection?.items.map(x=>x?.title),
+            equipmentTitles: equipmentCollection?.items.map(x=>x?.title),
+            eventTitles: eventCollection?.items.map(x=>x?.title),
+            fundingTitles: fundingCollection?.items.map(x=>x?.title),
+            serviceTitles: serviceCollection?.items.map(x=>x?.title),
+            softwareTitles: softwareCollection?.items.map(x=>x?.title),
+            subHubTitles: subHubCollection?.items.map(x=>x?.title)  
+          }))     
+        ) as Observable<PageTitles>
     } catch (e) { console.error('Error loading all page titles:', e) };
   }
 

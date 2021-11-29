@@ -61,15 +61,18 @@ export class SearchService {
       q: searchText,
     }
 
-    if (filters?.category?.length > 0) {
-      params.cat = filters.category
+    if (filters) {
+      if (filters.category?.length > 0) {
+        params.cat = filters.category
+      }
+      if (filters.relatedOrgs?.length > 0) {
+        params.org = filters.relatedOrgs
+      }
+      if (filters.stage?.length > 0) {
+        params.ra = filters.stage
+      }
     }
-    if (filters?.relatedOrgs?.length > 0) {
-      params.org = filters.relatedOrgs
-    }
-    if (filters?.stage?.length > 0) {
-      params.ra = filters.stage
-    }
+    
     if (sortOrder) {
       params.sort = sortOrder
     }
