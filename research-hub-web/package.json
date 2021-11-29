@@ -62,7 +62,7 @@
     "graphql-tag": "^2.12.5",
     "localforage": "^1.10.0",
     "ngx-contentful-rich-text": "^0.4.0",
-    "ngx-markdown": "^12.0.1",
+    "ngx-markdown": "^13.0.0",
     "ngx-pagination": "^5.1.1",
     "ngx-skeleton-loader": "^2.10.1",
     "ngx-take-until-destroy": "^5.4.0",
