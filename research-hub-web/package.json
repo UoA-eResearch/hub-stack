@@ -98,7 +98,7 @@
     "aws-sdk": "^2.995.0",
     "aws4": "^1.10.1",
     "change-case": "^4.1.1",
-    "concurrently": "^5.2.0",
+    "concurrently": "^6.4.0",
     "cypress": "^7.7.0",
     "cypress-commands": "^2.0.1",
     "eslint": "^7.32.0",
