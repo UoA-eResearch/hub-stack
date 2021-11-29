@@ -49,21 +49,19 @@ export class SearchAutocompleteService {
   }
 
   public getAllPageTitles() {
-    try {
-      return this.allPageTitlesGQL.fetch()
-        .pipe(pluck('data')).pipe(
-          map(({articleCollection, caseStudyCollection, equipmentCollection, eventCollection, fundingCollection, serviceCollection, softwareCollection, subHubCollection}) => ({
-            articleTitles: articleCollection?.items.map(x=>x?.title),
-            caseStudyTitles: caseStudyCollection?.items.map(x=>x?.title),
-            equipmentTitles: equipmentCollection?.items.map(x=>x?.title),
-            eventTitles: eventCollection?.items.map(x=>x?.title),
-            fundingTitles: fundingCollection?.items.map(x=>x?.title),
-            serviceTitles: serviceCollection?.items.map(x=>x?.title),
-            softwareTitles: softwareCollection?.items.map(x=>x?.title),
-            subHubTitles: subHubCollection?.items.map(x=>x?.title)  
-          }))     
-        ) as Observable<PageTitles>
-    } catch (e) { console.error('Error loading all page titles:', e) };
+    return this.allPageTitlesGQL.fetch()
+      .pipe(pluck('data')).pipe(
+        map(({articleCollection, caseStudyCollection, equipmentCollection, eventCollection, fundingCollection, serviceCollection, softwareCollection, subHubCollection}) => ({
+          articleTitles: articleCollection?.items.map(x=>x?.title) ?? [],
+          caseStudyTitles: caseStudyCollection?.items.map(x=>x?.title) ?? [],
+          equipmentTitles: equipmentCollection?.items.map(x=>x?.title) ?? [],
+          eventTitles: eventCollection?.items.map(x=>x?.title) ?? [],
+          fundingTitles: fundingCollection?.items.map(x=>x?.title) ?? [],
+          serviceTitles: serviceCollection?.items.map(x=>x?.title) ?? [],
+          softwareTitles: softwareCollection?.items.map(x=>x?.title) ?? [],
+          subHubTitles: subHubCollection?.items.map(x=>x?.title) ?? [] 
+        }))     
+      ) as Observable<PageTitles>
   }
 
   public getAutocompleteTerms(): string[] {
