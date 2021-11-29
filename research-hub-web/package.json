@@ -48,7 +48,7 @@
     "@apollo/link-context": "^2.0.0-beta.3",
     "@contentful/rich-text-types": "^14.1.1",
     "@microsoft/fetch-event-source": "^2.0.1",
-    "@sentry/angular": "^6.13.2",
+    "@sentry/angular": "^6.15.0",
     "@sentry/tracing": "^6.13.2",
     "@uoa/auth": "^0.6.0",
     "@uoa/error-pages": "^0.1.2",
