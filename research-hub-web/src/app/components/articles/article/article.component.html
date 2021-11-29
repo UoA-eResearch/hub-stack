@@ -75,15 +75,14 @@
   <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
     <app-breadcrumbs [title]="article.title"></app-breadcrumbs>
 
-    <div fxLayout="row" fxLayoutAlign="space-around" fxLayout.lt-lg="column">
+    <div fxLayout="row" fxLayoutAlign="space-evenly" fxLayoutGap="5vw" fxLayout.lt-lg="column" fxLayoutGap.lt-lg="0">
       <!-- Article Body -->
       <ngx-contentful-rich-text
         fxFlexOrder="2"
         fxFlexOrder.lt-lg="1"
-        fxFlex="1 1 35%"
+        fxFlex="1 1 auto"
         fxFlexOrder.xs="1"
         id="bodyMediaList"
-        class="section-2"
         style="word-break: break-word"
         [document]="article.bodyText.json"
         [nodeRenderers]="nodeRenderers"
