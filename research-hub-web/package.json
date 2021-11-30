@@ -56,7 +56,7 @@
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-link": "^1.2.14",
     "apollo-link-error": "^1.1.13",
-    "contentful": "^8.5.8",
+    "contentful": "^9.1.4",
     "date-fns": "~2.14.0",
     "graphql": "^15.6.0",
     "graphql-tag": "^2.12.5",
