@@ -16,7 +16,7 @@ export class InlinesAssetHyperlinkComponent extends NodeRenderer implements OnIn
     this.data = this.node;
     this.contentItem = this.bodyMediaService.getContentItem(this.node);
     if (!this.contentItem) {
-      console.error(`Error retrieving contentItem for node: ${this.node}`)
+      console.error(`Error retrieving contentItem for node: ${JSON.stringify(this.node)}`)
     }
   }
 }
