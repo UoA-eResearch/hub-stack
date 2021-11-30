@@ -18,6 +18,8 @@ describe('EventsComponent', () => {
   let component: EventComponent;
   let fixture: ComponentFixture<EventComponent>;
   let controller: ApolloTestingController;
+  
+  const testSlug: string = 'death-star';
 
   const mockEvent$: Observable<Event> = of(
     {
@@ -54,7 +56,10 @@ describe('EventsComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(() => {    
+    TestBed.inject(ActivatedRoute).params = of({
+      slug: testSlug
+    });
     controller = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(EventComponent);
     component = fixture.componentInstance;
@@ -70,15 +75,10 @@ describe('EventsComponent', () => {
   });
 
   describe('When a url slug is present', async () => {
-    const testSlug: string = 'death-star';
-
     beforeEach(() => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(EventComponent);
       component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: testSlug
-      });
       fixture.detectChanges();
       component.ngOnInit();
     })

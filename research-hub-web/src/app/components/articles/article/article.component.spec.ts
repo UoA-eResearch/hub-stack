@@ -19,6 +19,8 @@ describe('ArticleComponent', () => {
   let fixture: ComponentFixture<ArticleComponent>;
   let controller: ApolloTestingController;
 
+  const testSlug: string = 'first-article';
+  
   const mockArticle$: Observable<Article> = of({
     'title': 'First article',
     'summary': 'A brief description of the first article. I\'m writing some more stuff here just so that this seems a little more realistic. Sam was here. Have a good day.',
@@ -259,6 +261,9 @@ describe('ArticleComponent', () => {
   }));
 
   beforeEach(() => {
+    TestBed.inject(ActivatedRoute).params = of({
+      slug: testSlug
+    });
     controller = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(ArticleComponent);
     component = fixture.componentInstance;
@@ -274,17 +279,13 @@ describe('ArticleComponent', () => {
   });
 
   describe('When a url slug is present', async () => {
-    const testSlug: string = 'first-article';
-
     beforeEach(() => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(ArticleComponent);
       component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: testSlug
-      });
+      
       fixture.detectChanges();
-      component.ngOnInit();
+      // component.ngOnInit();
     });
 
     it('Should get a single article data', () => {
