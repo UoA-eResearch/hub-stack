@@ -80,10 +80,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
     return this.getArticleBySlug(slug).pipe(
       map(data => {
         // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
+        if (data.relatedContactsCollection) data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        if (data.relatedDocsCollection) data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
+        if (data.relatedItemsCollection) data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        if (data.relatedOrgsCollection) data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
 
         // If Call To Action is an email address
         if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
@@ -93,14 +93,12 @@ export class ArticleComponent implements OnInit, OnDestroy {
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
         }
 
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
 
-        this.pageTitleService.title = data.title;
+        this.pageTitleService.title = data.title ?? '';
 
         return data;
       })
@@ -116,10 +114,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
   public getArticleBySlug(slug: string): Observable<Article> {
     return this.getArticleBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.articleCollection.items.length === 0) {
-          throw new Error(`Not found. Could not find article with slug "${slug}"`)
+        if (x.data.articleCollection) {
+          if (x.data.articleCollection.items.length === 0) {
+            throw new Error(`Not found. Could not find article with slug "${slug}"`)
+          } else {
+            return x.data.articleCollection.items[0] as Article
+          }
         } else {
-          return x.data.articleCollection.items[0] as Article
+          throw new Error('Unable to fetch articleCollection');
         }
       })
     );

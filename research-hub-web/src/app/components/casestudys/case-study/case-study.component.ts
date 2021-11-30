@@ -81,23 +81,21 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     return this.getCaseStudyBySlug(slug).pipe(
       map(data => {
         // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
+        if (data.relatedContactsCollection) data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        if (data.relatedDocsCollection) data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
+        if (data.relatedItemsCollection) data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        if (data.relatedOrgsCollection) data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
 
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
         }
 
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
         this.bodyMediaService.buildLinkMaps(data.references?.links);
 
-        this.pageTitleService.title = data.title;
+        this.pageTitleService.title = data.title ?? '';
 
         return data;
       })
@@ -113,10 +111,14 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
   public getCaseStudyBySlug(slug: string): Observable<CaseStudy> {
     return this.getCaseStudyBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.caseStudyCollection.items.length === 0) {
-          throw new Error(`Not found. Could not find case study with slug "${slug}"`)
+        if (x.data.caseStudyCollection) {
+          if (x.data.caseStudyCollection.items.length === 0) {
+            throw new Error(`Not found. Could not find case study with slug "${slug}"`)
+          } else {
+            return x.data.caseStudyCollection.items[0] as CaseStudy
+          }
         } else {
-          return x.data.caseStudyCollection.items[0] as CaseStudy
+          throw new Error('Unable to fetch caseStudyCollection');
         }
       })
     );

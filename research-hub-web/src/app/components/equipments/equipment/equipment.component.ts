@@ -79,10 +79,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     return this.getEquipmentBySlug(slug).pipe(
       map((data) => {
         // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
+        if (data.relatedContactsCollection) data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        if (data.relatedDocsCollection) data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
+        if (data.relatedItemsCollection) data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        if (data.relatedOrgsCollection) data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
 
         // If Call To Action is an email address
         if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
@@ -92,14 +92,12 @@ export class EquipmentComponent implements OnInit, OnDestroy {
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
         }
 
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
 
-        this.pageTitleService.title = data.title;
+        this.pageTitleService.title = data.title ?? '';
 
         return data;
       })
@@ -115,10 +113,14 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
     return this.getEquipmentBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.equipmentCollection.items.length === 0) {
-          throw new Error(`Not found. Could not find equipment with slug "${slug}"`)
+        if (x.data.equipmentCollection) {
+          if (x.data.equipmentCollection.items.length === 0) {
+            throw new Error(`Not found. Could not find equipment with slug "${slug}"`)
+          } else {
+            return x.data.equipmentCollection.items[0] as Equipment
+          }
         } else {
-          return x.data.equipmentCollection.items[0] as Equipment
+          throw new Error('Unable to fetch equipmentCollection');
         }
       })
     );
