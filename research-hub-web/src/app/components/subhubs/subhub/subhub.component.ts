@@ -80,23 +80,21 @@ export class SubhubComponent implements OnInit, OnDestroy {
     return this.getSubHubBySlug(slug).pipe(
       map((data) => {
         // Remove nulls from server in case of error.
-        data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
-        data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
+        if (data.internalPagesCollection) data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
+        if (data.externalPagesCollection) data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
+        if (data.relatedItemsCollection) data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        if (data.relatedContactsCollection) data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        if (data.relatedOrgsCollection) data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
+        if (data.relatedDocsCollection) data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
 
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
 
-        this.pageTitleService.title = data.title;
+        this.pageTitleService.title = data.title ?? '';
 
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
         }
 
         return data;
@@ -113,10 +111,14 @@ export class SubhubComponent implements OnInit, OnDestroy {
   public getSubHubBySlug(slug: string): Observable<SubHub> {
     return this.getSubHubBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.subHubCollection.items.length === 0) {
-          throw new Error(`Not found. Could not find subHub with slug "${slug}"`)
+        if (x.data.subHubCollection) {
+          if (x.data.subHubCollection.items.length === 0) {
+            throw new Error(`Not found. Could not find subHub with slug "${slug}"`)
+          } else {
+            return x.data.subHubCollection.items[0] as SubHub
+          }
         } else {
-          return x.data.subHubCollection.items[0] as SubHub
+          throw new Error('Unable to fetch subHubCollection');
         }
       })
     );

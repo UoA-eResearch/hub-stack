@@ -55,7 +55,7 @@ export class BodyMediaService {
    * (components that extend NodeRenderer) to lookup the corresponding content for a rich text node.
    * @param links
    */
-  buildLinkMaps(links: BodyTextLinks) {
+  buildLinkMaps(links: BodyTextLinks | undefined | null) {
     if (links?.assets) {
       for (const asset of links.assets.block) {
         if (asset) this.assetBlockMap.set(asset.sys.id, asset);

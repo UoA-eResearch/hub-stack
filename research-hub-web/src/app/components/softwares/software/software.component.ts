@@ -79,16 +79,14 @@ export class SoftwareComponent implements OnInit, OnDestroy {
     return this.getSoftwareBySlug(slug).pipe(
       map(data => {
         // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
+        if (data.relatedContactsCollection) data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
+        if (data.relatedDocsCollection) data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
+        if (data.relatedItemsCollection) data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
+        if (data.relatedOrgsCollection) data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
 
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
-        } else {
-          this.bannerImageUrl = undefined;
         }
 
         // If Call To Action is an email address
@@ -97,7 +95,7 @@ export class SoftwareComponent implements OnInit, OnDestroy {
         }
 
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
-        this.pageTitleService.title = data.title;
+        this.pageTitleService.title = data.title ?? '';
 
         return data;
       })
@@ -113,10 +111,14 @@ export class SoftwareComponent implements OnInit, OnDestroy {
   public getSoftwareBySlug(slug: string): Observable<Software> {
     return this.getSoftwareBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.softwareCollection.items.length === 0) {
-          throw new Error(`Not found. Could not find software with slug "${slug}"`)
+        if (x.data.softwareCollection) {
+          if (x.data.softwareCollection.items.length === 0) {
+            throw new Error(`Not found. Could not find software with slug "${slug}"`)
+          } else {
+            return x.data.softwareCollection.items[0] as Software
+          }
         } else {
-          return x.data.softwareCollection.items[0] as Software
+          throw new Error('Unable to fetch softwareCollection');
         }
       })
     );
