@@ -82,13 +82,13 @@ export class AppModule {
 
     // The httpLink between Apollo and the GraphQL server
     const http = httpLink.create({ uri: environment.cerGraphQLUrl });
+
     // @uoa/error-pages automatically shows an error page when it
     // sees an error in fetch requests through an http interceptor.
     // Because some authentication errors from cer-graphql
     // are returned with a 400 status code, we want error-pages to ignore those
     // errors so they can be handled by our onError handler.
     this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
-
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
     const error = onError(({ response, networkError, graphQLErrors }) => {
@@ -116,6 +116,18 @@ export class AppModule {
               location.reload();
             }
           });
+          return;
+        }
+
+        if (graphQLErrors[0].extensions.code === "INTERNAL_SERVER_ERROR" &&
+            !(
+              graphQLErrors[0].message.includes('Did not fetch typename for object, unable to resolve interface.') ||
+              graphQLErrors[0].message.includes('Cannot return null for non-nullable field Asset.sys.')
+            )
+        ) {
+          // Something bad happened. Return the response with errors, unless it is a typename or non-nullable field error.
+          // Typename and non-nullable field errors can be caused by references/links to draft entries, and in this case we still want
+          // to load the page with partial data (see below).
           return;
         }
       }
