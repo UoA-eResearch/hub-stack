@@ -48,12 +48,13 @@ export class ExpandablePagePartComponent implements OnInit, OnDestroy {
   }
 
   private getExpandPart(): Observable<Expand> {
+    if (!this.contentItem.sys) throw new Error(`Missing sys for Expandable page part: ${this.contentItem}`)
     return this.getExpandPartByIdGQL.fetch({ id: this.contentItem.sys.id }).pipe(
       map((result) => {
         if (result.data.expand) {
           return result.data.expand as Expand
         } else {
-          throw new Error(`Could not find expandable page part for id ${this.contentItem.sys.id}`)
+          throw new Error(`Could not find expandable page part for id ${this.contentItem.sys?.id}`)
         }
       })
     );
@@ -88,7 +89,7 @@ export class ExpandablePagePartComponent implements OnInit, OnDestroy {
       }
       summary = summary.length > 0 ? summary.substring(0, maxLength - 3) + "..." : summary;
     } catch (e) {
-      console.error(`Error creating expandable page part summary text for ${this.contentItem.sys.id}:`, e);
+      console.error(`Error creating expandable page part summary text for ${this.contentItem.sys?.id}:`, e);
     }
     return summary;
   }

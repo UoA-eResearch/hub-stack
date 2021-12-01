@@ -37,10 +37,10 @@ export class NotificationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       this.getNotificationGQL.fetch().pipe(
-        map((result) => result.data.homepageCollection.items[0].notification),
+        map((result) => result.data.homepageCollection?.items[0]?.notification),
         filter((result) => result !== null)
       ).subscribe((result) => {
-        this.notification = result.json;
+        this.notification = result?.json;
 
         this.showNotification = true;
       })

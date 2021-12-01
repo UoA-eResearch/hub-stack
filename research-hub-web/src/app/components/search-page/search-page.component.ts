@@ -125,7 +125,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   }
 
   scrollToTop() {
-    document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
+    if (document.querySelector('.main-content')) document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   ngOnDestroy() {

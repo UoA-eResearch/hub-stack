@@ -40,7 +40,7 @@ export class SearchAutocompleteService {
     "Virtual Machine",
   ];
   // All published page titles in Contentful
-  public allTitles$: Observable<PageTitles> | undefined;
+  public allTitles$: Observable<PageTitles>;
   
   constructor(
     private allPageTitlesGQL: AllPageTitlesGQL,

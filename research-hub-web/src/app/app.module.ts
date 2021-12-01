@@ -108,7 +108,7 @@ export class AppModule {
       }
       if (graphQLErrors) {
         console.log("API returned graphQLErrors", graphQLErrors);
-        if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
+        if (graphQLErrors[0]?.extensions?.code === "UNAUTHENTICATED") {
           this.loginService.doLogin(this.router.url).then((result) => {
             // Workaround fix for blank page load issue
             // when auth library returns a token instead of navigating to target url
@@ -119,7 +119,7 @@ export class AppModule {
           return;
         }
 
-        if (graphQLErrors[0].extensions.code === "INTERNAL_SERVER_ERROR" &&
+        if (graphQLErrors[0]?.extensions?.code === "INTERNAL_SERVER_ERROR" &&
             !(
               graphQLErrors[0].message.includes('Did not fetch typename for object, unable to resolve interface.') ||
               graphQLErrors[0].message.includes('Cannot return null for non-nullable field Asset.sys.')
@@ -135,9 +135,9 @@ export class AppModule {
       if (hasErrors) {
         // If there is any data, disregard any errors.
         // This will mean the page will render as usual.
-        if (response.data) {
+        if (response?.data) {
           console.log("Ignoring errors as there is partial data to render.");
-          response.errors = null;
+          response.errors = undefined;
         }
       }
     });
