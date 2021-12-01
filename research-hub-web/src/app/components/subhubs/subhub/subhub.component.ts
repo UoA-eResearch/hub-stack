@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloError } from '@apollo/client/errors';
-import { GetSubHubBySlugGQL, SubHub } from '@graphql/schema';
+import { notEmpty } from '@app/global/notEmpty';
+import { GetSubHubBySlugGQL, OfficialDocuments, OrgUnit, Person, SubHub, SubHubExternalPagesItem, SubHubInternalPagesItem, SubHubRelatedItemsItem } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
@@ -24,6 +25,13 @@ export class SubhubComponent implements OnInit, OnDestroy {
   public bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
+
+  public internalPages: SubHubInternalPagesItem[];
+  public externalPages: SubHubExternalPagesItem[];
+  public relatedItems: SubHubRelatedItemsItem[];
+  public relatedContacts: Person[];
+  public relatedOrgs: OrgUnit[];
+  public relatedDocs: OfficialDocuments[];
 
   constructor(
     public route: ActivatedRoute,
@@ -80,12 +88,12 @@ export class SubhubComponent implements OnInit, OnDestroy {
     return this.getSubHubBySlug(slug).pipe(
       map((data) => {
         // Remove nulls from server in case of error.
-        if (data.internalPagesCollection) data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
-        if (data.externalPagesCollection) data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
-        if (data.relatedItemsCollection) data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        if (data.relatedContactsCollection) data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        if (data.relatedOrgsCollection) data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
-        if (data.relatedDocsCollection) data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
+        if (data.internalPagesCollection) this.internalPages = data.internalPagesCollection.items.filter(notEmpty);
+        if (data.externalPagesCollection) this.externalPages = data.externalPagesCollection.items.filter(notEmpty);
+        if (data.relatedItemsCollection) this.relatedItems = data.relatedItemsCollection.items.filter(notEmpty);
+        if (data.relatedContactsCollection) this.relatedContacts = data.relatedContactsCollection.items.filter(notEmpty);
+        if (data.relatedOrgsCollection) this.relatedOrgs = (data.relatedOrgsCollection.items.filter(notEmpty)).filter(item => item.name);
+        if (data.relatedDocsCollection) this.relatedDocs = (data.relatedDocsCollection.items.filter(notEmpty)).filter(item => item.title);
 
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);

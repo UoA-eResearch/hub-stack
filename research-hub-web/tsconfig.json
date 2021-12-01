@@ -14,6 +14,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
     "target": "es5",
     "types": ["jasmine"],
     "lib": [
@@ -55,8 +56,7 @@
     },
   },
   "angularCompilerOptions": {
-    "strictNullChecks": true,
-    // "strictTemplates": true,
+    "strictTemplates": true,
     "strictInjectionParameters": true
   }
 }
