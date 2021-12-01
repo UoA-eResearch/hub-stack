@@ -49,26 +49,20 @@ export class SearchFilterBarComponent implements OnInit, AfterViewInit {
 
   // Get all research stages
   private getAllStages(): Observable<StageCollection> {
-    try {
-      return this.allStagesGQL.fetch()
-        .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
-    } catch (e) { console.error('Error loading all stages:', e) };
+    return this.allStagesGQL.fetch()
+      .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
   }
 
   // Get all research categories
   private getAllCategories(): Observable<CategoryCollection> {
-    try {
-      return this.allCategoriesGQL.fetch()
-        .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
-    } catch (e) { console.error('Error loading all Categories:', e) };
+    return this.allCategoriesGQL.fetch()
+      .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
   }
 
   // Get all organisations
   private getAllOrganisations(): Observable<OrgUnitCollection> {
-    try {
-      return this.allOrganisationsGQL.fetch()
-        .pipe(pluck('data', 'orgUnitCollection')) as Observable<OrgUnitCollection>
-    } catch (e) { console.error('Error loading all organisations:', e) };
+    return this.allOrganisationsGQL.fetch()
+      .pipe(pluck('data', 'orgUnitCollection')) as Observable<OrgUnitCollection>
   }
 
   public updateSortOrder() {
@@ -106,11 +100,11 @@ export class SearchFilterBarComponent implements OnInit, AfterViewInit {
   public getFilterName(allFilters: { allCategories: CategoryCollection, allStages: StageCollection, allOrganisations: OrgUnitCollection }, filterId: string, filterType: FilterType) {
     switch (filterType) {
       case FilterType.ResearchCategory:
-        return allFilters.allCategories?.items.find(element => element.sys.id === filterId).name;
+        return allFilters.allCategories?.items.find(element => element?.sys.id === filterId)?.name;
       case FilterType.ResearchActivity:
-        return allFilters.allStages?.items.find(element => element.sys.id === filterId).name;
+        return allFilters.allStages?.items.find(element => element?.sys.id === filterId)?.name;
       case FilterType.Organisation:
-        return allFilters.allOrganisations?.items.find(element => element.sys.id === filterId).name;
+        return allFilters.allOrganisations?.items.find(element => element?.sys.id === filterId)?.name;
     }
   }
 

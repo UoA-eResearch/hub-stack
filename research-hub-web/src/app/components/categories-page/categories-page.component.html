@@ -1,6 +1,6 @@
 <div id="research-categories" *ngIf="allCategories$ | async; let allCategories">
   <h1>{{ title }}</h1>
-  <p>{{ description }}</p>
+  <p *ngIf="description">{{ description }}</p>
   <div [ngClass]="'main-underline'"></div>
 
   <!-- Category Cards Container -->

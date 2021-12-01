@@ -3,7 +3,8 @@ import { SearchService } from '@services/search.service';
 import {
   AllStagesGQL,
   StageCollection,
-  GetHomepageGQL
+  GetHomepageGQL,
+  Maybe
 } from '@graphql/schema';
 import { Observable, Subscription } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
@@ -16,7 +17,7 @@ import { PageTitleService } from '@services/page-title.service';
 })
 export class ActivitiesPageComponent implements OnInit, OnDestroy {
   public title: string = 'Research Activities';
-  public description: string;
+  public description: Maybe<string> | undefined;
   public allStages$: Observable<StageCollection>;
   private subscriptions: Subscription = new Subscription();
 
@@ -32,19 +33,17 @@ export class ActivitiesPageComponent implements OnInit, OnDestroy {
     this.allStages$ = this.getAllStages();
     this.subscriptions.add(
       this.getHomepageGQL.fetch().pipe(
-        map(x => x.data.homepageCollection.items[0])
+        map(x => x.data.homepageCollection?.items[0])
       ).subscribe(result => {
-        this.description = result.researchActivities;
+        this.description = result?.researchActivities;
       })
     )
   }
 
   // Get all research stages
   public getAllStages(): Observable<StageCollection> {
-    try {
-      return this.allStagesGQL.fetch()
-        .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
-    } catch (e) { console.error('Error loading all stages:', e) };
+    return this.allStagesGQL.fetch()
+      .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
   }
 
   ngOnDestroy(): void {

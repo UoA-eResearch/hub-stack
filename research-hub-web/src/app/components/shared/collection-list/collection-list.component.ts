@@ -20,6 +20,6 @@ export class CollectionListComponent implements OnChanges {
 
   // Scrolling to top of page on page change
   scrollToTop() {
-    document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
+    if (document.querySelector('.main-content')) document.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
