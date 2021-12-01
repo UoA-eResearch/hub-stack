@@ -75,15 +75,22 @@
   <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
     <app-breadcrumbs [title]="article.title"></app-breadcrumbs>
 
-    <div fxLayout="row" fxLayoutAlign="space-evenly" fxLayoutGap="5vw" fxLayout.lt-lg="column" fxLayoutGap.lt-lg="0">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+      fxLayoutGap="5vw"
+      fxLayout.lt-xl="column"
+      fxLayoutGap.lt-xl="0"
+    >
       <!-- Article Body -->
       <ngx-contentful-rich-text
         fxFlexOrder="2"
-        fxFlexOrder.lt-lg="1"
-        fxFlex="1 1 auto"
-        fxFlexOrder.xs="1"
+        fxFlexOrder.lt-xl="1"
+        fxFlex="1 1 50%"
+        fxFlex.lt-xl="1 1 auto"
         id="bodyMediaList"
         style="word-break: break-word"
+        [ngClass.lt-xl]="'single-column-max-width'"
         [document]="article.bodyText.json"
         [nodeRenderers]="nodeRenderers"
         [markRenderers]="markRenderers"
@@ -96,10 +103,10 @@
           article.relatedContactsCollection.items.length > 0 ||
           article.relatedOrgsCollection.items.length > 0
         "
-        fxFlex.gt-lg="0 0 350px"
+        fxFlex.gt-xl="0 0 350px"
         fxLayout="column"
         fxFlexOrder="1"
-        fxFlexOrder.lt-lg="2"
+        fxFlexOrder.lt-xl="2"
       >
         <h3 *ngIf="article?.relatedContactsCollection.items.length > 0">
           Contacts
@@ -108,8 +115,8 @@
         <div
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-xl="row wrap"
+          fxLayoutGap.lt-xl="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -127,8 +134,8 @@
           id="documents"
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-xl="row wrap"
+          fxLayoutGap.lt-xl="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -144,8 +151,8 @@
         <div
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-xl="row wrap"
+          fxLayoutGap.lt-xl="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -159,7 +166,7 @@
       <!-- Related items -->
       <div
         *ngIf="article.relatedItemsCollection.items.length > 0"
-        fxFlex.gt-lg="0 0 350px"
+        fxFlex.gt-xl="0 0 350px"
         fxLayout="column"
         fxFlexOrder="3"
       >
@@ -171,8 +178,8 @@
           id="you-might-be-interested-in"
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-xl="row wrap"
+          fxLayoutGap.lt-xl="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
