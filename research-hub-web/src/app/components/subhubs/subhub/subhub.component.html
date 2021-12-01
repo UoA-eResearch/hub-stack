@@ -74,7 +74,7 @@
       ngClass.lt-md="site-padding-mobile"
     >
       <app-standard-card
-        *ngFor="let child of internalPages"
+        *ngFor="let child of internalPages.concat(externalPages)"
         [contentItem]="child"
         [isSubhubChild]="true"
       ></app-standard-card>
