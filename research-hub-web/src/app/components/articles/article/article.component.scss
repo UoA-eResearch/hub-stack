@@ -37,10 +37,3 @@
     padding: 0 2.5vw;
   }
 }
-
-.single-column-max-width {
-  max-width: $single-column-max-width;
-  @media (min-width: $single-column-max-width) {
-    margin: auto;
-  }
-}
