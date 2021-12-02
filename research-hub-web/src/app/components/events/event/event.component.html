@@ -35,7 +35,7 @@
     <ngx-contentful-rich-text
       id="bodyMediaList"
       style="word-break: break-word"
-      [document]="event.bodyText.json"
+      [document]="event.bodyText?.json"
       [nodeRenderers]="nodeRenderers"
       [markRenderers]="markRenderers"
     ></ngx-contentful-rich-text>

@@ -85,7 +85,7 @@
         id="bodyMediaList"
         class="section-2"
         style="word-break: break-word"
-        [document]="article.bodyText.json"
+        [document]="article.bodyText?.json"
         [nodeRenderers]="nodeRenderers"
         [markRenderers]="markRenderers"
       ></ngx-contentful-rich-text>

@@ -23,7 +23,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
 
   public equipment: Equipment;
   public supportsWebp: Boolean;
-  public bannerImageUrl: string;
+  public bannerImageUrl: string | undefined;
 
   public relatedItems: EquipmentRelatedItemsItem[];
   public relatedContacts: Person[];
@@ -98,6 +98,8 @@ export class EquipmentComponent implements OnInit, OnDestroy {
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+        } else {
+          this.bannerImageUrl = undefined;
         }
 
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering

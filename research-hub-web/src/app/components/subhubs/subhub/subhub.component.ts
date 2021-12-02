@@ -24,7 +24,7 @@ export class SubhubComponent implements OnInit, OnDestroy {
   public subHub: SubHub;
   public bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   public supportsWebp: Boolean;
-  public bannerImageUrl: string;
+  public bannerImageUrl: string | undefined;
 
   public internalPages: SubHubInternalPagesItem[];
   public externalPages: SubHubExternalPagesItem[];
@@ -103,6 +103,8 @@ export class SubhubComponent implements OnInit, OnDestroy {
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+        } else {
+          this.bannerImageUrl = undefined;
         }
 
         return data;

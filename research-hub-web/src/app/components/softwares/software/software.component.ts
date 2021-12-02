@@ -23,7 +23,7 @@ export class SoftwareComponent implements OnInit, OnDestroy {
 
   public software: Software;
   public supportsWebp: Boolean;
-  public bannerImageUrl: string;
+  public bannerImageUrl: string | undefined;
 
   public relatedItems: SoftwareRelatedItemsItem[];
   public relatedContacts: Person[];
@@ -93,6 +93,8 @@ export class SoftwareComponent implements OnInit, OnDestroy {
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
           this.bannerImageUrl = this.supportsWebp ? data.banner?.url + '?w=1900&fm=webp' : data.banner?.url + '?w=1900';
+        } else {
+          this.bannerImageUrl = undefined;
         }
 
         // If Call To Action is an email address

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Maybe } from '@app/graphql/schema';
 import { Document } from '@contentful/rich-text-types';
 
 @Component({
@@ -8,8 +9,8 @@ import { Document } from '@contentful/rich-text-types';
 })
 export class ContactComponent {
   @Input() description: Document;
-  @Input() feedbackLink: string;
-  @Input() email: string;
+  @Input() feedbackLink: Maybe<string>;
+  @Input() email: Maybe<string>;
   
   public title = "Contact";
 
