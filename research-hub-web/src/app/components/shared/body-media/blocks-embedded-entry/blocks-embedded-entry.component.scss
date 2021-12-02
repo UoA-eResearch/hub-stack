@@ -97,13 +97,10 @@ mat-icon {
  .table-container {
   min-width: 100%;
   margin: 40px auto;
+  overflow-x: auto;
   .body-table {
     text-align: center;
     border-collapse: collapse;
-    font-size: 2vw;
-    @include size(small) {
-      font-size: initial;
-    }
     th {
       white-space: nowrap;
       background: $input-grey;
