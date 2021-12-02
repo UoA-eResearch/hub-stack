@@ -4,11 +4,13 @@ import {
   AllStagesGQL,
   StageCollection,
   GetHomepageGQL,
-  Maybe
+  Maybe,
+  Stage
 } from '@graphql/schema';
 import { Observable, Subscription } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { PageTitleService } from '@services/page-title.service';
+import { notEmpty } from '@app/global/notEmpty';
 
 @Component({
   selector: 'app-activities-page',
@@ -44,6 +46,10 @@ export class ActivitiesPageComponent implements OnInit, OnDestroy {
   public getAllStages(): Observable<StageCollection> {
     return this.allStagesGQL.fetch()
       .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
+  }
+
+  public filterOutNulls(arrayWithNulls: Array<Maybe<Stage>>) : Array<Stage> {
+    return arrayWithNulls.filter(notEmpty);
   }
 
   ngOnDestroy(): void {
