@@ -6,9 +6,7 @@
     class="site-padding margin-bottom"
     ngClass.lt-md="site-padding-mobile top-padding"
   >
-    <app-breadcrumbs
-      [title]="service.title"
-    ></app-breadcrumbs>
+    <app-breadcrumbs [title]="service.title!"></app-breadcrumbs>
 
     <!-- Title and Summary -->
     <div fxLayout="column">
@@ -60,14 +58,14 @@
     <!-- Owners and User Facing Support -->
     <div
       *ngIf="
-        service.relatedItemsCollection.items.length > 0 ||
-        service.relatedDocsCollection.items.length > 0 ||
-        service.relatedContactsCollection.items.length > 0 ||
-        service.relatedOrgsCollection.items.length > 0
+        relatedItems.length > 0 ||
+        relatedDocs.length > 0 ||
+        relatedContacts.length > 0 ||
+        relatedOrgs.length > 0
       "
       fxLayout="column"
     >
-      <h3 *ngIf="service?.relatedItemsCollection.items.length > 0">
+      <h3 *ngIf="relatedItems.length > 0">
         Explore Related
         <hr />
       </h3>
@@ -78,40 +76,40 @@
         fxLayoutGap="25px"
       >
         <app-standard-card
-          *ngFor="let content of service.relatedItemsCollection.items"
+          *ngFor="let content of relatedItems"
           [contentItem]="content"
         ></app-standard-card>
       </div>
 
-      <h3 *ngIf="service?.relatedContactsCollection.items.length > 0">
+      <h3 *ngIf="relatedContacts.length > 0">
         Contacts
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-contact-card
-          *ngFor="let person of service.relatedContactsCollection.items"
+          *ngFor="let person of relatedContacts"
           [person]="person"
         ></app-contact-card>
       </div>
 
-      <h3 *ngIf="service?.relatedOrgsCollection.items.length > 0">
+      <h3 *ngIf="relatedOrgs.length > 0">
         Organisations
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-org-unit-card
-          *ngFor="let orgUnit of service.relatedOrgsCollection.items"
+          *ngFor="let orgUnit of relatedOrgs"
           [orgUnit]="orgUnit"
         ></app-org-unit-card>
       </div>
 
-      <h3 *ngIf="service?.relatedDocsCollection.items.length > 0">
+      <h3 *ngIf="relatedDocs.length > 0">
         Documents
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-document-card
-          *ngFor="let document of service.relatedDocsCollection.items"
+          *ngFor="let document of relatedDocs"
           [document]="document"
         ></app-document-card>
       </div>
@@ -125,9 +123,9 @@
     class="banner-container"
     [ngClass]="{ 'standard-banner': bannerImageUrl }"
     [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
-    [ngStyle]="
-      bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
-    "
+    [ngStyle]="{
+      'background-image': bannerImageUrl ? 'url(' + bannerImageUrl + ')' : ''
+    }"
   ></div>
 </ng-template>
 
