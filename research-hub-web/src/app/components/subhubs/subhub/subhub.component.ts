@@ -52,7 +52,7 @@ export class SubhubComponent implements OnInit, OnDestroy {
     });
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.subscriptions.add(this.route.params.pipe(
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
