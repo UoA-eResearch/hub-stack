@@ -99,20 +99,22 @@ export class CerGraphqlService {
    */
   private _getBreadCrumbsArray(entrySlug: string, breadcrumbsArray) {
     for (const item of this._subHubCollectionWithChildPagesSlugs) {
-      item.internalPagesCollection.items.forEach(subPage => {
-        if (!subPage) {
-          return;
-        }
-        if (subPage.slug === entrySlug) { // The SubHub's childPages contains the current entry we're searching for
-          for (const subHub of breadcrumbsArray) { // Check it's not already known
-            if (subHub.slug === item.slug) {
-              throw new Error('Circular SubHub structure detected');
-            }
-          };
-          breadcrumbsArray.push({ title: item.title, slug: item.slug }); // Push it to the breadcrumbsArray
-          return this._getBreadCrumbsArray(item.slug, breadcrumbsArray); // Call the function on the SubHub
-        }
-      });
+      if (item && item.internalPagesCollection) {
+        item.internalPagesCollection.items.forEach(subPage => {
+          if (!subPage) {
+            return;
+          }
+          if (subPage.slug === entrySlug) { // The SubHub's childPages contains the current entry we're searching for
+            for (const subHub of breadcrumbsArray) { // Check it's not already known
+              if (subHub.slug === item.slug) {
+                throw new Error('Circular SubHub structure detected');
+              }
+            };
+            breadcrumbsArray.push({ title: item.title, slug: item.slug }); // Push it to the breadcrumbsArray
+            return this._getBreadCrumbsArray(item.slug, breadcrumbsArray); // Call the function on the SubHub
+          }
+        });
+      }
     }
   }
 
