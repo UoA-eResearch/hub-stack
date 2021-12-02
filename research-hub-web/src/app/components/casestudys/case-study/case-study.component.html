@@ -46,18 +46,23 @@
   <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
     <app-breadcrumbs [title]="caseStudy.title"></app-breadcrumbs>
 
-    <div fxLayout="row" fxLayoutAlign="space-around" fxLayout.lt-lg="column">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+      fxLayoutGap="5vw"
+      fxLayout.lt-xl="column"
+      fxLayoutGap.lt-xl="0"
+    >
       <!-- caseStudy Body and References -->
       <div
-        fxLayout="column"
         fxFlexOrder="2"
-        fxFlexOrder.lt-lg="1"
-        fxFlex="1 1 35%"
-        fxFlexOrder.xs="1"
+        fxFlexOrder.lt-xl="1"
+        fxFlex="1 1 50%"
+        fxFlex.lt-xl="1 1 auto"
+        [ngClass.lt-xl]="'single-column-max-width'"
       >
         <ngx-contentful-rich-text
           id="bodyMediaList"
-          class="section-2"
           style="word-break: break-word"
           [document]="caseStudy.bodyText?.json"
           [nodeRenderers]="nodeRenderers"
@@ -86,10 +91,10 @@
           caseStudy.relatedContactsCollection.items.length > 0 ||
           caseStudy.relatedOrgsCollection.items.length > 0
         "
-        fxFlex.gt-lg="0 0 350px"
+        fxFlex.gt-xl="0 0 350px"
         fxLayout="column"
         fxFlexOrder="1"
-        fxFlexOrder.lt-lg="2"
+        fxFlexOrder.lt-xl="2"
       >
         <h3 *ngIf="caseStudy?.relatedContactsCollection.items.length > 0">
           Contacts
@@ -98,8 +103,8 @@
         <div
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-xl="row wrap"
+          fxLayoutGap.lt-xl="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -117,8 +122,8 @@
         <div
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-xl="row wrap"
+          fxLayoutGap.lt-xl="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -135,8 +140,8 @@
         <div
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-xl="row wrap"
+          fxLayoutGap.lt-xl="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -150,7 +155,7 @@
       <!-- Related items -->
       <div
         *ngIf="caseStudy.relatedItemsCollection.items.length > 0"
-        fxFlex.gt-lg="0 0 350px"
+        fxFlex.gt-xl="0 0 350px"
         fxLayout="column"
         fxFlexOrder="3"
       >
@@ -162,8 +167,8 @@
           id="you-might-be-interested-in"
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-xl="row wrap"
+          fxLayoutGap.lt-xl="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
