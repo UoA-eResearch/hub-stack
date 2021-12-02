@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SearchService } from '@services/search.service';
 import {
   AllCategoriesGQL,
+  Category,
   CategoryCollection,
   GetHomepageGQL,
   Maybe
@@ -10,6 +11,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { PageTitleService } from '@services/page-title.service';
+import { notEmpty } from '@app/global/notEmpty';
 
 @Component({
   selector: 'app-categories-page',
@@ -54,6 +56,10 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
         queryParams: this.searchService.generateQueryParams('', {category: [id], stage: [], relatedOrgs: []})
       }
     );
+  }
+
+  public filterOutNulls(arrayWithNulls: Array<Maybe<Category>>) : Array<Category> {
+    return arrayWithNulls.filter(notEmpty);
   }
 
   ngOnDestroy(): void {

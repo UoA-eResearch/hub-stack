@@ -12,7 +12,7 @@
     "
   ></ng-container>
   <span class="card-label">{{
-    contentItem.__typename | contentTypeDisplayName
+    contentItem.__typename! | contentTypeDisplayName
   }}</span>
 
   <mat-card-title>
