@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { NavigationEnd, ResolveEnd, Router, RouterEvent } from '@angular/router';
-import { HomeScrollService } from '@services/home-scroll.service';
+import { NavigationEnd, Router, RouterEvent } from '@angular/router';
 import { LoginService, UserInfoDto } from '@uoa/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -27,7 +26,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    public homeScrollService: HomeScrollService,
     public loginService: LoginService,
     public location: Location,
   ) {
