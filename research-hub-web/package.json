@@ -67,7 +67,6 @@
     "ngx-pagination": "^5.1.1",
     "ngx-skeleton-loader": "^2.10.1",
     "ngx-take-until-destroy": "^5.4.0",
-    "ngx-webstorage-service": "^4.1.0",
     "rxjs": "^6.6.2",
     "smoothscroll-polyfill": "^0.4.4",
     "supports-webp": "^2.0.1",

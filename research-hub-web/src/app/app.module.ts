@@ -12,7 +12,6 @@ import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { onError } from '@apollo/client/link/error';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { StorageServiceModule } from 'ngx-webstorage-service';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './components/layout/layout.module';
 import { SharedModule } from './components/shared/app.shared.module';
@@ -44,7 +43,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
-    StorageServiceModule,
     RoutingModule,
     ErrorPagesModule,
     BrowserAnimationsModule,
@@ -147,7 +145,7 @@ export class AppModule {
     // Join the primary link and the error handler link
     // const link = error.concat(http);
     // Create the default (global) Apollo client
-    const client = apollo.create({
+    apollo.create({
       cache: new InMemoryCache({ fragmentMatcher }) as InMemoryCache,
       link: error.concat(http),
       defaultOptions: {
