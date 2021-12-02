@@ -9,7 +9,7 @@
   <div class="research-activity-container">
     <!-- Research Activities Content -->
     <div fxLayout="column" fxLayoutGap="8px" class="research-activity-content">
-      <div *ngFor="let item of allStages.items">
+      <div *ngFor="let item of filterOutNulls(allStages.items)">
         <!-- Panel Container -->
         <a
             [attr.aria-label]="'Search in ' + item.name"
