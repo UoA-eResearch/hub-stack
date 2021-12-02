@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloError } from '@apollo/client/errors';
-import { GetSoftwareBySlugGQL, Software } from '@graphql/schema';
+import { notEmpty } from '@app/global/notEmpty';
+import { GetSoftwareBySlugGQL, OfficialDocuments, OrgUnit, Person, Software, SoftwareRelatedItemsItem } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
@@ -23,6 +24,11 @@ export class SoftwareComponent implements OnInit, OnDestroy {
   public software: Software;
   public supportsWebp: Boolean;
   public bannerImageUrl: string;
+
+  public relatedItems: SoftwareRelatedItemsItem[];
+  public relatedContacts: Person[];
+  public relatedOrgs: OrgUnit[];
+  public relatedDocs: OfficialDocuments[];
 
   constructor(
     public route: ActivatedRoute,
@@ -79,10 +85,10 @@ export class SoftwareComponent implements OnInit, OnDestroy {
     return this.getSoftwareBySlug(slug).pipe(
       map(data => {
         // Strip nulls from related collection data.
-        if (data.relatedContactsCollection) data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        if (data.relatedDocsCollection) data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
-        if (data.relatedItemsCollection) data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        if (data.relatedOrgsCollection) data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
+        if (data.relatedContactsCollection) this.relatedContacts = data.relatedContactsCollection.items.filter(notEmpty);
+        if (data.relatedDocsCollection) this.relatedDocs = (data.relatedDocsCollection.items.filter(notEmpty)).filter(item => item.title);
+        if (data.relatedItemsCollection) this.relatedItems = data.relatedItemsCollection.items.filter(notEmpty);
+        if (data.relatedOrgsCollection) this.relatedOrgs = (data.relatedOrgsCollection.items.filter(notEmpty)).filter(item => item.name);
 
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
