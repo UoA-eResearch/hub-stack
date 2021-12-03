@@ -165,7 +165,10 @@
 
       <!-- Related items -->
       <div
-        *ngIf="article.relatedItemsCollection.items.length > 0"
+        *ngIf="
+          article.relatedItemsCollection.items.length > 0;
+          else filler;
+        "
         fxFlex.gt-xl="0 0 350px"
         fxLayout="column"
         fxFlexOrder="3"
@@ -192,3 +195,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #filler>
+  <div fxFlex="0 0 350px" fxFlexOrder="3" fxHide.lt-xl></div>
+</ng-template>
