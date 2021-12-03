@@ -28,8 +28,9 @@ export class SearchService {
         const results: SearchResult[] = [];
         data["result"]["hits"]["hits"].forEach(element => {
           const summary = element.highlight?.["fields.summary.en-US"] ?
-            element.highlight["fields.summary.en-US"].join(' ') :
-            element._source.fields.summary["en-US"];
+            element.highlight["fields.summary.en-US"].join(' '):
+            (element._source?.fields?.summary && element._source?.fields?.summary["en-US"]) ? 
+            element._source.fields.summary["en-US"] : '';
 
           const result: SearchResult = {
             title: element._source.fields.title["en-US"],
