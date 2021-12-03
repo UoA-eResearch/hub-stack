@@ -121,7 +121,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
     return this.getEquipmentBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.equipmentCollection) {
+        if (x?.data?.equipmentCollection) {
           if (x.data.equipmentCollection.items.length === 0) {
             throw new Error(`Not found. Could not find equipment with slug "${slug}"`)
           } else {

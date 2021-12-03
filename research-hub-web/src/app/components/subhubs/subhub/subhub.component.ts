@@ -121,7 +121,7 @@ export class SubhubComponent implements OnInit, OnDestroy {
   public getSubHubBySlug(slug: string): Observable<SubHub> {
     return this.getSubHubBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.subHubCollection) {
+        if (x?.data?.subHubCollection) {
           if (x.data.subHubCollection.items.length === 0) {
             throw new Error(`Not found. Could not find subHub with slug "${slug}"`)
           } else {

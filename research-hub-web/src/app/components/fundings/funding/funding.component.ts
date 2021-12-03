@@ -125,7 +125,7 @@ export class FundingComponent implements OnInit, OnDestroy {
   public getFundingBySlug(slug: string): Observable<Funding> {
     return this.getFundingBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.fundingCollection) {
+        if (x?.data?.fundingCollection) {
           if (x.data.fundingCollection.items.length === 0) {
             throw new Error(`Not found. Could not find funding with slug "${slug}"`)
           } else {

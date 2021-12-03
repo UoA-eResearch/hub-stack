@@ -19,7 +19,7 @@ export class FeaturedComponent implements OnInit {
 
   ngOnInit() {
     this.featuredItems$ = this.getAllFeaturedItemsGQL.fetch().pipe(
-      map(x => x.data.featuredItemsCollection?.items[0]?.itemsCollection as FeaturedItemsItemsCollection)
+      map(x => x?.data?.featuredItemsCollection?.items[0]?.itemsCollection as FeaturedItemsItemsCollection)
     );
   }
 

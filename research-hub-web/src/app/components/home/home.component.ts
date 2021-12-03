@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.pageTitleService.title = '';
     this.homePage$ = this.getHomepageGQL.fetch().pipe(
-      map(x => x.data.homepageCollection?.items[0]) 
+      map(x => x?.data?.homepageCollection?.items[0]) 
     ) as Observable<Homepage>;
   }
 }

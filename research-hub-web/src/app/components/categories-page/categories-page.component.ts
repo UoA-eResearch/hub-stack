@@ -37,7 +37,7 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
     this.allCategories$ = this.getAllCategories();
     this.subscriptions.add(
       this.getHomepageGQL.fetch().pipe(
-        map(x => x.data.homepageCollection?.items[0])
+        map(x => x?.data?.homepageCollection?.items[0])
       ).subscribe(result => {
         this.description = result?.researchCategories;
       })
