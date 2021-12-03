@@ -120,7 +120,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
   public getServiceBySlug(slug: string): Observable<Service> {
     return this.getServiceBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.serviceCollection) {
+        if (x?.data?.serviceCollection) {
           if (x.data.serviceCollection.items.length === 0) {
             throw new Error(`Not found. Could not find service with slug "${slug}"`)
           } else {

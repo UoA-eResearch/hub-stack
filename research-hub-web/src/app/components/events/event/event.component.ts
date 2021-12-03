@@ -120,7 +120,7 @@ export class EventComponent implements OnInit, OnDestroy {
   public getEventBySlug(slug: string): Observable<Event> {
     return this.getEventBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.eventCollection) {
+        if (x?.data?.eventCollection) {
           if (x.data.eventCollection.items.length === 0) {
             throw new Error(`Not found. Could not find event with slug "${slug}"`)
           } else {

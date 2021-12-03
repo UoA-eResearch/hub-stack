@@ -119,7 +119,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
   public getCaseStudyBySlug(slug: string): Observable<CaseStudy> {
     return this.getCaseStudyBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.caseStudyCollection) {
+        if (x?.data?.caseStudyCollection) {
           if (x.data.caseStudyCollection.items.length === 0) {
             throw new Error(`Not found. Could not find case study with slug "${slug}"`)
           } else {

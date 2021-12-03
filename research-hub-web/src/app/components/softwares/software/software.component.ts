@@ -119,7 +119,7 @@ export class SoftwareComponent implements OnInit, OnDestroy {
   public getSoftwareBySlug(slug: string): Observable<Software> {
     return this.getSoftwareBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.softwareCollection) {
+        if (x?.data?.softwareCollection) {
           if (x.data.softwareCollection.items.length === 0) {
             throw new Error(`Not found. Could not find software with slug "${slug}"`)
           } else {

@@ -122,7 +122,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   public getArticleBySlug(slug: string): Observable<Article> {
     return this.getArticleBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.articleCollection) {
+        if (x?.data?.articleCollection) {
           if (x.data.articleCollection.items.length === 0) {
             throw new Error(`Not found. Could not find article with slug "${slug}"`)
           } else {
