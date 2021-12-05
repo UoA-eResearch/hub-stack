@@ -6,9 +6,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnChanges {
-  public pageNumber;
   public loading: Boolean = false;
-  public itemsPerPage = 10;
 
   @Input() collection;
 
