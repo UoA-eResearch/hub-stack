@@ -1,0 +1,70 @@
+@use "@angular/material" as mat;
+@import "variables";
+
+.sticky-bar {
+  @include mat.elevation(0);
+  @include mat.elevation-transition();
+  @media (min-width: 961px) {
+    position: sticky;
+    top: -1px; // this is a trick to get the IntersectionObserver to react to the sticky state change https://stackoverflow.com/questions/16302483/event-to-detect-when-positionsticky-is-triggered
+  }
+  z-index: 500;
+  background-color: #fafafa;
+  padding: 10px 0;
+  // Results controls container
+  .result-controls {
+    width: 100%;
+    margin: 10px 0;
+    .result-total {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .applied-filters {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      flex: 1 1 auto;
+    }
+    mat-select {
+      padding: 10px;
+      background: $input-grey;
+      border: 1px solid $silver-lining;
+    }
+  }
+  .active-filters {
+    margin: 10px 0;
+  }
+}
+
+#order-label {
+  margin: 0% !important;
+  padding-right: 10px;
+  padding-top: 20px;
+}
+
+#order-picker {
+  padding-top: 10px;
+}
+
+// Filter Chip Indicator
+.mat-chip {
+  background-color: $dark-blue !important;
+  color: white !important;
+  font-size: 14px;
+  &.clear {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+  }
+}
+
+.mat-icon {
+  color: white !important;
+}
+
+.elevated {
+  @media (min-width: 961px) {
+    @include mat.elevation(5);
+  }
+}

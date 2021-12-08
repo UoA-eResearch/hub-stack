@@ -6,7 +6,7 @@ variable "aws_region" {
 }
 
 variable "aws_profile" {
-  default     = "my-aws-profile"
+  default     = "default"
   description = "The profile to be used when running"
 }
 
@@ -140,10 +140,16 @@ variable "vpc_id" {
   description = "What is the ID of the VPC this will reside within"
 }
 
+variable "create_firewall" {
+  description = "Should a cloudfront firewall be created?"
+  default     = false
+}
+
 ########################
 # Loadbalancer for ECS #
 ########################
 variable "lb_name" {
+  type        = string
   description = "What name should the LB be created with"
 }
 

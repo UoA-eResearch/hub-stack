@@ -1,0 +1,48 @@
+<div id="research-activities">
+  <h1>{{ title }}</h1>
+  <p>{{ description }}</p>
+  <div [ngClass]="'main-underline'"></div>
+</div>
+
+<div *ngIf="allStages$ | async as allStages">
+  <!-- Research Acitivities Container -->
+  <div class="research-activity-container">
+    <!-- Research Activities Content -->
+    <div fxLayout="column" fxLayoutGap="8px" class="research-activity-content">
+      <div *ngFor="let item of allStages.items">
+        <!-- Panel Container -->
+        <a
+            [attr.aria-label]="'Search in ' + item.name"
+            routerLink="/search"
+            [queryParams]="
+              searchService.generateQueryParams('', {
+                category: [],
+                stage: [item.sys.id],
+                relatedOrgs: []
+              })
+            "
+          >
+          <div class="outer-panel" fxLayout="row">
+            <div class="inner-panel">
+              <div>
+                  <h2>{{ item.name }}</h2>
+                  <p>{{ item.description }}</p>
+              </div>
+            </div>
+            
+            <!-- Panel Image -->
+            <div fxHide.lt-md class="research-category-img">
+              <picture>
+                <source
+                  srcset="{{ item.image?.url }}?w=1000&fm=webp"
+                  type="image/webp"
+                />
+                <img src="{{ item.image?.url }}?w=1000" alt="{{ item.name }}" />
+              </picture>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+@import "variables";
+@import "mixins";
+@import "styles-common";
+
+/**
+ * banner Image
+ */
+ .no-banner {
+  display: none;
+}
+
+.mobile-banner {
+  background-repeat: no-repeat;
+  padding: 20vh 0px;
+}
+
+.standard-banner {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding: 20vh 0px;
+}
+
+/**
+ * Specifications Table
+ */
+.specifications-table {
+  width: 100%;
+  border-collapse: collapse;
+  @include size(large) {
+    width: 50%;
+    margin: 0 auto;
+  }
+  td,
+  th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  th {
+    text-align: left;
+    padding-top: 12px;
+    margin-bottom: 12px;
+    color: $color-background;
+    background-color: $dark-blue;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  td:nth-child(odd) {
+    font-weight: bold;
+    width: 25%;
+  }
+}
+
+

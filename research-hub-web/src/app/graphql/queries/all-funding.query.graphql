@@ -1,5 +1,5 @@
 query AllFunding {
-    fundingCollection {
+    fundingCollection(limit: 250) {
         items {
             ...PublicFields
         }

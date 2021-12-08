@@ -1,0 +1,21 @@
+<app-content-container>
+  <app-content-title [title]="title">
+    <p *ngIf="email">We'd love to hear from you. Get in contact via email
+      <a href="mailto:{{email}}"
+        >{{email}}</a
+      >.
+    </p>
+  </app-content-title>
+  <!-- Feedback -->
+  <div *ngIf="description && feedbackLink" class="feedback-container">
+    <ngx-contentful-rich-text [document]="description"></ngx-contentful-rich-text>
+    <br />
+    <a href="{{ feedbackLink }}"
+      mat-flat-button
+      aria-label="provide feedback on the research hub"
+      class="standard-button"
+    >
+      <span>Provide Feedback</span>
+    </a>
+  </div>
+</app-content-container>

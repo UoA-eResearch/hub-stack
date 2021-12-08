@@ -2,9 +2,10 @@
     "chromeWebSecurity": false,
     "baseUrl": "http://localhost:4200/",
     "defaultCommandTimeout": 20000,
+    "screenshotOnRunFailure": false,
     "retries": {
         "runMode": 2,
         "openMode": 0
     },
-    "ignoreTestFiles": ["**/caseStudy.e2e.js", "**/fundings.e2e.js"]
+    "ignoreTestFiles": ["**/caseStudy.e2e.ts", "**/fundings.e2e.ts"]
 }

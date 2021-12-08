@@ -1,5 +1,5 @@
 query GetCaseStudyBySlug($slug: String) {
-  caseStudyCollection(limit: 1, where: {slug: $slug}) {
+  caseStudyCollection(limit: 1, where: { slug: $slug }) {
     items {
       __typename
       sys {
@@ -11,53 +11,94 @@ query GetCaseStudyBySlug($slug: String) {
       ssoProtected
       searchable
       banner {
-        title
-        description
         url
       }
       summary
       bodyText {
-        json 
+        json
         links {
           entries {
-            block { 
+            block {
               ...PublicFields
               sys {
                 id
               }
             }
-            inline { 
+            inline {
               ...PublicFields
               sys {
                 id
-              } 
+              }
             }
-            hyperlink { 
-              ...PublicFields 
+            hyperlink {
+              ...PublicFields
               sys {
                 id
               }
             }
           }
           assets {
-            block { ...AssetFields }
-            hyperlink { ...AssetFields }
+            block {
+              ...AssetFields
+            }
+            hyperlink {
+              ...AssetFields
+            }
           }
         }
-      } 
+      }
+      references {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+          }
+          assets {
+            block {
+              ...AssetFields
+            }
+            hyperlink {
+              ...AssetFields
+            }
+          }
+        }
+      }
       relatedItemsCollection {
-        items { ...PublicFields }
+        items {
+          ...PublicFields
+        }
       }
       relatedOrgsCollection {
-        items { ...PublicFields }
+        items {
+          ...PublicFields
+        }
       }
       relatedDocsCollection {
-        items { ...PublicFields }
+        items {
+          ...PublicFields
+        }
       }
       relatedContactsCollection {
-        items { 
+        items {
           ...PublicFields
-          ...on Person {
+          ... on Person {
             role
           }
         }

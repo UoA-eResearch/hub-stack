@@ -12,14 +12,14 @@ pipeline {
         booleanParam(name: "FORCE_REDEPLOY_LINK_CHECKER", defaultValue: false, description: "Force redeploy the SubHub link checker Contentful app even if there are no code changes.")
     }
 
-    agent  {
+    agent {
         label("uoa-buildtools-ionic")
     }
 
     options {
         buildDiscarder(
             logRotator(
-                daysToKeepStr: "30"
+                numToKeepStr: "3"
             )
         )
     }
@@ -109,7 +109,7 @@ pipeline {
             }
         }
 
-        stage('Build projects') {
+        stage('Build cer-graphql and search-proxy projects') {
             stages {
                 stage('Build search-proxy') {
                     when {
@@ -154,6 +154,118 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+
+        stage('Run cer-graphql and search-proxy tests') {
+            stages {
+                stage('Run cer-graphql tests') {
+                    when {
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
+                    }
+                    steps {
+                        script {
+                            if (env.BRANCH_NAME != 'prod') {    // tests rely on 2FAB so we do not test in prod
+                                echo 'Testing cer-graphql project'
+                                dir('cer-graphql') {
+                                    sh "npm install"
+                                    sh "export stage=${BRANCH_NAME} && npm run test -- --aws-profile=${awsProfile}"
+                                }
+		                dir("subhub-link-checker") {
+		                    echo "Installing link-checker dependencies..."
+		                    sh "npm install"
+		                }
+                            }
+                        }
+                    }
+                }
+                stage('Run search-proxy tests') {
+                    when {
+                        anyOf {
+                            changeset "**/hub-search-proxy/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
+                        }
+                    }
+                    steps {
+                        script {
+                            if (env.BRANCH_NAME != 'prod') {
+                                echo "Testing hub-search-proxy project"
+                                dir('hub-search-proxy') {
+                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${env.BRANCH_NAME}"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Deploy cer-graphql and search-proxy projects') {
+            parallel {
+                stage('Deploy cer-graphql') {
+                    when {
+                        anyOf {
+                            changeset "**/cer-graphql/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
+                        }
+                    }
+                    steps {     // TODO: may need to modify commands once we have both dev & test in nonprod account
+                        echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
+                        echo "Logging in to ECR"
+                        sh "(aws ecr get-login --no-include-email --region ${awsRegion} --profile=${awsProfile}) | /bin/bash"
+
+                        echo "Tagging built image with ECR tag"
+                        sh "docker tag cer-graphql:latest ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql-${BRANCH_NAME}:latest"
+
+                        echo "Pushing built image to ECR"
+                        sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql-${BRANCH_NAME}:latest"
+
+                        echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster-${BRANCH_NAME} --service cer-graphql-service-${BRANCH_NAME} --task-definition cer-graphql-${BRANCH_NAME} --force-new-deployment --region ${awsRegion}"
+                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster-${BRANCH_NAME} --service cer-graphql-preview-service-${BRANCH_NAME} --task-definition cer-graphql-preview-${BRANCH_NAME} --force-new-deployment --region ${awsRegion}"
+                    }
+                }
+                stage('Deploy search-proxy') {
+                    when {
+                        anyOf {
+                            changeset "**/hub-search-proxy/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
+                        }
+                    }
+                    steps {
+                        echo "Deploying hub-search-proxy Lambda function to ${BRANCH_NAME}"
+                        script {                            
+                            dir("hub-search-proxy") {
+                                sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
+                            }
+                        }
+                        echo "Deploy to ${BRANCH_NAME} complete"
+                    }
+                }
+                stage('Deploy link-checker') {
+                    when {
+                        anyOf {
+                            changeset "**/subhub-link-checker/**/*.*"
+                            equals expected: true, actual: params.FORCE_REDEPLOY_LINK_CHECKER
+                        }
+                    }
+                    steps {
+                        dir("subhub-link-checker") {
+                            echo "Deploying to GitHub pages..."
+                            sh "git config user.name cerci-user"
+                            sh "git config credential.helper '/bin/bash credentials-helper-ci.sh'"
+                            sh "npm run deploy"
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Research Hub Web steps') {
+            stages {
                 stage('Build research-hub-web') {
                     when {
                         anyOf {
@@ -210,11 +322,7 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
-
-        stage('Run tests') {
-            stages {
+                
                 stage('Run research-hub-web tests') {
                     when {
                         anyOf {
@@ -234,63 +342,7 @@ pipeline {
                         }
                     }
                 }
-                stage('Run cer-graphql tests') {
-                    when {
-                        anyOf {
-                            changeset "**/cer-graphql/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
-                        }
-                    }
-                    steps {
-                        script {
-                            if (env.BRANCH_NAME != 'prod') {    // tests rely on 2FAB so we do not test in prod
-                                echo 'Testing cer-graphql project'
-                                dir('cer-graphql') {
-                                    sh "npm install"
-                                    sh "export stage=${BRANCH_NAME} && npm run test -- --aws-profile=${awsProfile}"
-                                }
-                            }
-                        }
-                    }
-                }
-                stage('Run search-proxy tests') {
-                    when {
-                        anyOf {
-                            changeset "**/hub-search-proxy/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
-                        }
-                    }
-                    steps {
-                        script {
-                            if (env.BRANCH_NAME != 'prod') {
-                                echo "Testing hub-search-proxy project"
-                                dir('hub-search-proxy') {
-                                    sh "npm run test -- --aws-profile ${awsProfile} --stage ${env.BRANCH_NAME}"
-                                }
-                            }
-                        }
-                    }
-                }
-        //        stage('Run link-checker tests') {
-        //            when {
-        //                anyOf {
-        //                   changeset "**/subhub-link-checker/**/*.*"
-        //                    equals expected: true, actual: params.FORCE_REDEPLOY_LINK_CHECKER
-        //                }
-        //            }
-        //            steps {
-        //                echo 'Testing link-checker project'
-        //                dir('subhub-link-checker') {
-        //                   sh "npm install"
-        //                    sh "npm run test"
-        //                }
-        //            }
-        //        }
-            }
-        }
-
-        stage('Deploy projects') {
-            parallel {
+                
                 stage('Deploy research-hub-web') {
                     when {
                         anyOf {
@@ -354,63 +406,6 @@ pipeline {
                                     echo "Preview invalidation started"
                                 }
                             }
-                        }
-                    }
-                }
-                stage('Deploy cer-graphql') {
-                    when {
-                        anyOf {
-                            changeset "**/cer-graphql/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_CG
-                        }
-                    }
-                    steps {     // TODO: may need to modify commands once we have both dev & test in nonprod account
-                        echo 'Deploying cer-graphql image to ECR on ' + BRANCH_NAME
-                        echo "Logging in to ECR"
-                        sh "(aws ecr get-login --no-include-email --region ${awsRegion} --profile=${awsProfile}) | /bin/bash"
-
-                        echo "Tagging built image with ECR tag"
-                        sh "docker tag cer-graphql:latest ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql-${BRANCH_NAME}:latest"
-
-                        echo "Pushing built image to ECR"
-                        sh "docker push ${awsAccountId}.dkr.ecr.${awsRegion}.amazonaws.com/research-hub/cer-graphql-${BRANCH_NAME}:latest"
-
-                        echo 'Deploying cer-graphql image from ECR to Fargate on ' + BRANCH_NAME
-                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster-${BRANCH_NAME} --service cer-graphql-service-${BRANCH_NAME} --task-definition cer-graphql-${BRANCH_NAME} --force-new-deployment --region ${awsRegion}"
-                        sh "aws ecs update-service --profile ${awsProfile} --cluster cer-graphql-cluster-${BRANCH_NAME} --service cer-graphql-preview-service-${BRANCH_NAME} --task-definition cer-graphql-preview-${BRANCH_NAME} --force-new-deployment --region ${awsRegion}"
-                    }
-                }
-                stage('Deploy search-proxy') {
-                    when {
-                        anyOf {
-                            changeset "**/hub-search-proxy/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SP
-                        }
-                    }
-                    steps {
-                        echo "Deploying hub-search-proxy Lambda function to ${BRANCH_NAME}"
-                        script {                            
-                            dir("hub-search-proxy") {
-                                sh "npm run deploy -- --aws-profile ${awsProfile} --stage ${BRANCH_NAME}"
-                            }
-                        }
-                        echo "Deploy to ${BRANCH_NAME} complete"
-                        
-                    }
-                }
-                stage('Deploy link-checker') {
-                    when {
-                        anyOf {
-                            changeset "**/subhub-link-checker/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_LINK_CHECKER
-                        }
-                    }
-                    steps {
-                        dir("subhub-link-checker") {
-                            echo "Deploying to GitHub pages..."
-                            sh "git config user.name cerci-user"
-                            sh "git config credential.helper '/bin/bash credentials-helper-ci.sh'"
-                            sh "npm run deploy"
                         }
                     }
                 }

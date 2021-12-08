@@ -23,6 +23,8 @@ research-hub-web/cypress/screenshots/
 research-hub-web/src/app/graphql/possible-types.ts
 research-hub-web/src/app/graphql/schema.ts
 
+research-hub-web/.angular/cache
+
 # Custom environment file - use it in special local development situations
 research-hub-web/src/environments/environment.custom.ts
 
@@ -44,6 +46,9 @@ research-hub-web/typings
 # ====================== serverless-now ================ #
 serverless-now/.serverless/
 serverless-now/env/local.env
+
+# ====================== cer-graphql =================== #
+cer-graphql/build
 
 # ====================== subhub-link-checker =========== #
 subhub-link-checker/build/*

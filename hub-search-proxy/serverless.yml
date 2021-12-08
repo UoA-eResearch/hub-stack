@@ -76,6 +76,7 @@ functions:
             headers:
               - Content-Type
               - Authorization
+              - sentry-trace
             allowCredentials: false
   update:
     handler: handler.update
@@ -104,6 +105,7 @@ functions:
           cors:
             true
           private: true
+      - schedule: cron(0 12 * * ? *)
             
 plugins:
   - serverless-offline
