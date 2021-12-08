@@ -1,9 +1,6 @@
 @import "variables";
 @import "mixins";
-
-div.mat-card-avatar mat-icon {
-  color: map-get($hub-teal, 800);
-}
+@import "styles-common";
 
 div.collection {
   margin: 24px 0 24px 0;
@@ -11,26 +8,6 @@ div.collection {
 
 .result-item {
   cursor: pointer;
-
-  &.ssoProtected {
-  }
-  $avatar-size: 64px;
-
-  .item-avatar {
-    width: $avatar-size;
-    height: $avatar-size;
-    margin-right: $avatar-size * 0.15;
-    img {
-      object-fit: cover;
-      width: $avatar-size;
-      height: $avatar-size;
-    }
-  }
-  .item-avatar-icon {
-    padding: 16px 0;
-    font-size: $avatar-size !important;
-    color: map-get($hub-navy, 500) !important;
-  }
 }
 
 /**
@@ -75,18 +52,11 @@ mat-card {
 }
 
 /**
- * Card Result Icon
- */
-.item-avatar-icon {
-  color: map-get($hub-navy, 500) !important;
-}
-
-/**
  * Pagination Controls
  */
 ::ng-deep.ngx-pagination {
   .current {
-    background: map-get($hub-teal, 500) !important;
+    background: $dark-blue !important;
   }
   text-align: center;
   padding: 0;

@@ -1,5 +1,5 @@
 query AllServices {
-    serviceCollection {
+    serviceCollection(limit: 250) {
         items {
             ...PublicFields
         }

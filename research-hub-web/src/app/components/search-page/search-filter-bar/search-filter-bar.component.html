@@ -1,0 +1,123 @@
+<!-- sticky results control bar -->
+<div #stickyBar class="sticky-bar">
+  <div
+    fxLayout="row"
+    fxLayoutGap="10px"
+    fxLayout.lt-sm="column"
+    class="result-controls"
+    ngClass.gt-sm="site-padding-2"
+    ngClass.lt-md="site-padding"
+  >
+    <!-- Total Results -->
+    <div class="result-total">
+      <span>
+        <b>{{ totalResults }}&nbsp;</b>Result{{
+          totalResults !== 1 ? "s" : ""
+        }}
+        for "{{ searchText }}"
+      </span>
+    </div>
+
+    <div class="applied-filters">
+      <span>
+        Filters:
+        <b
+          *ngIf="
+            activeFilters.category.length === 0 &&
+            activeFilters.stage.length === 0 &&
+            activeFilters.relatedOrgs.length === 0
+          "
+          >0</b
+        >
+        <ng-container *ngIf="activeFilters?.category?.length > 0">
+          <b>{{ activeFilters.category.length }}</b>
+          {{ activeFilters.category.length === 1 ? "category" : "categories" }}
+        </ng-container>
+
+        <ng-container *ngIf="activeFilters?.stage?.length > 0">
+          <b>{{ activeFilters.stage.length }}</b>
+          {{ activeFilters.stage.length === 1 ? "activity" : "activities" }}
+        </ng-container>
+
+        <ng-container *ngIf="activeFilters?.relatedOrgs?.length > 0">
+          <b>{{ activeFilters.relatedOrgs.length }}</b>
+          {{
+            activeFilters.relatedOrgs.length === 1
+              ? "organisation"
+              : "organisations"
+          }}
+        </ng-container>
+      </span>
+    </div>
+
+    <!-- Sort Options -->
+    <mat-label id="order-label">Order By:</mat-label>
+    <div id="order-picker" fxFlexOrder.lt-sm="1" fxFlex="25%">
+      <mat-select
+        (selectionChange)="updateSortOrder()"
+        [(ngModel)]="sortOrder"
+        ngDefaultControl
+        placeholder="Relevance"
+      >
+        <mat-option value="relevance">Relevance</mat-option>
+        <mat-option value="A-Z">A-Z</mat-option>
+        <mat-option value="Z-A">Z-A</mat-option>
+      </mat-select>
+    </div>
+  </div>
+  <!-- Active Filters -->
+  <div
+    *ngIf="
+      activeFilters.category.length > 0 ||
+      activeFilters.stage.length > 0 ||
+      activeFilters.relatedOrgs.length > 0
+    "
+    class="active-filters"
+    ngClass.gt-sm="site-padding-2"
+    ngClass.lt-md="site-padding"
+  >
+    <mat-chip-list
+      fxFlex="row wrap"
+      *ngIf="
+        {
+          allCategories: allCategories$ | async,
+          allStages: allStages$ | async,
+          allOrganisations: allOrganisations$ | async
+        };
+        let allFilters
+      "
+    >
+      <!-- Clear All -->
+      <mat-chip (click)="clearFilters()" class="clear"> Clear All </mat-chip>
+      <!-- Categories -->
+      <mat-chip
+        *ngFor="let category of activeFilters.category"
+        [removable]="true"
+        (removed)="removeFilterById(category, filterTypes.ResearchCategory)"
+      >
+        {{ getFilterName(allFilters, category, filterTypes.ResearchCategory) }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+
+      <!-- Activities -->
+      <mat-chip
+        *ngFor="let activity of activeFilters.stage"
+        [removable]="true"
+        (removed)="removeFilterById(activity, filterTypes.ResearchActivity)"
+      >
+        {{ getFilterName(allFilters, activity, filterTypes.ResearchActivity) }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+
+      <!-- Organisation -->
+      <mat-chip
+        *ngFor="let org of activeFilters.relatedOrgs"
+        [removable]="true"
+        (removed)="removeFilterById(org, filterTypes.Organisation)"
+      >
+        {{ getFilterName(allFilters, org, filterTypes.Organisation) }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+</div>

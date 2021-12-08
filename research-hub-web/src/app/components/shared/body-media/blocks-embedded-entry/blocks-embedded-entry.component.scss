@@ -1,0 +1,118 @@
+@use "@angular/material" as mat;
+@import "variables";
+@import "mixins";
+@import "styles-common";
+
+
+/**
+ * Card Image
+ */
+ .mat-card-image {
+  min-height: 80px;
+  max-height: 152px;
+  margin-bottom: 5px;
+  min-width: 100%;
+  object-fit: cover;
+}
+
+/**
+ * Card Label
+ */
+ .card-label {
+  background: $dark-blue;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 14px;
+  left: 0;
+  top: 0;
+  padding: 0px 15px;
+}
+
+.embedded-entry-block .mat-card-title span {
+  font-size: 18px;
+  color: $light-blue;
+}
+.embedded-entry-block .mat-card-title span:hover {
+  border-bottom: solid 2px $light-blue;
+}
+
+/**
+ * Entry Block
+ */
+.embedded-entry-block {
+  @extend .section;
+  a {
+    display: flex;
+    align-items: center;
+  }
+  .mat-card {
+    margin: 15px auto;
+    width: 100%;
+    padding-right: 30px;
+    background: #ffffff;
+  }
+}
+
+/**
+ * Elevation
+ */
+ mat-card {
+  @include mat.elevation-transition();
+  &:hover {
+    @include mat.elevation(6);
+  }
+}
+
+.mat-card-title {
+  span * {
+    font-size: 18px;
+    color: $light-blue;
+  }
+}
+.mat-card-title a {
+  border-bottom: solid 2px transparent;
+  max-width: fit-content !important;
+}
+.mat-card-title a:hover {
+  border-bottom: solid 2px $light-blue;
+}
+
+.mat-card-content {
+  margin: 0px;
+}
+
+/**
+* Lock Icon
+*/
+mat-icon {
+  color: $light-blue !important;
+  font-size: 14px !important;
+  vertical-align: middle;
+  line-height: 20px;
+}
+
+/**
+ * Table
+ */
+ .table-container {
+  min-width: 100%;
+  margin: 40px auto;
+  .body-table {
+    text-align: center;
+    border-collapse: collapse;
+    font-size: 2vw;
+    @include size(small) {
+      font-size: initial;
+    }
+    th {
+      white-space: nowrap;
+      background: $input-grey;
+    }
+    th,
+    td {
+      padding: 8px;
+      word-break: keep-all;
+      border: 1px solid $light-blue;
+    }
+  }
+}

@@ -28,7 +28,10 @@ However, test and prod deploys will ONLY be triggered by a push to the test or p
 NOTE: The sandbox account is only for temporary usage. All resources created in sandbox should be destroyed when no longer needed.
 
 ## Architecture Overview
-![Architecture Overview](Architecture.drawio.svg)
+![Architecture Overview](ResearchHubArchitecture.png)
 
-## Development Journey
-![Development Journey](Development-Journey.png)
+## Development and Release Process
+![Development and Release](Dev_Journey_V3.drawio.svg)
+
+## UoA Wiki
+[ResearchHub Wiki Page](https://wiki.auckland.ac.nz/pages/viewpage.action?spaceKey=APPLCTN&title=ResearchHub)

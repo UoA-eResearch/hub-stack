@@ -1,20 +1,21 @@
 query GetHomepage {
-    homepageCollection(limit: 1) {
-        items {
-            image {
-                url
-            }
-            featuredItemsCollection {
-                items {
-                    ...PublicFields
-                }
-            }
-            featuredItemsDescription
-            researchCategories
-            researchActivities
-            notification {
-                json
-            }
-        }
+  homepageCollection(limit: 1) {
+    items {
+      researchCategories
+      researchActivities
+      featuredItemsDescription
+      contactEmail
+      feedbackLink
+      uniLogo {
+        url
+      }
+      image {
+        url
+      }
+      title
+      contactDescription {
+        json
+      }
     }
+  }
 }

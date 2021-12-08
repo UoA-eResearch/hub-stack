@@ -1,0 +1,47 @@
+@import "variables";
+
+/**
+ * banner Image
+ */
+ .no-banner {
+  display: none;
+}
+
+.mobile-banner {
+  background-repeat: no-repeat;
+  padding: 20vh 0px;
+}
+
+.standard-banner {
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  padding: 20vh 0px;
+}
+
+/**
+ * Specifications Table
+ */
+.specifications-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.specifications-table td,
+.specifications-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.specifications-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.specifications-table td:nth-child(odd) {
+  font-weight: bold;
+  width: 25%;
+}
+.specifications-table th {
+  padding-top: 12px;
+  margin-bottom: 12px;
+  text-align: left;
+  background-color: $dark-blue;
+  color: $color-background;
+}

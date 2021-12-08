@@ -1,48 +1,35 @@
 
-import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { AppComponent } from './app.component';
-import { RoutingModule } from './routing/routing.module';
-import { SharedModule } from './components/shared/app.shared.module';
-import { ServicesModule } from './services/services.module';
-import { SearchBarService } from './components/search-bar/search-bar.service';
-import { AppComponentService } from './app.component.service';
-
-import { AuthModule, CognitoConfigService, StorageService, LoginService } from '@uoa/auth';
-import { AppAuthConfigService } from './services/app-auth-config.service';
-import { ErrorPagesModule, BypassErrorService } from '@uoa/error-pages';
-import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { StorageServiceModule } from 'ngx-webstorage-service';
-import { FlexLayoutModule } from '@angular/flex-layout';
-
-import { HomeModule } from './components/home/home.module';
-
-import { Apollo } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { onError } from 'apollo-link-error';
-
 import { environment } from '@environments/environment';
-import { AppStorageService } from './services/app-storage.service';
-
-
+import { AuthModule, CognitoConfigService, LoginService, StorageService } from '@uoa/auth';
+import { BypassErrorService, ErrorPagesModule } from '@uoa/error-pages';
+import { Apollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { onError } from '@apollo/client/link/error';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { StorageServiceModule } from 'ngx-webstorage-service';
+import { AppComponent } from './app.component';
+import { AppLayoutModule } from './components/layout/layout.module';
+import { SharedModule } from './components/shared/app.shared.module';
+import * as Sentry from "@sentry/angular";
 /**
- * Dynamic Routing
- */
-import { APP_INITIALIZER } from '@angular/core';
-import { CerGraphqlService } from './services/cer-graphql.service';
-
-
-/**
- * Generated from Fragment matcher graphql-code-generator plugi
+ * Generated from Fragment matcher graphql-code-generator plugin
  * For more information see:
  * - https://graphql-code-generator.com/docs/plugins/fragment-matcher
  * - https://www.apollographql.com/docs/react/data/fragments/#defining-possibletypes-manually
  */
 import result from './graphql/possible-types';
+import { RoutingModule } from './routing/routing.module';
+import { AppAuthConfigService } from './services/app-auth-config.service';
+import { AppStorageService } from './services/app-storage.service';
+import { CerGraphqlService } from './services/cer-graphql.service';
+import { PageTitleService } from './services/page-title.service';
+
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData: {
@@ -56,7 +43,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     AuthModule,
     BrowserModule,
     BrowserAnimationsModule,
-    ServicesModule,
     SharedModule,
     StorageServiceModule,
     RoutingModule,
@@ -64,17 +50,30 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    HomeModule,
-    HomeModule,
-    HttpLinkModule,
-    ErrorPagesModule
+    ErrorPagesModule,
+    AppLayoutModule
   ],
   providers: [
     CerGraphqlService,
-    SearchBarService,
-    AppComponentService,
+    PageTitleService,
     { provide: CognitoConfigService, useClass: AppAuthConfigService },
     { provide: StorageService, useClass: AppStorageService },
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: false,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })
@@ -83,12 +82,12 @@ export class AppModule {
 
     // The httpLink between Apollo and the GraphQL server
     const http = httpLink.create({ uri: environment.cerGraphQLUrl });
-      // @uoa/error-pages automatically shows an error page when it
-      // sees an error in fetch requests through an http interceptor.
-      // Because some authentication errors from cer-graphql
-      // are returned with a 400 status code, we want error-pages to ignore those
-      // errors so they can be handled by our onError handler.
-      this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
+    // @uoa/error-pages automatically shows an error page when it
+    // sees an error in fetch requests through an http interceptor.
+    // Because some authentication errors from cer-graphql
+    // are returned with a 400 status code, we want error-pages to ignore those
+    // errors so they can be handled by our onError handler.
+    this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
 
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
@@ -97,14 +96,26 @@ export class AppModule {
       if (networkError) {
         console.log("API returned networkError", networkError);
         if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
-          this.loginService.doLogin(this.router.url);
+          this.loginService.doLogin(this.router.url).then((result) => {
+            // Workaround fix for blank page load issue
+            // when auth library returns a token instead of navigating to target url
+            if (result) {
+              location.reload();
+            }            
+          });
           return;
         }
       }
       if (graphQLErrors) {
         console.log("API returned graphQLErrors", graphQLErrors);
         if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
-          this.loginService.doLogin(this.router.url);
+          this.loginService.doLogin(this.router.url).then((result) => {
+            // Workaround fix for blank page load issue
+            // when auth library returns a token instead of navigating to target url
+            if (result) {
+              location.reload();
+            }
+          });
           return;
         }
       }

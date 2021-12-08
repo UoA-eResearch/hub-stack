@@ -1,0 +1,65 @@
+@import "mixins";
+@import "variables";
+@import 'styles-common';
+
+.mobile-banner {
+  background-attachment: scroll;
+}
+.standard-banner {
+  background-attachment: fixed;
+}
+.banner-container-home {
+  height: 40vh;
+  max-height: auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  @include size(medium) {
+    height: 30vh;
+  }
+  @include size(extra-small) {
+    height: 60vh;
+  }
+
+  .banner-content-home {
+    display: inline-block;
+    height: 40vh;
+    width: 95vw;
+    @extend .site-padding;
+    @include size(medium) {
+      height: 30vh;
+    }
+    @include size(extra-small) {
+      height: 60vh;
+    }
+
+    .banner-text {
+      .page-title {
+        margin: 0 auto;
+        font-weight: lighter;
+        color: white !important;
+        font-size: 48px;
+        text-align: center;
+        @include size(large) {
+          font-size: 54px;
+        }
+        @include size(medium) {
+          text-align: left;
+        }
+      }
+    }
+
+    .logo-img-container {
+      margin: 0 auto;
+      display: none;
+      @include size(medium) {
+        display: block;
+      }
+      .logo-img {
+        height: 130px;
+        width: auto;
+        display: block;        
+      }
+    }
+  }
+}

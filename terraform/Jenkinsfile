@@ -11,7 +11,7 @@ pipeline {
     }
 
     agent  {
-        label("uoa-buildtools-ionic")
+        label("uoa-buildtool-large")
     }
 
     stages {
@@ -91,6 +91,7 @@ pipeline {
 
                 dir('terraform') {
                     script{
+                        sh "terraform version"
                         sh "terraform init -input=false -backend-config=envs/${params.DEPLOY_ENV}/backend.conf"
 
                         if(params.TERRAFORM_ACTION == 'create'){

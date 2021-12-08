@@ -105,7 +105,7 @@ resource "aws_ecs_service" "preview" {
   }
 
   load_balancer {
-    target_group_arn = aws_alb_target_group.ecs-cer-graphql-preview.arn
+    target_group_arn = aws_lb_target_group.ecs-cer-graphql-preview.arn
     container_name   = "cer-graphql"
     container_port   = 4000
   }
@@ -120,7 +120,7 @@ resource "aws_ecs_service" "preview" {
       "Name" = "graphql-preview-service-definition"
     },
   )
-  depends_on = [aws_alb_target_group.ecs-cer-graphql-preview]
+  depends_on = [aws_lb_target_group.ecs-cer-graphql-preview]
   lifecycle {
     # create_before_destroy = true
     ignore_changes = [desired_count]
@@ -131,7 +131,7 @@ resource "aws_ecs_service" "preview" {
 
 # Configure the TG the Service will attach to.
 # IP is the setting needed for Fargate
-resource "aws_alb_target_group" "ecs-cer-graphql-preview" {
+resource "aws_lb_target_group" "ecs-cer-graphql-preview" {
   name        = "ecs-cer-graphql-preview-${var.lifecycle_state}"
   port        = "80"
   protocol    = "HTTP"
@@ -146,17 +146,17 @@ resource "aws_alb_target_group" "ecs-cer-graphql-preview" {
     matcher             = "200"
   }
 
-  depends_on = [aws_alb.ecs-load-balancer]
+  depends_on = [aws_lb.ecs-load-balancer]
 }
 
 resource "aws_lb_listener_rule" "routing-preview" {
-  listener_arn = aws_alb_listener.alb-listener.arn
+  listener_arn = aws_lb_listener.alb-listener.arn
 
   priority = 2
 
   action {
     type             = "forward"
-    target_group_arn = aws_alb_target_group.ecs-cer-graphql-preview.id
+    target_group_arn = aws_lb_target_group.ecs-cer-graphql-preview.id
   }
 
   # Based upon work in Sandbox

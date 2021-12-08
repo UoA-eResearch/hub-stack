@@ -1,0 +1,24 @@
+@import "variables";
+@import "styles-common";
+
+div.notification-bar-container {
+  z-index: 1000;
+  background: $light-blue;
+  transition: all 0.1s ease-in-out;
+  a {
+    text-decoration: underline;
+  }
+  mat-icon {
+    cursor: pointer;
+  }
+  div.notification-bar-content {
+    @extend .site-padding;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+    * { color: white };
+  }
+  button > span.mat-button-wrapper > mat-icon {
+    color: white;
+  }
+}

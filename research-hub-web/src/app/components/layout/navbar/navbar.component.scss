@@ -1,0 +1,83 @@
+@import "variables";
+@import "mixins";
+
+mat-toolbar {
+  color: white;
+  @media (min-width: $navbar-second-row-breakpoint) {
+    padding: 0 25px;
+  }
+  mat-toolbar-row.main-navbar-row {
+    /*
+     * Hub Logo
+     */
+    .hub-logo {
+      line-height: 64px;
+      img {
+        height: 24px;
+        @media (max-width: $navbar-second-row-breakpoint) {
+          height: 18px;
+        }
+      }
+      
+    }
+    .mat-button {
+      line-height: 64px;
+      padding: 0 16px;
+      min-width: 64px;
+      font-weight: 100;
+      @media (max-width: $navbar-second-row-breakpoint) {
+        line-height: 56px;
+      }
+      ::ng-deep.mat-button-wrapper {
+        white-space: nowrap;
+      }
+      font-size: 0.7em;
+    }
+  }
+  mat-toolbar-row.navbar-row-show-small {
+    display: none;
+    height: 36px;
+    @media (max-width: $navbar-second-row-breakpoint) {
+      display: flex;
+    }
+    .mat-button {
+      font-weight: 100;
+      flex: 1;
+    }
+  }
+}
+
+/**
+ * Sign Out Button
+ */
+.sign-out-button {
+  color: black;
+  background-color: white;
+  margin-right: 8px;
+}
+
+@media (max-width: $navbar-second-row-breakpoint) {
+  .hide-small {
+    display: none;
+  }
+}
+
+/*
+ * Skip links
+ */
+ .skip-link {
+  background: white;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 6px 6px;
+  position: fixed;
+  top: -100%;
+  z-index: 1001;
+  &:focus,
+  &:active {
+    top:auto
+  }
+  &:hover {
+    text-decoration:underline
+  }
+}

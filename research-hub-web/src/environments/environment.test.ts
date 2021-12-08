@@ -1,5 +1,7 @@
 // TODO: Insert nonprod values
 export const environment = {
+  env: 'test',
+  sentryTracesSampleRate: 1.0,
   production: true,
   cerGraphQLUrl: 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service',
   cerGraphQLPreviewUrl: 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-preview-service/',
@@ -23,5 +25,5 @@ export const environment = {
     get whoNeedIdToken() {
       return []
     }
-  },
+  }
 };

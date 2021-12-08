@@ -19,13 +19,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatBadgeModule} from '@angular/material/badge';
 @NgModule({
   imports: [
     CommonModule,
@@ -47,11 +47,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule,
     MatExpansionModule,
     MatStepperModule,
     MatTooltipModule,
     MatRadioModule,
+    MatTabsModule,
+    MatBadgeModule
   ],
   declarations: [],
   exports: [
@@ -73,12 +74,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule,
     MatExpansionModule,
     MatStepperModule,
     MatTooltipModule,
     MatRadioModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatTabsModule,
+    MatBadgeModule
   ]
 })
 export class MaterialModule {

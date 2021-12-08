@@ -18,3 +18,7 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Include contributed package to deal with text elements in a
+// more logical way
+require('cypress-commands');

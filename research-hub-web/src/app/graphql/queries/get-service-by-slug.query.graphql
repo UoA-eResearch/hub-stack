@@ -1,72 +1,77 @@
 query GetServiceBySlug($slug: String) {
-    serviceCollection(limit: 1, where: {slug: $slug}) {
-        items {
-            __typename
-            sys {
-            id
+  serviceCollection(limit: 1, where: { slug: $slug }) {
+    items {
+      __typename
+      sys {
+        id
+      }
+      title
+      slug
+      ssoProtected
+      searchable
+      banner {
+        url
+      }
+      summary
+      callToAction
+      callToActionLabel
+      bodyText {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
+                id
+              }
             }
-            title
-            slug
-            ssoProtected
-            searchable
-            banner {
-            title
-            description
-            url
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
             }
-            icon {
-            title
-            description
-            url
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
+              }
             }
-            summary
-            callToAction
-            callToActionLabel
-            bodyText {
-                json 
-                links {
-                entries {
-                    block { 
-                    ...PublicFields
-                    sys {
-                        id
-                    }
-                    }
-                    inline { 
-                    ...PublicFields
-                    sys {
-                        id
-                    } 
-                    }
-                    hyperlink { 
-                    ...PublicFields 
-                    sys {
-                        id
-                    }
-                    }
-                }
-                assets {
-                    block { ...AssetFields }
-                    hyperlink { ...AssetFields }
-                }
-                }
+          }
+          assets {
+            block {
+              ...AssetFields
             }
-            relatedContactsCollection {
-            items { ...PublicFields }
+            hyperlink {
+              ...AssetFields
             }
-            relatedOrgsCollection {
-            items { ...PublicFields }
-            }
-            relatedItemsCollection {
-            items { ...PublicFields }
-            }
-            relatedDocsCollection {
-            items { ...PublicFields }
-            }
-            audience
-            availability
-            cost 
-            access
+          }
         }
+      }
+      relatedContactsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedOrgsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedItemsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedDocsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      audience
+      availability
+      cost
+      access
     }
+  }
 }

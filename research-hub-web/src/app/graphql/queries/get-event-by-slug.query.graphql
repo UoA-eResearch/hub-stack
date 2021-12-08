@@ -12,9 +12,6 @@ query GetEventBySlug($slug: String) {
       banner {
         url
       }
-      icon {
-        url
-      }
       summary
       bodyText {
         json

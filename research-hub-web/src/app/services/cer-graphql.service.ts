@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, Routes } from '@angular/router';
 import { GetAllSubHubChildPagesSlugsGQL } from '@graphql/schema';
-import { map } from 'rxjs/operators';
 
 /**
  * The interface of the breadcrumbsArray object returned by this service's getParentSubHubs()
@@ -35,19 +34,10 @@ export class CerGraphqlService {
     this.hasPushedSubhubRoutes = true;
     const routes = this.router.config;
     await this._generateSubHubMapAndRoutes(); // Generate _subHubMap.map and _subHubMap.routes
-    // Check if there's a wildcard route in our configuration...
-    const wildcardRouteIdx = routes.findIndex((route) => route.path === "**");
-    let  newRoutes;
-    if (wildcardRouteIdx > -1) {
-      // ...if so, insert the new routes before the wildcard route, so during routing
-      // the new routes are matched before the wildcard route.
-      const routesBeforeWildcard = routes.slice(0, wildcardRouteIdx);
-      const wildcardRouteAndAfter = routes.slice(wildcardRouteIdx, routes.length);
-      newRoutes = routesBeforeWildcard.concat(this._subHubMap.routes, wildcardRouteAndAfter);
-    } else {
-      newRoutes = routes.concat(this._subHubMap.routes);
-    }
-    this.router.resetConfig(newRoutes);
+
+    routes.find((route => route.path === ''))?.children?.push(...this._subHubMap.routes);
+
+    this.router.resetConfig(routes);
   }
 
   /**
@@ -266,7 +256,8 @@ class SubHubMap {
       path: curPath,
       loadChildren: () => import(`../components/${curObject.typeName.toLowerCase()}s/${curObject.typeName.toLowerCase()}s.module`)
         .then(m => m[curObject.typeName.toLowerCase().charAt(0).toUpperCase() + curObject.typeName.toLowerCase().slice(1) + 'sModule']),
-      data: { slug: curObject.slug }
+      data: { slug: curObject.slug },
+      pathMatch: 'full'
     });
 
     if (curObject.isSubHub()) {

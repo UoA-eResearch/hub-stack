@@ -1,0 +1,9 @@
+@mixin theme($theme) {
+  mat-toolbar {
+    mat-toolbar-row {
+      > a:hover, > a:focus, > button:hover, > button:focus {
+        background: rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}

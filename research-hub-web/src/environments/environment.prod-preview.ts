@@ -1,5 +1,6 @@
 import { environment } from "./environment.prod";
 
+environment.env = 'prod-preview';
 environment.cerGraphQLUrl = environment.cerGraphQLPreviewUrl;
 environment.auth.redirectUri = "https://research-hub-preview.auckland.ac.nz";
 environment.auth.logout_uri = "https://research-hub-preview.auckland.ac.nz";

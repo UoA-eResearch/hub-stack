@@ -6,15 +6,19 @@
     color: $dark-blue !important;
     font-weight: bold !important;
   }
+
+  /**
+   * ResearchHub home button
+   */
   a div {
-    p {
+    span {
       font-weight: bold;
       margin-bottom: 5px;
       color: white !important;
       transition: color 0.1s ease-in-out, color 0.1s ease-in-out;
     }
     display: inline-block;
-    padding: 5px 10px 5px 10px;
+    padding: 10px;
     border: 3px solid $dark-blue !important;
     border-radius: 50px !important;
     background-color: $dark-blue !important;
@@ -25,9 +29,20 @@
     border-radius: 50px !important;
     background-color: white !important;
     transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-    p {
+    span {
       margin-bottom: 5px;
       color: $dark-blue !important;
     }
+  }
+
+  /**
+   * Error-Pages library overrides
+   */
+  app-footer {
+    visibility: hidden;
+  }
+
+  div.button.flex {
+    visibility: hidden;
   }
 }

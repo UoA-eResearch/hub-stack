@@ -1,11 +1,11 @@
 @import 'mixins';
 
 h2 {
-  font-size: 36px;
+  font-size: 30px;
   text-align: center;
   @include size(large) {
     text-align: left;
-    font-size: 48px;
+    font-size: 36px;
   }
 }
 
