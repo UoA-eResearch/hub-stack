@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { SearchFilters, SortOrder, FilterType } from '@app/global/searchTypes';
+import { SearchFilters, SortOrder, FilterType, AllFilters } from '@app/global/searchTypes';
 import { AllCategoriesGQL, AllOrganisationsGQL, AllStagesGQL, CategoryCollection, OrgUnitCollection, StageCollection } from '@app/graphql/schema';
 import { SearchService } from '@services/search.service';
 import { Observable } from 'rxjs';
@@ -97,7 +97,7 @@ export class SearchFilterBarComponent implements OnInit, AfterViewInit {
     this.router.navigate(['search'], { queryParams: this.searchService.generateQueryParams(this.searchText, this.activeFilters, this.sortOrder) });
   }
 
-  public getFilterName(allFilters: { allCategories: CategoryCollection, allStages: StageCollection, allOrganisations: OrgUnitCollection }, filterId: string, filterType: FilterType) {
+  public getFilterName(allFilters: AllFilters, filterId: string, filterType: FilterType) {
     switch (filterType) {
       case FilterType.ResearchCategory:
         return allFilters.allCategories?.items.find(element => element?.sys.id === filterId)?.name;
