@@ -2,13 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SearchService } from '@services/search.service';
 import {
   AllStagesGQL,
-  StageCollection,
   GetHomepageGQL,
   Maybe,
   Stage
 } from '@graphql/schema';
 import { Observable, Subscription } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { PageTitleService } from '@services/page-title.service';
 import { notEmpty } from '@app/global/notEmpty';
 
@@ -20,7 +19,7 @@ import { notEmpty } from '@app/global/notEmpty';
 export class ActivitiesPageComponent implements OnInit, OnDestroy {
   public title: string = 'Research Activities';
   public description: Maybe<string> | undefined;
-  public allStages$: Observable<StageCollection>;
+  public allStages$: Observable<Stage[]>;
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -43,13 +42,10 @@ export class ActivitiesPageComponent implements OnInit, OnDestroy {
   }
 
   // Get all research stages
-  public getAllStages(): Observable<StageCollection> {
-    return this.allStagesGQL.fetch()
-      .pipe(pluck('data', 'stageCollection')) as Observable<StageCollection>
-  }
-
-  public filterOutNulls(arrayWithNulls: Array<Maybe<Stage>>) : Array<Stage> {
-    return arrayWithNulls.filter(notEmpty);
+  public getAllStages(): Observable<Stage[]> {
+    return this.allStagesGQL.fetch().pipe(
+      map(result => result?.data?.stageCollection?.items.filter(notEmpty) as Stage[])
+    );
   }
 
   ngOnDestroy(): void {

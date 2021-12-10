@@ -3,12 +3,11 @@ import { SearchService } from '@services/search.service';
 import {
   AllCategoriesGQL,
   Category,
-  CategoryCollection,
   GetHomepageGQL,
   Maybe
 } from '@app/graphql/schema';
 import { Observable, Subscription } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { PageTitleService } from '@services/page-title.service';
 import { notEmpty } from '@app/global/notEmpty';
@@ -21,7 +20,7 @@ import { notEmpty } from '@app/global/notEmpty';
 export class CategoriesPageComponent implements OnInit, OnDestroy {
   public title: string = 'Research Categories';
   public description: Maybe<string> | undefined;
-  public allCategories$: Observable<CategoryCollection>;
+  public allCategories$: Observable<Category[]>;
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -44,9 +43,10 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
     )
   }
 
-  public getAllCategories(): Observable<CategoryCollection> {
-    return this.allCategoriesGQL.fetch()
-      .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
+  public getAllCategories(): Observable<Category[]> {
+    return this.allCategoriesGQL.fetch().pipe(
+        map(result => result?.data?.categoryCollection?.items.filter(notEmpty) as Category[])
+      )
   }
 
   public search(id: string): void {
@@ -56,10 +56,6 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
         queryParams: this.searchService.generateQueryParams('', {category: [id], stage: [], relatedOrgs: []})
       }
     );
-  }
-
-  public filterOutNulls(arrayWithNulls: Array<Maybe<Category>>) : Array<Category> {
-    return arrayWithNulls.filter(notEmpty);
   }
 
   ngOnDestroy(): void {
