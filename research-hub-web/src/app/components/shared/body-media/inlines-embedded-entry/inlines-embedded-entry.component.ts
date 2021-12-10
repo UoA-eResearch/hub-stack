@@ -13,9 +13,10 @@ export class InlinesEmbeddedEntryComponent extends NodeRenderer implements OnIni
   constructor(public bodyMediaService: BodyMediaService) { super(); }
 
   ngOnInit(): void {
-    this.contentItem = this.bodyMediaService.getContentItem(this.node);
-    if (!this.contentItem) {
-      console.error(`Error retrieving contentItem for node: ${JSON.stringify(this.node)}`)
+    try {
+      this.contentItem = this.bodyMediaService.getContentItem(this.node);
+    } catch(e) {
+      console.error(e);
     }
   }
 }

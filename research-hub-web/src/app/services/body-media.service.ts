@@ -42,11 +42,11 @@ export class BodyMediaService {
     [MARKS.CODE]: MarksCodeComponent
   };
 
-  private assetBlockMap = new Map<string, Maybe<Asset>>();
-  private assetHyperlinkMap = new Map<string, Maybe<Asset>>();
-  private entryBlockMap = new Map<string, Maybe<Entry>>();
-  private entryHyperlinkMap = new Map<string, Maybe<Entry>>();
-  private entryInlineMap = new Map<string, Maybe<Entry>>();
+  private assetBlockMap = new Map<string, Asset>();
+  private assetHyperlinkMap = new Map<string, Asset>();
+  private entryBlockMap = new Map<string, Entry>();
+  private entryHyperlinkMap = new Map<string, Entry>();
+  private entryInlineMap = new Map<string, Entry>();
 
   constructor() { }
 
@@ -78,19 +78,24 @@ export class BodyMediaService {
     }
   }
 
-  getContentItem(node: Block | Inline): Maybe<Asset> | Maybe<Entry> | undefined {
+  getContentItem(node: Block | Inline): Asset | Entry {
+    let item: Asset | Entry | undefined;
     switch (node.nodeType) {
       // For each type of node find matching contentItem
       case 'embedded-asset-block':
-        return this.assetBlockMap.get(node.data.target.sys.id);
+        item = this.assetBlockMap.get(node.data.target.sys.id);
       case 'embedded-entry-block':
-        return this.entryBlockMap.get(node.data.target.sys.id);
+        item = this.entryBlockMap.get(node.data.target.sys.id);
       case 'embedded-entry-inline':
-        return this.entryInlineMap.get(node.data.target.sys.id);
+        item = this.entryInlineMap.get(node.data.target.sys.id);
       case 'entry-hyperlink':
-        return this.entryHyperlinkMap.get(node.data.target.sys.id);
+        item = this.entryHyperlinkMap.get(node.data.target.sys.id);
       case 'asset-hyperlink':
-        return this.assetHyperlinkMap.get(node.data.target.sys.id);
+        item = this.assetHyperlinkMap.get(node.data.target.sys.id);
     }
+
+    if (!item) {
+      throw new Error(`Did not find content item for node ${node.data.target.sys.id}`);
+    } else return item;
   }
 }

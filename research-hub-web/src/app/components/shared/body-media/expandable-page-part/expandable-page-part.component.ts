@@ -18,7 +18,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./expandable-page-part.component.scss']
 })
 export class ExpandablePagePartComponent implements OnInit, OnDestroy {
-  @Input() contentItem: Partial<Expand>; // basically just the id of the expand e.g. { "__typename": "Expand", "sys": { "id": "3sOzm7PRhsgcGibaW73EXN", "__typename": "Sys" } }
+  @Input() contentItem: Expand; // basically just the id of the expand e.g. { "__typename": "Expand", "sys": { "id": "3sOzm7PRhsgcGibaW73EXN", "__typename": "Sys" } }
   
   public expandPart$: Observable<Expand>;
   private subscriptions = new Subscription();
@@ -48,13 +48,12 @@ export class ExpandablePagePartComponent implements OnInit, OnDestroy {
   }
 
   private getExpandPart(): Observable<Expand> {
-    if (!this.contentItem.sys) throw new Error(`Missing sys for Expandable page part: ${this.contentItem}`)
     return this.getExpandPartByIdGQL.fetch({ id: this.contentItem.sys.id }).pipe(
       map((result) => {
         if (result.data.expand) {
           return result.data.expand as Expand
         } else {
-          throw new Error(`Could not find expandable page part for id ${this.contentItem.sys?.id}`)
+          throw new Error(`Could not find expandable page part for id ${this.contentItem.sys.id}`)
         }
       })
     );

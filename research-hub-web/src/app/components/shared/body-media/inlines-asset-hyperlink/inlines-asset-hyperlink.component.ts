@@ -14,9 +14,10 @@ export class InlinesAssetHyperlinkComponent extends NodeRenderer implements OnIn
 
   ngOnInit(): void {
     this.data = this.node;
-    this.contentItem = this.bodyMediaService.getContentItem(this.node);
-    if (!this.contentItem) {
-      console.error(`Error retrieving contentItem for node: ${JSON.stringify(this.node)}`)
+    try {
+      this.contentItem = this.bodyMediaService.getContentItem(this.node);
+    } catch(e) {
+      console.error(e);
     }
   }
 }
