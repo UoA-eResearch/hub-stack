@@ -90,34 +90,34 @@
       <!-- Clear All -->
       <mat-chip (click)="clearFilters()" class="clear"> Clear All </mat-chip>
       <!-- Categories -->
-      <!-- <mat-chip
+      <mat-chip
         *ngFor="let category of activeFilters.category"
         [removable]="true"
         (removed)="removeFilterById(category, filterTypes.ResearchCategory)"
       >
         {{ getFilterName(allFilters, category, filterTypes.ResearchCategory) }}
         <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip> -->
+      </mat-chip>
 
       <!-- Activities -->
-      <!-- <mat-chip
+      <mat-chip
         *ngFor="let activity of activeFilters.stage"
         [removable]="true"
         (removed)="removeFilterById(activity, filterTypes.ResearchActivity)"
       >
         {{ getFilterName(allFilters, activity, filterTypes.ResearchActivity) }}
         <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip> -->
+      </mat-chip>
 
       <!-- Organisation -->
-      <!-- <mat-chip
+      <mat-chip
         *ngFor="let org of activeFilters.relatedOrgs"
         [removable]="true"
         (removed)="removeFilterById(org, filterTypes.Organisation)"
       >
         {{ getFilterName(allFilters, org, filterTypes.Organisation) }}
         <mat-icon matChipRemove>cancel</mat-icon>
-      </mat-chip>-->
+      </mat-chip>
     </mat-chip-list> 
   </div>
 </div>
