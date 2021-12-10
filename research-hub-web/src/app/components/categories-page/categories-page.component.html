@@ -7,7 +7,7 @@
   <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap" ngClass.lt-md="site-padding-mobile">
 
     <!-- Category Cards Content -->
-    <mat-nav-list *ngFor="let item of filterOutNulls(allCategories.items)" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
+    <mat-nav-list *ngFor="let item of allCategories" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
 
       <!-- Individual Category Card -->
       <mat-card tabindex="0" fxLayout="column" fxLayoutAlign="space-between" class="tile-content"

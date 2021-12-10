@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FeaturedItemsItemsCollection, FeaturedItemsItemsItem, GetAllFeaturedItemsGQL, Maybe } from '@graphql/schema';
+import { FeaturedItemsItemsItem, GetAllFeaturedItemsGQL, Maybe } from '@graphql/schema';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { notEmpty } from '@app/global/notEmpty';
@@ -11,7 +11,7 @@ import { notEmpty } from '@app/global/notEmpty';
 })
 export class FeaturedComponent implements OnInit {
   @Input() title: Maybe<string>;
-  public featuredItems$: Observable<FeaturedItemsItemsCollection>;
+  public featuredItems$: Observable<FeaturedItemsItemsItem[]>;
 
   constructor(
     public getAllFeaturedItemsGQL: GetAllFeaturedItemsGQL
@@ -19,11 +19,7 @@ export class FeaturedComponent implements OnInit {
 
   ngOnInit() {
     this.featuredItems$ = this.getAllFeaturedItemsGQL.fetch().pipe(
-      map(x => x?.data?.featuredItemsCollection?.items[0]?.itemsCollection as FeaturedItemsItemsCollection)
+      map(x => x?.data?.featuredItemsCollection?.items[0]?.itemsCollection?.items.filter(notEmpty) as FeaturedItemsItemsItem[])
     );
-  }
-
-  public filterOutNulls(arrayWithNulls: Array<Maybe<FeaturedItemsItemsItem>>) : Array<FeaturedItemsItemsItem> {
-    return arrayWithNulls.filter(notEmpty);
   }
 }
