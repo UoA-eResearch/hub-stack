@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { BannerImageComponent } from './banner-image.component';
+import { CommonModule } from '@angular/common';
+import { MockModule } from 'ng-mocks';
+import { SharedModule } from '@app/components/shared/app.shared.module';
 
 describe('BannerImageComponent', () => {
   let component: BannerImageComponent;
@@ -14,6 +17,8 @@ describe('BannerImageComponent', () => {
       imports: [
         ApolloTestingModule,
         RouterTestingModule.withRoutes([]),
+        MockModule(CommonModule),
+        MockModule(SharedModule)
       ]
     })
     .compileComponents();

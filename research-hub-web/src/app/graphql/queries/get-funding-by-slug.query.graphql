@@ -12,9 +12,6 @@ query GetFundingBySlug($slug: String) {
       banner {
         url
       }
-      icon {
-        url
-      }
       summary
       purpose {
         json

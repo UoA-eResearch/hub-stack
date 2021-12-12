@@ -1,9 +1,6 @@
 fragment PublicFields on Entry {
     ... on Article {
       __typename
-      icon {
-        url
-      }
       slug
       title
       summary
@@ -15,9 +12,6 @@ fragment PublicFields on Entry {
     } 
     ... on CaseStudy {
       __typename
-      icon {
-        url
-      }
       banner {
         url
       }
@@ -29,9 +23,6 @@ fragment PublicFields on Entry {
     }
     ... on Equipment {
       __typename
-      icon {
-        url
-      }
       slug
       title
       summary
@@ -43,9 +34,6 @@ fragment PublicFields on Entry {
     }
   ... on Event {
       __typename
-      icon {
-        url
-      }
       slug
       title
       summary
@@ -57,9 +45,6 @@ fragment PublicFields on Entry {
     }
     ... on Funding {
       __typename
-      icon {
-        url
-      }
       slug
       title
       summary
@@ -71,9 +56,6 @@ fragment PublicFields on Entry {
     }
     ... on Service {
       __typename
-      icon {
-        url
-      }
       banner {
         url
       }
@@ -85,9 +67,6 @@ fragment PublicFields on Entry {
     }
   ... on Software {
       __typename
-      icon {
-        url
-      }
       banner {
         url
       }
@@ -99,9 +78,6 @@ fragment PublicFields on Entry {
     }
     ... on SubHub {
       __typename
-      icon {
-        url
-      }
       slug
       title
       summary

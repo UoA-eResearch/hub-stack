@@ -7,7 +7,7 @@ import { StageCollection, AllStagesGQL } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { PageTitleService } from '@services/page-title.service';
-
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ActivitiesPageComponent', () => {
   let component: ActivitiesPageComponent;
@@ -49,7 +49,8 @@ describe('ActivitiesPageComponent', () => {
       ],
       imports: [
         HttpClientTestingModule,
-        ApolloTestingModule
+        ApolloTestingModule,
+        RouterTestingModule.withRoutes([])
       ],
       providers: [
         MockProvider(SearchService),
