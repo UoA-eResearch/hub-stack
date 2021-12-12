@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GetHomepageGQL, Homepage } from '@app/graphql/schema';
-import { HomeScrollService } from '@services/home-scroll.service';
 import { PageTitleService } from '@services/page-title.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -11,10 +10,9 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public homePage$: Observable<Homepage>;
+  public homePage$: Observable<Homepage> | undefined;
 
   constructor(
-    public homeScrollService: HomeScrollService,
     private getHomepageGQL: GetHomepageGQL,
     public pageTitleService: PageTitleService
   ) { }
@@ -22,7 +20,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.pageTitleService.title = '';
     this.homePage$ = this.getHomepageGQL.fetch().pipe(
-      map(x => x.data.homepageCollection.items[0]) 
+      map(x => x?.data?.homepageCollection?.items[0]) 
     ) as Observable<Homepage>;
   }
 }

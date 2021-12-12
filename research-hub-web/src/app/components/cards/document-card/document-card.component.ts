@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { OfficialDocuments } from '@app/graphql/schema';
+import { Maybe, OfficialDocuments } from '@app/graphql/schema';
 
 @Component({
   selector: 'app-document-card',
@@ -14,7 +14,7 @@ export class DocumentCardComponent {
 
   constructor() { }
 
-  public navigateTo(url: string) {
-    location.href = url;
+  public navigateTo(url: Maybe<string> | undefined) {
+    if (url) location.href = url;
   }
 }

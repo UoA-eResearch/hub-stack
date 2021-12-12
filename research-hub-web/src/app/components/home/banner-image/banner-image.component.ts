@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Maybe } from '@app/graphql/schema';
 import supportsWebP from 'supports-webp';
 
 @Component({
@@ -7,9 +8,9 @@ import supportsWebP from 'supports-webp';
   styleUrls: ['./banner-image.component.scss']
 })
 export class BannerImageComponent {
-  @Input() bannerImageUrl: string;
-  @Input() logoImageUrl: string;
-  @Input() title: string;
+  @Input() bannerImageUrl: Maybe<string> | undefined;
+  @Input() logoImageUrl: Maybe<string> | undefined;
+  @Input() title: Maybe<string>;
 
   public aucklandUniUrl = 'https://auckland.ac.nz';
 

@@ -52,25 +52,6 @@ mat-card {
 }
 
 /**
- * Pagination Controls
- */
-::ng-deep.ngx-pagination {
-  .current {
-    background: $dark-blue !important;
-  }
-  text-align: center;
-  padding: 0;
-
-  a:focus,
-  a:active,
-  a.active,
-  a:hover {
-    background: #fafafa !important;
-    outline: none !important;
-  }
-}
-
-/**
  * Loading Transition
  */
 .loading {

@@ -206,7 +206,7 @@ describe('SearchBarComponent', () => {
 
   it('Should get the autocomplete terms from the autocomplete service', async () => {
     await fixture.whenStable();
-    let filteredTerms: string[];
+    let filteredTerms: string[] = [];
 
     component.filteredTerms.subscribe((terms) => filteredTerms = terms);
     expect(filteredTerms.length).toBe(9);
@@ -214,7 +214,7 @@ describe('SearchBarComponent', () => {
 
   it('Should filter autocomplete terms correctly', async () => {
     await fixture.whenStable();
-    let filteredTerms: string[];
+    let filteredTerms: string[] = [];
 
     component.filteredTerms.subscribe((terms) => filteredTerms = terms);
 

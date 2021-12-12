@@ -1,9 +1,5 @@
 <mat-card
-  (click)="
-    document.url || document.document?.url
-      ? navigateTo(document.url || document.document?.url)
-      : null
-  "
+  (click)="navigateTo(document.url || document.document?.url)"
 >
   <span class="card-label">Document</span>
 

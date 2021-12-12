@@ -1,4 +1,4 @@
-query GetSoftwareBySlug($slug: String) {
+query GetSoftwareBySlug($slug: String!) {
   softwareCollection(limit: 1, where: { slug: $slug }) {
     items {
       __typename

@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockInstance, MockModule, MockProvider, MockService } from 'ng-mocks';
+import { MockComponent, MockInstance, MockModule, MockProvider } from 'ng-mocks';
 import { AppLayoutModule } from '../layout.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MaterialModule } from '@app/app.material.module';
 import { LoginService } from '@uoa/auth';
-import { HomeScrollService } from '@services/home-scroll.service';
 import { NavbarComponent } from './navbar.component';
 import { EMPTY } from 'rxjs';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
@@ -30,8 +29,7 @@ describe('NavbarComponent', () => {
         MockModule(MaterialModule)
       ],
       providers: [
-        MockProvider(LoginService),
-        MockProvider(HomeScrollService)
+        MockProvider(LoginService)
       ]
     })
     .compileComponents();
