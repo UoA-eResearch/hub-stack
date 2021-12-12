@@ -6,7 +6,7 @@
     class="site-padding margin-bottom"
     ngClass.lt-md="site-padding-mobile top-padding"
   >
-    <app-breadcrumbs [title]="funding.title"></app-breadcrumbs>
+    <app-breadcrumbs [title]="funding.title!"></app-breadcrumbs>
 
     <!-- Title and Summary -->
     <div fxLayout="column wrap">
@@ -79,7 +79,7 @@
     </h3>
     <div
       *ngIf="
-        funding.applicationDocumentsCollection?.items.length > 0;
+        applicationDocs.length > 0;
         else noApplicationDocs
       "
       fxLayout="row wrap"
@@ -89,7 +89,7 @@
       <div
         class="application-doc-container"
         ngClass.xs="application-doc-container-mobile"
-        *ngFor="let item of funding.applicationDocumentsCollection.items"
+        *ngFor="let item of applicationDocs"
         fxflex
       >
         <div class="application-doc file" ngClass.xs="application-doc-mobile">
@@ -108,15 +108,15 @@
                       src="assets/components/navy-download.png"
                     />&nbsp;Download File&nbsp;
                   </span>
-                  <span *ngIf="item.size * 0.001 < 1" class="file-size"
+                  <span *ngIf="item.size && item.size * 0.001 < 1" class="file-size"
                     >{{ item.size | number: "1.0-0" }}&nbsp;B</span
                   >
                   <span
-                    *ngIf="item.size * 0.001 < 1000 && item.size * 0.001 >= 1"
+                    *ngIf="item.size && item.size * 0.001 < 1000 && item.size * 0.001 >= 1"
                     class="file-size"
                     >{{ item.size * 0.001 | number: "1.0-0" }}&nbsp;kB</span
                   >
-                  <span *ngIf="item.size * 0.001 >= 1000" class="file-size"
+                  <span *ngIf="item.size && item.size * 0.001 >= 1000" class="file-size"
                     >{{ item.size * 0.000001 | number: "1.0-0" }}&nbsp;MB</span
                   >
                 </div>
@@ -132,47 +132,47 @@
 
     <!-- Related -->
     <div class="funding-owners section" fxLayout="column">
-      <h3 *ngIf="funding?.relatedItemsCollection.items.length > 0">
+      <h3 *ngIf="relatedItems.length > 0">
         Explore Related
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-standard-card
           id="you-might-be-interested-in"
-          *ngFor="let content of funding.relatedItemsCollection.items"
+          *ngFor="let content of relatedItems"
           [contentItem]="content"
         ></app-standard-card>
       </div>
 
-      <h3 *ngIf="funding?.relatedContactsCollection.items.length > 0">
+      <h3 *ngIf="relatedContacts.length > 0">
         Contacts
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-contact-card
-          *ngFor="let person of funding.relatedContactsCollection.items"
+          *ngFor="let person of relatedContacts"
           [person]="person"
         ></app-contact-card>
       </div>
 
-      <h3 *ngIf="funding?.relatedOrgsCollection.items.length > 0">
+      <h3 *ngIf="relatedOrgs.length > 0">
         Organisations
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-org-unit-card
-          *ngFor="let orgUnit of funding.relatedOrgsCollection.items"
+          *ngFor="let orgUnit of relatedOrgs"
           [orgUnit]="orgUnit"
         ></app-org-unit-card>
       </div>
 
-      <h3 *ngIf="funding?.relatedDocsCollection.items.length > 0">
+      <h3 *ngIf="relatedDocs.length > 0">
         Documents
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-document-card
-          *ngFor="let document of funding.relatedDocsCollection.items"
+          *ngFor="let document of relatedDocs"
           [document]="document"
         ></app-document-card>
       </div>
@@ -186,9 +186,9 @@
     class="banner-container"
     [ngClass]="{ 'standard-banner': bannerImageUrl }"
     [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
-    [ngStyle]="
-      bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
-    "
+    [ngStyle]="{
+      'background-image': bannerImageUrl ? 'url(' + bannerImageUrl + ')' : ''
+    }"
   ></div>
 </ng-template>
 

@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloError } from '@apollo/client/errors';
-import { CaseStudy, GetCaseStudyBySlugGQL } from '@graphql/schema';
+import { notEmpty } from '@app/global/notEmpty';
+import { CaseStudy, CaseStudyRelatedItemsItem, GetCaseStudyBySlugGQL, OfficialDocuments, OrgUnit, Person } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -24,7 +25,12 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
   public bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   public caseStudy: CaseStudy;
   public supportsWebp: Boolean;
-  public bannerImageUrl: string;
+  public bannerImageUrl: string | undefined;
+
+  public relatedItems: CaseStudyRelatedItemsItem[];
+  public relatedContacts: Person[];
+  public relatedOrgs: OrgUnit[];
+  public relatedDocs: OfficialDocuments[];
 
   constructor(
     public route: ActivatedRoute,
@@ -50,12 +56,18 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadCaseStudy(slug))
+      switchMap((slug) => slug
+        ? this.loadCaseStudy(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (caseStudy: CaseStudy) => this.caseStudy = caseStudy,
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to Case Study Collection page');
+          this.router.navigate(['casestudy', 'list'])
         } else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
@@ -75,10 +87,10 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
     return this.getCaseStudyBySlug(slug).pipe(
       map(data => {
         // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
+        if (data.relatedContactsCollection) this.relatedContacts = data.relatedContactsCollection.items.filter(notEmpty);
+        if (data.relatedDocsCollection) this.relatedDocs = (data.relatedDocsCollection.items.filter(notEmpty)).filter(item => item.title);
+        if (data.relatedItemsCollection) this.relatedItems = data.relatedItemsCollection.items.filter(notEmpty);
+        if (data.relatedOrgsCollection) this.relatedOrgs = (data.relatedOrgsCollection.items.filter(notEmpty)).filter(item => item.name);
 
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
@@ -91,7 +103,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
         this.bodyMediaService.buildLinkMaps(data.references?.links);
 
-        this.pageTitleService.title = data.title;
+        this.pageTitleService.title = data.title ?? '';
 
         return data;
       })
@@ -105,15 +117,16 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
    * @param slug The case study's slug. Retrieved from the route parameter of the same name.
    */
   public getCaseStudyBySlug(slug: string): Observable<CaseStudy> {
-    if (!slug) {
-      this.router.navigate(['casestudy', 'list'])
-    }
     return this.getCaseStudyBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.caseStudyCollection.items.length === 0) {
-          throw new Error(`Not found. Could not find case study with slug "${slug}"`)
+        if (x?.data?.caseStudyCollection) {
+          if (x.data.caseStudyCollection.items.length === 0) {
+            throw new Error(`Not found. Could not find case study with slug "${slug}"`)
+          } else {
+            return x.data.caseStudyCollection.items[0] as CaseStudy
+          }
         } else {
-          return x.data.caseStudyCollection.items[0] as CaseStudy
+          throw new Error('Unable to fetch caseStudyCollection');
         }
       })
     );

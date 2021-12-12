@@ -3,9 +3,9 @@
     class="banner-container"
     [ngClass]="{ 'standard-banner': bannerImageUrl }"
     [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
-    [ngStyle]="
-      bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
-    "
+    [ngStyle]="{
+      'background-image': bannerImageUrl ? 'url(' + bannerImageUrl + ')' : ''
+    }"
   >
     <div class="banner-content">
       <!-- Title -->
@@ -44,7 +44,7 @@
   </div>
 
   <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
-    <app-breadcrumbs [title]="caseStudy.title"></app-breadcrumbs>
+    <app-breadcrumbs [title]="caseStudy.title!"></app-breadcrumbs>
 
     <div
       fxLayout="row"
@@ -87,16 +87,16 @@
       <!-- Extra Links -->
       <div
         *ngIf="
-          caseStudy.relatedDocsCollection.items.length > 0 ||
-          caseStudy.relatedContactsCollection.items.length > 0 ||
-          caseStudy.relatedOrgsCollection.items.length > 0
+          relatedDocs.length > 0 ||
+          relatedContacts.length > 0 ||
+          relatedOrgs.length > 0
         "
         fxFlex.gt-xl="0 0 350px"
         fxLayout="column"
         fxFlexOrder="1"
         fxFlexOrder.lt-xl="2"
       >
-        <h3 *ngIf="caseStudy?.relatedContactsCollection.items.length > 0">
+        <h3 *ngIf="relatedContacts.length > 0">
           Contacts
           <hr />
         </h3>
@@ -109,13 +109,13 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-contact-card
-            *ngFor="let person of caseStudy.relatedContactsCollection.items"
+            *ngFor="let person of relatedContacts"
             [person]="person"
           ></app-contact-card>
         </div>
 
         <!-- Official Documents -->
-        <h3 *ngIf="caseStudy?.relatedDocsCollection.items.length > 0">
+        <h3 *ngIf="relatedDocs.length > 0">
           Documents
           <hr />
         </h3>
@@ -128,12 +128,12 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-document-card
-            *ngFor="let document of caseStudy.relatedDocsCollection.items"
+            *ngFor="let document of relatedDocs"
             [document]="document"
           ></app-document-card>
         </div>
 
-        <h3 *ngIf="caseStudy?.relatedOrgsCollection.items.length > 0">
+        <h3 *ngIf="relatedOrgs.length > 0">
           Organisations
           <hr />
         </h3>
@@ -146,7 +146,7 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-org-unit-card
-            *ngFor="let orgUnit of caseStudy.relatedOrgsCollection.items"
+            *ngFor="let orgUnit of relatedOrgs"
             [orgUnit]="orgUnit"
           ></app-org-unit-card>
         </div>
@@ -154,7 +154,7 @@
 
       <!-- Related items -->
       <div
-        *ngIf="caseStudy.relatedItemsCollection.items.length > 0; else filler"
+        *ngIf="relatedItems.length > 0"
         fxFlex.gt-xl="0 0 350px"
         fxLayout="column"
         fxFlexOrder="3"
@@ -173,7 +173,7 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-standard-card
-            *ngFor="let content of caseStudy.relatedItemsCollection.items"
+            *ngFor="let content of relatedItems"
             [contentItem]="content"
           ></app-standard-card>
         </div>

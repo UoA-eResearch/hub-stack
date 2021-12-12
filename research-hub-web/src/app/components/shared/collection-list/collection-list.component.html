@@ -17,17 +17,7 @@
 
     <!-- Content Collection -->
     <mat-nav-list>
-      <mat-card
-        *ngFor="
-          let content of collection.items
-            | paginate
-              : {
-                  itemsPerPage: itemsPerPage,
-                  currentPage: pageNumber,
-                  totalItems: collection.items.length
-                }
-        "
-      >
+      <mat-card *ngFor="let content of collection.items">
         <a
           [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]"
           class="result-item"
@@ -52,18 +42,5 @@
         </a>
       </mat-card>
     </mat-nav-list>
-
-    <!-- Paginator -->
-    <div id="pagination">
-      <pagination-controls
-        class="page-control"
-        responsive="true"
-        (pageChange)="pageNumber = $event; scrollToTop()"
-        screenReaderPaginationLabel="Pagination"
-        screenReaderPageLabel="page"
-        screenReaderCurrentLabel="You're on page"
-      >
-      </pagination-controls>
-    </div>
   </ng-container>
 </div>

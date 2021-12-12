@@ -1,4 +1,4 @@
-query GetFundingBySlug($slug: String) {
+query GetFundingBySlug($slug: String!) {
   fundingCollection(limit: 1, where: { slug: $slug }) {
     items {
       __typename
