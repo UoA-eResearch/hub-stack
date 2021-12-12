@@ -29,6 +29,6 @@
     "aws-elasticsearch-connector": "^9.0.3",
     "aws-sdk": "^2.841.0",
     "contentful": "^9.1.4",
-    "contentful-export": "^7.13.34"
+    "contentful-export": "^7.14.2"
   }
 }
