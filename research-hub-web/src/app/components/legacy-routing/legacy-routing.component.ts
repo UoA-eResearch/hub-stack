@@ -20,7 +20,7 @@ export class LegacyRoutingComponent implements OnInit {
     return this.router.url.split('/')[1];
   }
 
-  private getLegacyContentId(contentType: string): string {
+  private getLegacyContentId(contentType: string): string | null {
     switch(contentType) {
       case "content":
         return this.route.snapshot.paramMap.get("id");
@@ -29,13 +29,14 @@ export class LegacyRoutingComponent implements OnInit {
       case "requestStorage":
         return "requestStorage";
     }
+    return null;
   }
 
   private redirectLegacyRoute(): void {
     try {
       const contentType = this.getLegacyContentType();
       const legacyId = this.getLegacyContentId(contentType);
-      const redirect = legacyRoutes[legacyId];
+      const redirect = legacyId ? legacyRoutes[legacyId] : null;
       if (!redirect) {
         this.router.navigateByUrl("/error/404", {
           skipLocationChange: true,

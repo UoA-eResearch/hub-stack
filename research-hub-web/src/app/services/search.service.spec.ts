@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { SearchQuery, SearchResults } from '@app/global/searchTypes';
+import { SearchFilters, SearchQuery, SearchResults } from '@app/global/searchTypes';
 import { environment } from '@environments/environment';
 import { skip } from 'rxjs/operators';
 
@@ -128,7 +128,7 @@ describe('SearchService', () => {
 
     service.searchFilters.pipe(
       skip(1)
-    ).subscribe(result => {
+    ).subscribe((result: SearchFilters | undefined) => {
       expect(result).toEqual(query.filters);
     });
 

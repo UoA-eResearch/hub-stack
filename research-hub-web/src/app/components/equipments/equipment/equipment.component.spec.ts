@@ -18,6 +18,8 @@ describe('EquipmentComponent', () => {
   let component: EquipmentComponent;
   let fixture: ComponentFixture<EquipmentComponent>;
   let controller: ApolloTestingController;
+  
+  const testSlug: string = 'death-star';
 
   const mockEquipment$: Observable<Equipment> = of(
     {
@@ -56,6 +58,9 @@ describe('EquipmentComponent', () => {
   }));
 
   beforeEach(() => {
+    TestBed.inject(ActivatedRoute).params = of({
+      slug: testSlug
+    });
     controller = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(EquipmentComponent);
     component = fixture.componentInstance;
@@ -70,16 +75,11 @@ describe('EquipmentComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('When a url slug is present', async () => {
-    const testSlug: string = 'death-star';
-    
+  describe('When a url slug is present', async () => {    
     beforeEach(() => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(EquipmentComponent);
       component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: testSlug
-      });
       fixture.detectChanges();
       component.ngOnInit();
     })

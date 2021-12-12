@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Maybe } from '@app/graphql/schema';
 
 @Component({
   selector: 'app-content-title',
@@ -6,9 +7,9 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./content-title.component.scss']
 })
 export class ContentTitleComponent {
-  @Input() title = '';
-  @Input() description = ''
-  @Input() lightColorText = false;
+  @Input() title: Maybe<string>;
+  @Input() description: string = '';
+  @Input() lightColorText: boolean = false;
 
   constructor() { }
 

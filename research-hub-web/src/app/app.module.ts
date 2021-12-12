@@ -12,7 +12,6 @@ import { Apollo } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { onError } from '@apollo/client/link/error';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { StorageServiceModule } from 'ngx-webstorage-service';
 import { AppComponent } from './app.component';
 import { AppLayoutModule } from './components/layout/layout.module';
 import { SharedModule } from './components/shared/app.shared.module';
@@ -44,7 +43,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
-    StorageServiceModule,
     RoutingModule,
     ErrorPagesModule,
     BrowserAnimationsModule,
@@ -82,6 +80,7 @@ export class AppModule {
 
     // The httpLink between Apollo and the GraphQL server
     const http = httpLink.create({ uri: environment.cerGraphQLUrl });
+
     // @uoa/error-pages automatically shows an error page when it
     // sees an error in fetch requests through an http interceptor.
     // Because some authentication errors from cer-graphql
@@ -89,26 +88,16 @@ export class AppModule {
     // errors so they can be handled by our onError handler.
     this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
 
-
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
     const error = onError(({ response, networkError, graphQLErrors }) => {
       const hasErrors = networkError || graphQLErrors;
       if (networkError) {
         console.log("API returned networkError", networkError);
-        if (networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
-          this.loginService.doLogin(this.router.url).then((result) => {
-            // Workaround fix for blank page load issue
-            // when auth library returns a token instead of navigating to target url
-            if (result) {
-              location.reload();
-            }            
-          });
-          return;
-        }
+        return;
       }
       if (graphQLErrors) {
         console.log("API returned graphQLErrors", graphQLErrors);
-        if (graphQLErrors[0].extensions.code === "UNAUTHENTICATED") {
+        if (graphQLErrors[0]?.extensions?.code === "UNAUTHENTICATED") {
           this.loginService.doLogin(this.router.url).then((result) => {
             // Workaround fix for blank page load issue
             // when auth library returns a token instead of navigating to target url
@@ -118,14 +107,26 @@ export class AppModule {
           });
           return;
         }
+
+        if (graphQLErrors[0]?.extensions?.code === "INTERNAL_SERVER_ERROR" &&
+            !(
+              graphQLErrors[0].message.includes('Did not fetch typename for object, unable to resolve interface.') ||
+              graphQLErrors[0].message.includes('Cannot return null for non-nullable field Asset.sys.')
+            )
+        ) {
+          // Something bad happened. Return the response with errors, unless it is a typename or non-nullable field error.
+          // Typename and non-nullable field errors can be caused by references/links to draft entries, and in this case we still want
+          // to load the page with partial data (see below).
+          return;
+        }
       }
 
       if (hasErrors) {
         // If there is any data, disregard any errors.
         // This will mean the page will render as usual.
-        if (response.data) {
+        if (response?.data) {
           console.log("Ignoring errors as there is partial data to render.");
-          response.errors = null;
+          response.errors = undefined;
         }
       }
     });
@@ -135,7 +136,7 @@ export class AppModule {
     // Join the primary link and the error handler link
     // const link = error.concat(http);
     // Create the default (global) Apollo client
-    const client = apollo.create({
+    apollo.create({
       cache: new InMemoryCache({ fragmentMatcher }) as InMemoryCache,
       link: error.concat(http),
       defaultOptions: {

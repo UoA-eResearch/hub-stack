@@ -14,7 +14,7 @@ export class BlocksQuoteComponent extends NodeRenderer implements OnInit {
   ngOnInit(): void {
     this.contentItem = this.node.content[0];
     if (!this.contentItem) {
-      console.error(`Error retrieving contentItem for node: ${this.node}`)
+      console.error(`Error retrieving contentItem for node: ${JSON.stringify(this.node)}`)
     }
   }
 }
