@@ -84,18 +84,25 @@ export class BodyMediaService {
       // For each type of node find matching contentItem
       case 'embedded-asset-block':
         item = this.assetBlockMap.get(node.data.target.sys.id);
+        break;
       case 'embedded-entry-block':
         item = this.entryBlockMap.get(node.data.target.sys.id);
+        break;
       case 'embedded-entry-inline':
         item = this.entryInlineMap.get(node.data.target.sys.id);
+        break;
       case 'entry-hyperlink':
         item = this.entryHyperlinkMap.get(node.data.target.sys.id);
+        break;
       case 'asset-hyperlink':
         item = this.assetHyperlinkMap.get(node.data.target.sys.id);
+        break;
     }
 
     if (!item) {
       throw new Error(`Did not find content item for node ${node.data.target.sys.id}`);
-    } else return item;
+    } else {
+      return item
+    };
   }
 }
