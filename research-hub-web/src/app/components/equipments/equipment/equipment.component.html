@@ -5,9 +5,7 @@
     class="site-padding margin-bottom"
     ngClass.lt-md="site-padding-mobile top-padding"
   >
-    <app-breadcrumbs
-      [title]="equipment.title"
-    ></app-breadcrumbs>
+    <app-breadcrumbs [title]="equipment.title"></app-breadcrumbs>
     <!-- Title and Summary -->
     <div fxLayout="column wrap">
       <ng-container
@@ -32,14 +30,17 @@
     </div>
 
     <!-- Equipment Body -->
-    <ngx-contentful-rich-text
-      id="bodyMediaList"
-      style="word-break: break-word"
-      [document]="equipment.bodyText.json"
-      [nodeRenderers]="nodeRenderers"
-      [markRenderers]="markRenderers"
-    >
-    </ngx-contentful-rich-text>
+    <div class="single-column-max-width">
+      <ngx-contentful-rich-text
+        id="bodyMediaList"
+        style="word-break: break-word"
+        class="single-column-max-width"
+        [document]="equipment.bodyText.json"
+        [nodeRenderers]="nodeRenderers"
+        [markRenderers]="markRenderers"
+      >
+      </ngx-contentful-rich-text>
+    </div>
 
     <div
       class="section-2"

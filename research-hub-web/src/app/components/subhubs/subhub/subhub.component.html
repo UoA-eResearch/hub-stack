@@ -1,8 +1,4 @@
-<div
-  style="overflow-x: hidden"
-  class="results"
-  *ngIf="subHub"
->
+<div style="overflow-x: hidden" class="results" *ngIf="subHub">
   <div id="subhub-container" class="margin-bottom">
     <div
       class="banner-container"
@@ -51,9 +47,7 @@
     </div>
 
     <div class="site-padding" ngClass.lt-md="site-padding-mobile">
-      <app-breadcrumbs
-        [title]="subHub.title"
-      ></app-breadcrumbs>
+      <app-breadcrumbs [title]="subHub.title"></app-breadcrumbs>
 
       <!-- Body Content -->
       <div
@@ -157,12 +151,14 @@
 
 <!-- Templates -->
 <ng-template #body let-subHub>
-  <ngx-contentful-rich-text
-    id="bodyMediaList"
-    class="section-2"
-    style="word-break: break-word"
-    [document]="subHub.bodyText.json"
-    [nodeRenderers]="nodeRenderers"
-    [markRenderers]="markRenderers"
-  ></ngx-contentful-rich-text>
+  <div class="single-column-max-width">
+    <ngx-contentful-rich-text
+      id="bodyMediaList"
+      class="section-2"
+      style="word-break: break-word"
+      [document]="subHub.bodyText.json"
+      [nodeRenderers]="nodeRenderers"
+      [markRenderers]="markRenderers"
+    ></ngx-contentful-rich-text>
+  </div>
 </ng-template>
