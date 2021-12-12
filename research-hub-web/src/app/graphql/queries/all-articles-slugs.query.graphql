@@ -1,7 +1,0 @@
-query AllArticlesSlugs {
-    articleCollection(limit: 250) {
-        items {
-            slug
-        }
-    }
-}

@@ -1,4 +1,4 @@
-@use "~@angular/material" as mat;
+@use "@angular/material" as mat;
 @import "mixins";
 @import "variables";
 
@@ -89,4 +89,10 @@
   @media (max-width: $navbar-second-row-breakpoint) {
     display: none;
   }
+}
+
+.mat-option {
+  font-size: 18px;
+  height: 38px;
+  line-height: 38px;
 }

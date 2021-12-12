@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ServicesComponent } from './services.component';
+import { ServiceListComponent } from './service-list/service-list.component';
+import { ServiceComponent } from './service/service.component';
 
 
 const routes: Routes = [
-  { path: '', component: ServicesComponent }
+  { path: '', component: ServiceComponent },
+  { path: 'list', component: ServiceListComponent },
+  { path: ':slug', component: ServiceComponent }
 ];
 
 @NgModule({

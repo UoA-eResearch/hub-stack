@@ -9,6 +9,7 @@ import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { Category } from '@app/graphql/schema';
 
@@ -69,6 +70,7 @@ describe('SearchFiltersComponent', () => {
         FormsModule,
         MockModule(MatTabsModule),
         MockModule(MatChipsModule),
+        MatIconModule
       ]
     })
       .compileComponents();

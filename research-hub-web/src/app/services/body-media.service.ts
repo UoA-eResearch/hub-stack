@@ -10,7 +10,7 @@ import { InlinesAssetHyperlinkComponent } from '@components/shared/body-media/in
 import { InlinesEmbeddedEntryComponent } from '@components/shared/body-media/inlines-embedded-entry/inlines-embedded-entry.component';
 import { InlinesEntryHyperlinkComponent } from '@components/shared/body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
 import { MarksCodeComponent } from '@components/shared/body-media/marks-code/marks-code.component';
-import { ArticleBodyTextLinks, Asset, CaseStudyBodyTextLinks, CaseStudyReferencesLinks, Entry, EquipmentBodyTextLinks, EventBodyTextLinks, FundingBodyTextLinks, FundingDeadlinesLinks, FundingPurposeLinks, ServiceBodyTextLinks, SoftwareBodyTextLinks, SubHubBodyTextLinks } from '@app/graphql/schema';
+import { ArticleBodyTextLinks, Asset, CaseStudyBodyTextLinks, CaseStudyReferencesLinks, Entry, EquipmentBodyTextLinks, EventBodyTextLinks, ExpandBodyTextLinks, FundingBodyTextLinks, FundingDeadlinesLinks, FundingPurposeLinks, ServiceBodyTextLinks, SoftwareBodyTextLinks, SubHubBodyTextLinks } from '@app/graphql/schema';
 
 export type BodyTextLinks
   = ArticleBodyTextLinks
@@ -24,6 +24,7 @@ export type BodyTextLinks
   | EquipmentBodyTextLinks
   | CaseStudyReferencesLinks
   | CaseStudyBodyTextLinks
+  | ExpandBodyTextLinks
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,7 @@ export class BodyMediaService {
    * @param links
    */
   buildLinkMaps(links: BodyTextLinks) {
-    if (links.assets) {
+    if (links?.assets) {
       for (const asset of links.assets.block) {
         this.assetBlockMap.set(asset.sys.id, asset);
       }
@@ -64,7 +65,7 @@ export class BodyMediaService {
       }
     }
 
-    if (links.entries) {
+    if (links?.entries) {
       for (const entry of links.entries.block) {
         this.entryBlockMap.set(entry.sys.id, entry);
       }

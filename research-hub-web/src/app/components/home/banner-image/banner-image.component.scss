@@ -2,12 +2,17 @@
 @import "variables";
 @import 'styles-common';
 
+.mobile-banner {
+  background-attachment: scroll;
+}
+.standard-banner {
+  background-attachment: fixed;
+}
 .banner-container-home {
   height: 40vh;
   max-height: auto;
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   background-position: center;
   @include size(medium) {
     height: 30vh;
