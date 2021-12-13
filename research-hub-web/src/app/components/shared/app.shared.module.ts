@@ -11,7 +11,6 @@ import { CollectionListComponent } from './collection-list/collection-list.compo
 import { RouterModule } from '@angular/router';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { VideoCardComponent } from './video-card/video-card.component';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { MarkdownModule } from 'ngx-markdown';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
@@ -34,7 +33,6 @@ import { ExpandablePagePartComponent } from './body-media/expandable-page-part/e
     ReactiveFormsModule,
     MaterialModule,
     RouterModule,
-    NgxPaginationModule,
     NgxSkeletonLoaderModule,
     NgxContentfulRichTextModule,
     ScrollingModule,
@@ -68,7 +66,6 @@ import { ExpandablePagePartComponent } from './body-media/expandable-page-part/e
     CollectionListComponent,
     BreadcrumbsComponent,
     VideoCardComponent,
-    NgxPaginationModule,
     NgxSkeletonLoaderModule,
     ScrollingModule,
     NgxContentfulRichTextModule

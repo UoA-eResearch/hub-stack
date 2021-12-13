@@ -6,9 +6,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
   styleUrls: ['./collection-list.component.scss']
 })
 export class CollectionListComponent implements OnChanges {
-  public pageNumber;
   public loading: Boolean = false;
-  public itemsPerPage = 10;
 
   @Input() collection;
 
@@ -20,6 +18,6 @@ export class CollectionListComponent implements OnChanges {
 
   // Scrolling to top of page on page change
   scrollToTop() {
-    document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' });
+    document?.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

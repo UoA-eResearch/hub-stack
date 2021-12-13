@@ -31,7 +31,7 @@ describe('ExpandablePagePartComponent', () => {
   const expand: Expand = {
     "__typename": "Expand",
     contentfulMetadata: {
-      tags: null
+      tags: []
     },
     linkedFrom: null,
     "sys": {
@@ -142,7 +142,7 @@ describe('ExpandablePagePartComponent', () => {
               spaceId: ''
             },
             contentfulMetadata: {
-              tags: null
+              tags: []
             },
             "title": "cartman svg",
             "description": "example svg image",
@@ -217,8 +217,8 @@ describe('ExpandablePagePartComponent', () => {
 
   it('should generate the summary text from json input', async () => {
     component.expandPart$.subscribe(async () => {
-      const summary = component.getSummaryText(expand.bodyText.json);    
-      expect(summary).toContain(expand.bodyText.json.content[0].content[0].value);
+      const summary = component.getSummaryText(expand.bodyText?.json);    
+      expect(summary).toContain(expand.bodyText?.json.content[0].content[0].value);
     });
   });
 
@@ -226,14 +226,14 @@ describe('ExpandablePagePartComponent', () => {
     component.expandPart$.subscribe(async () => {
       const panel = await loader.getHarness(MatExpansionPanelHarness);
       const summary = await panel.getDescription();      
-      expect(summary).toBe(expand.bodyText.json);
+      expect(summary).toBe(expand.bodyText?.json);
     });
   });
 
   it('should be able to render the rich text content in the expansion panel body', async () => {
     component.expandPart$.subscribe(async () => {
       const panel = await loader.getHarness(MatExpansionPanelHarness);
-      expect(await panel.getTextContent()).toContain(expand.bodyText.json.content[0].content[0].value);
+      expect(await panel.getTextContent()).toContain(expand.bodyText?.json.content[0].content[0].value);
     });
   });
 });

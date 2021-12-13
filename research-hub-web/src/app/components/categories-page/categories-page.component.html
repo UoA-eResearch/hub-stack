@@ -1,13 +1,13 @@
 <div id="research-categories" *ngIf="allCategories$ | async; let allCategories">
   <h1>{{ title }}</h1>
-  <p>{{ description }}</p>
+  <p *ngIf="description">{{ description }}</p>
   <div [ngClass]="'main-underline'"></div>
 
   <!-- Category Cards Container -->
   <div fxLayout="row wrap" fxLayoutGap="1%" fxLayout.lt-md="column wrap" ngClass.lt-md="site-padding-mobile">
 
     <!-- Category Cards Content -->
-    <mat-nav-list *ngFor="let item of allCategories.items" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
+    <mat-nav-list *ngFor="let item of allCategories" fxFlex="24%" fxLayout="column" fxLayoutAlign="center">
 
       <!-- Individual Category Card -->
       <mat-card tabindex="0" fxLayout="column" fxLayoutAlign="space-between" class="tile-content"
