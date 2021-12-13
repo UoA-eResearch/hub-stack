@@ -1,5 +1,5 @@
 <div [ngClass]="lightColorText ? 'light-color' : ''">
-  <h2>{{ title }}</h2>
+  <h2 *ngIf="title">{{ title }}</h2>
   <p>{{ description }}</p>
   <p>
     <ng-content></ng-content>

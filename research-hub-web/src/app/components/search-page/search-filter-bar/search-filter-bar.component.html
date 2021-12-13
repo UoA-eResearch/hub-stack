@@ -29,17 +29,17 @@
           "
           >0</b
         >
-        <ng-container *ngIf="activeFilters?.category?.length > 0">
+        <ng-container *ngIf="activeFilters.category.length > 0">
           <b>{{ activeFilters.category.length }}</b>
           {{ activeFilters.category.length === 1 ? "category" : "categories" }}
         </ng-container>
 
-        <ng-container *ngIf="activeFilters?.stage?.length > 0">
+        <ng-container *ngIf="activeFilters.stage.length > 0">
           <b>{{ activeFilters.stage.length }}</b>
           {{ activeFilters.stage.length === 1 ? "activity" : "activities" }}
         </ng-container>
 
-        <ng-container *ngIf="activeFilters?.relatedOrgs?.length > 0">
+        <ng-container *ngIf="activeFilters.relatedOrgs.length > 0">
           <b>{{ activeFilters.relatedOrgs.length }}</b>
           {{
             activeFilters.relatedOrgs.length === 1
@@ -118,6 +118,6 @@
         {{ getFilterName(allFilters, org, filterTypes.Organisation) }}
         <mat-icon matChipRemove>cancel</mat-icon>
       </mat-chip>
-    </mat-chip-list>
+    </mat-chip-list> 
   </div>
 </div>

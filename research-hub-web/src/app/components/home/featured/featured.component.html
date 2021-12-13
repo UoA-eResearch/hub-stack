@@ -2,7 +2,7 @@
   <app-content-title [title]="title"></app-content-title>
   <div fxLayout="row wrap" fxLayoutGap="20px grid" fxLayoutAlign="space-evenly">
     <app-standard-card
-      *ngFor="let item of featuredItems.items"
+      *ngFor="let item of featuredItems"
       [contentItem]="item"
     ></app-standard-card>
   </div>

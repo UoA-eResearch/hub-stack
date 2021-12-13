@@ -1,4 +1,4 @@
-query GetEventBySlug($slug: String) {
+query GetEventBySlug($slug: String!) {
   eventCollection(limit: 1, where: { slug: $slug }) {
     items {
       __typename

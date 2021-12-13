@@ -102,7 +102,7 @@ describe('SearchFiltersComponent', () => {
   it('selecting filter should set activeFilters', async () => {
     component.allCategories = allCategoriesStub;
     const selectionList = await loader.getHarness(MatSelectionListHarness);
-    const items = await selectionList.getItems({ text: allCategoriesStub[0].name });
+    const items = await selectionList.getItems({ text: allCategoriesStub[0].name as string });
     await items[0].select();
 
     expect(component.activeFilters).toEqual({ category: [allCategoriesStub[0].sys.id], stage: [], relatedOrgs: [] });

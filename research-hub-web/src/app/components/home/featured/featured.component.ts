@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GetAllFeaturedItemsGQL, GetAllFeaturedItemsQuery } from '@graphql/schema';
+import { FeaturedItemsItemsItem, GetAllFeaturedItemsGQL, Maybe } from '@graphql/schema';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-type HomepageFeaturedItems = GetAllFeaturedItemsQuery['featuredItemsCollection']['items'][number]['itemsCollection'];
+import { notEmpty } from '@app/global/notEmpty';
 
 @Component({
   selector: 'app-featured',
@@ -11,8 +10,8 @@ type HomepageFeaturedItems = GetAllFeaturedItemsQuery['featuredItemsCollection']
   styleUrls: ['./featured.component.scss']
 })
 export class FeaturedComponent implements OnInit {
-  @Input() title: string;
-  public featuredItems$: Observable<HomepageFeaturedItems>;
+  @Input() title: Maybe<string>;
+  public featuredItems$: Observable<FeaturedItemsItemsItem[]>;
 
   constructor(
     public getAllFeaturedItemsGQL: GetAllFeaturedItemsGQL
@@ -20,7 +19,7 @@ export class FeaturedComponent implements OnInit {
 
   ngOnInit() {
     this.featuredItems$ = this.getAllFeaturedItemsGQL.fetch().pipe(
-      map(x => x.data.featuredItemsCollection.items[0].itemsCollection)
+      map(x => x?.data?.featuredItemsCollection?.items[0]?.itemsCollection?.items.filter(notEmpty) as FeaturedItemsItemsItem[])
     );
   }
 }
