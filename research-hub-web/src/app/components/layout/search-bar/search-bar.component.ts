@@ -57,18 +57,23 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.breakpointObserver.observe('(max-width: 1100px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches));
     
     // Search autocomplete initialisation
-    this.subscriptions.add(this.searchAutocompleteService.allTitles$.subscribe(titles => {
-      this.autoCompleteTerms = [
-        ...this.searchAutocompleteService.getAutocompleteTerms(),
-        ...titles.articleTitles,
-        ...titles.caseStudyTitles,
-        ...titles.equipmentTitles,
-        ...titles.eventTitles,
-        ...titles.fundingTitles,
-        ...titles.serviceTitles,
-        ...titles.softwareTitles,
-        ...titles.subHubTitles
-      ];
+    this.subscriptions.add(this.searchAutocompleteService.allTitles$.subscribe({
+      next: titles => {
+        this.autoCompleteTerms = [
+          ...this.searchAutocompleteService.getAutocompleteTerms(),
+          ...titles.articleTitles,
+          ...titles.caseStudyTitles,
+          ...titles.equipmentTitles,
+          ...titles.eventTitles,
+          ...titles.fundingTitles,
+          ...titles.serviceTitles,
+          ...titles.softwareTitles,
+          ...titles.subHubTitles
+        ];
+      },
+      error: (error: Error) => {
+        console.error(`Search autocomplete error. ${error}`);
+      }
     }));
 
     // Create search autocomplete filtered terms based on the user input

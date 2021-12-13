@@ -45,19 +45,19 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
 
   private getAllCategories(): Observable<Category[]> {
     return this.allCategoriesGQL.fetch().pipe(
-      map((result) => result.data.categoryCollection.items)
+      map((result) => result.data.categoryCollection?.items)
     ) as Observable<Category[]>;
   }
 
   private getAllStages(): Observable<Stage[]> {
     return this.allStagesGQL.fetch().pipe(
-      map((result) => result.data.stageCollection.items)
+      map((result) => result.data.stageCollection?.items)
     ) as Observable<Stage[]>;
   }
 
   private getAllOrgUnits(): Observable<OrgUnit[]> {
     return this.allOrgUnitsGQL.fetch().pipe(
-      map((result) => result.data.orgUnitCollection.items)
+      map((result) => result.data.orgUnitCollection?.items)
     ) as Observable<OrgUnit[]>;
   }
 

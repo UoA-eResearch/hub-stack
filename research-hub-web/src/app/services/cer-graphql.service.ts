@@ -61,7 +61,7 @@ export class CerGraphqlService {
    * Returns the results of the query response's .data.subHubCollection.items array
    */
   private _loadSubHubCollection() {
-    return this.getAllSubHubChildPagesSlugs.fetch().toPromise().then(x => x.data.subHubCollection.items);
+    return this.getAllSubHubChildPagesSlugs.fetch().toPromise().then(x => x?.data?.subHubCollection?.items);
   }
 
   /**
@@ -99,20 +99,22 @@ export class CerGraphqlService {
    */
   private _getBreadCrumbsArray(entrySlug: string, breadcrumbsArray) {
     for (const item of this._subHubCollectionWithChildPagesSlugs) {
-      item.internalPagesCollection.items.forEach(subPage => {
-        if (!subPage) {
-          return;
-        }
-        if (subPage.slug === entrySlug) { // The SubHub's childPages contains the current entry we're searching for
-          for (const subHub of breadcrumbsArray) { // Check it's not already known
-            if (subHub.slug === item.slug) {
-              throw new Error('Circular SubHub structure detected');
-            }
-          };
-          breadcrumbsArray.push({ title: item.title, slug: item.slug }); // Push it to the breadcrumbsArray
-          return this._getBreadCrumbsArray(item.slug, breadcrumbsArray); // Call the function on the SubHub
-        }
-      });
+      if (item && item.internalPagesCollection) {
+        item.internalPagesCollection.items.forEach(subPage => {
+          if (!subPage) {
+            return;
+          }
+          if (subPage.slug === entrySlug) { // The SubHub's childPages contains the current entry we're searching for
+            for (const subHub of breadcrumbsArray) { // Check it's not already known
+              if (subHub.slug === item.slug) {
+                throw new Error('Circular SubHub structure detected');
+              }
+            };
+            breadcrumbsArray.push({ title: item.title, slug: item.slug }); // Push it to the breadcrumbsArray
+            return this._getBreadCrumbsArray(item.slug, breadcrumbsArray); // Call the function on the SubHub
+          }
+        });
+      }
     }
   }
 
@@ -158,8 +160,8 @@ export interface SubHubFromQuery {
  */
 export class Content {
   constructor(
-    public slug?: string,
-    public typeName?: string
+    public slug: string,
+    public typeName: string
   ) { }
 
   public get ChildKeys(): string[] { return Object.keys(this).filter(key => key !== 'slug' && key !== 'typeName') }
@@ -182,18 +184,19 @@ class SubHubMap {
    * This function recursively searches through all SubHubs in SubHubMap.map for another
    * SubHub with a given slug. It returns either the parent SubHub (of type Content) or the
    * root ContentMap.map object (of type ContentMap) if the SubHub is not found.
-   * @param subHubSlug The slug o the SubHub we are looking for
+   * @param subHubSlug The slug of the SubHub we are looking for
    * @param subHub The current SubHub we are looking in
    */
-  findParentSubHub(subHubSlug: string, subHub: Content | ContentMap): Content | ContentMap {
-    if (subHub[subHubSlug]) { return subHub; }; // If the subHub is in the current SubHub
-
-    const childSubHubs: string[] = Object.keys(subHub) // Otherwise look at its children
+  findParentSubHub(subHubSlug: string, subHub: Content | ContentMap): Content | ContentMap | undefined {
+    if (subHub[subHubSlug]) { return subHub; } // If the subHub is in the current SubHub
+    else {
+      const childSubHubs: string[] = Object.keys(subHub) // Otherwise look at its children
       .filter(key => subHub[key].typeName === 'SubHub')
 
-    for (const childSubHub of childSubHubs) {
-      const parentSubHub = this.findParentSubHub(subHubSlug, subHub[childSubHub]);
-      if (parentSubHub) { return parentSubHub; }
+      for (const childSubHub of childSubHubs) {
+        const parentSubHub = this.findParentSubHub(subHubSlug, subHub[childSubHub]);
+        if (parentSubHub) { return parentSubHub; }
+      }
     }
   }
 
@@ -249,13 +252,13 @@ class SubHubMap {
    * @param curObject the Content item to create a route for
    * @param curPath the path to the current item's parent
    */
-  populateRouteArray(curObject: Content, curPath = '') {
+  populateRouteArray(curObject: Content, curPath: string = '') {
     curPath = curPath ? curPath + '/' + curObject.slug : curObject.slug;
 
     this.routes.push({
       path: curPath,
-      loadChildren: () => import(`../components/${curObject.typeName.toLowerCase()}s/${curObject.typeName.toLowerCase()}s.module`)
-        .then(m => m[curObject.typeName.toLowerCase().charAt(0).toUpperCase() + curObject.typeName.toLowerCase().slice(1) + 'sModule']),
+      loadChildren: () => import(`../components/${curObject.typeName?.toLowerCase()}s/${curObject.typeName?.toLowerCase()}s.module`)
+        .then(m => m[curObject.typeName?.toLowerCase().charAt(0).toUpperCase() + curObject.typeName?.toLowerCase().slice(1) + 'sModule']),
       data: { slug: curObject.slug },
       pathMatch: 'full'
     });
@@ -265,6 +268,5 @@ class SubHubMap {
         this.populateRouteArray(curObject[subHubChildKey], curPath);
       }
     }
-
   }
 }
