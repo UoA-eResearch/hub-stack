@@ -2,13 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { SearchService } from '@services/search.service';
 import {
   AllCategoriesGQL,
-  CategoryCollection,
-  GetHomepageGQL
+  Category,
+  GetHomepageGQL,
+  Maybe
 } from '@app/graphql/schema';
 import { Observable, Subscription } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { PageTitleService } from '@services/page-title.service';
+import { notEmpty } from '@app/global/notEmpty';
 
 @Component({
   selector: 'app-categories-page',
@@ -17,8 +19,8 @@ import { PageTitleService } from '@services/page-title.service';
 })
 export class CategoriesPageComponent implements OnInit, OnDestroy {
   public title: string = 'Research Categories';
-  public description: string;
-  public allCategories$: Observable<CategoryCollection>;
+  public description: Maybe<string> | undefined;
+  public allCategories$: Observable<Category[]>;
   private subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -34,18 +36,17 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
     this.allCategories$ = this.getAllCategories();
     this.subscriptions.add(
       this.getHomepageGQL.fetch().pipe(
-        map(x => x.data.homepageCollection.items[0])
+        map(x => x?.data?.homepageCollection?.items[0])
       ).subscribe(result => {
-        this.description = result.researchCategories;
+        this.description = result?.researchCategories;
       })
     )
   }
 
-  public getAllCategories(): Observable<CategoryCollection> {
-    try {
-      return this.allCategoriesGQL.fetch()
-        .pipe(pluck('data', 'categoryCollection')) as Observable<CategoryCollection>
-    } catch (e) { console.error('Error loading all Categories:', e) };
+  public getAllCategories(): Observable<Category[]> {
+    return this.allCategoriesGQL.fetch().pipe(
+        map(result => result?.data?.categoryCollection?.items.filter(notEmpty) as Category[])
+      )
   }
 
   public search(id: string): void {

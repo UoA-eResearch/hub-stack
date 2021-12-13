@@ -28,8 +28,9 @@ export class SearchService {
         const results: SearchResult[] = [];
         data["result"]["hits"]["hits"].forEach(element => {
           const summary = element.highlight?.["fields.summary.en-US"] ?
-            element.highlight["fields.summary.en-US"].join(' ') :
-            element._source.fields.summary["en-US"];
+            element.highlight["fields.summary.en-US"].join(' '):
+            (element._source?.fields?.summary && element._source?.fields?.summary["en-US"]) ? 
+            element._source.fields.summary["en-US"] : '';
 
           const result: SearchResult = {
             title: element._source.fields.title["en-US"],
@@ -61,15 +62,18 @@ export class SearchService {
       q: searchText,
     }
 
-    if (filters?.category?.length > 0) {
-      params.cat = filters.category
+    if (filters) {
+      if (filters.category?.length > 0) {
+        params.cat = filters.category
+      }
+      if (filters.relatedOrgs?.length > 0) {
+        params.org = filters.relatedOrgs
+      }
+      if (filters.stage?.length > 0) {
+        params.ra = filters.stage
+      }
     }
-    if (filters?.relatedOrgs?.length > 0) {
-      params.org = filters.relatedOrgs
-    }
-    if (filters?.stage?.length > 0) {
-      params.ra = filters.stage
-    }
+    
     if (sortOrder) {
       params.sort = sortOrder
     }
