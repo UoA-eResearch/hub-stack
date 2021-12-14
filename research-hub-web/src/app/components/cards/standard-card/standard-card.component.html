@@ -25,13 +25,15 @@
         contentItem.slug
       ]"
     >
-      {{ contentItem.title }}
+      <span>{{ contentItem.title }}
+        &nbsp;
+        <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">
+          lock
+        </mat-icon>
+      </span>
     </a>
-    &nbsp;
-    <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">
-      lock
-    </mat-icon>
   </mat-card-title>
+
   <mat-card-content
     ><span class="card-summary">
       <p>{{ contentItem.summary }}</p>
