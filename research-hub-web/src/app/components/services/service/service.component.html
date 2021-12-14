@@ -33,15 +33,13 @@
     </div>
 
     <!-- Service Body -->
-    <div class="single-column-max-width">
-      <ngx-contentful-rich-text
-        id="bodyMediaList"
-        style="word-break: break-word"
-        [document]="service.bodyText?.json"
-        [nodeRenderers]="nodeRenderers"
-        [markRenderers]="markRenderers"
-      ></ngx-contentful-rich-text>
-    </div>
+    <ngx-contentful-rich-text
+      id="bodyMediaList"
+      style="word-break: break-word"
+      [document]="service.bodyText?.json"
+      [nodeRenderers]="nodeRenderers"
+      [markRenderers]="markRenderers"
+    ></ngx-contentful-rich-text>
 
 
     <!-- Specifications Table -->

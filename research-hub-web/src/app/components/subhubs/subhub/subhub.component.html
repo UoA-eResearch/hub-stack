@@ -1,4 +1,8 @@
-<div style="overflow-x: hidden" class="results" *ngIf="subHub">
+<div
+  style="overflow-x: hidden"
+  class="results"
+  *ngIf="subHub"
+>
   <div id="subhub-container" class="margin-bottom">
     <div
       class="banner-container"
@@ -146,14 +150,12 @@
 
 <!-- Templates -->
 <ng-template #body let-subHub>
-  <div class="single-column-max-width">
-    <ngx-contentful-rich-text
-      id="bodyMediaList"
-      class="section-2"
-      style="word-break: break-word"
-      [document]="subHub.bodyText?.json"
-      [nodeRenderers]="nodeRenderers"
-      [markRenderers]="markRenderers"
-    ></ngx-contentful-rich-text>
-  </div>
+  <ngx-contentful-rich-text
+    id="bodyMediaList"
+    class="section-2"
+    style="word-break: break-word"
+    [document]="subHub.bodyText?.json"
+    [nodeRenderers]="nodeRenderers"
+    [markRenderers]="markRenderers"
+  ></ngx-contentful-rich-text>
 </ng-template>
