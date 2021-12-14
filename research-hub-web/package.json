@@ -58,6 +58,7 @@
     "apollo-link-error": "^1.1.13",
     "contentful": "^8.5.8",
     "date-fns": "~2.14.0",
+    "force-graph": "^1.42.4",
     "graphql": "^15.6.0",
     "graphql-tag": "^2.12.5",
     "localforage": "^1.10.0",

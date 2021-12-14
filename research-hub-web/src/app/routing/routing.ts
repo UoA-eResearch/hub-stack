@@ -5,6 +5,10 @@ import { LoginSuccessGuard } from '@uoa/auth';
 
 export const appRoutes: Routes = [
   {
+    path: 'graph',
+    loadChildren: () => import('@components/content-graph/content-graph.module').then((m) => m.ContentGraphModule)
+  },
+  {
     path: 'content/:id',
     loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then((m) => m.LegacyRoutingModule)
   },
