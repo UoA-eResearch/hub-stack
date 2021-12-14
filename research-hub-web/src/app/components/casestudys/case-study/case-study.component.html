@@ -49,17 +49,17 @@
     <div
       fxLayout="row"
       fxLayoutAlign="space-between"
-      fxLayoutGap="5vw"
-      fxLayout.lt-xl="column"
-      fxLayoutGap.lt-xl="0"
+      fxLayoutGap="3vw"
+      fxLayout.lt-lg="column"
+      fxLayoutGap.lt-lg="0"
     >
       <!-- caseStudy Body and References -->
       <div
         fxFlexOrder="2"
-        fxFlexOrder.lt-xl="1"
+        fxFlexOrder.lt-lg="1"
         fxFlex="1 1 50%"
-        fxFlex.lt-xl="1 1 auto"
-        [ngClass.lt-xl]="'single-column-max-width'"
+        fxFlex.lt-lg="1 1 auto"
+        [ngClass.lt-lg]="'single-column-max-width'"
       >
         <ngx-contentful-rich-text
           id="bodyMediaList"
@@ -91,10 +91,10 @@
           relatedContacts.length > 0 ||
           relatedOrgs.length > 0
         "
-        fxFlex.gt-xl="0 0 350px"
+        fxFlex.gt-lg="0 0 auto"
         fxLayout="column"
         fxFlexOrder="1"
-        fxFlexOrder.lt-xl="2"
+        fxFlexOrder.lt-lg="2"
       >
         <h3 *ngIf="relatedContacts.length > 0">
           Contacts
@@ -103,8 +103,8 @@
         <div
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-xl="row wrap"
-          fxLayoutGap.lt-xl="25px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -122,8 +122,8 @@
         <div
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-xl="row wrap"
-          fxLayoutGap.lt-xl="25px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -140,8 +140,8 @@
         <div
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-xl="row wrap"
-          fxLayoutGap.lt-xl="25px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -155,7 +155,7 @@
       <!-- Related items -->
       <div
         *ngIf="relatedItems.length > 0"
-        fxFlex.gt-xl="0 0 350px"
+        fxFlex.gt-lg="0 0 auto"
         fxLayout="column"
         fxFlexOrder="3"
       >
@@ -167,8 +167,8 @@
           id="you-might-be-interested-in"
           fxLayout="column"
           fxLayoutGap="0px"
-          fxLayout.lt-xl="row wrap"
-          fxLayoutGap.lt-xl="25px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
           fxLayout.lt-sm="column"
           fxLayoutGap.lt-sm="0px"
         >
@@ -183,5 +183,5 @@
 </div>
 
 <ng-template #filler>
-  <div fxFlex="0 0 350px" fxFlexOrder="3" fxHide.lt-xl></div>
+  <div fxFlex="0 0 350px" fxFlexOrder="3" fxHide.lt-lg></div>
 </ng-template>
