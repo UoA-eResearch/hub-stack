@@ -3,7 +3,7 @@ import { CategoriesPageComponent } from './categories-page.component';
 import { SearchService } from '@services/search.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-import { CategoryCollection } from '@graphql/schema';
+import { Category, CategoryCollection } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
 import { MockProvider } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -13,8 +13,8 @@ import { PageTitleService } from '@services/page-title.service';
 describe('CategoriesPageComponent', () => {
   let component: CategoriesPageComponent;
   let fixture: ComponentFixture<CategoriesPageComponent>;
-  const mockCategories$: Observable<CategoryCollection> = of({
-    'items': [
+  const mockCategories$: Observable<Category[]> = of(
+    [
       {
         "name": "Researcher Skills & Development",
         "description": "Explore the continuous learning available to you and find opportunities to develop your research skills.",
@@ -95,8 +95,8 @@ describe('CategoriesPageComponent', () => {
         "description": "See all upcoming events at the ResearchHub.",
         "displayOrder": 16
       }
-    ]
-  } as CategoryCollection);
+    ] as Category[]
+  );
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
