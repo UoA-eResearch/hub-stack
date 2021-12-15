@@ -37,7 +37,6 @@ describe('StandardCardComponent', () => {
       contentfulMetadata: {
         tags: [],
       },
-      icon: null,
       interestedPartiesCollection: null,
       keywords: null,
       linkedFrom: null,
