@@ -46,18 +46,23 @@
   <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
     <app-breadcrumbs [title]="caseStudy.title!"></app-breadcrumbs>
 
-    <div fxLayout="row" fxLayoutAlign="space-around" fxLayout.lt-lg="column">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+      fxLayoutGap="3vw"
+      fxLayout.lt-lg="column"
+      fxLayoutGap.lt-lg="0"
+    >
       <!-- caseStudy Body and References -->
       <div
-        fxLayout="column"
         fxFlexOrder="2"
         fxFlexOrder.lt-lg="1"
-        fxFlex="1 1 35%"
-        fxFlexOrder.xs="1"
+        fxFlex="1 1 50%"
+        fxFlex.lt-lg="1 1 auto"
+        [ngClass.lt-lg]="'single-column-max-width'"
       >
         <ngx-contentful-rich-text
           id="bodyMediaList"
-          class="section-2"
           style="word-break: break-word"
           [document]="caseStudy.bodyText?.json"
           [nodeRenderers]="nodeRenderers"
@@ -86,7 +91,7 @@
           relatedContacts.length > 0 ||
           relatedOrgs.length > 0
         "
-        fxFlex.gt-lg="0 0 350px"
+        fxFlex.gt-lg="0 0 auto"
         fxLayout="column"
         fxFlexOrder="1"
         fxFlexOrder.lt-lg="2"
@@ -150,7 +155,7 @@
       <!-- Related items -->
       <div
         *ngIf="relatedItems.length > 0"
-        fxFlex.gt-lg="0 0 350px"
+        fxFlex.gt-lg="0 0 auto"
         fxLayout="column"
         fxFlexOrder="3"
       >
@@ -176,3 +181,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #filler>
+  <div fxFlex="0 0 350px" fxFlexOrder="3" fxHide.lt-lg></div>
+</ng-template>

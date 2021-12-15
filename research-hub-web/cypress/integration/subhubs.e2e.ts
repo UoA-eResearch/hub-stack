@@ -21,7 +21,7 @@ describe('ResearchHubs SubHub Pages', () => {
   });
 
   it('clicking a subhub child takes you to its page', () => {
-    cy.get('#subhub-children').first().click();
+    cy.get('#subhub-children>app-standard-card').first().click();
     cy.get('h1.content-title').should('not.be.empty');
   });
 
