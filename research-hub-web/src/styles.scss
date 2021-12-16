@@ -438,3 +438,13 @@ mat-card picture:first-child img.mat-card-image {
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
 }
+
+/**
+ * body text max-width
+ */
+.single-column-max-width {
+  max-width: $single-column-max-width;
+  @media (min-width: $single-column-max-width) {
+    margin: auto;
+  }
+}

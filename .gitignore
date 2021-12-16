@@ -49,3 +49,6 @@ serverless-now/env/local.env
 
 # ====================== cer-graphql =================== #
 cer-graphql/build
+
+# ====================== subhub-link-checker =========== #
+subhub-link-checker/build/*

@@ -3,44 +3,44 @@ import { ActivitiesPageComponent } from './activities-page.component';
 import { SearchService } from '@services/search.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ApolloTestingModule } from 'apollo-angular/testing';
-import { StageCollection, AllStagesGQL } from '@graphql/schema';
+import { Stage } from '@graphql/schema';
 import { Observable, of } from 'rxjs';
-import { MockComponent, MockProvider } from 'ng-mocks';
+import { MockProvider } from 'ng-mocks';
 import { PageTitleService } from '@services/page-title.service';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ActivitiesPageComponent', () => {
   let component: ActivitiesPageComponent;
   let fixture: ComponentFixture<ActivitiesPageComponent>;
-  const mockStages$: Observable<StageCollection> = of({
-    'items': [
-        {
-            "name": "Discover & Reuse",
-            "description": "Discover other research publications and reuse them for your research project",
-            "displayOrder": 5
-          },
-          {
-            "name": "Analyze & Interpret",
-            "description": "Learn how to create and collect your research data effectively",
-            "displayOrder": 3
-          },
-          {
-            "name": "Publish & Report",
-            "description": "Publishing and reporting the findings of your research",
-            "displayOrder": 4
-          },
-          {
-            "name": "Create, Collect & Capture",
-            "description": "Learn how to create and collect your research data effectively",
-            "displayOrder": 2
-          },
-          {
-            "name": "Plan & Design",
-            "description": "Resources to support the planning and design process of your research",
-            "displayOrder": 1
-          }
-    ]
-  } as StageCollection);
+  const mockStages$: Observable<Stage[]> = of(
+    [
+      {
+        "name": "Discover & Reuse",
+        "description": "Discover other research publications and reuse them for your research project",
+        "displayOrder": 5
+      },
+      {
+        "name": "Analyze & Interpret",
+        "description": "Learn how to create and collect your research data effectively",
+        "displayOrder": 3
+      },
+      {
+        "name": "Publish & Report",
+        "description": "Publishing and reporting the findings of your research",
+        "displayOrder": 4
+      },
+      {
+        "name": "Create, Collect & Capture",
+        "description": "Learn how to create and collect your research data effectively",
+        "displayOrder": 2
+      },
+      {
+        "name": "Plan & Design",
+        "description": "Resources to support the planning and design process of your research",
+        "displayOrder": 1
+      }
+    ] as Stage[]
+  );
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

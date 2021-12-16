@@ -1,6 +1,6 @@
 {
   "name": "cer-graphql",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "A GraphQL server used to proxy and authorise requests to external data sources.",
   "main": "build/index.js",
   "scripts": {
@@ -21,13 +21,14 @@
   "homepage": "https://github.com/UoA-eResearch/cer-graphql#readme",
   "dependencies": {
     "apollo-link-http": "^1.5.17",
-    "apollo-server": "^2.25.3",
+    "apollo-server": "^3.4.0",
     "cross-fetch": "^3.1.4",
     "dotenv": "^8.2.0",
     "graphql": "^15.5.0",
+    "graphql-depth-limit": "1.1.0",
+    "graphql-tools": "^4.0.8",
     "jsonwebtoken": "^8.5.1",
-    "jwk-to-pem": "^2.0.4",
-    "graphql-depth-limit": "1.1.0"
+    "jwk-to-pem": "^2.0.4"
   },
   "devDependencies": {
     "@types/graphql-depth-limit": "^1.1.3",

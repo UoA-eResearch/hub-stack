@@ -1,131 +1,224 @@
 <!-- Entry Block -->
 <span *ngIf="contentItem">
+  <!-- Templates -->
+  <ng-template #image>
+    <picture>
+      <source
+        srcset="{{ contentItem.banner?.url }}?w=1000&fm=webp"
+        type="image/webp"
+      />
+      <img
+        mat-card-image
+        src="{{ contentItem.banner?.url }}?w=1000"
+        alt="{{ contentItem.title }}"
+      />
+    </picture>
+  </ng-template>
+  <ng-template #noImage>
+    <div style="margin-top: 10px"></div>
+  </ng-template>
 
-    <!-- Templates -->
-    <ng-template #image>
-        <picture>
-            <source
-              srcset="{{ contentItem.banner?.url }}?w=1000&fm=webp"
-              type="image/webp"
-            />
-            <img
-              mat-card-image
-              src="{{ contentItem.banner?.url }}?w=1000"
-              alt="{{ contentItem.title }}"
-            />
-        </picture>
-    </ng-template>
-    <ng-template #noImage>
-        <div style="margin-top: 10px;"></div>
-    </ng-template>
+  <!-- Different Types of Entry Content -->
+  <span [ngSwitch]="contentItem.__typename">
+    <!-- Link Card -->
+    <span *ngSwitchCase="'LinkCard'">
+      <div>
+        <a
+          href="{{
+            contentItem.document ? contentItem.document.url : contentItem.url
+          }}"
+          target="_blank"
+        >
+          <mat-card class="embedded-entry-block">
+            <mat-card-title>
+              <span> {{ contentItem.title }}&nbsp; </span>
+              <mat-icon
+                *ngIf="contentItem.ssoProtected"
+                matTooltip="SSO Login Required"
+                >lock</mat-icon
+              >
+            </mat-card-title>
+            <mat-card-content
+              ><span class="card-summary"
+                ><p>{{ contentItem.summary }}</p></span
+              >
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
+    </span>
 
-    <!-- Different Types of Entry Content -->
-    <span [ngSwitch]="contentItem.__typename">
+    <!-- Video -->
+    <span *ngSwitchCase="'Video'">
+      <app-video-card [contentItem]="contentItem"></app-video-card>
+    </span>
 
-        <!-- Link Card -->
-        <span *ngSwitchCase="'LinkCard'">
-            <div class="link-card">
-                <a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">
-                    <mat-card class="embedded-entry-block">
-                        <mat-card-title>
-                            <span>
-                                {{ contentItem.title }}&nbsp;
-                            </span>
-                            <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
-                        </mat-card-title>
-                        <mat-card-content><span class="card-summary"><p>{{ contentItem.summary }}</p></span>
-                        </mat-card-content>
-                    </mat-card>
-                </a>
-            </div>
-        </span>
+    <!-- Link Card -->
+    <span *ngSwitchCase="'LinkCard'">
+      <div class="link-card">
+        <a href="{{ contentItem.document ? contentItem.document.url : contentItem.url }}" target="_blank">
+          <mat-card class="embedded-entry-block">
+            <mat-card-title>
+              <span>
+                  {{ contentItem.title }}&nbsp;
+              </span>
+              <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">lock</mat-icon>
+            </mat-card-title>
+            <mat-card-content><span class="card-summary"><p>{{ contentItem.summary }}</p></span>
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
+    </span>
 
-        <!-- Video -->
-        <span *ngSwitchCase="'Video'">
-            <app-video-card [contentItem]="contentItem"></app-video-card>
-        </span>
+    <!-- Table -->
+    <span *ngSwitchCase="'Table'">
+      <div class="table-container section">
+        <h3>{{ contentItem.name }}</h3>
 
-        <!-- Table -->
-        <span *ngSwitchCase="'Table'">
-            <div class="table-container section">
-                <h3>{{ contentItem.name }}</h3>
-
-                <!-- Horizontal Headers -->
-                <ng-container
-                    *ngIf="contentItem.table.useHorizontalHeaders && !contentItem.table.useVerticalHeaders">
-                    <table class="body-table">
-                        <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
-                            <ng-container *ngFor="let column of row; let j = index">
-                                <th role="columnheader" *ngIf="i === 0"><markdown [data]="column"></markdown></th>
-                                <td role="cell" *ngIf="i !== 0"><markdown [data]="column"></markdown></td>
-                            </ng-container>
-                        </tr>
-                    </table>
+        <!-- Horizontal Headers -->
+        <div
+          *ngIf="
+            contentItem.table.useHorizontalHeaders &&
+            !contentItem.table.useVerticalHeaders
+          "
+          class="overflow-container"
+        >
+          <table class="body-table">
+            <tbody>
+              <tr
+                role="row"
+                *ngFor="let row of contentItem.table.tableData; let i = index"
+              >
+                <ng-container *ngFor="let column of row; let j = index">
+                  <th role="columnheader" *ngIf="i === 0">
+                    <markdown [data]="column"></markdown>
+                  </th>
+                  <td role="cell" *ngIf="i !== 0">
+                    <markdown [data]="column"></markdown>
+                  </td>
                 </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-                <!-- Vertical Headers -->
-                <ng-container
-                    *ngIf="contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders">
-                    <table class="body-table">
-                        <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
-                            <ng-container *ngFor="let column of row; let j = index">
-                                <th role="columnheader" *ngIf="j === 0"><markdown [data]="column"></markdown></th>
-                                <td role="cell" *ngIf="j !== 0"><markdown [data]="column"></markdown></td>
-                            </ng-container>
-                        </tr>
-                    </table>
-                </ng-container>
+        <!-- Vertical Headers -->
+        <div
+          *ngIf="
+            contentItem.table.useVerticalHeaders &&
+            !contentItem.table.useHorizontalHeaders
+          "
+          class="overflow-container"
+        >
+          <table class="body-table">
+            <tr
+              role="row"
+              *ngFor="let row of contentItem.table.tableData; let i = index"
+            >
+              <ng-container *ngFor="let column of row; let j = index">
+                <th role="columnheader" *ngIf="j === 0">
+                  <markdown [data]="column"></markdown>
+                </th>
+                <td role="cell" *ngIf="j !== 0">
+                  <markdown [data]="column"></markdown>
+                </td>
+              </ng-container>
+            </tr>
+          </table>
+        </div>
 
-                <!-- Horizontal and Vertical Headers -->
-                <ng-container
-                    *ngIf="contentItem.table.useVerticalHeaders && contentItem.table.useHorizontalHeaders">
-                    <table class="body-table">
-                        <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
-                            <ng-container *ngFor="let column of row; let j = index">
-                                <th role="columnheader" *ngIf="j === 0 || i === 0"><markdown [data]="column"></markdown></th>
-                                <td role="cell" *ngIf="j !== 0 && i !== 0"><markdown [data]="column"></markdown></td>
-                            </ng-container>
-                        </tr>
-                    </table>
-                </ng-container>
+        <!-- Horizontal and Vertical Headers -->
+        <div
+          *ngIf="
+            contentItem.table.useVerticalHeaders &&
+            contentItem.table.useHorizontalHeaders
+          "
+          class="overflow-container"
+        >
+          <table class="body-table">
+            <tr
+              role="row"
+              *ngFor="let row of contentItem.table.tableData; let i = index"
+            >
+              <ng-container *ngFor="let column of row; let j = index">
+                <th role="columnheader" *ngIf="j === 0 || i === 0">
+                  <markdown [data]="column"></markdown>
+                </th>
+                <td role="cell" *ngIf="j !== 0 && i !== 0">
+                  <markdown [data]="column"></markdown>
+                </td>
+              </ng-container>
+            </tr>
+          </table>
+        </div>
 
-                <!--  No Headers -->
-                <ng-container
-                    *ngIf="!contentItem.table.useVerticalHeaders && !contentItem.table.useHorizontalHeaders">
-                    <table class="body-table">
-                        <tr role="row" *ngFor="let row of contentItem.table.tableData; let i = index">
-                            <td role="cell" *ngFor="let column of row; let j = index"><markdown [data]="column"></markdown></td>
-                        </tr>
-                    </table>
-                </ng-container>
-            </div>
-        </span>
+        <!--  No Headers -->
+        <div
+          *ngIf="
+            !contentItem.table.useVerticalHeaders &&
+            !contentItem.table.useHorizontalHeaders
+          "
+          class="overflow-container"
+        >
+          <table class="body-table">
+            <tr
+              role="row"
+              *ngFor="let row of contentItem.table.tableData; let i = index"
+            >
+              <td role="cell" *ngFor="let column of row; let j = index">
+                <markdown [data]="column"></markdown>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </span>
 
-        <!-- Expandable - a special type which is a nested rich text field within this rich text field. 
-            For this reason we only fetch the expand ID, and use that in it's own component to fetch the nested rich text 
+    <!-- Expandable - a special type which is a nested rich text field within this rich text field.
+            For this reason we only fetch the expand ID, and use that in it's own component to fetch the nested rich text
             and then render it separately. (So that we don't end up in some kind of graphql infinity loop).
         -->
-        <span *ngSwitchCase="'Expand'">
-            <app-expandable-page-part [contentItem]="contentItem"></app-expandable-page-part>
-        </span>
-
-        <!-- Default Entry Block Template -->
-        <span *ngSwitchDefault>
-            <a [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
-                <mat-card class="embedded-entry-block">
-                    <ng-container *ngIf="contentItem.banner; then image; else noImage"></ng-container>
-                    <span class="card-label">{{
-                        contentItem.__typename | contentTypeDisplayName
-                      }}</span>
-                    <mat-card-title>
-                        <span>
-                            {{ contentItem['title'] }}
-                            <mat-icon *ngIf="contentItem.ssoProtected" matTooltip="SSO Login Required">&nbsp;lock</mat-icon>
-                        </span>
-                    </mat-card-title>
-                    <mat-card-content><span class="card-summary"><p>{{ contentItem['summary'] }}</p></span></mat-card-content>
-                </mat-card>
-            </a>
-        </span>
+    <span *ngSwitchCase="'Expand'">
+      <app-expandable-page-part
+        [contentItem]="contentItem"
+      ></app-expandable-page-part>
     </span>
+
+    <!-- Default Entry Block Template -->
+    <span *ngSwitchDefault>
+      <a
+        [routerLink]="
+          '/' +
+          contentItem['__typename'].toLowerCase() +
+          '/' +
+          contentItem['slug']
+        "
+      >
+        <mat-card class="embedded-entry-block">
+          <ng-container
+            *ngIf="contentItem.banner; then image; else noImage"
+          ></ng-container>
+          <span class="card-label">{{
+            contentItem.__typename | contentTypeDisplayName
+          }}</span>
+          <mat-card-title>
+            <span>
+              {{ contentItem["title"] }}
+              <mat-icon
+                *ngIf="contentItem.ssoProtected"
+                matTooltip="SSO Login Required"
+                >&nbsp;lock</mat-icon
+              >
+            </span>
+          </mat-card-title>
+          <mat-card-content
+            ><span class="card-summary"
+              ><p>{{ contentItem["summary"] }}</p></span
+            ></mat-card-content
+          >
+        </mat-card>
+      </a>
+    </span>
+  </span>
 </span>
