@@ -15,7 +15,7 @@ describe('ExpandablePagePartComponent', () => {
   let fixture: ComponentFixture<ExpandablePagePartComponent>;
   let loader: HarnessLoader;
 
-  const contentItem: Partial<Expand> = {
+  const contentItem: Expand = {
     "__typename": "Expand",
     "sys": {
       "id": "1NaeZx3cAryE4yv64fPCLI",
@@ -25,7 +25,14 @@ describe('ExpandablePagePartComponent', () => {
       "publishedVersion": 31,
       "environmentId": "50e5cff2-6fd6-4817-a6d4-d9fe8a3766a7",
       "spaceId": "vbuxn5csp0ik"
-    }
+    },
+    "contentfulMetadata": {
+      tags: []
+    },
+    "bodyText": null,
+    "linkedFrom": null,
+    "showSummary": true,
+    "title": "Test"
   };
 
   const expand: Expand = {
