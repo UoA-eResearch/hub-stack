@@ -1,4 +1,4 @@
-query GetCaseStudyBySlug($slug: String) {
+query GetCaseStudyBySlug($slug: String!) {
   caseStudyCollection(limit: 1, where: { slug: $slug }) {
     items {
       __typename

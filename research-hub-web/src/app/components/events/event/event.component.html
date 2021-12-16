@@ -6,9 +6,8 @@
     class="site-padding margin-bottom"
     ngClass.lt-md="site-padding-mobile top-padding"
   >
-    <app-breadcrumbs
-      [title]="event.title"
-    ></app-breadcrumbs>
+    <app-breadcrumbs [title]="event.title!"></app-breadcrumbs>
+
     <!-- Title and Summary -->
     <div fxLayout="column wrap">
       <ng-container
@@ -36,7 +35,7 @@
     <ngx-contentful-rich-text
       id="bodyMediaList"
       style="word-break: break-word"
-      [document]="event.bodyText.json"
+      [document]="event.bodyText?.json"
       [nodeRenderers]="nodeRenderers"
       [markRenderers]="markRenderers"
     ></ngx-contentful-rich-text>
@@ -59,7 +58,7 @@
 
     <!-- Related -->
     <div class="event-owners section" fxLayout="column">
-      <h3 *ngIf="event?.relatedItemsCollection.items.length > 0">
+      <h3 *ngIf="relatedItems.length > 0">
         Explore Related
         <hr />
       </h3>
@@ -70,40 +69,40 @@
         fxLayoutGap="25px"
       >
         <app-standard-card
-          *ngFor="let content of event.relatedItemsCollection.items"
+          *ngFor="let content of relatedItems"
           [contentItem]="content"
         ></app-standard-card>
       </div>
 
-      <h3 *ngIf="event?.relatedContactsCollection.items.length > 0">
+      <h3 *ngIf="relatedContacts.length > 0">
         Contacts
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-contact-card
-          *ngFor="let person of event.relatedContactsCollection.items"
+          *ngFor="let person of relatedContacts"
           [person]="person"
         ></app-contact-card>
       </div>
 
-      <h3 *ngIf="event?.relatedOrgsCollection.items.length > 0">
+      <h3 *ngIf="relatedOrgs.length > 0">
         Organisations
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-org-unit-card
-          *ngFor="let orgUnit of event.relatedOrgsCollection.items"
+          *ngFor="let orgUnit of relatedOrgs"
           [orgUnit]="orgUnit"
         ></app-org-unit-card>
       </div>
 
-      <h3 *ngIf="event?.relatedDocsCollection.items.length > 0">
+      <h3 *ngIf="relatedDocs.length > 0">
         Documents
         <hr />
       </h3>
       <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="25px">
         <app-document-card
-          *ngFor="let document of event.relatedDocsCollection.items"
+          *ngFor="let document of relatedDocs"
           [document]="document"
         ></app-document-card>
       </div>
@@ -118,9 +117,9 @@
     class="banner-container"
     [ngClass]="{ 'standard-banner': bannerImageUrl }"
     [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
-    [ngStyle]="
-      bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
-    "
+    [ngStyle]="{
+      'background-image': bannerImageUrl ? 'url(' + bannerImageUrl + ')' : ''
+    }"
   ></div>
 </ng-template>
 

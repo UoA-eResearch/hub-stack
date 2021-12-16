@@ -10,7 +10,7 @@ import { SearchService } from '@services/search.service';
 })
 export class SearchResultsListComponent {
   @Input() loading = false;
-  @Input() searchResults: SearchResults = null;
+  @Input() searchResults: SearchResults;
 
   constructor(
     public searchService: SearchService,

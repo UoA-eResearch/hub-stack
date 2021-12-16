@@ -1,3 +1,5 @@
+import { CategoryCollection, OrgUnitCollection, StageCollection } from "@app/graphql/schema"
+
 export interface SearchQuery {
   query: string,
   size: number,
@@ -11,6 +13,12 @@ export interface SearchFilters {
   relatedOrgs: string[],
   stage: string[],
   category: string[]
+}
+
+export interface AllFilters { 
+  allCategories: CategoryCollection | null,
+  allStages: StageCollection | null,
+  allOrganisations: OrgUnitCollection | null
 }
 
 export interface SearchResults {

@@ -10,7 +10,7 @@ describe('BodyMediaService', () => {
     "entries": {
       "block": [{
           contentfulMetadata: {
-            tags: null
+            tags: []
           },
           "sys": {
             "id": "53FJu74kjVsH21A0RU2nTH",
@@ -24,7 +24,7 @@ describe('BodyMediaService', () => {
       }],
       "inline": [{
         contentfulMetadata: {
-          tags: null
+          tags: []
         },
         "sys": {
           "id": "51CsS9cFmuRN2s0wOcWuuF",
@@ -38,7 +38,7 @@ describe('BodyMediaService', () => {
       }],
       "hyperlink": [{
         contentfulMetadata: {
-          tags: null
+          tags: []
         },
         "sys": {
           "id": "64qNrnSsvnM8ixdxOkUF4y",
@@ -70,7 +70,7 @@ describe('BodyMediaService', () => {
         "contentType": "image/png",
         "__typename": "Asset",
         contentfulMetadata: {
-          tags: null
+          tags: []
         },
         fileName: '',
         height: 0,
@@ -94,7 +94,7 @@ describe('BodyMediaService', () => {
         "contentType": "image/jpeg",
         "__typename": "Asset",
         contentfulMetadata: {
-          tags: null
+          tags: []
         },
         fileName: '',
         height: 0,
@@ -189,30 +189,30 @@ describe('BodyMediaService', () => {
   it('should fetch an embedded-asset-block', () => {
     const contentItem = service.getContentItem(embeddedAssetNode);
     expect(contentItem).toBeTruthy();
-    expect(contentItem.sys.id).toBe(embeddedAssetNode.data.target.sys.id);
+    expect(contentItem?.sys.id).toBe(embeddedAssetNode.data.target.sys.id);
   });
 
   it('should fetch an embedded-entry-block', () => {
     const contentItem = service.getContentItem(embeddedEntryNode);
     expect(contentItem).toBeTruthy();
-    expect(contentItem.sys.id).toBe(embeddedEntryNode.data.target.sys.id);
+    expect(contentItem?.sys.id).toBe(embeddedEntryNode.data.target.sys.id);
   });
 
   it('should fetch an embedded-entry-inline', () => {
     const contentItem = service.getContentItem(embeddedEntryInlineNode);
     expect(contentItem).toBeTruthy();
-    expect(contentItem.sys.id).toBe(embeddedEntryInlineNode.data.target.sys.id);
+    expect(contentItem?.sys.id).toBe(embeddedEntryInlineNode.data.target.sys.id);
   });
 
   it('should fetch an entry-hyperlink', () => {
     const contentItem = service.getContentItem(entryHyperlinkNode);
     expect(contentItem).toBeTruthy();
-    expect(contentItem.sys.id).toBe(entryHyperlinkNode.data.target.sys.id);
+    expect(contentItem?.sys.id).toBe(entryHyperlinkNode.data.target.sys.id);
   });
 
   it('should fetch an asset-hyperlink', () => {
     const contentItem = service.getContentItem(assetHyperlinkNode);
     expect(contentItem).toBeTruthy();
-    expect(contentItem.sys.id).toBe(assetHyperlinkNode.data.target.sys.id);
+    expect(contentItem?.sys.id).toBe(assetHyperlinkNode.data.target.sys.id);
   });
 });
