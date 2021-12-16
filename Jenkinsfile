@@ -9,7 +9,6 @@ pipeline {
         booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend even if there are no code changes.' )
         booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API even if there are no code changes.')
         booleanParam(name: "FORCE_REDEPLOY_SP", defaultValue: false, description: 'Force redeploy the search-proxy Lambda  even if there are no code changes.')
-        booleanParam(name: "FORCE_REDEPLOY_LINK_CHECKER", defaultValue: false, description: "Force redeploy the SubHub link checker Contentful app even if there are no code changes.")
     }
 
     agent {
@@ -140,20 +139,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Build subhub-link-checker') {
-                    when {
-                        anyOf {
-                            changeset "**/subhub-link-checker/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_LINK_CHECKER
-                        }
-                    }
-                    steps {
-                        dir("subhub-link-checker") {
-                            echo "Installing link-checker dependencies..."
-                            sh "npm install"
-                        }
-                    }
-                }
             }
         }
 
@@ -174,10 +159,6 @@ pipeline {
                                     sh "npm install"
                                     sh "export stage=${BRANCH_NAME} && npm run test -- --aws-profile=${awsProfile}"
                                 }
-		                dir("subhub-link-checker") {
-		                    echo "Installing link-checker dependencies..."
-		                    sh "npm install"
-		                }
                             }
                         }
                     }
@@ -243,22 +224,6 @@ pipeline {
                             }
                         }
                         echo "Deploy to ${BRANCH_NAME} complete"
-                    }
-                }
-                stage('Deploy link-checker') {
-                    when {
-                        anyOf {
-                            changeset "**/subhub-link-checker/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_LINK_CHECKER
-                        }
-                    }
-                    steps {
-                        dir("subhub-link-checker") {
-                            echo "Deploying to GitHub pages..."
-                            sh "git config user.name cerci-user"
-                            sh "git config credential.helper '/bin/bash credentials-helper-ci.sh'"
-                            sh "npm run deploy"
-                        }
                     }
                 }
             }
