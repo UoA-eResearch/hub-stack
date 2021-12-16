@@ -207,6 +207,13 @@ export async function createServer (config: CerGraphqlServerConfig) {
       schema,
       introspection: true,
       plugins: [
+        // Since Apollo 3, the GraphQL Playground environment
+        // is replaced by a link to Apollo Sandbox, a proprietary cloud-based
+        // service. They have also provided an option to re-enable GraphQL Playground,
+        // which is used here.
+        // GraphQL Playground is being merged with graphiql, though
+        // seems progress is stalled. (https://github.com/graphql/graphql-playground/issues/1143)
+        // May need to migrate to graphiql when that is available.
         enablePlayground ?
         ApolloServerPluginLandingPageGraphQLPlayground() :
         ApolloServerPluginLandingPageProductionDefault()
