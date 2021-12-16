@@ -18,7 +18,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./expandable-page-part.component.scss']
 })
 export class ExpandablePagePartComponent implements OnInit, OnDestroy {
-  @Input() contentItem: Partial<Expand>; // basically just the id of the expand e.g. { "__typename": "Expand", "sys": { "id": "3sOzm7PRhsgcGibaW73EXN", "__typename": "Sys" } }
+  @Input() contentItem: Expand; // basically just the id of the expand e.g. { "__typename": "Expand", "sys": { "id": "3sOzm7PRhsgcGibaW73EXN", "__typename": "Sys" } }
   
   public expandPart$: Observable<Expand>;
   private subscriptions = new Subscription();
@@ -88,7 +88,7 @@ export class ExpandablePagePartComponent implements OnInit, OnDestroy {
       }
       summary = summary.length > 0 ? summary.substring(0, maxLength - 3) + "..." : summary;
     } catch (e) {
-      console.error(`Error creating expandable page part summary text for ${this.contentItem.sys.id}:`, e);
+      console.error(`Error creating expandable page part summary text for ${this.contentItem.sys?.id}:`, e);
     }
     return summary;
   }

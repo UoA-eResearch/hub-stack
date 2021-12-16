@@ -37,7 +37,6 @@ describe('StandardCardComponent', () => {
       contentfulMetadata: {
         tags: [],
       },
-      icon: null,
       interestedPartiesCollection: null,
       keywords: null,
       linkedFrom: null,
@@ -54,7 +53,14 @@ describe('StandardCardComponent', () => {
       ssoProtected: true,
       stageCollection: null,
       summary: '',
-      sys: null,
+      sys: {
+        id: '',
+        environmentId: '',
+        firstPublishedAt: '',
+        publishedAt: '',
+        publishedVersion: 0,
+        spaceId: ''
+      },
       title: 'Test Article',
       __typename: 'Article'
     }

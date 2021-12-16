@@ -16,9 +16,9 @@
     >
       <div class="banner-text" fxFlex="5 0 70%" fxFlex.lt-md="1 1 auto">
         <!-- Title -->
-        <h1 class="page-title" role="heading" aria-level="1">{{ title }}</h1>
+        <h1 *ngIf="title" class="page-title" role="heading" aria-level="1">{{ title }}</h1>
       </div>
-      <div class="logo-img-container" fxFlex="1 0 auto">
+      <div *ngIf="logoImageUrl" class="logo-img-container" fxFlex="1 0 auto">
         <!-- UoA Logo -->
         <a tabindex="-1" [href]="aucklandUniUrl" target="_blank" >
           <img class="logo-img" src="{{logoImageUrl}}" alt="uoa-logo">

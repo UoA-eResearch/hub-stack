@@ -1,4 +1,4 @@
-query GetArticleBySlug($slug: String) {
+query GetArticleBySlug($slug: String!) {
   articleCollection(limit: 1, where: { slug: $slug }) {
     items {
       __typename
