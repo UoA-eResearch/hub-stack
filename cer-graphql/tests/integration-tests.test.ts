@@ -2,6 +2,8 @@ import { createServer, getCredentials } from "../index";
 import * as TQ from './test-queries'; // Collection of test queries
 import aws from 'aws-sdk';
 import fetch from "cross-fetch";
+import { Request } from 'express';
+import { ExpressContext } from "apollo-server-express";
 // This package does not have type declarations.
 const aws4 = require('aws4');
 
@@ -26,7 +28,7 @@ let awsProfile = 'saml';
  * with an injected context so we can add an authorization header to our query requests.
  * If passed false, will create a query with an valid authorization header.
  */
- async function createServerAndTestClientWithAuth(useValidToken = true) {
+async function createServerAndTestClientWithAuth(useValidToken = true) {
     let server = await createServer(getCredentials(true));
     let tokens = await getTokens();
     if (!useValidToken) {
@@ -34,16 +36,16 @@ let awsProfile = 'saml';
     }
 
     // creating a new apollo server with authorization baked into the requests
-     let authorizedServer = {
-         async query(q: any) {
-             return await server.executeOperation(q, {
-                 req: {
-                     headers: {
-                         authorization: `Bearer ${tokens['access_token']}`
-                     }
-                 }
-             });
-         }
+    let authorizedServer = {
+        async query(q: any) {
+            return await server.executeOperation(q, {
+                req: {
+                    headers: {
+                        authorization: `Bearer ${tokens['access_token']}`
+                    }
+                } as Request
+            } as ExpressContext);
+        }
     };
     return authorizedServer;
 }
