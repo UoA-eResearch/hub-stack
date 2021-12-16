@@ -28,6 +28,8 @@ describe('SubhubsComponent', () => {
   let subHubSpy: any; // returns mock query data
   let allSubHubsSpy: any; // returns mock query data
 
+  const testSlug: string = 'landing-page-for-a-sub-hub';
+
   // All the data for an example parent subhub.
   const childrenOfParentLink$: Observable<SubHubCollection> = of({
     "items": [
@@ -350,6 +352,9 @@ describe('SubhubsComponent', () => {
   }));
 
   beforeEach(() => {
+    TestBed.inject(ActivatedRoute).params = of({
+      slug: testSlug
+    });
     controller = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(SubhubComponent);
     component = fixture.componentInstance;
@@ -365,15 +370,10 @@ describe('SubhubsComponent', () => {
   });
 
   describe('When a url slug is present', async () => {
-    const testSlug: string = 'landing-page-for-a-sub-hub';
-
     beforeEach(() => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(SubhubComponent);
       component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: testSlug
-      });
       fixture.detectChanges();      
       component.ngOnInit();
     })

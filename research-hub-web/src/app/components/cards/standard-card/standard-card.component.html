@@ -1,5 +1,5 @@
 <mat-card
-  [routerLink]="['/', contentItem.__typename.toLowerCase(), contentItem.slug]"
+  [routerLink]="['/', contentItem.__typename!.toLowerCase(), contentItem.slug]"
   [ngClass]="{ 'subhub-child-card': isSubhubChild }"
 >
   <ng-container
@@ -12,7 +12,7 @@
     "
   ></ng-container>
   <span class="card-label">{{
-    contentItem.__typename | contentTypeDisplayName
+    contentItem.__typename! | contentTypeDisplayName
   }}</span>
 
   <mat-card-title>
@@ -21,7 +21,7 @@
       tabindex="-1"
       [routerLink]="[
         '/',
-        contentItem.__typename.toLowerCase(),
+        contentItem.__typename!.toLowerCase(),
         contentItem.slug
       ]"
     >

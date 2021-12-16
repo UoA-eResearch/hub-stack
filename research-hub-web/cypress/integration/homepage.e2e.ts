@@ -23,7 +23,7 @@ describe('ResearchHubs Homepage', () => {
     })
 
     it('displays contact section', () => {
-        cy.get('#contacts').should('be.visible');
+        cy.get('#contacts').scrollIntoView().should('be.visible');
         cy.get('#contacts h2').should('not.be.empty');
         cy.get('#contacts .feedback-container').should('not.be.empty');
     })

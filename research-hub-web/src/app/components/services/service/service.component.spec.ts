@@ -18,6 +18,8 @@ describe('ServiceComponent', () => {
   let component: ServiceComponent;
   let fixture: ComponentFixture<ServiceComponent>;
   let controller: ApolloTestingController;
+  
+  const testSlug: string = 'death-star';
 
   const mockService$: Observable<Service> = of(
     {
@@ -55,6 +57,9 @@ describe('ServiceComponent', () => {
   }));
 
   beforeEach(() => {
+    TestBed.inject(ActivatedRoute).params = of({
+      slug: testSlug
+    });
     controller = TestBed.inject(ApolloTestingController);
     fixture = TestBed.createComponent(ServiceComponent);
     component = fixture.componentInstance;
@@ -70,15 +75,10 @@ describe('ServiceComponent', () => {
   });
 
   describe('When a url slug is present', async () => {
-    const testSlug: string = 'death-star';
-
     beforeEach(() => {
       controller = TestBed.inject(ApolloTestingController);
       fixture = TestBed.createComponent(ServiceComponent);
       component = fixture.componentInstance;
-      TestBed.inject(ActivatedRoute).params = of({
-        slug: testSlug
-      });
       fixture.detectChanges();
       component.ngOnInit();
     })

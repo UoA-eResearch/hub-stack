@@ -3,9 +3,9 @@
     class="banner-container"
     [ngClass]="{ 'standard-banner': bannerImageUrl }"
     [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
-    [ngStyle]="
-      bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
-    "
+    [ngStyle]="{
+      'background-image': bannerImageUrl ? 'url(' + bannerImageUrl + ')' : ''
+    }"
   >
     <div class="banner-content">
       <!-- Title -->
@@ -44,20 +44,25 @@
   </div>
 
   <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
-    <app-breadcrumbs [title]="caseStudy.title"></app-breadcrumbs>
+    <app-breadcrumbs [title]="caseStudy.title!"></app-breadcrumbs>
 
-    <div fxLayout="row" fxLayoutAlign="space-around" fxLayout.lt-lg="column">
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+      fxLayoutGap="3vw"
+      fxLayout.lt-lg="column"
+      fxLayoutGap.lt-lg="0"
+    >
       <!-- caseStudy Body and References -->
       <div
-        fxLayout="column"
         fxFlexOrder="2"
         fxFlexOrder.lt-lg="1"
-        fxFlex="1 1 35%"
-        fxFlexOrder.xs="1"
+        fxFlex="1 1 50%"
+        fxFlex.lt-lg="1 1 auto"
+        [ngClass.lt-lg]="'single-column-max-width'"
       >
         <ngx-contentful-rich-text
           id="bodyMediaList"
-          class="section-2"
           style="word-break: break-word"
           [document]="caseStudy.bodyText?.json"
           [nodeRenderers]="nodeRenderers"
@@ -82,16 +87,16 @@
       <!-- Extra Links -->
       <div
         *ngIf="
-          caseStudy.relatedDocsCollection.items.length > 0 ||
-          caseStudy.relatedContactsCollection.items.length > 0 ||
-          caseStudy.relatedOrgsCollection.items.length > 0
+          relatedDocs.length > 0 ||
+          relatedContacts.length > 0 ||
+          relatedOrgs.length > 0
         "
-        fxFlex.gt-lg="0 0 350px"
+        fxFlex.gt-lg="0 0 auto"
         fxLayout="column"
         fxFlexOrder="1"
         fxFlexOrder.lt-lg="2"
       >
-        <h3 *ngIf="caseStudy?.relatedContactsCollection.items.length > 0">
+        <h3 *ngIf="relatedContacts.length > 0">
           Contacts
           <hr />
         </h3>
@@ -104,13 +109,13 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-contact-card
-            *ngFor="let person of caseStudy.relatedContactsCollection.items"
+            *ngFor="let person of relatedContacts"
             [person]="person"
           ></app-contact-card>
         </div>
 
         <!-- Official Documents -->
-        <h3 *ngIf="caseStudy?.relatedDocsCollection.items.length > 0">
+        <h3 *ngIf="relatedDocs.length > 0">
           Documents
           <hr />
         </h3>
@@ -123,12 +128,12 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-document-card
-            *ngFor="let document of caseStudy.relatedDocsCollection.items"
+            *ngFor="let document of relatedDocs"
             [document]="document"
           ></app-document-card>
         </div>
 
-        <h3 *ngIf="caseStudy?.relatedOrgsCollection.items.length > 0">
+        <h3 *ngIf="relatedOrgs.length > 0">
           Organisations
           <hr />
         </h3>
@@ -141,7 +146,7 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-org-unit-card
-            *ngFor="let orgUnit of caseStudy.relatedOrgsCollection.items"
+            *ngFor="let orgUnit of relatedOrgs"
             [orgUnit]="orgUnit"
           ></app-org-unit-card>
         </div>
@@ -149,8 +154,8 @@
 
       <!-- Related items -->
       <div
-        *ngIf="caseStudy.relatedItemsCollection.items.length > 0"
-        fxFlex.gt-lg="0 0 350px"
+        *ngIf="relatedItems.length > 0"
+        fxFlex.gt-lg="0 0 auto"
         fxLayout="column"
         fxFlexOrder="3"
       >
@@ -168,7 +173,7 @@
           fxLayoutGap.lt-sm="0px"
         >
           <app-standard-card
-            *ngFor="let content of caseStudy.relatedItemsCollection.items"
+            *ngFor="let content of relatedItems"
             [contentItem]="content"
           ></app-standard-card>
         </div>
@@ -176,3 +181,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #filler>
+  <div fxFlex="0 0 350px" fxFlexOrder="3" fxHide.lt-lg></div>
+</ng-template>

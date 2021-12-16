@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloError } from '@apollo/client/errors';
-import { GetSubHubBySlugGQL, SubHub } from '@graphql/schema';
+import { notEmpty } from '@app/global/notEmpty';
+import { GetSubHubBySlugGQL, OfficialDocuments, OrgUnit, Person, SubHub, SubHubExternalPagesItem, SubHubInternalPagesItem, SubHubRelatedItemsItem } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -23,7 +24,14 @@ export class SubhubComponent implements OnInit, OnDestroy {
   public subHub: SubHub;
   public bannerTextStyling = 'color: white; text-shadow: 0px 0px 8px #333333;';
   public supportsWebp: Boolean;
-  public bannerImageUrl: string;
+  public bannerImageUrl: string | undefined;
+
+  public internalPages: SubHubInternalPagesItem[];
+  public externalPages: SubHubExternalPagesItem[];
+  public relatedItems: SubHubRelatedItemsItem[];
+  public relatedContacts: Person[];
+  public relatedOrgs: OrgUnit[];
+  public relatedDocs: OfficialDocuments[];
 
   constructor(
     public route: ActivatedRoute,
@@ -44,17 +52,23 @@ export class SubhubComponent implements OnInit, OnDestroy {
     });
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.subscriptions.add(this.route.params.pipe(
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadSubHub(slug))
+      switchMap((slug) => slug
+        ? this.loadSubHub(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (subHub: SubHub) => this.subHub = subHub,
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to SubHub Collection page');
+          this.router.navigate(['subhub', 'list'])
         } else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
@@ -74,17 +88,17 @@ export class SubhubComponent implements OnInit, OnDestroy {
     return this.getSubHubBySlug(slug).pipe(
       map((data) => {
         // Remove nulls from server in case of error.
-        data.internalPagesCollection.items = data.internalPagesCollection.items.filter(item => item);
-        data.externalPagesCollection.items = data.externalPagesCollection.items.filter(item => item);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
+        if (data.internalPagesCollection) this.internalPages = data.internalPagesCollection.items.filter(notEmpty);
+        if (data.externalPagesCollection) this.externalPages = data.externalPagesCollection.items.filter(notEmpty);
+        if (data.relatedItemsCollection) this.relatedItems = data.relatedItemsCollection.items.filter(notEmpty);
+        if (data.relatedContactsCollection) this.relatedContacts = data.relatedContactsCollection.items.filter(notEmpty);
+        if (data.relatedOrgsCollection) this.relatedOrgs = (data.relatedOrgsCollection.items.filter(notEmpty)).filter(item => item.name);
+        if (data.relatedDocsCollection) this.relatedDocs = (data.relatedDocsCollection.items.filter(notEmpty)).filter(item => item.title);
 
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
 
-        this.pageTitleService.title = data.title;
+        this.pageTitleService.title = data.title ?? '';
 
         // Set banner image URL for webp format if webp is supported
         if (data.banner?.url) {
@@ -105,15 +119,16 @@ export class SubhubComponent implements OnInit, OnDestroy {
    * @param slug The subhub's slug. Retrieved from the route parameter of the same name.
    */
   public getSubHubBySlug(slug: string): Observable<SubHub> {
-    if (!slug) {
-      this.router.navigate(['subhub', 'list'])
-    }
     return this.getSubHubBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.subHubCollection.items.length === 0) {
-          throw new Error(`Not found. Could not find subHub with slug "${slug}"`)
+        if (x?.data?.subHubCollection) {
+          if (x.data.subHubCollection.items.length === 0) {
+            throw new Error(`Not found. Could not find subHub with slug "${slug}"`)
+          } else {
+            return x.data.subHubCollection.items[0] as SubHub
+          }
         } else {
-          return x.data.subHubCollection.items[0] as SubHub
+          throw new Error('Unable to fetch subHubCollection');
         }
       })
     );

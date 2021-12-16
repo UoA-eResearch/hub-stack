@@ -13,9 +13,10 @@ export class BlocksEmbeddedAssetComponent extends NodeRenderer implements OnInit
   constructor(public bodyMediaService: BodyMediaService) { super(); }
 
   ngOnInit(): void {
-    this.contentItem = this.bodyMediaService.getContentItem(this.node);
-    if (!this.contentItem) {
-      console.error(`Error retrieving contentItem for node: ${this.node}`)
+    try {
+      this.contentItem = this.bodyMediaService.getContentItem(this.node);
+    } catch(e) {
+      console.error(e);
     }
   }
 }

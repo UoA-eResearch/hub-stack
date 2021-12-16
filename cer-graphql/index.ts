@@ -7,16 +7,16 @@ import fetch from "cross-fetch";
 import { validateUnauthenticatedQuery } from "./validateUnauthenticatedQuery";
 import authenticateByJwt, { fetchCognitoPublicKeys } from "./authenticateByJwt";
 import assertResultsArePublicItems from "./assertResultsArePublicItems";
-import { AuthenticationError } from "apollo-server-errors";
-import {
-  ApolloServer, 
+import { AuthenticationError, ApolloServer } from "apollo-server";
+import { 
   mergeSchemas,
   makeRemoteExecutableSchema,
   delegateToSchema,
   introspectSchema,
-} from "apollo-server";
+} from "graphql-tools";
 import { HttpLink } from "apollo-link-http";
 import depthLimit from "graphql-depth-limit";
+import { ApolloServerPluginLandingPageGraphQLPlayground, ApolloServerPluginLandingPageProductionDefault } from "apollo-server-core";
 
   // Measure server startup time
   var startTime = new Date().getTime(); 
@@ -206,7 +206,19 @@ export async function createServer (config: CerGraphqlServerConfig) {
     return new ApolloServer({
       schema,
       introspection: true,
-      playground: enablePlayground,
+      plugins: [
+        // Since Apollo 3, the GraphQL Playground environment
+        // is replaced by a link to Apollo Sandbox, a proprietary cloud-based
+        // service. They have also provided an option to re-enable GraphQL Playground,
+        // which is used here.
+        // GraphQL Playground is being merged with graphiql, though
+        // seems progress is stalled. (https://github.com/graphql/graphql-playground/issues/1143)
+        // May need to migrate to graphiql when that is available.
+        enablePlayground ?
+        ApolloServerPluginLandingPageGraphQLPlayground() :
+        ApolloServerPluginLandingPageProductionDefault()
+      ]
+      ,
       rootValue: (document: DocumentNode) => {
         // This sets the root value for each resolver to be the query document,
         // enabling us to have the whole query document in resolvers.
