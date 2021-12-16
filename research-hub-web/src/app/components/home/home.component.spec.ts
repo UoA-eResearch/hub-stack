@@ -22,8 +22,10 @@ describe('HomeComponent', () => {
         MockComponent(ContentTitleComponent),
         MockComponent(ContentContainerComponent),
         MockComponent(BannerImageComponent),
-        MockComponent(ContactComponent),
-        RouterTestingModule.withRoutes([])
+        MockComponent(ContactComponent)
+      ],
+      imports: [
+        RouterTestingModule.withRoutes([]),
       ],
       providers: [
         MockProvider(PageTitleService),
