@@ -27,7 +27,7 @@ There are three instances of the Contentful App - one for dev, test and prod. [R
     Repeat this process with the names "SubHub Link Checker - test" and "SubHub Link Checker - prod" to create an instance for the other Contentful environments. This way each environment has a separate instance, and you can promote changes through the environments.
 
 
-2. Upload the App. Clone the repository, then:
+2. Upload the App.
     ```
     cd subhub-link-checker
     npm install
