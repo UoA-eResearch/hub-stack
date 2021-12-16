@@ -1,4 +1,4 @@
-query GetServiceBySlug($slug: String) {
+query GetServiceBySlug($slug: String!) {
   serviceCollection(limit: 1, where: { slug: $slug }) {
     items {
       __typename

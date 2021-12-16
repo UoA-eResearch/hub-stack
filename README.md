@@ -16,6 +16,8 @@ A [Serverless Framework](https://www.serverless.com/) ([AWS Lambda](https://aws.
 ### 4. [terraform/](terraform/)
 Terraform infrastructure as code to create the Research Hub AWS infrastructure.
 
+### 4. [subhub-link-checker/](subhub-link-checker/)
+A [Contentful App Framework app](https://www.contentful.com/developers/docs/extensibility/app-framework/) that checks to prevent cyclical content references in SubHubs.
 ## Deployment
 CI/CD is achieved via the monorepo's [Jenkinsfile](Jenkinsfile) which is triggered when code is pushed to one of 4 Git branches (`sandbox`, `dev`, `test`, `prod`) corresponding to environments across the three [UoA AWS accounts](http://aws.auckland.ac.nz/) (`sandbox`, `nonprod`, `prod`). 
 

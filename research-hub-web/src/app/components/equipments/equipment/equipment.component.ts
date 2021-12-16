@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit, Type } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloError } from '@apollo/client/errors';
-import { Equipment, GetEquipmentBySlugGQL } from '@graphql/schema';
+import { notEmpty } from '@app/global/notEmpty';
+import { Equipment, EquipmentRelatedItemsItem, GetEquipmentBySlugGQL, OfficialDocuments, OrgUnit, Person } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
 import { MarkRenderer, NodeRenderer } from 'ngx-contentful-rich-text';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import supportsWebP from 'supports-webp';
 
@@ -22,7 +23,12 @@ export class EquipmentComponent implements OnInit, OnDestroy {
 
   public equipment: Equipment;
   public supportsWebp: Boolean;
-  public bannerImageUrl: string;
+  public bannerImageUrl: string | undefined;
+
+  public relatedItems: EquipmentRelatedItemsItem[];
+  public relatedContacts: Person[];
+  public relatedOrgs: OrgUnit[];
+  public relatedDocs: OfficialDocuments[];
 
   constructor(
     public route: ActivatedRoute,
@@ -48,13 +54,19 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       map((params) => {
         return (params.slug || this.route.snapshot.data.slug) as string;
       }),
-      switchMap((slug) => this.loadEquipment(slug))
+      switchMap((slug) => slug
+        ? this.loadEquipment(slug)
+        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+      )
     ).subscribe({
       next: (equipment: Equipment) => this.equipment = equipment,
       error: (error: Error) => {
         if (error instanceof ApolloError && error.message.includes('Authentication required')) {
           console.warn('Waiting for redirect to Login page');
-        } else if (error.message.includes('Not found')) {
+        } else if (error.message.includes('No slug')) {
+          console.warn('Waiting for redirect to Equipment Collection page');
+          this.router.navigate(['equipment', 'list'])
+        }  else if (error.message.includes('Not found')) {
           console.error(error);
           this.router.navigate(['error', 404]);
         } else {
@@ -73,10 +85,10 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     return this.getEquipmentBySlug(slug).pipe(
       map((data) => {
         // Strip nulls from related collection data.
-        data.relatedContactsCollection.items = data.relatedContactsCollection.items.filter(item => item);
-        data.relatedDocsCollection.items = data.relatedDocsCollection.items.filter(item => item && item.title);
-        data.relatedItemsCollection.items = data.relatedItemsCollection.items.filter(item => item);
-        data.relatedOrgsCollection.items = data.relatedOrgsCollection.items.filter(item => item && item.name);
+        if (data.relatedContactsCollection) this.relatedContacts = data.relatedContactsCollection.items.filter(notEmpty);
+        if (data.relatedDocsCollection) this.relatedDocs = (data.relatedDocsCollection.items.filter(notEmpty)).filter(item => item.title);
+        if (data.relatedItemsCollection) this.relatedItems = data.relatedItemsCollection.items.filter(notEmpty);
+        if (data.relatedOrgsCollection) this.relatedOrgs = (data.relatedOrgsCollection.items.filter(notEmpty)).filter(item => item.name);
 
         // If Call To Action is an email address
         if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
@@ -93,7 +105,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
         // For each rich text field add the links to the link maps in the body media service to enable rich text rendering
         this.bodyMediaService.buildLinkMaps(data.bodyText?.links);
 
-        this.pageTitleService.title = data.title;
+        this.pageTitleService.title = data.title ?? '';
 
         return data;
       })
@@ -107,15 +119,16 @@ export class EquipmentComponent implements OnInit, OnDestroy {
    * @param slug The article's slug. Retrieved from the route parameter of the same name.
    */
   public getEquipmentBySlug(slug: string): Observable<Equipment> {
-    if (!slug) {
-      this.router.navigate(['equipment', 'list'])
-    }
     return this.getEquipmentBySlugGQL.fetch({ slug }).pipe(
       map(x => {
-        if (x.data.equipmentCollection.items.length === 0) {
-          throw new Error(`Not found. Could not find equipment with slug "${slug}"`)
+        if (x?.data?.equipmentCollection) {
+          if (x.data.equipmentCollection.items.length === 0) {
+            throw new Error(`Not found. Could not find equipment with slug "${slug}"`)
+          } else {
+            return x.data.equipmentCollection.items[0] as Equipment
+          }
         } else {
-          return x.data.equipmentCollection.items[0] as Equipment
+          throw new Error('Unable to fetch equipmentCollection');
         }
       })
     );

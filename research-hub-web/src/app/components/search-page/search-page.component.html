@@ -5,9 +5,9 @@
       class="banner-container"
       [ngClass]="{ 'standard-banner': bannerImageUrl }"
       [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
-      [ngStyle]="
-        bannerImageUrl && { 'background-image': 'url(' + bannerImageUrl + ')' }
-      "
+      [ngStyle]="{
+        'background-image': bannerImageUrl ? 'url(' + bannerImageUrl + ')' : ''
+      }"
     ></div>
   </ng-container>
 
