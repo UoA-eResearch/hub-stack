@@ -6,11 +6,7 @@
   <div style="margin-top: 12px"></div>
 
   <mat-card-title>
-    <a 
-      class="card-title"
-      [attr.href]="document.url ?? document.document?.url"
-      target="_blank"
-    >
+    <a class="card-title" tabindex="0" (keydown.enter)="navigateTo(document.url)">
       <span>{{ document.title }}</span>
     </a>
   </mat-card-title>
