@@ -37,8 +37,15 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.getHomepageGQL.fetch().pipe(
         map(x => x?.data?.homepageCollection?.items[0])
-      ).subscribe(result => {
-        this.description = result?.researchCategories;
+      ).subscribe({
+        next: result => {
+          this.description = result?.researchCategories;
+        },
+        error: err => {
+          console.error(err);
+          const status: number = err['status'] ? err['status'] : 500;
+          this.router.navigate(['error', status]);
+        }
       })
     )
   }
