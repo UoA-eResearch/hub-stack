@@ -7,6 +7,7 @@ import { HomeComponent } from './home.component';
 import { BannerImageComponent } from './banner-image/banner-image.component';
 import { ContactComponent } from './contact/contact.component';
 import { PageTitleService } from '@services/page-title.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 describe('HomeComponent', () => {
@@ -22,6 +23,9 @@ describe('HomeComponent', () => {
         MockComponent(ContentContainerComponent),
         MockComponent(BannerImageComponent),
         MockComponent(ContactComponent)
+      ],
+      imports: [
+        RouterTestingModule.withRoutes([]),
       ],
       providers: [
         MockProvider(PageTitleService),
