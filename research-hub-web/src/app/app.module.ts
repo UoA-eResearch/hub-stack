@@ -92,8 +92,26 @@ export class AppModule {
     const error = onError(({ response, networkError, graphQLErrors }) => {
       const hasErrors = networkError || graphQLErrors;
       if (networkError) {
-        console.log("API returned networkError", networkError);
-        return;
+        if (
+          // When the server picks up an authentication error before the graphql resolver stage,
+          // the error will be returned as a networkError but in a similar format as a graphQLError
+          // which is why we currently have to handle the error as follows:
+          networkError['error'] &&
+          networkError['error']['errors'] &&
+          networkError['error']['errors'][0] &&
+          networkError['error']['errors'][0]['extensions']['code'] === 'UNAUTHENTICATED') {
+          this.loginService.doLogin(this.router.url).then((result) => {
+            // Workaround fix for blank page load issue
+            // when auth library returns a token instead of navigating to target url
+            if (result) {
+              location.reload();
+            }            
+          });
+          return;
+      } else {
+          console.error("API returned networkError", networkError);
+          return;
+        }
       }
       if (graphQLErrors) {
         console.log("API returned graphQLErrors", graphQLErrors);
