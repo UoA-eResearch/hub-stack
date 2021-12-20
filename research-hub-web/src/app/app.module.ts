@@ -28,6 +28,7 @@ import { AppAuthConfigService } from './services/app-auth-config.service';
 import { AppStorageService } from './services/app-storage.service';
 import { CerGraphqlService } from './services/cer-graphql.service';
 import { PageTitleService } from './services/page-title.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -49,7 +50,13 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     HttpClientModule,
     FlexLayoutModule,
     ErrorPagesModule,
-    AppLayoutModule
+    AppLayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     CerGraphqlService,
