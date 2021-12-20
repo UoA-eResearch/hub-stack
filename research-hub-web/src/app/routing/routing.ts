@@ -1,13 +1,10 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from '@app/components/layout/layout.component';
+import { ContentGraphResolver } from '@resolvers/content-graph.resolver';
 import { LoginSuccessGuard } from '@uoa/auth';
 
 
 export const appRoutes: Routes = [
-  {
-    path: 'graph',
-    loadChildren: () => import('@components/content-graph/content-graph.module').then((m) => m.ContentGraphModule)
-  },
   {
     path: 'content/:id',
     loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then((m) => m.LegacyRoutingModule)
@@ -25,6 +22,11 @@ export const appRoutes: Routes = [
     canActivate: [LoginSuccessGuard],
     component: LayoutComponent,
     children: [
+      {
+        path: 'graph',
+        loadChildren: () => import('@components/content-graph/content-graph.module').then((m) => m.ContentGraphModule),
+        resolve: { graph: ContentGraphResolver }
+      },
       {
         path: 'error/:errorCode',
         loadChildren: () => import('@components/error-routing/error-routing.module').then((m) => m.ErrorRoutingModule),

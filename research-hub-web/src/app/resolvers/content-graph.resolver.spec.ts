@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ContentGraphService } from './content-graph.service';
+import { ContentGraphResolver } from './content-graph.resolver';
 
 describe('ContentGraphService', () => {
-  let service: ContentGraphService;
+  let service: ContentGraphResolver;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ContentGraphService);
+    service = TestBed.inject(ContentGraphResolver);
   });
 
   it('should be created', () => {
