@@ -7,7 +7,7 @@
     <a *ngIf="person.link" class="card-title" tabindex="0" (keydown.enter)="navigateTo(person.link)">
       <span *ngIf="person.name">{{ person.name }}</span>
     </a>
-    <span *ngIf="!person.link && person.name" class="card-title">{{ person.name }}</span>
+    <span *ngIf="!person.link && person.name" class="card-title" tabindex="0">{{ person.name }}</span>
   </mat-card-title>
 
   <mat-card-content>
