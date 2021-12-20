@@ -1,15 +1,16 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { GetNotificationGQL } from '@app/graphql/schema';
+import { GetNotificationGQL, GetNotificationPublishedVersionGQL, Maybe } from '@app/graphql/schema';
 import { Document } from '@contentful/rich-text-types';
-import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { AppStorageService } from '@services/app-storage.service';
+import { from, iif, Observable, Subscription } from 'rxjs';
+import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-notification',
   template: `
     <div
-      *ngIf="notification && showNotification && !hasBeenDismissed"
+      *ngIf="notification && showNotification"
       [@slideInOut]
       class="notification-bar-container mat-elevation-z6"
       fxLayout="row"
@@ -41,31 +42,61 @@ import { filter, map } from 'rxjs/operators';
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
+  private readonly NOTIFICATION_STORAGE_KEY = 'notification/publishedVersion'
+  private publishedVersion?: number | null;
+
   public showNotification = false;
-  public hasBeenDismissed = false;
   public notification: Document | null = null;
 
   constructor(
-    private getNotificationGQL: GetNotificationGQL
+    private getNotification: GetNotificationGQL,
+    private getNotificationPublishedVersion: GetNotificationPublishedVersionGQL,
+    private storageService: AppStorageService
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.getNotificationGQL.fetch().pipe(
-        map((result) => result.data.homepageCollection?.items[0]?.notification),
-        filter((result) => result !== null)
-      ).subscribe((result) => {
-        this.notification = result?.json;
+    const $equalsStoredValue = (publishedVersion?: number | null): Observable<boolean> =>
+      from(this.storageService.getItem(this.NOTIFICATION_STORAGE_KEY)).pipe(
+        map((storedVersion) => publishedVersion === parseInt(storedVersion))
+      )
 
-        this.showNotification = true;
+    const $getNotificationPublishedVersion = this.getNotificationPublishedVersion.fetch().pipe(
+      map((result) => result.data.homepageCollection?.items[0]?.sys.publishedVersion)
+    )
+
+    const $requestNotification = $getNotificationPublishedVersion.pipe(
+      mergeMap((result) => $equalsStoredValue(result)),
+      switchMap((isEqual) => iif(
+        () => !isEqual,
+        $getNotification
+      ))
+    )
+
+    const $getNotification = this.getNotification.fetch().pipe(
+      tap((result) => this.publishedVersion = result.data.homepageCollection?.items[0]?.sys.publishedVersion),
+      map((result) => result.data.homepageCollection?.items[0]?.notification),
+      filter((result) => result !== null),
+    )
+
+    this.subscriptions.add(
+      $requestNotification.subscribe((result) => {
+        if (result) {
+          this.notification = result.json;
+          this.showNotification = true;
+        }
       })
     );
 
   }
 
   close(): void {
-    this.showNotification = false;
-    this.hasBeenDismissed = true;
+    this.storageService.setItem(this.NOTIFICATION_STORAGE_KEY, this.publishedVersion)
+      .then(() => {
+        this.showNotification = false;
+      })
+      .finally(() => {
+        this.showNotification = false;
+      });
   }
 
   ngOnDestroy(): void {
