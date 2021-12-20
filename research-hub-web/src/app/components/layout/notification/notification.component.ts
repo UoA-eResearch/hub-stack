@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { GetNotificationGQL } from '@app/graphql/schema';
 import { Document } from '@contentful/rich-text-types';
@@ -9,6 +10,7 @@ import { filter, map } from 'rxjs/operators';
   template: `
     <div
       *ngIf="notification && showNotification && !hasBeenDismissed"
+      [@slideInOut]
       class="notification-bar-container mat-elevation-z6"
       fxLayout="row"
       role="notification" aria-labelledby="notification-text" tabindex="0"
@@ -22,7 +24,20 @@ import { filter, map } from 'rxjs/operators';
     </div>
   `,
   styleUrls: ['notification.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('200ms ease-in', style({ transform: 'translateY(0%)' }))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({ transform: 'translateY(-100%)' }))
+      ])
+    ]
+
+    )
+  ]
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
