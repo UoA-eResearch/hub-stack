@@ -1,6 +1,6 @@
 {
-  "name": "research-hub-web",
-  "short_name": "research-hub-web",
+  "name": "ResearchHub",
+  "short_name": "ResearchHub",
   "theme_color": "#00467f",
   "background_color": "#ffffff",
   "display": "standalone",
