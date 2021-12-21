@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { GetNotificationGQL, GetNotificationPublishedVersionGQL, Maybe } from '@app/graphql/schema';
 import { Document } from '@contentful/rich-text-types';
 import { AppStorageService } from '@services/app-storage.service';
+import { NotificationService } from '@services/notification.service';
 import { from, iif, Observable, Subscription } from 'rxjs';
 import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 
@@ -42,44 +43,18 @@ import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
-  private readonly NOTIFICATION_STORAGE_KEY = 'notification/publishedVersion'
-  private publishedVersion?: number | null;
 
   public showNotification = false;
   public notification: Document | null = null;
 
   constructor(
-    private getNotification: GetNotificationGQL,
-    private getNotificationPublishedVersion: GetNotificationPublishedVersionGQL,
+    private notificationService: NotificationService,
     private storageService: AppStorageService
   ) { }
 
   ngOnInit(): void {
-    const $equalsStoredValue = (publishedVersion?: number | null): Observable<boolean> =>
-      from(this.storageService.getItem(this.NOTIFICATION_STORAGE_KEY)).pipe(
-        map((storedVersion) => publishedVersion === parseInt(storedVersion))
-      )
-
-    const $getNotificationPublishedVersion = this.getNotificationPublishedVersion.fetch().pipe(
-      map((result) => result.data.homepageCollection?.items[0]?.sys.publishedVersion)
-    )
-
-    const $requestNotification = $getNotificationPublishedVersion.pipe(
-      mergeMap((result) => $equalsStoredValue(result)),
-      switchMap((isEqual) => iif(
-        () => !isEqual,
-        $getNotification
-      ))
-    )
-
-    const $getNotification = this.getNotification.fetch().pipe(
-      tap((result) => this.publishedVersion = result.data.homepageCollection?.items[0]?.sys.publishedVersion),
-      map((result) => result.data.homepageCollection?.items[0]?.notification),
-      filter((result) => result !== null),
-    )
-
     this.subscriptions.add(
-      $requestNotification.subscribe((result) => {
+      this.notificationService.getNotification.subscribe((result) => {
         if (result) {
           this.notification = result.json;
           this.showNotification = true;
@@ -90,13 +65,14 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   close(): void {
-    this.storageService.setItem(this.NOTIFICATION_STORAGE_KEY, this.publishedVersion)
-      .then(() => {
-        this.showNotification = false;
-      })
-      .finally(() => {
-        this.showNotification = false;
-      });
+    this.storageService.setItem(
+      this.notificationService.NOTIFICATION_STORAGE_KEY,
+      this.notificationService.publishedVersion
+    ).then(() => {
+      this.showNotification = false;
+    }).finally(() => {
+      this.showNotification = false;
+    });
   }
 
   ngOnDestroy(): void {
