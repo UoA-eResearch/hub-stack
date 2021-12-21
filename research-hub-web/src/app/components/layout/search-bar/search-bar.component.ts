@@ -16,7 +16,7 @@ import { filter, map, startWith } from 'rxjs/operators';
 export class SearchBarComponent implements OnInit, OnDestroy {
   @ViewChild('searchBarContainer') searchBarContainer: ElementRef;
   @ViewChild('searchBox') searchBox: ElementRef;
-  @ViewChild('filterContent') filterContent: ElementRef
+  @ViewChild('filterContent') filterContent: ElementRef;
 
   public searchText: FormControl = new FormControl();
   public activeFilters: SearchFilters;
