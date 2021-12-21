@@ -22,7 +22,7 @@
   <span [ngSwitch]="contentItem.__typename">
     <!-- Link Card -->
     <span *ngSwitchCase="'LinkCard'">
-      <div>
+      <div class="link-card">
         <a
           href="{{
             contentItem.document ? contentItem.document.url : contentItem.url
