@@ -85,3 +85,14 @@ The generator can be executed in several ways:
 * `npm run generate-watch`: Regenerates once, then watches for any changes to `.graphql` files in the [queries](./src/app/graphql/queries/) folder
 * `npm run dev`: As mentioned in the [Local Development Section](#local-development), this command also executes `npm run generate-watch`
 
+### PWA / Service Worker
+
+This application is a Progressive Web Application (PWA) - an app which behaves like a native app but can be used by devices on various platforms (Android, iOS or desktop). When a user visits the site, they can choose to install it as an app by clicking the install button in the browser bar. PWAs use Service Workers to manage caching and a web app manifest to make it installable. PWAs have enhanced capabilities and reliability over a traditional web app, such as faster loading time and more reliable functionality offline or on slow network connections.
+
+Angular provides a preconfigured service worker that can be added to an existing Angular app using the command `ng add @angular/pwa`. The command does the following:
+* Create a service worker with a default caching configuration.
+* Create a manifest file, which tells the browser how your app should behave when installed on the user's device.
+* Add a link to the manifest file in index.html.
+* Add the theme-color <meta> tag to index.html.
+* Create app icons in the src/assets directory.
+Read more info [here](https://angular.io/guide/service-worker-intro) about Angular service worker and PWA.
