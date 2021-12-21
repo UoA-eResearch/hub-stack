@@ -60,7 +60,7 @@ This project comes bundled with an interactive bash CLI test runner capable of l
 
 Simply run `./test.sh` to specify what sort of testing you would like to do.
 
-### Preview environment
+## Preview environment
 Aside from the main site, a preview version of the site is also built for content authors to view draft articles before they're published. The preview version is identical to the main site aside from content query endpoints. There is a preview environment configuration file for each deployment environment. The files are kept in the `src/environments` folder, named `environment.[DEPLOYMENT ENVIRONMENT]-preview.ts`. The files determine where the frontend sends GraphQL content queries, and which requests require authentication.
 
 The monorepo [Jenkinsfile](../Jenkinsfile) runs `ng build` to build the preview version of the site at the same time as the main site. The script passes the preview configuration file name to build the preview site. Search "preview" in the `Jenkinsfile` to understand how it's being built in the Continuous Integration process.
@@ -85,7 +85,7 @@ The generator can be executed in several ways:
 * `npm run generate-watch`: Regenerates once, then watches for any changes to `.graphql` files in the [queries](./src/app/graphql/queries/) folder
 * `npm run dev`: As mentioned in the [Local Development Section](#local-development), this command also executes `npm run generate-watch`
 
-### PWA / Service Worker
+## PWA / Service Worker
 
 This application is a Progressive Web Application (PWA) - an app which behaves like a native app but can be used by devices on various platforms (Android, iOS or desktop). When a user visits the site, they can choose to install it as an app by clicking the install button in the browser bar. PWAs use Service Workers to manage caching and a web app manifest to make it installable. PWAs have enhanced capabilities and reliability over a traditional web app, such as faster loading time and more reliable functionality offline or on slow network connections.
 
@@ -96,3 +96,10 @@ Angular provides a preconfigured service worker that can be added to an existing
 * Add the theme-color <meta> tag to index.html.
 * Create app icons in the src/assets directory.
 Read more info [here](https://angular.io/guide/service-worker-intro) about Angular service worker and PWA.
+
+### Testing PWA / Service Worker locally:
+Because ng serve does not work with service workers, you must use a separate HTTP server to test service worker locally. You can use http-server, for example.
+Install it globally: `npm install --global http-server`.
+Now you can run a build of the project (in whichever environment you want to test - e.g. `ng build --configuration prod`), and then serve the build directory (www) using http-server:
+`http-server -p 8080 -c-1 www`. YOu can now see the service worker information in the browser developer tools.
+

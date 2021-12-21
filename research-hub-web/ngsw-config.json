@@ -12,6 +12,12 @@
           "/manifest.webmanifest",
           "/*.css",
           "/*.js"
+        ],
+        "urls": [
+          "https://fonts.googleapis.com/**",
+          "https://fonts.gstatic.com/**",
+          "https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/**",
+          "https://images.ctfassets.net/**"
         ]
       }
     },
