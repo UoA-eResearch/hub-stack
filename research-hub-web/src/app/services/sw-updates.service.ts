@@ -7,16 +7,28 @@ import { SwUpdate } from '@angular/service-worker';
 export class SwUpdatesService {
 
   constructor(
-    private updates: SwUpdate
+    private swu: SwUpdate
   ) { }
 
   enable() {
     // if the service worker isn't active
-    if (!this.updates.isEnabled) return;
+    if (!this.swu.isEnabled) return;
 
-    console.log('SW updates service enabled. ' + this.updates.isEnabled);
+    // note that swupdate methods used in docs examples (https://angular.io/guide/service-worker-communications) have been deprecated. documentation is not up to date. 
 
-    // TODO: check for updates, activate updates, console.log version change
-    // note that swupdate methods used in docs examples have been deprecated. documentation is not up to date. 
+    // detect available updates
+    this.swu.available.subscribe(event => {
+      console.log('current version is', event.current);
+      console.log('available version is', event.available);
+      if (confirm('A new version of ResearchHub is available. Would you like to update now?')) {
+        window.location.reload();
+      }
+    });
+
+    // detect when update has been activated
+    this.swu.activated.subscribe(event => {
+      console.log('old version was', event.previous);
+      console.log('new version is', event.current);
+    });
   }
 }
