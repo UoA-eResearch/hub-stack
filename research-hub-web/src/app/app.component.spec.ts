@@ -6,6 +6,7 @@ import { ApolloTestingModule } from 'apollo-angular/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockModule, MockProvider } from 'ng-mocks';
 import { AppLayoutModule } from './components/layout/layout.module';
+import { SwUpdatesService } from '@services/sw-updates.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -21,7 +22,8 @@ describe('AppComponent', () => {
         MockModule(AppLayoutModule)
       ],
       providers: [
-        MockProvider(PageTitleService)
+        MockProvider(PageTitleService),
+        MockProvider(SwUpdatesService)
       ]
     })
       .compileComponents();
