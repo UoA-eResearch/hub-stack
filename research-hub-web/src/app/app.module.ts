@@ -93,7 +93,9 @@ export class AppModule {
     // Because some authentication errors from cer-graphql
     // are returned with a 400 status code, we want error-pages to ignore those
     // errors so they can be handled by our onError handler.
-    this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
+    // We also bypass 504 (gateway timeout) errors so that the service worker can attempt
+    // to serve cached files if there is a problem with the network connection.
+    this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500, 504]);
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
     const error = onError(({ response, networkError, graphQLErrors }) => {
