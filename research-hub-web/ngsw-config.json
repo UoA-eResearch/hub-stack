@@ -7,7 +7,7 @@
       "installMode": "prefetch",
       "resources": {
         "files": [
-          "/assets/imgs/favicon.png",
+          "/assets/imgs/favicon.png?v=2",
           "/index.html",
           "/manifest.webmanifest",
           "/*.css",
@@ -32,6 +32,28 @@
         "urls": [
           "https://images.ctfassets.net/**"
         ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "cer-graphql-service",
+      "urls": ["*/cer-graphql-service"],
+      "cacheConfig": {
+        "maxSize": 10,
+        "maxAge": "1h",
+        "timeout": "10s",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "cer-graphql-preview-service",
+      "urls": ["*/cer-graphql-preview-service"],
+      "cacheConfig": {
+        "maxSize": 10,
+        "maxAge": "1m",
+        "timeout": "10s",
+        "strategy": "freshness"
       }
     }
   ]

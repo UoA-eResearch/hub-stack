@@ -3,6 +3,7 @@ import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/ro
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { PageTitleService } from './services/page-title.service';
+import { SwUpdatesService } from '@services/sw-updates.service';
 
 @Component({
   selector: 'app-root',
@@ -15,13 +16,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    public titleService: PageTitleService
+    public titleService: PageTitleService,
+    private swUpdatesService: SwUpdatesService
   ) { }
 
 
   ngOnInit(): void {
     this.subscribeToRouterEvents();
     this.titleService.title = ''; //sets title to welcome message
+    
+    // Start listening for Service Worker version update events.
+    this.swUpdatesService.enable();
   }
 
   private subscribeToRouterEvents() {
