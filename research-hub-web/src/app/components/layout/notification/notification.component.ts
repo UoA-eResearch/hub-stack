@@ -1,11 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { GetNotificationGQL, GetNotificationPublishedVersionGQL, Maybe } from '@app/graphql/schema';
 import { Document } from '@contentful/rich-text-types';
-import { AppStorageService } from '@services/app-storage.service';
 import { NotificationService } from '@services/notification.service';
-import { from, iif, Observable, Subscription } from 'rxjs';
-import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notification',
@@ -48,13 +45,12 @@ export class NotificationComponent implements OnInit, OnDestroy {
   public notification: Document | null = null;
 
   constructor(
-    private notificationService: NotificationService,
-    private storageService: AppStorageService
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.notificationService.getNotification.subscribe((result) => {
+      this.notificationService.getNotification().subscribe((result) => {
         if (result) {
           this.notification = result.json;
           this.showNotification = true;
@@ -65,14 +61,13 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   close(): void {
-    this.storageService.setItem(
-      this.notificationService.NOTIFICATION_STORAGE_KEY,
-      this.notificationService.publishedVersion
-    ).then(() => {
-      this.showNotification = false;
-    }).finally(() => {
-      this.showNotification = false;
-    });
+    this.notificationService
+      .storeCurrentNotificationVersion()
+      .then(() => {
+        this.showNotification = false;
+      }).finally(() => {
+        this.showNotification = false;
+      });
   }
 
   ngOnDestroy(): void {
