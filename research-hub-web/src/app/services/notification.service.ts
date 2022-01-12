@@ -18,31 +18,34 @@ export class NotificationService {
   ) { }
 
   private $equalsStoredValue = (publishedVersion?: number | null): Observable<boolean> =>
-    from(this.storageService.getItem(this.NOTIFICATION_STORAGE_KEY)).pipe(
-      map((storedVersion) => publishedVersion === parseInt(storedVersion))
+    from(this.storageService.getItem(this.NOTIFICATION_STORAGE_KEY))
+      .pipe(
+        map((storedVersion) => publishedVersion === parseInt(storedVersion))
+      );
+
+
+  private $getNotificationPublishedVersion = this.getNotificationPublishedVersion
+    .fetch()
+    .pipe(
+      map((result) => result.data.homepageCollection?.items[0]?.sys.publishedVersion)
     );
-
-
-  private $getNotificationPublishedVersion = this.getNotificationPublishedVersion.fetch().pipe(
-    map((result) => result.data.homepageCollection?.items[0]?.sys.publishedVersion)
-  );
 
   private getNotificationData =
-    this.getNotificationGQL.fetch().pipe(
-      tap((result) => this.publishedVersion = result.data.homepageCollection?.items[0]?.sys.publishedVersion),
-      map((result) => result.data.homepageCollection?.items[0]?.notification),
-      filter((result) => result !== null),
-    );
+    this.getNotificationGQL
+      .fetch()
+      .pipe(
+        tap((result) => this.publishedVersion = result.data.homepageCollection?.items[0]?.sys.publishedVersion),
+        map((result) => result.data.homepageCollection?.items[0]?.notification),
+        filter((result) => result !== null),
+      );
 
   public getNotification =
-    this.$getNotificationPublishedVersion.pipe(
-      mergeMap((result) => this.$equalsStoredValue(result)),
-      switchMap((isEqual) => iif(
-        () => !isEqual,
-        this.getNotificationData
-      ))
-    );
-
-
-
+    this.$getNotificationPublishedVersion
+      .pipe(
+        mergeMap((result) => this.$equalsStoredValue(result)),
+        switchMap((isEqual) => iif(
+          () => !isEqual,
+          this.getNotificationData
+        ))
+      );
 }
