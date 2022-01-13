@@ -57,7 +57,7 @@ export class NotificationService {
 
   /**
    * Request the notification. Checks the currently stored version number and decides whether to emit the notification or nothing.
-   * @returns An observable that emits the notification if the `publishedVersion` is larger than the value stored in local storage or an `EMPTY` observable.
+   * @returns An observable that emits the notification if the `publishedVersion` is not equal to the value stored in local storage or an `EMPTY` observable.
    */
   public getNotification() {
     return this.getNotificationPublishedVersion()
