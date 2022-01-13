@@ -63,7 +63,8 @@ export class NotificationService {
     return this.getNotificationPublishedVersion()
       .pipe(
         mergeMap((result) => this.equalsStoredValue(result)),
-        // if isEqual is false iif() returns EMPTY by default
+        // if isEqual is true iif() returns EMPTY
+        // if isEqual is false iif() return this.getNotificationData()
         switchMap((isEqual) => iif(
           () => !isEqual,
           this.getNotificationData()
