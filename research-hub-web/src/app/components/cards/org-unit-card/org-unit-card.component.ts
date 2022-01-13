@@ -15,7 +15,7 @@ export class OrgUnitCardComponent {
   constructor() { }
 
   public navigateTo(url: string) {
-    location.href = url;
+    window.open(url, "_blank");
   }
 
 }
