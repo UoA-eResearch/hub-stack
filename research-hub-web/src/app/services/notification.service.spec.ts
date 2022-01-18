@@ -1,13 +1,15 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ApolloTestingController, ApolloTestingModule, APOLLO_TESTING_CACHE } from 'apollo-angular/testing';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { MockProvider } from 'ng-mocks';
+import { MockInstance, MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 import { AppStorageService } from './app-storage.service';
 
 import { NotificationService } from './notification.service';
 
 fdescribe('NotificationService', () => {
+  MockInstance.scope();
+
   let service: NotificationService;
   let backend: ApolloTestingController;
 
@@ -16,7 +18,8 @@ fdescribe('NotificationService', () => {
       imports: [ApolloTestingModule],
       providers: [
         MockProvider(AppStorageService, {
-          getItem: (key) => of(1).toPromise()
+          getItem: (key) => of(1).toPromise(),
+          setItem: (key, value) => Promise.resolve()
         }),
         {
           provide: APOLLO_TESTING_CACHE,
@@ -26,6 +29,7 @@ fdescribe('NotificationService', () => {
     });
     service = TestBed.inject(NotificationService);
     backend = TestBed.inject(ApolloTestingController);
+
   });
 
   afterEach(() => {
@@ -105,4 +109,11 @@ fdescribe('NotificationService', () => {
 
     backend.expectNone('GetNotification');
   }));
+
+  it('#storeCurrentNotificationVersion should not return a value', async () => {
+    service.publishedVersion = 1;
+    const value = await service.storeCurrentNotificationVersion();
+
+    expect(value).toBeFalsy();
+  });
 });
