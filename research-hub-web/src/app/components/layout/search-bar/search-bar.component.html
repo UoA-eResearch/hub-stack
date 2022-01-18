@@ -35,7 +35,8 @@
         id="search"
         #searchBox
         type="search"
-        (keydown.enter)="search()"
+        #trigger="matAutocompleteTrigger"
+        (keydown.enter)="search(); trigger.closePanel()"
         placeholder="Search for anything"
         [matAutocomplete]="auto"
         [formControl]="searchText"

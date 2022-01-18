@@ -7,7 +7,7 @@
     background: rgb(255, 255, 255);
   }
   .mat-card-title {
-    >a {
+    span {
       color: white;
       &:hover {
         border-bottom: solid 2px white;
@@ -28,6 +28,7 @@ mat-icon {
   font-size: 16px;
   height: 16px;
   width: 16px;
+  color: $dark-grey;
 }
 
 img {
