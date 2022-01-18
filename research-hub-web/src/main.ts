@@ -20,7 +20,10 @@ Sentry.init({
   tracesSampleRate: environment.sentryTracesSampleRate,
   ignoreErrors: [
     'Authentication required to view protected content.'
-  ]
+  ],
+  initialScope: {
+    user: {ip_address: "{{auto}}"}
+  }
 });
 
 
