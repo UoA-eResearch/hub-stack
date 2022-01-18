@@ -2,7 +2,7 @@
     <span [ngSwitch]="contentItem.contentType">
     <ng-template #image>
         <div class="embedded-asset-block section-2" ngClass.xs="embedded-asset-block-mobile">
-            <a *ngIf="contentItem.url" href="{{ contentItem.url }}">
+            <a *ngIf="contentItem.url" href="{{ contentItem.url }}" target="_blank">
                 <picture>
                     <source srcset="{{ contentItem.url }}?w=1500&fm=webp" type="image/webp">
                     <img src="{{ contentItem.url }}?w=1500" alt="{{ contentItem.title }}" />
@@ -15,7 +15,7 @@
 
     <ng-template #svg>
         <div class="embedded-asset-block section-2" ngClass.xs="embedded-asset-block-mobile">
-            <a *ngIf="contentItem.url" href="{{ contentItem.url }}">
+            <a *ngIf="contentItem.url" href="{{ contentItem.url }}" target="_blank">
                 <img src="{{ contentItem.url }}?w=1500" alt="{{ contentItem.title }}" />
             </a><br>{{ contentItem.title }}
             <small class="asset-summary" *ngIf="contentItem.description">&nbsp;—&nbsp;{{ contentItem.description
@@ -43,7 +43,7 @@
     <!-- Asset File -->
     <span *ngSwitchDefault>
         <div class="embedded-asset-block file" ngClass.xs="embedded-asset-block-mobile">
-            <a *ngIf="contentItem.url" href="{{ contentItem.url }}">
+            <a *ngIf="contentItem.url" href="{{ contentItem.url }}" target="_blank">
                 <mat-card>
                     <mat-card-title class="card-title">
                         <span>{{ contentItem.title }}</span>
