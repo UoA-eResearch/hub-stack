@@ -65,7 +65,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
       .storeCurrentNotificationVersion()
       .then(() => {
         this.showNotification = false;
-      }).finally(() => {
+      }).catch((e) => {
+        console.log(e);
         this.showNotification = false;
       });
   }
