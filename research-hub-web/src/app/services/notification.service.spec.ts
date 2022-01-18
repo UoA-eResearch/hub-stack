@@ -83,9 +83,7 @@ fdescribe('NotificationService', () => {
   }));
 
   it('#getNotification should NOT return notification text if stored version is same as backend version', fakeAsync( () => {
-    service.getNotification().subscribe((result) => {
-      //expect(result).not.;
-    });
+    service.getNotification().subscribe();
 
     backend.expectOne('GetNotificationPublishedVersion')
       .flushData({
