@@ -15,6 +15,6 @@ export class DocumentCardComponent {
   constructor() { }
 
   public navigateTo(url: Maybe<string> | undefined) {
-    if (url) location.href = url;
+    if (url) window.open(url, "_blank");
   }
 }
