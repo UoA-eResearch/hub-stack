@@ -7,9 +7,7 @@ import { AppStorageService } from './app-storage.service';
 
 import { NotificationService } from './notification.service';
 
-fdescribe('NotificationService', () => {
-  MockInstance.scope();
-
+describe('NotificationService', () => {
   let service: NotificationService;
   let backend: ApolloTestingController;
 
