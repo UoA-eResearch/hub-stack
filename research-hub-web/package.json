@@ -84,8 +84,6 @@
     "@types/node": "^12.20.27",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.33.0",
-    "aws-sdk": "^2.995.0",
-    "aws4": "^1.10.1",
     "change-case": "^4.1.1",
     "concurrently": "^6.4.0",
     "cypress": "^7.7.0",
