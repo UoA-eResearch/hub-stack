@@ -1,6 +1,13 @@
 <div class="search-filters-container">
   <mat-tab-group>
-    <mat-tab [label]="'Categories'">
+    <mat-tab
+      [label]="
+        'Categories' +
+        (activeFilters.category.length > 0
+          ? ' (' + activeFilters.category.length + ')'
+          : '')
+      "
+    >
       <div class="list-container">
         <mat-selection-list #categories [(ngModel)]="activeFilters.category">
           <ng-container *ngFor="let category of allCategories">
@@ -14,7 +21,14 @@
         </mat-selection-list>
       </div>
     </mat-tab>
-    <mat-tab [label]="'Activities'">
+    <mat-tab
+      [label]="
+        'Activities' +
+        (activeFilters.stage.length > 0
+          ? ' (' + activeFilters.stage.length + ')'
+          : '')
+      "
+    >
       <div class="list-container">
         <mat-selection-list #stages [(ngModel)]="activeFilters.stage">
           <mat-list-option
@@ -27,7 +41,14 @@
         </mat-selection-list>
       </div>
     </mat-tab>
-    <mat-tab [label]="'Organisations'">
+    <mat-tab
+      [label]="
+        'Organisations' +
+        (activeFilters.relatedOrgs.length > 0
+          ? ' (' + activeFilters.relatedOrgs.length + ')'
+          : '')
+      "
+    >
       <div class="list-container">
         <mat-selection-list #stages [(ngModel)]="activeFilters.relatedOrgs">
           <mat-list-option
@@ -101,7 +122,12 @@
 
     <span style="flex: 1 1 auto"></span>
 
-    <button id="search" mat-raised-button color="primary" (click)="onSearch($event)">
+    <button
+      id="search"
+      mat-raised-button
+      color="primary"
+      (click)="onSearch($event)"
+    >
       Search
     </button>
   </div>
