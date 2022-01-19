@@ -51,7 +51,6 @@
     "@uoa/error-pages": "^0.1.2",
     "apollo-angular": "^2.6.0",
     "apollo-cache-inmemory": "^1.6.6",
-    "apollo-link": "^1.2.14",
     "date-fns": "~2.14.0",
     "graphql": "^15.6.0",
     "localforage": "^1.10.0",
