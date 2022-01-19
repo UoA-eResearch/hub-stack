@@ -69,7 +69,11 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -104,7 +108,11 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -132,7 +140,11 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -160,7 +172,11 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -188,7 +204,11 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -216,7 +236,11 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -244,7 +268,11 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -272,7 +300,11 @@
                 "fonts": true
               },
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
