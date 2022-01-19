@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GetNotificationGQL, GetNotificationPublishedVersionGQL } from '@app/graphql/schema';
-import { from, iif, Observable } from 'rxjs';
+import { EMPTY, from, iif, Observable } from 'rxjs';
 import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { AppStorageService } from './app-storage.service';
 
@@ -63,11 +63,10 @@ export class NotificationService {
     return this.getNotificationPublishedVersion()
       .pipe(
         mergeMap((result) => this.equalsStoredValue(result)),
-        // if isEqual is true iif() returns EMPTY
-        // if isEqual is false iif() return this.getNotificationData()
         switchMap((isEqual) => iif(
           () => !isEqual,
-          this.getNotificationData()
+          this.getNotificationData(),
+          EMPTY
         ))
       );
   }
