@@ -23,7 +23,8 @@ Sentry.init({
   ],
   initialScope: {
     user: {ip_address: "{{auto}}"}
-  }
+  },
+  autoSessionTracking: true
 });
 
 
