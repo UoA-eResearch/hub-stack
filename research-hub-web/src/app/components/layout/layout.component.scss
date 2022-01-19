@@ -15,14 +15,22 @@ app-navbar {
   z-index: 1000;
 }
 
+app-notification {
+  position: fixed;
+  position: -webkit-fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 999;
+}
+
 div.main-content {
   flex: 1;
   margin-top: 64px;
   height: calc(100vh - 64px);
   overflow-y: auto;
   background-color: #fafafa;
-  color: rgba(0,0,0,.87);
-  // the order of these 2 media queries matters!
+  color: rgba(0, 0, 0, 0.87);
   @media (max-width: $navbar-second-row-breakpoint) {
     margin-top: 100px;
     height: calc(100vh - 100px);
@@ -30,5 +38,27 @@ div.main-content {
   @media (max-width: 960px) {
     margin-top: 92px;
     height: calc(100vh - 92px);
+  }
+}
+
+// the order of these 2 media queries matters!
+@media (max-width: $navbar-second-row-breakpoint) {
+  div.main-content {
+    margin-top: 100px;
+    height: calc(100vh - 100px);
+  }
+
+  app-notification {
+    top: 100px;
+  }
+}
+@media (max-width: 960px) {
+  div.main-content {
+    margin-top: 92px;
+    height: calc(100vh - 92px);
+  }
+
+  app-notification {
+    top: 92px;
   }
 }
