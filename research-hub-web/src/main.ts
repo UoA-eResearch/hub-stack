@@ -16,6 +16,7 @@ Sentry.init({
       routingInstrumentation: Sentry.routingInstrumentation,
     })
   ],
+  release: environment.version,
   environment: environment.env,
   tracesSampleRate: environment.sentryTracesSampleRate,
   ignoreErrors: [

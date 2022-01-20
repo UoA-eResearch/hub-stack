@@ -278,6 +278,9 @@ pipeline {
                         stage ('Building for production') {
                             steps {
                                 dir("research-hub-web") {
+                                    echo 'Setting build version as commit SHA'
+                                    //sh "sed -ri "s|\"VERSION\"|\"${GIT_COMMIT}\"|" src/environments/environment.${BRANCH_NAME}.ts"
+
                                     echo 'Building for production'
                                     sh "npm run build -- -c ${BRANCH_NAME}"
                                     echo 'Building preview for production'
@@ -369,6 +372,37 @@ pipeline {
                                     echo "Invalidation started"
                                     sh "aws cloudfront create-invalidation --distribution-id ${previewAwsCloudFrontDistroId} --paths '/*' --profile ${awsProfile}"
                                     echo "Preview invalidation started"
+                                }
+                            }
+                        }
+                        stage('Notify Sentry of Release and Upload Sourcemaps') {
+                            steps {
+                                script {
+                                    // https://docs.sentry.io/product/cli/releases/#creating-releases
+
+                                    echo 'Notify Sentry of Release and Upload Sourcemaps for ' + BRANCH_NAME
+                                    
+                                    environment {
+                                        SENTRY_AUTH_TOKEN = credentials('sentry-auth-token') // TODO - set token in jenkins
+                                        SENTRY_ORG = 'university-of-auckland-7o'
+                                        SENTRY_PROJECT = 'research-hub'
+                                        SENTRY_ENVIRONMENT = BRANCH_NAME    // TODO - should also do a release process for preview envs (BRANCH_NAME + '-preview')
+                                        SENTRY_RELEASE = GIT_COMMIT
+                                    }
+
+                                    dir("research-hub-web") {
+                                        sh "command -v sentry-cli || curl -sL https://sentry.io/get-cli/ | bash"
+                                        echo "Installed sentry-cli"
+                                        sh '''
+                                            sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
+                                            sentry-cli releases set-commits $SENTRY_RELEASE --auto
+                                            sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps www
+                                            sentry-cli releases files $SENTRY_RELEASE list
+                                            sentry-cli releases finalize $SENTRY_RELEASE
+                                            sentry-cli releases deploys $SENTRY_RELEASE new -e $SENTRY_ENVIRONMENT
+                                        '''
+                                        echo "Release notification complete."
+                                    }
                                 }
                             }
                         }
