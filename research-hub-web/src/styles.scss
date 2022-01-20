@@ -448,3 +448,17 @@ mat-card picture:first-child img.mat-card-image {
     margin: auto;
   }
 }
+
+/**
+ * MatSnackBar
+ */
+.snack-bar {
+  background: $dark-blue;
+  color: white;
+  button {
+    @extend .standard-button;
+    color: white;
+    border: 3px solid white !important;
+    max-height: none !important;
+  }
+}

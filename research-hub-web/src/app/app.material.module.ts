@@ -16,7 +16,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -26,6 +25,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -45,7 +45,6 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
@@ -53,7 +52,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatTooltipModule,
     MatRadioModule,
     MatTabsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSnackBarModule
   ],
   declarations: [],
   exports: [
@@ -72,7 +72,6 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatAutocompleteModule,
-    MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
@@ -81,7 +80,8 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatRadioModule,
     MatSlideToggleModule,
     MatTabsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatSnackBarModule
   ]
 })
 export class MaterialModule {

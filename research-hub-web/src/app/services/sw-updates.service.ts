@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { SwUpdate, UnrecoverableStateEvent, VersionEvent } from '@angular/service-worker';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent, DialogData } from '@app/components/shared/confirm-dialog/confirm-dialog.component';
+import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarRef, MatSnackBarVerticalPosition, TextOnlySnackBar} from '@angular/material/snack-bar';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SwUpdatesService {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'start';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   constructor(
     private swu: SwUpdate,
-    public dialog: MatDialog
+    private snackBar: MatSnackBar
   ) { }
 
   enable() {
@@ -26,7 +27,7 @@ export class SwUpdatesService {
       if (event.type === "VERSION_READY") {
         console.log('The current version is', event.currentVersion.hash);
         console.log('The latest version is', event.latestVersion.hash);
-        this.openDialog();
+        this.openSnackBar('There is a new version of the ResearchHub available!', 'Update');
       }
 
       if (event.type === "VERSION_INSTALLATION_FAILED") {
@@ -42,19 +43,14 @@ export class SwUpdatesService {
     });
   }
 
-  openDialog(): void {
-    const data: DialogData = {
-      title: 'Update Available',
-      message: 'A new version of ResearchHub is available. Would you like to update now?'
-    }
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: data
+  openSnackBar(message: string, action: string) {
+    let snackBarRef: MatSnackBarRef<TextOnlySnackBar> = this.snackBar.open(message, action, {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) this.activateUpdate();
+    snackBarRef.afterDismissed().subscribe(() => {
+      this.activateUpdate();
     });
   }
 
