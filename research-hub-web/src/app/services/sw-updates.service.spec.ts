@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { SwUpdate } from '@angular/service-worker';
 import { MockProvider } from 'ng-mocks';
 
@@ -12,7 +13,11 @@ describe('SwUpdatesService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        MockProvider(SwUpdate)
+        MockProvider(SwUpdate),
+        {
+          provide: MatDialog,
+          useValue: {}
+        }
       ]
     });
     service = TestBed.inject(SwUpdatesService);
