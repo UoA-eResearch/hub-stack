@@ -5,6 +5,7 @@
 export const environment = {
   env: 'dev',
   sentryTracesSampleRate: 1.0,
+  version: 'VERSION',
   production: false,
   cerGraphQLUrl: 'http://localhost:4000/',
   auth: {
