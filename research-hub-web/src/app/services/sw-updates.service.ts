@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SwUpdate, VersionEvent } from '@angular/service-worker';
-import { error } from 'console';
+import { SwUpdate, UnrecoverableStateEvent, VersionEvent } from '@angular/service-worker';
 
 @Injectable({
   providedIn: 'root'
@@ -14,32 +13,31 @@ export class SwUpdatesService {
   enable() {
     if (!this.swu.isEnabled) return; // if the service worker isn't active
 
-    this.swu.versionUpdates.subscribe((event) => {
+    this.swu.versionUpdates.subscribe((event: VersionEvent) => {
       
       if (event.type === "VERSION_DETECTED") {
         console.log('A new version of the ResearchHub has been detected.');
       }
 
       if (event.type === "VERSION_READY") {
-        console.log('The current version is', event.currentVersion);
-        console.log('The latest version is', event.latestVersion);
+        console.log('The current version is', event.currentVersion.hash);
+        console.log('The latest version is', event.latestVersion.hash);
         if (confirm('A new version of ResearchHub is available. Would you like to update now?')) {
           this.activateUpdate();
         }
       }
 
       if (event.type === "VERSION_INSTALLATION_FAILED") {
-        console.error(`Error installing ResearchHub version ${event.version}: ${event.error}`);
+        console.error(`Error installing ResearchHub version ${event.version.hash}: ${event.error}`);
       }
       
     });
 
-    // handle unrecoverable states
     // https://angular.io/guide/service-worker-communications#handling-an-unrecoverable-state
-    this.swu.unrecoverable.subscribe((event) => {
+    this.swu.unrecoverable.subscribe((event: UnrecoverableStateEvent) => {
       console.error(`Service worker error occurred: ${event.reason}`);
       window.location.reload();
-    })
+    });
   }
 
   activateUpdate() {
