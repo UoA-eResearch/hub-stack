@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SwUpdate, UnrecoverableStateEvent, VersionEvent } from '@angular/service-worker';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent, DialogData } from '@app/components/shared/confirm-dialog/confirm-dialog.component';
+
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +10,8 @@ import { SwUpdate, UnrecoverableStateEvent, VersionEvent } from '@angular/servic
 export class SwUpdatesService {
 
   constructor(
-    private swu: SwUpdate
+    private swu: SwUpdate,
+    public dialog: MatDialog
   ) { }
 
   enable() {
@@ -22,9 +26,7 @@ export class SwUpdatesService {
       if (event.type === "VERSION_READY") {
         console.log('The current version is', event.currentVersion.hash);
         console.log('The latest version is', event.latestVersion.hash);
-        if (confirm('A new version of ResearchHub is available. Would you like to update now?')) {
-          this.activateUpdate();
-        }
+        this.openDialog();
       }
 
       if (event.type === "VERSION_INSTALLATION_FAILED") {
@@ -37,6 +39,22 @@ export class SwUpdatesService {
     this.swu.unrecoverable.subscribe((event: UnrecoverableStateEvent) => {
       console.error(`Service worker error occurred: ${event.reason}`);
       window.location.reload();
+    });
+  }
+
+  openDialog(): void {
+    const data: DialogData = {
+      title: 'Update Available',
+      message: 'A new version of ResearchHub is available. Would you like to update now?'
+    }
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.activateUpdate();
     });
   }
 

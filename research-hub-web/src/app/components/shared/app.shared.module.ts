@@ -21,6 +21,7 @@ import { InlinesAssetHyperlinkComponent } from './body-media/inlines-asset-hyper
 import { InlinesEntryHyperlinkComponent } from './body-media/inlines-entry-hyperlink/inlines-entry-hyperlink.component';
 import { MarksCodeComponent } from './body-media/marks-code/marks-code.component';
 import { ExpandablePagePartComponent } from './body-media/expandable-page-part/expandable-page-part.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { ExpandablePagePartComponent } from './body-media/expandable-page-part/e
     InlinesAssetHyperlinkComponent,
     InlinesEntryHyperlinkComponent,
     MarksCodeComponent,
-    ExpandablePagePartComponent
+    ExpandablePagePartComponent,
+    ConfirmDialogComponent
   ],
   exports: [
     FlexLayoutModule,
