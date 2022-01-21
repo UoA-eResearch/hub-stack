@@ -7,6 +7,7 @@ import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarRef, MatSnackBarV
   providedIn: 'root'
 })
 export class SwUpdatesService {
+  snackBarRef: MatSnackBarRef<TextOnlySnackBar>;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
@@ -44,12 +45,12 @@ export class SwUpdatesService {
   }
 
   openSnackBar(message: string, action: string) {
-    let snackBarRef: MatSnackBarRef<TextOnlySnackBar> = this.snackBar.open(message, action, {
+    this.snackBarRef = this.snackBar.open(message, action, {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
 
-    snackBarRef.afterDismissed().subscribe(() => {
+    this.snackBarRef.afterDismissed().subscribe(() => {
       this.activateUpdate();
     });
   }
