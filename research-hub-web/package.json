@@ -105,7 +105,7 @@
     "karma-spec-reporter": "0.0.32",
     "karma-time-stats-reporter": "^0.1.0",
     "karma-verbose-reporter": "0.0.6",
-    "ng-mocks": "^12.5.0",
+    "ng-mocks": "^13.0.0",
     "nodemon": "^2.0.13",
     "sass": "^1.42.1",
     "ts-node": "~8.3.0",
