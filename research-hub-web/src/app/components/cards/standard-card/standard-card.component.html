@@ -43,9 +43,9 @@
 
 <!-- Templates -->
 <ng-template #image let-url let-title="title">
-  <picture>
+  <picture mat-card-image>
     <source srcset="{{ url }}?w=1000&fm=webp" type="image/webp" />
-    <img mat-card-image src="{{ url }}?w=1000" alt="{{ title }}" />
+    <img src="{{ url }}?w=1000" alt="{{ title }}" />
   </picture>
 </ng-template>
 
