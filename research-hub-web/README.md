@@ -100,6 +100,8 @@ Read more info [here](https://angular.io/guide/service-worker-intro) about Angul
 ### Testing PWA / Service Worker locally:
 Because ng serve does not work with service workers, you must use a separate HTTP server to test service worker locally. You can use http-server, for example.
 Install it globally: `npm install --global http-server`.
-Now you can run a build of the project (in whichever environment you want to test - e.g. `ng build --configuration prod`), and then serve the build directory (www) using http-server:
-`http-server -p 8080 -c-1 www`. You can now see the service worker information in the browser developer tools. You can run the command `npm run start:prod` to do the same.
+Now you can run a build of the project (in whichever environment you want to test - e.g. `ng build --configuration dev`), and then serve the build directory (www) using http-server:
+`http-server -p 8080 -c-1 www`. You can now see the service worker information in the browser developer tools. You can run the command `npm run start:sw` to do the same.
+
+**NOTE**: not all navigation/redirects will work correctly when serving from the http-server due to the server address and environment settings etc. The best way to test the service worker is to do a proper deployment into the dev environment.
 

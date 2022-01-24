@@ -9,7 +9,7 @@
     "qdev": "concurrently \"npm run graphql-server-watch\" \"sleep 3 && npm run generate-watch\" \"sleep 3 && npm start\"",
     "qdev-no-gen": "concurrently \"npm run graphql-server-watch\" \"sleep 3 && ng serve\"",
     "start": "ng serve",
-    "start:prod": "ng build --configuration prod && http-server -p 8080 -c-1 www",
+    "start:sw": "ng build --configuration dev && http-server -p 8080 -c-1 www",
     "prestart": "npm run generate",
     "build": "ng build --source-map=false",
     "prebuild": "npm run generate",
