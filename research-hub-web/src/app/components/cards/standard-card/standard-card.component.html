@@ -4,10 +4,12 @@
 >
   <ng-container
     *ngTemplateOutlet="
-      contentItem?.banner ? image : defaultCardImage;
+      image;
       context: {
-        $implicit: contentItem?.banner?.url,
-        title: contentItem?.title
+        $implicit: contentItem?.banner
+          ? contentItem.banner?.url
+          : contentItem.__typename ? defaultImage.get(contentItem.__typename) : defaultImage.get('Article'),
+        title: contentItem?.banner ? contentItem.title : 'default background'
       }
     "
   ></ng-container>
@@ -46,18 +48,5 @@
   <picture mat-card-image>
     <source srcset="{{ url }}?w=1000&fm=webp" type="image/webp" />
     <img src="{{ url }}?w=1000" alt="{{ title }}" />
-  </picture>
-</ng-template>
-
-<ng-template #defaultCardImage>
-  <picture mat-card-image>
-    <source
-      srcset="{{ defaultImage.get(contentItem.__typename) }}?w=1000&fm=webp"
-      type="image/webp"
-    />
-    <img
-      src="{{ defaultImage.get(contentItem.__typename) }}?w=1000"
-      alt="default background"
-    />
   </picture>
 </ng-template>
