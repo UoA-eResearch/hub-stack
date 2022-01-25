@@ -97,7 +97,7 @@
     "jasmine": "^2.99.0",
     "jasmine-core": "^2.99.1",
     "jasmine-spec-reporter": "~7.0.0",
-    "karma": "^6.3.4",
+    "karma": "^6.3.12",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "^2.0.3",
     "karma-jasmine": "~4.0.0",
