@@ -13,7 +13,7 @@ import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
 import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-fdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let loader: HarnessLoader;
