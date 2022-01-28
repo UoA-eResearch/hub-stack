@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, RouterEvent } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, mergeMap } from 'rxjs/operators';
 import { PageTitleService } from './services/page-title.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarRef, MatSnackBarVerticalPosition, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { SwUpdate, UnrecoverableStateEvent, VersionDetectedEvent, VersionEvent, VersionInstallationFailedEvent, VersionReadyEvent } from '@angular/service-worker';
@@ -75,15 +75,29 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(this.swUpdate.versionUpdates.pipe(
       filter((event: VersionEvent): event is VersionReadyEvent => event.type === 'VERSION_READY'),
-      switchMap((event: VersionReadyEvent) => {
+      mergeMap((event: VersionReadyEvent) => {
         console.log('The current version is', event.currentVersion.hash);
         console.log('The latest version is', event.latestVersion.hash);
         return this.openSnackBar('There is a new version of the ResearchHub available!', 'Update').afterDismissed()
-      })
-    ).subscribe(() => {
-      this.activateUpdate();
+      }),
+      mergeMap(() => this.swUpdate.activateUpdate())
+    ).subscribe({
+      next: (activated) => {
+        if (activated) {
+          console.log('Updated successfully.');
+          // Calling activateUpdate() without reloading the page could break lazy-loading
+          // in a currently running app, especially if the lazy-loaded chunks use filenames
+          // with hashes, which change every version. Therefore, it is recommended to reload
+          // the page once the promise returned by activateUpdate() is resolved.
+          // https://angular.io/guide/service-worker-communications#forcing-update-activation
+          window.location.reload();
+        } else {
+          console.log('Client already on latest version.');
+        }
+      },
+      error: (error) => console.error('Error updating to latest version. ', error)
     }));
-    
+
     this.subscriptions.add(this.swUpdate.versionUpdates.pipe(
       filter((event: VersionEvent): event is VersionDetectedEvent => event.type === 'VERSION_DETECTED')
     ).subscribe(() => {
@@ -108,24 +122,6 @@ export class AppComponent implements OnInit, OnDestroy {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
-  }
-
-  activateUpdate(): void {
-    this.swUpdate.activateUpdate()
-      .then((activated) => {
-        if (activated) {
-          console.log('Updated successfully.');
-          // Calling activateUpdate() without reloading the page could break lazy-loading 
-          // in a currently running app, especially if the lazy-loaded chunks use filenames 
-          // with hashes, which change every version. Therefore, it is recommended to reload 
-          // the page once the promise returned by activateUpdate() is resolved.
-          // https://angular.io/guide/service-worker-communications#forcing-update-activation
-          window.location.reload();
-        } else {
-          console.log('Client already on latest version.');
-        }
-      })
-      .catch((error) => console.error('Error updating to latest version. ', error))
   }
 
   ngOnDestroy() {

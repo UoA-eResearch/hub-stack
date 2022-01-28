@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { PageTitleService } from './services/page-title.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -10,13 +10,26 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSnackBarHarness } from '@angular/material/snack-bar/testing';
-import { ServiceWorkerModule, SwUpdate } from '@angular/service-worker';
+import { ServiceWorkerModule, SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EMPTY, of } from 'rxjs';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let loader: HarnessLoader;
+  let subscribeToRouterEventsSpy: jasmine.Spy;
+  let enableServiceWorkerSpy: jasmine.Spy;
+
+  const updateEvent: VersionReadyEvent = {
+    currentVersion: {
+      hash: 'abc'
+    },
+    latestVersion: {
+      hash: 'def'
+    },
+    type: 'VERSION_READY'
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -32,7 +45,13 @@ describe('AppComponent', () => {
       ],
       providers: [
         MockProvider(PageTitleService),
-        MockProvider(SwUpdate)
+        MockProvider(SwUpdate, {
+          versionUpdates: of(updateEvent),
+          activateUpdate: () => Promise.resolve(true),
+          isEnabled: true,
+          checkForUpdate: () => Promise.resolve(true),
+          unrecoverable: EMPTY
+        })
       ]
     })
       .compileComponents();
@@ -41,6 +60,10 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
+
+    subscribeToRouterEventsSpy = spyOn(component, 'subscribeToRouterEvents').and.callThrough();
+    enableServiceWorkerSpy = spyOn(component, 'enableServiceWorker').and.callThrough();
+
     fixture.detectChanges();
     loader = TestbedHarnessEnvironment.documentRootLoader(fixture);
   });
@@ -53,39 +76,23 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load harness for snack-bar', async () => {
-    fixture.componentInstance.openSnackBar('Testing', '123');
-    let snackBars = await loader.getAllHarnesses(MatSnackBarHarness);
-    expect(snackBars.length).toBe(1);
-  });
-
-  it('should be able to get message of snack-bar', async () => {
-    fixture.componentInstance.openSnackBar('Testing', '123');
-    let snackBar = await loader.getHarness(MatSnackBarHarness);
-    expect(await snackBar.getMessage()).toBe('Testing');
-  });
-
-  it('should be able to get action description of snack-bar', async () => {
-    fixture.componentInstance.openSnackBar('Testing', '123');
-    let snackBar = await loader.getHarness(MatSnackBarHarness);
-    expect(await snackBar.getActionDescription()).toBe('123');
-  });
-
-  it('should be able to check whether simple snack-bar has action', async () => {
-    fixture.componentInstance.openSnackBar('Testing', '123');
-    let snackBar = await loader.getHarness(MatSnackBarHarness);
-    expect(await snackBar.hasAction()).toBe(true);
-  });
-
   it('Should subscribe to router events', () => {
-    const subscribeToRouterEventsSpy = spyOn(component, 'subscribeToRouterEvents');
-    component.ngOnInit();
     expect(subscribeToRouterEventsSpy).toHaveBeenCalled();
   });
 
   it('Should try to enable service worker', () => {
-    const enableServiceWorkerSpy = spyOn(component, 'enableServiceWorker');
-    component.ngOnInit();
     expect(enableServiceWorkerSpy).toHaveBeenCalled();
   });
+
+  it('should show snackbar when update is detected', async () => {
+    let snackBars =  await loader.getAllHarnesses(MatSnackBarHarness);
+    expect(snackBars.length).toBe(1);
+    expect(await snackBars[0].getMessage()).toBe('There is a new version of the ResearchHub available!');
+    expect(await snackBars[0].hasAction()).toBeTrue();
+    expect(await snackBars[0].getActionDescription()).toBe('Update');
+
+    await snackBars[0].dismissWithAction();
+    expect(await snackBars[0].isDismissed()).toBeTrue();
+  })
 });
+
