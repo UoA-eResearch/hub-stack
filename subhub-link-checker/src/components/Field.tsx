@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CollectionResponse, EntrySys, FieldExtensionSDK } from '@contentful/app-sdk';
+import { CollectionResponse, ContentEntitySys, FieldExtensionSDK } from '@contentful/app-sdk';
 import { CombinedLinkActions, MultipleEntryReferenceEditor } from '@contentful/field-editor-reference';
 import { Entry } from '@contentful/field-editor-reference/dist/types';
 import { LinkActionsProps } from '@contentful/field-editor-reference/dist/components';
@@ -9,7 +9,7 @@ interface FieldProps {
   sdk: FieldExtensionSDK;
 }
 
-function checkPageReferences(sdk: FieldExtensionSDK, subhubSys: EntrySys, pageSys: EntrySys): Promise<Boolean> {
+function checkPageReferences(sdk: FieldExtensionSDK, subhubSys: ContentEntitySys, pageSys: ContentEntitySys): Promise<Boolean> {
   console.log(`Checking page reference for subhub ${subhubSys.id} and page ${pageSys.id}`);
   // First, check if the content author is trying to link a subhub to itself.
   if (subhubSys.type === pageSys.type && subhubSys.id === pageSys.id) {
