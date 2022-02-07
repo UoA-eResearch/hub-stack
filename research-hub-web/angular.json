@@ -17,7 +17,8 @@
             "tsConfig": "tsconfig.build.json",
             "polyfills": "src/polyfills.ts",
             "assets": [
-              "./src/assets"
+              "./src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles.scss",
@@ -42,7 +43,9 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "local": {
@@ -363,16 +366,7 @@
               "src/environments/**",
               "src/**/**.module.ts",
               "src/test.ts",
-              "src/polyfills.ts",
-              "src/**/search-results/**/*.ts",
-              "src/**/search-bar/**/*.ts",
-              "src/**/shared/confirm-dialog/**/*.ts",
-              "src/**/shared/error-dialog/**/*.ts",
-              "src/**/shared/markdown/**/*.ts",
-              "src/**/services/cer-api.service.ts",
-              "src/**/services/research-hub-api.service.ts",
-              "src/**/directives/search-result-link.directive.ts",
-              "src/**/pipes/list-item-to-router-link.pipe.ts"
+              "src/polyfills.ts"
             ],
             "karmaConfig": "karma.conf.js",
             "polyfills": "src/polyfills.ts",
@@ -382,7 +376,8 @@
               "src/styles.scss"
             ],
             "assets": [
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
