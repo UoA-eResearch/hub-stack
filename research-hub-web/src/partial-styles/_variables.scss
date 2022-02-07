@@ -153,15 +153,6 @@ $app-base-typography: mat.define-typography-config(
 );
 
 /**
- * Sidenav
- */
-$app-sidenav-list-typography: mat.define-typography-config(
-  $body-1: mat.define-typography-level(16px, 20px, 400),
-  // text
-  $body-2: mat.define-typography-level(24px, 24px, 500) // icon,
-);
-
-/**
  * Mat Chip
  */
 $app-chips-typography: mat.define-typography-config(
