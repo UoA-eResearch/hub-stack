@@ -2,7 +2,8 @@
     "awsAccountId": "416527880812",
     "infra": {
         "awsApiGatewayCustomDomainName": "apigw.sandbox.amazon.auckland.ac.nz",
-        "deploymentBucketStage": "dev"
+        "deploymentBucketStage": "dev",
+        "cognitoUserPoolId": ""
     },
     "elasticsearchDomainName": "researchhub-test-domain",
     "elasticsearchDomainAccount": "518380838815",
@@ -13,5 +14,9 @@
     "CONTENTFUL_ACCESS_TOKEN": "${ssm:/dev/research-hub/contentful-access-token~true}",
     "CONTENTFUL_ENVIRONMENT": "dev",
     "resourceKey": "3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d",
-    "PROFILE": "uoa-sandbox"
+    "PROFILE": "uoa-sandbox",
+    "SWIFTYPE_API_KEY": "${ssm:/dev/research-hub/swiftype-api-key~true}",
+    "awsApiGatewayOauthScopes": [
+        "https://research-hub-dev.auckland.ac.nz/spa"
+    ]
 }
