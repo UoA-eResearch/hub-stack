@@ -50,6 +50,7 @@ provider:
     CONTENTFUL_ACCESS_TOKEN: ${file(env/${self:provider.stage}.json):CONTENTFUL_ACCESS_TOKEN}
     CONTENTFUL_ENVIRONMENT: ${file(env/${self:provider.stage}.json):CONTENTFUL_ENVIRONMENT}
     PROFILE: ${file(env/${self:provider.stage}.json):PROFILE}
+    SWIFTYPE_API_KEY: ${file(env/${self:provider.stage}.json):SWIFTYPE_API_KEY}
   apiGateway:
     apiKeySourceType: HEADER
   apiKeys:
@@ -106,6 +107,25 @@ functions:
             true
           private: true
       - schedule: cron(0 12 * * ? *)
+  uoasearch:
+    handler: handler.uoasearch
+    events:
+      - http:
+          path: uoasearch
+          method: post
+          cors:
+            origin: "${file(env/${self:provider.stage}.json):CORS_ACCESS_CONTROL_ALLOW_ORIGINS}"
+            headers:
+              - Content-Type
+              - Authorization
+              - sentry-trace
+            allowCredentials: false
+          authorizer:
+            type: cognito_user_pools
+            authorizerId:
+              Ref: MyApiGatewayAuthorizer
+            scopes: ${file(env/${self:provider.stage}.json):awsApiGatewayOauthScopes}
+          
             
 plugins:
   - serverless-offline
@@ -177,3 +197,19 @@ resources:
                           - Ref: "AWS::Region"
                           - "${file(env/${self:provider.stage}.json):elasticsearchDomainAccount}"
                           - "domain/${file(env/${self:provider.stage}.json):elasticsearchDomainName}/*"
+    MyApiGatewayAuthorizer:
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        AuthorizerResultTtlInSeconds: 10
+        IdentitySource: method.request.header.Authorization
+        Name: cognito-authorizer-uoapool
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - "Fn::Join":
+              - ":"
+              - - "arn:aws:cognito-idp"
+                - Ref: "AWS::Region"
+                - Ref: "AWS::AccountId"
+                - "userpool/${file(env/${self:provider.stage}.json):infra.cognitoUserPoolId}"
