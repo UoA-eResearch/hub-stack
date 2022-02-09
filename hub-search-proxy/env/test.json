@@ -15,7 +15,8 @@
     "CONTENTFUL_ENVIRONMENT": "test",
     "resourceKey": "891f7417-3a6e-4152-b6d5-c37433acae54",
     "PROFILE": "uoa-its-nonprod",
-    "SWIFTYPE_API_KEY": "${ssm:/test/research-hub/swiftype-api-key~true}",
+    "SWIFTYPE_API_KEY_PATH": "/test/research-hub/swiftype-api-key",
+    "SWIFTYPE_URL": "search-api.swiftype.com",
     "awsApiGatewayOauthScopes": [
         "https://research-hub-test.auckland.ac.nz/spa"
     ]

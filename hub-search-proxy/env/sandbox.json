@@ -15,7 +15,8 @@
     "CONTENTFUL_ENVIRONMENT": "dev",
     "resourceKey": "3cf7aeb4-ad8c-4505-a8e3-7d2a556e188d",
     "PROFILE": "uoa-sandbox",
-    "SWIFTYPE_API_KEY": "${ssm:/dev/research-hub/swiftype-api-key~true}",
+    "SWIFTYPE_API_KEY_PATH": "/dev/research-hub/swiftype-api-key",
+    "SWIFTYPE_URL": "search-api.swiftype.com",
     "awsApiGatewayOauthScopes": [
         "https://research-hub-dev.auckland.ac.nz/spa"
     ]
