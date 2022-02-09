@@ -17,57 +17,127 @@
   </div>
 </div>
 
-<app-search-filter-bar
-  [searchText]="searchText"
-  [totalResults]="totalResults"
-  [(sortOrder)]="sortOrder"
-  [(activeFilters)]="activeFilters"
-></app-search-filter-bar>
+<mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+  <mat-tab label="ResearchHub">
+    <app-search-filter-bar
+      [searchText]="searchText"
+      [totalResults]="totalResults"
+      [(sortOrder)]="sortOrder"
+      [(activeFilters)]="activeFilters"
+    ></app-search-filter-bar>
 
-<!-- Search Results -->
-<div
-  id="search-results"
-  ngClass.gt-sm="search-content site-padding-2 section"
-  ngClass.lt-md="site-padding search-content section"
->
-  <app-search-results-list
-    [searchResults]="{ results: searchResults, totalResults: totalResults }"
-    [loading]="loading"
-  ></app-search-results-list>
-  <!--Load more or no results message-->
-  <div
-    class="eol"
-    *ngIf="
-      !loading && searchResults.length === totalResults && totalResults !== 0
-    "
-  >
-    <div>No More Results</div>
-  </div>
+    <!-- Search Results -->
+    <div
+      id="search-results"
+      ngClass.gt-sm="search-content site-padding-2 section"
+      ngClass.lt-md="site-padding search-content section"
+    >
+      <app-search-results-list
+        [searchResults]="{ results: searchResults, totalResults: totalResults }"
+        [loading]="loading"
+      ></app-search-results-list>
+      <!--Load more or no results message-->
+      <div
+        class="eol"
+        *ngIf="
+          !loading && searchResults.length === totalResults && totalResults !== 0
+        "
+      >
+        <div>No More Results</div>
+      </div>
 
-  <!-- No results message -->
-  <div *ngIf="totalResults === 0" class="no-results">
-    <p>
-      Sorry, your search for "<i
-        ><b>{{ searchText }}</b></i
-      >" did not match anything on the ResearchHub.
-    </p>
-    <p>
-      <br /><b>Suggestions:</b><br />
-      Widen your filters or modify your search query<br />
-      Let us know what you were looking for via our
-      <a href="{{ feedbackUrl }}">Feedback page</a><br />
-      You can try the Staff Service Centre in the
-      <a href="{{ staffIntranet }}">Staff Intranet</a><br />
-    </p>
-  </div>
-</div>
+      <!-- No results message -->
+      <div *ngIf="totalResults === 0" class="no-results">
+        <p>
+          Sorry, your search for "<i
+            ><b>{{ searchText }}</b></i
+          >" did not match anything on the ResearchHub.
+        </p>
+        <p>
+          <br /><b>Suggestions:</b><br />
+          Widen your filters or modify your search query<br />
+          Let us know what you were looking for via our
+          <a href="{{ feedbackUrl }}">Feedback page</a><br />
+          You can try the Staff Service Centre in the
+          <a href="{{ staffIntranet }}">Staff Intranet</a><br />
+        </p>
+      </div>
+    </div>
 
-<!-- Floating up button -->
-<button
-  mat-mini-fab
-  matTooltip="Scroll to top"
-  class="floating-button"
-  (click)="scrollToTop()"
->
-  <mat-icon>arrow_drop_up</mat-icon>
-</button>
+    <!-- Floating up button -->
+    <button
+      mat-mini-fab
+      matTooltip="Scroll to top"
+      class="floating-button"
+      (click)="scrollToTop()"
+      >
+      <mat-icon>arrow_drop_up</mat-icon>
+    </button>
+
+  </mat-tab>
+
+  <mat-tab label="Staff Intranet">
+    
+    <app-search-filter-bar
+      [searchText]="searchText"
+      [totalResults]="intranetTotalResults"
+      [(sortOrder)]="sortOrder"
+    ></app-search-filter-bar>
+
+    <!-- Search Results -->
+    <div
+      id="search-results"
+      ngClass.gt-sm="search-content site-padding-2 section"
+      ngClass.lt-md="site-padding search-content section"
+    >
+      <p>Search results from the staff intranet. You must be logged in to see this content.</p>
+      <p>Total results: {{ intranetTotalResults }}</p>
+      <p>{{ intranetSearchResults | json }}</p>
+
+      <!-- <app-search-results-list
+        [searchResults]="{ results: intranetSearchResults, totalResults: intranetTotalResults }"
+        [loading]="intranetLoading"
+      ></app-search-results-list> -->
+
+      <!--Load more or no results message-->
+      <div
+        class="eol"
+        *ngIf="
+          !intranetLoading && intranetSearchResults.length === intranetTotalResults && intranetTotalResults !== 0
+        "
+      >
+        <div>No More Results</div>
+      </div>
+
+      <!-- No results message -->
+      <div *ngIf="intranetTotalResults === 0" class="no-results">
+        <p>
+          Sorry, your search for "<i
+            ><b>{{ searchText }}</b></i
+          >" did not match anything on the Staff Intranet.
+        </p>
+        <p>
+          <br /><b>Suggestions:</b><br />
+          Modify your search query<br />
+          Let us know what you were looking for via our
+          <a href="{{ feedbackUrl }}">Feedback page</a><br />
+          You can try the Staff Service Centre in the
+          <a href="{{ staffIntranet }}">Staff Intranet</a><br />
+        </p>
+      </div>
+    </div>
+
+    <!-- Floating up button -->
+    <button
+      mat-mini-fab
+      matTooltip="Scroll to top"
+      class="floating-button"
+      (click)="scrollToTop()"
+      >
+      <mat-icon>arrow_drop_up</mat-icon>
+    </button>
+  </mat-tab>
+</mat-tab-group>
+
+
+

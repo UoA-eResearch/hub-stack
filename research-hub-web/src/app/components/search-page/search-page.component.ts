@@ -1,13 +1,15 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { EMPTY, Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
-import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType, SearchResults } from '@app/global/searchTypes';
+import { SearchFilters, SearchQuery, SearchResult, SortOrder, ContentType, SearchResults, IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { ActivatedRoute } from '@angular/router';
 import supportsWebP from 'supports-webp';
 import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 import { PageTitleService } from '@services/page-title.service';
+import { IntranetSearchService } from '@services/intranet-search.service';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-search-page',
@@ -25,13 +27,19 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   public searchText: string;
   public activeFilters: SearchFilters;
   public sortOrder: SortOrder;
-
+  
   public loading: boolean = true;
+  
+  // Staff intranet search
+  public intranetSearchResults: IntranetSearchResult[] = [];
+  public intranetTotalResults: number;
+  public intranetLoading: boolean = true;
 
   private subscriptions: Subscription = new Subscription();
 
   constructor(
     public searchService: SearchService,
+    public intranetSearchService: IntranetSearchService,
     private route: ActivatedRoute,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
@@ -87,6 +95,32 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       if (results) {
         this.ngZone.run(() => {
           this.searchResults = this.searchResults.concat(results.results);
+          this.intranetLoading = false;
+        })
+      }
+    }))
+
+    /**
+     * this subscription implements infinite scrolling on intranet search results
+     */
+     this.subscriptions.add(this.scrollDispatcher.scrolled().pipe(
+      map((event: CdkScrollable) => event.measureScrollOffset("bottom")),
+      pairwise(),
+      filter(([y1, y2]) => (y2 < y1 && y2 < 500)),
+      throttleTime(200),
+      concatMap(() => {
+        return this.ngZone.run(() => {
+          if (this.intranetSearchResults.length < this.intranetTotalResults) {
+            return this.intranetSearch(10, this.intranetSearchResults.length);
+          } else {
+            return EMPTY;
+          }
+        })
+      })
+    ).subscribe((results) => {
+      if (results) {
+        this.ngZone.run(() => {
+          this.intranetSearchResults = this.intranetSearchResults.concat(results.results);
           this.loading = false;
         })
       }
@@ -123,6 +157,41 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
     return this.searchService.search(searchQuery);
   }
+
+  /**
+   * Executes a search using the current search text, filters and sort order.
+   *
+   * @param size - The maximum amount of hits to be returned
+   * @param page - The page number of the results to be returned
+   * @returns an array observable
+   *
+   */
+  private intranetSearch(size: number = 10, page: number = 1): Observable<IntranetSearchResults> {
+    this.intranetLoading = true;
+
+    const searchQuery: IntranetSearchQuery = {
+      query: this.searchText,
+      size: size,
+      page: page,
+      sort: this.sortOrder
+    };
+
+    return this.intranetSearchService.search(searchQuery);
+  }
+
+  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+    if (tabChangeEvent.tab.textLabel === "Staff Intranet" && tabChangeEvent.tab.isActive) {
+      this.intranetSearch().subscribe(searchResults => {
+        this.intranetSearchResults = searchResults.results;
+        this.intranetTotalResults = searchResults.totalResults;
+        this.intranetLoading = false;
+      })
+    }
+
+    if (tabChangeEvent.tab.textLabel === "ResearchHub" && tabChangeEvent.tab.isActive) {
+      console.log('tab switched to researchhub')
+    }
+}
 
   scrollToTop() {
     document?.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });

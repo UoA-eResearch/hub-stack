@@ -9,6 +9,13 @@ export interface SearchQuery {
   includeContentTypes : ContentType[]
 }
 
+export interface IntranetSearchQuery {
+  query: string,
+  size: number,
+  page: number,
+  sort?: SortOrder
+}
+
 export interface SearchFilters {
   relatedOrgs: string[],
   stage: string[],
@@ -38,6 +45,17 @@ export interface SearchResult {
 export interface SearchResultChip {
   name: string;
   id: string;
+}
+
+export interface IntranetSearchResults {
+  totalResults: number;
+  results: IntranetSearchResult[];
+}
+
+export interface IntranetSearchResult {
+  title: string;
+  summary: string;
+  url: string;
 }
 
 export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
