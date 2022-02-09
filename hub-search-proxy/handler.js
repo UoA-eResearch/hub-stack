@@ -4,6 +4,7 @@ const AWS = require('aws-sdk');
 const createAwsElasticsearchConnector = require('aws-elasticsearch-connector');
 const contentfulExport = require('contentful-export');
 const contentful = require('contentful')
+const { formatResponse } = require('./helpers');
 
 
 const mgmtToken = process.env.CONTENTFUL_MGMT_ACCESS_TOKEN;  // Contentful Management API Token
@@ -470,17 +471,5 @@ module.exports.bulk = async () => {
       statusCode,
       { result: `${error.name}: ${error.message}` }
     );
-  }
-}
-
-function formatResponse(status, body) {
-  return {
-      isBase64Encoded: false,
-      statusCode: status,
-      body: JSON.stringify(body),
-      headers: {
-          "Access-Control-Allow-Origin": process.env.CORS_ACCESS_CONTROL_ALLOW_ORIGINS,
-          "Content-Type": "application/json"
-      }
   }
 }

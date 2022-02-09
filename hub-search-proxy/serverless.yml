@@ -50,7 +50,8 @@ provider:
     CONTENTFUL_ACCESS_TOKEN: ${file(env/${self:provider.stage}.json):CONTENTFUL_ACCESS_TOKEN}
     CONTENTFUL_ENVIRONMENT: ${file(env/${self:provider.stage}.json):CONTENTFUL_ENVIRONMENT}
     PROFILE: ${file(env/${self:provider.stage}.json):PROFILE}
-    SWIFTYPE_API_KEY: ${file(env/${self:provider.stage}.json):SWIFTYPE_API_KEY}
+    SWIFTYPE_API_KEY_PATH: ${file(env/${self:provider.stage}.json):SWIFTYPE_API_KEY_PATH}
+    SWIFTYPE_URL: ${file(env/${self:provider.stage}.json):SWIFTYPE_URL}
   apiGateway:
     apiKeySourceType: HEADER
   apiKeys:
@@ -108,7 +109,7 @@ functions:
           private: true
       - schedule: cron(0 12 * * ? *)
   uoasearch:
-    handler: handler.uoasearch
+    handler: uoasearch.search
     events:
       - http:
           path: uoasearch
@@ -168,8 +169,9 @@ resources:
                           - "log-group:/aws/lambda/*:*:*"
                 - Effect: Allow
                   Action:
-                    - ssm:GetParameter
-                    - ssm:GetParameters
+                    - "ssm:Describe*"
+                    - "ssm:Get*"
+                    - "ssm:List*"
                   Resource:
                     - "Fn::Join":
                         - ":"
