@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { SearchResults } from '@app/global/searchTypes';
+import { IntranetSearchResults, SearchResults } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 
 @Component({
