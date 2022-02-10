@@ -1,0 +1,57 @@
+<!-- Search Results Container -->
+<mat-list role="list" *ngIf="searchResults && searchResults.results.length > 0">
+  <a *ngFor="let result of searchResults.results" [href]="result.url" target="_blank">
+    <!-- Result Item -->
+    <mat-card
+      class="card-content"
+      role="listitem"
+    >
+
+      <p class="card-title">
+        <span>{{ result.title }}</span>
+      </p>
+
+      <p class="card-summary" [innerHTML]="result.summary"></p>
+      
+    </mat-card>
+  </a>
+</mat-list>
+
+<!-- Skeleton Loader -->
+<div *ngIf="loading">
+  <div *ngFor="let i of [].constructor(10)" class="skeleton-wrapper">
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="progress-dark"
+        [theme]="{
+          width: '50%',
+          height: '24px',
+          'border-radius': '0px',
+          'margin-bottom': '8px',
+          'margin-top': '12px'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="progress-dark"
+        [theme]="{
+          width: '100%',
+          height: '15px',
+          'border-radius': '0px',
+          'margin-bottom': '2px'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+    <div class="wrapper">
+      <ngx-skeleton-loader
+        animation="progress-dark"
+        [theme]="{
+          width: '30%',
+          'border-radius': '10px',
+          height: '15px'
+        }"
+      ></ngx-skeleton-loader>
+    </div>
+  </div>
+</div>
