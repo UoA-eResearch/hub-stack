@@ -1,7 +1,8 @@
-<app-search-filter-bar
+<app-search-filter-bar *ngIf="loggedIn$ | async;"
   [searchText]="searchText"
   [totalResults]="totalResults"
   [(sortOrder)]="sortOrder"
+  [(activeFilters)]="activeFilters"
 ></app-search-filter-bar>
 
 <!-- Search Results -->
@@ -10,17 +11,24 @@
   ngClass.gt-sm="search-content site-padding-2 section"
   ngClass.lt-md="site-padding search-content section"
 >
-  <p>Search results from the staff intranet. You must be logged in to see this content.</p>
+  <ng-container
+    *ngIf="loggedIn$ | async; then results; else notSignedIn"
+  ></ng-container>
+</div>
 
+<!--templates-->
+<ng-template #results>
+  <ng-container
+    *ngIf="searchText; then resultsList; else noSearchTerms" 
+  ></ng-container>
+</ng-template>
+
+<ng-template #resultsList>
+  <em>Please note that search filters that you have applied will not work on intranet search.</em>
   <app-intranet-search-results-list
     [searchResults]="{ results: searchResults, totalResults: totalResults }"
     [loading]="loading"
   ></app-intranet-search-results-list>
-
-  <!-- <app-search-results-list
-    [searchResults]="{ results: searchResults, totalResults: totalResults }"
-    [loading]="loading"
-  ></app-search-results-list> -->
 
   <!--Load more or no results message-->
   <div
@@ -48,7 +56,17 @@
       <a href="{{ staffIntranet }}">Staff Intranet</a><br />
     </p>
   </div>
-</div>
+</ng-template>
+
+<!--Not signed in template-->
+<ng-template #notSignedIn>
+  <p>Search results from the staff intranet. You must be logged in to see this content.</p>
+</ng-template>
+
+<!--No search terms template-->
+<ng-template #noSearchTerms>
+  <p>Please enter a search query to see results here.</p>
+</ng-template>
 
 <!-- Floating up button -->
 <button

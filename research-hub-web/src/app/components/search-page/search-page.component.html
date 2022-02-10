@@ -18,6 +18,7 @@
 </div>
 
 <mat-tab-group mat-align-tabs="center">
+
   <mat-tab label="ResearchHub">
     <app-search-filter-bar
       [searchText]="searchText"
@@ -73,15 +74,18 @@
       >
       <mat-icon>arrow_drop_up</mat-icon>
     </button>
-
   </mat-tab>
 
-  <mat-tab label="Staff Intranet">
-    
-    <app-intranet-search></app-intranet-search>
-
+  <mat-tab>
+    <ng-template mat-tab-label>
+      Staff Intranet
+      <mat-icon matTooltip="SSO Login Required"
+        >lock</mat-icon
+      >
+    </ng-template>
+    <ng-template matTabContent>
+      <app-intranet-search></app-intranet-search>
+    </ng-template>    
   </mat-tab>
+
 </mat-tab-group>
-
-
-

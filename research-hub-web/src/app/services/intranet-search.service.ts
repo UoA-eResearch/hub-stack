@@ -3,8 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'environments/environment'
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
-import { Params } from '@angular/router';
-import { IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults, SortOrder } from '@app/global/searchTypes';
+import { IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults } from '@app/global/searchTypes';
 import { SearchService } from './search.service';
 
 @Injectable({
