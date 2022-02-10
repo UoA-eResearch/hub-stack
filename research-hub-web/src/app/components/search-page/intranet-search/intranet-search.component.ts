@@ -1,13 +1,13 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, from, iif, Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
-import { SortOrder, IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults } from '@app/global/searchTypes';
+import { SortOrder, IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults, SearchFilters } from '@app/global/searchTypes';
 import { SearchService } from '@services/search.service';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 import { IntranetSearchService } from '@services/intranet-search.service';
-import { MatTabChangeEvent } from '@angular/material/tabs';
+import { LoginService } from '@uoa/auth';
 
 @Component({
   selector: 'app-intranet-search',
@@ -21,11 +21,14 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
   public searchResults: IntranetSearchResult[] = [];
   public totalResults: number;
   public searchText: string;
+  public activeFilters: SearchFilters;
   public sortOrder: SortOrder;
 
   private resultsPerPage: number = 10;
   
-  public loading: boolean = true;
+  public loading: boolean = false;
+
+  public loggedIn$: Observable<boolean>;
 
   private subscriptions: Subscription = new Subscription();
 
@@ -34,28 +37,21 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
     public intranetSearchService: IntranetSearchService,
     private route: ActivatedRoute,
     private scrollDispatcher: ScrollDispatcher,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    public loginService: LoginService,
   ) { }
 
   ngOnInit() {
-    /**
-     * this subscription reacts to changes to the search parameters, i.e. new searches
-     */
-    this.subscriptions.add(this.route.queryParamMap
-      .pipe(
-        tap(params => {
-          this.searchText = params.get('q') || '';
-          this.sortOrder = params.get('sort') as SortOrder || 'relevance';
-          this.searchResults = [];
-          this.totalResults = 0;
-        }),
-        switchMap(() => this.intranetSearch())
-      ).subscribe(searchResults => {
-        this.searchResults = searchResults.results;
-        this.totalResults = searchResults.totalResults;
-        this.loading = false;
-      })
+
+    this.loggedIn$ = from(this.loginService.isAuthenticated()).pipe(
+      switchMap(() => this.loginService.loggedIn$)
     );
+
+    this.subscriptions.add(this.loggedIn$.subscribe(loggedIn => {
+      if (loggedIn) {
+        this.search();
+      }
+    }));
 
     /**
      * this subscription implements infinite scrolling
@@ -84,8 +80,39 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
     }))
   }
 
+  search() {
+    /**
+     * this subscription reacts to changes to the search parameters, i.e. new searches
+     */
+    this.subscriptions.add(this.route.queryParamMap
+      .pipe(
+        tap(params => {
+          this.searchText = params.get('q') || '';
+          this.activeFilters = {
+            category: params.getAll('cat'),
+            stage: params.getAll('ra'),
+            relatedOrgs: params.getAll('org')
+          }
+          this.sortOrder = params.get('sort') as SortOrder || 'relevance';
+          this.searchResults = [];
+          this.totalResults = 0;
+        }),
+        switchMap(() => 
+          iif(() => (this.searchText.length > 0),
+            this.intranetSearch(),
+            EMPTY
+          )
+        )
+      ).subscribe(searchResults => {
+        this.searchResults = searchResults.results;
+        this.totalResults = searchResults.totalResults;
+        this.loading = false;
+      })
+    );
+  }
+
   /**
-   * Executes a search using the current search text, filters and sort order.
+   * Executes a search of the staff intranet using the current search text and sort order.
    *
    * @param size - The maximum amount of hits to be returned
    * @param page - The page number of the results to be returned

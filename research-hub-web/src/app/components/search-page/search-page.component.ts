@@ -8,7 +8,6 @@ import supportsWebP from 'supports-webp';
 import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 import { PageTitleService } from '@services/page-title.service';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-search-page',
