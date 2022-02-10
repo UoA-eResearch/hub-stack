@@ -6,12 +6,16 @@ import { SharedModule } from '@components/shared/app.shared.module';
 import { NgxContentfulRichTextModule } from 'ngx-contentful-rich-text';
 import { SearchResultsListComponent } from './search-results-list/search-results-list.component';
 import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component';
+import { IntranetSearchComponent } from './intranet-search/intranet-search.component';
+import { IntranetSearchResultsListComponent } from './intranet-search-results-list/intranet-search-results-list.component';
 
 @NgModule({
   declarations: [
     SearchPageComponent,
     SearchResultsListComponent,
-    SearchFilterBarComponent
+    SearchFilterBarComponent,
+    IntranetSearchComponent,
+    IntranetSearchResultsListComponent
   ],
   imports: [
     CommonModule,
