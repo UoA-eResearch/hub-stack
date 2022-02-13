@@ -2,7 +2,6 @@ import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { EMPTY, from, iif, Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { SortOrder, IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults, SearchFilters } from '@app/global/searchTypes';
-import { SearchService } from '@services/search.service';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
@@ -33,7 +32,6 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    public searchService: SearchService,
     public intranetSearchService: IntranetSearchService,
     private route: ActivatedRoute,
     private scrollDispatcher: ScrollDispatcher,
@@ -42,7 +40,6 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
     this.loggedIn$ = from(this.loginService.isAuthenticated()).pipe(
       switchMap(() => this.loginService.loggedIn$)
     );
