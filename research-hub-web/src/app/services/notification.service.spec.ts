@@ -1,7 +1,7 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ApolloTestingController, ApolloTestingModule, APOLLO_TESTING_CACHE } from 'apollo-angular/testing';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { MockInstance, MockProvider } from 'ng-mocks';
+import { MockProvider } from 'ng-mocks';
 import { of } from 'rxjs';
 import { AppStorageService } from './app-storage.service';
 

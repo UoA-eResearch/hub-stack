@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@app/app.material.module';
@@ -37,8 +37,7 @@ describe('IntranetSearchComponent', () => {
   const org = 'ghi';
   const sort = 'relevance';
 
-  beforeEach(MockInstance.remember);
-  afterAll(MockInstance.restore);
+  MockInstance.scope();
   
   beforeEach(async () => {
     await TestBed.configureTestingModule({

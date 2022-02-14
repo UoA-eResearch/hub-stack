@@ -1,5 +1,5 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { EMPTY, from, iif, Observable } from 'rxjs';
+import { EMPTY, iif, Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
 import { SortOrder, IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults, SearchFilters } from '@app/global/searchTypes';
 import { ActivatedRoute } from '@angular/router';
