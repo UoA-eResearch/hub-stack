@@ -134,18 +134,31 @@ a {
   color: $link-light-bg-color;
   font-family: $font-family;
 }
-
-// show icon for external links
-// page below is good for checking
-// http://localhost:4200/research-impact/planning-for-impact
-// a:not([href^="/"]):after {
-//   font-family: "Material Icons";
-//   content: " \e895";
-//   font-size: 0.8em;
-// }
-
 span {
   font-family: $font-family;
+}
+
+/**
+* External Links Icon
+* Show the icon for any anchor tags in the main-content area where:
+* - href does not start with '/' (our domain)
+* - href does not contain @ (emails)
+* - do not apply to those with .standard-button class
+* - do not apply to descendents of element app-blocks-embedded-asset
+* - do not apply to link cards or funding application docs
+* - show the mail icon for email links within rich text
+*/
+#main-content a:not([href^="/"]):not([href*="//research-hub"]):not([href*="@"]):not([href^="tel"]):not(.standard-button):not(app-blocks-embedded-asset *):not(.link-card *):not(.application-doc *):not(.banner-container-home *):after {
+  font-family: "Material Icons";
+  content: " \e895";
+  font-size: 0.8em;
+  color: $dark-grey;
+}
+ngx-contentful-rich-text a[href^="mailto"]:after {
+  font-family: "Material Icons";
+  content: " \e0e1";
+  font-size: 0.8em;
+  color: $dark-grey;
 }
 
 /*
@@ -168,7 +181,7 @@ span {
 }
 
 /*
- * Gloabl styles and Material overrides
+ * Global styles and Material overrides
  */
 mat-chip.mat-chip {
   font-size: mat-font-size($app-chips-typography, button);
@@ -411,19 +424,6 @@ h2.maori-proverb {
   border-radius: 50px !important;
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
-}
-/**
- * Fix picture tag on mat card top margin globally
- * mat-card currently doesn't handle picture tags very nicely.
- * By default, mat-card applied a style to an img element to remove top-margin.
- * The style doesn't get applied automatically for img within picture so we apply it globally here.
- * https://github.com/angular/components/blob/6e1f522d6a50d6f589d069775bc771b5590bff4c/src/material/card/card.scss#L191
- * I created a bug report here https://github.com/angular/components/issues/23649
- */
-mat-card picture:first-child img.mat-card-image {
-  margin-top: -16px;
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
 }
 
 /**

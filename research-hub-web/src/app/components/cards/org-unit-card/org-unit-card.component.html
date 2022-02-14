@@ -4,7 +4,7 @@
   <div style="margin-top: 12px"></div>
 
   <mat-card-title>
-    <a class="card-title" [attr.href]="orgUnit.link ? orgUnit.link : null">
+    <a class="card-title" tabindex="0" (keydown.enter)="orgUnit.link ? navigateTo(orgUnit.link) : null">
       <span *ngIf="orgUnit.name">{{ orgUnit.name }}</span>
       <span *ngIf="orgUnit.maoriName && orgUnit.name">, </span>
       <span *ngIf="orgUnit.maoriName">{{ orgUnit.maoriName }}</span>

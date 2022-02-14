@@ -10,6 +10,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PageTitleService } from '@services/page-title.service';
 import { notEmpty } from '@app/global/notEmpty';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-activities-page',
@@ -26,7 +27,8 @@ export class ActivitiesPageComponent implements OnInit, OnDestroy {
     public allStagesGQL: AllStagesGQL,
     private getHomepageGQL: GetHomepageGQL,
     public searchService: SearchService,
-    public pageTitleService: PageTitleService
+    public pageTitleService: PageTitleService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -35,8 +37,15 @@ export class ActivitiesPageComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.getHomepageGQL.fetch().pipe(
         map(x => x?.data?.homepageCollection?.items[0])
-      ).subscribe(result => {
-        this.description = result?.researchActivities;
+      ).subscribe({
+        next: result => {
+          this.description = result?.researchActivities;
+        },
+        error: err => {
+          console.error(err);
+          const status: number = err['status'] ? err['status'] : 500;
+          this.router.navigate(['error', status]);
+        }
       })
     )
   }
