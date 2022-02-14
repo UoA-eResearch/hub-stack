@@ -61,6 +61,15 @@
 <!--Not signed in template-->
 <ng-template #notSignedIn>
   <p>Search results from the staff intranet. You must be logged in to see this content.</p>
+  <a
+    role="button"
+    mat-raised-button
+    color="primary"
+    (click)="loginService.doLogin('/search')"
+    (keydown.enter)="loginService.doLogin('/search')"
+  >
+    Sign In
+  </a>
 </ng-template>
 
 <!--No search terms template-->
