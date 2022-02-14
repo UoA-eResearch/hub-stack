@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@app/app.material.module';
@@ -12,16 +12,34 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from './../../shared/app.shared.module';
 import { IntranetSearchService } from '@services/intranet-search.service';
 import { LoginService } from '@uoa/auth';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
+import { IntranetSearchResults } from '@app/global/searchTypes';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
-fdescribe('IntranetSearchComponent', () => {
+describe('IntranetSearchComponent', () => {
   let component: IntranetSearchComponent;
   let fixture: ComponentFixture<IntranetSearchComponent>;
   let searchSpy: jasmine.Spy;
+  const mockResults: IntranetSearchResults = {
+    totalResults: 1,
+    results: [
+      {
+        title: 'test title',
+        summary: 'test summary 2',
+        url: 'https://www.google.co.nz/',
+      }
+    ]
+  }
 
-  beforeAll(MockInstance.remember);
+  const query = 'test';
+  const cat = 'abc';
+  const ra = 'def';
+  const org = 'ghi';
+  const sort = 'relevance';
+
+  beforeEach(MockInstance.remember);
   afterAll(MockInstance.restore);
-
+  
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
@@ -39,8 +57,22 @@ fdescribe('IntranetSearchComponent', () => {
         MockModule(SharedModule)
       ],
       providers: [
-        IntranetSearchService,
-        MockProvider(LoginService)
+        MockProvider(IntranetSearchService, {
+          search: () => of(mockResults)
+        }),
+        MockProvider(LoginService),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParamMap: of(convertToParamMap({
+              q: query,
+              cat: cat,
+              ra: ra,
+              org: org,
+              sort: sort
+            })),
+          },
+        },
       ]
     })
     .compileComponents();
@@ -49,7 +81,7 @@ fdescribe('IntranetSearchComponent', () => {
   beforeEach(() => {
     MockInstance(LoginService, (instance) => {
       instance.isAuthenticated = jasmine.createSpy().and.returnValue(Promise.resolve(false));
-      instance.loggedIn$ = EMPTY;
+      instance.loggedIn$ = of(false);
       instance.userInfo$ = EMPTY;
     });
 
@@ -65,7 +97,42 @@ fdescribe('IntranetSearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should not call intranet search if not logged in', async () => {
+  it('Initial search properties should be undefined', () => {   
+    expect(component.searchText).toBeUndefined();
+    expect(component.activeFilters).toBeUndefined();
+    expect(component.sortOrder).toBeUndefined();
+    expect(component.searchResults.length).toBe(0);
+    expect(component.totalResults).toBeUndefined();
+  });
+
+  it('#search should update search variables', () => {   
+    component.search();
+
+    expect(component.searchText).toBe(query);
+    expect(component.activeFilters).toEqual({
+      category: [cat],
+      stage: [ra],
+      relatedOrgs: [org]
+    });
+    expect(component.sortOrder).toBe(sort);
+  });
+
+  it('#search should set search results and total results', () => {   
+    component.search();
+
+    expect(component.totalResults).toBe(mockResults.totalResults);
+    expect(component.searchResults).toBe(mockResults.results);
+  });
+
+  it('should not call intranet search if not logged in', (done) => {
+    let isLoggedIn;
+
+    component.loggedIn$.subscribe(loggedIn => {
+      isLoggedIn = loggedIn;
+      done();
+    });
+
+    expect(isLoggedIn).toBe(false);
     expect(searchSpy).not.toHaveBeenCalled();
   });
 });

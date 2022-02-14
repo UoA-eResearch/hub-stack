@@ -40,9 +40,7 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.loggedIn$ = from(this.loginService.isAuthenticated()).pipe(
-      switchMap(() => this.loginService.loggedIn$)
-    );
+    this.loggedIn$ = this.loginService.loggedIn$;
 
     this.subscriptions.add(this.loggedIn$.subscribe(loggedIn => {
       if (loggedIn) {
