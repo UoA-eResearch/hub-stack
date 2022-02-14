@@ -5,7 +5,7 @@ import { environment } from '@environments/environment';
 
 import { IntranetSearchService } from './intranet-search.service';
 
-fdescribe('IntranetSearchService', () => {
+describe('IntranetSearchService', () => {
   let service: IntranetSearchService;
   let httpTestingController: HttpTestingController
   
