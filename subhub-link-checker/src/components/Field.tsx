@@ -4,12 +4,13 @@ import { CombinedLinkActions, MultipleEntryReferenceEditor } from '@contentful/f
 import { Entry } from '@contentful/field-editor-reference/dist/types';
 import { LinkActionsProps } from '@contentful/field-editor-reference/dist/components';
 import "./Field.css";
+import { createClient, ClientAPI, Space, Environment } from 'contentful-management';
 
 interface FieldProps {
   sdk: FieldExtensionSDK;
 }
 
-function checkPageReferences(sdk: FieldExtensionSDK, subhubSys: ContentEntitySys, pageSys: ContentEntitySys): Promise<Boolean> {
+async function checkPageReferences(environment: Environment, subhubSys: ContentEntitySys, pageSys: ContentEntitySys): Promise<Boolean> {
   console.log(`Checking page reference for subhub ${subhubSys.id} and page ${pageSys.id}`);
   // First, check if the content author is trying to link a subhub to itself.
   if (subhubSys.type === pageSys.type && subhubSys.id === pageSys.id) {
@@ -17,7 +18,7 @@ function checkPageReferences(sdk: FieldExtensionSDK, subhubSys: ContentEntitySys
     return Promise.resolve(false);
   }
   // Fetch other subhubs that have links to this page.
-  return sdk.space.getEntries({
+  return environment.getEntries({
     "content_type": "subHub",
     "fields.internalPages.sys.id": pageSys.id,
     "sys.id[ne]": subhubSys.id
@@ -64,11 +65,17 @@ interface CustomLinkActionsProps {
 
 const CustomLinkActions = ({inheritedProps:props, sdk}: CustomLinkActionsProps) => {
   const locale = sdk.locales.default;
+  // Get the current contentful Space.
+  const cma = createClient(
+    { apiAdapter: sdk.cmaAdapter }
+  );
   return <CombinedLinkActions
   {...props}
-  onLinkExisting={index => {
+  onLinkExisting={async (index) => {
     // This callback is called when the user wants to "link" existing pages to the subhub's internalPages collection.
     const contentTypes = getContentTypesAcceptedByField(sdk);
+    const space = await cma.getSpace(sdk.ids.space);
+    const environment = await space.getEnvironment(sdk.ids.environment);
     sdk.dialogs
       .selectMultipleEntries({
         locale: sdk.field.locale,
@@ -80,8 +87,9 @@ const CustomLinkActions = ({inheritedProps:props, sdk}: CustomLinkActionsProps) 
         }
         // Check all entries are ok.
         const subhubSys = sdk.entry.getSys();
+        
         return Promise.all(
-          entries.map(entry => checkPageReferences(sdk, subhubSys, (entry as Entry).sys))
+          entries.map(entry => checkPageReferences(environment, subhubSys, (entry as Entry).sys))
         ).then(results => {
           const failedEntries = entries.filter((entry, i) => !results[i]);
           if (failedEntries.length === 0) {
