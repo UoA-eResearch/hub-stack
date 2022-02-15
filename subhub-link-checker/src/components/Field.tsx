@@ -15,20 +15,19 @@ async function checkPageReferences(environment: Environment, subhubSys: ContentE
   // First, check if the content author is trying to link a subhub to itself.
   if (subhubSys.type === pageSys.type && subhubSys.id === pageSys.id) {
     console.log("Subhub and page are the same, rejecting.");
-    return Promise.resolve(false);
+    return false;
   }
   // Fetch other subhubs that have links to this page.
-  return environment.getEntries({
+  const entries = await environment.getEntries({
     "content_type": "subHub",
     "fields.internalPages.sys.id": pageSys.id,
     "sys.id[ne]": subhubSys.id
-  }).then((entries: CollectionResponse<Object>) => {
-    console.log(`Found ${entries.items.length} other Subhub(s) that contain this page.`);
-    if (entries.items.length > 0) {
-      console.log("Other SubHub(s) containing this page",entries.items);
-    }
-    return entries.items.length === 0;
   });
+  console.log(`Found ${entries.items.length} other Subhub(s) that contain this page.`);
+  if (entries.items.length > 0) {
+    console.log("Other SubHub(s) containing this page",entries.items);
+  }
+  return entries.items.length === 0;
 }
 
 const doFailedAlertDialog = (sdk: FieldExtensionSDK, hasMultiplePages: boolean, failedPageNames : string[]) => {
@@ -76,46 +75,43 @@ const CustomLinkActions = ({inheritedProps:props, sdk}: CustomLinkActionsProps) 
     const contentTypes = getContentTypesAcceptedByField(sdk);
     const space = await cma.getSpace(sdk.ids.space);
     const environment = await space.getEnvironment(sdk.ids.environment);
-    sdk.dialogs
-      .selectMultipleEntries({
+    const entries = await sdk.dialogs.selectMultipleEntries({
         locale: sdk.field.locale,
         contentTypes
-      })
-      .then((entries) => {
-        if (!entries || entries.length === 0) {
-          return;
-        }
-        // Check all entries are ok.
-        const subhubSys = sdk.entry.getSys();
-        
-        return Promise.all(
-          entries.map(entry => checkPageReferences(environment, subhubSys, (entry as Entry).sys))
-        ).then(results => {
-          const failedEntries = entries.filter((entry, i) => !results[i]);
-          if (failedEntries.length === 0) {
-            // All OK! Will add all entries to entry list.
-            props.onLinkedExisting(entries as Entry[], index);
-            return;
-          } else {
-            // There were some pages that didn't pass the check. Do not allow them to be entered.
-            const hasMultiplePages = entries.length !== 1;
-            const failedPageNames = failedEntries.map(entry => {
-              const title = (entry as Entry).fields.title;
-              return title ? title[locale] : "(Untitled content)";
-            });
-            doFailedAlertDialog(sdk, hasMultiplePages, failedPageNames);
-            return;
-          }
+    });
+    if (!entries || entries.length === 0) {
+      return;
+    }
+    // Check all entries are ok.
+    const subhubSys = sdk.entry.getSys();
+    try {
+      const results = await Promise.all(
+        entries.map(entry => checkPageReferences(environment, subhubSys, (entry as Entry).sys))
+      );
+      const failedEntries = entries.filter((entry, i) => !results[i]);
+      if (failedEntries.length === 0) {
+        // All OK! Will add all entries to entry list.
+        props.onLinkedExisting(entries as Entry[], index);
+        return;
+      } else {
+        // There were some pages that didn't pass the check. Do not allow them to be entered.
+        const hasMultiplePages = entries.length !== 1;
+        const failedPageNames = failedEntries.map(entry => {
+          const title = (entry as Entry).fields.title;
+          return title ? title[locale] : "(Untitled content)";
         });
-      }).catch(reason => {
-        sdk.dialogs.openAlert({
-          title: "Error occurred in the SubHub link checking application",
-          message: "Sorry, an error occurred while adding your page(s) to the SubHub Internal Pages field. " +
-            "Please try again. If problems persist, please message the ResearchHub team for assistance. " +
-            "You can also add your page(s) to the External Pages field as a workaround."
-        });
-        console.log("Error occurred in SubHub link checking application", reason);
+        doFailedAlertDialog(sdk, hasMultiplePages, failedPageNames);
+        return;
+      }
+    } catch (reason) {
+      sdk.dialogs.openAlert({
+        title: "Error occurred in the SubHub link checking application",
+        message: "Sorry, an error occurred while adding your page(s) to the SubHub Internal Pages field. " +
+          "Please try again. If problems persist, please message the ResearchHub team for assistance. " +
+          "You can also add your page(s) to the External Pages field as a workaround."
       });
+      console.log("Error occurred in SubHub link checking application", reason);
+    }
   }}
 />
 };
