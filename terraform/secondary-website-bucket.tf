@@ -17,7 +17,8 @@ resource "aws_s3_bucket" "secondary_website" {
 }
 
 resource "aws_s3_bucket_versioning" "secondary_website_versioning" {
-  bucket = aws_s3_bucket.secondary_website.id
+  count  = var.create_secondary ? 1 : 0
+  bucket = aws_s3_bucket.secondary_website[count.index].id
   
   versioning_configuration {
     status = "Suspended"
@@ -27,7 +28,8 @@ resource "aws_s3_bucket_versioning" "secondary_website_versioning" {
 # Encrypt the data at rest. We use the default Service Side Encryption
 # in order to minimize issues between CloudFront and KMS
 resource "aws_s3_bucket_server_side_encryption_configuration" "secondary_website_server_side_encryption" {
-  bucket = aws_s3_bucket.secondary_website.id
+  count  = var.create_secondary ? 1 : 0
+  bucket = aws_s3_bucket.secondary_website[count.index].id
 
   rule {
     apply_server_side_encryption_by_default {
@@ -37,7 +39,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "secondary_website
 }
 
 resource "aws_s3_bucket_acl" "secondary_website_acl" {
-  bucket = aws_s3_bucket.secondary_website.id
+  count  = var.create_secondary ? 1 : 0
+  bucket = aws_s3_bucket.secondary_website[count.index].id
   acl    = "private"
 }
 
