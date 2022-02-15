@@ -1,0 +1,60 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/imgs/favicon.png?v=2",
+          "/index.html",
+          "/manifest.webmanifest",
+          "/*.css",
+          "/*.js"
+        ],
+        "urls": [
+          "https://fonts.googleapis.com/**",
+          "https://fonts.gstatic.com/**",
+          "https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/**"
+        ]
+      }
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": [
+          "/assets/**",
+          "/*.(svg|cur|jpg|jpeg|png|apng|webp|avif|gif|otf|ttf|woff|woff2)"
+        ],
+        "urls": [
+          "https://images.ctfassets.net/**"
+        ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "cer-graphql-service",
+      "urls": ["*/cer-graphql-service"],
+      "cacheConfig": {
+        "maxSize": 10,
+        "maxAge": "1h",
+        "timeout": "10s",
+        "strategy": "freshness"
+      }
+    },
+    {
+      "name": "cer-graphql-preview-service",
+      "urls": ["*/cer-graphql-preview-service"],
+      "cacheConfig": {
+        "maxSize": 10,
+        "maxAge": "1m",
+        "timeout": "10s",
+        "strategy": "freshness"
+      }
+    }
+  ]
+}

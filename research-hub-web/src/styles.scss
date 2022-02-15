@@ -435,3 +435,24 @@ h2.maori-proverb {
     margin: auto;
   }
 }
+
+/**
+ * MatSnackBar
+ */
+.mat-snack-bar-container {
+  background: $light-blue;
+  color: white;
+  button {
+    @extend .standard-button;
+    color: white;
+    border: 3px solid white !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    max-height: none !important;
+  }
+  button:hover {
+    @extend .standard-button;
+    color: $light-blue !important;
+    border: 3px solid white !important;
+    background-color: white !important;
+  }
+}
