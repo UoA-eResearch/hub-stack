@@ -16,7 +16,7 @@ There are three instances of the Contentful App - one for dev, test and prod. [R
 ## Seeing and deploying your changes
 This assumes the Contentful environments are set up with the required app definitions. See the First time deployment section if you need to redo those steps.
 
-ResearchHub has three Contentful environments - `dev`, `test`, and `prod`, and `prod` is the one content authors see. Use `dev` for previewing your changes and manual testing - Contentful Apps can't be run locally. To deploy to `test` and `prod`, you should perform the deployment during a scheduled Change.
+ResearchHub has three Contentful environments - `dev`, `test`, and `prod`, and `prod` is the one content authors see. Use `dev` for previewing your changes and manual testing - Contentful Apps can't be run locally. Deployment to `test` and `prod` should only be done as part of [the official release process](https://wiki.auckland.ac.nz/display/APPLCTN/Release+to+prod) and content authors need to be notified before deploying updates.
 
 1. If you are deploying to `test` and `prod`, first check-in your changes to Git and merge them into `master`.
 1. Run `npm run build` to build a new bundle.
