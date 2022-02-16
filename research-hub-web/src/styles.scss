@@ -425,19 +425,6 @@ h2.maori-proverb {
   background-color: white !important;
   transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
 }
-/**
- * Fix picture tag on mat card top margin globally
- * mat-card currently doesn't handle picture tags very nicely.
- * By default, mat-card applied a style to an img element to remove top-margin.
- * The style doesn't get applied automatically for img within picture so we apply it globally here.
- * https://github.com/angular/components/blob/6e1f522d6a50d6f589d069775bc771b5590bff4c/src/material/card/card.scss#L191
- * I created a bug report here https://github.com/angular/components/issues/23649
- */
-mat-card picture:first-child img.mat-card-image {
-  margin-top: -16px;
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-}
 
 /**
  * body text max-width
@@ -446,5 +433,26 @@ mat-card picture:first-child img.mat-card-image {
   max-width: $single-column-max-width;
   @media (min-width: $single-column-max-width) {
     margin: auto;
+  }
+}
+
+/**
+ * MatSnackBar
+ */
+.mat-snack-bar-container {
+  background: $light-blue;
+  color: white;
+  button {
+    @extend .standard-button;
+    color: white;
+    border: 3px solid white !important;
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    max-height: none !important;
+  }
+  button:hover {
+    @extend .standard-button;
+    color: $light-blue !important;
+    border: 3px solid white !important;
+    background-color: white !important;
   }
 }

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ErrorPagesModule, ErrorPage, UoaErrorsConfig } from '@uoa/error-pages';
 import { PageTitleService } from '@services/page-title.service';
-import './error-routing.scss';
 
 @NgModule({
     imports: [
