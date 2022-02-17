@@ -89,6 +89,7 @@
     "cypress": "^7.7.0",
     "cypress-commands": "^2.0.1",
     "eslint": "^7.32.0",
+    "graphql": "^15.8.0",
     "jasmine-core": "^3.99.0",
     "karma": "^6.3.12",
     "karma-chrome-launcher": "~3.1.0",
