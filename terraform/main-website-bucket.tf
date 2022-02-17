@@ -1,20 +1,5 @@
 resource "aws_s3_bucket" "main_website" {
   bucket = var.dns_entry
-  acl    = "private"
-
-  versioning {
-    enabled = false
-  }
-
-  # Encrypt the data at rest. We use the default Service Side Encryption
-  # in order to minimize issues between CloudFront and KMS
-  server_side_encryption_configuration {
-    rule {
-      apply_server_side_encryption_by_default {
-        sse_algorithm = "AES256"
-      }
-    }
-  }
 
   tags = merge(
     local.common_tags,
@@ -28,6 +13,31 @@ resource "aws_s3_bucket" "main_website" {
       logging
     ]
   }
+}
+
+resource "aws_s3_bucket_versioning" "main_website_versioning" {
+  bucket = aws_s3_bucket.main_website.id
+  
+  versioning_configuration {
+    status = "Suspended"
+  }
+}
+
+# Encrypt the data at rest. We use the default Service Side Encryption
+# in order to minimize issues between CloudFront and KMS
+resource "aws_s3_bucket_server_side_encryption_configuration" "main_website_server_side_encryption" {
+  bucket = aws_s3_bucket.main_website.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_acl" "main_website_acl" {
+  bucket = aws_s3_bucket.main_website.id
+  acl    = "private"
 }
 
 resource "aws_s3_bucket_policy" "cdn_access_policy" {
