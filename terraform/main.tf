@@ -5,8 +5,10 @@ terraform {
   }
 }
 
+# NOTE: aws provider v4 is the last to support Terraform v0.12-0.15, therefore we specify versions less than 5.0.0.
+# as Jenkins currently is on v0.12.31 of Terraform.
 provider "aws" {
-  version = ">= 3.41.0"
+  version = ">= 3.41.0, < 5.0.0"
   region  = var.aws_region
   profile = var.aws_profile
   ignore_tags {
