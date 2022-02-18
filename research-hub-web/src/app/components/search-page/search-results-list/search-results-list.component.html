@@ -5,20 +5,21 @@
     *ngFor="let result of searchResults.results"
     class="card-content"
     role="listitem"
-    [routerLink]="['/' + result.contentType.toLowerCase() + '/' + result.slug]"
     (keydown.enter)="navigate(result.contentType, result.slug)"
   >
+    <a class="search-link" [routerLink]="['/' + result.contentType.toLowerCase() + '/' + result.slug]"></a>
+    
     <span class="card-label">{{
       result.contentType | contentTypeDisplayName
     }}</span>
 
-    <p class="card-title">
+    <mat-card-title>
       <span>{{ result.title }}</span
       >&nbsp;
       <mat-icon *ngIf="result.ssoProtected" matTooltip="SSO Login Required"
         >lock</mat-icon
       >
-    </p>
+    </mat-card-title>
 
     <p class="card-summary" [innerHTML]="result.summary"></p>
 
