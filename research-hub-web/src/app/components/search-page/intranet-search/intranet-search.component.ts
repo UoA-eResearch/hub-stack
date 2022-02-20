@@ -1,7 +1,7 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { EMPTY, iif, Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
-import { SortOrder, IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults, SearchFilters } from '@app/global/searchTypes';
+import { SortOrder, IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults, SearchFilters, SearchContext } from '@app/global/searchTypes';
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
@@ -14,9 +14,7 @@ import { LoginService } from '@uoa/auth';
   styleUrls: ['./intranet-search.component.scss']
 })
 export class IntranetSearchComponent implements OnInit, OnDestroy {
-  public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
-  public staffIntranet = "https://www.staff.auckland.ac.nz/";
-
+  public searchContext: SearchContext = SearchContext.StaffIntranet;
   public searchResults: IntranetSearchResult[] = [];
   public totalResults: number;
   public searchText: string;

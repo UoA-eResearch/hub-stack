@@ -41,20 +41,8 @@
   </div>
 
   <!-- No results message -->
-  <div *ngIf="totalResults === 0" class="no-results">
-    <p>
-      Sorry, your search for "<i
-        ><b>{{ searchText }}</b></i
-      >" did not match anything on the Staff Intranet.
-    </p>
-    <p>
-      <br /><b>Suggestions:</b><br />
-      Modify your search query<br />
-      Let us know what you were looking for via our
-      <a href="{{ feedbackUrl }}">Feedback page</a><br />
-      You can try the Staff Service Centre in the
-      <a href="{{ staffIntranet }}">Staff Intranet</a><br />
-    </p>
+  <div *ngIf="totalResults === 0">
+    <app-no-results [searchText]="searchText" [searchContext]="searchContext"></app-no-results>
   </div>
 </ng-template>
 

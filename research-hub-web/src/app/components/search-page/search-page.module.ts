@@ -8,6 +8,8 @@ import { SearchResultsListComponent } from './search-results-list/search-results
 import { SearchFilterBarComponent } from './search-filter-bar/search-filter-bar.component';
 import { IntranetSearchComponent } from './intranet-search/intranet-search.component';
 import { IntranetSearchResultsListComponent } from './intranet-search-results-list/intranet-search-results-list.component';
+import { SearchComponent } from './search/search.component';
+import { NoResultsComponent } from './no-results/no-results.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { IntranetSearchResultsListComponent } from './intranet-search-results-li
     SearchResultsListComponent,
     SearchFilterBarComponent,
     IntranetSearchComponent,
-    IntranetSearchResultsListComponent
+    IntranetSearchResultsListComponent,
+    SearchComponent,
+    NoResultsComponent
   ],
   imports: [
     CommonModule,
