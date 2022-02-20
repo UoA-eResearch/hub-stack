@@ -1,0 +1,6 @@
+@import "styles-common";
+
+.no-results {
+  @extend .section-2;
+  text-align: center;
+}

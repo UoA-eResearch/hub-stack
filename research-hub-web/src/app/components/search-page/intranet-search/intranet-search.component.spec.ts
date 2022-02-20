@@ -15,6 +15,7 @@ import { LoginService } from '@uoa/auth';
 import { EMPTY, of } from 'rxjs';
 import { IntranetSearchResults } from '@app/global/searchTypes';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { NoResultsComponent } from '../no-results/no-results.component';
 
 describe('IntranetSearchComponent', () => {
   let component: IntranetSearchComponent;
@@ -45,7 +46,8 @@ describe('IntranetSearchComponent', () => {
         IntranetSearchComponent,
         MockComponent(NgxSkeletonLoaderComponent),
         MockComponent(IntranetSearchResultsListComponent),
-        MockComponent(SearchFilterBarComponent)
+        MockComponent(SearchFilterBarComponent),
+        MockComponent(NoResultsComponent)
       ],
       imports: [
         RouterTestingModule,

@@ -20,60 +20,7 @@
 <mat-tab-group mat-align-tabs="center">
 
   <mat-tab label="ResearchHub">
-    <app-search-filter-bar
-      [searchText]="searchText"
-      [totalResults]="totalResults"
-      [(sortOrder)]="sortOrder"
-      [(activeFilters)]="activeFilters"
-    ></app-search-filter-bar>
-
-    <!-- Search Results -->
-    <div
-      id="search-results"
-      ngClass.gt-sm="search-content site-padding-2 section"
-      ngClass.lt-md="site-padding search-content section"
-    >
-      <app-search-results-list
-        [searchResults]="{ results: searchResults, totalResults: totalResults }"
-        [loading]="loading"
-      ></app-search-results-list>
-      <!--Load more or no results message-->
-      <div
-        class="eol"
-        *ngIf="
-          !loading && searchResults.length === totalResults && totalResults !== 0
-        "
-      >
-        <div>No More Results</div>
-      </div>
-
-      <!-- No results message -->
-      <div *ngIf="totalResults === 0" class="no-results">
-        <p>
-          Sorry, your search for "<i
-            ><b>{{ searchText }}</b></i
-          >" did not match anything on the ResearchHub.
-        </p>
-        <p>
-          <br /><b>Suggestions:</b><br />
-          Widen your filters or modify your search query<br />
-          Let us know what you were looking for via our
-          <a href="{{ feedbackUrl }}">Feedback page</a><br />
-          You can try the Staff Service Centre in the
-          <a href="{{ staffIntranet }}">Staff Intranet</a><br />
-        </p>
-      </div>
-    </div>
-
-    <!-- Floating up button -->
-    <button
-      mat-mini-fab
-      matTooltip="Scroll to top"
-      class="floating-button"
-      (click)="scrollToTop()"
-      >
-      <mat-icon>arrow_drop_up</mat-icon>
-    </button>
+    <app-search></app-search>
   </mat-tab>
 
   <mat-tab>

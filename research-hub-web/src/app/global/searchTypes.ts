@@ -66,3 +66,8 @@ export enum FilterType {
   ResearchCategory,
   Organisation
 }
+
+export enum SearchContext {
+  ResearchHub = 'ResearchHub',
+  StaffIntranet = 'Staff Intranet'
+}
