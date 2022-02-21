@@ -25,4 +25,8 @@ export class SearchPageComponent implements OnInit {
       this.bannerImageUrl = supported ? this.bannerImageUrl  + '?w=1900&fm=webp' : this.bannerImageUrl + '?w=1900';
     });
   }
+
+  scrollToTop() {
+    document?.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

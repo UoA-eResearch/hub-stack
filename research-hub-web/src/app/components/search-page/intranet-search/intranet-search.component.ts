@@ -125,10 +125,6 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
     return this.intranetSearchService.search(searchQuery);
   }
 
-  scrollToTop() {
-    document?.querySelector('.main-content')?.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }

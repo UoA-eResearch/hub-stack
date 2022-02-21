@@ -26,7 +26,7 @@
   <mat-tab>
     <ng-template mat-tab-label>
       Staff Intranet
-      <mat-icon matTooltip="SSO Login Required"
+      <mat-icon class="lock-icon" matTooltip="SSO Login Required"
         >lock</mat-icon
       >
     </ng-template>
@@ -36,3 +36,13 @@
   </mat-tab>
 
 </mat-tab-group>
+
+<!-- Floating up button -->
+<button
+  mat-mini-fab
+  matTooltip="Scroll to top"
+  class="floating-button"
+  (click)="scrollToTop()"
+  >
+  <mat-icon>arrow_drop_up</mat-icon>
+</button>
