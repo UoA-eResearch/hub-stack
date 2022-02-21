@@ -10,7 +10,7 @@ import { IntranetSearchComponent } from './intranet-search.component';
 import { IntranetSearchResultsListComponent } from './../intranet-search-results-list/intranet-search-results-list.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from './../../shared/app.shared.module';
-import { IntranetSearchService } from '@services/intranet-search.service';
+import { SearchService } from '@services/search.service';
 import { LoginService } from '@uoa/auth';
 import { EMPTY, of } from 'rxjs';
 import { IntranetSearchResults } from '@app/global/searchTypes';
@@ -58,8 +58,8 @@ describe('IntranetSearchComponent', () => {
         MockModule(SharedModule)
       ],
       providers: [
-        MockProvider(IntranetSearchService, {
-          search: () => of(mockResults)
+        MockProvider(SearchService, {
+          searchIntranet: () => of(mockResults)
         }),
         MockProvider(LoginService),
         {

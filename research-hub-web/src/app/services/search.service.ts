@@ -4,7 +4,7 @@ import { environment } from 'environments/environment'
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { Params } from '@angular/router';
-import { SearchFilters, SearchQuery, SearchResult, SearchResults, SortOrder } from '@app/global/searchTypes';
+import { IntranetSearchQuery, IntranetSearchResult, IntranetSearchResults, SearchFilters, SearchQuery, SearchResult, SearchResults, SortOrder } from '@app/global/searchTypes';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +57,38 @@ export class SearchService {
     );
   }
 
+  public searchIntranet(query: IntranetSearchQuery): Observable<IntranetSearchResults> {
+    return this.http.post(
+      environment.intranetSearchUrl,
+      query
+    ).pipe(
+      tap(() => this.updateSearchSubjects(query)),
+      map(data => {
+        const totalResults = data["result"]["info"]["page"]["total_result_count"];
+        const results: IntranetSearchResult[] = [];
+        data["result"]["records"]["page"].forEach(element => {
+          const length: number = 200;
+          const body: string = element.body.length > length ? element.body.substring(0, length - 3) + "..." : element.body.substring(0, length);
+          
+          const result: IntranetSearchResult = {
+            title: element.title,
+            summary: body,
+            url: element.url
+          };
+
+          results.push(result);
+        });
+
+        const searchResults: IntranetSearchResults = {
+          totalResults,
+          results
+        }
+
+        return searchResults;
+      })
+    );
+  }
+
   public generateQueryParams(searchText: string, filters?: SearchFilters, sortOrder?: SortOrder): Params {
     const params: Params = {
       q: searchText,
@@ -81,9 +113,9 @@ export class SearchService {
     return params;
   }
 
-  private updateSearchSubjects(query: SearchQuery) {
+  private updateSearchSubjects(query: SearchQuery | IntranetSearchQuery) {
     this.searchText.next(query.query);
-    this.searchFilters.next(Object.assign({}, query.filters));
+    if ('filters' in query) this.searchFilters.next(Object.assign({}, query.filters));
   }
 
   private pushToDataLayer(query: string, totalResults: number) {

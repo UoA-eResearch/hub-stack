@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { SearchFilters, SearchQuery, SearchResults } from '@app/global/searchTypes';
+import { IntranetSearchQuery, IntranetSearchResults, SearchFilters, SearchQuery, SearchResults } from '@app/global/searchTypes';
 import { environment } from '@environments/environment';
 import { skip } from 'rxjs/operators';
 
@@ -8,7 +8,8 @@ import { SearchService } from './search.service';
 
 describe('SearchService', () => {
   let service: SearchService;
-  let httpTestingController: HttpTestingController
+  let httpTestingController: HttpTestingController;
+
   const searchStub = {
     "result": {
       "hits": {
@@ -57,7 +58,8 @@ describe('SearchService', () => {
         }
       }
     }
-  }
+  };
+
   const resultsStub: SearchResults = {
     results: [
       {
@@ -75,7 +77,8 @@ describe('SearchService', () => {
       }
     ],
     totalResults: 1
-  }
+  };
+
   const query: SearchQuery = {
     from: 0,
     includeContentTypes: ['article'],
@@ -87,6 +90,68 @@ describe('SearchService', () => {
       stage: []
     }
   };
+
+  const intranetSearchStub = {
+    "result": {
+      "record_count": 1,
+      "records": {
+        "page": [{
+            "sections": [],
+            "title": "test title",
+            "type": "",
+            "description": "description",
+            "collection": "Staff_intranet",
+            "external_id": "abc",
+            "image": "",
+            "url": "https://www.google.co.nz/",
+            "published_at": "2022-02-13T05:29:36Z",
+            "updated_at": "2022-02-08T03:48:19Z",
+            "popularity": 10,
+            "body": "test summary 2",
+            "info": "",
+            "_index": "abc",
+            "_type": "_doc",
+            "_score": 184.14064,
+            "_version": null,
+            "_explanation": null,
+            "sort": null,
+            "highlight": {},
+            "id": "abc"
+          }
+        ]
+      },
+      "info": {
+        "page": {
+          "query": "Tis better to have tested and lost than never to have tested at all",
+          "current_page": 1,
+          "num_pages": 1,
+          "per_page": 10,
+          "total_result_count": 1,
+          "facets": {}
+        }
+      },
+      "errors": {}
+    }
+  };
+
+  const intranetResultsStub: IntranetSearchResults = {
+    results: [
+      {
+        title: 'test title',
+        summary: 'test summary 2',
+        url: 'https://www.google.co.nz/',
+      }
+    ],
+    totalResults: 1
+  };
+
+  const intranetQuery: IntranetSearchQuery = {
+    page: 1,
+    query: 'test',
+    size: 10,
+    sort: 'relevance'
+  };
+
   window.dataLayer = [];
 
   beforeEach(() => {
@@ -138,5 +203,16 @@ describe('SearchService', () => {
     expect(req.request.method).toEqual('POST');
 
     req.flush(searchStub);
+  });
+
+  it('#searchIntranet should make a POST request and return search result', () => {
+    service.searchIntranet(intranetQuery).subscribe(result => {
+      expect(result).toEqual(intranetResultsStub);
+    });
+
+    const req = httpTestingController.expectOne(environment.intranetSearchUrl);
+    expect(req.request.method).toEqual('POST');
+
+    req.flush(intranetSearchStub);
   });
 });
