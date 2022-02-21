@@ -10,7 +10,7 @@ import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss', './../search-common.scss']
 })
 export class SearchComponent implements OnInit, OnDestroy {
   public searchContext: SearchContext = SearchContext.ResearchHub;

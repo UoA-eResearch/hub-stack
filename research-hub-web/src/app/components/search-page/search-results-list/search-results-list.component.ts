@@ -6,7 +6,7 @@ import { SearchService } from '@services/search.service';
 @Component({
   selector: 'app-search-results-list',
   templateUrl: './search-results-list.component.html',
-  styleUrls: ['./search-results-list.component.scss']
+  styleUrls: ['./search-results-list.component.scss', './../search-common.scss']
 })
 export class SearchResultsListComponent {
   @Input() loading = false;
