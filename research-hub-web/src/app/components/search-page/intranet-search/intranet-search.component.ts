@@ -5,7 +5,7 @@ import { SortOrder, IntranetSearchQuery, IntranetSearchResult, IntranetSearchRes
 import { ActivatedRoute } from '@angular/router';
 import { concatMap, filter, map, pairwise, switchMap, tap, throttleTime } from 'rxjs/operators';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
-import { IntranetSearchService } from '@services/intranet-search.service';
+import { SearchService } from '@services/search.service';
 import { LoginService } from '@uoa/auth';
 
 @Component({
@@ -30,7 +30,7 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
 
   constructor(
-    public intranetSearchService: IntranetSearchService,
+    public searchService: SearchService,
     private route: ActivatedRoute,
     private scrollDispatcher: ScrollDispatcher,
     private ngZone: NgZone,
@@ -122,7 +122,7 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
       sort: this.sortOrder
     };
 
-    return this.intranetSearchService.search(searchQuery);
+    return this.searchService.searchIntranet(searchQuery);
   }
 
   ngOnDestroy() {
