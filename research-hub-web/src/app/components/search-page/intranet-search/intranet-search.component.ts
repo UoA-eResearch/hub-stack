@@ -11,7 +11,7 @@ import { LoginService } from '@uoa/auth';
 @Component({
   selector: 'app-intranet-search',
   templateUrl: './intranet-search.component.html',
-  styleUrls: ['./intranet-search.component.scss']
+  styleUrls: ['./intranet-search.component.scss', './../search-common.scss']
 })
 export class IntranetSearchComponent implements OnInit, OnDestroy {
   public searchContext: SearchContext = SearchContext.StaffIntranet;
