@@ -6,6 +6,8 @@ import { SearchPageComponent } from './search-page.component';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/app.shared.module';
 import { PageTitleService } from '@services/page-title.service';
+import { SearchComponent } from './search/search.component';
+import { IntranetSearchComponent } from './intranet-search/intranet-search.component';
 
 describe('SearchPageComponent', () => {
   let component: SearchPageComponent;
@@ -15,6 +17,8 @@ describe('SearchPageComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [
         SearchPageComponent,
+        MockComponent(SearchComponent),
+        MockComponent(IntranetSearchComponent),
         MockComponent(BreadcrumbsComponent)
       ],
       imports: [

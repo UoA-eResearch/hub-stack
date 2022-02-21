@@ -126,14 +126,10 @@ describe('IntranetSearchComponent', () => {
   });
 
   it('should not call intranet search if not logged in', (done) => {
-    let isLoggedIn;
-
     component.loggedIn$.subscribe(loggedIn => {
-      isLoggedIn = loggedIn;
+      expect(loggedIn).toBe(false);
+      expect(searchSpy).not.toHaveBeenCalled();
       done();
     });
-
-    expect(isLoggedIn).toBe(false);
-    expect(searchSpy).not.toHaveBeenCalled();
   });
 });
