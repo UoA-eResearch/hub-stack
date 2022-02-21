@@ -24,7 +24,9 @@
 </ng-template>
 
 <ng-template #resultsList>
-  <em>Please note that search filters that you have applied will not work on intranet search.</em>
+  <em *ngIf="totalResults > 0 && !errorMessage">
+    Please note that search filters that you have applied will not work on intranet search.
+  </em>
   <app-intranet-search-results-list
     [searchResults]="{ results: searchResults, totalResults: totalResults }"
     [loading]="loading"
@@ -41,8 +43,16 @@
   </div>
 
   <!-- No results message -->
-  <div *ngIf="totalResults === 0">
+  <div *ngIf="totalResults === 0 && !errorMessage">
     <app-no-results [searchText]="searchText" [searchContext]="searchContext"></app-no-results>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="errorMessage">
+    <h3>Oops! It looks like something went wrong :(</h3>
+    <p>Please try reloading the page. If the problem persists, please contact
+      <a href="mailto:reshubproject@auckland.ac.nz">ResearchHub Project</a>.
+    </p>
   </div>
 </ng-template>
 

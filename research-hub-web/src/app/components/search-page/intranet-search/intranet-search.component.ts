@@ -20,6 +20,7 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
   public searchText: string;
   public activeFilters: SearchFilters;
   public sortOrder: SortOrder;
+  public errorMessage: string;
 
   private resultsPerPage: number = 10;
   
@@ -63,12 +64,19 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
           }
         })
       })
-    ).subscribe((results) => {
-      if (results) {
-        this.ngZone.run(() => {
-          this.searchResults = this.searchResults.concat(results.results);
-          this.loading = false;
-        })
+    ).subscribe({ 
+      next: (results) => {
+        if (results) {
+          this.ngZone.run(() => {
+            this.searchResults = this.searchResults.concat(results.results);
+            this.loading = false;
+          })
+        }
+      },
+      error: (error: Error) => {
+        this.loading = false;
+        console.error(error.message);
+        this.errorMessage = error.message;
       }
     }))
   }
@@ -96,10 +104,17 @@ export class IntranetSearchComponent implements OnInit, OnDestroy {
             EMPTY
           )
         )
-      ).subscribe(searchResults => {
-        this.searchResults = searchResults.results;
-        this.totalResults = searchResults.totalResults;
-        this.loading = false;
+      ).subscribe({
+        next: searchResults => {
+          this.searchResults = searchResults.results;
+          this.totalResults = searchResults.totalResults;
+          this.loading = false;
+        },
+        error: (error: Error) => {
+          this.loading = false;
+          console.error(error.message);
+          this.errorMessage = error.message;
+        }
       })
     );
   }
