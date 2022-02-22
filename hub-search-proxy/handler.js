@@ -252,20 +252,30 @@ module.exports.search = async (event, context) => {
           includes: includeInResult
         },
         query: {
-          bool: {
-            must: simpleQuery,
-            minimum_should_match: minimum_should_match,
-            should: queryParts,
-            filter: [
+          function_score: {
+            query: {
+              bool: {
+                must: simpleQuery,
+                minimum_should_match: minimum_should_match,
+                should: queryParts,
+                filter: [
+                  {
+                    term: {
+                      "fields.searchable.en-US": true
+                    }
+                  },
+                  {
+                    terms: {
+                      "sys.contentType.sys.id": contentTypes
+                    }
+                  }
+                ]
+              }
+            },
+            functions: [
               {
-                term: {
-                  "fields.searchable.en-US": true
-                }
-              },
-              {
-                terms: {
-                  "sys.contentType.sys.id": contentTypes
-                }
+                filter: {"match":{"fields.title.en-US": queryString}},
+                weight: 2 // boost match score for titles that contain the query terms
               }
             ]
           }
