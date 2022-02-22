@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { CollectionResponse, ContentEntitySys, FieldExtensionSDK } from '@contentful/app-sdk';
+import { ContentEntitySys, FieldExtensionSDK } from '@contentful/app-sdk';
 import { CombinedLinkActions, MultipleEntryReferenceEditor } from '@contentful/field-editor-reference';
 import { Entry } from '@contentful/field-editor-reference/dist/types';
 import { LinkActionsProps } from '@contentful/field-editor-reference/dist/components';
 import "./Field.css";
-import { createClient, ClientAPI, Space, Environment } from 'contentful-management';
+import { createClient, Environment } from 'contentful-management';
 
 interface FieldProps {
   sdk: FieldExtensionSDK;

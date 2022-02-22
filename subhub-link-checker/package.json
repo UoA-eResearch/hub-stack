@@ -47,7 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@contentful/app-scripts": "^0.8.49"
+    "@contentful/app-scripts": "^0.14.130"
   },
   "homepage": "."
 }
