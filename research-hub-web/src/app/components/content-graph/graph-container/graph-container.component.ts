@@ -14,7 +14,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
 
   private highlightNodes = new Set<string>();
   private highlightLinks = new Set<ContentLink>();
-  private hoverNode: ContentNode = null;
+  private hoverNode: ContentNode | null = null;
 
   private readonly NODE_R = 8;
 
@@ -38,7 +38,9 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit(): void {
-    this.graph(document.getElementById('graph'))
+    const element = document.getElementById('graph');
+    if (!element) return;
+    this.graph(element)
       .nodeRelSize(this.NODE_R)
       .backgroundColor('#101020')
       .linkColor(() => 'rgba(255,255,255,0.2)')
@@ -63,14 +65,14 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .linkWidth((link: ContentLink) => this.highlightLinks.has(link) ? 5 : 1)
       .linkDirectionalParticles(4)
       .linkDirectionalParticleWidth((link: ContentLink) => this.highlightLinks.has(link) ? 4 : 0)
-      .nodeCanvasObjectMode(node => this.highlightNodes.has(node.id as string) ? 'before' : undefined)
-      .nodeCanvasObject((node, ctx) => {
-        // add ring just for highlighted nodes
-        ctx.beginPath();
-        ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
-        ctx.fillStyle = node.id === this.hoverNode.id ? 'red' : 'orange';
-        ctx.fill();
-      });
+      //.nodeCanvasObjectMode(node => this.highlightNodes.has(node.id as string) ? 'before' : undefined)
+      // .nodeCanvasObject((node, ctx) => {
+      //   // add ring just for highlighted nodes
+      //   ctx.beginPath();
+      //   ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
+      //   ctx.fillStyle = node.id === this.hoverNode.id ? 'red' : 'orange';
+      //   ctx.fill();
+      // });
   }
 
   ngOnDestroy(): void {
@@ -85,6 +87,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
     graph.links.forEach(link => {
       const a = graph.nodes.find(node => node.id === link.source);
       const b = graph.nodes.find(node => node.id === link.target);
+      if (!a || !b) return;
       !a.neighbours && (a.neighbours = []);
       !b.neighbours && (b.neighbours = []);
       a.neighbours.push(a.id);
