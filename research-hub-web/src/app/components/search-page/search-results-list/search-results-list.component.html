@@ -7,7 +7,7 @@
     role="listitem"
     (keydown.enter)="navigate(result.contentType, result.slug)"
   >
-    <a class="search-link" [routerLink]="[result.contentType.toLowerCase(), result.slug]"></a>
+    <a class="search-link" [routerLink]="['/' + result.contentType.toLowerCase(), result.slug]"></a>
     
     <span class="card-label">{{
       result.contentType | contentTypeDisplayName
