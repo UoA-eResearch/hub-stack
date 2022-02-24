@@ -1,0 +1,9 @@
+query GetNotificationPublishedVersion {
+  homepageCollection(limit: 1) {
+    items {
+      sys {
+        publishedVersion
+      }
+    }
+  }
+}

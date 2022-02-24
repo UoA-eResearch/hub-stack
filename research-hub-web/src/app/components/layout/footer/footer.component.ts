@@ -6,9 +6,7 @@ import { format } from 'date-fns';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent {
-  
-  public homeUrl = '/';
+export class FooterComponent {  
   public aucklandUniUrl = 'https://auckland.ac.nz';
   public aboutUrl = '/article/about';
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';

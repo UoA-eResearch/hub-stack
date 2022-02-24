@@ -2,13 +2,12 @@
 <span *ngIf="contentItem">
   <!-- Templates -->
   <ng-template #image>
-    <picture>
+    <picture mat-card-image>
       <source
         srcset="{{ contentItem.banner?.url }}?w=1000&fm=webp"
         type="image/webp"
       />
       <img
-        mat-card-image
         src="{{ contentItem.banner?.url }}?w=1000"
         alt="{{ contentItem.title }}"
       />
@@ -22,7 +21,7 @@
   <span [ngSwitch]="contentItem.__typename">
     <!-- Link Card -->
     <span *ngSwitchCase="'LinkCard'">
-      <div>
+      <div class="link-card">
         <a
           href="{{
             contentItem.document ? contentItem.document.url : contentItem.url
