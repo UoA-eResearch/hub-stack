@@ -21,7 +21,7 @@
             <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
           </li>
           <li>
-            <a [href]="aboutUrl" aria-label="About the ResearchHub">About</a>
+            <a [routerLink]="aboutUrl" aria-label="About the ResearchHub">About</a>
           </li>
           <li>
             <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
@@ -33,7 +33,7 @@
             <a [href]="accessibilityUrl" target="_blank">Accessibility</a>
           </li>
           <li>
-            <a [href]="feedbackUrl">Feedback</a>
+            <a [href]="feedbackUrl" target="_blank">Feedback</a>
           </li>
           <li>
             <span>Copyright © {{ getYear() }}</span>
