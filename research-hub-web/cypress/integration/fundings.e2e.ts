@@ -1,7 +1,13 @@
+import { aliasQuery } from '../utils/graphql-utils';
+
 describe('ResearchHubs Funding Pages', () => {
 
     beforeEach(() => {
-        cy.visit('/funding/hikina-kia-tutuki');
+        cy.intercept('POST', '/cer-graphql-service', (req) => {
+            aliasQuery(req, 'GetFundingBySlug');
+            req.reply({ fixture: 'funding' });
+        });
+        cy.visit('/funding/internal-funding/hikina-kia-tutuki');
     });
 
     it('can visit a funding page and display its title', () => {
