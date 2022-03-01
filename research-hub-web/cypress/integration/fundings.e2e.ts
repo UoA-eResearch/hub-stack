@@ -1,18 +1,10 @@
-import { aliasQuery, hasOperationName } from '../utils/graphql-utils';
+import { hasOperationName } from '../utils/graphql-utils';
 
 describe('ResearchHubs Funding Pages', () => {
-
     beforeEach(() => {
-        cy.intercept('POST', 'http://localhost:4000/', (req) => {
-            aliasQuery(req, 'GetFundingBySlug');
-            req.reply({ fixture: 'funding' });
-        });
-        
-        cy.visit('/funding/internal-funding/hikina-kia-tutuki');
-    });
+        console.log(Cypress.env('graphql_server'));
 
-    it('can visit a funding page and display its title', () => {
-        cy.intercept('POST', 'http://localhost:4000/', (req) => {
+        cy.intercept('POST', Cypress.env('graphql_server'), (req) => {
             if (hasOperationName(req, 'GetFundingBySlug')) {
                 req.alias = 'gqlGetFundingBySlug';
                 req.reply({ fixture: 'funding' });
@@ -21,11 +13,14 @@ describe('ResearchHubs Funding Pages', () => {
 
         cy.visit('/internal-funding/hikina-kia-tutuki');
 
-        cy.wait('@gqlGetFundingBySlug').its('response.body.data.fundingCollection').should((funding) => {
-            console.log(funding)
-            expect(funding.items.length).to.equal(1);
-        });
+        cy.wait('@gqlGetFundingBySlug');
+    });
 
+    it('can visit a funding page and display the banner', () => {
+        cy.get('.banner-container').should('be.visible');
+    });
+
+    it('can visit a funding page and display its title', () => {
         cy.get('h1.content-title').should('not.be.empty');
     });
 
