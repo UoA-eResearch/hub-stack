@@ -93,37 +93,11 @@
               "data": {},
               "content": [
                 {
-                  "data": {
-                    "target": {
-                      "sys": {
-                        "id": "30ShjkjTe3MhrDZhFzhX5P",
-                        "type": "Link",
-                        "linkType": "Entry"
-                      }
-                    }
-                  },
-                  "content": [],
-                  "nodeType": "embedded-entry-block"
-                },
-                {
                   "data": {},
                   "content": [
                     { "data": {}, "marks": [], "value": "", "nodeType": "text" }
                   ],
                   "nodeType": "paragraph"
-                },
-                {
-                  "data": {
-                    "target": {
-                      "sys": {
-                        "id": "6pTFmR2tpLKzvxxDtXzM5Q",
-                        "type": "Link",
-                        "linkType": "Entry"
-                      }
-                    }
-                  },
-                  "content": [],
-                  "nodeType": "embedded-entry-block"
                 },
                 {
                   "data": {},
@@ -149,22 +123,7 @@
             },
             "links": {
               "entries": {
-                "block": [
-                  {
-                    "__typename": "Expand",
-                    "sys": {
-                      "id": "30ShjkjTe3MhrDZhFzhX5P",
-                      "__typename": "Sys"
-                    }
-                  },
-                  {
-                    "__typename": "Expand",
-                    "sys": {
-                      "id": "6pTFmR2tpLKzvxxDtXzM5Q",
-                      "__typename": "Sys"
-                    }
-                  }
-                ],
+                "block": [],
                 "inline": [],
                 "hyperlink": [],
                 "__typename": "FundingBodyTextEntries"
