@@ -13,7 +13,7 @@ describe('ResearchHubs SubHub Pages', () => {
   });
 
   it('subhub displays body text', () => {
-    cy.get('#bodyMediaList > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').should('not.be.empty');
+    cy.get('.body-media-list > ng-component > ngx-contentful-rich-text > ng-component > p > ngx-contentful-rich-text > ng-component').should('not.be.empty');
   });
 
   it('displays subhub children', () => {

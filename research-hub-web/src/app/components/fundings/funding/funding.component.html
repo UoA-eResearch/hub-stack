@@ -36,7 +36,8 @@
     <!-- Funding Purpose -->
     <ngx-contentful-rich-text
       *ngIf="funding.purpose"
-      id="bodyMediaList"
+      id="funding-purpose"
+      class="body-media-list"
       style="word-break: break-word"
       [document]="funding.purpose?.json"
       [nodeRenderers]="nodeRenderers"
@@ -62,7 +63,8 @@
     <!-- Funding Body -->
     <div class="section">
       <ngx-contentful-rich-text
-        id="bodyMediaList"
+        id="funding-body"
+        class="body-media-list"
         style="word-break: break-word"
         [document]="funding.bodyText?.json"
         [nodeRenderers]="nodeRenderers"
@@ -236,7 +238,8 @@
         <td role="cell">
           <div *ngIf="funding.deadlines">
             <ngx-contentful-rich-text
-              id="bodyMediaList"
+              id="funding-deadlines"
+              class="body-media-list"
               style="word-break: break-word"
               [document]="funding.deadlines?.json"
               [nodeRenderers]="nodeRenderers"
