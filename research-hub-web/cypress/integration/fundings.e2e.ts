@@ -28,6 +28,10 @@ describe('ResearchHubs Funding Pages', () => {
         cy.get('.content-summary').should('exist');
     });
 
+    it('displays a call to action button', () => {
+        cy.get('.standard-button > span').should('have.text', 'Test');
+    });
+
     it('funding page displays purpose text', () => {
         cy.get('#funding-purpose ng-component.ng-star-inserted p .ng-star-inserted').should('exist');
     });
@@ -45,11 +49,19 @@ describe('ResearchHubs Funding Pages', () => {
         cy.get('.application-doc-container .application-doc').should('exist');
     });
 
+    it('displays a list of related items', () => {
+        cy.get('app-standard-card#you-might-be-interested-in').should('have.length', 1);
+    });
+
     it('displays a list of contacts', () => {
-        cy.get('#contacts .card-title span').should('exist');
+        cy.get('app-contact-card').should('have.length', 1);
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations mat-nav-list:first-child a').should('exist');
+        cy.get('app-org-unit-card').should('have.length', 1);
+    });
+
+    it('displays a list of documents', () => {
+        cy.get('app-document-card').should('have.length', 1);
     });
 });
