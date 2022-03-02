@@ -2,8 +2,6 @@ import { hasOperationName } from '../utils/graphql-utils';
 
 describe('ResearchHubs Funding Pages', () => {
     beforeEach(() => {
-        console.log(Cypress.env('graphql_server'));
-
         cy.intercept('POST', Cypress.env('graphql_server'), (req) => {
             if (hasOperationName(req, 'GetFundingBySlug')) {
                 req.alias = 'gqlGetFundingBySlug';

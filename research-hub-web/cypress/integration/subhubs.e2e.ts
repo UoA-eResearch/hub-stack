@@ -2,8 +2,6 @@ import { hasOperationName } from '../utils/graphql-utils';
 
 describe('ResearchHubs SubHub Pages', () => {
     beforeEach(() => {
-        console.log(Cypress.env('graphql_server'));
-
         cy.intercept('POST', Cypress.env('graphql_server'), (req) => {
             if (hasOperationName(req, 'GetSubHubBySlug')) {
                 req.alias = 'gqlGetSubHubBySlug';

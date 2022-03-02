@@ -2,8 +2,6 @@ import { hasOperationName } from '../utils/graphql-utils';
 
 describe('ResearchHubs Case Study Pages', () => {
     beforeEach(() => {
-        console.log(Cypress.env('graphql_server'));
-
         cy.intercept('POST', Cypress.env('graphql_server'), (req) => {
             if (hasOperationName(req, 'GetCaseStudyBySlug')) {
                 req.alias = 'gqlGetCaseStudyBySlug';
