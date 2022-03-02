@@ -95,20 +95,6 @@
                 {
                   "data": {},
                   "content": [
-                    { "data": {}, "marks": [], "value": "", "nodeType": "text" }
-                  ],
-                  "nodeType": "paragraph"
-                },
-                {
-                  "data": {},
-                  "content": [
-                    { "data": {}, "marks": [], "value": "", "nodeType": "text" }
-                  ],
-                  "nodeType": "paragraph"
-                },
-                {
-                  "data": {},
-                  "content": [
                     {
                       "data": {},
                       "marks": [{ "type": "bold" }, { "type": "italic" }],
