@@ -19,7 +19,7 @@ describe('ResearchHubs Homepage', () => {
     it('displays featured items', () => {
         cy.get('app-featured').should('be.visible');
         cy.get('app-content-title h2').should('exist');
-        cy.get('.featured app-featured app-standard-card').should('have.length.greaterThan', 0);;
+        cy.get('.featured app-featured app-standard-card').should('have.length.greaterThan', 0);
     })
 
     it('displays contact section', () => {
