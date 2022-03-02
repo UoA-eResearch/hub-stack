@@ -1,0 +1,145 @@
+{
+  "data": {
+    "subHubCollection": {
+      "items": [
+        {
+          "slug": "research-impact",
+          "title": "Subhub Title",
+          "maoriProverb": "Maori Proverb",
+          "summary": "Subhub Summary.",
+          "ssoProtected": false,
+          "searchable": true,
+          "banner": {
+            "url": "https://images.ctfassets.net/vbuxn5csp0ik/43XrwAi4yAyhMb0fYKyzis/857b18ac2113abd34f15e509ea10c1d3/terry-vlisidis-SFEvfN01-ao-unsplash.jpg",
+            "__typename": "Asset"
+          },
+          "bodyText": {
+            "json": {
+              "nodeType": "document",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "paragraph",
+                  "content": [
+                    {
+                      "nodeType": "text",
+                      "value": "Body text.",
+                      "marks": [],
+                      "data": {}
+                    }
+                  ],
+                  "data": {}
+                }
+              ]
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "SubHubBodyTextEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "SubHubBodyTextAssets"
+              },
+              "__typename": "SubHubBodyTextLinks"
+            },
+            "__typename": "SubHubBodyText"
+          },
+          "internalPagesCollection": {
+            "items": [
+              {
+                "__typename": "Article",
+                "slug": "planning-for-impact",
+                "title": "Title",
+                "summary": "Summary.",
+                "ssoProtected": false,
+                "searchable": true,
+                "banner": {
+                  "url": "https://images.ctfassets.net/vbuxn5csp0ik/75HzqCjc7rMyku5cPCnGhk/1ef3975084154d37fe407e47abace855/Planning.jpg",
+                  "__typename": "Asset"
+                }
+              }
+            ],
+            "__typename": "SubHubInternalPagesCollection"
+          },
+          "externalPagesCollection": {
+            "items": [
+              {
+                "__typename": "Article",
+                "slug": "open-access",
+                "title": "Title",
+                "summary": "Summary.",
+                "ssoProtected": false,
+                "searchable": true,
+                "banner": {
+                  "url": "https://images.ctfassets.net/vbuxn5csp0ik/LyVHjs5bw6wzAQi8zWi73/4b2c42a71904cd9511f5c8aad69043f0/2020-OAW-01-Banner-986x310-BLANK.png",
+                  "__typename": "Asset"
+                }
+              }
+            ],
+            "__typename": "SubHubExternalPagesCollection"
+          },
+          "relatedItemsCollection": {
+            "items": [
+              {
+                "__typename": "SubHub",
+                "slug": "he-korowai-matauranga",
+                "title": "Title",
+                "summary": "Summary. ",
+                "ssoProtected": false,
+                "searchable": true,
+                "banner": {
+                  "url": "https://images.ctfassets.net/vbuxn5csp0ik/62r2rEy95pHH49NHwNwOLJ/05ee242fc2c86281af3fd4820b7feaba/Grad15AoteaSq-139.jpg",
+                  "__typename": "Asset"
+                }
+              }
+            ],
+            "__typename": "SubHubRelatedItemsCollection"
+          },
+          "relatedContactsCollection": {
+            "items": [
+              {
+                "__typename": "Person",
+                "name": "Kylo Ren",
+                "role": "Bad Guy",
+                "email": "kylo.ren@auckland.ac.nz",
+                "phone": "+64-27-1234567",
+                "link": "https://directory.auckland.ac.nz/people/profile/kylo-ren"
+              }
+            ],
+            "__typename": "SubHubRelatedContactsCollection"
+          },
+          "relatedOrgsCollection": {
+            "items": [
+              {
+                "__typename": "OrgUnit",
+                "name": "Org name",
+                "maoriName": null,
+                "description": "Org description.",
+                "link": "https://orguniturl.html"
+              }
+            ],
+            "__typename": "SubHubRelatedOrgsCollection"
+          },
+          "relatedDocsCollection": {
+            "items": [
+              {
+                "__typename": "OfficialDocuments",
+                "title": "Title",
+                "summary": "Summary.",
+                "document": null,
+                "url": "https://documenturl.html"
+              }
+            ],
+            "__typename": "SubHubRelatedDocsCollection"
+          },
+          "__typename": "SubHub"
+        }
+      ],
+      "__typename": "SubHubCollection"
+    }
+  }
+}
