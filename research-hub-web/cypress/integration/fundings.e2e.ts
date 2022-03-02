@@ -21,15 +21,19 @@ describe('ResearchHubs Funding Pages', () => {
     });
 
     it('can visit a funding page and display its title', () => {
-        cy.get('h1.content-title').should('not.be.empty');
+        cy.get('h1.content-title').should('have.text', ' Funding Title ');
     });
 
     it('can visit a funding page and display its subtitle', () => {
-        cy.get('.content-summary').should('not.be.empty');
+        cy.get('.content-summary').should('exist');
+    });
+
+    it('funding page displays purpose text', () => {
+        cy.get('#funding-purpose ng-component.ng-star-inserted p .ng-star-inserted').should('exist');
     });
 
     it('funding page displays body text', () => {
-        cy.get('#funding-container ng-component.ng-star-inserted p .ng-star-inserted').should('not.be.empty');
+        cy.get('#funding-body ng-component.ng-star-inserted p .ng-star-inserted').should('exist');
     });
 
     it('displays specifications table', () => {
@@ -37,11 +41,15 @@ describe('ResearchHubs Funding Pages', () => {
         cy.get('#specifications-table').contains('Description').should('exist');
     });
 
+    it('displays funding application documents', () => {
+        cy.get('.application-doc-container .application-doc').should('exist');
+    });
+
     it('displays a list of contacts', () => {
-        cy.get('#contacts .card-title span').should('not.be.empty');
+        cy.get('#contacts .card-title span').should('exist');
     });
 
     it('displays a list of organisations', () => {
-        cy.get('#organisations mat-nav-list:first-child a').should('not.be.empty');
+        cy.get('#organisations mat-nav-list:first-child a').should('exist');
     });
 });
