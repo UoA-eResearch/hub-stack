@@ -50,3 +50,11 @@ describe("ResearchHubs legacy routing", () => {
         cy.contains("Page Not Found");
     })
 });
+
+describe("ResearchHubs SSO protected content", () => {
+
+    it('clicking on an SSO protected item redirects to SSO login page', () => {
+        cy.visit('/subhub/internal-funding');
+        cy.location('pathname').should('include', '/profile/SAML2/Redirect/SSO');
+    });
+});
