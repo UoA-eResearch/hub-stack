@@ -10,9 +10,23 @@
 }
 
 /**
- * Result Cards
+ * Link behaviour
+ * Ref: https://github.com/twbs/bootstrap/issues/18294
  */
- 
+ .search-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  &:hover ~ .mat-card-title {
+    border-bottom: 1px solid $dark-blue;
+  }
+}
+
+/**
+ * Result Cards
+ */ 
 mat-card {
   background-color: $light-grey;
 }
@@ -24,30 +38,15 @@ mat-card {
   }
   cursor: pointer;
   width: 100%;
-  p {
-    @include size(medium) {
-      display: inline-block;
-      width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-  }
-  .card-title {
-    @extend .card-title;
-    display: inline-block;
+  .mat-card-title {
+    display: inline;
+    font-weight: 100;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0);
-    &:hover {
-      border-bottom: 1px solid $dark-blue;
-    }
     font-size: 22px;
     color: $dark-blue;
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    word-wrap: break-word;
   }
   .card-summary {
     margin-top: 0px;
