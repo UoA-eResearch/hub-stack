@@ -17,10 +17,6 @@ export class SearchResultsListComponent {
     private router: Router
   ) { }
 
-  public navigate(contentType: string, slug: string) {
-    this.router.navigate([contentType.toLowerCase() + '/' + slug]);
-  }
-
   public search(id: string): void {
     this.router.navigate(
       ['/search'],
