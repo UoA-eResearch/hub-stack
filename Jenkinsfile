@@ -307,8 +307,8 @@ pipeline {
                                 sh 'npm run test-ci'
 
                                 echo 'Running research-hub-web e2e tests'
-                                // set the graphql server url for intercepting some graphql queries and returning mocked data
-                                echo "Setting server url ${graphqlServer}"
+                                // set the graphql server url as an env variable for Cypress
+                                // for intercepting some of the graphql queries and returning mocked data
                                 sh "export cypress_graphql_server=${graphqlServer} && npm run e2e-ci"
                             }
                         }
