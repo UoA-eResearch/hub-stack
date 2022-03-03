@@ -1,21 +1,22 @@
 <!-- Search Results Container -->
 <mat-list role="list" *ngIf="searchResults && searchResults.results.length > 0">
-  <a *ngFor="let result of searchResults.results" [href]="result.url" target="_blank">
-    <!-- Result Item -->
-    <mat-card
-      class="card-content"
-      role="listitem"
-    >
-      <span class="card-label">Intranet</span>
+  <!-- Result Item -->
+  <mat-card
+    *ngFor="let result of searchResults.results"
+    class="card-content"
+    role="listitem"
+  >
+    <a class="search-link" [href]="result.url" target="_blank"></a>
 
-      <p class="card-title">
-        <span>{{ result.title }}</span>
-      </p>
+    <span class="card-label">Intranet</span>
 
-      <p class="card-summary" [innerHTML]="result.summary"></p>
-      
-    </mat-card>
-  </a>
+    <mat-card-title>
+      <span>{{ result.title }}</span>
+    </mat-card-title>
+
+    <p class="card-summary" [innerHTML]="result.summary"></p>
+    
+  </mat-card>
 </mat-list>
 
 <!-- Skeleton Loader -->
