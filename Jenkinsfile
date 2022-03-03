@@ -296,14 +296,21 @@ pipeline {
                         }
                     }
                     steps {
-                        echo 'Testing research-hub-web project'
+                        script {
+                            echo 'Testing research-hub-web project'
 
-                        dir("research-hub-web") {
-                            echo 'Running research-hub-web unit tests'
-                            sh 'npm run test-ci'
+                            // need to trim the trailing slash from the graphql server url for the e2e tests
+                            def graphqlServer = env.SCHEMA_PATH.substring(0, env.SCHEMA_PATH.length() - 1)
 
-                            echo 'Running research-hub-web e2e tests'
-                            sh "npm run e2e-ci"
+                            dir("research-hub-web") {
+                                echo 'Running research-hub-web unit tests'
+                                sh 'npm run test-ci'
+
+                                echo 'Running research-hub-web e2e tests'
+                                // set the graphql server url for intercepting some graphql queries and returning mocked data
+                                echo "Setting server url ${graphqlServer}"
+                                sh "export cypress_graphql_server=${graphqlServer} && npm run e2e-ci"
+                            }
                         }
                     }
                 }

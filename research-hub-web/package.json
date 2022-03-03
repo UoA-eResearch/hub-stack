@@ -27,7 +27,7 @@
     "cy:run": "cypress run",
     "e2e": "cypress run -q",
     "e2e-gui": "npm run cy:open",
-    "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && export cypress_graphql_server=${SCHEMA_PATH} && npm run e2e\" --kill-others --success first",
+    "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
     "e2e-serve": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
     "e2e-serve-gui": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first"
   },
