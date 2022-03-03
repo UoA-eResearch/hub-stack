@@ -5,7 +5,6 @@
     *ngFor="let result of searchResults.results"
     class="card-content"
     role="listitem"
-    (keydown.enter)="navigate(result.contentType, result.slug)"
   >
     <a class="search-link" [routerLink]="['/', result.contentType.toLowerCase(), result.slug]"></a>
     
@@ -42,6 +41,7 @@
     
   </mat-card>
 </mat-list>
+
 <!-- Skeleton Loader -->
 <div *ngIf="loading">
   <div *ngFor="let i of [].constructor(10)" class="skeleton-wrapper">
