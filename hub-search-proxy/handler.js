@@ -490,13 +490,5 @@ function formatResponse(status, body) {
 
 function containsOperators(queryString) {
   const queryOperators = ['+', '|', '-', '*', '"', '(', ')'];
-  let matchCount = 0;
-
-  for (let i = 0; i < queryOperators.length; i++) {
-    if (queryString.indexOf(queryOperators[i]) > -1) {
-      matchCount++;
-    }
-  };
-  
-  return matchCount > 0;
+  return queryOperators.some(operator => queryString.includes(operator));
 }
