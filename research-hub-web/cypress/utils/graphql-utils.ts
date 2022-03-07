@@ -1,7 +1,8 @@
+import { CyHttpMessages } from "cypress/types/net-stubbing"
+
 // Utility to match GraphQL mutation based on the operation name
-export const hasOperationName = (req, operationName) => {
-  const { body } = req
+export const hasOperationName = (req: CyHttpMessages.IncomingHttpRequest, operationName: string) => {
   return (
-    body.hasOwnProperty('operationName') && body.operationName === operationName
+    'operationName' in req.body && req.body.operationName === operationName
   )
 }
