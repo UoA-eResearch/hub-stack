@@ -46,7 +46,7 @@
     "@angular/router": "13.2.3",
     "@angular/service-worker": "13.2.3",
     "@apollo/client": "^3.4.13",
-    "@contentful/rich-text-types": "^14.1.1",
+    "@contentful/rich-text-types": "^15.11.1",
     "@sentry/angular": "^6.17.9",
     "@sentry/tracing": "^6.17.9",
     "@uoa/auth": "^0.6.0",
