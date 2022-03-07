@@ -33,7 +33,8 @@
 
     <!-- Event Body -->
     <ngx-contentful-rich-text
-      id="bodyMediaList"
+      id="event-body"
+      class="body-media-list"
       style="word-break: break-word"
       [document]="event.bodyText?.json"
       [nodeRenderers]="nodeRenderers"

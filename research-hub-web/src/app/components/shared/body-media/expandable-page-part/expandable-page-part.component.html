@@ -12,7 +12,7 @@
   
   <!-- Lazy render the rich text when the panel is opened -->
   <ng-template [matExpansionPanelContent]>
-    <ngx-contentful-rich-text id="bodyMediaList" class="section-2" style="word-break:break-word;"
+    <ngx-contentful-rich-text id="expand-body" class="section-2 body-media-list" style="word-break:break-word;"
       [document]="expandPart.bodyText?.json"
       [nodeRenderers]="nodeRenderers"
       [markRenderers]="markRenderers">

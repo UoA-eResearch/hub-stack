@@ -62,7 +62,8 @@
         [ngClass.lt-lg]="'single-column-max-width'"
       >
         <ngx-contentful-rich-text
-          id="bodyMediaList"
+          id="casestudy-body"
+          class="body-media-list"
           style="word-break: break-word"
           [document]="caseStudy.bodyText?.json"
           [nodeRenderers]="nodeRenderers"
@@ -72,7 +73,8 @@
         <h2>References</h2>
         <ngx-contentful-rich-text
           *ngIf="caseStudy.references; else noReferences"
-          id="bodyMediaList"
+          id="casestudy-references"
+          class="body-media-list"
           style="word-break: break-word"
           [document]="caseStudy.references?.json"
           [nodeRenderers]="nodeRenderers"
