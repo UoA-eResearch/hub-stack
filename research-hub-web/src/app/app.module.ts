@@ -28,6 +28,7 @@ import { AppAuthConfigService } from './services/app-auth-config.service';
 import { AppStorageService } from './services/app-storage.service';
 import { CerGraphqlService } from './services/cer-graphql.service';
 import { PageTitleService } from './services/page-title.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -49,7 +50,13 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     HttpClientModule,
     FlexLayoutModule,
     ErrorPagesModule,
-    AppLayoutModule
+    AppLayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     CerGraphqlService,
@@ -86,7 +93,9 @@ export class AppModule {
     // Because some authentication errors from cer-graphql
     // are returned with a 400 status code, we want error-pages to ignore those
     // errors so they can be handled by our onError handler.
-    this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
+    // We also bypass 504 (gateway timeout) errors so that the service worker can attempt
+    // to serve cached files if there is a problem with the network connection.
+    this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500, 504]);
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
     const error = onError(({ response, networkError, graphQLErrors }) => {
