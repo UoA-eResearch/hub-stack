@@ -9,7 +9,7 @@ describe('ResearchHubs NavBar', () => {
     });
     
     it('The ResearchHub logo is displayed', () => {
-        cy.get('a.hub-logo > img')
+        cy.get('a.hub-logo > span > img')
             .should('be.visible')
             .invoke('width')
             .should('be.greaterThan', 0);
