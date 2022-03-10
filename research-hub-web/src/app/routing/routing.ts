@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from '@app/components/layout/layout.component';
 import { ContentGraphResolver } from '@resolvers/content-graph.resolver';
-import { LoginSuccessGuard } from '@uoa/auth';
+import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 
 
 export const appRoutes: Routes = [
@@ -24,6 +24,7 @@ export const appRoutes: Routes = [
     children: [
       {
         path: 'graph',
+        canActivate: [AuthGuard],
         loadChildren: () => import('@components/content-graph/content-graph.module').then((m) => m.ContentGraphModule),
         resolve: { graph: ContentGraphResolver }
       },
@@ -92,6 +93,6 @@ export const appRoutes: Routes = [
    */
   {
     path: '**',
-    loadChildren: () =>  import("@components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
+    loadChildren: () => import("@components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
   }
 ];
