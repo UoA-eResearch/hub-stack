@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-title>{{ node.name }}</mat-card-title>
+
+  <mat-card-content>
+    <div *ngFor="let neighbour of node.neighbours">
+      <span>{{ neighbour.name }}</span>
+      <div>
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="[neighbour.type, neighbour.slug]"
+        >
+          <mat-icon>article</mat-icon>
+        </button>
+        <a
+          mat-icon-button
+          color="primary"
+          [href]="
+            'https://app.contentful.com/spaces/vbuxn5csp0ik/entries/' +
+            neighbour.id
+          "
+          ><mat-icon>edit</mat-icon></a
+        >
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button
+      mat-button
+      [routerLink]="[node.type, node.slug]"
+      class="standard-button"
+    >
+      Visit in ResearchHub
+    </button>
+    <a
+      mat-button
+      [href]="
+        'https://app.contentful.com/spaces/vbuxn5csp0ik/entries/' + node.id
+      "
+      target="_blank"
+      class="standard-button"
+      >Edit in Contentful</a
+    >
+  </mat-card-actions>
+</mat-card>

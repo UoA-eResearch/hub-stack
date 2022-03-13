@@ -11,8 +11,9 @@ export interface ContentNode extends NodeObject {
   name: string,
   slug: string,
   type: string,
-  neighbours?: string[],
-  links?: ContentLink[]
+  neighbours?: ContentNode[],
+  links?: ContentLink[],
+  color?: string
 }
 
 export interface ContentLink extends LinkObject {

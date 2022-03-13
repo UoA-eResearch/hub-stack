@@ -1,12 +1,15 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import ForceGraph, { ForceGraphInstance } from 'force-graph';
+import ForceGraph, { ForceGraphInstance, NodeObject } from 'force-graph';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph.resolver';
 import { Source } from 'graphql';
 
 @Component({
   selector: 'app-graph-container',
-  template: `<div id="graph"></div>`,
+  template: `
+    <div id="graph"></div>
+    <app-node-details *ngIf="selectedNode" [node]="selectedNode"></app-node-details>
+  `,
   styles: [`#graph {width: auto}`]
 })
 export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -15,6 +18,8 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   private highlightNodes = new Set<string>();
   private highlightLinks = new Set<ContentLink>();
   private hoverNode: ContentNode | null = null;
+
+  public selectedNode: ContentNode | null = null;
 
   private readonly NODE_R = 8;
 
@@ -44,7 +49,9 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .nodeRelSize(this.NODE_R)
       .backgroundColor('#101020')
       .linkColor(() => 'rgba(255,255,255,0.2)')
+      //.nodeColor('red')
       .nodeAutoColorBy('type')
+      .onNodeClick((node: ContentNode) => this.selectedNode = node)
       .onNodeRightClick((node: ContentNode) => {
         console.log(node.type, node.slug)
         node.slug ? this.router.navigate([node.type, node.slug]) : null
@@ -55,7 +62,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
 
         if (node) {
           this.highlightNodes.add(node.id);
-          node.neighbours?.forEach(neighbour => this.highlightNodes.add(neighbour));
+          node.neighbours?.forEach(neighbour => this.highlightNodes.add(neighbour.id));
           node.links?.forEach(link => this.highlightNodes.add(link.target))
         }
 
@@ -65,14 +72,22 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .linkWidth((link: ContentLink) => this.highlightLinks.has(link) ? 5 : 1)
       .linkDirectionalParticles(4)
       .linkDirectionalParticleWidth((link: ContentLink) => this.highlightLinks.has(link) ? 4 : 0)
-      //.nodeCanvasObjectMode(node => this.highlightNodes.has(node.id as string) ? 'before' : undefined)
-      // .nodeCanvasObject((node, ctx) => {
-      //   // add ring just for highlighted nodes
-      //   ctx.beginPath();
-      //   ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
-      //   ctx.fillStyle = node.id === this.hoverNode.id ? 'red' : 'orange';
-      //   ctx.fill();
-      // });
+      .nodeCanvasObjectMode('before')
+      .nodeCanvasObject((node, ctx) => {
+        // add ring just for highlighted nodes
+        if (!node.x || !node.y) return;
+        if (node === this.hoverNode) {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
+          ctx.strokeStyle = 'red';
+          ctx.stroke();
+        }
+
+        // ctx.beginPath();
+        // ctx.arc(node.x, node.y, this.NODE_R, 0, 2 * Math.PI, false);
+        // ctx.fillStyle = 'blue';
+        // ctx.fill();
+      });
   }
 
   ngOnDestroy(): void {
@@ -90,8 +105,8 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       if (!a || !b) return;
       !a.neighbours && (a.neighbours = []);
       !b.neighbours && (b.neighbours = []);
-      a.neighbours.push(a.id);
-      b.neighbours.push(b.id);
+      a.neighbours.push(b);
+      b.neighbours.push(a);
 
       !a.links && (a.links = []);
       !b.links && (b.links = []);
@@ -99,5 +114,4 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       b.links.push(link);
     })
   }
-
 }
