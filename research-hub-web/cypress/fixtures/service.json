@@ -1,0 +1,111 @@
+{
+  "data": {
+    "serviceCollection": {
+      "items": [
+        {
+          "__typename": "Service",
+          "sys": { "id": "3YryLper0baumWcq4LI2Pd", "__typename": "Sys" },
+          "title": "Service Title",
+          "slug": "research-virtual-machines",
+          "ssoProtected": false,
+          "searchable": true,
+          "banner": null,
+          "summary": "Service Summary.",
+          "callToAction": "https://www.google.co.nz/",
+          "callToActionLabel": "Test",
+          "bodyText": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "content": [
+                    {
+                      "data": {},
+                      "marks": [],
+                      "value": "Body text.",
+                      "nodeType": "text"
+                    }
+                  ],
+                  "nodeType": "paragraph"
+                }
+              ],
+              "nodeType": "document"
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "ServiceBodyTextEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "ServiceBodyTextAssets"
+              },
+              "__typename": "ServiceBodyTextLinks"
+            },
+            "__typename": "ServiceBodyText"
+          },
+          "relatedContactsCollection": {
+            "items": [
+              {
+                "__typename": "Person",
+                "name": "Kylo Ren",
+                "role": "Bad Guy",
+                "email": "kylo.ren@auckland.ac.nz",
+                "phone": "+64-27-1234567",
+                "link": "https://directory.auckland.ac.nz/people/profile/kylo-ren"
+              }
+            ],
+            "__typename": "ServiceRelatedContactsCollection"
+          },
+          "relatedOrgsCollection": {
+            "items": [
+              {
+                "__typename": "OrgUnit",
+                "name": "Org name",
+                "maoriName": null,
+                "description": "Org description.",
+                "link": "https://orguniturl.html"
+              }
+            ],
+            "__typename": "ServiceRelatedOrgsCollection"
+          },
+          "relatedItemsCollection": {
+            "items": [
+              {
+                "__typename": "Service",
+                "banner": null,
+                "slug": "nectar-research-cloud",
+                "title": "Title",
+                "summary": "Summary. ",
+                "ssoProtected": false,
+                "searchable": true
+              }
+            ],
+            "__typename": "ServiceRelatedItemsCollection"
+          },
+          "relatedDocsCollection": {
+            "items": [
+              {
+                "__typename": "OfficialDocuments",
+                "title": "Title",
+                "summary": "Summary.",
+                "document": null,
+                "url": "https://documenturl.html"
+              }
+            ],
+            "__typename": "ServiceRelatedDocsCollection"
+          },
+          "audience": "Audience.",
+          "availability": "Availability",
+          "cost": "Cost",
+          "access": "Access"
+        }
+      ],
+      "__typename": "ServiceCollection"
+    }
+  }
+}

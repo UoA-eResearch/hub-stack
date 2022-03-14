@@ -138,12 +138,16 @@ export class AppModule {
         if (graphQLErrors[0]?.extensions?.code === "INTERNAL_SERVER_ERROR" &&
             !(
               graphQLErrors[0].message.includes('Did not fetch typename for object, unable to resolve interface.') ||
-              graphQLErrors[0].message.includes('Cannot return null for non-nullable field Asset.sys.')
+              graphQLErrors[0].message.includes('Cannot return null for non-nullable field Asset.sys.') ||
+              graphQLErrors[0].message.includes('Query execution error. Link from entry') 
             )
         ) {
           // Something bad happened. Return the response with errors, unless it is a typename or non-nullable field error.
           // Typename and non-nullable field errors can be caused by references/links to draft entries, and in this case we still want
-          // to load the page with partial data (see below).
+          // to load the page with partial data (see below). 
+          // We also ignore here query execution errors where there is a link from an entry to a draft asset, and try to load the page with partial data.
+          // The full Query execution error message would be something like this: 'Query execution error. Link from entry '3u2YQXWLCEjxZNDl3syxhp' to asset 
+          // '7ElfS57bxNb08YV9AN31ab' on field 'banner' within type 'Article' cannot be resolved'
           return;
         }
       }
