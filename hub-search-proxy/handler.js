@@ -269,7 +269,11 @@ module.exports.search = async (event, context) => {
             functions: [
               {
                 filter: {"match":{"fields.title.en-US": queryString}},
-                weight: 2 // boost match score for titles that contain the query terms
+                weight: 2 // boost match score for titles that contain the individual query terms
+              },
+              {
+                filter: {"match":{"fields.title.en-US.raw": queryString}},
+                weight: 2 // boost match score for titles that contain the exact query terms (the 'raw' field is a keyword field meaning it is not tokenised)
               }
             ]
           }
