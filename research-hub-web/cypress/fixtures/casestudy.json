@@ -1,0 +1,162 @@
+{
+  "data": {
+    "caseStudyCollection": {
+      "items": [
+        {
+          "__typename": "CaseStudy",
+          "sys": { "id": "1ucDvGUTnxXlBW0f1dx2vt", "__typename": "Sys" },
+          "title": "Case Study Title",
+          "maoriProverb": "Maori Proverb",
+          "slug": "research-project-funding-case-study",
+          "ssoProtected": false,
+          "searchable": true,
+          "banner": {
+            "url": "https://images.ctfassets.net/vbuxn5csp0ik/7KS7xvfGiaoJH8xiYPLUWZ/2ad4f83b1e822015b55e2d8cb74a497e/visual-stories-micheile-lZ_4nPFKcV8-unsplash.jpg",
+            "__typename": "Asset"
+          },
+          "summary": "Case study summary.",
+          "bodyText": {
+            "json": {
+              "nodeType": "document",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "paragraph",
+                  "content": [
+                    {
+                      "nodeType": "text",
+                      "value": "Body text.",
+                      "marks": [],
+                      "data": {}
+                    }
+                  ],
+                  "data": {}
+                }
+              ]
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "CaseStudyBodyTextEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "CaseStudyBodyTextAssets"
+              },
+              "__typename": "CaseStudyBodyTextLinks"
+            },
+            "__typename": "CaseStudyBodyText"
+          },
+          "references": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "content": [
+                    {
+                      "data": {},
+                      "marks": [],
+                      "value": "",
+                      "nodeType": "text"
+                    }, 
+                    {
+                      "data": {
+                        "uri": "https://www.auckland.ac.nz/en/about/the-university/how-university-works/policy-and-administration/human-resources1/employer-and-employee-responsibilities/outside-activities-undertaken-by-academic-staff-policy-and-proce.html"
+                      },
+                      "content": [{
+                        "data": {},
+                        "marks": [],
+                        "value": "Outside Activities\nUndertaken by Academic Staff Policy and Procedures",
+                        "nodeType": "text"
+                      }],
+                      "nodeType": "hyperlink"
+                    },
+                    {
+                      "data": {},
+                      "marks": [],
+                      "value": "",
+                      "nodeType": "text"
+                    }
+                  ],
+                  "nodeType": "paragraph"
+                }
+              ],
+              "nodeType": "document"
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "CaseStudyReferencesEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "CaseStudyReferencesAssets"
+              },
+              "__typename": "CaseStudyReferencesLinks"
+            },
+            "__typename": "CaseStudyReferences"
+          },
+          "relatedItemsCollection": {
+            "items": [
+              {
+                "__typename": "CaseStudy",
+                "banner": null,
+                "slug": "consulting-project-funding-case-studies",
+                "title": "Title",
+                "summary": "Summary text.",
+                "ssoProtected": false,
+                "searchable": true
+              }
+            ],
+            "__typename": "CaseStudyRelatedItemsCollection"
+          },
+          "relatedOrgsCollection": {
+            "items": [
+              {
+                "__typename": "OrgUnit",
+                "name": "Org name",
+                "maoriName": null,
+                "description": "Org description.",
+                "link": "https://orguniturl.html"
+              }
+            ],
+            "__typename": "CaseStudyRelatedOrgsCollection"
+          },
+          "relatedDocsCollection": {
+            "items": [
+              {
+                "__typename": "OfficialDocuments",
+                "title": "Title",
+                "summary": "Summary.",
+                "document": null,
+                "url": "https://documenturl.html"
+              }
+            ],
+            "__typename": "CaseStudyRelatedDocsCollection"
+          },
+          "relatedContactsCollection": {
+            "items": [
+              {
+                "__typename": "Person",
+                "name": "Kylo Ren",
+                "role": "Bad Guy",
+                "email": "kylo.ren@auckland.ac.nz",
+                "phone": "+64-27-1234567",
+                "link": "https://directory.auckland.ac.nz/people/profile/kylo-ren"
+              }
+            ],
+            "__typename": "CaseStudyRelatedContactsCollection"
+          }
+        }
+      ],
+      "__typename": "CaseStudyCollection"
+    }
+  }
+}

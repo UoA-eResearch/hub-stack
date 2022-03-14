@@ -1,0 +1,114 @@
+{
+  "data": {
+    "articleCollection": {
+      "items": [
+        {
+          "__typename": "Article",
+          "sys": { "id": "38aCtOWOyYSUcjlfmI6aI0", "__typename": "Sys" },
+          "title": "Article Title",
+          "maoriProverb": "Maori Proverb",
+          "slug": "open-access",
+          "ssoProtected": false,
+          "searchable": true,
+          "callToAction": "https://www.google.co.nz/",
+          "callToActionLabel": "Test",
+          "banner": {
+            "url": "https://images.ctfassets.net/vbuxn5csp0ik/PVZBYAz7HqKofBQHOFz3E/936509e78eda8c0fa4a0b78783a47e7f/Community.jpg",
+            "__typename": "Asset"
+          },
+          "summary": "Article Summary.",
+          "bodyText": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "paragraph",
+                  "content": [
+                    {
+                      "nodeType": "text",
+                      "value": "Body text.",
+                      "marks": [],
+                      "data": {}
+                    }
+                  ],
+                  "data": {}
+                }
+              ],
+              "nodeType": "document"
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "ArticleBodyTextEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "ArticleBodyTextAssets"
+              },
+              "__typename": "ArticleBodyTextLinks"
+            },
+            "__typename": "ArticleBodyText"
+          },
+          "relatedItemsCollection": {
+            "items": [
+              {
+                "__typename": "SubHub",
+                "slug": "research-impact",
+                "title": "Title",
+                "summary": "Summary. ",
+                "ssoProtected": false,
+                "searchable": true,
+                "banner": {
+                  "url": "https://images.ctfassets.net/vbuxn5csp0ik/43XrwAi4yAyhMb0fYKyzis/857b18ac2113abd34f15e509ea10c1d3/terry-vlisidis-SFEvfN01-ao-unsplash.jpg",
+                  "__typename": "Asset"
+                }
+              }
+            ],
+            "__typename": "ArticleRelatedItemsCollection"
+          },
+          "relatedOrgsCollection": {
+            "items": [
+              {
+                "__typename": "OrgUnit",
+                "name": "Org name",
+                "maoriName": null,
+                "description": "Org description.",
+                "link": "https://orguniturl.html"
+              }
+            ],
+            "__typename": "ArticleRelatedOrgsCollection"
+          },
+          "relatedDocsCollection": {
+            "items": [
+              {
+                "__typename": "OfficialDocuments",
+                "title": "Title",
+                "summary": "Summary.",
+                "document": null,
+                "url": "https://documenturl.html"
+              }
+            ],
+            "__typename": "ArticleRelatedDocsCollection"
+          },
+          "relatedContactsCollection": {
+            "items": [
+              {
+                "__typename": "Person",
+                "name": "Kylo Ren",
+                "role": "Bad Guy",
+                "email": "kylo.ren@auckland.ac.nz",
+                "phone": "+64-27-1234567",
+                "link": "https://directory.auckland.ac.nz/people/profile/kylo-ren"
+              }
+            ],
+            "__typename": "ArticleRelatedContactsCollection"
+          }
+        }
+      ],
+      "__typename": "ArticleCollection"
+    }
+  }
+}

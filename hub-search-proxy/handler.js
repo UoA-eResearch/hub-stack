@@ -201,23 +201,16 @@ module.exports.search = async (event, context) => {
 
       let formattedQueryString = queryString;
       
-      if (queryString.split(' ').length < 5) {
-        // format the query string for fuzzy search if the query contains less than 5 words. 
+      // format the query string for fuzzy search if the query contains less than 5 words.
+      // Also if the query string contains query operators dont make it fuzzy
+      if (queryString.split(' ').length < 5 && !containsOperators(queryString)) {
         // modify degree of fuzziness here. 
         // Note: '~AUTO' is not supported currently despite what the docs say.
-        const fuzziness = '~2'; 
+        const fuzziness = '~2';
         
-        formattedQueryString = queryString.split(' ').map(s => {
-          // if word contains query operators dont make it fuzzy
+        formattedQueryString = queryString.split(' ').map(s => {          
           // if word is less than 3 letters dont make it fuzzy
-          const queryOperators = ['+', '|', '-', '*', '"', '(', ')'];
-          let matchCount = 0;
-          for (let i = 0; i < queryOperators.length; i++) {
-            if (s.indexOf(queryOperators[i]) > -1) {
-            matchCount++;
-            }
-          };
-          return (matchCount > 0 || s.length < 3) ? s : s + fuzziness; 
+          return s.length < 3 ? s : s + fuzziness; 
         }).join(' ');
       }
 
@@ -253,20 +246,30 @@ module.exports.search = async (event, context) => {
           includes: includeInResult
         },
         query: {
-          bool: {
-            must: simpleQuery,
-            minimum_should_match: minimum_should_match,
-            should: queryParts,
-            filter: [
+          function_score: {
+            query: {
+              bool: {
+                must: simpleQuery,
+                minimum_should_match: minimum_should_match,
+                should: queryParts,
+                filter: [
+                  {
+                    term: {
+                      "fields.searchable.en-US": true
+                    }
+                  },
+                  {
+                    terms: {
+                      "sys.contentType.sys.id": contentTypes
+                    }
+                  }
+                ]
+              }
+            },
+            functions: [
               {
-                term: {
-                  "fields.searchable.en-US": true
-                }
-              },
-              {
-                terms: {
-                  "sys.contentType.sys.id": contentTypes
-                }
+                filter: {"match":{"fields.title.en-US": queryString}},
+                weight: 2 // boost match score for titles that contain the query terms
               }
             ]
           }
@@ -472,4 +475,9 @@ module.exports.bulk = async () => {
       { result: `${error.name}: ${error.message}` }
     );
   }
+}
+
+function containsOperators(queryString) {
+  const queryOperators = ['+', '|', '-', '*', '"', '(', ')'];
+  return queryOperators.some(operator => queryString.includes(operator));
 }

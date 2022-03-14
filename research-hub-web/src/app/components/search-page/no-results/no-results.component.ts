@@ -8,7 +8,7 @@ import { SearchContext } from '@app/global/searchTypes';
   styleUrls: ['./no-results.component.scss']
 })
 export class NoResultsComponent {
-  public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
+  public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdSLhFgCw2uy6AZvzcK-1-UV9b_qYk6MdR0eZfM-NDwKNZyoA/viewform?usp=sf_link";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
 
   @Input() searchText: string;
