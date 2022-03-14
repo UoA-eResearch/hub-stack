@@ -8,6 +8,13 @@
         <button
           mat-icon-button
           color="primary"
+          (click)="changeSelection(neighbour)"
+        >
+          <mat-icon>highlight</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="primary"
           [routerLink]="[neighbour.type, neighbour.slug]"
         >
           <mat-icon>article</mat-icon>

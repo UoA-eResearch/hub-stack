@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ContentNode } from '@resolvers/content-graph.resolver';
 
 @Component({
@@ -8,10 +8,13 @@ import { ContentNode } from '@resolvers/content-graph.resolver';
 })
 export class NodeDetailsComponent {
   @Input() node: ContentNode;
+  @Output() nodeChange = new EventEmitter<ContentNode | null>();
 
   constructor() { }
 
-  // ngOnInit(): void {
-  // }
+  changeSelection(node: ContentNode | null) {
+    if (node) this.node = node;
+    this.nodeChange.emit(node);
+  }
 
 }

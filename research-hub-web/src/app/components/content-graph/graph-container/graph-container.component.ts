@@ -8,14 +8,14 @@ import { Source } from 'graphql';
   selector: 'app-graph-container',
   template: `
     <div id="graph"></div>
-    <app-node-details *ngIf="selectedNode" [node]="selectedNode"></app-node-details>
+    <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
   `,
   styles: [`#graph {width: auto}`]
 })
 export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   private graph: ForceGraphInstance;
 
-  private highlightNodes = new Set<string>();
+  private highlightNodes = new Set<ContentNode>();
   private highlightLinks = new Set<ContentLink>();
   private hoverNode: ContentNode | null = null;
 
@@ -51,19 +51,18 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .linkColor(() => 'rgba(255,255,255,0.2)')
       //.nodeColor('red')
       .nodeAutoColorBy('type')
-      .onNodeClick((node: ContentNode) => this.selectedNode = node)
-      .onNodeRightClick((node: ContentNode) => {
-        console.log(node.type, node.slug)
-        node.slug ? this.router.navigate([node.type, node.slug]) : null
+      .onNodeClick((node: ContentNode) => {
+        this.selectedNode = node || null;
       })
+      .onBackgroundClick(() => this.selectedNode = null)
       .onNodeHover((node: ContentNode) => {
         this.highlightLinks.clear();
         this.highlightNodes.clear();
 
         if (node) {
-          this.highlightNodes.add(node.id);
-          node.neighbours?.forEach(neighbour => this.highlightNodes.add(neighbour.id));
-          node.links?.forEach(link => this.highlightNodes.add(link.target))
+          this.highlightNodes.add(node);
+          node.neighbours?.forEach(neighbour => this.highlightNodes.add(neighbour));
+          node.links?.forEach(link => this.highlightLinks.add(link));
         }
 
         this.hoverNode = node || null;
@@ -72,22 +71,19 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .linkWidth((link: ContentLink) => this.highlightLinks.has(link) ? 5 : 1)
       .linkDirectionalParticles(4)
       .linkDirectionalParticleWidth((link: ContentLink) => this.highlightLinks.has(link) ? 4 : 0)
-      .nodeCanvasObjectMode('before')
+      .nodeCanvasObjectMode((node: ContentNode) => this.highlightNodes.has(node) || node === this.selectedNode ? 'before' : undefined)
       .nodeCanvasObject((node, ctx) => {
         // add ring just for highlighted nodes
         if (!node.x || !node.y) return;
-        if (node === this.hoverNode) {
-          ctx.beginPath();
-          ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
-          ctx.strokeStyle = 'red';
-          ctx.stroke();
-        }
-
-        // ctx.beginPath();
-        // ctx.arc(node.x, node.y, this.NODE_R, 0, 2 * Math.PI, false);
-        // ctx.fillStyle = 'blue';
-        // ctx.fill();
-      });
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
+        ctx.fillStyle = node === this.hoverNode
+          ? 'red'
+          : node === this.selectedNode ? 'blue' : 'orange';
+        ctx.fill();
+      })
+      .d3AlphaDecay(0.04)
+      .d3VelocityDecay(0.2);
   }
 
   ngOnDestroy(): void {
