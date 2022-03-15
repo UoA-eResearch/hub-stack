@@ -57,7 +57,7 @@ export class FundingComponent implements OnInit, OnDestroy {
       }),
       switchMap((slug) => slug
         ? this.loadFunding(slug)
-        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+        : throwError(() => new Error('No slug included in URL. Redirect to Collection page.'))
       )
     ).subscribe({
       next: (funding: Funding) => this.funding = funding,
