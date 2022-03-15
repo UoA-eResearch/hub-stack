@@ -56,7 +56,7 @@ export class EventComponent implements OnInit, OnDestroy {
       }),
       switchMap((slug) => slug
         ? this.loadEvent(slug)
-        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+        : throwError(() => new Error('No slug included in URL. Redirect to Collection page.'))
       )
     ).subscribe({
       next: (event: Event) => this.event = event,
