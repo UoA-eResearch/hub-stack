@@ -56,7 +56,7 @@ export class SoftwareComponent implements OnInit, OnDestroy {
       }),
       switchMap((slug) => slug
         ? this.loadSoftware(slug)
-        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+        : throwError(() => new Error('No slug included in URL. Redirect to Collection page.'))
       )
     ).subscribe({
       next: (software: Software) => this.software = software,
