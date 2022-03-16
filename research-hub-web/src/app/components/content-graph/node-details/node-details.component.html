@@ -1,41 +1,92 @@
 <mat-card>
-  <mat-card-title>{{ node.name }}</mat-card-title>
+  <mat-card-title>
+    {{ node.name }}
+    <mat-chip-list>
+      <mat-chip color="primary">{{
+        node.type | contentTypeDisplayName
+      }}</mat-chip>
+    </mat-chip-list>
+  </mat-card-title>
+
+  <mat-divider></mat-divider>
 
   <mat-card-content>
-    <div *ngFor="let neighbour of node.neighbours">
-      <span>{{ neighbour.name }}</span>
-      <div>
-        <button
-          mat-icon-button
-          color="primary"
-          (click)="changeSelection(neighbour)"
-        >
-          <mat-icon>highlight</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          color="primary"
-          [routerLink]="[neighbour.type, neighbour.slug]"
-        >
-          <mat-icon>article</mat-icon>
-        </button>
-        <a
-          mat-icon-button
-          color="primary"
-          [href]="
-            'https://app.contentful.com/spaces/vbuxn5csp0ik/entries/' +
-            neighbour.id
-          "
-          ><mat-icon>edit</mat-icon></a
-        >
+    <ng-container *ngIf="node.linkedFrom && node.linkedFrom.length > 0">
+      <h1>Linked from</h1>
+      <div class="links-list">
+        <div *ngFor="let neighbour of node.linkedFrom" class="detail-item">
+          <!-- <span class="label">{{ neighbour.type | contentTypeDisplayName }}</span> -->
+          <span class="neighbour-title">{{ neighbour.name }}</span>
+          <div class="detail-buttons">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="changeSelection(neighbour)"
+            >
+              <mat-icon>sync_alt</mat-icon>
+            </button>
+            <a
+              mat-icon-button
+              color="primary"
+              [routerLink]="['/', neighbour.type.toLowerCase(), neighbour.slug]"
+            >
+              <mat-icon>article</mat-icon>
+            </a>
+            <a
+              mat-icon-button
+              color="primary"
+              [href]="
+                'https://app.contentful.com/spaces/vbuxn5csp0ik/entries/' +
+                neighbour.id
+              "
+              ><mat-icon>edit</mat-icon></a
+            >
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="node.linksTo && node.linksTo.length > 0">
+      <h1>Links to</h1>
+      <div class="links-list">
+        <div *ngFor="let neighbour of node.linksTo" class="detail-item">
+          <!-- <span class="label">{{ neighbour.type | contentTypeDisplayName }}</span> -->
+          <span class="neighbour-title">{{ neighbour.name }}</span>
+          <div class="detail-buttons">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="changeSelection(neighbour)"
+            >
+              <mat-icon>sync_alt</mat-icon>
+            </button>
+            <a
+              mat-icon-button
+              color="primary"
+              [routerLink]="['/', neighbour.type.toLowerCase(), neighbour.slug]"
+            >
+              <mat-icon>article</mat-icon>
+            </a>
+            <a
+              mat-icon-button
+              color="primary"
+              [href]="
+                'https://app.contentful.com/spaces/vbuxn5csp0ik/entries/' +
+                neighbour.id
+              "
+              ><mat-icon>edit</mat-icon></a
+            >
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </mat-card-content>
+
+  <mat-divider></mat-divider>
 
   <mat-card-actions>
     <button
       mat-button
-      [routerLink]="[node.type, node.slug]"
+      [routerLink]="['/', node.type.toLowerCase(), node.slug]"
       class="standard-button"
     >
       Visit in ResearchHub

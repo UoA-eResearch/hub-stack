@@ -1,16 +1,43 @@
+@import "variables";
+
 mat-card {
   position: fixed;
   bottom: 50px;
   right: 50px;
   width: 500px;
-  overflow-y: auto;
+  height: 100%;
+  max-height: calc(100% - 200px);
 
   mat-card-content {
-    div {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
+    overflow-y: scroll;
+    height: calc(100% - 150px);
+    display: flex;
+    flex-direction: column;
+
+    div.links-list {
+      flex-shrink: 1;
+
+      div.detail-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        span.neighbour-title {
+          max-width: 310px;
+          text-overflow: ellipsis;
+          overflow-y: hidden;
+          white-space: nowrap;
+        }
+
+        // span.label {
+        //   font-size: 14px;
+        //   color: white;
+        //   background: $dark-blue;
+        //   padding: 0 15px;
+        //   margin: 0 15px;
+        // }
+      }
     }
   }
 

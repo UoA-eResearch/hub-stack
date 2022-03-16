@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import ForceGraph, { ForceGraphInstance, NodeObject } from 'force-graph';
+import ForceGraph, { ForceGraphInstance } from 'force-graph';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph.resolver';
-import { Source } from 'graphql';
+import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 
 @Component({
   selector: 'app-graph-container',
@@ -10,7 +10,7 @@ import { Source } from 'graphql';
     <div id="graph"></div>
     <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
   `,
-  styles: [`#graph {width: auto}`]
+  styles: [`#graph {width: 100%}`]
 })
 export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   private graph: ForceGraphInstance;
@@ -19,7 +19,15 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   private highlightLinks = new Set<ContentLink>();
   private hoverNode: ContentNode | null = null;
 
-  public selectedNode: ContentNode | null = null;
+  private selectedNeighbourNodes = new Set<ContentNode>();
+  private selectedNeighbourLinks = new Set<ContentLink>();
+  private _selectedNode: ContentNode | null = null;
+  public get selectedNode(): ContentNode | null {
+    return this._selectedNode;
+  }
+  public set selectedNode(value: ContentNode | null) {
+    this.changeSelectedNode(value);
+  }
 
   private readonly NODE_R = 8;
 
@@ -52,7 +60,8 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       //.nodeColor('red')
       .nodeAutoColorBy('type')
       .onNodeClick((node: ContentNode) => {
-        this.selectedNode = node || null;
+        console.dir(node);
+        this.changeSelectedNode(node);
       })
       .onBackgroundClick(() => this.selectedNode = null)
       .onNodeHover((node: ContentNode) => {
@@ -61,7 +70,10 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
 
         if (node) {
           this.highlightNodes.add(node);
-          node.neighbours?.forEach(neighbour => this.highlightNodes.add(neighbour));
+          [
+            ...(node.linkedFrom ? node.linkedFrom : []),
+            ...(node.linksTo ? node.linksTo : [])
+          ].forEach(neighbour => this.highlightNodes.add(neighbour));
           node.links?.forEach(link => this.highlightLinks.add(link));
         }
 
@@ -70,16 +82,18 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .autoPauseRedraw(false)
       .linkWidth((link: ContentLink) => this.highlightLinks.has(link) ? 5 : 1)
       .linkDirectionalParticles(4)
-      .linkDirectionalParticleWidth((link: ContentLink) => this.highlightLinks.has(link) ? 4 : 0)
-      .nodeCanvasObjectMode((node: ContentNode) => this.highlightNodes.has(node) || node === this.selectedNode ? 'before' : undefined)
-      .nodeCanvasObject((node, ctx) => {
+      .linkDirectionalParticleWidth((link: ContentLink) => this.highlightLinks.has(link) || this.selectedNeighbourLinks.has(link) ? 4 : 0)
+      .nodeCanvasObjectMode((node: ContentNode) => this.highlightNodes.has(node) || this.selectedNeighbourNodes.has(node) ? 'before' : undefined)
+      .nodeCanvasObject((node: ContentNode, ctx) => {
         // add ring just for highlighted nodes
         if (!node.x || !node.y) return;
         ctx.beginPath();
         ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
         ctx.fillStyle = node === this.hoverNode
           ? 'red'
-          : node === this.selectedNode ? 'blue' : 'orange';
+          : node === this.selectedNode
+            ? 'blue'
+            : 'orange';
         ctx.fill();
       })
       .d3AlphaDecay(0.04)
@@ -90,24 +104,44 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
     this.graph?._destructor();
   }
 
+  private changeSelectedNode(node: ContentNode | null) {
+    this.selectedNeighbourNodes.clear();
+    this.selectedNeighbourLinks.clear();
+
+    if (node) {
+      this.selectedNeighbourNodes.add(node);
+      [
+        ...(node.linkedFrom ? node.linkedFrom : []),
+        ...(node.linksTo ? node.linksTo : [])
+      ].forEach(neighbour => this.selectedNeighbourNodes.add(neighbour));
+      node.links?.forEach(link => this.selectedNeighbourLinks.add(link));
+    }
+
+    this._selectedNode = node || null
+  }
+
   /**
    * Adds neighbour information to node objects in graph
    * @param graph graph object
    */
   private findNeighbours(graph: ContentGraph): void {
     graph.links.forEach(link => {
-      const a = graph.nodes.find(node => node.id === link.source);
-      const b = graph.nodes.find(node => node.id === link.target);
-      if (!a || !b) return;
-      !a.neighbours && (a.neighbours = []);
-      !b.neighbours && (b.neighbours = []);
-      a.neighbours.push(b);
-      b.neighbours.push(a);
+      const sourceNode = graph.nodes.find(node => node.id === link.source);
+      const targetNode = graph.nodes.find(node => node.id === link.target);
+      if (!sourceNode || !targetNode) return;
+      !sourceNode.neighbours && (sourceNode.neighbours = []);
+      !targetNode.neighbours && (targetNode.neighbours = []);
+      !sourceNode.linksTo && (sourceNode.linksTo = []);
+      !targetNode.linkedFrom && (targetNode.linkedFrom = []);
+      sourceNode.linksTo.push(targetNode);
+      sourceNode.neighbours.push(targetNode)
+      targetNode.linkedFrom.push(sourceNode);
+      targetNode.neighbours.push(sourceNode)
 
-      !a.links && (a.links = []);
-      !b.links && (b.links = []);
-      a.links.push(link);
-      b.links.push(link);
+      !sourceNode.links && (sourceNode.links = []);
+      !targetNode.links && (targetNode.links = []);
+      sourceNode.links.push(link);
+      targetNode.links.push(link);
     })
   }
 }
