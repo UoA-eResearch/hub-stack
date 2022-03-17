@@ -1,12 +1,10 @@
+@use "@angular/material" as mat;
 @import "variables";
 
 mat-card {
-  position: fixed;
-  bottom: 50px;
-  right: 50px;
-  width: 500px;
-  height: 100%;
-  max-height: calc(100% - 200px);
+  margin: 0 20px;
+  @include mat.elevation(2);
+  width: auto;
 
   mat-card-content {
     overflow-y: scroll;

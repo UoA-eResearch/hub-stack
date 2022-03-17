@@ -9,18 +9,17 @@ import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph
     <mat-drawer-container>
       <mat-drawer mode="side" opened>
         <app-graph-legend [nodes]="nodes" [(selectedNode)]="selectedNode"></app-graph-legend>
+        <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
       </mat-drawer>
       <mat-drawer-content>
         <div id="graph"></div>
-        <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
       </mat-drawer-content>
     </mat-drawer-container>
   `,
   styles: [`
-    #graph {width: 100%}
-    app-graph-legend {
-      padding: 20px;
-    }
+    #graph {width: auto}
+    mat-drawer-container {height: calc(100vh - 64px)}
+    mat-drawer {width: 30vw; max-width: 500px;}
   `]
 })
 export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
