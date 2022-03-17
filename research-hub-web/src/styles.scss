@@ -148,7 +148,7 @@ span {
 * - do not apply to link cards or funding application docs
 * - show the mail icon for email links within rich text
 */
-#main-content a:not([href^="/"]):not([href*="//research-hub"]):not([href*="@"]):not([href^="tel"]):not(.standard-button):not(app-blocks-embedded-asset *):not(.link-card *):not(.application-doc *):not(.banner-container-home *):after {
+#main-content a:not([href^="/"]):not([href*="//research-hub"]):not([href*="@"]):not([href^="tel"]):not(.standard-button):not(app-blocks-embedded-asset *):not(.link-card *):not(.application-doc *):not(.banner-container-home *):not(app-intranet-search *):after {
   font-family: "Material Icons";
   content: " \e895";
   font-size: 0.8em;

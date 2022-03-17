@@ -1,0 +1,76 @@
+<app-search-filter-bar *ngIf="loggedIn$ | async;"
+  [searchText]="searchText"
+  [totalResults]="totalResults"
+  [(sortOrder)]="sortOrder"
+  [(activeFilters)]="activeFilters"
+></app-search-filter-bar>
+
+<!-- Search Results -->
+<div
+  id="search-results"
+  ngClass.gt-sm="search-content site-padding-2 section"
+  ngClass.lt-md="site-padding search-content section"
+>
+  <ng-container
+    *ngIf="loggedIn$ | async; then results; else notSignedIn"
+  ></ng-container>
+</div>
+
+<!--templates-->
+<ng-template #results>
+  <ng-container
+    *ngIf="searchText; then resultsList; else noSearchTerms" 
+  ></ng-container>
+</ng-template>
+
+<ng-template #resultsList>
+  <em *ngIf="totalResults > 0 && !errorMessage">
+    Please note that search filters that you have applied will not work on intranet search.
+  </em>
+  <app-intranet-search-results-list
+    [searchResults]="{ results: searchResults, totalResults: totalResults }"
+    [loading]="loading"
+  ></app-intranet-search-results-list>
+
+  <!--Load more or no results message-->
+  <div
+    class="eol"
+    *ngIf="
+      !loading && searchResults.length === totalResults && totalResults !== 0
+    "
+  >
+    <div>No More Results</div>
+  </div>
+
+  <!-- No results message -->
+  <div *ngIf="totalResults === 0 && !errorMessage">
+    <app-no-results [searchText]="searchText" [searchContext]="searchContext"></app-no-results>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="errorMessage">
+    <h3>Oops! It looks like something went wrong :(</h3>
+    <p>Please try reloading the page. If the problem persists, please contact
+      <a href="mailto:reshubproject@auckland.ac.nz">ResearchHub Project</a>.
+    </p>
+  </div>
+</ng-template>
+
+<!--Not signed in template-->
+<ng-template #notSignedIn>
+  <p>Search results from the staff intranet. You must be logged in to see this content.</p>
+  <a
+    role="button"
+    mat-raised-button
+    color="primary"
+    (click)="loginService.doLogin('/search')"
+    (keydown.enter)="loginService.doLogin('/search')"
+  >
+    Sign In
+  </a>
+</ng-template>
+
+<!--No search terms template-->
+<ng-template #noSearchTerms>
+  <p>Please enter a search query to see results here.</p>
+</ng-template>

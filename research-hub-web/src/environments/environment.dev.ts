@@ -16,10 +16,12 @@ export const environment = {
     logout_uri: 'https://research-hub-dev.connect.test.amazon.auckland.ac.nz'
   },
   searchUrl: 'https://apigw.test.amazon.auckland.ac.nz/hub-search-proxy-dev',
+  intranetSearchUrl: 'https://apigw.test.amazon.auckland.ac.nz/hub-search-proxy-dev/uoasearch',
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
       return [
-        { url: environment.cerGraphQLUrl, optional: true }
+        { url: environment.cerGraphQLUrl, optional: true },
+        { url: environment.intranetSearchUrl, optional: false }
       ]
     },
     get whoNeedIdToken() {

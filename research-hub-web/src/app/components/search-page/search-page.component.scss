@@ -21,17 +21,6 @@
   padding: 10vh 0px;
 }
 
-.no-results {
-  @extend .section-2;
-  text-align: center;
-}
-
-.eol {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 .floating-button {
   position: sticky;
   bottom: 20px;
@@ -42,4 +31,16 @@
   @media (max-width: 960px) {
     margin-right: 20px;
   }
+  z-index: 1000;
+  mat-icon {
+    line-height: 20px;
+  }
+}
+
+/**
+* Lock Icon
+*/
+.lock-icon {
+  font-size: 14px;
+  line-height: 24px;
 }

@@ -4,6 +4,7 @@ const AWS = require('aws-sdk');
 const createAwsElasticsearchConnector = require('aws-elasticsearch-connector');
 const contentfulExport = require('contentful-export');
 const contentful = require('contentful')
+const { formatResponse } = require('./helpers');
 
 
 const mgmtToken = process.env.CONTENTFUL_MGMT_ACCESS_TOKEN;  // Contentful Management API Token
@@ -323,31 +324,31 @@ module.exports.search = async (event, context) => {
 }
 
 module.exports.update = async (event, context) => {
-  let doc = JSON.parse(event.body);
-  const categories = await deliveryApiClient.getEntries({
-    content_type: "category",
-    select: ['sys.id', 'fields.name']
-  });
-
-  // add category names
-  if (doc.fields.hasOwnProperty('category')) {
-    for (let item of doc.fields.category['en-US']) {
-      const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
-      if (cat) {item['name'] = cat.fields.name;}
-    }
-  }
-
-  const params = {
-    id: event.pathParameters.id,
-    index: ELASTICSEARCH_INDEX_NAME,
-    body: {
-      doc: doc,
-      doc_as_upsert: true  // if doc doesn't exist, create it
-    },
-    refresh: 'true'   // index refresh
-  };
-
   try {
+    let doc = JSON.parse(event.body);
+    const categories = await deliveryApiClient.getEntries({
+      content_type: "category",
+      select: ['sys.id', 'fields.name']
+    });
+
+    // add category names
+    if (doc.fields.hasOwnProperty('category')) {
+      for (let item of doc.fields.category['en-US']) {
+        const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
+        if (cat) {item['name'] = cat.fields.name;}
+      }
+    }
+
+    const params = {
+      id: event.pathParameters.id,
+      index: ELASTICSEARCH_INDEX_NAME,
+      body: {
+        doc: doc,
+        doc_as_upsert: true  // if doc doesn't exist, create it
+      },
+      refresh: 'true'   // index refresh
+    };
+
     const result = await esClient.update(params);
     console.log(`Processed document id ${result.body._id}: ${result.body.result}.`);
     return formatResponse(
@@ -367,13 +368,13 @@ module.exports.update = async (event, context) => {
 }
 
 module.exports.delete = async (event, context) => {
-  const params = {
-    id: event.pathParameters.id,
-    index: ELASTICSEARCH_INDEX_NAME,
-    refresh: 'true'   // index refresh
-  };
-
   try {
+    const params = {
+      id: event.pathParameters.id,
+      index: ELASTICSEARCH_INDEX_NAME,
+      refresh: 'true'   // index refresh
+    };
+  
     const result = await esClient.delete(params);
     console.log(`Processed document id ${result.body._id}: ${result.body.result}.`);
     return formatResponse(
@@ -477,18 +478,6 @@ module.exports.bulk = async () => {
       statusCode,
       { result: `${error.name}: ${error.message}` }
     );
-  }
-}
-
-function formatResponse(status, body) {
-  return {
-      isBase64Encoded: false,
-      statusCode: status,
-      body: JSON.stringify(body),
-      headers: {
-          "Access-Control-Allow-Origin": process.env.CORS_ACCESS_CONTROL_ALLOW_ORIGINS,
-          "Content-Type": "application/json"
-      }
   }
 }
 

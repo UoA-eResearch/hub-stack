@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AllPageTitlesGQL, Maybe } from '@app/graphql/schema';
-import { pluck, map } from 'rxjs/operators';
+import { AllPageTitlesGQL } from '@app/graphql/schema';
+import { map } from 'rxjs/operators';
 
 export interface PageTitles {
   articleTitles: string[];

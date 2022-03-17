@@ -9,6 +9,13 @@ export interface SearchQuery {
   includeContentTypes : ContentType[]
 }
 
+export interface IntranetSearchQuery {
+  query: string,
+  size: number,
+  page: number,
+  sort?: SortOrder
+}
+
 export interface SearchFilters {
   relatedOrgs: string[],
   stage: string[],
@@ -40,6 +47,17 @@ export interface SearchResultChip {
   id: string;
 }
 
+export interface IntranetSearchResults {
+  totalResults: number;
+  results: IntranetSearchResult[];
+}
+
+export interface IntranetSearchResult {
+  title: string;
+  summary: string;
+  url: string;
+}
+
 export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
 export type ContentType = 'article' | 'caseStudy' | 'equipment' | 'event' | 'funding' | 'service' | 'software' | 'subHub'
 
@@ -47,4 +65,9 @@ export enum FilterType {
   ResearchActivity = 1,
   ResearchCategory,
   Organisation
+}
+
+export enum SearchContext {
+  ResearchHub = 'ResearchHub',
+  StaffIntranet = 'Staff Intranet'
 }
