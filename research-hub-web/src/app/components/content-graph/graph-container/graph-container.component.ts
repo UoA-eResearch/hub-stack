@@ -2,17 +2,30 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import ForceGraph, { ForceGraphInstance } from 'force-graph';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph.resolver';
-import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
 
 @Component({
   selector: 'app-graph-container',
   template: `
-    <div id="graph"></div>
-    <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
+    <mat-drawer-container>
+      <mat-drawer mode="side" opened>
+        <app-graph-legend [nodes]="nodes" [(selectedNode)]="selectedNode"></app-graph-legend>
+      </mat-drawer>
+      <mat-drawer-content>
+        <div id="graph"></div>
+        <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
+      </mat-drawer-content>
+    </mat-drawer-container>
   `,
-  styles: [`#graph {width: 100%}`]
+  styles: [`
+    #graph {width: 100%}
+    app-graph-legend {
+      padding: 20px;
+    }
+  `]
 })
 export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
+  public nodes: ContentNode[];
+
   private graph: ForceGraphInstance;
 
   private highlightNodes = new Set<ContentNode>();
@@ -33,7 +46,6 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
   ) {
     this.graph = ForceGraph();
   }
@@ -43,6 +55,8 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
     console.log(graph)
 
     this.findNeighbours(graph);
+
+    this.nodes = graph.nodes;
 
     this.graph.graphData({
       nodes: graph.nodes,
@@ -60,7 +74,6 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       //.nodeColor('red')
       .nodeAutoColorBy('type')
       .onNodeClick((node: ContentNode) => {
-        console.dir(node);
         this.changeSelectedNode(node);
       })
       .onBackgroundClick(() => this.selectedNode = null)
@@ -97,7 +110,8 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
         ctx.fill();
       })
       .d3AlphaDecay(0.04)
-      .d3VelocityDecay(0.2);
+      .d3VelocityDecay(0.2)
+      .maxZoom(3);
   }
 
   ngOnDestroy(): void {
@@ -118,6 +132,18 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     this._selectedNode = node || null
+
+    this.centerAtNode(node);
+  }
+
+  private centerAtNode(node: ContentNode | null) {
+    if (node) {
+      if (!node.x || !node.y) return;
+      this.graph.centerAt(node.x, node.y, 1000);
+      this.graph.zoomToFit(2000, 75, (currentNode: ContentNode) => node.neighbours ? node.neighbours.includes(currentNode) : false);
+    } else {
+      this.graph.zoomToFit(2000);
+    }
   }
 
   /**

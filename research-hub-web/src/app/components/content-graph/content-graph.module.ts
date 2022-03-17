@@ -4,6 +4,8 @@ import { GraphContainerComponent } from './graph-container/graph-container.compo
 import { RouterModule, Routes } from '@angular/router';
 import { NodeDetailsComponent } from './node-details/node-details.component';
 import { SharedModule } from '../shared/app.shared.module';
+import { GraphLegendComponent } from './graph-legend/graph-legend.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const routes: Routes = [
   { path: '', component: GraphContainerComponent }
@@ -12,12 +14,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     GraphContainerComponent,
-    NodeDetailsComponent
+    NodeDetailsComponent,
+    GraphLegendComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
+    MatSidenavModule,
   ]
 })
 export class ContentGraphModule { }
