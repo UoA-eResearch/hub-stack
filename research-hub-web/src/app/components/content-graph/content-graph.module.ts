@@ -4,7 +4,7 @@ import { GraphContainerComponent } from './graph-container/graph-container.compo
 import { RouterModule, Routes } from '@angular/router';
 import { NodeDetailsComponent } from './node-details/node-details.component';
 import { SharedModule } from '../shared/app.shared.module';
-import { GraphLegendComponent } from './graph-legend/graph-legend.component';
+import { GraphFilterComponent } from './graph-filter/graph-filter.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ContentGraphResolver } from '@resolvers/content-graph.resolver';
 
@@ -16,7 +16,7 @@ const routes: Routes = [
   declarations: [
     GraphContainerComponent,
     NodeDetailsComponent,
-    GraphLegendComponent,
+    GraphFilterComponent,
   ],
   imports: [
     CommonModule,

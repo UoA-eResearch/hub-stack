@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GraphLegendComponent } from './graph-legend.component';
+import { GraphFilterComponent } from './graph-filter.component';
 
 describe('GraphLegendComponent', () => {
-  let component: GraphLegendComponent;
-  let fixture: ComponentFixture<GraphLegendComponent>;
+  let component: GraphFilterComponent;
+  let fixture: ComponentFixture<GraphFilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GraphLegendComponent ]
+      declarations: [GraphFilterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GraphLegendComponent);
+    fixture = TestBed.createComponent(GraphFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

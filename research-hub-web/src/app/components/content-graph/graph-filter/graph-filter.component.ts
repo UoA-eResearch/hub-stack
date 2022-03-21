@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { ContentNode } from '@resolvers/content-graph.resolver';
-import { filter, map, Observable, startWith } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
 
 @Component({
-  selector: 'app-graph-legend',
-  templateUrl: './graph-legend.component.html',
-  styleUrls: ['./graph-legend.component.scss']
+  selector: 'app-graph-filter',
+  templateUrl: './graph-filter.component.html',
+  styleUrls: ['./graph-filter.component.scss']
 })
-export class GraphLegendComponent implements OnInit {
+export class GraphFilterComponent implements OnInit {
   @Input() nodes: ContentNode[];
   @Input() selectedNode: ContentNode | null;
   @Output() selectedNodeChange = new EventEmitter<ContentNode>();

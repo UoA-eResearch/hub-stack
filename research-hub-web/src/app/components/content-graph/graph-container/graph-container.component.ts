@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2 } fr
 import ForceGraph, { ForceGraphInstance } from 'force-graph';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph.resolver';
+import chroma from "chroma-js";
 
 @Component({
   selector: 'app-graph-container',
@@ -9,12 +10,14 @@ import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph
     <mat-drawer-container>
       <mat-drawer mode="side" opened>
         <div class="graph-drawer-container">
-          <app-graph-legend [nodes]="nodes" [(selectedNode)]="selectedNode"></app-graph-legend>
+          <app-graph-filter [nodes]="nodes" [(selectedNode)]="selectedNode"></app-graph-filter>
           <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
         </div>
       </mat-drawer>
       <mat-drawer-content>
         <div id="graph"></div>
+        <!--<router-outlet></router-outlet>-->
+        <!--add a loading template here for the route resolver to work properly-->
       </mat-drawer-content>
     </mat-drawer-container>
   `,
@@ -49,6 +52,20 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
 
   private readonly NODE_R = 8;
 
+  // colorbrewer qualitative Set1
+  private colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf'];
+
+  private colorMap = new Map([
+    ['article', this.colors[0]],
+    ['caseStudy', this.colors[1]],
+    ['equipment', this.colors[2]],
+    ['event', this.colors[3]],
+    ['funding', this.colors[4]],
+    ['service', this.colors[5]],
+    ['software', this.colors[6]],
+    ['subHub', this.colors[7]],
+  ]);
+
   constructor(
     private route: ActivatedRoute,
     private el: ElementRef
@@ -77,8 +94,8 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .nodeRelSize(this.NODE_R)
       .backgroundColor('#101020')
       .linkColor(() => 'rgba(255,255,255,0.2)')
-      //.nodeColor('red')
-      .nodeAutoColorBy('type')
+      //.nodeAutoColorBy('type')
+      .nodeColor((node: ContentNode) => node.color = this.colorMap.get(node.type) ?? 'black')
       .onNodeClick((node: ContentNode) => {
         this.changeSelectedNode(node);
       })
