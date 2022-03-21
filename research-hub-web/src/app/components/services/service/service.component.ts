@@ -56,7 +56,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
       }),
       switchMap((slug) => slug
         ? this.loadService(slug)
-        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+        : throwError(() => new Error('No slug included in URL. Redirect to Collection page.'))
       )
     ).subscribe({
       next: (service: Service) => this.service = service,
