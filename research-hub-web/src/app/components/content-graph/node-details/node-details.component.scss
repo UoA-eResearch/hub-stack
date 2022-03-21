@@ -1,51 +1,21 @@
 @use "@angular/material" as mat;
 @import "variables";
 
-mat-card {
-  margin: 0 20px;
-  @include mat.elevation(2);
-  width: auto;
+.detail-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-  mat-card-content {
-    overflow-y: scroll;
-    height: calc(100% - 150px);
-    display: flex;
-    flex-direction: column;
+  span {
+    flex: 0 0 auto;
 
-    div.links-list {
+    &.neighbour-title {
       flex-shrink: 1;
-
-      div.detail-item {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-
-        span.neighbour-title {
-          max-width: 310px;
-          text-overflow: ellipsis;
-          overflow-y: hidden;
-          white-space: nowrap;
-        }
-
-        // span.label {
-        //   font-size: 14px;
-        //   color: white;
-        //   background: $dark-blue;
-        //   padding: 0 15px;
-        //   margin: 0 15px;
-        // }
-      }
-    }
-  }
-
-  mat-card-actions {
-    a {
-      mat-icon {
-        font-size: 16px;
-        height: 16px;
-        width: 16px;
-      }
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow-y: hidden;
+      max-width: 65%;
     }
   }
 }

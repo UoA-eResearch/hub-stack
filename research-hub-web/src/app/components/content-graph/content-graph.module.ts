@@ -6,9 +6,10 @@ import { NodeDetailsComponent } from './node-details/node-details.component';
 import { SharedModule } from '../shared/app.shared.module';
 import { GraphLegendComponent } from './graph-legend/graph-legend.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { ContentGraphResolver } from '@resolvers/content-graph.resolver';
 
 const routes: Routes = [
-  { path: '', component: GraphContainerComponent }
+  { path: '', component: GraphContainerComponent, resolve: { graph: ContentGraphResolver } }
 ]
 
 @NgModule({

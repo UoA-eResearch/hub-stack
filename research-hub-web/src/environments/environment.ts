@@ -18,11 +18,12 @@ export const environment = {
     logout_uri: 'http://localhost:4200'
   },
   searchUrl: 'https://apigw.test.amazon.auckland.ac.nz/hub-search-proxy-dev',
-  graphURL: 'http://localhost:3000/dev',
+  graphURL: 'http://localhost:3000/dev/graph', // 'https://apigw.test.amazon.auckland.ac.nz/content-graph-api-dev/graph',
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
       return [
-        { url: environment.cerGraphQLUrl, optional: true }
+        { url: environment.cerGraphQLUrl, optional: true },
+        { url: environment.graphURL, optional: false }
       ]
     },
     get whoNeedIdToken() {

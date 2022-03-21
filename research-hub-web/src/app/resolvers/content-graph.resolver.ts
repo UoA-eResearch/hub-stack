@@ -40,7 +40,7 @@ export class ContentGraphResolver implements Resolve<Observable<ContentGraph>> {
   }
 
   private getGraph(): Observable<ContentGraph> {
-    return this.http.get(environment.graphURL + '/graph').pipe(
+    return this.http.get(environment.graphURL).pipe(
       map(result => result as ContentGraph)
     );
   }

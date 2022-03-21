@@ -25,8 +25,7 @@ export const appRoutes: Routes = [
       {
         path: 'graph',
         canActivate: [AuthGuard],
-        loadChildren: () => import('@components/content-graph/content-graph.module').then((m) => m.ContentGraphModule),
-        resolve: { graph: ContentGraphResolver }
+        loadChildren: () => import('@components/content-graph/content-graph.module').then((m) => m.ContentGraphModule)
       },
       {
         path: 'error/:errorCode',
