@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { ApolloTestingModule } from 'apollo-angular/testing';
+import { MockComponent } from 'ng-mocks';
+import { SearchPageComponent } from '../search-page.component';
 
 describe('SearchFilterBarComponent', () => {
   let component: SearchFilterBarComponent;
@@ -24,7 +26,10 @@ describe('SearchFilterBarComponent', () => {
       declarations: [SearchFilterBarComponent],
       imports: [
         ApolloTestingModule,
-        RouterTestingModule.withRoutes([]),
+        RouterTestingModule.withRoutes([{
+          path: 'search',
+          component: MockComponent(SearchPageComponent)
+        }]),
         HttpClientTestingModule,
         MatSelectModule,
         MatChipsModule,
