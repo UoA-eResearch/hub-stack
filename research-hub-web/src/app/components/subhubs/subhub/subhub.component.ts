@@ -59,7 +59,7 @@ export class SubhubComponent implements OnInit, OnDestroy {
       }),
       switchMap((slug) => slug
         ? this.loadSubHub(slug)
-        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+        : throwError(() => new Error('No slug included in URL. Redirect to Collection page.'))
       )
     ).subscribe({
       next: (subHub: SubHub) => this.subHub = subHub,

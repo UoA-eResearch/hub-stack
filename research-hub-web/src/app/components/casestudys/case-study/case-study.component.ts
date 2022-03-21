@@ -58,7 +58,7 @@ export class CaseStudyComponent implements OnInit, OnDestroy {
       }),
       switchMap((slug) => slug
         ? this.loadCaseStudy(slug)
-        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+        : throwError(() => new Error('No slug included in URL. Redirect to Collection page.'))
       )
     ).subscribe({
       next: (caseStudy: CaseStudy) => this.caseStudy = caseStudy,

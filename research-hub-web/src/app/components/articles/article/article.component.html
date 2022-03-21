@@ -89,7 +89,8 @@
         fxFlexOrder.lt-lg="1"
         fxFlex="1 1 50%"
         fxFlex.lt-lg="1 1 auto"
-        id="bodyMediaList"
+        id="article-body"
+        class="body-media-list"
         style="word-break: break-word"
         [ngClass.lt-lg]="'single-column-max-width'"
         [document]="article.bodyText?.json"
@@ -103,7 +104,7 @@
           relatedDocs.length > 0 ||
           relatedContacts.length > 0 ||
           relatedOrgs.length > 0
-        "
+          ; else fillerLeft"
         fxFlex.gt-lg="0 0 auto"
         fxLayout="column"
         fxFlexOrder="1"
@@ -166,7 +167,7 @@
 
       <!-- Related items -->
       <div
-        *ngIf="relatedItems.length > 0"
+        *ngIf="relatedItems.length > 0; else fillerRight"
         fxFlex.gt-lg="0 0 auto"
         fxLayout="column"
         fxFlexOrder="3"
@@ -194,6 +195,9 @@
   </div>
 </div>
 
-<ng-template #filler>
+<ng-template #fillerLeft>
+  <div fxFlex="0 0 350px" fxFlexOrder="1" fxHide.lt-lg></div>
+</ng-template>
+<ng-template #fillerRight>
   <div fxFlex="0 0 350px" fxFlexOrder="3" fxHide.lt-lg></div>
 </ng-template>

@@ -1,0 +1,111 @@
+{
+  "data": {
+    "softwareCollection": {
+      "items": [
+        {
+          "__typename": "Software",
+          "sys": { "id": "6pwi5TrCFG5dYEEE26GnLp", "__typename": "Sys" },
+          "title": "Software Title",
+          "slug": "microsoft-onedrive",
+          "ssoProtected": false,
+          "banner": null,
+          "summary": "Software Summary.",
+          "bodyText": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "content": [
+                    {
+                      "data": {},
+                      "marks": [],
+                      "value": "Body text.",
+                      "nodeType": "text"
+                    }
+                  ],
+                  "nodeType": "paragraph"
+                }
+              ],
+              "nodeType": "document"
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "SoftwareBodyTextEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "SoftwareBodyTextAssets"
+              },
+              "__typename": "SoftwareBodyTextLinks"
+            },
+            "__typename": "SoftwareBodyText"
+          },
+          "relatedContactsCollection": {
+            "items": [
+              {
+                "__typename": "Person",
+                "name": "Kylo Ren",
+                "role": "Bad Guy",
+                "email": "kylo.ren@auckland.ac.nz",
+                "phone": "+64-27-1234567",
+                "link": "https://directory.auckland.ac.nz/people/profile/kylo-ren"
+              }
+            ],
+            "__typename": "SoftwareRelatedContactsCollection"
+          },
+          "relatedItemsCollection": {
+            "items": [
+              {
+                "__typename": "Software",
+                "banner": null,
+                "slug": "zotero",
+                "title": "Title",
+                "summary": "Summary",
+                "ssoProtected": false,
+                "searchable": true
+              }
+            ],
+            "__typename": "SoftwareRelatedItemsCollection"
+          },
+          "relatedOrgsCollection": {
+            "items": [
+              {
+                "__typename": "OrgUnit",
+                "name": "Org name",
+                "maoriName": null,
+                "description": "Org description.",
+                "link": "https://orguniturl.html"
+              }
+            ],
+            "__typename": "SoftwareRelatedOrgsCollection"
+          },
+          "relatedDocsCollection": {
+            "items": [
+              {
+                "__typename": "OfficialDocuments",
+                "title": "Title",
+                "summary": "Summary.",
+                "document": null,
+                "url": "https://documenturl.html"
+              }
+            ],
+            "__typename": "SoftwareRelatedDocsCollection"
+          },
+          "searchable": true,
+          "callToAction": "https://www.google.co.nz/",
+          "callToActionLabel": "Test",
+          "licencing": "Licencing.",
+          "cost": "Cost",
+          "access": "Download and install the software.",
+          "limitations": null
+        }
+      ],
+      "__typename": "SoftwareCollection"
+    }
+  }
+}

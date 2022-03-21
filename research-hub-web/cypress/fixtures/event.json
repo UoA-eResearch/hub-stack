@@ -1,0 +1,136 @@
+{
+  "data": {
+    "eventCollection": {
+      "items": [
+        {
+          "__typename": "Event",
+          "sys": { "id": "10MBnxmhBuK14kZIhksQBS", "__typename": "Sys" },
+          "title": "Event Title",
+          "slug": "orientation-and-welcome-events",
+          "ssoProtected": false,
+          "searchable": true,
+          "banner": null,
+          "summary": "Event Summary",
+          "bodyText": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "content": [
+                    {
+                      "data": {},
+                      "marks": [],
+                      "value": "Body text.",
+                      "nodeType": "text"
+                    }
+                  ],
+                  "nodeType": "paragraph"
+                }
+              ],
+              "nodeType": "document"
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "EventBodyTextEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "EventBodyTextAssets"
+              },
+              "__typename": "EventBodyTextLinks"
+            },
+            "__typename": "EventBodyText"
+          },
+          "relatedContactsCollection": {
+            "items": [
+              {
+                "__typename": "Person",
+                "name": "Kylo Ren",
+                "role": "Bad Guy",
+                "email": "kylo.ren@auckland.ac.nz",
+                "phone": "+64-27-1234567",
+                "link": "https://directory.auckland.ac.nz/people/profile/kylo-ren"
+              }
+            ],
+            "__typename": "EventRelatedContactsCollection"
+          },
+          "relatedOrgsCollection": {
+            "items": [
+              {
+                "__typename": "OrgUnit",
+                "name": "Org name",
+                "maoriName": null,
+                "description": "Org description.",
+                "link": "https://orguniturl.html"
+              }
+            ],
+            "__typename": "EventRelatedOrgsCollection"
+          },
+          "relatedItemsCollection": {
+            "items": [
+              {
+                "__typename": "SubHub",
+                "slug": "research-impact",
+                "title": "Title",
+                "summary": "Summary. ",
+                "ssoProtected": false,
+                "searchable": true,
+                "banner": {
+                  "url": "https://images.ctfassets.net/vbuxn5csp0ik/43XrwAi4yAyhMb0fYKyzis/857b18ac2113abd34f15e509ea10c1d3/terry-vlisidis-SFEvfN01-ao-unsplash.jpg",
+                  "__typename": "Asset"
+                }
+              }
+            ],
+            "__typename": "EventRelatedItemsCollection"
+          },
+          "relatedDocsCollection": {
+            "items": [
+              {
+                "__typename": "OfficialDocuments",
+                "title": "Title",
+                "summary": "Summary.",
+                "document": null,
+                "url": "https://documenturl.html"
+              }
+            ],
+            "__typename": "EventRelatedDocsCollection"
+          },
+          "callToAction": "https://www.google.co.nz/",
+          "callToActionLabel": "Test",
+          "audience": "Audience",
+          "mode": "Mode",
+          "availability": "Availability",
+          "date": null,
+          "access": null,
+          "location": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "content": [
+                    {
+                      "data": {},
+                      "marks": [],
+                      "value": "Location",
+                      "nodeType": "text"
+                    }
+                  ],
+                  "nodeType": "paragraph"
+                }
+              ],
+              "nodeType": "document"
+            },
+            "__typename": "EventLocation"
+          }
+        }
+      ],
+      "__typename": "EventCollection"
+    }
+  }
+}
