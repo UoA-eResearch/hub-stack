@@ -411,7 +411,8 @@ module.exports.bulk = async () => {
       environmentId: contentfulEnv,
       contentOnly: true,
       downloadAssets: false,
-      saveFile: false
+      saveFile: false,
+      maxAllowedLimit: 100
     };
     const contentfulData = await contentfulExport(options);
     validEntries = contentfulData.entries.filter(
