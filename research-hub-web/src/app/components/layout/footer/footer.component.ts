@@ -12,7 +12,7 @@ export class FooterComponent {
   public disclaimerUrl = 'https://www.auckland.ac.nz/en/admin/footer-links/disclaimer.html';
   public privacyUrl = 'https://www.auckland.ac.nz/en/privacy.html';
   public accessibilityUrl = 'https://www.auckland.ac.nz/en/accessibility.html';
-  public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdxSyxLBBzexHDgPmjoAukxDzDo3fRHfKi4TmqFHYxa0dB37g/viewform";
+  public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdSLhFgCw2uy6AZvzcK-1-UV9b_qYk6MdR0eZfM-NDwKNZyoA/viewform?usp=sf_link";
 
   constructor() { }
 

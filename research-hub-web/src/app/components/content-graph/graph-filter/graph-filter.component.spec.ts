@@ -1,14 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MockModule } from 'ng-mocks';
 
 import { GraphFilterComponent } from './graph-filter.component';
 
-describe('GraphLegendComponent', () => {
+describe('GraphFilterComponent', () => {
   let component: GraphFilterComponent;
   let fixture: ComponentFixture<GraphFilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GraphFilterComponent]
+      declarations: [GraphFilterComponent],
+      imports: [
+        MockModule(MatAutocompleteModule),
+        MockModule(FormsModule)
+      ]
     })
       .compileComponents();
   });
@@ -16,6 +23,12 @@ describe('GraphLegendComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(GraphFilterComponent);
     component = fixture.componentInstance;
+    component.selectedNode = {
+      id: 'A',
+      name: 'Test',
+      slug: 'abc',
+      type: 'article'
+    }
     fixture.detectChanges();
   });
 

@@ -1,6 +1,3 @@
-/**
- * Tests the basic homepage components i.e. Search, Featured, Research Categories, Research Activities, Contact
- */
 describe('ResearchHubs Homepage', () => {
 
     beforeEach(() => {
@@ -15,20 +12,25 @@ describe('ResearchHubs Homepage', () => {
         cy.get('app-banner-image').should('be.visible');
     })
 
-    // Only enable if featured items are enabled
-    it('displays featured articles', () => {
+    it('displays the title', () => {
+        cy.get('h1.page-title').should('exist');
+    });
+
+    it('displays featured items', () => {
         cy.get('app-featured').should('be.visible');
-        cy.get('app-content-title h2').should('not.be.empty');
-        cy.get('app-cards mat-nav-list:first-child a').should('not.be.empty');
+        cy.get('app-content-title h2').should('exist');
+        cy.get('.featured app-featured app-standard-card').should('have.length.greaterThan', 0);
     })
 
     it('displays contact section', () => {
         cy.get('#contacts').scrollIntoView().should('be.visible');
-        cy.get('#contacts h2').should('not.be.empty');
-        cy.get('#contacts .feedback-container').should('not.be.empty');
+        cy.get('#contacts h2').should('exist');
+        cy.get('#contacts .feedback-container').should('exist');
     })
 
     it('displays footer', () => {
-        cy.get('.footer-content li:first-child a').should('not.be.empty');
+        cy.get('.footer-content').should('exist');
+        cy.get('.footer-content .logo-img-container').should('exist');
+        cy.get('.footer-content .footer-links').should('exist');
     })
 });
