@@ -5,7 +5,7 @@ import { MockModule } from 'ng-mocks';
 
 import { GraphFilterComponent } from './graph-filter.component';
 
-describe('GraphFilterComponent', () => {
+xdescribe('GraphFilterComponent', () => {
   let component: GraphFilterComponent;
   let fixture: ComponentFixture<GraphFilterComponent>;
 
