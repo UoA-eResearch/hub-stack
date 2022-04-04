@@ -2,7 +2,6 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2 } fr
 import ForceGraph, { ForceGraphInstance } from 'force-graph';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph.resolver';
-import chroma from "chroma-js";
 
 @Component({
   selector: 'app-graph-container',
@@ -10,6 +9,8 @@ import chroma from "chroma-js";
     <mat-drawer-container>
       <mat-drawer mode="side" opened>
         <div class="graph-drawer-container">
+          <h1>HubGraph</h1>
+          <app-color-legend [colorMap]="colorMap"></app-color-legend>
           <app-graph-filter [nodes]="nodes" [(selectedNode)]="selectedNode"></app-graph-filter>
           <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
         </div>
@@ -55,7 +56,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   // colorbrewer qualitative Set1
   private colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf'];
 
-  private colorMap = new Map([
+  public colorMap = new Map([
     ['article', this.colors[0]],
     ['caseStudy', this.colors[1]],
     ['equipment', this.colors[2]],

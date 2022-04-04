@@ -1,0 +1,22 @@
+<h2>Legend</h2>
+<section>
+  <ul style="list-style: none">
+    <li
+      style="float: left; margin-right: 10px"
+      *ngFor="let mapping of colorMap | keyvalue"
+    >
+      <span
+        [ngStyle]="{ 'background-color': mapping.value }"
+        style="
+          border-radius: 2px;
+          float: left;
+          width: 16px;
+          height: 16px;
+          margin: 2px;
+        "
+      ></span>
+      {{ mapping.key | contentTypeDisplayName }}
+    </li>
+  </ul>
+</section>
+<div style="float: none; clear: both"></div>

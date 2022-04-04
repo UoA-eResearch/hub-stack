@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from '@app/components/layout/layout.component';
-import { ContentGraphResolver } from '@resolvers/content-graph.resolver';
 import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 
 

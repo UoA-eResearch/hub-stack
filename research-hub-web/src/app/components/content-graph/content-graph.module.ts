@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/app.shared.module';
 import { GraphFilterComponent } from './graph-filter/graph-filter.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ContentGraphResolver } from '@resolvers/content-graph.resolver';
+import { ColorLegendComponent } from './color-legend/color-legend.component';
 
 const routes: Routes = [
   { path: '', component: GraphContainerComponent, resolve: { graph: ContentGraphResolver } }
@@ -17,6 +18,7 @@ const routes: Routes = [
     GraphContainerComponent,
     NodeDetailsComponent,
     GraphFilterComponent,
+    ColorLegendComponent,
   ],
   imports: [
     CommonModule,
