@@ -57,7 +57,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
       }),
       switchMap((slug) => slug
         ? this.loadArticle(slug)
-        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+        : throwError(() => new Error('No slug included in URL. Redirect to Collection page.'))
       )
     ).subscribe({
       next: (article: Article) => this.article = article,

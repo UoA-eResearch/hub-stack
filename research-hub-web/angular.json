@@ -31,7 +31,8 @@
             "allowedCommonJsDependencies": [
               "graphql-tag",
               "crypto-js",
-              "zen-observable"
+              "zen-observable",
+              "@contentful/rich-text-types"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
