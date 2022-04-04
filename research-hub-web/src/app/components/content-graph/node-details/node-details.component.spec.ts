@@ -8,14 +8,20 @@ describe('NodeDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NodeDetailsComponent ]
+      declarations: [NodeDetailsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NodeDetailsComponent);
     component = fixture.componentInstance;
+    component.node = {
+      id: 'A',
+      name: 'Test',
+      slug: 'abc-def',
+      type: 'article'
+    };
     fixture.detectChanges();
   });
 

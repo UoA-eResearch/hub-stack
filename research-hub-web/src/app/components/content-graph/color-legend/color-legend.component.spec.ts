@@ -8,9 +8,9 @@ describe('ColorLegendComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ColorLegendComponent ]
+      declarations: [ColorLegendComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

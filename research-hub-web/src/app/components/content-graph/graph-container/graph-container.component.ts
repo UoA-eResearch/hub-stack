@@ -68,8 +68,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   ]);
 
   constructor(
-    private route: ActivatedRoute,
-    private el: ElementRef
+    private route: ActivatedRoute
   ) {
     this.graph = ForceGraph();
   }
