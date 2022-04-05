@@ -8,6 +8,7 @@ import { GraphFilterComponent } from './graph-filter/graph-filter.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ContentGraphResolver } from '@resolvers/content-graph.resolver';
 import { ColorLegendComponent } from './color-legend/color-legend.component';
+import { GraphContainerComponent } from './graph-container/graph-container.component';
 
 const routes: Routes = [
   { path: '', component: GraphLayoutComponent, resolve: { graph: ContentGraphResolver } }
@@ -19,6 +20,7 @@ const routes: Routes = [
     NodeDetailsComponent,
     GraphFilterComponent,
     ColorLegendComponent,
+    GraphContainerComponent,
   ],
   imports: [
     CommonModule,
