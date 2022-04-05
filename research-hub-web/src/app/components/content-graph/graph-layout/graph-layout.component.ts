@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph.resolver';
 
 @Component({
-  selector: 'app-graph-container',
+  selector: 'app-graph-layout',
   template: `
     <mat-drawer-container>
       <mat-drawer mode="side" opened>
@@ -17,7 +17,7 @@ import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph
       </mat-drawer>
       <mat-drawer-content>
         <div id="graph"></div>
-        <!--<router-outlet></router-outlet>-->
+        <!-- <router-outlet></router-outlet> -->
         <!--add a loading template here for the route resolver to work properly-->
       </mat-drawer-content>
     </mat-drawer-container>
@@ -32,7 +32,7 @@ import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph
     }`
   ]
 })
-export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class GraphLayoutComponent implements OnInit, AfterViewInit, OnDestroy {
   public nodes: ContentNode[];
 
   private graph: ForceGraphInstance;

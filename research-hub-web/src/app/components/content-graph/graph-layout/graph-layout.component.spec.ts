@@ -3,15 +3,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { GraphContainerComponent } from './graph-container.component';
+import { GraphLayoutComponent } from './graph-layout.component';
 
-describe('GraphContainerComponent', () => {
-  let component: GraphContainerComponent;
-  let fixture: ComponentFixture<GraphContainerComponent>;
+describe('GraphLayoutComponent', () => {
+  let component: GraphLayoutComponent;
+  let fixture: ComponentFixture<GraphLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GraphContainerComponent],
+      declarations: [GraphLayoutComponent],
       imports: [
         RouterTestingModule.withRoutes([]),
       ],
@@ -30,7 +30,7 @@ describe('GraphContainerComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GraphContainerComponent);
+    fixture = TestBed.createComponent(GraphLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
