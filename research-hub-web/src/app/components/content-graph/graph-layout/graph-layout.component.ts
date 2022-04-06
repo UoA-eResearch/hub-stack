@@ -23,6 +23,7 @@ import { ContentNode } from '@services/content-graph.service';
     `mat-drawer-container {height: calc(100vh - 64px); width: 100vw}`,
     `mat-drawer {width: 30vw; max-width: 500px;}`,
     `.graph-drawer-container {
+      margin-bottom: 25px;
       padding: 0 20px;
       width: 100%;
     }`

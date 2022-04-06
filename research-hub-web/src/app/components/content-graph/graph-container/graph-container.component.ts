@@ -102,7 +102,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
         ctx.beginPath();
         ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
         ctx.fillStyle = node === this.hoverNode
-          ? 'red'
+          ? 'yellow'
           : node === this.selectedNode
             ? 'white'
             : 'orange';
