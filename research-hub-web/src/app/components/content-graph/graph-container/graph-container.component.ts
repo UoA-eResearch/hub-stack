@@ -1,15 +1,16 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ContentGraph, ContentLink, ContentNode } from '@resolvers/content-graph.resolver';
+import { ContentGraph, ContentGraphService, ContentLink, ContentNode } from '@services/content-graph.service';
 import ForceGraph, { ForceGraphInstance } from 'force-graph';
 
 @Component({
   selector: 'app-graph-container',
   template: `
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
     <div id="graph"></div>
   `,
   styles: [
-    `#graph {width: auto}`,
+    `#graph {width: 100%}`,
   ]
 })
 export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
@@ -25,6 +26,8 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   }
   public nodes: ContentNode[];
 
+  public loading = true;
+
   private graph: ForceGraphInstance;
 
   private highlightNodes = new Set<ContentNode>();
@@ -38,23 +41,26 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   private readonly NODE_R = 8;
 
   constructor(
-    private route: ActivatedRoute
+    private graphService: ContentGraphService
   ) {
     this.graph = ForceGraph();
   }
 
   ngOnInit(): void {
-    const graph = this.route.snapshot.data.graph as ContentGraph;
-    console.log(graph)
+    this.graphService.getGraph().subscribe(data => {
+      const graph = data;
 
-    this.findNeighbours(graph);
+      this.findNeighbours(graph);
 
-    this.nodes = graph.nodes;
+      this.nodes = graph.nodes;
 
-    this.graph.graphData({
-      nodes: graph.nodes,
-      links: graph.links
-    })
+      this.graph.graphData({
+        nodes: graph.nodes,
+        links: graph.links
+      })
+
+      this.loading = false;
+    });
   }
 
   ngAfterViewInit(): void {

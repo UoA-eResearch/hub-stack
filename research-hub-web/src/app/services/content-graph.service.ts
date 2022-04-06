@@ -31,15 +31,11 @@ export interface ContentGraph {
 @Injectable({
   providedIn: 'root'
 })
-export class ContentGraphResolver implements Resolve<Observable<ContentGraph>> {
+export class ContentGraphService {
 
   constructor(private http: HttpClient) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ContentGraph> | Observable<Observable<ContentGraph>> | Promise<Observable<ContentGraph>> {
-    return this.getGraph();
-  }
-
-  private getGraph(): Observable<ContentGraph> {
+  public getGraph(): Observable<ContentGraph> {
     return this.http.get(environment.graphUrl).pipe(
       map(result => result as ContentGraph)
     );

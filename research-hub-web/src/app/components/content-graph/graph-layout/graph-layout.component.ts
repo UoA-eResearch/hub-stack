@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ContentNode } from '@resolvers/content-graph.resolver';
+import { ContentNode } from '@services/content-graph.service';
 
 @Component({
   selector: 'app-graph-layout',

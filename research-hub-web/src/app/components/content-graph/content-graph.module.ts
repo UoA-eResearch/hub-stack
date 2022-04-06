@@ -6,12 +6,12 @@ import { NodeDetailsComponent } from './node-details/node-details.component';
 import { SharedModule } from '../shared/app.shared.module';
 import { GraphFilterComponent } from './graph-filter/graph-filter.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { ContentGraphResolver } from '@resolvers/content-graph.resolver';
 import { ColorLegendComponent } from './color-legend/color-legend.component';
 import { GraphContainerComponent } from './graph-container/graph-container.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const routes: Routes = [
-  { path: '', component: GraphLayoutComponent, resolve: { graph: ContentGraphResolver } }
+  { path: '', component: GraphLayoutComponent }
 ]
 
 @NgModule({
@@ -27,6 +27,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     MatSidenavModule,
+    MatProgressBarModule
   ]
 })
 export class ContentGraphModule { }
