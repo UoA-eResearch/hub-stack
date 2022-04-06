@@ -14,14 +14,15 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   @Input() public set selectedNode(value: ContentNode | null) {
     this.changeSelectedNode(value);
   }
+  @Input() nodes: ContentNode[];
   @Output() selectedNodeChange = new EventEmitter<ContentNode | null>();
+  @Output() nodesChange = new EventEmitter<ContentNode[]>();
 
   @ViewChild('graph', { static: true }) graphElement: ElementRef;
 
   public get selectedNode(): ContentNode | null {
     return this._selectedNode;
   }
-  public nodes: ContentNode[];
 
   public loading = true;
 
@@ -55,7 +56,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
 
       this.findNeighbours(graph);
 
-      this.nodes = graph.nodes;
+      this.nodesChange.emit(graph.nodes);
 
       this.graph
         .graphData({
@@ -74,9 +75,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .backgroundColor('#101020')
       .linkColor(() => 'rgba(255,255,255,0.2)')
       .nodeColor((node: ContentNode) => node.color = this.colorMap.get(node.type) ?? 'black')
-      .onNodeClick((node: ContentNode) => {
-        this.changeSelectedNode(node);
-      })
+      .onNodeClick((node: ContentNode) => this.changeSelectedNode(node))
       .onBackgroundClick(() => this.selectedNode = null)
       .onNodeHover((node: ContentNode) => {
         this.highlightLinks.clear();
@@ -99,14 +98,13 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .linkDirectionalParticleWidth((link: ContentLink) => this.highlightLinks.has(link) || this.selectedNeighbourLinks.has(link) ? 4 : 0)
       .nodeCanvasObjectMode((node: ContentNode) => this.highlightNodes.has(node) || this.selectedNeighbourNodes.has(node) ? 'before' : undefined)
       .nodeCanvasObject((node: ContentNode, ctx) => {
-        // add ring just for highlighted nodes
         if (!node.x || !node.y) return;
         ctx.beginPath();
         ctx.arc(node.x, node.y, this.NODE_R * 1.4, 0, 2 * Math.PI, false);
         ctx.fillStyle = node === this.hoverNode
           ? 'red'
           : node === this.selectedNode
-            ? 'blue'
+            ? 'white'
             : 'orange';
         ctx.fill();
       })

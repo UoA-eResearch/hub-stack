@@ -14,11 +14,12 @@ import { ContentNode } from '@services/content-graph.service';
         </div>
       </mat-drawer>
       <mat-drawer-content>
-        <app-graph-container [(selectedNode)]="selectedNode" [colorMap]="colorMap"></app-graph-container>
+        <app-graph-container [(nodes)]="nodes" [(selectedNode)]="selectedNode" [colorMap]="colorMap"></app-graph-container>
       </mat-drawer-content>
     </mat-drawer-container>
   `,
   styles: [
+    `h1 {font-size: 52px;}`,
     `mat-drawer-container {height: calc(100vh - 64px); width: 100vw}`,
     `mat-drawer {width: 30vw; max-width: 500px;}`,
     `.graph-drawer-container {
