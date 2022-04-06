@@ -14,7 +14,15 @@ import ForceGraph, { ForceGraphInstance } from 'force-graph';
 })
 export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() colorMap: Map<string, string>;
+  @Input() public set selectedNode(value: ContentNode | null) {
+    this.changeSelectedNode(value);
+  }
 
+  @Output() selectedNodeChange = new EventEmitter<ContentNode | null>();
+
+  public get selectedNode(): ContentNode | null {
+    return this._selectedNode;
+  }
   public nodes: ContentNode[];
 
   private graph: ForceGraphInstance;
@@ -26,14 +34,6 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   private selectedNeighbourNodes = new Set<ContentNode>();
   private selectedNeighbourLinks = new Set<ContentLink>();
   private _selectedNode: ContentNode | null = null;
-  public get selectedNode(): ContentNode | null {
-    return this._selectedNode;
-  }
-  @Input() public set selectedNode(value: ContentNode | null) {
-    this.changeSelectedNode(value);
-  }
-
-  @Output() selectedNodeChange = new EventEmitter<ContentNode | null>();
 
   private readonly NODE_R = 8;
 
