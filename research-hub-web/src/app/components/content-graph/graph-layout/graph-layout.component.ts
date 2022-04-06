@@ -35,13 +35,13 @@ export class GraphLayoutComponent {
   private colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf'];
 
   public colorMap = new Map([
-    ['article', this.colors[0]],
-    ['caseStudy', this.colors[1]],
-    ['equipment', this.colors[2]],
-    ['event', this.colors[3]],
+    ['subHub', this.colors[0]],
+    ['article', this.colors[1]],
+    ['event', this.colors[2]],
+    ['equipment', this.colors[3]],
     ['funding', this.colors[4]],
     ['service', this.colors[5]],
     ['software', this.colors[6]],
-    ['subHub', this.colors[7]],
+    ['caseStudy', this.colors[7]],
   ]);
 }

@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ContentGraph, ContentGraphService, ContentLink, ContentNode } from '@services/content-graph.service';
 import ForceGraph, { ForceGraphInstance } from 'force-graph';
 
@@ -7,19 +6,17 @@ import ForceGraph, { ForceGraphInstance } from 'force-graph';
   selector: 'app-graph-container',
   template: `
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-    <div id="graph"></div>
-  `,
-  styles: [
-    `#graph {width: 100%}`,
-  ]
+    <div #graph></div>
+  `
 })
 export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() colorMap: Map<string, string>;
   @Input() public set selectedNode(value: ContentNode | null) {
     this.changeSelectedNode(value);
   }
-
   @Output() selectedNodeChange = new EventEmitter<ContentNode | null>();
+
+  @ViewChild('graph', { static: true }) graphElement: ElementRef;
 
   public get selectedNode(): ContentNode | null {
     return this._selectedNode;
@@ -47,6 +44,12 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnInit(): void {
+    const observer = new ResizeObserver(entries => {
+      this.graph.width(entries[0].contentRect.width);
+      this.graph.height(entries[0].contentRect.height);
+    });
+    observer.observe(this.graphElement.nativeElement);
+
     this.graphService.getGraph().subscribe(data => {
       const graph = data;
 
@@ -54,23 +57,22 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
 
       this.nodes = graph.nodes;
 
-      this.graph.graphData({
-        nodes: graph.nodes,
-        links: graph.links
-      })
+      this.graph
+        .graphData({
+          nodes: graph.nodes,
+          links: graph.links
+        })
 
       this.loading = false;
     });
   }
 
   ngAfterViewInit(): void {
-    const element = document.getElementById('graph');
-    if (!element) return;
-    this.graph(element)
+    if (!this.graphElement) return;
+    this.graph(this.graphElement.nativeElement)
       .nodeRelSize(this.NODE_R)
       .backgroundColor('#101020')
       .linkColor(() => 'rgba(255,255,255,0.2)')
-      //.nodeAutoColorBy('type')
       .nodeColor((node: ContentNode) => node.color = this.colorMap.get(node.type) ?? 'black')
       .onNodeClick((node: ContentNode) => {
         this.changeSelectedNode(node);
@@ -110,7 +112,9 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       })
       .d3AlphaDecay(0.04)
       .d3VelocityDecay(0.2)
-      .maxZoom(3);
+      .maxZoom(3)
+      .width(this.graphElement.nativeElement.with)
+      .height(this.graphElement.nativeElement.height);
   }
 
   ngOnDestroy(): void {
