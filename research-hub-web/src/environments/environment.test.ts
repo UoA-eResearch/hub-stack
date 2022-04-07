@@ -16,6 +16,7 @@ export const environment = {
     logout_uri: 'https://research-hub.connect.test.amazon.auckland.ac.nz'
   },
   searchUrl: 'https://apigw.test.amazon.auckland.ac.nz/hub-search-proxy-test',
+  contentfulEditUrl: 'https://app.contentful.com/spaces/vbuxn5csp0ik/environments/test/entries/',
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
       return [

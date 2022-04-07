@@ -20,7 +20,7 @@ import { Component, Input, OnInit } from '@angular/core';
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 5px;
+      gap: 15px;
     }`,
     `ul li span {
       float: left;

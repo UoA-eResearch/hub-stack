@@ -11,6 +11,10 @@
     flex: 0 0 auto;
 
     &.neighbour-title {
+      gap: 5px;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
       flex-shrink: 1;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -18,4 +22,19 @@
       max-width: 65%;
     }
   }
+}
+
+mat-accordion {
+  .badge {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+}
+
+.color-square {
+  border-radius: 2px;
+  width: 16px;
+  height: 16px;
+  margin: 2px;
 }

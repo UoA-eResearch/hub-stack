@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { environment } from '@environments/environment';
 import { ContentNode } from '@services/content-graph.service';
 
 @Component({
@@ -8,7 +9,10 @@ import { ContentNode } from '@services/content-graph.service';
 })
 export class NodeDetailsComponent {
   @Input() node: ContentNode;
+  @Input() colorMap: Map<string, string>;
   @Output() nodeChange = new EventEmitter<ContentNode | null>();
+
+  public environment = environment;
 
   constructor() { }
 

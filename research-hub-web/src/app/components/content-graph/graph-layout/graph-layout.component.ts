@@ -10,7 +10,7 @@ import { ContentNode } from '@services/content-graph.service';
           <h1>HubGraph</h1>
           <app-color-legend [colorMap]="colorMap"></app-color-legend>
           <app-graph-filter [nodes]="nodes" [(selectedNode)]="selectedNode"></app-graph-filter>
-          <app-node-details *ngIf="selectedNode" [(node)]="selectedNode"></app-node-details>
+          <app-node-details *ngIf="selectedNode" [(node)]="selectedNode" [colorMap]="colorMap"></app-node-details>
         </div>
       </mat-drawer>
       <mat-drawer-content>
