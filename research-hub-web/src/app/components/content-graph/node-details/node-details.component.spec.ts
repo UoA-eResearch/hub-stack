@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pipe';
+import { MockPipe } from 'ng-mocks';
 
 import { NodeDetailsComponent } from './node-details.component';
 
@@ -8,7 +10,10 @@ describe('NodeDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NodeDetailsComponent]
+      declarations: [
+        NodeDetailsComponent,
+        MockPipe(ContentTypeDisplayNamePipe)
+      ]
     })
       .compileComponents();
   });
@@ -16,6 +21,9 @@ describe('NodeDetailsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NodeDetailsComponent);
     component = fixture.componentInstance;
+    component.colorMap = new Map([
+      ['article', 'red']
+    ]);
     component.node = {
       id: 'A',
       name: 'Test',
