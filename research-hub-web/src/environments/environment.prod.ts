@@ -17,11 +17,13 @@ export const environment = {
     logout_uri: 'https://research-hub.auckland.ac.nz'
   },
   searchUrl: 'https://apigw.prod.amazon.auckland.ac.nz/hub-search-proxy-prod',
+  graphUrl: 'https://apigw.prod.amazon.auckland.ac.nz/content-graph-api-prod/graph',
   contentfulEditUrl: 'https://app.contentful.com/spaces/vbuxn5csp0ik/environments/prod/entries/',
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
       return [
-        { url: environment.cerGraphQLUrl, optional: true }
+        { url: environment.cerGraphQLUrl, optional: true },
+        { url: environment.graphUrl, optional: false }
       ]
     },
     get whoNeedIdToken() {
