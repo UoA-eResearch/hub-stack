@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ContentNode } from '@resolvers/content-graph.resolver';
+import { ContentNode } from '@services/content-graph.service';
 import { map, Observable, startWith } from 'rxjs';
 
 @Component({

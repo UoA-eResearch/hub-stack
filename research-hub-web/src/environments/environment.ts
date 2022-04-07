@@ -19,6 +19,7 @@ export const environment = {
   },
   searchUrl: 'https://apigw.test.amazon.auckland.ac.nz/hub-search-proxy-dev',
   graphUrl: 'http://localhost:3000/dev/graph',
+  contentfulEditUrl: 'https://app.contentful.com/spaces/vbuxn5csp0ik/environments/dev/entries/',
   privateUrlKeyWords: {
     get whoNeedBearerToken() {
       return [
