@@ -1,7 +1,10 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponent, MockModule } from 'ng-mocks';
+import { ColorLegendComponent } from '../color-legend/color-legend.component';
+import { GraphContainerComponent } from '../graph-container/graph-container.component';
+import { GraphFilterComponent } from '../graph-filter/graph-filter.component';
 
 import { GraphLayoutComponent } from './graph-layout.component';
 
@@ -11,19 +14,15 @@ describe('GraphLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GraphLayoutComponent],
+      declarations: [
+        GraphLayoutComponent,
+        MockComponent(ColorLegendComponent),
+        MockComponent(GraphFilterComponent),
+        MockComponent(GraphContainerComponent)
+      ],
       imports: [
         RouterTestingModule.withRoutes([]),
-      ],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              data: { graph: { links: [], nodes: [] } }
-            }
-          }
-        }
+        MockModule(MatSidenavModule),
       ]
     })
       .compileComponents();
