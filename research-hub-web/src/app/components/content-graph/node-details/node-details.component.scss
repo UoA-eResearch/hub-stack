@@ -25,10 +25,21 @@
 }
 
 mat-accordion {
+  mat-panel-title {
+    gap: 5px;
+  }
+
   .badge {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+  }
+
+  .selected-node-info {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
   }
 }
 

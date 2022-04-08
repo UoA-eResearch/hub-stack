@@ -3,26 +3,14 @@
   <mat-expansion-panel expanded hideToggle>
     <mat-expansion-panel-header>
       <mat-panel-title>
+        <span
+          class="color-square"
+          [ngStyle]="{ 'background-color': colorMap.get(node.type) }"
+        ></span>
         <b>{{ node.name }}</b>
       </mat-panel-title>
-      <mat-panel-description>
-        <span class="badge">
-          <span
-            class="color-square"
-            [ngStyle]="{ 'background-color': colorMap.get(node.type) }"
-          ></span>
-          {{ node.type | contentTypeDisplayName }}
-        </span>
-      </mat-panel-description>
     </mat-expansion-panel-header>
-    <section
-      style="
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-      "
-    >
+    <section class="selected-node-info">
       <a
         mat-icon-button
         color="primary"
