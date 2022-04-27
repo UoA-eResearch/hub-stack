@@ -15,7 +15,7 @@ import { PageTitleService } from '@services/page-title.service';
   styleUrls: ['./search-page.component.scss']
 })
 export class SearchPageComponent implements OnInit, OnDestroy {
-  public feedbackUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdSLhFgCw2uy6AZvzcK-1-UV9b_qYk6MdR0eZfM-NDwKNZyoA/viewform?usp=sf_link";
+  public feedbackUrl = "https://forms.office.com/r/W6Y4d46LiP";
   public staffIntranet = "https://www.staff.auckland.ac.nz/";
 
   public bannerImageUrl: string = 'https://images.ctfassets.net/vbuxn5csp0ik/dLNmMgxMJVJjdDATTpWZn/433ae5de80f78868c4fb37a256ed2801/1500_UoA_13Oct09_001.jpg';
