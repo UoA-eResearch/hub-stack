@@ -1,0 +1,31 @@
+<h2>Search</h2>
+<section>
+  <mat-form-field>
+    <input
+      matInput
+      type="text"
+      placeholder="Select entry"
+      [formControl]="node"
+      [matAutocomplete]="auto"
+    />
+    <button
+      *ngIf="node.value"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="node.setValue('')"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-autocomplete
+    #auto="matAutocomplete"
+    [displayWith]="displayFn"
+    (optionSelected)="updateNode()"
+  >
+    <mat-option *ngFor="let node of filteredNodes | async" [value]="node">
+      {{ node.name }}
+    </mat-option>
+  </mat-autocomplete>
+</section>

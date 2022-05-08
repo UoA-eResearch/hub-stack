@@ -1,0 +1,117 @@
+<h2>Selected Entry</h2>
+<mat-accordion displayMode="flat">
+  <mat-expansion-panel expanded hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <span
+          class="color-square"
+          [ngStyle]="{ 'background-color': colorMap.get(node.type) }"
+        ></span>
+        <b>{{ node.name }}</b>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <section class="selected-node-info">
+      <a
+        mat-icon-button
+        color="primary"
+        [routerLink]="['/', node.type.toLowerCase(), node.slug]"
+        matTooltip="Visit page in ResearchHub"
+      >
+        <mat-icon>article</mat-icon>
+      </a>
+      <a
+        mat-icon-button
+        color="primary"
+        [href]="environment.contentfulEditUrl + node.id"
+        matTooltip="Show entry in Contentful"
+      >
+        <mat-icon>edit</mat-icon>
+      </a>
+    </section>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel
+    [disabled]="!(node.linkedFrom && node.linkedFrom.length > 0)"
+  >
+    <mat-expansion-panel-header>Linked from</mat-expansion-panel-header>
+    <section class="links-list">
+      <div *ngFor="let neighbour of node.linkedFrom" class="detail-item">
+        <span class="neighbour-title">
+          <span
+            class="color-square"
+            [ngStyle]="{ 'background-color': colorMap.get(neighbour.type) }"
+            [matTooltip]="neighbour.type | contentTypeDisplayName"
+          ></span>
+          <span [matTooltip]="neighbour.name">{{ neighbour.name }}</span>
+        </span>
+        <span class="detail-buttons">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="changeSelection(neighbour)"
+            matTooltip="Change selection"
+          >
+            <mat-icon>sync_alt</mat-icon>
+          </button>
+          <a
+            mat-icon-button
+            color="primary"
+            [routerLink]="['/', neighbour.type.toLowerCase(), neighbour.slug]"
+            matTooltip="Visit page in ResearchHub"
+          >
+            <mat-icon>article</mat-icon>
+          </a>
+          <a
+            mat-icon-button
+            color="primary"
+            [href]="environment.contentfulEditUrl + neighbour.id"
+            matTooltip="Show entry in Contentful"
+            ><mat-icon>edit</mat-icon>
+          </a>
+        </span>
+      </div>
+    </section>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel [disabled]="!(node.linksTo && node.linksTo.length > 0)">
+    <mat-expansion-panel-header>Links to</mat-expansion-panel-header>
+    <section class="links-list">
+      <div *ngFor="let neighbour of node.linksTo" class="detail-item">
+        <!-- <span class="label">{{ neighbour.type | contentTypeDisplayName }}</span> -->
+        <span class="neighbour-title" [matTooltip]="neighbour.name">
+          <span
+            class="color-square"
+            [ngStyle]="{ 'background-color': colorMap.get(neighbour.type) }"
+            [matTooltip]="neighbour.type | contentTypeDisplayName"
+          ></span>
+          <span [matTooltip]="neighbour.name">{{ neighbour.name }}</span>
+        </span>
+        <span class="detail-buttons">
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="changeSelection(neighbour)"
+            matTooltip="Change selection"
+          >
+            <mat-icon>sync_alt</mat-icon>
+          </button>
+          <a
+            mat-icon-button
+            color="primary"
+            [routerLink]="['/', neighbour.type.toLowerCase(), neighbour.slug]"
+            matTooltip="Visit page in ResearchHub"
+          >
+            <mat-icon>article</mat-icon>
+          </a>
+          <a
+            mat-icon-button
+            color="primary"
+            [href]="environment.contentfulEditUrl + neighbour.id"
+            matTooltip="Show entry in Contentful"
+            ><mat-icon>edit</mat-icon>
+          </a>
+        </span>
+      </div>
+    </section>
+  </mat-expansion-panel>
+</mat-accordion>
