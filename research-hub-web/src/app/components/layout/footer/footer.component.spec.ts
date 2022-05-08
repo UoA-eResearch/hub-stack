@@ -3,6 +3,7 @@ import { MockModule } from 'ng-mocks';
 import { AppLayoutModule } from '../layout.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FooterComponent } from './footer.component';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -10,13 +11,14 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FooterComponent ],
+      declarations: [FooterComponent],
       imports: [
         MockModule(AppLayoutModule),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([]),
+        ApolloTestingModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
