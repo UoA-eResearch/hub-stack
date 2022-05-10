@@ -259,7 +259,7 @@ pipeline {
                                 string(credentialsId: "contentful-link-checker-app-id-${BRANCH_NAME}", variable: "contentfulSLCAppId"),
                                 string(credentialsId: "contentful-org-id", variable: "contentfulOrgId")
                             ]) {
-                                sh "npm run upload-ci -- --organization-id ${contentful-org-id} --definition-id ${contentfulSLCAppId} --token ${contentfulPat}"
+                                sh "npm run upload-ci -- --organization-id ${contentfulOrgId} --definition-id ${contentfulSLCAppId} --token ${contentfulPat}"
                             }
                             
                         }
