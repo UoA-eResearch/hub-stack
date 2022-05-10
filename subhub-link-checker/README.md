@@ -21,7 +21,7 @@ ResearchHub has three Contentful environments - `dev`, `test`, and `prod`, and `
 This assumes the Contentful environments are set up with the required app definitions. See the First time deployment section if you need to redo those steps.
 
 # Manual deployment
-If you would like to manually deploy the App (for example, if you would like to preview changes in the dev Contentful environment without ), follow these instructions.
+If you would like to manually deploy the App (for example, if you would like to preview changes in the dev Contentful environment without having to commit and push into your dev branch), follow these instructions.
 
 1. Run `npm run build` to build a new bundle.
 2. Run `npm run upload`.
