@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
       catchError(err => {
         const status: number = err['status'] ? err['status'] : 500;
         this.router.navigate(['error', status]);
-        return throwError(err);
+        return throwError(() => err);
       })
     ) as Observable<Homepage>;
   }

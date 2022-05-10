@@ -28,6 +28,7 @@ import { AppAuthConfigService } from './services/app-auth-config.service';
 import { AppStorageService } from './services/app-storage.service';
 import { CerGraphqlService } from './services/cer-graphql.service';
 import { PageTitleService } from './services/page-title.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
@@ -49,7 +50,13 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     HttpClientModule,
     FlexLayoutModule,
     ErrorPagesModule,
-    AppLayoutModule
+    AppLayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     CerGraphqlService,
@@ -86,7 +93,9 @@ export class AppModule {
     // Because some authentication errors from cer-graphql
     // are returned with a 400 status code, we want error-pages to ignore those
     // errors so they can be handled by our onError handler.
-    this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500]);
+    // We also bypass 504 (gateway timeout) errors so that the service worker can attempt
+    // to serve cached files if there is a problem with the network connection.
+    this._bypass.bypassError(environment.cerGraphQLUrl, [400, 500, 504]);
 
     // The error link handler. Redirects to SSO login on UNAUTHENTICATED errors
     const error = onError(({ response, networkError, graphQLErrors }) => {
@@ -129,12 +138,16 @@ export class AppModule {
         if (graphQLErrors[0]?.extensions?.code === "INTERNAL_SERVER_ERROR" &&
             !(
               graphQLErrors[0].message.includes('Did not fetch typename for object, unable to resolve interface.') ||
-              graphQLErrors[0].message.includes('Cannot return null for non-nullable field Asset.sys.')
+              graphQLErrors[0].message.includes('Cannot return null for non-nullable field Asset.sys.') ||
+              graphQLErrors[0].message.includes('Query execution error. Link from entry') 
             )
         ) {
           // Something bad happened. Return the response with errors, unless it is a typename or non-nullable field error.
           // Typename and non-nullable field errors can be caused by references/links to draft entries, and in this case we still want
-          // to load the page with partial data (see below).
+          // to load the page with partial data (see below). 
+          // We also ignore here query execution errors where there is a link from an entry to a draft asset, and try to load the page with partial data.
+          // The full Query execution error message would be something like this: 'Query execution error. Link from entry '3u2YQXWLCEjxZNDl3syxhp' to asset 
+          // '7ElfS57bxNb08YV9AN31ab' on field 'banner' within type 'Article' cannot be resolved'
           return;
         }
       }

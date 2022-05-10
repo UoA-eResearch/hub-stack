@@ -1,6 +1,6 @@
 {
   "name": "cer-graphql",
-  "version": "2.5.1",
+  "version": "2.6.1",
   "description": "A GraphQL server used to proxy and authorise requests to external data sources.",
   "main": "build/index.js",
   "scripts": {
@@ -35,7 +35,7 @@
     "@types/jest": "^27.4.0",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/jwk-to-pem": "^2.0.0",
-    "aws-sdk": "^2.1058.0",
+    "aws-sdk": "^2.1095.0",
     "aws4": "^1.10.1",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15",

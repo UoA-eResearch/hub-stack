@@ -1,0 +1,201 @@
+{
+  "data": {
+    "fundingCollection": {
+      "items": [
+        {
+          "__typename": "Funding",
+          "sys": { "id": "5gifKvyf67yDKycYgFz8Ho", "__typename": "Sys" },
+          "title": "Funding Title",
+          "slug": "/internal-funding/hikina-kia-tutuki",
+          "ssoProtected": true,
+          "searchable": true,
+          "banner": {
+            "url": "https://images.ctfassets.net/vbuxn5csp0ik/46kJ8UIPvrNlXp3MRIa1RD/bbb852e7f62d1fc8bd4e8666bfbcc598/photo-1531804055935-76f44d7c3621.jpg",
+            "__typename": "Asset"
+          },
+          "summary": "Funding summary. ",
+          "purpose": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "content": [
+                    {
+                      "data": {},
+                      "marks": [],
+                      "value": "Purpose text.",
+                      "nodeType": "text"
+                    }
+                  ],
+                  "nodeType": "paragraph"
+                }
+              ],
+              "nodeType": "document"
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "FundingPurposeEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "FundingPurposeAssets"
+              },
+              "__typename": "FundingPurposeLinks"
+            },
+            "__typename": "FundingPurpose"
+          },
+          "type": "Fund",
+          "funding": "Funding text.",
+          "eligibility": "Eligibility text.",
+          "eligibleExpenses": null,
+          "deadlines": {
+            "json": {
+              "nodeType": "document",
+              "data": {},
+              "content": [
+                {
+                  "nodeType": "paragraph",
+                  "content": [
+                    {
+                      "nodeType": "text",
+                      "value": "Deadlines text.",
+                      "marks": [{ "type": "bold" }],
+                      "data": {}
+                    }
+                  ],
+                  "data": {}
+                }
+              ]
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "FundingDeadlinesEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "FundingDeadlinesAssets"
+              },
+              "__typename": "FundingDeadlinesLinks"
+            },
+            "__typename": "FundingDeadlines"
+          },
+          "bodyText": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "content": [
+                    {
+                      "data": {},
+                      "marks": [{ "type": "bold" }, { "type": "italic" }],
+                      "value": "Body text.",
+                      "nodeType": "text"
+                    }
+                  ],
+                  "nodeType": "paragraph"
+                }
+              ],
+              "nodeType": "document"
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "FundingBodyTextEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "FundingBodyTextAssets"
+              },
+              "__typename": "FundingBodyTextLinks"
+            },
+            "__typename": "FundingBodyText"
+          },
+          "applicationDocumentsCollection": {
+            "items": [
+              {
+                "sys": { "id": "1VxNsfYuD7KbKBp9MqvHmr", "__typename": "Sys" },
+                "title": "Document Title",
+                "description": "",
+                "url": "https://documenturl.docx",
+                "size": 67580,
+                "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                "__typename": "Asset"
+              }
+            ],
+            "__typename": "AssetCollection"
+          },
+          "relatedContactsCollection": {
+            "items": [
+              {
+                "__typename": "Person",
+                "name": "Kylo Ren",
+                "role": "Bad Guy",
+                "email": "kylo.ren@auckland.ac.nz",
+                "phone": "+64-27-1234567",
+                "link": "https://directory.auckland.ac.nz/people/profile/kylo-ren"
+              }
+            ],
+            "__typename": "SubHubRelatedContactsCollection"
+          },
+          "relatedOrgsCollection": {
+            "items": [
+              {
+                "__typename": "OrgUnit",
+                "name": "Org Name",
+                "maoriName": "Maori Name",
+                "description": "Description.",
+                "link": "https://orguniturl.html"
+              }
+            ],
+            "__typename": "FundingRelatedOrgsCollection"
+          },
+          "relatedItemsCollection": {
+            "items": [
+              {
+                "__typename": "SubHub",
+                "slug": "internal-funding",
+                "title": "Title",
+                "summary": "Summary text.",
+                "ssoProtected": true,
+                "searchable": true,
+                "banner": {
+                  "url": "https://images.ctfassets.net/vbuxn5csp0ik/7vTRm35qDbpOoEOnqIuLmx/c4c16bf21906b8b22a43f53e63fa07ee/sandy-millar-house_fund-unsplash.jpg",
+                  "__typename": "Asset"
+                }
+              }
+            ],
+            "__typename": "FundingRelatedItemsCollection"
+          },
+          "relatedDocsCollection": {
+            "items": [
+              {
+                "__typename": "OfficialDocuments",
+                "title": "Title",
+                "summary": "Summary.",
+                "document": null,
+                "url": "https://documenturl.html"
+              }
+            ],
+            "__typename": "FundingRelatedDocsCollection"
+          },
+          "callToAction": "https://www.google.co.nz/",
+          "callToActionLabel": "Test"
+        }
+      ],
+      "__typename": "FundingCollection"
+    }
+  }
+}

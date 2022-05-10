@@ -1,13 +1,22 @@
 <footer>
   <!-- Footer Content -->
-  <div class="footer-content" fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="center center" ngClass.lt-md="site-padding-mobile">
-
-    <div style="width: 100%" fxLayoutGap="5%" fxLayout="row" fxLayout.lt-md="column">
-
+  <div
+    class="footer-content"
+    fxLayout="column"
+    fxLayoutGap="8px"
+    fxLayoutAlign="center center"
+    ngClass.lt-md="site-padding-mobile"
+  >
+    <div
+      style="width: 100%"
+      fxLayoutGap="5%"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+    >
       <!-- UoA Footer Logo -->
       <div class="logo-img-container">
-        <a [href]="aucklandUniUrl" target="_blank" >
-          <img class="logo-img" src="assets/imgs/uoa-logo.svg" alt="uoa-logo">
+        <a [href]="aucklandUniUrl" target="_blank">
+          <img class="logo-img" src="assets/imgs/uoa-logo.svg" alt="uoa-logo" />
         </a>
       </div>
 
@@ -15,13 +24,22 @@
       <div fxFlex fxHide.lt-md></div>
 
       <!-- Footer Links -->
-      <div class="footer-links" fxLayout="row wrap" fxLayoutGap="2vw" fxLayoutAlign="space-between">
-        <ul class='footer-content'>
+      <div
+        class="footer-links"
+        fxLayout="row wrap"
+        fxLayoutGap="2vw"
+        fxLayoutAlign="space-between"
+      >
+        <ul class="footer-content">
           <li>
-            <a [href]="aucklandUniUrl" target="_blank">The University of Auckland</a>
+            <a [href]="aucklandUniUrl" target="_blank"
+              >The University of Auckland</a
+            >
           </li>
           <li>
-            <a [href]="aboutUrl" aria-label="About the ResearchHub">About</a>
+            <a [routerLink]="aboutUrl" aria-label="About the ResearchHub"
+              >About</a
+            >
           </li>
           <li>
             <a [href]="disclaimerUrl" target="_blank">Disclaimer</a>
@@ -33,7 +51,10 @@
             <a [href]="accessibilityUrl" target="_blank">Accessibility</a>
           </li>
           <li>
-            <a [href]="feedbackUrl">Feedback</a>
+            <a [href]="feedbackUrl | async" target="_blank">Feedback</a>
+          </li>
+          <li>
+            <a [routerLink]="['/', 'graph']">Hub Graph </a>
           </li>
           <li>
             <span>Copyright © {{ getYear() }}</span>
