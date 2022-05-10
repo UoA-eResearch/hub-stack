@@ -151,7 +151,7 @@ pipeline {
                         echo 'Building subhub-link-checker project'
                         dir("subhub-link-checker") {
                             echo 'Installing subhub-link-checker dependencies...'
-                            sh "npm install"
+                            sh "npm ci"
                             sh "npm run build"
                         }
                     }
