@@ -64,10 +64,10 @@ These instructions are for deploying to a fresh Contentful instance.
 
     Open a SubHub to verify the Internal Pages field is still editable. If it is, then the App setup is complete!
 
-4. Create a [Contentful personal access token](https://www.contentful.com/developers/docs/references/authentication/#getting-a-personal-access-token), preferably using a service account. Add 5 secrets to Jenkins credentials store, so the Jenkins CI process can refer to the values:
-* Personal Access Token: contentful-pat
-*  The App definition ID for each app definition: contentful-link-checker-app-id-dev, contentful-link-checker-app-id-test, and contentful-link-checker-app-id-prod.
-* Organisation ID: contentful-org-id
+4. Create a [Contentful personal access token](https://www.contentful.com/developers/docs/references/authentication/#getting-a-personal-access-token), preferably using a service account. Add these five secrets to Jenkins credentials store, so the Jenkins CI process can refer to the values. Read `Jenkinsfile` to see how these values are used. 
+    * Personal Access Token: `contentful-pat`
+    *  The App definition ID for each app definition: `contentful-link-checker-app-id-dev`, `contentful-link-checker-app-id-test`, and `contentful-link-checker-app-id-prod`.
+    * Organisation ID: `contentful-org-id`
 
 ## Development
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
