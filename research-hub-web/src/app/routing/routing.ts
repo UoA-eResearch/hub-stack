@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from '@app/components/layout/layout.component';
-import { LoginSuccessGuard } from '@uoa/auth';
+import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 
 
 export const appRoutes: Routes = [
@@ -21,6 +21,11 @@ export const appRoutes: Routes = [
     canActivate: [LoginSuccessGuard],
     component: LayoutComponent,
     children: [
+      {
+        path: 'graph',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('@components/content-graph/content-graph.module').then((m) => m.ContentGraphModule)
+      },
       {
         path: 'error/:errorCode',
         loadChildren: () => import('@components/error-routing/error-routing.module').then((m) => m.ErrorRoutingModule),
@@ -86,6 +91,6 @@ export const appRoutes: Routes = [
    */
   {
     path: '**',
-    loadChildren: () =>  import("@components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
+    loadChildren: () => import("@components/subhub-routes-loader/subhub-routes-loader.module").then(m => m.SubHubRoutesLoaderModule)
   }
 ];
