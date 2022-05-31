@@ -14,11 +14,15 @@ Part of the Hub Expansion project. This is required due to SubHub routing logic 
 There are three instances of the Contentful App - one for dev, test and prod. [Read more...](https://www.contentful.com/developers/docs/extensibility/app-framework/)
 
 ## Seeing and deploying your changes
+Build and deployment for the SubHub Link Checker app are part of the Jenkins CI process. 
+
+ResearchHub has three Contentful environments - `dev`, `test`, and `prod`, and `prod` is the one content authors see. An [app definition](https://www.contentful.com/developers/docs/extensibility/app-framework/app-definition/) is set up for in three different environments, which means different versions of the link checker app can run in each environment. Deploy changes to `dev` for previewing your changes and manual testing - Contentful Apps can't be run locally. Deployment to `test` and `prod` should only be done as part of [the official release process](https://wiki.auckland.ac.nz/display/APPLCTN/Release+to+prod) and content authors need to be notified before deploying updates.
+
 This assumes the Contentful environments are set up with the required app definitions. See the First time deployment section if you need to redo those steps.
 
-ResearchHub has three Contentful environments - `dev`, `test`, and `prod`, and `prod` is the one content authors see. Use `dev` for previewing your changes and manual testing - Contentful Apps can't be run locally. Deployment to `test` and `prod` should only be done as part of [the official release process](https://wiki.auckland.ac.nz/display/APPLCTN/Release+to+prod) and content authors need to be notified before deploying updates.
+## Manual deployment
+If you would like to manually deploy the App (for example, if you would like to preview changes in the dev Contentful environment without having to commit and push into your dev branch), follow these instructions.
 
-1. If you are deploying to `test` and `prod`, first check-in your changes to Git and merge them into `master`.
 1. Run `npm run build` to build a new bundle.
 2. Run `npm run upload`.
     1. For the bundle comment, put in the hash of Git commit you built the bundle from if applicable.
@@ -28,6 +32,7 @@ ResearchHub has three Contentful environments - `dev`, `test`, and `prod`, and `
 3. Go to Contentful to see your changes.
 
 ## First time deployment
+These instructions are for deploying to a fresh Contentful instance.
 
 1. Create three Apps on Contentful. In the `subhub-link-checker` folder, run the command:
 
@@ -58,6 +63,11 @@ ResearchHub has three Contentful environments - `dev`, `test`, and `prod`, and `
     Click on Content model tab, then the model for SubHubs (currently titled `Page > SubHub`). Find and click on the field for internal pages (currently titled `Internal Pages`). In the Appearance tab, select the SubHub Link Checker option and Save.
 
     Open a SubHub to verify the Internal Pages field is still editable. If it is, then the App setup is complete!
+
+4. Create a [Contentful personal access token](https://www.contentful.com/developers/docs/references/authentication/#getting-a-personal-access-token), preferably using a service account. Add these five secrets to Jenkins credentials store, so the Jenkins CI process can refer to the values. Read `Jenkinsfile` to see how these values are used. 
+    * Personal Access Token: `contentful-pat`
+    *  The App definition ID for each app definition: `contentful-link-checker-app-id-dev`, `contentful-link-checker-app-id-test`, and `contentful-link-checker-app-id-prod`.
+    * Organisation ID: `contentful-org-id`
 
 ## Development
 This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
