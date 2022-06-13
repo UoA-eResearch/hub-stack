@@ -56,7 +56,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       }),
       switchMap((slug) => slug
         ? this.loadEquipment(slug)
-        : throwError(new Error('No slug included in URL. Redirect to Collection page.'))
+        : throwError(() => new Error('No slug included in URL. Redirect to Collection page.'))
       )
     ).subscribe({
       next: (equipment: Equipment) => this.equipment = equipment,

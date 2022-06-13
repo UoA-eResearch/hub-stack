@@ -26,12 +26,13 @@
             ],
             "scripts": [
               "src/tagManager.js",
-              "node_modules/marked/lib/marked.js"
+              "node_modules/marked/marked.min.js"
             ],
             "allowedCommonJsDependencies": [
               "graphql-tag",
               "crypto-js",
-              "zen-observable"
+              "zen-observable",
+              "@contentful/rich-text-types"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

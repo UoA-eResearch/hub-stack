@@ -28,7 +28,7 @@ hr {
 /**
  * List
  */
-#bodyMediaList {
+.body-media-list {
   ul,
   ol {
     list-style: none;
@@ -148,7 +148,8 @@ span {
 * - do not apply to link cards or funding application docs
 * - show the mail icon for email links within rich text
 */
-#main-content a:not([href^="/"]):not([href*="//research-hub"]):not([href*="@"]):not([href^="tel"]):not(.standard-button):not(app-blocks-embedded-asset *):not(.link-card *):not(.application-doc *):not(.banner-container-home *):after {
+#main-content a:not([href^="/"]):not([href*="//research-hub"]):not([href*="@"]):not([href^="tel"]):not(.standard-button):not(app-blocks-embedded-asset *):not(.link-card *):not(.application-doc *):not(.banner-container-home *):not(app-graph-layout *):after
+{
   font-family: "Material Icons";
   content: " \e895";
   font-size: 0.8em;
@@ -213,7 +214,6 @@ mat-option.search-autocomplete-options .mat-option-text {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-
 
 /**
  * Browser Settings
@@ -393,7 +393,19 @@ h2.maori-proverb {
 // Pre-launch style tweeks
 
 .easter-egg {
-  background: linear-gradient(146deg, #ff0000, #ff9900, #ccff00, #33ff00, #00ff66, #00ffff, #0066ff, #3300ff, #cc00ff, #ff0099);
+  background: linear-gradient(
+    146deg,
+    #ff0000,
+    #ff9900,
+    #ccff00,
+    #33ff00,
+    #00ff66,
+    #00ffff,
+    #0066ff,
+    #3300ff,
+    #cc00ff,
+    #ff0099
+  );
   background-size: 400% 100%;
   color: #ffffff;
   animation: pulse 10s infinite;
@@ -413,7 +425,7 @@ h2.maori-proverb {
 /**
  * Custom Button Styles
  */
- .standard-button-banner {
+.standard-button-banner {
   @extend .standard-button;
   color: white !important;
   border: 3px solid white !important;

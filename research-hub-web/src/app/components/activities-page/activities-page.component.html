@@ -32,7 +32,7 @@
             
             <!-- Panel Image -->
             <div fxHide.lt-md class="research-category-img">
-              <picture>
+              <picture *ngIf="item.image?.url">
                 <source
                   srcset="{{ item.image?.url }}?w=1000&fm=webp"
                   type="image/webp"

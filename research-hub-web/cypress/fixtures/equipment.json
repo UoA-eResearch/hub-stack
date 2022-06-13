@@ -1,0 +1,115 @@
+{
+  "data": {
+    "equipmentCollection": {
+      "items": [
+        {
+          "__typename": "Equipment",
+          "sys": { "id": "3u1gIrkPyOnDE22sjWz9HP", "__typename": "Sys" },
+          "title": "Equipment Title",
+          "slug": "operetta-high-content-imaging-system",
+          "ssoProtected": false,
+          "searchable": true,
+          "banner": null,
+          "summary": "Equipment Summary",
+          "callToAction": "https://www.google.co.nz/",
+          "callToActionLabel": "Test",
+          "bodyText": {
+            "json": {
+              "data": {},
+              "content": [
+                {
+                  "data": {},
+                  "content": [
+                    {
+                      "data": {},
+                      "marks": [],
+                      "value": "Body text.",
+                      "nodeType": "text"
+                    }
+                  ],
+                  "nodeType": "paragraph"
+                }
+              ],
+              "nodeType": "document"
+            },
+            "links": {
+              "entries": {
+                "block": [],
+                "inline": [],
+                "hyperlink": [],
+                "__typename": "EquipmentBodyTextEntries"
+              },
+              "assets": {
+                "block": [],
+                "hyperlink": [],
+                "__typename": "EquipmentBodyTextAssets"
+              },
+              "__typename": "EquipmentBodyTextLinks"
+            },
+            "__typename": "EquipmentBodyText"
+          },
+          "manufacturer": "manufacturer",
+          "model": "model",
+          "yearOfManufacture": "2022",
+          "audience": "audience",
+          "availability": "availability",
+          "cost": "cost",
+          "access": "access",
+          "relatedItemsCollection": {
+            "items": [
+              {
+                "__typename": "Article",
+                "slug": "share",
+                "title": "Title",
+                "summary": "Summary.",
+                "ssoProtected": false,
+                "searchable": true,
+                "banner": null
+              }
+            ],
+            "__typename": "EquipmentRelatedItemsCollection"
+          },
+          "relatedContactsCollection": {
+            "items": [
+              {
+                "__typename": "Person",
+                "name": "Kylo Ren",
+                "role": "Bad Guy",
+                "email": "kylo.ren@auckland.ac.nz",
+                "phone": "+64-27-1234567",
+                "link": "https://directory.auckland.ac.nz/people/profile/kylo-ren"
+              }
+            ],
+            "__typename": "EquipmentRelatedContactsCollection"
+          },
+          "relatedOrgsCollection": {
+            "items": [
+              {
+                "__typename": "OrgUnit",
+                "name": "Org name",
+                "maoriName": null,
+                "description": "Org description.",
+                "link": "https://orguniturl.html"
+              }
+            ],
+            "__typename": "EquipmentRelatedOrgsCollection"
+          },
+          "relatedDocsCollection": {
+            "items": [
+              {
+                "__typename": "OfficialDocuments",
+                "title": "Title",
+                "summary": "Summary.",
+                "document": null,
+                "url": "https://documenturl.html"
+              }
+            ],
+            "__typename": "EquipmentRelatedDocsCollection"
+          },
+          "location": null
+        }
+      ],
+      "__typename": "EquipmentCollection"
+    }
+  }
+}
