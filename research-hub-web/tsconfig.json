@@ -26,9 +26,6 @@
       "@services/*": [
         "app/services/*"
       ],
-      "@resolvers/*": [
-        "app/resolvers/*"
-      ],
       "@pipes/*": [
         "app/pipes/*"
       ],

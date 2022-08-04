@@ -9,8 +9,7 @@
   /* IE9 Compat Modes */
   src: url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff2")
       format("woff2"),
-    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff")
-      format("woff");
+    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff") format("woff");
   /* Pretty Modern Browsers */
   font-weight: 500;
 }
@@ -34,8 +33,7 @@
   /* IE9 Compat Modes */
   src: url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff2")
       format("woff2"),
-    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff")
-      format("woff");
+    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff") format("woff");
   /* Pretty Modern Browsers */
   font-weight: 600;
 }
@@ -59,8 +57,7 @@
   /* IE9 Compat Modes */
   src: url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff2")
       format("woff2"),
-    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff")
-      format("woff");
+    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff") format("woff");
   /* Pretty Modern Browsers */
   font-weight: 700;
 }
@@ -84,8 +81,7 @@
   /* IE9 Compat Modes */
   src: url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff2")
       format("woff2"),
-    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff")
-      format("woff");
+    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Bold.woff") format("woff");
   /* Pretty Modern Browsers */
   font-weight: bold;
 }
@@ -109,8 +105,7 @@
   /* IE9 Compat Modes */
   src: url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Book.woff2")
       format("woff2"),
-    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Book.woff")
-      format("woff");
+    url("https://cdn.auckland.ac.nz/designs/uoa-digital/clientlibs/css/base/fonts/NationalWeb-Book.woff") format("woff");
   /* Pretty Modern Browsers */
 }
 
@@ -140,7 +135,7 @@ p,
 ion-item,
 ion-title {
   font-family: "National" !important;
-  // white-space: normal;
+  white-space: normal;
 }
 
 .bold {

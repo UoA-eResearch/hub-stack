@@ -41,10 +41,6 @@ div.main-content {
   }
 }
 
-#main-content {
-  min-height: calc(100vh - 64px);
-}
-
 // the order of these 2 media queries matters!
 @media (max-width: $navbar-second-row-breakpoint) {
   div.main-content {
@@ -55,10 +51,6 @@ div.main-content {
   app-notification {
     top: 100px;
   }
-
-  #main-content {
-    min-height: calc(100vh - 100px);
-  }
 }
 @media (max-width: 960px) {
   div.main-content {
@@ -68,9 +60,5 @@ div.main-content {
 
   app-notification {
     top: 92px;
-  }
-
-  #main-content {
-    min-height: calc(100vh - 92px);
   }
 }

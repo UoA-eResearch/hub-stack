@@ -9,8 +9,7 @@ environment.auth.logout_uri = "https://research-hub-dev-preview.connect.test.ama
 environment.privateUrlKeyWords = {
   get whoNeedBearerToken() {
     return [
-      { url: environment.cerGraphQLUrl, optional: true },
-      { url: environment.graphUrl, optional: false }
+      { url: environment.cerGraphQLUrl, optional: true }
     ]
   },
   get whoNeedIdToken() {

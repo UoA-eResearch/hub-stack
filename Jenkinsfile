@@ -9,7 +9,6 @@ pipeline {
         booleanParam(name: "FORCE_REDEPLOY_WEB", defaultValue: false, description: 'Force redeploy the web frontend even if there are no code changes.' )
         booleanParam(name: "FORCE_REDEPLOY_CG", defaultValue: false, description: 'Force redeploy the cer-graphql API even if there are no code changes.')
         booleanParam(name: "FORCE_REDEPLOY_SP", defaultValue: false, description: 'Force redeploy the search-proxy Lambda  even if there are no code changes.')
-        booleanParam(name: "FORCE_REDEPLOY_SLC", defaultValue: false, description: 'Force redeploy the subhub-link-checker Contentful App even if there are no code changes.')
     }
 
     agent {
@@ -109,7 +108,7 @@ pipeline {
             }
         }
 
-        stage('Build cer-graphql, subhub-link-checker and search-proxy projects') {
+        stage('Build cer-graphql and search-proxy projects') {
             stages {
                 stage('Build search-proxy') {
                     when {
@@ -139,23 +138,6 @@ pipeline {
                             sh "docker build . -t cer-graphql:latest"
                         }
                     }
-                }
-                stage('Build subhub-link-checker') {
-                    when {
-                        anyOf {
-                            changeset "**/subhub-link-checker/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SLC
-                        }
-                    }
-                    steps {
-                        echo 'Building subhub-link-checker project'
-                        dir("subhub-link-checker") {
-                            echo 'Installing subhub-link-checker dependencies...'
-                            sh "npm ci"
-                            sh "npm run build"
-                        }
-                    }
-                    
                 }
             }
         }
@@ -202,7 +184,7 @@ pipeline {
             }
         }
 
-        stage('Deploy cer-graphql, search-proxy and subhub-link-checker projects') {
+        stage('Deploy cer-graphql and search-proxy projects') {
             parallel {
                 stage('Deploy cer-graphql') {
                     when {
@@ -242,27 +224,6 @@ pipeline {
                             }
                         }
                         echo "Deploy to ${BRANCH_NAME} complete"
-                    }
-                }
-                stage('Deploy subhub-link-checker') {
-                    when {
-                        anyOf {
-                            changeset "**/subhub-link-checker/**/*.*"
-                            equals expected: true, actual: params.FORCE_REDEPLOY_SLC
-                        }
-                    }
-                    steps {
-                        dir("subhub-link-checker") {
-                            // Grab relevant credentials
-                            withCredentials([
-                                string(credentialsId: "contentful-pat", variable: "contentfulPat"),
-                                string(credentialsId: "contentful-link-checker-app-id-${BRANCH_NAME}", variable: "contentfulSLCAppId"),
-                                string(credentialsId: "contentful-org-id", variable: "contentfulOrgId")
-                            ]) {
-                                sh "npm run upload-ci -- --organization-id ${contentfulOrgId} --definition-id ${contentfulSLCAppId} --token ${contentfulPat}"
-                            }
-                            
-                        }
                     }
                 }
             }
