@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@contentful/app-sdk": "^4.2.0",
-    "@contentful/f36-components": "^4.0.17",
+    "@contentful/f36-components": "^4.15.1",
     "@contentful/f36-tokens": "^4.0.0",
     "@contentful/field-editor-reference": "^4.1.0",
     "@contentful/field-editor-single-line": "^1.1.0",
