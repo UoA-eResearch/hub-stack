@@ -10,10 +10,10 @@ export class CollectionListComponent implements OnChanges {
 
   @Input() collection;
 
-  constructor() {  }
+  constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    try { this.collection = changes['collection'].currentValue; this.loading = false } catch {}
+    try { this.collection = changes['collection'].currentValue; this.loading = false } catch { }
   }
 
   // Scrolling to top of page on page change
