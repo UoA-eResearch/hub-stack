@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CapabilityListComponent } from './capability-list/capability-list.component';
+import { CapabilityComponent } from './capability/capability.component';
 
 const routes: Routes = [ // TODO add components
-  { path: '' },
-  { path: 'list' },
-  { path: ':slug' }
+  { path: '', component: CapabilityComponent },
+  { path: 'list', component: CapabilityListComponent },
+  { path: ':slug', component: CapabilityComponent }
 ];
 
 @NgModule({
