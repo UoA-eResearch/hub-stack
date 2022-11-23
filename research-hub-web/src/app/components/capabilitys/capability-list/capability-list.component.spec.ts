@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PageTitleService } from '@services/page-title.service';
+import { MockProvider } from 'ng-mocks';
 
 import { CapabilityListComponent } from './capability-list.component';
 
@@ -8,9 +10,12 @@ describe('CapabilityListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CapabilityListComponent ]
+      declarations: [CapabilityListComponent],
+      providers: [
+        MockProvider(PageTitleService)
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

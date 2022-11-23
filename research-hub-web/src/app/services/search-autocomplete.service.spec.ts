@@ -8,13 +8,14 @@ describe('SearchAutocompleteService', () => {
 
   const mockPageTitles$: Observable<PageTitles> = of({
     articleTitles: ['an article'],
+    capabilityTitles: ['a capability'],
     caseStudyTitles: ['a caseStudy'],
     equipmentTitles: ['an equipment'],
     eventTitles: ['an event'],
     fundingTitles: ['a funding'],
     serviceTitles: ['a service'],
     softwareTitles: ['a software'],
-    subHubTitles: ['a subHub']
+    subHubTitles: ['a subHub'],
   });
 
   beforeEach(() => {
