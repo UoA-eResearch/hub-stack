@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Article, CaseStudy, Equipment, Event, Funding, Service, Software, SubHub } from '@app/graphql/schema';
+import { Article, Capability, CaseStudy, Equipment, Event, Funding, Service, Software, SubHub } from '@app/graphql/schema';
 
 export type PossibleContentItems
   = Article
@@ -10,6 +10,7 @@ export type PossibleContentItems
   | Funding
   | Service
   | Software
+  | Capability
 
 @Component({
   selector: 'app-standard-card',
