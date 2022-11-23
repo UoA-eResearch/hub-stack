@@ -4,6 +4,11 @@ query AllPageTitles {
       title
     }
   }
+  capabilityCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
   caseStudyCollection (limit: 1000, where: {searchable: true}) {
     items {
       title
