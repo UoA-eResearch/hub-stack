@@ -1,1 +1,204 @@
-<p>capability works!</p>
+<div id="capability-container" *ngIf="capability">
+  <div
+    class="banner-container"
+    [ngClass]="{ 'standard-banner': bannerImageUrl }"
+    [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
+    [ngStyle]="{
+      'background-image': bannerImageUrl ? 'url(' + bannerImageUrl + ')' : ''
+    }"
+  >
+    <div class="banner-content">
+      <!-- Title -->
+      <h1
+        role="heading"
+        aria-level="1"
+        class="content-title"
+        ngClass.lt-md="content-title-mobile"
+        [style]="capability.banner ? bannerTextStyling : ''"
+      >
+        {{ capability.title }}
+      </h1>
+
+      <!-- Maori Proverb -->
+      <h2
+        aria-level="2"
+        *ngIf="capability.maoriProverb"
+        class="maori-proverb"
+        [style]="capability.banner ? bannerTextStyling : ''"
+      >
+        <hr />
+        {{ capability.maoriProverb }}
+        <hr />
+      </h2>
+
+      <!-- Summary -->
+      <p
+        class="content-summary"
+        ngClass.sm="content-summary-sm"
+        ngClass.xs="content-summary-xs"
+        [style]="capability.banner ? bannerTextStyling : ''"
+      >
+        <small>{{ capability.summary }}</small>
+      </p>
+
+      <!-- Call To Action -->
+      <div class="section" *ngIf="capability.callToAction">
+        <div *ngIf="capability.banner">
+          <a
+            href="{{ capability.callToAction }}"
+            target="_blank"
+            mat-flat-button
+            class="standard-button-banner"
+          >
+            <span *ngIf="capability.callToActionLabel">{{
+              capability.callToActionLabel
+            }}</span>
+            <span *ngIf="!capability.callToActionLabel">View Capability</span>
+          </a>
+        </div>
+        <div *ngIf="!capability.banner">
+          <a
+            href="{{ capability.callToAction }}"
+            target="_blank"
+            mat-flat-button
+            class="standard-button"
+          >
+            <span *ngIf="capability.callToActionLabel">{{
+              capability.callToActionLabel
+            }}</span>
+            <span *ngIf="!capability.callToActionLabel">View Capability</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
+    <app-breadcrumbs [title]="capability.title!"></app-breadcrumbs>
+
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+      fxLayoutGap="3vw"
+      fxLayout.lt-lg="column"
+      fxLayoutGap.lt-lg="0"
+    >
+      <!-- Capability Body -->
+      <ngx-contentful-rich-text
+        fxFlexOrder="2"
+        fxFlexOrder.lt-lg="1"
+        fxFlex="1 1 50%"
+        fxFlex.lt-lg="1 1 auto"
+        id="capability-body"
+        class="body-media-list"
+        style="word-break: break-word"
+        [ngClass.lt-lg]="'single-column-max-width'"
+        [document]="capability.bodyText?.json"
+        [nodeRenderers]="nodeRenderers"
+        [markRenderers]="markRenderers"
+      ></ngx-contentful-rich-text>
+
+      <!-- Extra Links -->
+      <div
+        *ngIf="
+          relatedDocs.length > 0 ||
+          relatedContacts.length > 0 ||
+          relatedOrgs.length > 0
+          ; else fillerLeft"
+        fxFlex.gt-lg="0 0 auto"
+        fxLayout="column"
+        fxFlexOrder="1"
+        fxFlexOrder.lt-lg="2"
+      >
+        <h3 *ngIf="relatedContacts.length > 0">
+          Contacts
+          <hr />
+        </h3>
+        <div
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-contact-card
+            *ngFor="let person of relatedContacts"
+            [person]="person"
+          ></app-contact-card>
+        </div>
+
+        <h3 *ngIf="relatedOrgs.length > 0">
+          Organisations
+          <hr />
+        </h3>
+        <div
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-org-unit-card
+            *ngFor="let orgUnit of relatedOrgs"
+            [orgUnit]="orgUnit"
+          ></app-org-unit-card>
+        </div>
+
+        <h3 *ngIf="relatedDocs.length > 0">
+          Support Materials
+          <hr />
+        </h3>
+        <div
+          id="documents"
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-document-card
+            *ngFor="let document of relatedDocs"
+            [document]="document"
+          ></app-document-card>
+        </div>
+      </div>
+
+      <!-- Related items -->
+      <div
+        *ngIf="relatedItems.length > 0; else fillerRight"
+        fxFlex.gt-lg="0 0 auto"
+        fxLayout="column"
+        fxFlexOrder="3"
+      >
+        <h3>
+          Explore Related
+          <hr />
+        </h3>
+        <div
+          id="you-might-be-interested-in"
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-standard-card
+            *ngFor="let content of relatedItems"
+            [contentItem]="content"
+          ></app-standard-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #fillerLeft>
+  <div fxFlex="0 0 350px" fxFlexOrder="1" fxHide.lt-lg></div>
+</ng-template>
+<ng-template #fillerRight>
+  <div fxFlex="0 0 350px" fxFlexOrder="3" fxHide.lt-lg></div>
+</ng-template>

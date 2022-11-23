@@ -19,6 +19,7 @@ import { CapabilityListComponent } from './capability-list/capability-list.compo
     CapabilityRoutingModule,
     SharedModule,
     NgxContentfulRichTextModule,
-    CardsModule]
+    CardsModule
+  ]
 })
 export class CapabilitysModule { }
