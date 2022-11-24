@@ -1,8 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SharedModule } from '@app/components/shared/app.shared.module';
 import { CollectionListComponent } from '@app/components/shared/collection-list/collection-list.component';
 import { CapabilityCollection } from '@app/graphql/schema';
 import { PageTitleService } from '@services/page-title.service';
-import { MockComponent, MockProvider } from 'ng-mocks';
+import { ApolloTestingModule } from 'apollo-angular/testing';
+import { MockComponent, MockModule, MockProvider } from 'ng-mocks';
 import { Observable, of } from 'rxjs';
 
 import { CapabilityListComponent } from './capability-list.component';
@@ -38,6 +41,11 @@ describe('CapabilityListComponent', () => {
       declarations: [
         CapabilityListComponent,
         MockComponent(CollectionListComponent)
+      ],
+      imports: [
+        ApolloTestingModule,
+        MockModule(SharedModule),
+        RouterTestingModule.withRoutes([])
       ],
       providers: [
         MockProvider(PageTitleService)
