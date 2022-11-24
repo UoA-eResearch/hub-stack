@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CollectionListComponent } from '@app/components/shared/collection-list/collection-list.component';
 import { CapabilityCollection } from '@app/graphql/schema';
 import { PageTitleService } from '@services/page-title.service';
-import { MockProvider } from 'ng-mocks';
+import { MockComponent, MockProvider } from 'ng-mocks';
 import { Observable, of } from 'rxjs';
 
 import { CapabilityListComponent } from './capability-list.component';
@@ -34,7 +35,10 @@ describe('CapabilityListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CapabilityListComponent],
+      declarations: [
+        CapabilityListComponent,
+        MockComponent(CollectionListComponent)
+      ],
       providers: [
         MockProvider(PageTitleService)
       ]
