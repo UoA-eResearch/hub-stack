@@ -6,10 +6,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@app/app.material.module';
 import { ArticleListComponent } from '@app/components/articles/article-list/article-list.component';
 import { SharedModule } from '@app/components/shared/app.shared.module';
+import { Capability } from '@app/graphql/schema';
 import { PageTitleService } from '@services/page-title.service';
 import { ApolloTestingController, ApolloTestingModule } from 'apollo-angular/testing';
 import { MockModule, MockProvider } from 'ng-mocks';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { CapabilityComponent } from './capability.component';
 
@@ -19,6 +20,19 @@ describe('CapabilityComponent', () => {
   let component: CapabilityComponent;
   let fixture: ComponentFixture<CapabilityComponent>;
   let controller: ApolloTestingController;
+
+  const mockCapability$: Observable<Capability> = of(
+    {
+      '__typename': 'Capability',
+      'sys': {
+        'id': '111'
+      },
+      'slug': 'first-capability',
+      'title': 'Death Star',
+      'summary': 'Mobile space station and galactic superweapon.',
+      'ssoProtected': false,
+      'searchable': false
+    } as unknown as Capability);
 
 
   beforeEach(async () => {
@@ -57,5 +71,26 @@ describe('CapabilityComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  describe('When a url slug is present', async () => {
+    beforeEach(() => {
+      controller = TestBed.inject(ApolloTestingController);
+      fixture = TestBed.createComponent(CapabilityComponent);
+      component = fixture.componentInstance;
+
+      fixture.detectChanges();
+      // component.ngOnInit();
+    });
+
+    it('Should get a single article data', () => {
+      spyOn(component, 'getCapabilityBySlug').and.returnValue(mockCapability$);
+
+      fixture.whenStable().then(() => {
+        component.getCapabilityBySlug(testSlug).subscribe(res => {
+          expect(res.slug).toEqual(testSlug);
+        });
+      })
+    });
   });
 });
