@@ -26,7 +26,7 @@ export class StandardCardComponent {
 
   public defaultImage = new Map<Exclude<PossibleContentItems['__typename'], undefined>, string>([
     ['Article', 'https://images.ctfassets.net/vbuxn5csp0ik/7dPrwEcbk56xKfz5zTLvEP/0efddb4b6c9e1eda80d2fb8d1ee47275/card-background-article.png'],
-    ['Capability', 'https://images.ctfassets.net/vbuxn5csp0ik/7dPrwEcbk56xKfz5zTLvEP/0efddb4b6c9e1eda80d2fb8d1ee47275/card-background-article.png'], // TODO new image for this?
+    ['Capability', 'https://images.ctfassets.net/vbuxn5csp0ik/QT1QGR7KkqaSswnmg7L97/d90bdfb944aa0f18640553a21cbf45a5/card-background-capability.png'],
     ['CaseStudy', 'https://images.ctfassets.net/vbuxn5csp0ik/2qmi1RS1lZSgXj9xP47h8E/54eb4e54bfc00d26f34401293af1ed80/card-background-case-study.png'],
     ['Equipment', 'https://images.ctfassets.net/vbuxn5csp0ik/1aSspX7erQzo9jVKStvwO9/6b141535dc463e8af1394f269100b9d7/card-background-equipment.png'],
     ['Event', 'https://images.ctfassets.net/vbuxn5csp0ik/lwzGPgcdAAwSIR7PruzdG/de3e9093f3504a0e64d12a7751d5752e/card-background-event.png'],
