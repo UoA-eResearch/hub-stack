@@ -34,7 +34,7 @@ export class GraphLayoutComponent {
   public selectedNode: ContentNode | null;
 
   // colorbrewer qualitative Set1
-  private colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf'];
+  private colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628', '#f781bf', '#999999'];
 
   public colorMap = new Map([
     ['subHub', this.colors[0]],
@@ -45,5 +45,6 @@ export class GraphLayoutComponent {
     ['service', this.colors[5]],
     ['software', this.colors[6]],
     ['caseStudy', this.colors[7]],
+    ['capability', this.colors[8]]
   ]);
 }
