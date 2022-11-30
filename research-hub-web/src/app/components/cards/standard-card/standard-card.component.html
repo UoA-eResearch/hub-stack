@@ -4,7 +4,7 @@
 >
   <picture mat-card-image>
     <source srcset="{{ url ? url : (defaultImageUrl$ | async) }}?w=1000&fm=webp" type="image/webp" />
-    <img src="{{ url }}?w=1000" alt="{{ contentItem.banner ? contentItem.title : 'default background' }}" />
+    <img src="{{ url ? url : (defaultImageUrl$ | async) }}?w=1000" alt="{{ contentItem.banner ? contentItem.title : 'default background' }}" />
   </picture>
 
   <span class="card-label">{{
