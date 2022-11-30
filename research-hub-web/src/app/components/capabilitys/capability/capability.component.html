@@ -110,6 +110,26 @@
         fxFlexOrder="1"
         fxFlexOrder.lt-lg="2"
       >
+
+        <h3 *ngIf="relatedDocs.length > 0">
+          Support Materials
+          <hr />
+        </h3>
+        <div
+          id="documents"
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-document-card
+            *ngFor="let document of relatedDocs"
+            [document]="document"
+          ></app-document-card>
+        </div>
+
         <h3 *ngIf="relatedContacts.length > 0">
           Contacts
           <hr />
@@ -144,25 +164,6 @@
             *ngFor="let orgUnit of relatedOrgs"
             [orgUnit]="orgUnit"
           ></app-org-unit-card>
-        </div>
-
-        <h3 *ngIf="relatedDocs.length > 0">
-          Support Materials
-          <hr />
-        </h3>
-        <div
-          id="documents"
-          fxLayout="column"
-          fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
-          fxLayout.lt-sm="column"
-          fxLayoutGap.lt-sm="0px"
-        >
-          <app-document-card
-            *ngFor="let document of relatedDocs"
-            [document]="document"
-          ></app-document-card>
         </div>
       </div>
 
