@@ -53,7 +53,7 @@ describe('ResearchHubs NavBar', () => {
   });
 
   it('can click Sign In in navbar and are taken to SSO login page', () => {
-    cy.get('.main-navbar-row a').contains('Sign In').click();
+    cy.get('.main-navbar-row a').contains('Sign in').click();
 
     cy.location('pathname').should('include', '/profile/SAML2/Redirect/SSO');
   });

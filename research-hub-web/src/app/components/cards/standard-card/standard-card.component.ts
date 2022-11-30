@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Article, Capability, CaseStudy, Equipment, Event, Funding, GetAssetByIdGQL, Service, Software, SubHub } from '@app/graphql/schema';
-import { defaultIfEmpty, EMPTY, filter, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 export type PossibleContentItems
   = Article
