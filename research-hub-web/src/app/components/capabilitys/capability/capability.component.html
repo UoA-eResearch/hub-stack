@@ -111,6 +111,24 @@
         fxFlexOrder.lt-lg="2"
       >
 
+        <h3 *ngIf="relatedContacts.length > 0">
+          Contacts
+          <hr />
+        </h3>
+        <div
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-contact-card
+            *ngFor="let person of relatedContacts"
+            [person]="person"
+          ></app-contact-card>
+        </div>
+
         <h3 *ngIf="relatedDocs.length > 0">
           Support Materials
           <hr />
@@ -128,24 +146,6 @@
             *ngFor="let document of relatedDocs"
             [document]="document"
           ></app-document-card>
-        </div>
-
-        <h3 *ngIf="relatedContacts.length > 0">
-          Contacts
-          <hr />
-        </h3>
-        <div
-          fxLayout="column"
-          fxLayoutGap="0px"
-          fxLayout.lt-lg="row wrap"
-          fxLayoutGap.lt-lg="25px"
-          fxLayout.lt-sm="column"
-          fxLayoutGap.lt-sm="0px"
-        >
-          <app-contact-card
-            *ngFor="let person of relatedContacts"
-            [person]="person"
-          ></app-contact-card>
         </div>
 
         <h3 *ngIf="relatedOrgs.length > 0">
