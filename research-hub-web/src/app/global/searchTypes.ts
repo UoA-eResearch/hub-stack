@@ -6,7 +6,7 @@ export interface SearchQuery {
   from: number,
   sort?: SortOrder,
   filters?: SearchFilters,
-  includeContentTypes : ContentType[]
+  includeContentTypes: ContentType[]
 }
 
 export interface SearchFilters {
@@ -15,7 +15,7 @@ export interface SearchFilters {
   category: string[]
 }
 
-export interface AllFilters { 
+export interface AllFilters {
   allCategories: CategoryCollection | null,
   allStages: StageCollection | null,
   allOrganisations: OrgUnitCollection | null
@@ -41,7 +41,7 @@ export interface SearchResultChip {
 }
 
 export type SortOrder = 'A-Z' | 'Z-A' | 'relevance'
-export type ContentType = 'article' | 'caseStudy' | 'equipment' | 'event' | 'funding' | 'service' | 'software' | 'subHub'
+export type ContentType = 'article' | 'capability' | 'caseStudy' | 'equipment' | 'event' | 'funding' | 'service' | 'software' | 'subHub'
 
 export enum FilterType {
   ResearchActivity = 1,

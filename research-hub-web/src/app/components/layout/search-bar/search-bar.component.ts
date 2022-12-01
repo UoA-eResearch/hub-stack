@@ -55,13 +55,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       filter(event => event instanceof NavigationStart)
     ).subscribe(() => this.showFilters = false));
     this.subscriptions.add(this.breakpointObserver.observe('(max-width: 1100px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches));
-    
+
     // Search autocomplete initialisation
     this.subscriptions.add(this.searchAutocompleteService.allTitles$.subscribe({
       next: titles => {
         this.autoCompleteTerms = [
           ...this.searchAutocompleteService.getAutocompleteTerms(),
           ...titles.articleTitles,
+          ...titles.capabilityTitles,
           ...titles.caseStudyTitles,
           ...titles.equipmentTitles,
           ...titles.eventTitles,
@@ -117,12 +118,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   /**
    * Filters out the autocomplete terms to match a user's search text input.
-   * 
+   *
    * The filtering process also handles lowercasing, removes leading and trailing white space, and removal of diacritics/accents, so that for example,
    * a user input of 'creme brulee' will match 'Crème Brulée' in the autocomplete list (and vice-versa).
    * Ref: https://stackoverflow.com/a/37511463/9803180
    * Ref: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes
-   * 
+   *
    * @param value - the user input search term
    * @returns string[] of filtered autocomplete terms that match the user input
    */

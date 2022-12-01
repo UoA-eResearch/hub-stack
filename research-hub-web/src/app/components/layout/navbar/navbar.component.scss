@@ -80,3 +80,8 @@ mat-toolbar {
     text-decoration:underline
   }
 }
+
+.overflow-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
