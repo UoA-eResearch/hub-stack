@@ -82,6 +82,10 @@ export const appRoutes: Routes = [
       {
         path: 'software',
         loadChildren: () => import('@components/softwares/softwares.module').then(m => m.SoftwaresModule)
+      },
+      {
+        path: 'capability',
+        loadChildren: () => import('@components/capabilitys/capabilitys.module').then(m => m.CapabilitysModule)
       }
     ]
   },

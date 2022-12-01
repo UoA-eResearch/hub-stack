@@ -111,7 +111,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
       .d3AlphaDecay(0.04)
       .d3VelocityDecay(0.2)
       .maxZoom(3)
-      .width(this.graphElement.nativeElement.with)
+      .width(this.graphElement.nativeElement.width)
       .height(this.graphElement.nativeElement.height);
   }
 

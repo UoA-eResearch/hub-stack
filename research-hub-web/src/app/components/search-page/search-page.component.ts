@@ -95,7 +95,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   detectWebP() {
     supportsWebP.then(supported => {
-      this.bannerImageUrl = supported ? this.bannerImageUrl  + '?w=1900&fm=webp' : this.bannerImageUrl + '?w=1900';
+      this.bannerImageUrl = supported ? this.bannerImageUrl + '?w=1900&fm=webp' : this.bannerImageUrl + '?w=1900';
     });
   }
 
@@ -110,7 +110,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   private search(size: number = 10, from: number = 0): Observable<SearchResults> {
     this.loading = true;
 
-    const contentTypes: ContentType[] = ['article', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
+    const contentTypes: ContentType[] = ['article', 'capability', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
 
     const searchQuery: SearchQuery = {
       query: this.searchText,

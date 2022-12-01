@@ -9,7 +9,20 @@ fragment PublicFields on Entry {
       banner {
           url
         }
-    } 
+    }
+
+    ... on Capability {
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+      banner {
+          url
+        }
+    }
+
     ... on CaseStudy {
       __typename
       banner {
@@ -114,7 +127,7 @@ fragment PublicFields on Entry {
   ... on Person {
       __typename
       name
-      role 
+      role
       email
       phone
       link
