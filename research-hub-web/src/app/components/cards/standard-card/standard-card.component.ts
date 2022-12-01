@@ -49,15 +49,11 @@ export class StandardCardComponent implements OnInit {
     this.defaultImageUrl$ = this.getDefaultImageUrl(this.contentItem.__typename);
   }
 
-  private getAssetId(type: Exclude<PossibleContentItems['__typename'], undefined>): string {
-    return this.defaultImageId[type];
-  }
-
   private getDefaultImageUrl(type: PossibleContentItems['__typename']): Observable<string> {
     if (!type) {
       type = 'Article';
     }
-    const id = this.getAssetId(type);
+    const id = this.defaultImageId[type];
     return this.getAssetById.fetch({ id }).pipe(
       map(result => result.data.asset?.url ? result.data.asset.url : this.fallbackUrl),
     )
