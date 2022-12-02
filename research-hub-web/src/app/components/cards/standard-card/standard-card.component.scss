@@ -33,5 +33,6 @@ mat-icon {
 
 img {
   object-fit: cover;
-  height: 200px;
+  min-height: 200px;
+  height: 200px; // this is likely redundant, but I want to assure that the element is never anything else but 200px in height
 }

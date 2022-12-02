@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { environment } from '@environments/environment';
 import { LinkObject, NodeObject } from 'force-graph';
 import { Observable } from 'rxjs';
