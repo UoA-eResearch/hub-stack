@@ -37,7 +37,8 @@ describe('SearchBarComponent', () => {
     fundingTitles: ['a funding'],
     serviceTitles: ['a service'],
     softwareTitles: ['a software'],
-    subHubTitles: ['a subHub']
+    subHubTitles: ['a subHub'],
+    capabilityTitles: ['a capability']
   };
 
   beforeEach(async () => {
@@ -68,7 +69,7 @@ describe('SearchBarComponent', () => {
         }),
         MockProvider(SearchAutocompleteService, {
           allTitles$: of(pageTitles),
-          getAutocompleteTerms: () => {return ['Covfefé']}
+          getAutocompleteTerms: () => { return ['Covfefé'] }
         }),
         MockProvider(BreakpointObserver, {
           observe: () => EMPTY
@@ -193,7 +194,7 @@ describe('SearchBarComponent', () => {
     component.toggleMobileSearch();
     fixture.detectChanges();
 
-    const button = await loader.getHarness(MatButtonHarness.with({selector: '#searchBackButton'}));
+    const button = await loader.getHarness(MatButtonHarness.with({ selector: '#searchBackButton' }));
 
     expect(button)
       .withContext('back button should exist')
@@ -209,7 +210,7 @@ describe('SearchBarComponent', () => {
     let filteredTerms: string[] = [];
 
     component.filteredTerms.subscribe((terms) => filteredTerms = terms);
-    expect(filteredTerms.length).toBe(9);
+    expect(filteredTerms.length).toBe(10);
   });
 
   it('Should filter autocomplete terms correctly', async () => {
@@ -218,7 +219,7 @@ describe('SearchBarComponent', () => {
 
     component.filteredTerms.subscribe((terms) => filteredTerms = terms);
 
-    const input = await loader.getHarness(MatAutocompleteHarness.with({selector: '#search'}));
+    const input = await loader.getHarness(MatAutocompleteHarness.with({ selector: '#search' }));
     await input.enterText('covfefe');
 
     expect(filteredTerms.length).toBe(1);

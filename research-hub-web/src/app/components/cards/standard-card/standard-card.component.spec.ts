@@ -6,6 +6,7 @@ import { ContentTypeDisplayNamePipe } from '@pipes/content-type-display-name.pip
 import { MockModule, MockPipe } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StandardCardComponent } from './standard-card.component';
+import { ApolloTestingModule } from 'apollo-angular/testing';
 
 describe('StandardCardComponent', () => {
   let component: StandardCardComponent;
@@ -19,6 +20,7 @@ describe('StandardCardComponent', () => {
 
       ],
       imports: [
+        ApolloTestingModule,
         MockModule(MatCardModule),
         MockModule(MatIconModule),
         RouterTestingModule.withRoutes([])

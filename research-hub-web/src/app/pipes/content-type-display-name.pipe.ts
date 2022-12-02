@@ -3,6 +3,7 @@ import { HumanCasePipe } from './human-case.pipe';
 
 export const ContentTypeDisplayNames = {
   'article': 'Article',
+  'capability': 'Capability',
   'casestudy': 'Case Study',
   'equipment': 'Equipment',
   'event': 'Event',

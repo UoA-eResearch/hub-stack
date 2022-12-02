@@ -8,6 +8,9 @@ query GetAllSubHubChildPagesSlugs {
                     ...on Article {
                         slug
                     }
+                    ...on Capability {
+                        slug
+                    }
                     ...on CaseStudy {
                         slug
                     }
