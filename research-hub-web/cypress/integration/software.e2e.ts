@@ -10,7 +10,7 @@ describe("ResearchHubs Software Pages", () => {
     });
 
     cy.visit(
-      "/research-software-and-computing/store-sync-share/microsoft-onedrive"
+      "/research-software-and-computing/advanced-compute/nesi"
     );
 
     cy.wait("@gqlGetSoftwareBySlug");
