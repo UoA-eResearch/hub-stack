@@ -10,7 +10,7 @@ describe("ResearchHubs Software Pages", () => {
     });
 
     cy.visit(
-      "/research-software-and-computing/advanced-compute/nesi"
+      "/research-software-and-computing/research-software/matlab"
     );
 
     cy.wait("@gqlGetSoftwareBySlug");
