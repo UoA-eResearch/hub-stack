@@ -10,7 +10,7 @@ describe("ResearchHubs Software Pages", () => {
     });
 
     cy.visit(
-      "/research-software-and-computing/research-software/matlab"
+      "/research-software-and-computing/software/research-software/adobe-creative-cloud"
     );
 
     cy.wait("@gqlGetSoftwareBySlug");
