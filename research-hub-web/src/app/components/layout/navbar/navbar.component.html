@@ -34,8 +34,8 @@
     <a mat-button class="hide-small" [routerLink]="'/categories'">
       Categories
     </a>
-    <a mat-button class="hide-small" [routerLink]="'/activities'">
-      Activities
+    <a mat-button class="hide-small" [routerLink]="'/stage'">
+      Research stage
     </a>
     <ng-container
       *ngIf="loggedIn$ | async; then isSignedIn; else signIn"
@@ -43,7 +43,7 @@
   </mat-toolbar-row>
   <mat-toolbar-row class="navbar-row-show-small">
     <a mat-button [routerLink]="'/categories'">Categories</a>
-    <a mat-button [routerLink]="'/activities'">Activities</a>
+    <a mat-button [routerLink]="'/stage'">Research stage</a>
   </mat-toolbar-row>
 </mat-toolbar>
 
