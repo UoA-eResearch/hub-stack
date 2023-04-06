@@ -48,7 +48,7 @@ export const appRoutes: Routes = [
         loadChildren: () => import('@components/categories-page/categories-page.module').then((m) => m.CategoriesPageModule),
       },
       {
-        path: 'activities',
+        path: 'stage',
         loadChildren: () => import('@components/activities-page/activities-page.module').then((m) => m.ActivitiesPageModule),
       },
       {
