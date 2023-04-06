@@ -1,7 +1,7 @@
 describe('ResearchHubs Activities Page', () => {
 
   beforeEach(() => {
-      cy.visit('/activities');
+      cy.visit('/stage');
   });
 
   it('displays the title', () => {
