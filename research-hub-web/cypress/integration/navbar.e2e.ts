@@ -47,9 +47,9 @@ describe('ResearchHubs NavBar', () => {
   });
 
   it('can click Activities in navbar and navigate to Activities page', () => {
-    cy.get('.main-navbar-row a').contains('Activities').click();
+    cy.get('.main-navbar-row a').contains('Research stage').click();
 
-    cy.location('pathname').should('include', 'activities');
+    cy.location('pathname').should('include', 'stage');
   });
 
   it('can click Sign In in navbar and are taken to SSO login page', () => {
