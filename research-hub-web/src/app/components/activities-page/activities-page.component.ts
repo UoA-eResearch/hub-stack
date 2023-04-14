@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./activities-page.component.scss']
 })
 export class ActivitiesPageComponent implements OnInit, OnDestroy {
-  public title: string = 'Research Activities';
+  public title: string = 'Research stage';
   public description: Maybe<string> | undefined;
   public allStages$: Observable<Stage[]>;
   private subscriptions: Subscription = new Subscription();
