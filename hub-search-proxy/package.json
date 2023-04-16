@@ -1,6 +1,6 @@
 {
   "name": "hub-search-proxy",
-  "version": "2.8.2",
+  "version": "2.8.3",
   "description": "Serverless Framework Lambda functions to interact with AWS ElasticSearch Service.",
   "main": "handler.js",
   "scripts": {
