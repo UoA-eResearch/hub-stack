@@ -54,7 +54,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     this.subscriptions.add(this.router.events.pipe(
       filter(event => event instanceof NavigationStart)
     ).subscribe(() => this.showFilters = false));
-    this.subscriptions.add(this.breakpointObserver.observe('(max-width: 1100px)').subscribe(isSmallScreen => this.isMobile = isSmallScreen.matches));
+    this.subscriptions.add(this.breakpointObserver.observe('(max-width: 1100px)').subscribe(isSmallScreen => {
+      console.log('isSmallScreen', isSmallScreen);
+      return this.isMobile = isSmallScreen.matches;
+    }));
 
     // Search autocomplete initialisation
     this.subscriptions.add(this.searchAutocompleteService.allTitles$.subscribe({
