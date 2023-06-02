@@ -325,17 +325,24 @@ module.exports.search = async (event, context) => {
 }
 
 module.exports.update = async (event, context) => {
+    console.log(`1-event`, event);
     let doc = JSON.parse(event.body);
     const categories = await deliveryApiClient.getEntries({
         content_type: "category",
         select: ['sys.id', 'fields.name']
     });
+    console.log(`2-categories`, categories);
 
     // add category names
+    console.log(`3-doc.fields`, doc.fields);
     if (doc.fields.hasOwnProperty('category')) {
+      console.log(`4-doc.fields.category['en-US']`, doc.fields.category['en-US']);
         for (let item of doc.fields.category['en-US']) {
+          console.log(`5-categories.items`, categories.items);
             const cat = categories.items.find((c) => { return c.sys.id === item.sys.id; });
+            console.log(`6-cat`, cat);
             if (cat) { item['name'] = cat.fields.name; }
+            console.log(`7-item`, item);
         }
     }
 
@@ -348,9 +355,11 @@ module.exports.update = async (event, context) => {
         },
         refresh: 'true'   // index refresh
     };
+    console.log(`10-params`, params);
 
     try {
         const result = await esClient.update(params);
+        console.log(`99-result`, result);
         console.log(`Processed document id ${result.body._id}: ${result.body.result}.`);
         return formatResponse(
             200,

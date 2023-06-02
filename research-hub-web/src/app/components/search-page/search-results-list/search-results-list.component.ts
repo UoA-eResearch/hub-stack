@@ -29,4 +29,9 @@ export class SearchResultsListComponent {
       }
     );
   }
+
+  public printResult(result: any) {
+    if (result.title == 'High Performance Computing')
+      console.log(`printResult`, result);
+  }
 }

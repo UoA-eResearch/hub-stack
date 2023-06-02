@@ -8,7 +8,10 @@
     "debug": "export SLS_DEBUG=* && node --inspect ./node_modules/.bin/sls offline",
     "test": "sls invoke test",
     "testw": "nodemon --watch . --exec 'sls invoke test || true'",
-    "deploy": "sls deploy"
+    "deploy": "sls deploy",
+    "cred-np": "python C:\\opt\\uoa_project\\utility-aws-cli-access\\aws_saml_login.py --idp iam.auckland.ac.nz --role 518380838815 --account devops --profile uoa-nonprod --user etan221",
+    "local": "lambda-local -l ./.build/handler.js - update --watch 8008 --envfile .env --timeout 30 --profile uoa-nonprod",
+    "td1": "sls deploy function --function update --stage test --aws-profile uoa-nonprod"
   },
   "keywords": [
     "Lambda",

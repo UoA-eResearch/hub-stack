@@ -18,6 +18,7 @@ export class SearchService {
   ) { }
 
   public search(query: SearchQuery): Observable<SearchResults> {
+    console.log(`environment.searchUrl`, environment.searchUrl, query);
     return this.http.post(
       environment.searchUrl,
       query
@@ -29,9 +30,10 @@ export class SearchService {
         data["result"]["hits"]["hits"].forEach(element => {
           const summary = element.highlight?.["fields.summary.en-US"] ?
             element.highlight["fields.summary.en-US"].join(' '):
-            (element._source?.fields?.summary && element._source?.fields?.summary["en-US"]) ? 
+            (element._source?.fields?.summary && element._source?.fields?.summary["en-US"]) ?
             element._source.fields.summary["en-US"] : '';
 
+          console.log(`search result1: `, element._source.fields.category?.["en-US"]);
           const result: SearchResult = {
             title: element._source.fields.title["en-US"],
             summary: summary,
@@ -73,7 +75,7 @@ export class SearchService {
         params.ra = filters.stage
       }
     }
-    
+
     if (sortOrder) {
       params.sort = sortOrder
     }

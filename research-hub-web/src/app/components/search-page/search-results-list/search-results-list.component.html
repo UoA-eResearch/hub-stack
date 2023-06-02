@@ -7,8 +7,9 @@
     role="listitem"
     (keydown.enter)="navigate(result.contentType, result.slug)"
   >
+    {{ printResult(result) }}
     <a class="search-link" [routerLink]="['/', result.contentType.toLowerCase(), result.slug]"></a>
-    
+
     <span class="card-label">{{
       result.contentType | contentTypeDisplayName
     }}</span>
@@ -39,7 +40,7 @@
         >
       </ng-container>
     </mat-chip-list>
-    
+
   </mat-card>
 </mat-list>
 <!-- Skeleton Loader -->
