@@ -136,7 +136,7 @@ describe("Tests for cer-graphql", () => {
             const client = await createServerAndTestClient();
             query = client.query;
         } catch (error) {
-            fail("An error occurred when trying to setup the server. Have you filled in credentials in the .env file?");
+            throw new Error("An error occurred when trying to setup the server. Have you filled in credentials in the .env file?");
         }
     });
 
