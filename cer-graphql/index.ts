@@ -104,10 +104,10 @@ async function getRemoteSchema(remoteUri: string) {
   }
 }
 /**
- * Given schema for Hub content, returns names for
+ * Given schema for Hub content, returns resolver names for
  * types that require authentication resolvers.
 * @param schema GraphQL schema for Hub content
- * @returns Array of names of types that should be protected as strings.
+ * @returns Array of resolver names for types that should be protected.
  */
 function getProtectedTypes(schema: GraphQLSchema) {
   const typeMap = schema.getTypeMap();
