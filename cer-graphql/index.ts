@@ -1,8 +1,7 @@
 import {
   DocumentNode,
   GraphQLResolveInfo,
-  GraphQLSchema,
-  printSchema
+  GraphQLSchema
 } from "graphql";
 import fetch from "cross-fetch";
 import { validateUnauthenticatedQuery } from "./validateUnauthenticatedQuery";
