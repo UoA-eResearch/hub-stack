@@ -103,19 +103,40 @@ async function getRemoteSchema(remoteUri: string) {
     throw new Error("Unable to load remote schema.");
   }
 }
+/**
+ * Given schema for Hub content, returns resolver names for
+ * types that require authentication resolvers.
+* @param schema GraphQL schema for Hub content
+ * @returns Array of resolver names for types that should be protected.
+ */
 function getProtectedTypes(schema: GraphQLSchema) {
   const typeMap = schema.getTypeMap();
-
-  return Object.keys(typeMap)
-    .filter(x => x.includes('Filter')) // Get all the filters
-    .filter(x => !x.startsWith('cf')) // Filter out Contentful's special cf* filters
-    .filter(y => { // Filter by those with an ssoProtected field
-      const type = typeMap[y];
-      // First check this type has its own nested fields, before seeing if it has a ssoProtected field.
-      return "getFields" in type && type.getFields()["ssoProtected"];
+  const itemResolvers = Object.keys(typeMap)
+    .filter(typeName => { 
+      const type = typeMap[typeName];
+      // Filters don't need resolvers.
+      if (typeName.includes("Filter")){
+        return false;
+      }
+      // If the type is a primitive, then it doesn't need protection.
+      if (!("getFields" in type)) {
+        return false;
+      } else {
+        //  If a content type has a "contentfulMetadata" field,
+        // it is a type defined by us and not a Contentful built-in type.
+        // See https://www.contentful.com/developers/docs/references/graphql/#/reference/schema-generation/contentfulmetadata-field
+        //  
+        // We then check if it has a ssoProtected field, which we use
+        // to flag authenticated content.
+        const fields = type.getFields();
+        return fields["contentfulMetadata"] && fields["ssoProtected"];
+      }
     })
-    .flatMap(z => [z.replace('Filter', ''), z.replace('Filter', 'Collection')]) // Replace 'xfilter' with 'x' and 'xCollection'
-    .map(a => a[0].toLowerCase() + a.substring(1)); // Make first char lower case
+    // Make first char lower case for resolver convention.
+    .map(a => a[0].toLowerCase() + a.substring(1)); 
+    // Also protect the collection queries for each type
+    const collectionResolvers = itemResolvers.map(name => name + "Collection");
+    return itemResolvers.concat(collectionResolvers)    
 }
 
 export async function createServer (config: CerGraphqlServerConfig) {
