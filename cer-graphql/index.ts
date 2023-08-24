@@ -111,7 +111,7 @@ async function getRemoteSchema(remoteUri: string) {
  */
 function getProtectedTypes(schema: GraphQLSchema) {
   const typeMap = schema.getTypeMap();
-  return Object.keys(typeMap)
+  const itemResolvers = Object.keys(typeMap)
     .filter(typeName => { 
       const type = typeMap[typeName];
       // Filters don't need resolvers.
@@ -134,6 +134,9 @@ function getProtectedTypes(schema: GraphQLSchema) {
     })
     // Make first char lower case for resolver convention.
     .map(a => a[0].toLowerCase() + a.substring(1)); 
+    // Also protect the collection queries for each type
+    const collectionResolvers = itemResolvers.map(name => name + "Collection");
+    return itemResolvers.concat(collectionResolvers)    
 }
 
 export async function createServer (config: CerGraphqlServerConfig) {
