@@ -1,6 +1,6 @@
 {
   "name": "cer-graphql",
-  "version": "2.8.4",
+  "version": "2.8.5",
   "description": "A GraphQL server used to proxy and authorise requests to external data sources.",
   "main": "build/index.js",
   "scripts": {
