@@ -10,7 +10,9 @@ query AllStages {
             sys {
                 id
             }
-            linkedTo
+            linkedToRef {
+              slug
+            }
         }
     }
 }

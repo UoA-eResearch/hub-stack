@@ -11,14 +11,9 @@
     <div fxLayout="column" fxLayoutGap="8px" class="research-activity-content">
       <div *ngFor="let item of allStages">
         <!-- Panel Container -->
-        <!-- absolute path -->
         <a [attr.aria-label]="item.name"
-          [href]="item.linkedTo"
+          [routerLink]="'/subhub/' + item?.linkedToRef?.slug"
         >
-        <!-- Relative path -->
-        <!-- <a [attr.aria-label]="item.name"
-          routerLink="/subhub/research-impact"
-        > -->
           <div class="outer-panel" fxLayout="row">
             <div class="inner-panel">
               <div>
