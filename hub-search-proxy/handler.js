@@ -146,19 +146,22 @@ module.exports.search = async (event, context) => {
             // query with filters but no query string
 
             let queryParts = [];
+            let queryPart;
 
             // add our search filters
             for (const filter in queryFilters) {
                 if (!Array.isArray(queryFilters[filter])) {
                     throw new Error('Query filters must be in array format.')
                 }
+                queryPart = [];
                 for (const id of queryFilters[filter]) {
-                    queryParts.push(
+                    queryPart.push(
                         JSON.parse(
                             `{"match":{"fields.${filter}.en-US.sys.id":"${id}"}}`
                         )
                     )
                 }
+                queryParts.push({ bool: { should: queryPart }})
             }
 
             query = {
@@ -170,7 +173,7 @@ module.exports.search = async (event, context) => {
                         query: {
                             bool: {
                                 minimum_should_match: 1,
-                                should: queryParts,
+                                must: queryParts,
                                 filter: [
                                     {
                                         term: {
@@ -221,20 +224,23 @@ module.exports.search = async (event, context) => {
                 }
             }
 
-            let queryParts = []
+            let queryParts = [];
+            let queryPart;
 
             // add our search filters
             for (const filter in queryFilters) {
                 if (!Array.isArray(queryFilters[filter])) {
                     throw new Error('Query filters must be in array format.')
                 }
+                queryPart = [];
                 for (const id of queryFilters[filter]) {
-                    queryParts.push(
+                    queryPart.push(
                         JSON.parse(
                             `{"match":{"fields.${filter}.en-US.sys.id":"${id}"}}`
                         )
                     )
                 }
+                queryParts.push({ bool: { should: queryPart }})
             }
 
             let minimum_should_match = 0;
@@ -248,9 +254,8 @@ module.exports.search = async (event, context) => {
                     function_score: {
                         query: {
                             bool: {
-                                must: simpleQuery,
+                                must: [simpleQuery, queryParts],
                                 minimum_should_match: minimum_should_match,
-                                should: queryParts,
                                 filter: [
                                     {
                                         term: {
