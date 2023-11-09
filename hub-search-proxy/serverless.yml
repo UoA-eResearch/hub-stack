@@ -15,7 +15,7 @@ custom:
     stage: ${self:provider.stage}
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs16.x
   stage: ${opt:stage, 'dev'} # Deploy with sls deploy --stage STAGE (default dev)
   region: ap-southeast-2
   endpointType: regional
