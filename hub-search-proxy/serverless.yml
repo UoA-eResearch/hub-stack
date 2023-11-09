@@ -52,8 +52,8 @@ provider:
     PROFILE: ${file(env/${self:provider.stage}.json):PROFILE}
   apiGateway:
     apiKeySourceType: HEADER
-  apiKeys:
-    - name: ${self:service}-${self:provider.stage}-apiKey
+    apiKeys:
+      - name: ${self:service}-${self:provider.stage}-apiKey
     
 package:
   exclude:
