@@ -11,17 +11,9 @@
     <div fxLayout="column" fxLayoutGap="8px" class="research-activity-content">
       <div *ngFor="let item of allStages">
         <!-- Panel Container -->
-        <a
-            [attr.aria-label]="'Search in ' + item.name"
-            routerLink="/search"
-            [queryParams]="
-              searchService.generateQueryParams('', {
-                category: [],
-                stage: [item.sys.id],
-                relatedOrgs: []
-              })
-            "
-          >
+        <a [attr.aria-label]="item.name"
+          [routerLink]="'/subhub/' + item?.linkedToRef?.slug"
+        >
           <div class="outer-panel" fxLayout="row">
             <div class="inner-panel">
               <div>
@@ -29,7 +21,7 @@
                   <p>{{ item.description }}</p>
               </div>
             </div>
-            
+
             <!-- Panel Image -->
             <div fxHide.lt-md class="research-category-img">
               <picture *ngIf="item.image?.url">
