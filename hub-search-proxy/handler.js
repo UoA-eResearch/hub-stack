@@ -161,7 +161,9 @@ module.exports.search = async (event, context) => {
                         )
                     )
                 }
-                queryParts.push({ bool: { should: queryPart }})
+                if (queryPart.length > 0) {
+                    queryParts.push({ bool: { should: queryPart }})
+                }
             }
 
             query = {
@@ -172,7 +174,6 @@ module.exports.search = async (event, context) => {
                     function_score: {
                         query: {
                             bool: {
-                                minimum_should_match: 1,
                                 must: queryParts,
                                 filter: [
                                     {
@@ -222,7 +223,7 @@ module.exports.search = async (event, context) => {
                     default_operator: "and",
                     analyzer: "hub_analyzer"
                 }
-            }
+            };
 
             let queryParts = [];
             let queryPart;
@@ -240,11 +241,10 @@ module.exports.search = async (event, context) => {
                         )
                     )
                 }
-                queryParts.push({ bool: { should: queryPart }})
+                if (queryPart.length > 0) {
+                    queryParts.push({ bool: { should: queryPart }})
+                }
             }
-
-            let minimum_should_match = 0;
-            if (queryParts.length > 0) { minimum_should_match = 1 };
 
             query = {
                 _source: {
@@ -254,8 +254,7 @@ module.exports.search = async (event, context) => {
                     function_score: {
                         query: {
                             bool: {
-                                must: [simpleQuery, queryParts],
-                                minimum_should_match: minimum_should_match,
+                                must: [simpleQuery, ...queryParts],
                                 filter: [
                                     {
                                         term: {
