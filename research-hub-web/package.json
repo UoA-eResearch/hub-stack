@@ -90,7 +90,7 @@
     "@typescript-eslint/parser": "4.33.0",
     "chroma-js": "^2.4.2",
     "concurrently": "^6.4.0",
-    "cypress": "^7.7.0",
+    "cypress": "^13.6.2",
     "cypress-commands": "^2.0.1",
     "eslint": "^7.32.0",
     "graphql": "^15.8.0",
