@@ -31,10 +31,21 @@ export class ErrorRoutingModule extends UoaErrorsConfig {
 
         this.ErrorPageContent['ErrorCode403'] = {
             title: 'Access Restricted',
-            content: `<p>Sorry, You do not have permission to view this page. Please ensure that you are logged in and try again.</p>
+            content: `<p>This page is restricted.</p>
             <p>
-              If you still do not have access and believe you are seeing this page in error, please contact
-              <a href=mailto:${this.contactEmail} target="_blank">${this.contactEmail}</a>.
+                We apologize, but you currently lack the necessary permissions to view this page.  
+                To gain access to this content, kindly retry and ensure that you are logged in 
+                using your University email address (or UPI) along with the corresponding password.
+            </p>
+            <p>
+                Please be aware that content secured behind Single Sign-On (SSO) is exclusively 
+                available to University of Auckland staff and PhD students, Masters students, 
+                under-graduates, collaborating District health boards (DHBs), 
+                and the public are not able to access content protected by SSO.
+            </p>
+            <p>
+                <a href="/article/get-access-to-researchhub">
+                Learn more about SSO and accessing ResearchHub content via the ‘Get access to ResearchHub’ page</a>
             </p>`
         };
 
