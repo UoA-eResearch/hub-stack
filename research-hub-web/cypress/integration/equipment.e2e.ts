@@ -9,7 +9,7 @@ describe('ResearchHubs Equipment Pages', () => {
             }
         });
 
-        cy.visit('equipment/operetta-high-content-imaging-system');
+        cy.visit('infrastructure/operetta-high-content-imaging-system');
 
         cy.wait('@gqlGetEquipmentBySlug');
     });
