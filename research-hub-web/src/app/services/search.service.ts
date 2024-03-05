@@ -37,7 +37,8 @@ export class SearchService {
             summary: summary,
             slug: element._source.fields.slug["en-US"],
             ssoProtected: element._source.fields.ssoProtected["en-US"],
-            contentType: element._source.sys.contentType.sys.id,
+            contentType: element._source.sys.contentType.sys.id == 'equipment' ?
+            'infrastructure' : element._source.sys.contentType.sys.id,
             chips: element._source.fields.category?.["en-US"].map(x => {
               return { name: x.name, id: x.sys.id };
             })
