@@ -13,7 +13,7 @@ pipeline {
     }
 
     agent {
-        label("uoa-buildtools-node14")
+        label("uoa-buildtools-ionic")
     }
 
     options {
