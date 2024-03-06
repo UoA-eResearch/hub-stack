@@ -17,7 +17,7 @@
       tabindex="-1"
       [routerLink]="[
         '/',
-        contentItem.__typename!.toLowerCase(),
+        contentItem.__typename!.toLowerCase() === 'equipment' ? 'infrastructure' : contentItem.__typename!.toLowerCase(),
         contentItem.slug
       ]"
     >
