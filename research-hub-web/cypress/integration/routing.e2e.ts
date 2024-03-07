@@ -57,7 +57,7 @@ describe("ResearchHubs legacy routing", () => {
 describe("ResearchHubs SSO protected content", () => {
 
   it('visiting an SSO protected item redirects to SSO login page', () => {
-    cy.visit('/subhub/internal-funding');
+    cy.visit('/article/contracts-and-clauses');
     cy.location('pathname').should('include', '/profile/SAML2/Redirect/SSO');
   });
 });

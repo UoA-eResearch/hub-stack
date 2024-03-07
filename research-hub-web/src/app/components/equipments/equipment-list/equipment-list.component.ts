@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class EquipmentListComponent implements OnInit, OnDestroy {
   public equipment: EquipmentCollection;
-  public title: string = 'Equipment Collection';
+  public title: string = 'Infrastructure Collection';
 
   private subscription = new Subscription();
 
