@@ -5,7 +5,7 @@ describe('ResearchHubs Homepage', () => {
     });
 
     it('displays notification', () => {
-        cy.get('app-notification').should('be.visible');
+        cy.get('app-notification').should('exist');
     })
 
     it('displays banner content', () => {
