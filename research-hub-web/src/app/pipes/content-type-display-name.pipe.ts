@@ -5,7 +5,7 @@ export const ContentTypeDisplayNames = {
   'article': 'Article',
   'capability': 'Capability',
   'casestudy': 'Case Study',
-  'equipment': 'Equipment',
+  'equipment': 'Infrastructure',
   'event': 'Event',
   'funding': 'Funding',
   'service': 'Service',

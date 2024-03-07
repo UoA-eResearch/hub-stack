@@ -52,7 +52,7 @@ export const appRoutes: Routes = [
         loadChildren: () => import('@components/activities-page/activities-page.module').then((m) => m.ActivitiesPageModule),
       },
       {
-        path: 'equipment',
+        path: 'infrastructure',
         loadChildren: () => import('@components/equipments/equipments.module').then(m => m.EquipmentsModule)
       },
       {

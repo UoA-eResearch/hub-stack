@@ -10,7 +10,7 @@ describe('ContentTypeDisplayNamePipe', () => {
   it('Should return correct content display names', () => {
     expect(pipe.transform('article')).toBe('Article');
     expect(pipe.transform('caseStudy')).toBe('Case Study');
-    expect(pipe.transform('equipment')).toBe('Equipment');
+    expect(pipe.transform('equipment')).toBe('Infrastructure');
     expect(pipe.transform('event')).toBe('Event');
     expect(pipe.transform('funding')).toBe('Funding');
     expect(pipe.transform('service')).toBe('Service');
