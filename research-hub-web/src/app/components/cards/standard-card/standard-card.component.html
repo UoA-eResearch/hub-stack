@@ -1,5 +1,5 @@
 <mat-card
-  [routerLink]="['/', contentItem.__typename!.toLowerCase(), contentItem.slug]"
+  [routerLink]="['/', (contentItem.__typename!.toLowerCase() === 'equipment' ? 'infrastructure' : contentItem.__typename!.toLowerCase()) , contentItem.slug]"
   [ngClass]="{ 'subhub-child-card': isSubhubChild }"
 >
   <picture mat-card-image>
@@ -17,7 +17,7 @@
       tabindex="-1"
       [routerLink]="[
         '/',
-        contentItem.__typename!.toLowerCase() === 'equipment' ? 'infrastructure' : contentItem.__typename!.toLowerCase(),
+        (contentItem.__typename!.toLowerCase() === 'equipment' ? 'infrastructure' : contentItem.__typename!.toLowerCase()),
         contentItem.slug
       ]"
     >
