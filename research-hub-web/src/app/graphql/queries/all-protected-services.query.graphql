@@ -1,0 +1,7 @@
+query AllProtectedServices {
+    serviceCollection(limit: 1000, where: {ssoProtected: true}) {
+        items {
+            ...PublicFields
+        }
+    }
+}

@@ -1,5 +1,5 @@
 query AllCapabilities {
-    capabilityCollection(limit: 250) {
+    capabilityCollection(limit: 1000) {
         items {
             ...PublicFields
         }

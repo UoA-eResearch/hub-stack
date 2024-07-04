@@ -1,0 +1,7 @@
+query AllProtectedSubHub {
+    subHubCollection(limit: 1000, where: {ssoProtected: true}) {
+        items {
+            ...PublicFields
+        }
+    }
+}
