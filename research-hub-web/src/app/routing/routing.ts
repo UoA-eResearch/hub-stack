@@ -86,6 +86,10 @@ export const appRoutes: Routes = [
       {
         path: 'capability',
         loadChildren: () => import('@components/capabilitys/capabilitys.module').then(m => m.CapabilitysModule)
+      },
+      {
+        path: 'protected-pages',
+        loadChildren: () => import('@components/protected-pages/protected-pages.module').then(m => m.ProtectedPagesModule)
       }
     ]
   },
