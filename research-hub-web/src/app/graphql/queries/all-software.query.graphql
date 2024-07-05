@@ -1,5 +1,5 @@
 query AllSoftware {
-    softwareCollection(limit: 250) {
+    softwareCollection(limit: 1000) {
         items {
             ...PublicFields
         }

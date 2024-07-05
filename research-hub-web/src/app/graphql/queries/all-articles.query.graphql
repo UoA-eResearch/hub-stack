@@ -1,5 +1,5 @@
 query AllArticles {
-    articleCollection(limit: 250) {
+    articleCollection(limit: 1000) {
         items {
             ...PublicFields
         }
