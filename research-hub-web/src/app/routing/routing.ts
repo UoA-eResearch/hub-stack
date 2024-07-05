@@ -89,6 +89,7 @@ export const appRoutes: Routes = [
       },
       {
         path: 'protected-pages',
+        canActivate: [AuthGuard],
         loadChildren: () => import('@components/protected-pages/protected-pages.module').then(m => m.ProtectedPagesModule)
       }
     ]
