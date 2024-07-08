@@ -1,0 +1,7 @@
+query AllProtectedEvents {
+    eventCollection(limit: 1000, where: {ssoProtected: true}) {
+        items {
+            ...PublicFields
+        }
+    }
+}
