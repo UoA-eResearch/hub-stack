@@ -1,5 +1,5 @@
 query AllEvents {
-    eventCollection(limit: 250) {
+    eventCollection(limit: 1000) {
         items {
             ...PublicFields
         }
