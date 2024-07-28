@@ -1,87 +1,114 @@
-@import "variables";
-@import "mixins";
+.dropdown-menu {
+  padding: 12px 104px 64px 104px;
 
-mat-toolbar {
-  color: white;
-  @media (min-width: $navbar-second-row-breakpoint) {
-    padding: 0 25px;
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  pointer-events: none;
+  color: #00467f;
+
+  &.show {
+    max-height: 1000px; // 十分な高さを設定
+    opacity: 1;
+    pointer-events: auto;
   }
-  mat-toolbar-row.main-navbar-row {
-    /*
-     * Hub Logo
-     */
-    .hub-logo {
-      line-height: 64px;
-      img {
-        height: 24px;
-        @media (max-width: $navbar-second-row-breakpoint) {
-          height: 18px;
+
+  .dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 0 0 12px 0; // 上下のパディングを増やし、左右は全体のパディングに任せる
+    margin-bottom: 24px; // ヘッダーとコンテンツの間隔を増やす
+  }
+
+  .dropdown-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #00467f;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .close-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #00467f;
+    background: none;
+    border: none;
+    padding: 8px;
+
+    &:hover {
+      color: #757575;
+    }
+  }
+
+  .dropdown-content {
+    display: flex;
+    flex-wrap: wrap;
+    //padding: 16px;
+    justify-content: flex-start;
+    margin: -16px; // ネガティブマージンを使用して、子要素のマージンを相殺
+
+    a.mat-button {
+      flex: 0 0 calc(33.333% - 32px); // マージンの増加に合わせて調整
+      margin: 16px; // 項目間の間隔を増やす
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      text-align: left;
+      justify-content: flex-start;
+      //padding: 12px 0; // 上下のパディングを増やす
+      font-size: 1.2em; // フォントサイズを1emに変更（またはこれよりも大きい値に調整）
+      line-height: 1.2; // 行間を調整
+      font-weight: normal;
+
+      ::ng-deep .mat-button-wrapper {
+        width: 100%;
+        text-align: left;
+        background-image: linear-gradient(currentColor, currentColor);
+        background-position: 0 100%;
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        transition: background-size 0.3s ease-in-out;
+      }
+
+      &:hover,
+      &:focus {
+        background-color: transparent !important;
+        ::ng-deep .mat-button-wrapper {
+          background-size: 100% 2px;
         }
       }
-    }
-    .mat-button {
-      line-height: 64px;
-      padding: 0 16px;
-      min-width: 64px;
-      font-weight: 100;
-      @media (max-width: $navbar-second-row-breakpoint) {
-        line-height: 56px;
+
+      ::ng-deep .mat-button-focus-overlay {
+        background-color: transparent !important;
       }
-      ::ng-deep.mat-button-wrapper {
-        white-space: nowrap;
-      }
-      font-size: 0.7em;
     }
   }
-  mat-toolbar-row.navbar-row-show-small {
-    display: none;
-    height: 36px;
-    @media (max-width: $navbar-second-row-breakpoint) {
-      display: flex;
-    }
-    .mat-button {
-      font-weight: 100;
-      flex: 1;
-    }
+
+  &.show .dropdown-content a.mat-button {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/**
- * Sign Out Button
- */
-.sign-out-button {
-  color: black;
-  background-color: white;
-  margin-right: 8px;
-}
-
-@media (max-width: $navbar-second-row-breakpoint) {
-  .hide-small {
-    display: none;
+// グローバルスタイルとして追加
+::ng-deep {
+  .mat-button-focus-overlay {
+    background-color: transparent !important;
   }
-}
-
-/*
- * Skip links
- */
- .skip-link {
-  background: white;
-  font-size: 16px;
-  border-radius: 8px;
-  padding: 6px 6px;
-  position: fixed;
-  top: -100%;
-  z-index: 1001;
-  &:focus,
-  &:active {
-    top:auto
-  }
-  &:hover {
-    text-decoration:underline
-  }
-}
-
-.overflow-ellipsis {
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
