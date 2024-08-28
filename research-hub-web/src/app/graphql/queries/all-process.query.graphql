@@ -1,5 +1,5 @@
-query AllArticles {
-    articleCollection(limit: 1000) {
+query AllProcesses {
+    processCollection(limit: 1000) {
         items {
             ...PublicFields
         }

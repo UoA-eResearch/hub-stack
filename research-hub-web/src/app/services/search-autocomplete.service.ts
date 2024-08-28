@@ -54,6 +54,7 @@ export class SearchAutocompleteService {
     return this.allPageTitlesGQL.fetch()
       .pipe(
         map(result => ({
+          // processTitles: result?.data?.processCollection?.items.map(x => x?.title).filter(notEmpty) ?? [],
           articleTitles: result?.data?.articleCollection?.items.map(x => x?.title).filter(notEmpty) ?? [],
           capabilityTitles: result?.data?.capabilityCollection?.items.map(x => x?.title).filter(notEmpty) ?? [],
           caseStudyTitles: result?.data?.caseStudyCollection?.items.map(x => x?.title).filter(notEmpty) ?? [],

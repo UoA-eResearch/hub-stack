@@ -1,0 +1,69 @@
+query GetProcessBySlug($slug: String!) {
+  processCollection(limit: 1, where: { slug: $slug }) {
+    items {
+      __typename
+      sys {
+        id
+      }
+      title
+      maoriProverb
+      slug
+      ssoProtected
+      searchable
+      callToAction
+      callToActionLabel
+      banner {
+        url
+      }
+      summary
+      bodyText {
+        json
+        links {
+          entries {
+            block {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            inline {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+            hyperlink {
+              ...PublicFields
+              sys {
+                id
+              }
+            }
+          }
+          assets {
+            block {
+              ...AssetFields
+            }
+            hyperlink {
+              ...AssetFields
+            }
+          }
+        }
+      }
+      relatedContactsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedOrgsCollection {
+        items {
+          ...PublicFields
+        }
+      }
+      relatedProcessesCollection {
+        items {
+          ...PublicFields
+        }
+      }
+    }
+  }
+}
