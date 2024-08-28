@@ -97,7 +97,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
         // Strip nulls from related collection data.
         if (data.relatedContactsCollection) this.relatedContacts = data.relatedContactsCollection.items.filter(notEmpty);
         if (data.relatedOrgsCollection) this.relatedOrgs = (data.relatedOrgsCollection.items.filter(notEmpty)).filter(item => item.name);
-        // if (data.relatedProcessesCollection) this.relatedProcesses = data.relatedProcessesCollection.items.filter(notEmpty);
+        if (data.relatedProcessesCollection) this.relatedProcesses = data.relatedProcessesCollection.items.filter(notEmpty);
         // if (data.relatedItemsCollection) this.relatedItems = data.relatedItemsCollection.items.filter(notEmpty);
 
         // If Call To Action is an email address
@@ -145,66 +145,3 @@ export class ProcessComponent implements OnInit, OnDestroy {
   }
 }
 
-const test  = {
-  relatedProcessesCollection: {
-    "items": [
-      {
-        "__typename": "SubHub",
-        "slug": "open-access",
-        "title": "Open Access",
-        "summary": "Learn about what Open Access (OA) is, why and how to make your work open and how to comply with the University's OA policy and other funder OA mandates.",
-        "ssoProtected": false,
-        "searchable": true,
-        "banner": {
-          "url": "https://images.ctfassets.net/vbuxn5csp0ik/LyVHjs5bw6wzAQi8zWi73/f3817c9dddb4fd29964644b74f376030/simon-berger-twukN12EN7c-unsplash.jpg",
-          "__typename": "Asset"
-        }
-      },
-      {
-        "__typename": "SubHub",
-        "slug": "guide-to-managing-research-data",
-        "title": "Managing research data and artefacts",
-        "summary": "A guide to services and information to help you to manage your research data during each phase of the research data lifecycle.",
-        "ssoProtected": false,
-        "searchable": true,
-        "banner": {
-          "url": "https://images.ctfassets.net/vbuxn5csp0ik/1PAusgrQfpbtD70mGFax5f/30dac068c182daf1d34b167bea0657ec/starry-sky-2051448_1920.jpg",
-          "__typename": "Asset"
-        }
-      }
-    ],
-    "__typename": "ProcessRelatedContactsCollection"
-  }
-}
-
-const test2  = {
-  relatedItemsCollection: {
-    "items": [
-      {
-        "__typename": "SubHub",
-        "slug": "open-access",
-        "title": "Open Access",
-        "summary": "Learn about what Open Access (OA) is, why and how to make your work open and how to comply with the University's OA policy and other funder OA mandates.",
-        "ssoProtected": false,
-        "searchable": true,
-        "banner": {
-          "url": "https://images.ctfassets.net/vbuxn5csp0ik/LyVHjs5bw6wzAQi8zWi73/f3817c9dddb4fd29964644b74f376030/simon-berger-twukN12EN7c-unsplash.jpg",
-          "__typename": "Asset"
-        }
-      },
-      {
-        "__typename": "SubHub",
-        "slug": "guide-to-managing-research-data",
-        "title": "Managing research data and artefacts",
-        "summary": "A guide to services and information to help you to manage your research data during each phase of the research data lifecycle.",
-        "ssoProtected": false,
-        "searchable": true,
-        "banner": {
-          "url": "https://images.ctfassets.net/vbuxn5csp0ik/1PAusgrQfpbtD70mGFax5f/30dac068c182daf1d34b167bea0657ec/starry-sky-2051448_1920.jpg",
-          "__typename": "Asset"
-        }
-      }
-    ],
-    "__typename": "ArticleRelatedItemsCollection"
-  }
-}
