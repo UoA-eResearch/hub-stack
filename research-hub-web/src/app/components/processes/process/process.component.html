@@ -146,62 +146,31 @@
         </div>
       </div>
 
-      <!--      TODO Kay-->
-      <!-- Related items -->
-
-
-<!--      <div-->
-<!--        *ngIf="relatedProcesses.length > 0; else fillerRight"-->
-<!--        fxFlex.gt-lg="0 0 auto"-->
-<!--        fxLayout="column"-->
-<!--        fxFlexOrder="3"-->
-<!--      >-->
-<!--        <h3>-->
-<!--          Explore related-->
-<!--          <hr />-->
-<!--        </h3>-->
-<!--        <div-->
-<!--          id="you-might-be-interested-in"-->
-<!--          fxLayout="column"-->
-<!--          fxLayoutGap="0px"-->
-<!--          fxLayout.lt-lg="row wrap"-->
-<!--          fxLayoutGap.lt-lg="25px"-->
-<!--          fxLayout.lt-sm="column"-->
-<!--          fxLayoutGap.lt-sm="0px"-->
-<!--        >-->
-<!--&lt;!&ndash;          <app-standard-card&ndash;&gt;-->
-<!--&lt;!&ndash;            *ngFor="let content of relatedProcesses"&ndash;&gt;-->
-<!--&lt;!&ndash;            [contentItem]="content"&ndash;&gt;-->
-<!--&lt;!&ndash;          ></app-standard-card>&ndash;&gt;-->
-<!--        </div>-->
-<!--      </div>-->
-
-
-<!--      <div-->
-<!--        *ngIf="relatedItems.length > 0; else fillerRight"-->
-<!--        fxFlex.gt-lg="0 0 auto"-->
-<!--        fxLayout="column"-->
-<!--        fxFlexOrder="3"-->
-<!--      >-->
-<!--        <h3>-->
-<!--          Explore related-->
-<!--          <hr />-->
-<!--        </h3>-->
-<!--        <div-->
-<!--          id="you-might-be-interested-in"-->
-<!--          fxLayout="column"-->
-<!--          fxLayoutGap="0px"-->
-<!--          fxLayout.lt-lg="row wrap"-->
-<!--          fxLayoutGap.lt-lg="25px"-->
-<!--          fxLayout.lt-sm="column"-->
-<!--          fxLayoutGap.lt-sm="0px"-->
-<!--        >-->
-<!--          <app-standard-card-->
-<!--            *ngFor="let content of relatedItems"-->
-<!--            [contentItem]="content"-->
-<!--          ></app-standard-card>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div
+        *ngIf="relatedProcesses.length > 0; else fillerRight"
+        fxFlex.gt-lg="0 0 auto"
+        fxLayout="column"
+        fxFlexOrder="3"
+      >
+        <h3>
+          Explore related
+          <hr />
+        </h3>
+        <div
+          id="you-might-be-interested-in"
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-standard-card
+            *ngFor="let content of relatedProcesses"
+            [contentItem]="content"
+          ></app-standard-card>
+        </div>
+      </div>
     </div>
   </div>
 </div>
