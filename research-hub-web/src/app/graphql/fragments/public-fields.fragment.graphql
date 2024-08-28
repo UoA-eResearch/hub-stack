@@ -1,4 +1,16 @@
 fragment PublicFields on Entry {
+    ... on Process {
+      __typename
+      slug
+      title
+      summary
+      ssoProtected
+      searchable
+      banner {
+          url
+        }
+    }
+
     ... on Article {
       __typename
       slug
