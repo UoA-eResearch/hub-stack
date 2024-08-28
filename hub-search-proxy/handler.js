@@ -18,7 +18,7 @@ const deliveryApiClient = contentful.createClient({
     accessToken: token
 })
 
-const VALID_CONTENT_TYPES = ['article', 'casestudy', 'capability', 'equipment', 'event', 'funding', 'service', 'software', 'subhub'];
+const VALID_CONTENT_TYPES = ['article', 'casestudy', 'capability', 'equipment', 'event', 'funding', 'process', 'service', 'software', 'subhub'];
 
 let credentials;
 try {
