@@ -64,6 +64,13 @@ query GetProcessBySlug($slug: String!) {
           ...PublicFields
         }
       }
+      processRelatedResourcesCollection {
+         items {
+           ...PublicFields
+         }
+       }
+
+
     }
   }
 }

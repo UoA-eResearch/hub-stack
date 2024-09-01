@@ -8,7 +8,7 @@ import {
   GetProcessBySlugGQL,
   OfficialDocuments,
   OrgUnit,
-  Person, ArticleRelatedItemsItem,
+  Person
 } from '@graphql/schema';
 import { BodyMediaService } from '@services/body-media.service';
 import { PageTitleService } from '@services/page-title.service';
@@ -33,11 +33,10 @@ export class ProcessComponent implements OnInit, OnDestroy {
   public supportsWebp: Boolean;
   public bannerImageUrl: string | undefined;
 
-  public relatedItems: ArticleRelatedItemsItem[];
   public relatedProcesses: ProcessRelatedProcessesItem[];
   public relatedContacts: Person[];
   public relatedOrgs: OrgUnit[];
-  public relatedDocs: OfficialDocuments[];
+  public relatedResources: OfficialDocuments[];
 
   constructor(
     public route: ActivatedRoute,
@@ -98,7 +97,7 @@ export class ProcessComponent implements OnInit, OnDestroy {
         if (data.relatedContactsCollection) this.relatedContacts = data.relatedContactsCollection.items.filter(notEmpty);
         if (data.relatedOrgsCollection) this.relatedOrgs = (data.relatedOrgsCollection.items.filter(notEmpty)).filter(item => item.name);
         if (data.relatedProcessesCollection) this.relatedProcesses = data.relatedProcessesCollection.items.filter(notEmpty);
-        // if (data.relatedItemsCollection) this.relatedItems = data.relatedItemsCollection.items.filter(notEmpty);
+        if (data.processRelatedResourcesCollection) this.relatedResources = data.processRelatedResourcesCollection.items.filter(notEmpty);
 
         // If Call To Action is an email address
         if (data.callToAction?.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
