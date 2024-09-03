@@ -13,7 +13,7 @@ export class CollectionListComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    try { this.collection = changes['collection'].currentValue; this.loading = false } catch { }
+    try { this.collection = changes['collection'].currentValue; this.loading = false; console.log(this.collection.__typename) } catch { }
   }
 
   // Scrolling to top of page on page change

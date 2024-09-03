@@ -15,6 +15,7 @@ export class BlocksEmbeddedEntryComponent extends NodeRenderer implements OnInit
   ngOnInit(): void {
     try {
       this.contentItem = this.bodyMediaService.getContentItem(this.node);
+      console.log(this.contentItem['__typename'].toLowerCase() === 'equipment' ? 'infrastructure' : this.contentItem['__typename'].toLowerCase())
     } catch(e) {
       console.error(e);
     }

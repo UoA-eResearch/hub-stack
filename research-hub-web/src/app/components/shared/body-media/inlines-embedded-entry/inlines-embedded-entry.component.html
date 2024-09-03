@@ -1,7 +1,7 @@
 <!-- Entry Inline -->
 <span *ngIf="contentItem">
     <span>
-        <a class="embedded-entry-inline" [routerLink]="'/' + contentItem['__typename'].toLowerCase() + '/' + contentItem['slug']">
+        <a class="embedded-entry-inline" [routerLink]="'/' + (contentItem['__typename'].toLowerCase() === 'equipment' ? 'infrastructure' : contentItem['__typename'].toLowerCase()) + '/' + contentItem['slug']">
             {{ contentItem.title }}
         </a>
     </span>
