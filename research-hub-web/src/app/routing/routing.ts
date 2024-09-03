@@ -64,6 +64,10 @@ export const appRoutes: Routes = [
         loadChildren: () => import('@components/articles/articles.module').then(m => m.ArticlesModule)
       },
       {
+        path: 'process',
+        loadChildren: () => import('@components/processes/processes.module').then(m => m.ProcessesModule)
+      },
+      {
         path: 'event',
         loadChildren: () => import('@components/events/events.module').then(m => m.EventsModule)
       },
