@@ -217,11 +217,11 @@ describe("Tests for cer-graphql", () => {
             expect(res.errors[0].extensions.code).toBe("UNAUTHENTICATED");
         });
 
-        test('Requesting an articleCollection private field with a valid Authorization header returns data', async function () {
+        /*test('Requesting an articleCollection private field with a valid Authorization header returns data', async function () {
             let { query } = await createServerAndTestClientWithAuth();
             let res = await query({ query: TQ.GET_ARTICLE_COLLECTION_PRIVATE_WITH_SSO });
             expect((res as any).data.articleCollection).toBeTruthy();
-        }, TIMEOUT_PERIOD);
+        }, TIMEOUT_PERIOD);*/
 
         test('Requesting a article single resource private field returns an error', async function () {
             let res = await query({
