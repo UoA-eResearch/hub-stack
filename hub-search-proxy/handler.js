@@ -413,7 +413,7 @@ module.exports.bulk = async () => {
         console.log('Exporting data from Contentful space id: ' + spaceId + ', environment: ' + contentfulEnv);
         const options = {
             spaceId: spaceId,
-            managementToken: mgmtToken,
+            managementToken: token,
             environmentId: contentfulEnv,
             contentOnly: true,
             downloadAssets: false,
