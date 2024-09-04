@@ -127,6 +127,24 @@
           ></app-contact-card>
         </div>
 
+        <h3 *ngIf="relatedResources.length > 0">
+          Process related resources
+          <hr />
+        </h3>
+        <div
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+        <app-document-card
+          *ngFor="let document of relatedResources"
+          [document]="document"
+        ></app-document-card>
+        </div>
+
         <h3 *ngIf="relatedOrgs.length > 0">
           Organisations
           <hr />
@@ -146,18 +164,21 @@
         </div>
       </div>
 
+
+      <!-- Related Links -->
       <div
-        *ngIf="relatedProcesses.length > 0; else fillerRight"
-        fxFlex.gt-lg="0 0 auto"
-        fxLayout="column"
-        fxFlexOrder="3"
+        *ngIf="
+          relatedProcesses.length > 0
+          ; else fillerRight"
+          fxFlex.gt-lg="0 0 auto"
+          fxLayout="column"
+          fxFlexOrder="3"
       >
-        <h3>
-          Explore related
+        <h3 *ngIf="relatedProcesses.length > 0">
+          Related processes
           <hr />
         </h3>
         <div
-          id="you-might-be-interested-in"
           fxLayout="column"
           fxLayoutGap="0px"
           fxLayout.lt-lg="row wrap"
@@ -171,6 +192,7 @@
           ></app-standard-card>
         </div>
       </div>
+
     </div>
   </div>
 </div>
