@@ -14,7 +14,7 @@
       <a
         mat-icon-button
         color="primary"
-        [routerLink]="['/', node.type.toLowerCase(), node.slug]"
+        [routerLink]="['/', (node.type.toLowerCase() === 'equipment' ? 'infrastructure' : node.type.toLowerCase()), node.slug]"
         matTooltip="Visit page in ResearchHub"
       >
         <mat-icon>article</mat-icon>
@@ -56,7 +56,7 @@
           <a
             mat-icon-button
             color="primary"
-            [routerLink]="['/', neighbour.type.toLowerCase(), neighbour.slug]"
+            [routerLink]="['/', (neighbour.type.toLowerCase() === 'equipment' ? 'infrastructure' : neighbour.type.toLowerCase()), neighbour.slug]"
             matTooltip="Visit page in ResearchHub"
           >
             <mat-icon>article</mat-icon>
@@ -98,7 +98,7 @@
           <a
             mat-icon-button
             color="primary"
-            [routerLink]="['/', neighbour.type.toLowerCase(), neighbour.slug]"
+            [routerLink]="['/', (neighbour.type.toLowerCase() === 'equipment' ? 'infrastructure' : neighbour.type.toLowerCase()), neighbour.slug]"
             matTooltip="Visit page in ResearchHub"
           >
             <mat-icon>article</mat-icon>

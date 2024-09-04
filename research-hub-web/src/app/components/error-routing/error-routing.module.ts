@@ -39,8 +39,8 @@ export class ErrorRoutingModule extends UoaErrorsConfig {
             </p>
             <p>
                 Please be aware that content secured behind Single Sign-On (SSO) is exclusively 
-                available to University of Auckland staff and PhD students, Masters students, 
-                under-graduates, collaborating District health boards (DHBs), 
+                available to University of Auckland staff and PhD students. Masters students, 
+                under-graduates, collaborating District Health Boards (DHBs), 
                 and the public are not able to access content protected by SSO.
             </p>
             <p>

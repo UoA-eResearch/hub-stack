@@ -5,21 +5,21 @@
   <ng-container *ngIf="collection">
     <!-- Content Collection -->
     <h1 id="title">
-      {{ collection.__typename | humanCase }}
+      {{ (collection.__typename === 'EquipmentCollection' ? 'InfrastructureCollection' : collection.__typename) | humanCase }}
     </h1>
     Found
     <span class="search-results-text">
       {{ collection.items.length }} </span
     >results in
     <span class="search-results-text">
-      {{ collection.__typename | humanCase }}
+      {{ (collection.__typename === 'EquipmentCollection' ? 'InfrastructureCollection' : collection.__typename) | humanCase }}
     </span>
 
     <!-- Content Collection -->
     <mat-nav-list>
       <mat-card *ngFor="let content of collection.items">
         <a
-          [routerLink]="['/' + content.__typename.toLowerCase(), content.slug]"
+          [routerLink]="['/' + (content.__typename.toLowerCase() === 'equipment' ? 'infrastructure' : content.__typename.toLowerCase()), content.slug]"
           class="result-item"
           [ngClass]="{ ssoProtected: content.ssoProtected }"
         >
