@@ -414,6 +414,7 @@ module.exports.bulk = async () => {
         const options = {
             spaceId: spaceId,
             managementToken: mgmtToken,
+            deliveryToken: token,
             environmentId: contentfulEnv,
             contentOnly: true,
             downloadAssets: false,
