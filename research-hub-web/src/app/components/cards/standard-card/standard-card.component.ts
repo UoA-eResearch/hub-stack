@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Article, Capability, CaseStudy, Equipment, Event, Funding, GetAssetByIdGQL, Service, Software, SubHub } from '@app/graphql/schema';
+import { Process, Article, Capability, CaseStudy, Equipment, Event, Funding, GetAssetByIdGQL, Service, Software, SubHub } from '@app/graphql/schema';
 import { map, Observable } from 'rxjs';
 
 export type PossibleContentItems
@@ -12,6 +12,7 @@ export type PossibleContentItems
   | Service
   | Software
   | Capability
+  | Process
 
 @Component({
   selector: 'app-standard-card',
@@ -31,6 +32,7 @@ export class StandardCardComponent implements OnInit {
   private readonly fallbackUrl = 'https://images.ctfassets.net/vbuxn5csp0ik/7dPrwEcbk56xKfz5zTLvEP/0efddb4b6c9e1eda80d2fb8d1ee47275/card-background-article.png';
 
   private readonly defaultImageId: Record<Exclude<PossibleContentItems['__typename'], undefined>, string> = {
+    'Process': '7dPrwEcbk56xKfz5zTLvEP',
     'Article': '7dPrwEcbk56xKfz5zTLvEP',
     'Capability': 'QT1QGR7KkqaSswnmg7L97',
     'CaseStudy': '2qmi1RS1lZSgXj9xP47h8E',
