@@ -4,7 +4,8 @@ import { AllProtectedArticlesGQL, ArticleCollection,
     AllProtectedCaseStudiesGQL, CaseStudyCollection,
     AllProtectedEquipmentGQL, EquipmentCollection,
     AllProtectedEventsGQL, EventCollection,
-    AllProtectedFundingGQL,FundingCollection,
+    AllProtectedFundingGQL, FundingCollection,
+    AllProtectedProcessesGQL, ProcessCollection,
     AllProtectedServicesGQL, ServiceCollection,
     AllProtectedSoftwareGQL, SoftwareCollection,
     AllProtectedSubHubGQL, SubHubCollection
@@ -26,6 +27,7 @@ export class ProtectedPagesListComponent implements OnInit, OnDestroy {
   public protectedEquipment: any;
   public protectedEvents: any;
   public protectedFunding: any;
+  public protectedProcesses: any;
   public protectedServices: any;
   public protectedSoftware: any;
   public protectedSubHub: any;
@@ -40,6 +42,7 @@ export class ProtectedPagesListComponent implements OnInit, OnDestroy {
     private allProtectedEquipmentGQL: AllProtectedEquipmentGQL,
     private allProtectedEventsGQL: AllProtectedEventsGQL,
     private allProtectedFundingGQL: AllProtectedFundingGQL,
+    private allProtectedProcessesGQL: AllProtectedProcessesGQL,
     private allProtectedServicesGQL: AllProtectedServicesGQL,
     private allProtectedSoftwareGQL: AllProtectedSoftwareGQL,
     private allProtectedSubHubGQL: AllProtectedSubHubGQL,
@@ -65,6 +68,9 @@ export class ProtectedPagesListComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.loadFunding().subscribe((collection) => this.protectedFunding = collection)
+    );
+    this.subscription.add(
+      this.loadProcesses().subscribe((collection) => this.protectedProcesses = collection)
     );
     this.subscription.add(
       this.loadServices().subscribe((collection) => this.protectedServices = collection)
@@ -110,6 +116,12 @@ export class ProtectedPagesListComponent implements OnInit, OnDestroy {
   public loadFunding(): Observable<FundingCollection> {
     return this.allProtectedFundingGQL.fetch().pipe(
       map((result) => result.data.fundingCollection as FundingCollection)
+    )
+  }
+
+  public loadProcesses(): Observable<ProcessCollection> {
+    return this.allProtectedProcessesGQL.fetch().pipe(
+      map((result) => result.data.processCollection as ProcessCollection)
     )
   }
 
