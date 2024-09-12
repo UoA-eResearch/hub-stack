@@ -1,4 +1,9 @@
 query AllPageTitles {
+  processCollection (limit: 1000, where: {searchable: true}) {
+    items {
+      title
+    }
+  }
   articleCollection (limit: 1000, where: {searchable: true}) {
     items {
       title
