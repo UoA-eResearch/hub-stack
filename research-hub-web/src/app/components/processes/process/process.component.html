@@ -1,0 +1,205 @@
+<div id="article-container" *ngIf="process">
+  <div
+    class="banner-container"
+    [ngClass]="{ 'standard-banner': bannerImageUrl }"
+    [ngClass.xs]="{ 'mobile-banner': bannerImageUrl }"
+    [ngStyle]="{
+      'background-image': bannerImageUrl ? 'url(' + bannerImageUrl + ')' : ''
+    }"
+  >
+    <div class="banner-content">
+      <!-- Title -->
+      <h1
+        role="heading"
+        aria-level="1"
+        class="content-title"
+        ngClass.lt-md="content-title-mobile"
+        [style]="process.banner ? bannerTextStyling : ''"
+      >
+        {{ process.title }}
+      </h1>
+
+      <!-- Maori Proverb -->
+      <h2
+        aria-level="2"
+        *ngIf="process.maoriProverb"
+        class="maori-proverb"
+        [style]="process.banner ? bannerTextStyling : ''"
+      >
+        <hr />
+        {{ process.maoriProverb }}
+        <hr />
+      </h2>
+
+      <!-- Summary -->
+      <p
+        class="content-summary"
+        ngClass.sm="content-summary-sm"
+        ngClass.xs="content-summary-xs"
+        [style]="process.banner ? bannerTextStyling : ''"
+      >
+        <small>{{ process.summary }}</small>
+      </p>
+
+      <!-- Call To Action -->
+      <div class="section" *ngIf="process.callToAction">
+        <div *ngIf="process.banner">
+          <a
+            href="{{ process.callToAction }}"
+            target="_blank"
+            mat-flat-button
+            class="standard-button-banner"
+          >
+            <span *ngIf="process.callToActionLabel">{{
+              process.callToActionLabel
+            }}</span>
+            <span *ngIf="!process.callToActionLabel">View Article</span>
+          </a>
+        </div>
+        <div *ngIf="!process.banner">
+          <a
+            href="{{ process.callToAction }}"
+            target="_blank"
+            mat-flat-button
+            class="standard-button"
+          >
+            <span *ngIf="process.callToActionLabel">{{
+              process.callToActionLabel
+            }}</span>
+            <span *ngIf="!process.callToActionLabel">View Article</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="site-padding margin-bottom" ngClass.lt-md="site-padding-mobile">
+    <app-breadcrumbs [title]="process.title!"></app-breadcrumbs>
+
+    <div
+      fxLayout="row"
+      fxLayoutAlign="space-between"
+      fxLayoutGap="3vw"
+      fxLayout.lt-lg="column"
+      fxLayoutGap.lt-lg="0"
+    >
+      <!-- Article Body -->
+      <ngx-contentful-rich-text
+        fxFlexOrder="2"
+        fxFlexOrder.lt-lg="1"
+        fxFlex="1 1 50%"
+        fxFlex.lt-lg="1 1 auto"
+        id="process-body"
+        class="body-media-list"
+        style="word-break: break-word"
+        [ngClass.lt-lg]="'single-column-max-width'"
+        [document]="process.bodyText?.json"
+        [nodeRenderers]="nodeRenderers"
+        [markRenderers]="markRenderers"
+      ></ngx-contentful-rich-text>
+
+      <!-- Extra Links -->
+      <div
+        *ngIf="
+          relatedContacts.length > 0 ||
+          relatedOrgs.length > 0
+          ; else fillerLeft"
+        fxFlex.gt-lg="0 0 auto"
+        fxLayout="column"
+        fxFlexOrder="1"
+        fxFlexOrder.lt-lg="2"
+      >
+        <h3 *ngIf="relatedContacts.length > 0">
+          Contacts
+          <hr />
+        </h3>
+        <div
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-contact-card
+            *ngFor="let person of relatedContacts"
+            [person]="person"
+          ></app-contact-card>
+        </div>
+
+        <h3 *ngIf="relatedResources.length > 0">
+          Process related resources
+          <hr />
+        </h3>
+        <div
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+        <app-document-card
+          *ngFor="let document of relatedResources"
+          [document]="document"
+        ></app-document-card>
+        </div>
+
+        <h3 *ngIf="relatedOrgs.length > 0">
+          Organisations
+          <hr />
+        </h3>
+        <div
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-org-unit-card
+            *ngFor="let orgUnit of relatedOrgs"
+            [orgUnit]="orgUnit"
+          ></app-org-unit-card>
+        </div>
+      </div>
+
+
+      <!-- Related Links -->
+      <div
+        *ngIf="
+          relatedProcesses.length > 0
+          ; else fillerRight"
+          fxFlex.gt-lg="0 0 auto"
+          fxLayout="column"
+          fxFlexOrder="3"
+      >
+        <h3 *ngIf="relatedProcesses.length > 0">
+          Related processes
+          <hr />
+        </h3>
+        <div
+          fxLayout="column"
+          fxLayoutGap="0px"
+          fxLayout.lt-lg="row wrap"
+          fxLayoutGap.lt-lg="25px"
+          fxLayout.lt-sm="column"
+          fxLayoutGap.lt-sm="0px"
+        >
+          <app-standard-card
+            *ngFor="let content of relatedProcesses"
+            [contentItem]="content"
+          ></app-standard-card>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #fillerLeft>
+  <div fxFlex="0 0 350px" fxFlexOrder="1" fxHide.lt-lg></div>
+</ng-template>
+<ng-template #fillerRight>
+  <div fxFlex="0 0 350px" fxFlexOrder="3" fxHide.lt-lg></div>
+</ng-template>

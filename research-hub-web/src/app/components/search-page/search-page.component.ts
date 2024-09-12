@@ -110,7 +110,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   private search(size: number = 10, from: number = 0): Observable<SearchResults> {
     this.loading = true;
 
-    const contentTypes: ContentType[] = ['article', 'capability', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
+    const contentTypes: ContentType[] = ['process', 'article', 'capability', 'caseStudy', 'equipment', 'event', 'funding', 'service', 'software', 'subHub']
 
     const searchQuery: SearchQuery = {
       query: this.searchText,
