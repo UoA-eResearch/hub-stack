@@ -16,11 +16,16 @@ Sentry.init({
       routingInstrumentation: Sentry.routingInstrumentation,
     })
   ],
+  release: environment.version,
   environment: environment.env,
   tracesSampleRate: environment.sentryTracesSampleRate,
   ignoreErrors: [
     'Authentication required to view protected content.'
-  ]
+  ],
+  initialScope: {
+    user: {ip_address: "{{auto}}"}
+  },
+  autoSessionTracking: true
 });
 
 
