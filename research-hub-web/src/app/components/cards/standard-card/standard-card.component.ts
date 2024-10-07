@@ -32,7 +32,7 @@ export class StandardCardComponent implements OnInit {
   private readonly fallbackUrl = 'https://images.ctfassets.net/vbuxn5csp0ik/7dPrwEcbk56xKfz5zTLvEP/0efddb4b6c9e1eda80d2fb8d1ee47275/card-background-article.png';
 
   private readonly defaultImageId: Record<Exclude<PossibleContentItems['__typename'], undefined>, string> = {
-    'Process': '7dPrwEcbk56xKfz5zTLvEP',
+    'Process': '2B5LyjdIcdxregO7TQ8G7F',
     'Article': '7dPrwEcbk56xKfz5zTLvEP',
     'Capability': 'QT1QGR7KkqaSswnmg7L97',
     'CaseStudy': '2qmi1RS1lZSgXj9xP47h8E',
