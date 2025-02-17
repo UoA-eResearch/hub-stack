@@ -9,7 +9,7 @@ describe('ResearchHubs Funding Pages', () => {
             }
         });
 
-        cy.visit('/internal-funding/hikina-kia-tutuki');
+        cy.visit('/research-project-management/identify-explore-and-create-opportunities/internal-funding/global-research-engagement-fund-gref');
 
         cy.wait('@gqlGetFundingBySlug');
     });
