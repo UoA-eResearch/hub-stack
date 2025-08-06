@@ -32,6 +32,9 @@ query GetAllSubHubChildPagesSlugs {
                     ...on SubHub {
                         slug
                     }
+                    ...on Process {
+                        slug
+                    }
                 }
             }
         }
