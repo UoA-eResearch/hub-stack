@@ -4,7 +4,7 @@
         "awsApiGatewayCustomDomainName": "apigw.test.amazon.auckland.ac.nz",
         "deploymentBucketStage": "test"
     },
-    "elasticsearchDomainName": "researchhub-test-domain",
+    "elasticsearchDomainName": "researchhub-tst-domain",
     "elasticsearchDomainAccount": "518380838815",
     "ELASTICSEARCH_ENDPOINT": "${ssm:/test/research-hub/elasticsearch_endpoint_vpc}",
     "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "*",
