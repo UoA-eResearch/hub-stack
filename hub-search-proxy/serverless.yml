@@ -18,6 +18,13 @@ provider:
   runtime: nodejs20.x
   stage: ${opt:stage, 'dev'} # Deploy with sls deploy --stage STAGE (default dev)
   region: ap-southeast-2
+  vpc:
+    securityGroupIds:
+      - sg-0226eccf470d21ee4
+    subnetIds:
+      - subnet-0d0a68988c480b3a4
+      - subnet-0b56849cba433ce13
+      - subnet-0fc970830487f2323
   endpointType: regional
   role: myDefaultRole
   timeout: 30
@@ -177,3 +184,10 @@ resources:
                           - Ref: "AWS::Region"
                           - "${file(env/${self:provider.stage}.json):elasticsearchDomainAccount}"
                           - "domain/${file(env/${self:provider.stage}.json):elasticsearchDomainName}/*"
+                - Effect: Allow
+                  Action: 
+                  - "ec2:CreateNetworkInterface"
+                  - "ec2:DescribeNetworkInterfaces"
+                  - "ec2:DeleteNetworkInterface"
+                  Resource: 
+                  - "*"
