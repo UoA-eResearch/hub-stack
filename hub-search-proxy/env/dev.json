@@ -6,7 +6,7 @@
     },
     "elasticsearchDomainName": "researchhub-test-domain",
     "elasticsearchDomainAccount": "518380838815",
-    "ELASTICSEARCH_ENDPOINT": "${ssm:/test/research-hub/elasticsearch_endpoint}",
+    "ELASTICSEARCH_ENDPOINT": "${ssm:/test/research-hub/elasticsearch_endpoint_vpc}",
     "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "*",
     "CONTENTFUL_SPACE_ID": "${ssm:/test/research-hub/contentful-space-id}",
     "CONTENTFUL_MGMT_ACCESS_TOKEN": "${ssm:/test/research-hub/contentful-mgmt-access-token}",
