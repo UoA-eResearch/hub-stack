@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ContentGraph, ContentGraphService, ContentLink, ContentNode } from '@services/content-graph.service';
-import ForceGraph, { ForceGraphInstance } from 'force-graph';
+import ForceGraph from 'force-graph';
+import type ForceGraphInstance from 'force-graph';
 
 @Component({
   selector: 'app-graph-container',
@@ -41,7 +42,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
   constructor(
     private graphService: ContentGraphService
   ) {
-    this.graph = ForceGraph();
+    // this.graph = new ForceGraph();
   }
 
   ngOnInit(): void {
@@ -70,7 +71,7 @@ export class GraphContainerComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit(): void {
     if (!this.graphElement) return;
-    this.graph(this.graphElement.nativeElement)
+    this.graph = new ForceGraph(this.graphElement.nativeElement)
       .nodeRelSize(this.NODE_R)
       .backgroundColor('#101020')
       .linkColor(() => 'rgba(255,255,255,0.2)')
