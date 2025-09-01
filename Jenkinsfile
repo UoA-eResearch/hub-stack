@@ -288,7 +288,7 @@ pipeline {
                             steps {
                                 echo 'Installing research-hub-web dependencies.'
                                 dir("research-hub-web") {
-                                    sh "npm install"
+                                    sh "npm install --force"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
                                     // sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                     // script {
