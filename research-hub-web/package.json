@@ -15,7 +15,7 @@
     "prebuild": "npm run generate",
     "postinstall": "ngcc",
     "test": "ng test --source-map=false --browsers ChromeHeadless",
-    "test-ci": "ng test --watch=false --source-map=false --browsers ChromeHeadless",
+    "test-ci": "ng test --watch=false --source-map=false --browsers ChromeHeadlessNoSandbox",
     "test-watch": "ng test --watch=true --browsers ChromeHeadless",
     "lint": "ng lint",
     "bundle-report": "ng build --configuration prod --stats-json && webpack-bundle-analyzer www/stats.json",
