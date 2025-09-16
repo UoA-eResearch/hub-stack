@@ -1,9 +1,17 @@
 @import "variables";
 
+.card-label-rounded-corners {
+  border-radius: 0 9px 0 0 !important;
+  left: 0;
+  top: 179px !important;
+}
+
 .subhub-child-card {
   background-color: $dark-blue;
   .card-label {
     color: $dark-blue;
+  }
+  .card-label-rounded-corners {
     background: rgb(255, 255, 255);
   }
   .mat-card-title {
