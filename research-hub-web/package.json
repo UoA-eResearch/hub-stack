@@ -15,7 +15,7 @@
     "prebuild": "npm run generate",
     "postinstall": "ngcc",
     "test": "ng test --source-map=false --browsers ChromeHeadless",
-    "test-ci": "ng test --watch=false --source-map=false --browsers ChromeHeadless",
+    "test-ci": "ng test --watch=false --source-map=false --browsers ChromeHeadlessNoSandbox",
     "test-watch": "ng test --watch=true --browsers ChromeHeadless",
     "lint": "ng lint",
     "bundle-report": "ng build --configuration prod --stats-json && webpack-bundle-analyzer www/stats.json",
@@ -29,7 +29,8 @@
     "e2e-gui": "npm run cy:open",
     "e2e-ci": "concurrently \"npm run start -- -c ${BRANCH_NAME}\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
     "e2e-serve": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run e2e\" --kill-others --success first",
-    "e2e-serve-gui": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first"
+    "e2e-serve-gui": "concurrently \"npm run qdev\" \"wait-on http-get://localhost:4200 && npm run cy:open\" --kill-others --success first",
+    "preinstall": "npx npm-force-resolutions"
   },
   "private": true,
   "dependencies": {
@@ -45,7 +46,7 @@
     "@angular/platform-browser-dynamic": "13.2.3",
     "@angular/router": "13.2.3",
     "@angular/service-worker": "13.2.3",
-    "@apollo/client": "^3.5.10",
+    "@apollo/client": "3.5.10",
     "@contentful/rich-text-types": "^15.11.1",
     "@sentry/angular": "^6.17.9",
     "@sentry/tracing": "^6.17.9",
@@ -104,11 +105,15 @@
     "karma-time-stats-reporter": "^0.1.0",
     "karma-verbose-reporter": "^0.0.8",
     "ng-mocks": "^13.0.2",
+    "npm-force-resolutions": "^0.0.10",
     "ts-node": "~8.3.0",
     "typescript": "4.4.x",
     "wait-on": "^5.2.1"
   },
   "browser": {
     "crypto": false
+  },
+  "resolutions": {
+    "@apollo/client": "3.5.10"
   }
 }

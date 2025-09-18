@@ -7,9 +7,11 @@
     <img src="{{ url ? url : (defaultImageUrl$ | async) }}?w=1000" alt="{{ contentItem.banner ? contentItem.title : 'default background' }}" />
   </picture>
 
-  <span class="card-label">{{
-    contentItem.__typename! | contentTypeDisplayName
-  }}</span>
+  <div class="card-label-rounded-corners">
+    <span class="card-label">{{
+      contentItem.__typename! | contentTypeDisplayName
+    }}</span>
+  </div>
 
   <mat-card-title>
     <a
