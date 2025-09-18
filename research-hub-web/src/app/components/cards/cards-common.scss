@@ -5,13 +5,23 @@
  * Card Label
  */
 .card-label {
-  background: $dark-blue;
   color: rgb(255, 255, 255);
-  position: absolute;
   font-size: 14px;
+  font-weight: bold;
+}
+
+/**
+* Rounded Corners on Card Label
+*/
+.card-label-rounded-corners {
+  border-radius: 10px 0 9px 0;
+  background: $dark-blue;
+  position: absolute;
+  display: flex;
+  align-items: center;
   left: 0;
   top: 0;
-  padding: 0px 15px;
+  padding: 0px 15px 3px;
 }
 
 /**
@@ -20,9 +30,9 @@
 .mat-card-title {
   line-height: 20px;
   span {
-    color: $dark-grey;
+    color: $dark-blue;
     &:hover {
-      border-bottom: solid 2px $dark-grey;
+      border-bottom: solid 2px $dark-blue;
     }
   }
 }

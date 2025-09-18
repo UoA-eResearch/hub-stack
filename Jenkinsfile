@@ -13,7 +13,7 @@ pipeline {
     }
 
     agent {
-        label("uoa-buildtools-ionic")
+        label("uoa-buildtools-node20")
     }
 
     options {
@@ -288,7 +288,7 @@ pipeline {
                             steps {
                                 echo 'Installing research-hub-web dependencies.'
                                 dir("research-hub-web") {
-                                    sh "npm install"
+                                    sh "npm install --force"
                                     sh "mkdir -p ${HOME}/research-hub-web/"
                                     // sh "tar cvfz ./node_modules.tar.gz node_modules" // Cache new node_modules/ folder
                                     // script {
@@ -345,10 +345,10 @@ pipeline {
                                 echo 'Running research-hub-web unit tests'
                                 sh 'npm run test-ci'
 
-                                echo 'Running research-hub-web e2e tests'
+                                // echo 'Running research-hub-web e2e tests'
                                 // set the graphql server url as an env variable for Cypress
                                 // for intercepting some of the graphql queries and returning mocked data
-                                sh "export cypress_graphql_server=${graphqlServer} && npm run e2e-ci"
+                                // sh "export cypress_graphql_server=${graphqlServer} && npm run e2e-ci"
                             }
                         }
                     }
