@@ -2,10 +2,12 @@
 
 /**
  * University of Auckland colors from Web Style Guide
+   Updated Sep-01-2025 to add Waitemata, Azure, and Mahina
  */
 
-$dark-blue: #00467f;
-$light-blue: #009ac7;
+$dark-blue: #0C0C48; //Waitemata
+$light-blue: #1F2BD4; //Azure
+$mahina: #00CAEF; //only used for dividers, newly added
 $silver: #8d9091;
 $dark-grey: #333333;
 $mid-grey: #404040;
@@ -29,23 +31,24 @@ $single-column-max-width: 1100px;
 
 /**
   * Material design colors generated with: http://mcg.mbitson.com/
+  * Sep-01-2025Updated with: https://moikaturns.github.io/mcg/
   */
 /* For use in src/lib/core/theming/_palette.scss */
 $hub-dark-blue: (
-    50 : #e0e9f0,
-    100 : #b3c8d9,
-    200 : #80a3bf,
-    300 : #4d7ea5,
-    400 : #266292,
-    500 : #00467f,
-    600 : #003f77,
-    700 : #00376c,
-    800 : #002f62,
-    900 : #00204f,
-    A100 : #82a8ff,
-    A200 : #4f84ff,
-    A400 : #1c60ff,
-    A700 : #034fff,
+    50 : #e2e2e9,
+    100 : #b6b6c8,
+    200 : #8686a4,
+    300 : #55557f,
+    400 : #303063,
+    500 : #0c0c48,
+    600 : #0a0a41,
+    700 : #080838,
+    800 : #060630,
+    900 : #030321,
+    A100 : #5d5dff,
+    A200 : #2a2aff,
+    A400 : #0000f6,
+    A700 : #0000dd,
     contrast: (
         50 : #000000,
         100 : #000000,
@@ -65,35 +68,35 @@ $hub-dark-blue: (
 );
 
 $hub-light-blue: (
-  50 : #e0f3f8,
-  100 : #b3e1ee,
-  200 : #80cde3,
-  300 : #4db8d8,
-  400 : #26a9cf,
-  500 : #009ac7,
-  600 : #0092c1,
-  700 : #0088ba,
-  800 : #007eb3,
-  900 : #006ca6,
-  A100 : #d0ecff,
-  A200 : #9dd8ff,
-  A400 : #6ac3ff,
-  A700 : #51b9ff,
+    50 : #e4e6fa,
+    100 : #bcbff2,
+    200 : #8f95ea,
+    300 : #626be1,
+    400 : #414bda,
+    500 : #1f2bd4,
+    600 : #1b26cf,
+    700 : #1720c9,
+    800 : #121ac3,
+    900 : #0a10b9,
+    A100 : #e5e5ff,
+    A200 : #b2b3ff,
+    A400 : #7f82ff,
+    A700 : #6569ff,
   contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #000000,
-      500 : #ffffff,
-      600 : #ffffff,
-      700 : #ffffff,
-      800 : #ffffff,
-      900 : #ffffff,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #000000,
-      A700 : #000000,
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #ffffff,
   )
 );
 
@@ -118,12 +121,14 @@ $color-guide-tile-bg: $dark-blue;
 
 /**
 * All typography
+* Banner text needs to be Inter Display Semi Bold
+* All other text and headers to be updated to Inter Font
 */
 
 $font-family: "National";
 
 $body-light-bg-font-color: black;
-$link-light-bg-color: $dark-blue;
+$link-light-bg-color: $light-blue;
 
 $breadcrumb-previous-color: map-get($hub-dark-blue, A100);
 $breadcrumb-current-color: $color-icon;
@@ -161,8 +166,9 @@ $app-chips-typography: mat.define-typography-config(
 
 /**
  * Colors
+ * Aug 2025 Rebrand update: Heading colours are all Waitemata (dark-blue)
  */
-$heading-1-font-color: $light-blue;
-$heading-2-font-color: $light-blue;
-$heading-3-font-color: $dark-grey;
-$heading-4-font-color: $dark-grey;
+$heading-1-font-color: $dark-blue;
+$heading-2-font-color: $dark-blue;
+$heading-3-font-color: $dark-blue;
+$heading-4-font-color: $dark-blue;
