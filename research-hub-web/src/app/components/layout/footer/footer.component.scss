@@ -9,10 +9,10 @@ footer {
   @include size(medium) {
     min-height: $height-footer;
   }
-  background: $dark-grey;
+  background: #000000;
   font-size: mat.font-size($app-base-typography, button);
   font-weight: mat.font-weight($app-base-typography, caption);
-  color: #a1a1a1;
+  color: white;
 
   .footer-content {
     @extend .top-padding;
@@ -46,7 +46,7 @@ footer {
     text-decoration: none;
     font-size: mat.font-size($app-base-typography, button);
     font-weight: mat.font-weight($app-base-typography, caption);
-    color: #a1a1a1;
+    color: white;
   }
   .footer-xs a {
     text-align: center;

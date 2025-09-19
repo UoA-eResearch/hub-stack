@@ -1,9 +1,12 @@
+@import "variables";
+
 mat-expansion-panel {
   border-radius: 0px;
 }
 
 mat-panel-title {
   font-weight: bold;
+  color: $dark-blue;
 }
 
 .description-xs {
