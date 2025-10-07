@@ -128,6 +128,7 @@ h4 {
 p {
   color: $body-grey;
   font-family: $font-family;
+  line-height: 1.5;
 }
 a {
   text-decoration: none;
@@ -195,14 +196,14 @@ mat-card.mat-card {
 
 app-search-filters {
   div.mat-list-text {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: normal;
     white-space: normal;
     line-height: 24px;
   }
   mat-tab-header {
     .mat-tab-label-content {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: normal;
       color: black;
     }
@@ -279,7 +280,7 @@ mat-option.search-autocomplete-options .mat-option-text {
  */
 h1.content-title {
   color: $dark-blue;
-  font-size: 52px;
+  font-size: 48px;
   font-weight: bold;
   line-height: 110%;
 }
@@ -308,7 +309,8 @@ h2.maori-proverb {
  * Card Text
  */
 .card-title {
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 /**
@@ -383,9 +385,9 @@ h2.maori-proverb {
     }
   }
   > p {
-    font-size: 16px;
+    font-size: 14px;
     @include size(medium) {
-      font-size: 20px;
+      font-size: 18px;
     }
   }
 }

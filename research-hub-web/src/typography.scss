@@ -126,6 +126,29 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: "Inter";
+  src: url('Inter-Regular.otf') format('otf');
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url('Inter-Bold.otf') format('otf');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url('Inter-Italic.otf') format('otf');
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Inter Display";
+  src: url('InterDisplay-SemiBold.woff2') format('woff2');
+  font-weight: bold;
+}
+
 html,
 body,
 span,
@@ -139,7 +162,7 @@ h6,
 p,
 ion-item,
 ion-title {
-  font-family: "National" !important;
+  font-family: "Inter" !important;
   // white-space: normal;
 }
 
