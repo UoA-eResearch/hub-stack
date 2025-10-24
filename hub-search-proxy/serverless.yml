@@ -20,11 +20,11 @@ provider:
   region: ap-southeast-2
   vpc:
     securityGroupIds:
-      - sg-0226eccf470d21ee4
+      - sg-0a2c01e3cc21a0c3b
     subnetIds:
-      - subnet-0d0a68988c480b3a4
-      - subnet-0b56849cba433ce13
-      - subnet-0fc970830487f2323
+      - subnet-008ef14c8a3818b31
+      - subnet-09489834fe62d8b27
+      - subnet-09a1e1f3a0d8166c2
   endpointType: regional
   role: myDefaultRole
   timeout: 30
