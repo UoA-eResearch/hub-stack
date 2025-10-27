@@ -34,7 +34,7 @@ mat-card {
   width: 100%;
   .mat-card-title {
     display: inline;
-    font-weight: 100;
+    font-weight: 400;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
     border-bottom: 1px solid rgba(0, 0, 0, 0);
@@ -78,7 +78,7 @@ mat-card {
   font-size: 14px;
   right: 0;
   top: 0;
-  padding: 0px 15px;
+  padding: 3px 15px;
 }
 
 // Skeleton Loader
