@@ -318,7 +318,9 @@ h2.maori-proverb {
  */
 .standard-button {
   color: white !important;
-  padding-bottom: 2.4px !important;
+  // padding-bottom: 2.4px !important;
+  padding: .6em 2em !important;
+  font-weight: bold;
   border: 3px solid $dark-blue !important;
   border-radius: 50px !important;
   background-color: $dark-blue !important;
