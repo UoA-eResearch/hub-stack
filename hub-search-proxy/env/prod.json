@@ -4,9 +4,9 @@
         "awsApiGatewayCustomDomainName": "apigw.prod.amazon.auckland.ac.nz",
         "deploymentBucketStage": "prod"
     },
-    "elasticsearchDomainName": "researchhub-prod-domain",
+    "elasticsearchDomainName": "researchhub-prod-vpc-domain",
     "elasticsearchDomainAccount": "291148375163",
-    "ELASTICSEARCH_ENDPOINT": "${ssm:/prod/research-hub/elasticsearch_endpoint}",
+    "ELASTICSEARCH_ENDPOINT": "${ssm:/prod/research-hub/elasticsearch_endpoint_vpc}",
     "CORS_ACCESS_CONTROL_ALLOW_ORIGINS": "*",
     "CONTENTFUL_SPACE_ID": "${ssm:/prod/research-hub/contentful-space-id}",
     "CONTENTFUL_MGMT_ACCESS_TOKEN": "${ssm:/prod/research-hub/contentful-mgmt-access-token}",
