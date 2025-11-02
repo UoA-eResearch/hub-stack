@@ -17,16 +17,16 @@ export const appRoutes: Routes = [
     loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
   },
   // redirects
-  { //RSM-4221
-    path: 'platforms',
-    redirectTo: 'subhub/researcher-development',
-    pathMatch: 'full'
-  },
-  { //SCTASK0366060
-    path: 'article/share',
-    redirectTo: 'subhub/researcher-development',
-    pathMatch: 'full'
-  },
+  // { //RSM-4221
+  //   path: 'platforms',
+  //   redirectTo: 'subhub/researcher-development',
+  //   pathMatch: 'full'
+  // },
+  // { //SCTASK0366060
+  //   path: 'article/share',
+  //   redirectTo: 'subhub/researcher-development',
+  //   pathMatch: 'full'
+  // },
   {
     path: '',
     canActivate: [LoginSuccessGuard],
