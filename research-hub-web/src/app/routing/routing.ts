@@ -16,6 +16,17 @@ export const appRoutes: Routes = [
     path: 'requestStorage',
     loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
   },
+  // redirects
+  { //RSM-4221
+    path: 'platforms',
+    redirectTo: 'subhub/research-platforms',
+    pathMatch: 'full'
+  },
+  { //SCTASK0366060
+    path: 'article/share',
+    redirectTo: 'subhub/research-platforms',
+    pathMatch: 'full'
+  },
   {
     path: '',
     canActivate: [LoginSuccessGuard],
