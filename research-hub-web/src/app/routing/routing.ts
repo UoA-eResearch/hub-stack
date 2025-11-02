@@ -19,12 +19,12 @@ export const appRoutes: Routes = [
   // redirects
   { //RSM-4221
     path: 'platforms',
-    redirectTo: 'subhub/existing-research-infrastructure',
+    redirectTo: 'subhub/researcher-development',
     pathMatch: 'full'
   },
   { //SCTASK0366060
     path: 'article/share',
-    redirectTo: 'subhub/existing-research-infrastructure',
+    redirectTo: 'subhub/researcher-development',
     pathMatch: 'full'
   },
   {
