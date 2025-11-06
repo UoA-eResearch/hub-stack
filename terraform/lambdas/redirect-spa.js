@@ -6,6 +6,8 @@ function handler(event) {
     var host = headers.host && headers.host.value ? headers.host.value : 'research-hub.auckland.ac.nz'; // replace with hardcoded host 
     
     var redirectMap = {
+        "/platforms": "/subhub/research-platforms",
+        "/article/share": "subhub/research-platforms",
         "/researcher-profiles-and-ids/discovery-profiles-research-outputs": "/subhub/discovery-profiles-research-outputs",
         "/researcher-profiles-and-ids/discovery-profiles-research-outputs/add-research-discovery-profile-and-researchspace": "/subhub/add-research-discovery-profile-and-researchspace",
         "/open-access/open-access-publishing-agreements": "/article/open-access-publishing-agreements",
