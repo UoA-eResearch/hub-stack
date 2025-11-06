@@ -1,6 +1,6 @@
 {
   "name": "research-hub-web",
-  "version": "2.8.13",
+  "version": "2.8.14",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
