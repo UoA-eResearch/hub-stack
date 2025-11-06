@@ -7,7 +7,7 @@ function handler(event) {
     
     var redirectMap = {
         "/platforms": "/subhub/research-platforms",
-        "/article/share": "subhub/research-platforms",
+        "/article/share": "/subhub/research-platforms",
         "/researcher-profiles-and-ids/discovery-profiles-research-outputs": "/subhub/discovery-profiles-research-outputs",
         "/researcher-profiles-and-ids/discovery-profiles-research-outputs/add-research-discovery-profile-and-researchspace": "/subhub/add-research-discovery-profile-and-researchspace",
         "/open-access/open-access-publishing-agreements": "/article/open-access-publishing-agreements",
