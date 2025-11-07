@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LayoutComponent } from '@app/components/layout/layout.component';
 import { AuthGuard, LoginSuccessGuard } from '@uoa/auth';
 import { ExternalRedirectGuard } from './external-redirect-guard';
+import { redirectRoutes } from './redirect-routes';
 
 
 export const appRoutes: Routes = [
@@ -16,20 +17,7 @@ export const appRoutes: Routes = [
   {
     path: 'requestStorage',
     loadChildren: () => import('@components/legacy-routing/legacy-routing.module').then(m => m.LegacyRoutingModule)
-  },
-  /**
-   * URL redirects start here
-   */
-  { //RSM-4221
-    path: 'platforms',
-    redirectTo: 'subhub/research-platforms',
-    pathMatch: 'full'
-  },
-  { //SCTASK0366060
-    path: 'article/share',
-    redirectTo: 'subhub/research-platforms',
-    pathMatch: 'full'
-  },
+  }, 
   { //SCTASK0366067
     path: 'service/media-productions',
     canActivate: [ExternalRedirectGuard],
@@ -38,9 +26,7 @@ export const appRoutes: Routes = [
       externalUrl: 'https://www.auckland.ac.nz/en/intranet/services/buying-payment/approved-suppliers/photographers-videographers-designers.html'
     }
   },
-  /**
-   * URL redirects end here
-   */
+  ...redirectRoutes,
   {
     path: '',
     canActivate: [LoginSuccessGuard],
