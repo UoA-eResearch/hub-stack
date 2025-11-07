@@ -34,7 +34,7 @@ export const redirectRoutes: Routes = [
     },
     {
         path: 'researcher-profiles-and-ids/scopus-ID',
-        redirectTo: 'article/scopus-id',
+        redirectTo: 'article/scopus-ID',
         pathMatch: 'full'
     },
     {
