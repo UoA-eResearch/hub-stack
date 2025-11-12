@@ -11,7 +11,7 @@ function handler(event) {
         "researcher-profiles-and-ids/discovery-profiles-research-outputs": "subhub/discovery-profiles-research-outputs",
         "researcher-profiles-and-ids/discovery-profiles-research-outputs/add-research-discovery-profile-and-researchspace": "subhub/add-research-discovery-profile-and-researchspace",
         "open-access/open-access-publishing-agreements": "article/open-access-publishing-agreements",
-        "metrics/introduction-to-metrics": "articleintroduction-to-metrics",
+        "metrics/introduction-to-metrics": "article/introduction-to-metrics",
         "researcher-profiles-and-ids/scopus-ID": "article/scopus-ID",
         "researcher-profiles-and-ids/discovery-profiles-research-outputs/add-research-discovery-profile-and-researchspace/deposit-research-outputs": "article/deposit-research-outputs",
         "metrics/responsible-metrics": "article/responsible-metrics",
