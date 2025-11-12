@@ -1,179 +1,32 @@
 // https://stackoverflow.com/questions/59160472/how-to-solve-x-cache-error-from-cloudfront-on-spa
+import cf from 'cloudfront';
 
-function handler(event) {
+async function handler(event) {
+    const kvs = cf.kvs();
     var request = event.request;
-    var headers = request.headers;
-    var host = headers.host && headers.host.value ? headers.host.value : 'research-hub.auckland.ac.nz'; // replace with hardcoded host 
     
-    var redirectMap = {
-        "platforms": "subhub/research-platforms",
-        "article/share": "subhub/research-platforms",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs": "subhub/discovery-profiles-research-outputs",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/add-research-discovery-profile-and-researchspace": "subhub/add-research-discovery-profile-and-researchspace",
-        "open-access/open-access-publishing-agreements": "article/open-access-publishing-agreements",
-        "metrics/introduction-to-metrics": "article/introduction-to-metrics",
-        "researcher-profiles-and-ids/scopus-ID": "article/scopus-ID",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/add-research-discovery-profile-and-researchspace/deposit-research-outputs": "article/deposit-research-outputs",
-        "metrics/responsible-metrics": "article/responsible-metrics",
-        "open-access/why-should-i-make-my-work-open-access": "article/why-should-i-make-my-work-open-access",
-        "the-publishing-process/how-do-i-publish-in-a-journal": "article/how-do-i-publish-in-a-journal",
-        "researcher-profiles-and-ids/orcid": "article/orcid",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/add-research-discovery-profile-and-researchspace/research-outputs-manual-records": "article/research-outputs-manual-records",
-        "open-access/open-access-toolkit-for-aotearoa-new-zealand-researchers": "article/open-access-toolkit-for-aotearoa-new-zealand-researchers",
-        "publishing-communication-profiles/publishing-guide/open-access/creative-commons": "article/creative-commons",
-        "the-publishing-process/what-journal-should-i-publish-in": "article/what-journal-should-i-publish-in",
-        "open-access/creative-commons": "article/what-is-open-access",
-        "open-access/diamond-open-access": "article/diamond-open-access",
-        "open-access/green-open-access": "article/green-open-access",
-        "open-access/glossary-of-open-access-terms": "article/glossary-of-open-access-terms",
-        "open-access/ethical-concerns-about-open-access-fees-and-apcs": "article/ethical-concerns-about-open-access-fees-and-apcs",
-        "the-publishing-process/predatory-publishers": "article/predatory-publishers",
-        "metrics/metrics-for-promotions-grants-and-awards": "article/metrics-for-promotions-grants-and-awards",
-        "the-publishing-process/top-ranked-journals-list": "article/top-ranked-journals-list",
-        "researcher-profiles-and-ids/how-to-build-and-maintain-your-researcher-profile": "article/how-to-build-and-maintain-your-researcher-profile",
-        "open-access/how-do-i-make-my-journal-article-open-access": "article/how-do-i-make-my-journal-article-open-access",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/update-engagement-tab": "article/update-engagement-tab",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/update-teaching-and-supervision-tab": "article/update-teaching-and-supervision-tab",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/discovery-privacy-settings": "article/discovery-privacy-settings",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/edit-your-research-tab": "article/edit-your-research-tab",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/add-research-discovery-profile-and-researchspace/research-outputs-searches": "article/research-outputs-searches",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/discovery-update-personal-details": "article/discovery-update-personal-details",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/discovery-profile-uses": "article/discovery-profile-uses",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/introduction-discovery-profile": "article/introduction-discovery-profile",
-        "researcher-profiles-and-ids/discovery-profiles-research-outputs/workshop-discovery-profile": "event/workshop-discovery-profile",
-        "researcher-profiles-and-ids/workshop-orcid": "event/workshop-orcid",
-        "open-access/open-access-week-events": "event/open-access-week-events",
-        "researcher-profiles-and-ids/raising-your-research-profile": "event/raising-your-research-profile",
-        "the-publishing-process/publishing-overview-workshop": "event/publishing-overview-workshop",
-        "open-access/workshop-pathways-to-open-access-uoa": "event/workshop-pathways-to-open-access-uoa",
-        "the-publishing-process/copyright-advisory": "service/copyright-advisory",
-        "open-access/open-access-support-fund-for-high-impact-publications": "funding/open-access-support-fund-for-high-impact-publications",
-        'subhub/research-project-management': 'subhub/research-grant-management',
-        'research-project-management/negotiate-and-establish-contracts/fast-track-project-activation': 'article/fast-track-project-activation',
-        'research-project-management/negotiate-and-establish-contracts/project-activation': 'process/project-activation',
-        'research-project-management/negotiate-and-establish-contracts/subcontracts': 'article/subcontracts',
-        'research-project-management/negotiate-and-establish-contracts/memorandum-of-understanding': 'process/memorandum-of-understanding',
-        'research-project-management/develop-and-submit-proposals/prepare-or-revise-project-budget': 'article/prepare-or-revise-project-budget',
-        'research-project-management/develop-and-submit-proposals/writing-a-research-proposal': 'article/writing-a-research-proposal',
-        'research-project-management/develop-and-submit-proposals/fx-rates': 'article/fx-rates',
-        'research-project-management/conduct-and-close-research-projects/manage-deliverables-and-milestones': 'article/manage-deliverables-and-milestones',
-        'research-project-management/conduct-and-close-research-projects/manage-risks-and-issues': 'article/manage-risks-and-issues',
-        'research-project-management/negotiate-and-establish-contracts/material-transfer-agreements': 'process/material-transfer-agreements',
-        'research-project-management/negotiate-and-establish-contracts/varying-a-contract': 'article/varying-a-contract',
-        'research-project-management/develop-and-submit-proposals/submit-a-proposal-with-institutional-approval': 'article/submit-a-proposal-with-institutional-approval',
-        'research-project-management/conduct-and-close-research-projects/research-and-consulting-incentives/c3-c4-incentive-payments-for-consulting-projects': 'article/c3-c4-incentive-payments-for-consulting-projects',
-        'research-project-management/conduct-and-close-research-projects': 'subhub/conduct-and-close-research-projects',
-        'research-project-management/negotiate-and-establish-contracts/confidentiality-and-non-disclosure-agreements': 'article/confidentiality-and-non-disclosure-agreements',
-        'research-project-management/negotiate-and-establish-contracts/contracts-and-clauses': 'article/contracts-and-clauses',
-        'research-project-management/develop-and-submit-proposals': 'subhub/develop-and-submit-proposals',
-        'research-project-management/develop-and-submit-proposals/funds-categorisation': 'subhub/funds-categorisation',
-        'research-project-management/develop-and-submit-proposals/funds-categorisation/partnered-schemes': 'article/partnered-schemes',
-        'research-project-management/develop-and-submit-proposals/funds-categorisation/self-service-schemes': 'article/self-service-schemes',
-        'research-project-management/develop-and-submit-proposals/funds-categorisation/serviced-schemes': 'article/serviced-schemes',
-        'research-project-management/develop-and-submit-proposals/funds-categorisation/supported-schemes': 'article/supported-schemes',
-        'research-project-management/conduct-and-close-research-projects/manage-budget-and-resources': 'article/manage-budget-and-resources',
-        'research-project-management/negotiate-and-establish-contracts': 'subhub/negotiate-and-establish-contracts',
-        'research-project-management/conduct-and-close-research-projects/research-and-consulting-incentives/outside-activities-hours': 'article/outside-activities-hours',
-        'research-project-management/conduct-and-close-research-projects/reporting-guidance-and-templates': 'article/reporting-guidance-and-templates',
-        'research-project-management/conduct-and-close-research-projects/research-and-consulting-incentives': 'subhub/research-and-consulting-incentives',
-        'research-project-management/conduct-and-close-research-projects/research-and-consulting-incentives/research-development-accounts-rda': 'article/research-development-accounts-rda',
-        'research-project-management/conduct-and-close-research-projects/research-and-consulting-incentives/research-project-funding-case-study': 'casestudy/research-project-funding-case-study',
-        'research-project-management/conduct-and-close-research-projects/research-project-scholarships-rps': 'article/research-project-scholarships-rps',
-        'research-project-management/conduct-and-close-research-projects/internal-extensions': 'article/internal-extensions',
-        'research-project-management/conduct-and-close-research-projects/project-closure': 'article/project-closure',
-        'research-project-management/identify-explore-and-create-opportunities': 'subhub/identify-explore-and-create-opportunities',
-        'research-project-management/identify-explore-and-create-opportunities/a-guide-to-finding-research-funding-opportunities-and-the-uoa-submission': 'article/a-guide-to-finding-research-funding-opportunities-and-the-uoa-submission',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding': 'subhub/domestic-funding',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/mbie-endeavour-fund': 'subhub/mbie-endeavour-fund',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/mbie-endeavour-fund/endeavour-smart-ideas': 'funding/endeavour-smart-ideas',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/mbie-endeavour-fund/endeavour-research-programmes': 'funding/endeavour-research-programmes',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/mbie-endeavour-fund/endeavour-fund-application-support': 'article/endeavour-fund-application-support',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/mbie-endeavour-fund/introducing-pitau-mbies-new-online-portal': 'article/introducing-pitau-mbies-new-online-portal',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/royal-society-te-aparangi': 'subhub/royal-society-te-aparangi',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/royal-society-te-aparangi/royal-society-marsden-fund': 'subhub/royal-society-marsden-fund',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/royal-society-te-aparangi/royal-society-marsden-fund/marsden-fund-proposal-and-budget-advice': 'article/marsden-fund-proposal-and-budget-advice',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/royal-society-te-aparangi/royal-society-marsden-fund/marsden-fund-support-material': 'article/marsden-fund-support-material',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/royal-society-te-aparangi/royal-society-te-aparangi-tawhia-te-mana-research-fellowships': 'article/royal-society-te-aparangi-tawhia-te-mana-research-fellowships',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/royal-society-te-aparangi/royal-society-te-aparangi-catalyst-fund': 'article/royal-society-te-aparangi-catalyst-fund',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/health-research-council': 'subhub/health-research-council',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/health-research-council/health-research-council-hrc-2026-project-and-programme-changes': 'article/health-research-council-hrc-2026-project-and-programme-changes',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/health-research-council/hrc-investment-rounds': 'article/hrc-investment-rounds',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/health-research-council/maori-health-advancement': 'article/maori-health-advancement',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/health-research-council/hrc-application-support': 'service/hrc-application-support',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/health-research-council/hrc-presentations-and-webinars': 'article/hrc-presentations-and-webinars',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/health-research-council/HRC-nga-kanohi-kitea-community-advancement-fund': 'article/HRC-nga-kanohi-kitea-community-advancement-fund',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/national-research-collaborations': 'subhub/national-research-collaborations',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/national-research-collaborations/cores': 'article/cores',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/national-research-collaborations/national-research-collaborations-nrcs': 'article/national-research-collaborations-nrcs',
-        'research-project-management/identify-explore-and-create-opportunities/domestic-funding/national-research-collaborations/nsc-and-core-contestable-funds-opportunities': 'article/nsc-and-core-contestable-funds-opportunities',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding': 'subhub/international-funding',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/find-international-funding-schemes': 'subhub/international-funding',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/us-federal-schemes': 'subhub/us-federal-schemes',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/us-federal-schemes/university-response-to-new-us-regulations': 'article/university-response-to-new-us-regulations',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/us-federal-schemes/us-federal-funding': 'article/us-federal-funding',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/us-federal-schemes/air-force-office-of-scientific-research-afosr': 'article/air-force-office-of-scientific-research-afosr',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/us-federal-schemes/congressionally-directed-medical-research-programs-cdmrp': 'article/congressionally-directed-medical-research-programs-cdmrp',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/us-federal-schemes/us-national-institutes-of-health': 'article/us-national-institutes-of-health',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/us-federal-schemes/office-of-naval-research-onr': 'article/office-of-naval-research-onr',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/horizon-europe-funding-guidance': 'article/horizon-europe-funding-guidance',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/international-research-partnerships-funding-guidance': 'article/international-research-partnerships-funding-guidance',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/other-international-funding-schemes': 'subhub/other-international-funding-schemes',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/other-international-funding-schemes/human-frontier-science-programme-hfsp': 'article/human-frontier-science-programme-hfsp',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/other-international-funding-schemes/spencer-foundation': 'article/spencer-foundation',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/other-international-funding-schemes/john-templeton-foundation': 'article/john-templeton-foundation',
-        'research-project-management/identify-explore-and-create-opportunities/international-funding/other-international-funding-schemes/tech-research-funding-guidance': 'article/tech-research-funding-guidance',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding': 'subhub/internal-funding',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/research-development-fund': 'funding/research-development-fund',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/transdisciplinary-ideation-fund': 'funding/transdisciplinary-ideation-fund',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/researcher-skills-and-development-fund': 'funding/researcher-skills-and-development-fund',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/global-research-engagement-fund-gref': 'funding/global-research-engagement-fund-gref',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/hikina-kia-tutuki': 'funding/hikina-kia-tutuki',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/covid-19-hardship-fund': 'funding/covid-19-hardship-fund',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/covid-19-research-restart-fund': 'funding/covid-19-research-restart-fund',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/fofongas-afi-pacific-partnership-programme': 'funding/fofongas-afi-pacific-partnership-programme',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/fofonga-tubu-researcher-capability-fund': 'funding/fofonga-tubu-researcher-capability-fund',
-        'research-project-management/identify-explore-and-create-opportunities/internal-funding/the-university-of-auckland-inventors-fund': 'funding/the-university-of-auckland-inventors-fund',
-        'research-infrastructure/shared-research-infrastructure-fund': 'funding/shared-research-infrastructure-fund',
-        'research-project-management/identify-explore-and-create-opportunities/international-networks/wun-research-development-fund': 'funding/wun-research-development-fund',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards': 'subhub/prizes-and-awards',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards/ECREA': 'funding/ECREA',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards/REM': 'funding/REM',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards/research-impact-award': 'funding/research-impact-award',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards/te-rau-hiringa-professional-staff-research-excellence-award': 'funding/te-rau-hiringa-professional-staff-research-excellence-award',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards/Te-Taumata-Rangahau': 'subhub/Te-Taumata-Rangahau',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards/hood-fellowships': 'funding/hood-fellowships',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards/seelye-fellowships': 'funding/seelye-fellowships',
-        'research-project-management/identify-explore-and-create-opportunities/prizes-and-awards/DVA': 'funding/DVA',
-        'research-project-management/identify-explore-and-create-opportunities/national-and-international-prizes-and-awards': 'subhub/national-and-international-prizes-and-awards',
-        'identify-explore-and-create-opportunities/national-and-international-prizes-and-awards/national-and-international-awards': 'article/national-and-international-awards',
-        'identify-explore-and-create-opportunities/national-and-international-prizes-and-awards/the-prime-ministers-science-prizes': 'article/the-prime-ministers-science-prizes',
-        'identify-explore-and-create-opportunities/national-and-international-prizes-and-awards/the-prime-ministers-science-prize': 'funding/the-prime-ministers-science-prize',
-        'identify-explore-and-create-opportunities/national-and-international-prizes-and-awards/the-prime-ministers-science-communication-prize': 'funding/the-prime-ministers-science-communication-prize',
-        'identify-explore-and-create-opportunities/national-and-international-prizes-and-awards/the-prime-ministers-macdiarmid-emerging-scientist-prize': 'funding/the-prime-ministers-macdiarmid-emerging-scientist-prize',
-        'research-project-management/identify-explore-and-create-opportunities/international-networks': 'subhub/international-networks',
-        'identify-explore-and-create-opportunities/international-networks/apru': 'article/apru',
-        'identify-explore-and-create-opportunities/international-networks/u21': 'article/u21',
-        'identify-explore-and-create-opportunities/international-networks/wun': 'article/wun',
-        'identify-explore-and-create-opportunities/funding-calendar': 'article/funding-calendar',
-        'identify-explore-and-create-opportunities/gets': 'service/gets',
-        'identify-explore-and-create-opportunities/research-professional': 'service/research-professional'
-    } 
-
     if (request.uri === '/service/media-productions') { //SCTASK0366067
         return {
             statusCode: 302,
             statusDescription: 'Found',
             headers: { 'location': { 'value' : 'https://www.auckland.ac.nz/en/intranet/services/buying-payment/approved-suppliers/photographers-videographers-designers.html' } }
-        };   
-    } 
-    
-    if (redirectMap[request.uri]) { 
-        return {
-            statusCode: 302,
-            statusDescription: 'Found',
-            headers: { 'location': { 'value' : `https://${host}/${redirectMap[request.uri]}` } }
         }
     }
+    
+    try {
+        const lookupKey = request.uri.replace(/^\/+/, '');
+        const target = await kvs.get(lookupKey, { format: 'string' });
+        if (target && typeof target === 'string') {
+            const location = target.startsWith('/') ? target : `/${target}`;
+            return {
+                statusCode: 301,
+                statusDescription: 'Moved Permanently',
+                headers: {
+                    location: { value: location }
+                }
+            }
+        }
+    } catch (e) {}
 
     if (!hasExtension(request.uri)) {
         request.uri = '/index.html';
