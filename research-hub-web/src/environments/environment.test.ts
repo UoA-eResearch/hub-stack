@@ -2,6 +2,7 @@
 export const environment = {
   env: 'test',
   sentryTracesSampleRate: 1.0,
+  version: 'VERSION',
   production: true,
   cerGraphQLUrl: 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-service',
   cerGraphQLPreviewUrl: 'https://rhubcpapi.connect.test.amazon.auckland.ac.nz/cer-graphql-preview-service/',
