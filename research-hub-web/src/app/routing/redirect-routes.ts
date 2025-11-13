@@ -221,27 +221,42 @@ export const redirectRoutes: Routes = [
   },
   {
     path: 'research-project-management/negotiate-and-establish-contracts/fast-track-project-activation',
-    redirectTo: 'article/fast-track-project-activation',
+    redirectTo: 'process/manage-research-fast-track-project-activation',
+    pathMatch: 'full'
+  },
+  {
+    path: 'article/fast-track-project-activation',
+    redirectTo: 'process/manage-research-fast-track-project-activation',
     pathMatch: 'full'
   },
   {
     path: 'research-project-management/negotiate-and-establish-contracts/project-activation',
-    redirectTo: 'process/project-activation',
+    redirectTo: 'article/project-activation',
     pathMatch: 'full'
   },
   {
     path: 'research-project-management/negotiate-and-establish-contracts/subcontracts',
-    redirectTo: 'article/subcontracts',
+    redirectTo: 'process/negotiate-and-execute-research-subcontract',
+    pathMatch: 'full'
+  },
+  {
+    path: 'article/subcontracts',
+    redirectTo: 'process/negotiate-and-execute-research-subcontract',
     pathMatch: 'full'
   },
   {
     path: 'research-project-management/negotiate-and-establish-contracts/memorandum-of-understanding',
-    redirectTo: 'process/memorandum-of-understanding',
+    redirectTo: 'article/memorandum-of-understanding',
     pathMatch: 'full'
   },
   {
     path: 'research-project-management/develop-and-submit-proposals/prepare-or-revise-project-budget',
-    redirectTo: 'article/prepare-or-revise-project-budget',
+    redirectTo: 'process/prepare-budget-for-funding-proposal',
+    pathMatch: 'full'
+  },
+  {
+    path: 'article/prepare-or-revise-project-budget',
+    redirectTo: 'process/prepare-budget-for-funding-proposal',
     pathMatch: 'full'
   },
   {
@@ -266,7 +281,7 @@ export const redirectRoutes: Routes = [
   },
   {
     path: 'research-project-management/negotiate-and-establish-contracts/material-transfer-agreements',
-    redirectTo: 'process/material-transfer-agreements',
+    redirectTo: 'article/material-transfer-agreements',
     pathMatch: 'full'
   },
   {
