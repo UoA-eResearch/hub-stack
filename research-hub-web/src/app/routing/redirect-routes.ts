@@ -1,4 +1,4 @@
-import { Routes } from "@angular/router";
+import { Routes } from '@angular/router';
 
 export const redirectRoutes: Routes = [
     { //RSM-4221
@@ -773,6 +773,99 @@ export const redirectRoutes: Routes = [
     path: 'identify-explore-and-create-opportunities/research-professional',
     redirectTo: 'service/research-professional',
     pathMatch: 'full'
-  }
+  },
     // SCTASK0368795 end
+    // SCTASK0387840 start
+  {
+    'path': 'subhub/ahrec',
+    'redirectTo': 'article/about-the-human-ethics-committees',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'subhub/uahpec',
+    'redirectTo': 'article/about-the-human-ethics-committees',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'subhub/health-and-disability-research',
+    'redirectTo': 'article/about-the-human-ethics-committees',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/applying-to-uahpec-for-human-ethics-approval',
+    'redirectTo': 'article/how-to-apply-for-human-ethics-approval',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/applying-to-ahrec',
+    'redirectTo': 'article/how-to-apply-for-human-ethics-approval',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/guidance-right-ethics-committee-for-human-participant-research',
+    'redirectTo': 'article/about-the-human-ethics-committees',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/amendments-to-uahpec-approved-projects',
+    'redirectTo': 'article/managing-your-approved-human-ethics-application',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/ahrec-reviews',
+    'redirectTo': 'article/managing-your-approved-human-ethics-application',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/before-applying-for-human-ethics-approval',
+    'redirectTo': 'article/how-to-apply-for-human-ethics-approval',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/uahpec-reviews',
+    'redirectTo': 'article/managing-your-approved-human-ethics-application',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/human-ethics-studies-affected-by-covid-19',
+    'redirectTo': 'subhub/research-involving-human-participants',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/before-applying-to-ahrec',
+    'redirectTo': 'article/how-to-apply-for-human-ethics-approval',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/research-ethics-survey',
+    'redirectTo': 'subhub/research-involving-human-participants',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/check-eligibility-before-applying-for-approval-from-a-health-and-disability',
+    'redirectTo': 'article/about-the-human-ethics-committees',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/post-approval-reporting-and-amendments-for-ahrec',
+    'redirectTo': 'article/managing-your-approved-human-ethics-application',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'article/approval-from-hdec',
+    'redirectTo': 'article/how-to-apply-for-human-ethics-approval',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'event/online-ethics-training-modules',
+    'redirectTo': 'capability/Human-animal-ethics-and-biological-safety-development-opportunities',
+    'pathMatch': 'full'
+  },
+  {
+    'path': 'event/research-ethics-training',
+    'redirectTo': 'capability/Human-animal-ethics-and-biological-safety-development-opportunities',
+    'pathMatch': 'full'
+  },
+  // SCTASK0387840 end
+
 ] 
